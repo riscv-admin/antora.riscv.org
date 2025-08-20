@@ -93,10 +93,17 @@ const config: Config = {
           items:[
             {
               type: 'doc',
+              docId: 'spec/overview',
+              label: 'Library',
+              // docsPluginId: 'tool1',
+              to:"/docs/spec/intro",
+            },
+            {
+              type: 'doc',
               docId: 'spec/isa',
               label: 'ISA',
               // docsPluginId: 'tool1',
-              to:"/docs/spec/intro",
+              to:"/docs/spec/isa",
             },
             {
               type: 'doc',
@@ -166,8 +173,9 @@ const config: Config = {
     },
     announcementBar: {
       id: 'announcement-bar',
+      backgroundColor: '#fdb515',
       isCloseable: true,
-      content:'congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.',
+      content:'Congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.',
     },
     footer: {
       style: 'dark',
