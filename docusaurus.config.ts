@@ -93,7 +93,7 @@ const config: Config = {
           items:[
             {
               type: 'doc',
-              docId: 'spec/overview',
+              docId: 'spec/intro',
               label: 'Library',
               // docsPluginId: 'tool1',
               to:"/docs/spec/intro",
