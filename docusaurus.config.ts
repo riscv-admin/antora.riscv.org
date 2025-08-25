@@ -26,7 +26,7 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
 
   customFields:{
-    description: "All the developer resources for the RISC-V ecosystem.",
+    description: "Developer resources for the RISC-V ecosystem.",
   },
 
   // Even if you don't use internationalization, you can use this field to set
@@ -41,6 +41,7 @@ const config: Config = {
     [
       'classic',
       {
+        debug:true,
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
