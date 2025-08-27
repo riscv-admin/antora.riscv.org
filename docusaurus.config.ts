@@ -93,17 +93,10 @@ const config: Config = {
           items:[
             {
               type: 'doc',
-              docId: 'spec/intro',
-              label: 'Library',
-              // docsPluginId: 'tool1',
-              to:"/docs/spec/intro",
-            },
-            {
-              type: 'doc',
               docId: 'spec/isa',
               label: 'ISA',
               // docsPluginId: 'tool1',
-              to:"/docs/spec/isa",
+              to:"/docs/spec/intro",
             },
             {
               type: 'doc',
