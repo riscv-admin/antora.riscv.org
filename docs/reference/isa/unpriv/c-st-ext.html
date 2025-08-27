@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -264,10 +279,31 @@
     <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -902,9 +938,9 @@ registers.</p>
 </div>
 <div class="sect3">
 <h4 id="stack-pointer-based-loads-and-stores"><a class="anchor" href="#stack-pointer-based-loads-and-stores"></a>Stack-Pointer-Based Loads and Stores</h4>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-sp-load-store.edn" alt="c sp load store">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCBxJKSIqAadSN1HXVn7ERsrQ7CCFO4EZm5uRAzYEaYApXnp6UVp5ZEm1gZ1ZhbmcUCFSCEjGss0IRqLNHV4NaGwxVFKWgeAbkiJbW45FHnAgOQOfjYcBrFcEPcXjREeNE0lmQ2ii3GcFvSSvOSS4yBFsFsMQaFu55PeHAAyIFAlgucFQhjuSGk3cDyIMNjdRSS8_PSMoGxDvOLWW0tAHBqlSU=" alt="svg">
 </div>
 </div>
 <div id="c-sp-load-store" class="paragraph">
@@ -938,9 +974,9 @@ register <em>rd</em>. It computes its effective address by adding the
 <em>zero</em>-extended offset, scaled by 8, to the stack pointer, <code>x2</code>. It
 expands to <code>fld rd, offset(x2)</code>.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-sp-load-store-css.edn" alt="c sp load store css">
+<img src="https://kroki.io/wavedrom/svg/eNp1kDEPgjAQhXd_xW1dGhNbqdoVw6xhcCAMSKhhAExbJ-C_e1VbAmqH9uXd3deX63V1k5CtAPprbY0ERqEtmkoC6e6EgjuFtRp7CCOUxL-vfKQTIgoIbdib4RERthtdovn_mbFEYNVNM2cJZHVKmcpmkWTDTorcIYLFh_3S2g6HpeUHv-ZmMXiIoR5taTkifAzuNrBOL-nJcVEdgzp7lUzl5FV38JxC2bWqxv1_ftmIcXwCyX9t5A==" alt="svg">
 </div>
 </div>
 <div id="c-sp-load-store-css" class="paragraph">
@@ -1042,9 +1078,9 @@ attain the greatest code size reduction.</p>
 </div>
 <div class="sect3">
 <h4 id="register-based-loads-and-stores"><a class="anchor" href="#register-based-loads-and-stores"></a>Register-Based Loads and Stores</h4>
-<div id="reg-based-ldnstr" class="imageblock">
+<div id="reg-based-ldnstr" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/reg-based-ldnstr.edn" alt="reg based ldnstr">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbAdnqzgY4ydhaHYQZxnAzilJO7QSqgBtjDFKeklpcgqCxUSimIVyUmZsLcxLURflpacWpJdFGNWaxSFxzK3xcbIpxOb_YEOx-FOcnJRanEqRxGAjxAap5UHeYWhnH4uHWmNRYxBJQjsPStNK85BJjDHud9XzCobQLlA6E0G4wCTegDMjQWB2F5Py8tExgUoGabmhWWwsAcj2iYg==?id=reg-based-ldnstr" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1080,9 +1116,9 @@ floating-point value from memory into floating-point register
 <code><em>rs1′</em></code>. It expands to
 <code>fld rd′, offset(rs1′)</code>.</p>
 </div>
-<div id="c-cs-format-ls" class="imageblock">
+<div id="c-cs-format-ls" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-cs-format-ls.edn" alt="c cs format ls">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCBxJKSIqAadSMgX93ZQF0HCxFbq4MwwxhuRlGx0amdYGNghhiDDCkuSgZqw06imIRwTWZuLsQ5KK7JT0srTi2JNqoxiwVqh_LMrXDzsKjE6XRDbE5PSixOBRqAm8JhHIb7jZHcb2pljOQqNF6NSY0FblkQD4eVaaV5ySUga1CsdNYLDgfFmV6wC4QKBFNuUFE3oDDIvFgdheT8vLRMYOqAGmxoVlsLAJbsn54=?id=c-cs-format-ls" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1129,9 +1165,9 @@ register <code><em>rs1′</em></code>. It expands to
 instructions. As with base RVI instructions, the offsets of all RVC
 control transfer instructions are in multiples of 2 bytes.</p>
 </div>
-<div id="c-cj-format-ls" class="imageblock">
+<div id="c-cj-format-ls" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-cj-format-ls.edn" alt="c cj format ls">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCBxJKSIqAadSN1HXVnQwgRW6uD0GNoCNeUmZsL1gXTYwhSn5-WVpxaEm1oWGNSY2llUWNoUGNWY15jbGVYYxpLUB7FKmO4TWmlecklxkDLYFYZg1ym5wUhHX3A-mJ1FJLz89IygX6EudWsthYA8P1F0A==?id=c-cj-format-ls" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1152,9 +1188,9 @@ C.J, but additionally writes the address of the instruction following
 the jump (<code>pc+2</code>) to the link register, <code>x1</code>. C.JAL expands to
 <code>jal x1, offset</code>.</p>
 </div>
-<div id="c-cr-format-ls" class="imageblock">
+<div id="c-cr-format-ls" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-cr-format-ls.edn" alt="c cr format ls">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOwMJBRAZW6uD0GAK11BUDFIAAjBdpkBdBiBNBrj1GGLRU1yU_KhzAVgnjImi3wSuP600L7nEBGQETL8JyKV6XkFgt-p5OfoEgfXG6igk5-elZQJ9CzXE0Ky2FgDFjkcZ?id=c-cr-format-ls" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1195,9 +1231,9 @@ bytes is only a very minor change to the base microarchitecture.</p>
 </tr>
 </table>
 </div>
-<div id="c-cb-format-ls" class="imageblock">
+<div id="c-cb-format-ls" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-cb-format-ls.edn" alt="c cb format ls">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOxsCBUBkbK0OQoMpXENmbi6SDlOgjvy0tOLUkmhzK7MaIyvDGtNYkAGYgijmGcPNKyo2fNSwCagFBGDGGgONLS5KBhkEonBohTgFTRvUYosaEytjZJdABWJ1sJuVVpqXXGKMaZyznpNrYBQ4SPSc_FyjIAbE6igk5-elZQJDFWqSoVltLQDXAWZJ?id=c-cb-format-ls" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1231,9 +1267,9 @@ generation.</p>
 <p>The two constant-generation instructions both use the CI instruction
 format and can target any integer register.</p>
 </div>
-<div id="c-integer-const-gen" class="imageblock">
+<div id="c-integer-const-gen" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-integer-const-gen.edn" alt="c integer const gen">
+<img src="https://kroki.io/wavedrom/svg/eNp1kD0LgzAQhvf-iuuUJYiJ1ULAqZPg2kkyWD-Kg7FoulTy33vRRptCMxzcXd6Hh5vH5i6gOADMt05PAjgFVfaNADI8CIVS6xH3hBNKLgwHtkpD90C8Bbq-L04ilPgLn0vGmNw3RL1swxLBuPwHGusV4THqZtJwTCG0Eq6ZQwrc-BzmCcU_Ouyjs8ydzRlV6Dcj2hjtU1U68hmRPUaQZ8s5gvyarWlJoRpU2-FBnUpizBvPNWDr?id=c-integer-const-gen" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1263,9 +1299,9 @@ The code points with <em>rd</em>=<code>x0</code> and <em>imm</em>≠0 are HINTs.
 <p>These integer register-immediate operations are encoded in the CI format
 and perform operations on an integer register and a 6-bit immediate.</p>
 </div>
-<div id="c-integer-register-immediate" class="imageblock">
+<div id="c-integer-register-immediate" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-int-reg-immed.edn" alt="c int reg immed">
+<img src="https://kroki.io/wavedrom/svg/eNp1kb0OgjAURnef4jp1aZSCRW3iYGRxM3FwIB1QwDBQTKmLwLtL-SnUxA7NbW-_k5PbSiZPBuECoLpnqmTgYhBRnjBAxQthGFaklGyfIRdhdCLt_bTzBk9patJZnocbxjViDNM2LD59w9EdNK-HTu3XO7atKf8HlvFalqRXm5PjpFSwPICjYdbBtVHEcqTcRhEjSY0inQnuf8Q8Q0vf4qE8m-bpea2OQXDuptVVt6kk_vXS4TiGRyHSrP2L0dJvmi_Y4HAl?id=c-integer-register-immediate" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1312,9 +1348,9 @@ always 16-byte aligned.</p>
 </tr>
 </table>
 </div>
-<div id="c-ciw" class="imageblock">
+<div id="c-ciw" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-ciw.edn" alt="c ciw">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOxuox-rU6iDUGsPVFqU8atgEVA4CMC3GQC0pqcUlaJos4Joyc3MhWmA6LIA68qpKgeLRplYmNZZWZjVGNcax6rHYLU0rzUsuMUY1AmSps56ji4unSXCAH1hnrI5Ccn5eWibQn1AjDM1qawG_eEd5?id=c-ciw" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1328,9 +1364,9 @@ pointers to stack-allocated variables, and expands to
 <em>nzuimm</em>≠0; the code points with <em>nzuimm</em>=0 are
 reserved.</p>
 </div>
-<div id="c-ci" class="imageblock">
+<div id="c-ci" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-ci.edn" alt="c ci">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbAdnqzkbqsbU6CLWmcLXFGYm5JdEmVgaxQHVAANNmCtKGJIlDe1GKflGxIUQrqt6U1OISBUVbBQNUrYZoNpui2WuIsNcUzVZjuNa00rzkEmNUjcZgf-oF-_h4grXF1gIAzdVQIg==?id=c-ci" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1349,9 +1385,9 @@ C.SLLI expands into <code>slli rd, rd, shamt[5:0]</code>.</p>
 <p>For RV32C, <em>shamt[5]</em> must be zero; the code points with <em>shamt[5]</em>=1
 are designated for custom extensions.</p>
 </div>
-<div id="c-srli-srai" class="imageblock">
+<div id="c-srli-srai" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-srli-srai.edn" alt="c srli srai">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOxsCBUBkrE6tDkKHKVxHcUZibkm0iZVBLFAhEMA0mwI1o8gh81ANM4YbVpTyqGGTflGxIZCCGAc3zxhoXkpqcQnIJDCNagbCC2mlecklRqiOAftELzjIxxPsGyDL0RPNAEM0H5mi-ccQ7h9TJN-Y4vYL2B3GqIYY43RHbC0Add1yEw==?id=c-srli-srai" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1392,9 +1428,9 @@ where all other immediates are sign-extended.</p>
 </tr>
 </table>
 </div>
-<div id="c-andi" class="imageblock">
+<div id="c-andi" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-andi.edn" alt="c andi">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCCxJKSIqASdSN1HXVnQ_VYnVodhHJTuPLM3NxoEyuDWFRNpkBNcJlYZJ3GcJ1FKY8aNukXFRsCKVTdxkDdKanFJWiWItyYVpqXXGIE0YTqUD1HPxdPNH2GKI41RXOqIdSpQHFUbcao1gEdheJAZKtiawHUi17G?id=c-andi" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1409,9 +1445,9 @@ expands to <code>andi rd′, rd′, imm</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>Integer Register-Register Operations</h4>
-<div id="c-cr" class="imageblock">
+<div id="c-cr" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-int-reg-to-reg-cr-format.edn" alt="c int reg to reg cr format">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCBxJKSIqAadSMgX90ZRsbq1OogtJnCtRUVG0H0wbSZgjQUFyU_6lxggMzEaUCKflGxIVAligEpqcUlMBPgbFQjTOBGpJXmJZeYIBlhAna0nm8YhHZ0cYHojdVRSM7PS8sEhgHUEEOz2loArh5QKw==?id=c-cr" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1447,9 +1483,9 @@ to register <em>rd</em>. C.ADD expands into <code>add rd, rd, rs2</code>. C.ADD 
 valid when <em>rs2</em>≠<code>x0</code>; the code points with <em>rs2</em>=<code>x0</code> correspond to the C.JALR
 and C.EBREAK instructions. The code points with <em>rs2</em>≠<code>x0</code> and <em>rd</em>=<code>x0</code> are HINTs.</p>
 </div>
-<div id="c-ca" class="imageblock">
+<div id="c-ca" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-int-reg-to-reg-ca-format.edn" alt="c int reg to reg ca format">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUQCBxJKSIqAadSMgX93ZkAAZq1OrgzDOGG5cUbHRo4ZNECNhJhqD9BQXJRNDoZqLcGZaaV5yCchpqM7Uc_RzgTD8gyB0BIwRHOoEVeLiEg4XCsft8hSgw_WLig0h7kdxfEpqcQnRNKoFZqheMEMy2owiL8TWAgDcEXyi?id=c-ca" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1516,9 +1552,9 @@ improvement in static and dynamic compression.</p>
 </div>
 <div class="sect3">
 <h4 id="defined-illegal-instruction"><a class="anchor" href="#defined-illegal-instruction"></a>Defined Illegal Instruction</h4>
-<div id="c-def-illegal-inst" class="imageblock">
+<div id="c-def-illegal-inst" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-def-illegal-inst.edn" alt="c def illegal inst">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlA3UNdRSCwpKQJKqxup6wD5sTq1OgiVplhVmlKk0hCrSkMsKo2xqjRGqIzVUUjOz0vLBHoPZrhZbS0ABoVARg==?id=c-def-illegal-inst" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1551,9 +1587,9 @@ non-existent memory regions.</p>
 </div>
 <div class="sect3">
 <h4 id="nop-instruction"><a class="anchor" href="#nop-instruction"></a>NOP Instruction</h4>
-<div id="c-nop-instr" class="imageblock">
+<div id="c-nop-instr" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-nop-instr.edn" alt="c nop instr">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOxuqx-rU6iDUmsLVZubmRptYGcQi6TAF6jDAqaEoRb-o2JCAckMU802RTTfEotwYrjytNC-5xBhJuTHI-Xp-_gEQLbG1AGi5RFc=?id=c-nop-instr" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1568,9 +1604,9 @@ with <em>imm</em>≠0 encode HINTs.</p>
 </div>
 <div class="sect3">
 <h4 id="breakpoint-instruction"><a class="anchor" href="#breakpoint-instruction"></a>Breakpoint Instruction</h4>
-<div id="c-breakpoint-instr" class="imageblock">
+<div id="c-breakpoint-instr" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/c-breakpoint-instr.edn" alt="c breakpoint instr">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDSUchLzE21UlDPL1DXUUgsKSkCyqsbqeuoOxupx-rU6iDUGhrAFRsgqTUEcoACqGpN4ErTSvOSS0yQ1JuAzNZzdQpydfSG6IrVUUjOz0vLBDoNZpVZbS0A-aYv3w==?id=c-breakpoint-instr" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1845,21 +1881,21 @@ RV64</p></td>
 <div class="paragraph">
 <p><a href="#rvc-instr-table0">Instruction listing for RVC, Quadrant 0</a>, <a href="#rvc-instr-table1">Instruction listing for RVC, Quadrant 1</a>, and <a href="#rvc-instr-table2">Instruction listing for RVC, Quadrant 2</a> list the RVC instructions.</p>
 </div>
-<div id="rvc-instr-table0" class="imageblock">
+<div id="rvc-instr-table0" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rvc-instr-quad0.edn" alt="rvc instr quad0">
+<img src="https://kroki.io/bytefield/svg/eNrdld2K2kAUx-_7FIe5UtopTqJxN9CLUissbEvZQPdCvBiTUYdOEpkZ96OrsM_UR-qT9Iw1sYYNbY0ti-BBOB__OfMbz7GViCm3VhsIF4rLDEbb74dwmmeWTnkq1T2QDy-BLWDIlZrw-AtZj9svWlgKOr-lcyFncwt-D_acPBGaTjPIpNr6lZhamnI9Q_1OketqC2e38E7yO2HoAgVQCzzfuTW_pXGulmm2FTfYpOIToQy0tLhBh4ARIfDEp4PG0Dw0H62L1kML0PpoZ2jnLmeT6DKZS2Uul7lk1iPj9rpoA9tDzQ4mP4RmwTPwIcTzrYy5olzJWQYklUmiBKnUlBVndQG_ekoZ8fYiLSvuLJALpcSMK5CZsXoZW5lnpHg8Y--VACItthRjJ4VQH0JXTHkWz3MNxFiuLYFwkuufWNd4Uu1V9_tbyjQd9cLu6jwMVt7KH9fccNuuTr4_fiN__is7kMq7128Hg4tu9OkjXivldo4nmuUESOvqffQKXNNvOm0yboKE_QbJLygqCdqwDYUno9sbbET6YTDevab8KoAFu2f0KqpJvWg9MEQ1vByQwzmwzr_n4K3-B4fL6yYY2ElgKOdn6GhURuez7zWbGXYaM1NCcoNTZRR0GzFi9auWUlqGGPu7Xq-EEfpGJASO_ufAnt8mNN6hqzBqsArZ81uFB4OIrptwYKfBYbcMo-MvQ8ZOZGxKStFRtuEPpnr1bQ==?id=rvc-instr-table0" alt="Instruction listing for RVC, Quadrant 0">
 </div>
 <div class="title">Figure 1. Instruction listing for RVC, Quadrant 0</div>
 </div>
-<div id="rvc-instr-table1" class="imageblock">
+<div id="rvc-instr-table1" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rvc-instr-quad1.edn" alt="rvc instr quad1">
+<img src="https://kroki.io/bytefield/svg/eNrVWM1u00AQvvcpVj4logaP8--qh4QWUVRSSCggohw28aaxcOxo7TSt6khceQuegRN9hYqn6JMwm5j8NFqX1HGLJY8s7czs7vfNz66dMVmP-j73iDG0qeWQVvi-Mnqu46tjZp31faJ0XNtUyGysRweWfUmUt88IDMkratsd2v2qTNrZnQxOR7g7Vvszv4JGVgapybjac4hj2eG4zXq-OqD8DNfU_toK37uDHfeCeeoQ_XEqApXFsDq2TL9PSlNLTsdq17VHAydczkMoNu0w2yMZzs5xgJGWopDw0VAARUfJoeRRCihFlBJKGaUibKaGwhKEKQhbEMZQUNrZSXYnXBv3g5NqaH1leEPqkNwku6yyBoNWoT3Xwqp24VZYd8sbWlum12Cu0Vc0GZ9dYPxePq-fvMMADigy1TK8UYcomddH9Q-7BKe-_f5DyyKM-Z6JIdxU6nT7LieK51Puo3fH5TNGJxsDzi4QL2u5By-4KdZPDnn14OBICn0_LnCIAg4Q5IOKUQ5AC4pBKcgZECxHHzbF8qZ6fBdK42NOTxKDPFsfK3if1iEX83ukcdjcJdyMG0F4YK1y8_ev_QSRH0uSdguII-NdkSLWI8FigpeN0nJ6PyjYUGyuNapppLdQrFLg4Q6mJVuaApidftODRVSpNAcw-6-0XQQUxQ0UDdDjpMLpkZySPbKlvABpEw83MloUxL_RszShvtY6bq6xedxcy1JxFL-Cmg1ZDY3iJ1MCbMETs1V9Crbu6bIQI4UezIloRXVxaUgAriZFGiP8UYWm3377KfWLYKB5WksRAbB9Aj6fNNJDACSQAanCn0ACYA9IhABIRQtYHAynNdkNHD89xDU8qaMBUtEqlq-v6SFKVdXNe0mE0330NJjH-Dkz5_chz7-0GR7SPrWtrjJJAy-QMl4e5d-E-CsRo01Gf36Xg7yRa8sssNgjClb4l4xioK8C2-ASWDt8_yUONPiPodUPN4P2BySg3oY=?id=rvc-instr-table1" alt="Instruction listing for RVC, Quadrant 1">
 </div>
 <div class="title">Figure 2. Instruction listing for RVC, Quadrant 1</div>
 </div>
-<div id="rvc-instr-table2" class="imageblock">
+<div id="rvc-instr-table2" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rvc-instr-quad2.edn" alt="rvc instr quad2">
+<img src="https://kroki.io/bytefield/svg/eNrNVttum0AQfc9XjPYJ1NKw2OCUKg9ubatpSVSZKnmw_LAYHKNysXZxnCbxB_Qv8m39kg4JlPqCU9vYrcQIaXZmmHP2MLuS6w1ZknAB5jhgfgS97H1vDuMoUYYs9IPvQM5fAR1DhwWBwwbfyKwvH0mYCjyeKiPPvx4loKsw52Sux5VhBJEfZP7AGyZKyPg11lfz2DQ3d9ZzrxPfekIZYwGsBZpWuJWp7yYjaDxFcjZVBnEwCaPsewL7DpjjBQIk7t2gw4MeIbD4qGgUTUOrodXRdDQDrYF2gvY2jXkKTCNpGkrTWJoGU5305Zl8lDWBjWFRFaPvTTFmEdRm8h9LUuLdJkCiu4kfhj29T3J6hX_nATVmcp5H5_IIF_SYuz9_PBaV9fmIrGbdVPtlIbRI1la19eGNbVlnBMyQIbM9U0wcINLHs4uvr4G7pyrEHPAbp6qMmPNKBphptsKiwQjXiUgYT7CGE_PnfZgtsUPXs7MxN24Z4IyR2sOJaWzOCvLRsVr2F7I9VKpWDXWdBDK42kNjG7i_RWBdpZjnRdBt288a2G3r6aG3flcuOivJuKxp_xsPf6GLLX-DQhetVVQY9XdQjTpo6dgkxcLyXFyHXN0e7afu6n9A0H8Bc-3-cqGtW34Z6_ll-dDfF1ZahrXCzURo7ffddvMzOSiCykWZyrFpdQ-O4njPumu2WnsTXtmEzWbr4jQ0lqBtdV-wd7ov0NL7Qt71wnlWTdf21W5N04M3XZzP9j7O55chVa-e4g5ecsxuiugXk7w_Iw==?id=rvc-instr-table2" alt="Instruction listing for RVC, Quadrant 2">
 </div>
 <div class="title">Figure 3. Instruction listing for RVC, Quadrant 2</div>
 </div>
@@ -1882,101 +1918,6 @@ RV64</p></td>
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
                         </div>                        <div class="version-item is-active">
                           <div>
@@ -1989,82 +1930,6 @@ RV64</p></td>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

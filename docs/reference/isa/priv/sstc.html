@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="priv-history.html">
+    <link rel="prev" href="supervisor.html">
+    <link rel="next" href="sscofpmf.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
@@ -286,7 +287,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -310,7 +311,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-history.html">History</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="bibliography.html">Bibliography</a>
   </li>
 </ul>
@@ -358,19 +359,264 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume II: RISC-V Privileged ISA Specification</li>
-      <li><a href="bibliography.html">Bibliography</a></li>
+      <li><a href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a></li>
     </ul>
   </nav>
 </div><div class="sect1">
-<h2 id="bibliography"><a class="anchor" href="#bibliography"></a>Bibliography</h2>
+<h2 id="Sstc"><a class="anchor" href="#Sstc"></a>"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>bibliography::[]</p>
+<p>The current Privileged arch specification only defines a hardware mechanism for
+generating machine-mode timer interrupts (based on the mtime and mtimecmp
+registers). With the resultant requirement that timer services for
+S-mode/HS-mode (and for VS-mode) have to all be provided by M-mode - via SBI
+calls from S/HS-mode up to M-mode (or VS-mode calls to HS-mode and then to
+M-mode). M-mode software then multiplexes these multiple logical timers onto
+its one physical M-mode timer facility, and the M-mode timer interrupt handler
+passes timer interrupts back down to the appropriate lower privilege mode.</p>
+</div>
+<div class="paragraph">
+<p>This extension serves to provide supervisor mode with its own CSR-based timer
+interrupt facility that it can directly manage to provide its own timer service
+(in the form of having its own stimecmp register) - thus eliminating the large
+overheads for emulating S/HS-mode timers and timer interrupt generation up in
+M-mode. Further, this extension adds a similar facility to the Hypervisor
+extension for VS-mode.</p>
+</div>
+<div class="paragraph">
+<p>The extension name is "Sstc" ('Ss' for Privileged arch and Supervisor-level
+extensions, and 'tc' for timecmp). This extension adds the S-level stimecmp CSR
+and the VS-level vstimecmp CSR.</p>
+</div>
+<div class="sect2">
+<h3 id="machine-and-supervisor-level-additions"><a class="anchor" href="#machine-and-supervisor-level-additions"></a>Machine and Supervisor Level Additions</h3>
+<div class="sect3">
+<h4 id="supervisor-timer-stimecmp-register"><a class="anchor" href="#supervisor-timer-stimecmp-register"></a>Supervisor Timer (<code>stimecmp</code>) Register</h4>
+<div class="paragraph">
+<p>This extension adds this new CSR.</p>
+</div>
+<div class="paragraph">
+<p>The <code>stimecmp</code> CSR is a 64-bit register and has 64-bit precision on all RV32 and
+RV64 systems. In RV32 only, accesses to the <code>stimecmp</code> CSR access the low 32
+bits, while accesses to the <code>stimecmph</code> CSR access the high 32 bits of <code>stimecmp</code>.</p>
+</div>
+<div class="paragraph">
+<p>The CSR numbers for <code>stimecmp</code> / <code>stimecmph</code> are 0x14D / 0x15D (within the
+Supervisor Trap Setup block of CSRs).</p>
+</div>
+<div class="paragraph">
+<p>A supervisor timer interrupt becomes pending, as reflected in the STIP bit in
+the <code>mip</code> and <code>sip</code> registers whenever <code>time</code> contains a value greater than or
+equal to <code>stimecmp</code>, treating the values as unsigned integers.
+If the result of this comparison changes, it is guaranteed to be reflected in
+STIP eventually, but not necessarily immediately.
+The interrupt remains posted until <code>stimecmp</code> becomes greater than <code>time</code>,
+typically as a result of writing <code>stimecmp</code>.
+The interrupt will be taken based on the standard interrupt enable and
+delegation rules.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A spurious timer interrupt might occur if an interrupt handler advances
+<code>stimecmp</code> then immediately returns, because STIP might not yet have fallen in
+the interim. All software should be written to assume this event is possible,
+but most software should assume this event is extremely unlikely. It is almost
+always more performant to incur an occasional spurious timer interrupt than to
+poll STIP until it falls.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In systems in which a supervisor execution environment (SEE) provides timer
+facilities via an SBI function call, this SBI call will continue to support
+requests to schedule a timer interrupt. The SEE will simply make use of
+stimecmp, changing its value as appropriate. This ensures compatibility with
+existing S-mode software that uses this SEE facility, while new S-mode software
+takes advantage of stimecmp directly.)</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="machine-interrupt-mip-and-mie-registers"><a class="anchor" href="#machine-interrupt-mip-and-mie-registers"></a>Machine Interrupt (<code>mip</code> and <code>mie</code>) Registers</h4>
+<div class="paragraph">
+<p>This extension modifies the description of the STIP/STIE bits in these
+registers as follows:</p>
+</div>
+<div class="paragraph">
+<p>If supervisor mode is implemented, its mip.STIP and mie.STIE are the
+interrupt-pending and interrupt-enable bits for supervisor-level timer
+interrupts. If the stimecmp register is not implemented, STIP is writable in
+mip, and may be written by M-mode software to deliver timer interrupts to
+S-mode. If the <code>stimecmp</code> (supervisor-mode timer compare) register is
+implemented, STIP is read-only in mip and reflects the supervisor-level timer
+interrupt signal resulting from stimecmp. This timer interrupt signal is
+cleared by writing <code>stimecmp</code> with a value greater than the current time value.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h4>
+<div class="paragraph">
+<p>This extension modifies the description of the STIP/STIE bits in these
+registers as follows:</p>
+</div>
+<div class="paragraph">
+<p>Bits <code>sip</code>.STIP and <code>sie</code>.STIE are the interrupt-pending and interrupt-enable bits
+for supervisor-level timer interrupts. If implemented, STIP is read-only in
+sip, and is either set and cleared by the execution environment (if <code>stimecmp</code> is
+not implemented), or reflects the timer interrupt signal resulting from
+<code>stimecmp</code> (if <code>stimecmp</code> is implemented). The <code>sip</code>.STIP bit, in response to timer
+interrupts generated by <code>stimecmp</code>, is set and cleared by writing <code>stimecmp</code> with a
+value that respectively is less than or equal to, or greater than, the current
+time value.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="machine-counter-enable-mcounteren-register"><a class="anchor" href="#machine-counter-enable-mcounteren-register"></a>Machine Counter-Enable (<code>mcounteren</code>) Register</h4>
+<div class="paragraph">
+<p>This extension adds to the description of the TM bit in this register as
+follows:</p>
+</div>
+<div class="paragraph">
+<p>In addition, when the TM bit in the mcounteren register is clear, attempts to
+access the <code>stimecmp</code> or <code>vstimecmp</code> register while executing in a mode less
+privileged than M will cause an illegal-instruction exception.  When this bit
+is set, access to the <code>stimecmp</code> or <code>vstimecmp</code> register is permitted in S-mode if
+implemented, and access to the <code>vstimecmp</code> register (via <code>stimecmp</code>) is permitted
+in VS-mode if implemented and not otherwise prevented by the TM bit in
+<code>hcounteren</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hypervisor-extension-additions"><a class="anchor" href="#hypervisor-extension-additions"></a>Hypervisor Extension Additions</h3>
+<div class="sect3">
+<h4 id="virtual-supervisor-timer-vstimecmp-register"><a class="anchor" href="#virtual-supervisor-timer-vstimecmp-register"></a>Virtual Supervisor Timer (<code>vstimecmp</code>) Register</h4>
+<div class="paragraph">
+<p>This extension adds this new CSR.</p>
+</div>
+<div class="paragraph">
+<p>The <code>vstimecmp</code> CSR is a 64-bit register and has 64-bit precision on all RV32 and
+RV64 systems. In RV32 only, accesses to the <code>vstimecmp</code> CSR access the low 32
+bits, while accesses to the <code>vstimecmph</code> CSR access the high 32 bits of
+vstimecmp.</p>
+</div>
+<div class="paragraph">
+<p>The CSR numbers for <code>vstimecmp</code> / <code>vstimecmph</code> are 0x24D / 0x25D (within
+the Virtual Supervisor Registers block of CSRs, and mirroring the CSR numbers
+for stimecmp/stimecmph).</p>
+</div>
+<div class="paragraph">
+<p>A virtual supervisor timer interrupt becomes pending, as reflected in the
+VSTIP bit in the <code>hip</code> register, whenever (<code>time</code> + <code>htimedelta</code>), truncated
+to 64 bits, contains a value greater than or equal to <code>vstimecmp</code>, treating
+the values as unsigned integers.
+If the result of this comparison changes, it is guaranteed to be reflected in
+VSTIP eventually, but not necessarily immediately.
+The interrupt remains posted until <code>vstimecmp</code> becomes greater than (<code>time</code>
++ <code>htimedelta</code>), typically as a result of writing <code>vstimecmp</code>.
+The interrupt will be taken based on the standard interrupt enable and
+delegation rules while V=1.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In systems in which a supervisor execution environment (SEE) implemented by an
+HS-mode hypervisor provides timer facilities via an SBI function call, this SBI
+call will continue to support requests to schedule a timer interrupt. The SEE
+will simply make use of vstimecmp, changing its value as appropriate. This
+ensures compatibility with existing guest VS-mode software that uses this SEE
+facility, while new VS-mode software takes advantage of vstimecmp directly.)</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="hypervisor-interrupt-hvip-hip-and-hie-registers"><a class="anchor" href="#hypervisor-interrupt-hvip-hip-and-hie-registers"></a>Hypervisor Interrupt (<code>hvip</code>, <code>hip</code>, and <code>hie</code>) Registers</h4>
+<div class="paragraph">
+<p>This extension modifies the description of the VSTIP/VSTIE bits in the hip/hie
+registers as follows:</p>
+</div>
+<div class="paragraph">
+<p>Bits hip.VSTIP and hie.VSTIE are the interrupt-pending and interrupt-enable
+bits for VS-level timer interrupts. VSTIP is read-only in hip, and is the
+logical-OR of hvip.VSTIP and the timer interrupt signal resulting from
+<code>vstimecmp</code> (if <code>vstimecmp</code> is implemented). The <code>hip</code>.VSTIP bit, in response to
+timer interrupts generated by <code>vstimecmp</code>, is set and cleared by writing
+<code>vstimecmp</code> with a value that respectively is less than or equal to, or greater
+than, the current (<code>time</code> + <code>htimedelta</code>) value. The <code>hip</code>.VSTIP bit remains defined
+while V=0 as well as V=1.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="hypervisor-counter-enable-hcounteren-register"><a class="anchor" href="#hypervisor-counter-enable-hcounteren-register"></a>Hypervisor Counter-Enable (<code>hcounteren</code>) Register</h4>
+<div class="paragraph">
+<p>This extension adds to the description of the TM bit in this register as
+follows:</p>
+</div>
+<div class="paragraph">
+<p>In addition, when the TM bit in the <code>hcounteren</code> register is clear, attempts to
+access the <code>vstimecmp</code> register (via stimecmp) while executing in VS-mode will
+cause a virtual-instruction  exception if the same bit in <code>mcounteren</code> is set.
+When this bit and the same bit in <code>mcounteren</code> are both set, access to the
+<code>vstimecmp</code> register (if implemented) is permitted in VS-mode.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="environment-config-menvcfg-and-henvcfg-support"><a class="anchor" href="#environment-config-menvcfg-and-henvcfg-support"></a>Environment Config (<code>menvcfg</code> and <code>henvcfg</code>) Support</h3>
+<div class="paragraph">
+<p>Enable/disable bits for this extension are provided in the new <code>menvcfg</code> /
+<code>henvcfg</code> CSRs.</p>
+</div>
+<div class="paragraph">
+<p>Bit 63 of <code>menvcfg</code> (or bit 31 of <code>menvcfgh</code>) - named STCE (STimecmp Enable) -
+enables <code>stimecmp</code> for S-mode when set to one, and the same bit of henvcfg
+enables <code>vstimecmp</code> for VS-mode. These STCE bits are WARL and are hard-wired to 0
+when this extension is not implemented.</p>
+</div>
+<div class="paragraph">
+<p>When this extension is implemented and STCE in <code>menvcfg</code> is zero, an attempt to access <code>stimecmp</code> or <code>vstimecmp</code> in a
+mode other than M-mode raises an illegal-instruction exception, STCE in <code>henvcfg</code>
+is read-only zero, and STIP in <code>mip</code> and <code>sip</code> reverts to its defined behavior as
+if this extension is not implemented. Further, if the H extension is implemented, then hip.VSTIP also reverts its defined behavior as if this extension is not implemented.</p>
+</div>
+<div class="paragraph">
+<p>But when STCE in <code>menvcfg</code> is one and STCE in <code>henvcfg</code> is zero, an attempt to access
+<code>stimecmp</code> (really <code>vstimecmp</code>) when V = 1 raises a virtual-instruction  exception,
+and VSTIP in hip reverts to its defined behavior as if this extension is not
+implemented.</p>
+</div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="priv-history.html">History</a></span>
+  <span class="prev"><a href="supervisor.html">Supervisor-Level ISA, Version 1.13</a></span>
+  <span class="next"><a href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a></span>
 </nav>
 </article>  </div>
 </main>

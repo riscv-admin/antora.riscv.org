@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -264,10 +279,31 @@
     <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -814,13 +850,13 @@ regardless of any subsequent extensions.</p>
 <h3 id="memory"><a class="anchor" href="#memory"></a>Memory</h3>
 <div class="paragraph">
 <p>A RISC-V hart has a single byte-addressable address space of
-\(2^{\text{XLEN}}\) bytes for all memory accesses. A <em>word</em> of
+<span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.808ex" height="1.914ex" role="img" focusable="false" viewBox="0 -846 2567.1 846"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g></g></g></svg> </span> bytes for all memory accesses. A <em>word</em> of
 memory is defined as 32&#160;bits (4&#160;bytes). Correspondingly, a <em>halfword</em> is 16&#160;bits (2&#160;bytes), a
 <em>doubleword</em> is 64&#160;bits (8&#160;bytes), and a <em>quadword</em> is 128&#160;bits (16&#160;bytes). The memory address space is
-circular, so that the byte at address \(2^{\text{XLEN}}-1\) is
+circular, so that the byte at address <span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.705ex" height="2.099ex" role="img" focusable="false" viewBox="0 -846 4289.6 928"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(2789.4,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(3789.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span> is
 adjacent to the byte at address zero. Accordingly, memory address
 computations done by the hardware ignore overflow and instead wrap
-around modulo \(2^{\text{XLEN}}\).</p>
+around modulo <span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.808ex" height="1.914ex" role="img" focusable="false" viewBox="0 -846 2567.1 846"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g></g></g></svg> </span>.</p>
 </div>
 <div class="paragraph">
 <p>The execution environment determines the mapping of hardware resources
@@ -1297,101 +1333,6 @@ extensions, platform standards, or implementations.</p>
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
                         </div>                        <div class="version-item is-active">
                           <div>
@@ -1404,82 +1345,6 @@ extensions, platform standards, or implementations.</p>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

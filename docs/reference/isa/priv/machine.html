@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="priv-csrs.html">
-    <link rel="next" href="indirect-csr.html">
+    <link rel="next" href="smstateen.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -264,10 +279,31 @@
     <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -350,9 +386,9 @@ code can access all CSRs at lower privilege levels.</p>
 <div class="paragraph">
 <p>The <code>misa</code> CSR is a <strong>WARL</strong> read-write register reporting the ISA supported by the hart. This register must be readable in any implementation, but a value of zero can be returned to indicate the <code>misa</code> register has not been implemented, requiring that CPU capabilities be determined through a separate non-standard mechanism.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/misareg.edn" alt="misareg">
+<img src="https://kroki.io/bytefield/svg/eNrNVD1vwjAQ3fkVJ0-JKkv5KFB560An2qFLKyEGp3EgqrEj-ypoUf57nQYQIU0BUVWdIt_de_f8cj4vFRlHNBZYIXmuYLL5rlmmFdKML3L5DuT-CsIC7riUCX95JVBnbf4hIByUU7_nOSIweknnIp_NEeIAGkGeCkMzBSqXm7gUGdIFNzPXLQyCbXWFbocTvRKWFo7D0UEc-T0XN3xJXcKpex6PHmhInGpbcAUDYIk2rqOFdVn67dLo9NJ4V9oHhmKFlKuXuTZALHKDpBsfDSpoZ7a_Ix6eSRx0IoVKD3EHN5qELJju3_4nPKv-0fZM35QRkqNIHUgX34UTjagX7UxTv1e1BOI93T6OfbKdtGU9NyTRMiWl36Ww5c1lWva8jI94cWYf6DDvAi_i3_YC2NdzO2rSaIVC2VwrO4n6-_Mz_PeeDf_Us8YD37kURkf30c0pC6leKDXldbPsE8pW88A=" alt="Machine ISA register (misa)">
 </div>
 <div class="title">Figure 1. Machine ISA register (misa)</div>
 </div>
@@ -667,9 +703,9 @@ readable in any implementation, but a value of 0 can be returned to
 indicate the field is not implemented or that this is a non-commercial
 implementation.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mvendorid.edn" alt="mvendorid">
+<img src="https://kroki.io/bytefield/svg/eNqVUMlqwzAQvfcrhjk5FIEXXBcfc-it9ANCDmNbckTGkpHUpgv-98rESevmVBgh8TY9KemkohCch3pk0gZ2y_5VK2uCUDRo_gB8vodshCdibqg94rTf3CXRCs6exEHq_hCgKGEFUiedUAaM5gVnqYIYyPUxP0vTi3p238KNfZdejDEjxkGRz7Cjk2gtvw5myfex53J9nsK5stefErJHqJkayR4SJ9-iUsIOUwT8Mw9xVfMRb7n_TpHhfjNdisYHAG7JHDGW9CMZyEuoY5WgW2JBrHsDOOiuY4lr14tSXoarr4rsbzovV5GNdeevmNYp1U_AVTRrvgHZs49p" alt="Vendor ID register (`mvendorid`)">
 </div>
 <div class="title">Figure 2. Vendor ID register (<code>mvendorid</code>)</div>
 </div>
@@ -718,9 +754,9 @@ is not implemented. The combination of <code>mvendorid</code> and <code>marchid<
 uniquely identify the type of hart microarchitecture that is
 implemented.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/marchid.edn" alt="marchid">
+<img src="https://kroki.io/bytefield/svg/eNqNj0trwzAQhO_5FYtONkVgJxSKb4W2EEh6LoQc1vbKFl1LRlKaPvB_r9yoh_QBgQWh0c6nmawlhSE4D9XIqA3s0vlRKWuCVDhofgOxvYJyhAdkrrF5FtM-X2TRCs4eZU-66wOsruFMxJacVAaM5qQzqSAHdF3kl0XxvT27f8u1fSUvx8iIOFgtZ9nhUTaWD4NJfB9zpu-XBZwie_1OUN5AxVgTe8gcvcRNgp0oBIi_R_z7ctlsnzb3j7KcL_t8yhcpbCwB4tY1vQ7UhIMjWN-JmNmPaGInqGKyoBtkiaw7A2LQbcskfhC-6Ge-2rpT_WnKPwGBoIBU" alt="Machine Architecture ID (`marchid`) register">
 </div>
 <div class="title">Figure 3. Machine Architecture ID (<code>marchid</code>) register</div>
 </div>
@@ -772,9 +808,9 @@ implementation, but a value of 0 can be returned to indicate that the
 field is not implemented. The Implementation value should reflect the
 design of the RISC-V processor itself and not any surrounding system.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mimpid.edn" alt="mimpid">
+<img src="https://kroki.io/bytefield/svg/eNqNT8tqAzEMvOcrhE-7FMNuQqHsvYVC03Mh5KBN5MRUfmC7zYv993obF5I-oCAQGo1GM9WaFKYUInSeUVtYlH7qlLNJKjSaDyDmN9B6eEDmHlevYljWkyqfQnA7uSW92SaY3cIViGsKUlmwmgvOpJI0GDZZv22aL_Z4_RPu3Z6i9Fkjy8FsOsIBd3Ll-M3Yoh-zz_J-2sDZctRHgvYOOsaeOEIV6D0zCRaiESB-L_Hn5n81f3m6f5btOCzroZ4UszkEiEfjmQzZhEk7K7Ll6NHmSN94nxoXa-h6F84hh6H-ANwpd8s=" alt="Machine Implementation ID (`mimpid`) register">
 </div>
 <div class="title">Figure 4. Machine Implementation ID (<code>mimpid</code>) register</div>
 </div>
@@ -808,9 +844,9 @@ numbered contiguously in a multiprocessor system, but at least one hart
 must have a hart ID of zero. Hart IDs must be unique within the
 execution environment.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mhartid.edn" alt="mhartid">
+<img src="https://kroki.io/bytefield/svg/eNqNj0trwzAQhO_5FcuebIrATigUn9uSQNNzIeSwtteO6Foyktr0gf975UY9pA8oLAiNdj7NZC13FILzUI1C2sAune9VZ01QHQ1aXgG3F1COcEsiNTWPOO3zRRat4OxRHVj3hwCrSzgTqWWnOgNGS9KFu6AGcn3kl0XxtT27f8q1fWGvxsiIOFgtZ9nRUTVWngaT-D7mTN8vCzhF9vqNobyCSqhm8ZA5fo6bDDssEPD3wT9f_jfbh7ube1XOl30-5YsUNpYAXJMLsLnGmNWPZGIXqGKioBsSRaJ7AzjothXGb85P6pmvtu5Ue5ryD0gefQA=" alt="Hart ID (`mhartid`) register">
 </div>
 <div class="title">Figure 5. Hart ID (<code>mhartid</code>) register</div>
 </div>
@@ -2057,9 +2093,9 @@ interrupts, unless the interrupt results in a user-level context swap.</p>
 trap vector configuration, consisting of a vector base address (BASE)
 and a vector mode (MODE).</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtvec.edn" alt="mtvec">
+<img src="https://kroki.io/bytefield/svg/eNrNUl1LwzAUfd-vuNynFgm02YTRt4nzaVPQB4Wxh7RNt2KalCRzU-l_N92yLzcREURICDk5OffckwQ5L5i12kBSC1ZKmPj1PSmUtKRgVSleAccXENdww4RIWfaMzTTsBO4qaLUkc17O5ha6l3AEspxrUkiQpfC44IUlFdMzpx9H0Zbd3j6FU7XihtROw8lBl7awZkuSKbGopNc3zqcvTyPYWDblG4e4D4lgKRcGAs1fHJPDBCMEPB2xm_TsyY_G-Gk0vCWtGE7DJux4v64PwKvBw3DiCQmdorNtaubapZBYvrKEyWyuNCCXOUKSKu2bs6rebslCai6Y5XmLWKuqcydtxqd404QHdoK2JGDwOLgfhbh96uUmR0yVyLEJv7RoLNP2dybXT_6dSxzfXQ93SfX-fVC9P83pKKj1x6K7rGjvoOqnUPes_jHpA8gSSkc=" alt="Encoding of mtvec MODE field.">
 </div>
 <div class="title">Figure 9. Encoding of mtvec MODE field.</div>
 </div>
@@ -2249,9 +2285,9 @@ will not be taken when executing in M-mode. By contrast, if <code>mideleg</code>
 is clear, STIs can be taken in any mode and regardless of current mode
 will transfer control to M-mode.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/medeleg.edn" alt="medeleg">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1PwzAU3PsrnjwlQpbyRVVlY4AJFhgYEIOTOI2FY1v2q5JS5b_jtClqaAtisnzPd-98F1S8ZojWQW4kEwrepnOX11ohrVkr5BbI0w3EBh6YlAUrPwgcpk58ckiy4T1cBF4IrO5ow8W6QUhvZxiruKW1AiXkhEteI22ZXftlcRQdX4_kc7jQPXfUeA0vB2kSLjxuWUf9AMgyJd6vM8xTlpAj75EyVTbaAnHILHq_hbbegoPdMISn3Og6lavqJ_GU-bL176xWeuPgvi-5QaGVI8fk9tnEK5jEV7-L56jN8Uo3ynLJkFcjgqjbS5Mxv3N8_rtgXAkkeL17fgy_nXWHhkihZUWG8Irh7K8g_295X-5lz7M6s3mISTZ5SpN5HV8oEutW" alt="Machine Exception Delegation (`medeleg`) register.">
 </div>
 <div class="title">Figure 10. Machine Exception Delegation (<code>medeleg</code>) register.</div>
 </div>
@@ -2267,9 +2303,9 @@ lower-privilege trap handler).</p>
 that aliases bits 63:32 of <code>medeleg</code>.
 The <code>medelegh</code> register does not exist when XLEN=64.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mideleg.edn" alt="mideleg">
+<img src="https://kroki.io/bytefield/svg/eNqVkU9Pg0AQxe_9FJM9QcwmQPFPuHnQxKR68KKJ8TCUpRCXXbI7DdWG7-7Sgiml1Xja7Bve2x9vvEzkSGQsJLXEUsFbf26TXCviOVal_AT2eAFhDfcoZYrLDwb7qS2_BERx--7PPBcERje8EOWqIIgDGImYCcNzBaqUvS5FTrxCs3KvhUEwfN25p3KqN8Ly2mW4OJhH_szpBhvuBo7udXH3xEPmqG2NzncFCYkNcVTLQhtgltCQo061cRwWtm3rHwYE561CZcfGQ-eDImHMuibLhs52rYQ30Ade_x6YkK6HK18rIySSyDqFSFenJl1xU338R173JDDv5fZ54f-QNfvdsFTLjLX-GeDLv8r7P_Juq6eZJ3sc9xjFPdY8Gm_hG6kU6Vg=" alt="Machine Interrupt Delegation (`mideleg`) Register.">
 </div>
 <div class="title">Figure 11. Machine Interrupt Delegation (<code>mideleg</code>) Register.</div>
 </div>
@@ -2311,15 +2347,15 @@ at the platform&#8217;s discretion.
 </tr>
 </table>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mideleg.edn" alt="mideleg">
+<img src="https://kroki.io/bytefield/svg/eNqVkU9Pg0AQxe_9FJM9QcwmQPFPuHnQxKR68KKJ8TCUpRCXXbI7DdWG7-7Sgiml1Xja7Bve2x9vvEzkSGQsJLXEUsFbf26TXCviOVal_AT2eAFhDfcoZYrLDwb7qS2_BERx--7PPBcERje8EOWqIIgDGImYCcNzBaqUvS5FTrxCs3KvhUEwfN25p3KqN8Ly2mW4OJhH_szpBhvuBo7udXH3xEPmqG2NzncFCYkNcVTLQhtgltCQo061cRwWtm3rHwYE561CZcfGQ-eDImHMuibLhs52rYQ30Ade_x6YkK6HK18rIySSyDqFSFenJl1xU338R173JDDv5fZ54f-QNfvdsFTLjLX-GeDLv8r7P_Juq6eZJ3sc9xjFPdY8Gm_hG6kU6Vg=" alt="Machine Interrupt-Pending (`mip`) register.">
 </div>
 <div class="title">Figure 12. Machine Interrupt-Pending (<code>mip</code>) register.</div>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mideleg.edn" alt="mideleg">
+<img src="https://kroki.io/bytefield/svg/eNqVkU9Pg0AQxe_9FJM9QcwmQPFPuHnQxKR68KKJ8TCUpRCXXbI7DdWG7-7Sgiml1Xja7Bve2x9vvEzkSGQsJLXEUsFbf26TXCviOVal_AT2eAFhDfcoZYrLDwb7qS2_BERx--7PPBcERje8EOWqIIgDGImYCcNzBaqUvS5FTrxCs3KvhUEwfN25p3KqN8Ly2mW4OJhH_szpBhvuBo7udXH3xEPmqG2NzncFCYkNcVTLQhtgltCQo061cRwWtm3rHwYE561CZcfGQ-eDImHMuibLhs52rYQ30Ade_x6YkK6HK18rIySSyDqFSFenJl1xU338R173JDDv5fZ54f-QNfvdsFTLjLX-GeDLv8r7P_Juq6eZJ3sc9xjFPdY8Gm_hG6kU6Vg=" alt="Machine Interrupt-Enable (`mie`) register">
 </div>
 <div class="title">Figure 13. Machine Interrupt-Enable (<code>mie</code>) register</div>
 </div>
@@ -2359,15 +2395,15 @@ zero.</p>
 <p>The standard portions (bits 15:0) of the <code>mip</code> and <code>mie</code> registers are
 formatted as shown in <a href="#mipreg-standard">Standard portion (bits 15:0) of <code>mip</code>.</a> and <a href="#miereg-standard">Standard portion (bits 15:0) of <code>mie</code>.</a> respectively.</p>
 </div>
-<div id="mipreg-standard" class="imageblock">
+<div id="mipreg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mipreg-standard.edn" alt="mipreg standard">
+<img src="https://kroki.io/bytefield/svg/eNrtksFLwzAUxu_7Kx45tUig6dzUXsWBYFGYt7FDuqVbMU1LEt109H_3xbasnRftdTt8FL73-74XknprkXJrtYGolDxTsGi-hygtlKUpzzP5CSS-AlbCjEuZ8NUbgXpqsi8BLKyW_sjDItDFjm5FttlaGAfQM_laaJoqUJlsfClSS3OuN7iNBUFLu_RvOyn2wtASO7AO2NTZmu_oqpDvuWr6DZ5a8kRIA54WH2gIWJCAAGGoEDVGXaMmqCnqBnWLunPMD-hI5lDmWOZgNiFLv_JHzUo8CrjSQ2RKriCs_M7As2JvgTzdP88eX0h7i_U9BZXfhlgv1Gk7GcQPdcu_QvMhofh1yKYhoXg-ZNOfQ91JeHwliJJC1_9I1Y-zY_wCnRX0DW9RhZk=?id=mipreg-standard" alt="Standard portion (bits 15:0) of `mip`.">
 </div>
 <div class="title">Figure 14. Standard portion (bits 15:0) of <code>mip</code>.</div>
 </div>
-<div id="miereg-standard" class="imageblock">
+<div id="miereg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/miereg-standard.edn" alt="miereg standard">
+<img src="https://kroki.io/bytefield/svg/eNrtkjFvgzAQhff8ipMnUGUJkyZtWatEqlTUId2iDCYxCYoxyHabtBH_vecCCjRLy9oMT0jvvvfOsvE2IuXWagNRKXmmYNl8T1FaKEtTnmfyA0h8A6yEOZcy4es9gXpqsk8BLKxW_sjDItDFge5Ett1ZGAfQM_lGaJoqUJlsfClSS3Out7iNBUFLu_SlnRRHYWiJHVgHbOpszQ90Xci3XDX9Bk8teSKkAU-LdzQELElAgDBUiBqjblET1BR1h7pHPTjmG3QkcyhzLHMwm5CVX_mjZiUeBVzpKTIlVxBWfmfgWXG0QJ4fX-ZPM9LeYn1PQeW3IdYLddp-DOJZ3fKn0GJIKH4dsmlIKF4M2fTrUHcSnl8JoqTQ9T9S9ePsHL9C_wr6AowKhUw=?id=miereg-standard" alt="Standard portion (bits 15:0) of `mie`.">
 </div>
 <div class="title">Figure 15. Standard portion (bits 15:0) of <code>mie</code>.</div>
 </div>
@@ -2565,9 +2601,9 @@ these events is defined by the platform, but event 0 is defined to mean
 implementation is to make both the counter and its corresponding event
 selector be read-only 0.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hpmevents.edn" alt="hpmevents">
+<img src="https://kroki.io/bytefield/svg/eNq9Ul1qhDAQft9TDHlSSsA_LHiAvvUEyz5EHVdpTCTJdndbPEHv0kP1JI1dpdWibFspCMLM9zefOjkWzBilIWk4qwRs-_dzUkhhaMHqip-B3N-A38Ad4zxl2QOBy1ZXTwhB1O7cjWOFQMkjLbHalwYibzRjOSpaCBAV7-ccC0NrpvbW7BPccb9NU3lCTRurYMUgDLqxYkeaSX6oRa-ubeTeO4jH-SDhLEWuwVH4aJEIW0LgN493JS4Oyc5t3U0f1B4ApM7OGUdiY-qGCfCj1v2ytsUMG5s3lepyUjsH8qeokVUltFFo_sNsCfZDx662AXULicGToUxkpVRAtGHK3jNQp0xvlogin9BGTZVNncmDMKjCP7X1oWT_LmEmOjNu0Upu0bzb28srWe3TLIrNNeqtVal3Vaehv5afP-8XR-uVuqD1DphvxnA=" alt="Hardware performance monitor counters.">
 </div>
 <div class="title">Figure 16. Hardware performance monitor counters.</div>
 </div>
@@ -2591,9 +2627,9 @@ The <code>mhpmevent<em>n</em>h</code> CSRs are provided only if the Sscofpmf ext
 controls the availability of the hardware performance-monitoring
 counters to the next-lower privileged mode.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/counteren.edn" alt="counteren">
+<img src="https://kroki.io/bytefield/svg/eNq9UV1LwzAUfd-vuOSpRVqatNXZV0H0oSDii4w9pFvqillSkur8oP_dOxq0da4ouEEuJ5xz7kduvKUoedMYC1kteaVg5vA9K7VqgpKvK_kKJD8BWsMll7Lgi0fSzv2Jh6lg9CZYieph1UCSDji-FCYoFahKOr7QL8IGNdLogJhtacM3wULLp7VyKRY7u4Isgm4IW70JoFPIJC-EtOAZ8YxOATMSESAUg2HgiTtIOkgxTrvr7w-bOjx3JSOHlMz91p-4ofExQK5ucqRxYltzBaz1v4vRiLht8LMYhuGnRM92EtORosnYNPu069uvdkPlLt-nXNwPlL7U2whkhTbdr7bD_P8zsbi3rGM0_KOJHsr0AbdqGNQ=" alt="Counter-enable (`mcounteren`) register.">
 </div>
 <div class="title">Figure 17. Counter-enable (<code>mcounteren</code>) register.</div>
 </div>
@@ -2665,9 +2701,9 @@ executing in a less-privileged mode. In harts without U-mode, the
 </div>
 <div class="sect3">
 <h4 id="machine-counter-inhibit-mcountinhibit-register"><a class="anchor" href="#machine-counter-inhibit-mcountinhibit-register"></a>Machine Counter-Inhibit (<code>mcountinhibit</code>) Register</h4>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/counterinh.edn" alt="counterinh">
+<img src="https://kroki.io/bytefield/svg/eNq9UV1LwzAUfd-vuOSpRVqatNWtr4Low0B8k7GHdEtdMUtKUp0f9L97R4K26oqCDnI54ZxzP3ITrEXF29ZYKBrJawULj69FpVUbVXxby2cg8xOgDVxwKUu-uifdMpwEmApG76KNqO82LWT5gONrYaJKgaql50v9JGzUII0OSNmeNnwXrbR82CqfYrGzL8gScEPY-kUAnUIheSmkhcCIR3QKWJCEAKEYDANP6iBzkGOcuuvPD5t6nPmSiUdKlmEXTvzQ-Bggl9dzpHFi23AFrAs_i8mIuG_wvRjH8btEz74k5iNFs7FpDmlXNx_thkpySDi_HSh9qbcQKEpt3Kd2w_y_M7G0t6tjNPylif6X6Q1q7hhj" alt="Counter-inhibit `mcountinhibit` register">
 </div>
 <div class="title">Figure 18. Counter-inhibit <code>mcountinhibit</code> register</div>
 </div>
@@ -2723,9 +2759,9 @@ for use by machine mode. Typically, it is used to hold a pointer to a
 machine-mode hart-local context space and swapped with a user register
 upon entry to an M-mode trap handler.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mscratch.edn" alt="mscratch">
+<img src="https://kroki.io/bytefield/svg/eNp1kE9rwzAMxe_9FMKnhmFI0jBG7uup23lQdlASuzFz7CAL2rXku09b29Hsz0nw9N7TDy07Y5GZEtSjRxdge5mn2sbA2uLg_DuopzsoRlij9w22bwrO2-SOBspqes0WSykCinvdG7frGaocZiJ2hrQNEJy_6N5Y1gPSTq4VeX51f6Z_y008mKRH6ZA6WJXZQnTCvZaF0L1sHp91oYQ6jSi5e6jZHFhjaPtIoBIjsVA3kYQjwWmastuC_P-oCd3P4G1ySC0ht726fuzrJ8UDnOtW5fQH6txcVt_m-aEPksaETw==" alt="Machine-mode scratch register.">
 </div>
 <div class="title">Figure 19. Machine-mode scratch register.</div>
 </div>
@@ -2802,9 +2838,9 @@ address of the instruction that was interrupted or that encountered the
 exception. Otherwise, <code>mepc</code> is never written by the implementation,
 though it may be explicitly written by software.</p>
 </div>
-<div id="mepcreg" class="imageblock">
+<div id="mepcreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mepcreg.edn" alt="mepcreg">
+<img src="https://kroki.io/bytefield/svg/eNp1kMFKxDAQhu_7FENOWyTQdhcPvetJPQviYdpOtmHTJCQDu7r03R21la3iKfDPfF9-ZtuTQeaUoYkOrYeX-b00JnjWBkfr3kA93kAV4R6da7E7KvieZvtOUO-n12KzFRGkcNID2cPAsC9hFWJPSRsP3ro5d2RYj5gO8ltVlsv2J_03bsOZso7iEB3s6mIjecKTloG0e364e9KVktY5onC30DCdWaPvhpBAZcbE0roNSXpkuExTcS0o_0fJ97_Ba3Kk2P3Au3qt_eqlllvO14Jld239ANwufhM=?id=mepcreg" alt="Machine exception program counter register.">
 </div>
 <div class="title">Figure 20. Machine exception program counter register.</div>
 </div>
@@ -2825,9 +2861,9 @@ the last exception or interrupt. <a href="#mcauses">Machine cause (<code>mcause<
 the possible machine-level exception codes. The Exception Code is a
 <strong>WLRL</strong> field, so is only guaranteed to hold supported exception codes.</p>
 </div>
-<div id="mcausereg" class="imageblock">
+<div id="mcausereg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mcausereg.edn" alt="mcausereg">
+<img src="https://kroki.io/bytefield/svg/eNqlUj1rwzAQ3fMrDk02RWA7KRSvJYVC2qFLC6WDbJ9jUVkS8oWkDfnvlZvEsbGHhk5C7-596HRBgaUgcg2kVgmp4f107tPSaOKlqKX6AvZ0A7GFB6FUJvJPBsdqI78RksXhI5wFXgic2fIK5boiWEQwAEWBjpcatFQnXGFJvBZu7d2SKDp3t-wxnJkdNtx6DS8H8yScedyJLfcFn-5ttXzmMfOpGys0LCDNjPOODewPh3DcmnSt8aAXUsIdcaHzyjhgDQlHbCgQ_Y2KumiJfeajJnRuY-mScyi93OVoSRoN96ZAuBjdToj3vFMy9nzlG-1QCcKiRYhMPVVpZz_Gh6MKWktgwevqZRWy80Jsj9_LMqPaB3YR55Oj-1fI31WYTtmf2hXfHnfPOG0uHInJ3ZD5A-o7Bk0=?id=mcausereg" alt="Machine Cause (`mcause`) register.">
 </div>
 <div class="title">Figure 21. Machine Cause (<code>mcause</code>) register.</div>
 </div>
@@ -3219,9 +3255,9 @@ faulting virtual address, even for physical-memory access-fault
 exceptions. This design reduces datapath cost for most implementations,
 particularly those with hardware page-table walkers.</p>
 </div>
-<div id="mtvalreg" class="imageblock">
+<div id="mtvalreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtvalreg.edn" alt="mtvalreg">
+<img src="https://kroki.io/bytefield/svg/eNq1UMFqAjEQvfsVQ04bSmBdpYe9t6fac0E8zGqiobPJkqTaKvl3Z2ssiufCQJg3b968l2qjDaYUIrQDoXWwLO-pNd4lZbC39ANi8QTTAV6RqMP1p4DLNNqjhmaeV3JSsRAEf1A7bbe7BPMa7kDc6KCMA2ep4KRNUj2GLV9r6vrKHrcf4c5_66gG1mA5mDUjHPCg1p6-elf0I7su55vne4vQEnaaIlRB75mpYSlqAeKfavHx9vKupmOzkllOiltOAaJPeyTBVuOAjqNkeTv93RTX7_9zX7jQdj5ckuYsz8B4fT4=?id=mtvalreg" alt="Machine Trap Value (`mtval`) register.">
 </div>
 <div class="title">Figure 22. Machine Trap Value (<code>mtval</code>) register.</div>
 </div>
@@ -3338,16 +3374,16 @@ address of a configuration data structure. Software can traverse this
 data structure to discover information about the harts, the platform,
 and their configuration.</p>
 </div>
-<div id="mconfigptrreg" class="imageblock">
+<div id="mconfigptrreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mconfigptrreg.edn" alt="mconfigptrreg">
+<img src="https://kroki.io/bytefield/svg/eNq1UctqwzAQvOcrFp0sisBxQw--N6ek50DIYe2sHBFZEpKaR4v-vXKjlIaeC4JFs7OzM2y1J4kx-gCt06gMbEv9bKU1UUgclb4CWz_B3MESte6wPzK4dYP6IGgWacdnVRYCb8_iQGo4RFjU8ADinryQBozSBdckoxjRD3lbU9d39jT9F-7shYJwWSPLwXMzwR7Porf6fTRFP2TXZX3z8mgRWo0d6QCVp1NmEmxZzYD901tvVq9vYj59djzxWXGbUwAbe2ukGlz0LPsNDk3Ok_hvyvc4u9_gJ0LhQttZf4ubEv8CW_9_Uw==?id=mconfigptrreg" alt="Machine Configuration Pointer (`mconfigptr`) register.">
 </div>
 <div class="title">Figure 23. Machine Configuration Pointer (<code>mconfigptr</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>The pointer alignment in bits must be no smaller than MXLEN:
 i.e., if MXLEN is
-\(8\times n\), then <code>mconfigptr</code>[\(\log_2n\)-1:0]
+<span class="steminline"> <svg style="vertical-align: -0.05ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.254ex" height="1.557ex" role="img" focusable="false" viewBox="0 -666 2322.4 688"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mn"><path data-c="38" d="M70 417T70 494T124 618T248 666Q319 666 374 624T429 515Q429 485 418 459T392 417T361 389T335 371T324 363L338 354Q352 344 366 334T382 323Q457 264 457 174Q457 95 399 37T249 -22Q159 -22 101 29T43 155Q43 263 172 335L154 348Q133 361 127 368Q70 417 70 494ZM286 386L292 390Q298 394 301 396T311 403T323 413T334 425T345 438T355 454T364 471T369 491T371 513Q371 556 342 586T275 624Q268 625 242 625Q201 625 165 599T128 534Q128 511 141 492T167 463T217 431Q224 426 228 424L286 386ZM250 21Q308 21 350 55T392 137Q392 154 387 169T375 194T353 216T330 234T301 253T274 270Q260 279 244 289T218 306L210 311Q204 311 181 294T133 239T107 157Q107 98 150 60T250 21Z"></path></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mi" transform="translate(1722.4,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span>, then <code>mconfigptr</code>[<span class="steminline"> <svg style="vertical-align: -0.546ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.614ex" height="2.116ex" role="img" focusable="false" viewBox="0 -694 2481.2 935.4"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="mi"><path data-c="6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"></path><path data-c="6F" d="M28 214Q28 309 93 378T250 448Q340 448 405 380T471 215Q471 120 407 55T250 -10Q153 -10 91 57T28 214ZM250 30Q372 30 372 193V225V250Q372 272 371 288T364 326T348 362T317 390T268 410Q263 411 252 411Q222 411 195 399Q152 377 139 338T126 246V226Q126 130 145 91Q177 30 250 30Z" transform="translate(278,0)"></path><path data-c="67" d="M329 409Q373 453 429 453Q459 453 472 434T485 396Q485 382 476 371T449 360Q416 360 412 390Q410 404 415 411Q415 412 416 414V415Q388 412 363 393Q355 388 355 386Q355 385 359 381T368 369T379 351T388 325T392 292Q392 230 343 187T222 143Q172 143 123 171Q112 153 112 133Q112 98 138 81Q147 75 155 75T227 73Q311 72 335 67Q396 58 431 26Q470 -13 470 -72Q470 -139 392 -175Q332 -206 250 -206Q167 -206 107 -175Q29 -140 29 -75Q29 -39 50 -15T92 18L103 24Q67 55 67 108Q67 155 96 193Q52 237 52 292Q52 355 102 398T223 442Q274 442 318 416L329 409ZM299 343Q294 371 273 387T221 404Q192 404 171 388T145 343Q142 326 142 292Q142 248 149 227T179 192Q196 182 222 182Q244 182 260 189T283 207T294 227T299 242Q302 258 302 292T299 343ZM403 -75Q403 -50 389 -34T348 -11T299 -2T245 0H218Q151 0 138 -6Q118 -15 107 -34T95 -74Q95 -84 101 -97T122 -127T170 -155T250 -167Q319 -167 361 -139T403 -75Z" transform="translate(778,0)"></path></g><g data-mml-node="mn" transform="translate(1311,-241.4) scale(0.707)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g><g data-mml-node="mo" transform="translate(1714.6,0)"><path data-c="2061" d=""></path></g><g data-mml-node="mi" transform="translate(1881.2,0)"><path data-c="1D45B" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span>-1:0]
 must be zero.</p>
 </div>
 <div class="paragraph">
@@ -3642,15 +3678,15 @@ until <code>mtimecmp</code> becomes greater than <code>mtime</code> (typically a
 writing <code>mtimecmp</code>). The interrupt will only be taken if interrupts are
 enabled and the MTIE bit is set in the <code>mie</code> register.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtime.edn" alt="mtime">
+<img src="https://kroki.io/bytefield/svg/eNq1kE1qAzEMhfc5hdBqTDFMJ0MWc4DueoKQhSaRE1PZHmy36Q--ex3ilIauCwbD0_PT99wd2FDOMcG0CFkP23Z_TSb4rA05Kx-Azw_wuMATicy0f0G4TpP9ZBjGslOrrgZBDGd9Yns8ZRh7uBPpwFEbD95K04VN1o7isW4b-v7mvrz-K8_hnZNeakaNg_VwkSOd9T7Iq_MtP1Xqtn4Y7xFhEppZEnSR36qTYYs9Av7f2axxp4paNdBaANBl6xgrZVrI1xZF_Z5uRrx9-w91M8I0h3htWIr6BtmpeqE=" alt="Machine time register (memory-mapped control register).">
 </div>
 <div class="title">Figure 26. Machine time register (memory-mapped control register).</div>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtimecmp.edn" alt="mtimecmp">
+<img src="https://kroki.io/bytefield/svg/eNq1kE1qwzAQhfc5xaCVRRG4jvHCB-iuJwhZjJ1RIjr6QVKb_qC7VyFKaei6IBC8eXrzPXUH0phzTDAHRuNg1-6vWXuXlUZr-APE8wM8BnhC5gXXFwHXaTKfBMNY9nLT1SCI_qxOZI6nDGMPdyIeKCrtwBluOpPOymI81m1D39_cl9d_5cW_U1KhZtQ42A4XOeJZrZ5frWv5qVK39cN0jwgz40KcoIv0Vp0EO9ELEP93pq3YyyI3DbQWAGGzsbTaICpoCuhqkSJ_G6ZR3H7-B7wZYV58vJYsRX4DYrd74w==" alt="Machine time compare register (memory-mapped control register).">
 </div>
 <div class="title">Figure 27. Machine time compare register (memory-mapped control register).</div>
 </div>
@@ -3982,9 +4018,9 @@ extensions that wait on memory locations changing, or message arrival.</p>
 <p>The subspace of the SYSTEM major opcode shown in <a href="#customsys">SYSTEM instruction encodings designated for custom use.</a> is designated for custom use. It is recommended that these instructions use bits 29:28 to designate the
 minimum required privilege mode, as do other SYSTEM instructions.</p>
 </div>
-<div id="customsys" class="imageblock">
+<div id="customsys" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/cust-sys-instr.edn" alt="cust sys instr">
+<img src="https://kroki.io/bytefield/svg/eNrtVc1vmzAUv_evePIpaELCkA-Je6cdFmla1sNU9eAYk1gzNrJN2qzif589CKVRiVKV7YRkbHjv975-fjazjOXEWm0gLQXhEu7b9TnNlbRhTgoujoDWnwCX8JkIsSX0F6ofgpuZMwWtHsM947u9hWQBr4QkYzrMJUguWrlguQ0LonfOf3TCetuTcH6SbtUTM2HpHDhfkMRerMljSJWoCtk6Ny7JNnY8hyZfw38ziCOAVJAtEwZmmh0clME9QvDGiJpl6Z5V84qxn-L2Y-6nxZumzYi9Ml6eSROMHoI6uGnzdvUAyitJrQM-p6YkEpZ10NfSylhVdFocvVb_NU46dXLR-EyrSqoyNqCdWfZkAX1nVBUFkxnL4FulS2W8QR2cjFaQemBIJN0rDajgWSYcJN0q3exFfVZur9IzVA_kye4qHob1Ch8GLa4Bra4AuY7tlT1YII6iqJf_cJUtxS-b1LSqPQoGiFsiOEUvTF_iIboi-_dFu0DV5ufmx-36-oh3stT8wAXbuR5yPXJn3Pn96o6f-GAnYTwR_X-I9jxPRHcRYVO5f9CBGzVaI0_89iKOTW-Ep3uiF_HLceTunej9l_T6u2Git4u4JnTPJRurdSdux-P2D1NKndo=?id=customsys" alt="SYSTEM instruction encodings designated for custom use.">
 </div>
 <div class="title">Figure 28. SYSTEM instruction encodings designated for custom use.</div>
 </div>
@@ -4747,15 +4783,15 @@ entries 8-11 appear in <code>pmpcfg2</code>[31:0] for both RV32 and RV64.</p>
 </tr>
 </table>
 </div>
-<div id="pmpcfg-rv32" class="imageblock">
+<div id="pmpcfg-rv32" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/pmp-rv32.edn" alt="pmp rv32">
+<img src="https://kroki.io/bytefield/svg/eNrtVUtugzAQ3fcUI68SVZYwEAdxgOx6gqoLAzag8pOxlFQRJ-hdeqiepLOAFqRiUjaVIlaW3pvxe-D57BKphDG6hbApRF7Bc39eQ1VXhipR5sUbkKdHYA2cRFFEIn4l3cv-YYepoOszzaRIpKaqgiovejyqL7KlDcIYAa7Tw4VUhpZCp6jgOgOq8zSbwohrcaZ4CxCPEXTTNgI5CI28GCqqOKs1kNYIbQiEUa3RQQvXrtuPU11_NlVWiS3RW63J-EpNdlitGayUPK5WdNYpYoEMef4timPJpmy8WKXfwv7UEdKunWZ22rHTyP58tG_xGcxG_VvQ9LfPOt86beu0vtqP9mbgdvpgp_3FTmP33WmjKNe55a5g3tXn-weBIY79sbpsRrbJsE2GXyYDX1jCfGEL84U1zJf38OiV7mY8fAExoMLy?id=pmpcfg-rv32" alt="RV32 PMP configuration CSR layout.">
 </div>
 <div class="title">Figure 29. RV32 PMP configuration CSR layout.</div>
 </div>
-<div id="pmpcfg-rv64" class="imageblock">
+<div id="pmpcfg-rv64" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/pmp-rv64.edn" alt="pmp rv64">
+<img src="https://kroki.io/bytefield/svg/eNrtl0FOwzAQRfecYpRVK2QpdmyT9gDsOAFi4bZOG5EmkWOphaon4C4cipNgoC0FUU_wqqq8ijTfM380Gvspg5kulLWmg3FbqbKG-913My6a2pJCLcvqCZK7a6At3KqqmqjpYwJfalc-a2Bs-zC8GrhCYJoVWWg104YUNdRltYtPmrXuSOvC7gTwdBeudGHJUpm582PpPmrK-eKv8GftDw2Ei7mgUSviKkMis8T127XKnYex1WtLVD1dNAaSzipjXbuTxriuOthst8PjVCFPpup65ksUwZ48D_TkN-GeaaBnNgr2zFioJw32ZDzQk4XvEA3dIRq-Q6ErFL5BgQvkHoF9Xt7H8diyXbY302J-MOY_O3Ky9MvCL3O_nPll5pepX079slO_B877TJd7Bpn3KBUP_drVk9OMuIm4ibi5SNxQhBgUQQZFmEExaCDUoAg2Rn45R6HDInTOEjrHM0_71KLydFtvL68JHK4X_9_N9HUSKRkpGSl58ZSUCOUkQjmJUE4ilBMI5gTCOYH8VQqJcpLyCMqzAeU7edrAUg==?id=pmpcfg-rv64" alt="RV64 PMP configuration CSR layout.">
 </div>
 <div class="title">Figure 30. RV64 PMP configuration CSR layout.</div>
 </div>
@@ -4788,15 +4824,15 @@ the same limit.</p>
 </tr>
 </table>
 </div>
-<div id="pmpaddr-rv32" class="imageblock">
+<div id="pmpaddr-rv32" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/pmpaddr-rv32.edn" alt="pmpaddr rv32">
+<img src="https://kroki.io/bytefield/svg/eNq1kT1PwzAQhvf-ipOnRMhS6lQM2ViYYGFhiDpc6ksb1bEj-0oKKP8dp02hVcuChGTJutf38dzrRFONzD5A0RlsLJTT_VnUzrKssW3MO4jnO5h38IjGVLjaCji-huaDQC2GZTpLYiPwrpcbatYbhkUGFyJq8rK2YBsz6YZqli36dZymsuyUPVZfy5XbU5Bd7BHbQa5G2WMvV87sWjv1D5F6Gq8Wl4hQGKzIBEg8vcVMglJkAsT_nXwulumQzibQuAAI1NpTCGWeF2opIm3o0ML8HgqmPUu0q43zIMjq6HDl_LQTu-4Uyp31ZJBJjwqza2-9jNZe68OQnsEk40gQyevDy1MqTv_9bdch6o9misoZLYb0V-DA6PkH-Q_Eh2-_jXxuYK6uSQ9IuTozLFZ9ASzn4PA=?id=pmpaddr-rv32" alt="PMP address register format, RV32.">
 </div>
 <div class="title">Figure 31. PMP address register format, RV32.</div>
 </div>
-<div id="pmpaddr-rv64" class="imageblock">
+<div id="pmpaddr-rv64" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/pmpaddr-rv64.edn" alt="pmpaddr rv64">
+<img src="https://kroki.io/bytefield/svg/eNrVkjFvgzAQhff8ipMnUGUJSKgqti6d2qVLhyjDEY4E1djIdpq0iP9eOyEoCak6RB0qIdl-9t37_ExQUInWagNZI7CSMO_HNiuVtLzEuhKfwF7uIG7gCYXIcfnO4LBrqi-CZNYtwkngGoFWW76marW2kEZwJmJBmpcSZCV6XVBpeY165dySKDqe9tVjOVc7MrxxPVw7mCZe1rjlSyU2tez7G0fd2yezc0TIBOYkDASaPtxJgjmLGLDbv3R6KcyG6f2ULcIunPSw7hLgXdvMNCjBQVnaWY5yuVYaGMnCBZsr7a_SZlY1xxXfSE0CLRVesVbV13Z8oGO968IT-8A7AgveHl-fQ3Z85SGk_Wp7iJDlShSsC3_CNRa1vQl4_9a_ETMsCk3GzNM0SxZDeHHyv9Ib8f5pfKf5xdGYdI_0MJhDe5G5_4ev1vjJadE3LZ9dSg==?id=pmpaddr-rv64" alt="PMP address register format, RV64.">
 </div>
 <div class="title">Figure 32. PMP address register format, RV64.</div>
 </div>
@@ -4807,9 +4843,9 @@ permits read, write, and instruction execution, respectively. When one
 of these bits is clear, the corresponding access type is denied. The R,
 W, and X fields form a collective <strong>WARL</strong> field for which the combinations with R=0 and W=1 are reserved. The remaining two fields, A and L, are described in the following sections.</p>
 </div>
-<div id="pmpcfg" class="imageblock">
+<div id="pmpcfg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/pmpcfg.edn" alt="pmpcfg">
+<img src="https://kroki.io/bytefield/svg/eNqtkD9rwzAUxPd8ioemmCLwv7jgrUundsmSQunwHEuxiCIZ6UHSBn_3qjRtYopKmmYy3P3uTn7TVkgkch7qXqMy8Hz47mtpDXGJG6VfgT3eQNbDPWrd4HLN4NP16k1AXg4vyWQaisDZLe-EWnUEZQojEVvhuDRglD7oWkjiG3SrsJal6Rf9kf4pN3YnPO9DR6iDIk8mQXe45cEAdsvCe32PBmZQN9aFLQ_7YUhOoeobKqAmsSOOZtlZB8wTOmLx5CyaFKb9JVdevFhcuJifc4jsHCiNQqfUw5GKxauxcRcznmJVi5gxHxl__sPjrap_QtnVrh6F3gGPkyno?id=pmpcfg" alt="PMP configuration register format.">
 </div>
 <div class="title">Figure 33. PMP configuration register format.</div>
 </div>
@@ -4942,20 +4978,20 @@ any address <code>y&lt;pmpaddr<sub>0</sub></code>.</p>
 <div class="paragraph">
 <p>Although the PMP mechanism supports regions as small as four bytes,
 platforms may specify coarser PMP regions. In general, the PMP grain is
-\(2^{G+2}\) bytes and must be the same across all PMP regions.
-When \(G \geq 1\), the NA4 mode is not selectable. When
-\(G \geq 2\) and \({\tt pmpcfg}_i\).A[1] is set,
-i.e. the mode is NAPOT, then bits \({\tt pmpaddr}_i\)[G-2:0]
-read as all ones. When \(G \geq 1\) and
-\({\tt pmpcfg}_i\).A[1] is clear, i.e. the mode is OFF or TOR,
-then bits \({\tt pmpaddr}_i\)[G-1:0] read as all zeros. Bits
+<span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.621ex" height="1.949ex" role="img" focusable="false" viewBox="0 -861.5 2042.5 861.5"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D43A" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></g><g data-mml-node="mo" transform="translate(786,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(1564,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></g></g></svg> </span> bytes and must be the same across all PMP regions.
+When <span class="steminline"> <svg style="vertical-align: -0.312ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.927ex" height="1.907ex" role="img" focusable="false" viewBox="0 -705 2619.6 843"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43A" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></g><g data-mml-node="mo" transform="translate(1063.8,0)"><path data-c="2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(2119.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span>, the NA4 mode is not selectable. When
+<span class="steminline"> <svg style="vertical-align: -0.312ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.927ex" height="1.907ex" role="img" focusable="false" viewBox="0 -705 2619.6 843"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43A" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></g><g data-mml-node="mo" transform="translate(1063.8,0)"><path data-c="2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(2119.6,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span> and <span class="steminline"> <svg style="vertical-align: -0.616ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.891ex" height="2.012ex" role="img" focusable="false" viewBox="0 -617 3488 889.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68C" d="M291 -6Q196 -6 131 60T66 216Q66 296 119 361Q154 403 200 421T273 439Q275 440 293 440H313Q400 440 433 409Q454 388 454 359Q454 335 439 321T402 306Q380 306 365 321T350 357V362L340 363Q339 363 326 363T303 364Q280 364 266 362Q217 352 184 313T151 215Q151 153 199 112T313 70Q341 70 357 85T381 118T394 140Q402 146 424 146Q443 146 447 144Q466 137 466 117Q466 106 457 88T429 47T374 10T291 -6Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68F" d="M43 395Q44 405 44 408T47 416T53 423T66 431H176V461Q176 500 182 518Q201 570 252 593T353 617Q399 614 418 593T437 548Q437 528 424 514T387 499Q365 499 353 511T338 537V541H328Q275 536 261 494Q260 490 260 460V431H327Q334 431 346 431T364 432Q392 432 404 425T416 393T405 362T365 355H327H260V76H319Q375 76 388 71T401 38Q401 27 400 23T395 12T379 1H58Q47 6 42 12T36 23T35 38Q35 65 53 73Q59 76 117 76H176V355H121H93Q64 355 54 362T43 395Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D690" d="M60 274Q60 337 107 386T233 436Q278 436 316 417L329 410L338 416Q384 442 427 442T489 423T509 381T494 345T460 332Q449 332 440 338Q432 341 427 348T419 360T415 365Q414 364 410 364L383 355Q406 320 406 274Q406 211 358 162T233 112Q189 112 155 128L146 133Q142 125 142 115Q142 99 150 85T175 71Q182 72 187 70Q188 70 195 70T218 70T254 69Q259 69 275 69T297 69T318 68T340 66T361 62T384 57T405 49T428 38Q495 -1 495 -76Q495 -143 427 -186T262 -229Q161 -229 94 -185T29 -73Q30 -60 33 -48T39 -26T47 -8T57 8T67 20T77 30T86 38L91 43Q91 44 86 53T75 80T70 117Q70 142 89 183L83 194Q60 232 60 274ZM321 274Q321 312 296 337T230 362Q197 362 171 338T145 274Q145 235 170 211T233 187Q273 187 297 212T321 274ZM422 -78Q422 -54 408 -38T366 -15T315 -6T255 -4H200Q198 -4 193 -4T183 -3Q148 -3 125 -26T102 -78Q102 -110 151 -132T261 -154Q321 -154 371 -132T422 -78Z"></path></g></g><g data-mml-node="mi" transform="translate(3194,-264.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>.A[1] is set,
+i.e. the mode is NAPOT, then bits <span class="steminline"> <svg style="vertical-align: -0.598ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.079ex" height="1.98ex" role="img" focusable="false" viewBox="0 -611 4013 875.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68A" d="M126 306Q105 306 90 321T74 359Q74 439 211 439Q268 439 276 438Q343 426 383 390T430 306Q431 301 431 190V81Q446 79 465 78T492 76T509 72T521 60T524 38Q524 11 506 3Q502 1 466 1Q426 1 406 5T379 14T355 36L345 30Q284 -6 205 -6Q135 -6 92 39T48 141Q48 182 79 212T158 256T252 278T342 285H347V290Q347 315 325 335T267 362Q258 363 224 363Q189 363 185 362H179L178 358Q178 353 178 352T176 345T174 337T170 330T165 322T158 316T150 311T139 308T126 306ZM132 140Q132 115 157 93T224 70Q269 70 302 87T344 133Q346 139 347 175V211H339Q256 209 194 190T132 140Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(3161,0)"><path data-c="1D69B" d="M327 76Q359 76 369 70T380 38Q380 10 359 1H47Q24 8 24 38Q24 54 28 61T47 76H145V355H96L47 356Q24 363 24 393Q24 409 28 416T47 431H207Q223 419 226 414T229 393V387V369Q297 437 394 437Q436 437 461 417T487 368Q487 347 473 332T438 317Q428 317 420 320T407 327T398 337T393 347T390 356L388 361Q348 356 324 345Q228 299 228 170Q228 161 228 151T229 138V76H293H327Z"></path></g></g><g data-mml-node="mi" transform="translate(3719,-256.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>[G-2:0]
+read as all ones. When <span class="steminline"> <svg style="vertical-align: -0.312ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.927ex" height="1.907ex" role="img" focusable="false" viewBox="0 -705 2619.6 843"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D43A" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q492 659 471 656T418 643T357 615T294 567T236 496T189 394T158 260Q156 242 156 221Q156 173 170 136T206 79T256 45T308 28T353 24Q407 24 452 47T514 106Q517 114 529 161T541 214Q541 222 528 224T468 227H431Q425 233 425 235T427 254Q431 267 437 273H454Q494 271 594 271Q634 271 659 271T695 272T707 272Q721 272 721 263Q721 261 719 249Q714 230 709 228Q706 227 694 227Q674 227 653 224Q646 221 643 215T629 164Q620 131 614 108Q589 6 586 3Q584 1 581 1Q571 1 553 21T530 52Q530 53 528 52T522 47Q448 -22 322 -22Q201 -22 126 55T50 252Z"></path></g><g data-mml-node="mo" transform="translate(1063.8,0)"><path data-c="2265" d="M83 616Q83 624 89 630T99 636Q107 636 253 568T543 431T687 361Q694 356 694 346T687 331Q685 329 395 192L107 56H101Q83 58 83 76Q83 77 83 79Q82 86 98 95Q117 105 248 167Q326 204 378 228L626 346L360 472Q291 505 200 548Q112 589 98 597T83 616ZM84 -118Q84 -108 99 -98H678Q694 -104 694 -118Q694 -130 679 -138H98Q84 -131 84 -118Z"></path></g><g data-mml-node="mn" transform="translate(2119.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span> and
+<span class="steminline"> <svg style="vertical-align: -0.616ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.891ex" height="2.012ex" role="img" focusable="false" viewBox="0 -617 3488 889.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68C" d="M291 -6Q196 -6 131 60T66 216Q66 296 119 361Q154 403 200 421T273 439Q275 440 293 440H313Q400 440 433 409Q454 388 454 359Q454 335 439 321T402 306Q380 306 365 321T350 357V362L340 363Q339 363 326 363T303 364Q280 364 266 362Q217 352 184 313T151 215Q151 153 199 112T313 70Q341 70 357 85T381 118T394 140Q402 146 424 146Q443 146 447 144Q466 137 466 117Q466 106 457 88T429 47T374 10T291 -6Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68F" d="M43 395Q44 405 44 408T47 416T53 423T66 431H176V461Q176 500 182 518Q201 570 252 593T353 617Q399 614 418 593T437 548Q437 528 424 514T387 499Q365 499 353 511T338 537V541H328Q275 536 261 494Q260 490 260 460V431H327Q334 431 346 431T364 432Q392 432 404 425T416 393T405 362T365 355H327H260V76H319Q375 76 388 71T401 38Q401 27 400 23T395 12T379 1H58Q47 6 42 12T36 23T35 38Q35 65 53 73Q59 76 117 76H176V355H121H93Q64 355 54 362T43 395Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D690" d="M60 274Q60 337 107 386T233 436Q278 436 316 417L329 410L338 416Q384 442 427 442T489 423T509 381T494 345T460 332Q449 332 440 338Q432 341 427 348T419 360T415 365Q414 364 410 364L383 355Q406 320 406 274Q406 211 358 162T233 112Q189 112 155 128L146 133Q142 125 142 115Q142 99 150 85T175 71Q182 72 187 70Q188 70 195 70T218 70T254 69Q259 69 275 69T297 69T318 68T340 66T361 62T384 57T405 49T428 38Q495 -1 495 -76Q495 -143 427 -186T262 -229Q161 -229 94 -185T29 -73Q30 -60 33 -48T39 -26T47 -8T57 8T67 20T77 30T86 38L91 43Q91 44 86 53T75 80T70 117Q70 142 89 183L83 194Q60 232 60 274ZM321 274Q321 312 296 337T230 362Q197 362 171 338T145 274Q145 235 170 211T233 187Q273 187 297 212T321 274ZM422 -78Q422 -54 408 -38T366 -15T315 -6T255 -4H200Q198 -4 193 -4T183 -3Q148 -3 125 -26T102 -78Q102 -110 151 -132T261 -154Q321 -154 371 -132T422 -78Z"></path></g></g><g data-mml-node="mi" transform="translate(3194,-264.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>.A[1] is clear, i.e. the mode is OFF or TOR,
+then bits <span class="steminline"> <svg style="vertical-align: -0.598ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.079ex" height="1.98ex" role="img" focusable="false" viewBox="0 -611 4013 875.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68A" d="M126 306Q105 306 90 321T74 359Q74 439 211 439Q268 439 276 438Q343 426 383 390T430 306Q431 301 431 190V81Q446 79 465 78T492 76T509 72T521 60T524 38Q524 11 506 3Q502 1 466 1Q426 1 406 5T379 14T355 36L345 30Q284 -6 205 -6Q135 -6 92 39T48 141Q48 182 79 212T158 256T252 278T342 285H347V290Q347 315 325 335T267 362Q258 363 224 363Q189 363 185 362H179L178 358Q178 353 178 352T176 345T174 337T170 330T165 322T158 316T150 311T139 308T126 306ZM132 140Q132 115 157 93T224 70Q269 70 302 87T344 133Q346 139 347 175V211H339Q256 209 194 190T132 140Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(3161,0)"><path data-c="1D69B" d="M327 76Q359 76 369 70T380 38Q380 10 359 1H47Q24 8 24 38Q24 54 28 61T47 76H145V355H96L47 356Q24 363 24 393Q24 409 28 416T47 431H207Q223 419 226 414T229 393V387V369Q297 437 394 437Q436 437 461 417T487 368Q487 347 473 332T438 317Q428 317 420 320T407 327T398 337T393 347T390 356L388 361Q348 356 324 345Q228 299 228 170Q228 161 228 151T229 138V76H293H327Z"></path></g></g><g data-mml-node="mi" transform="translate(3719,-256.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>[G-1:0] read as all zeros. Bits
 \({\tt
 pmpaddr}_i\)[G-1:0] do not affect the TOR address-matching logic.
-Although changing \({\tt pmpcfg}_i\).A[1] affects the value
-read from \({\tt pmpaddr}_i\), it does not affect the
+Although changing <span class="steminline"> <svg style="vertical-align: -0.616ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.891ex" height="2.012ex" role="img" focusable="false" viewBox="0 -617 3488 889.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68C" d="M291 -6Q196 -6 131 60T66 216Q66 296 119 361Q154 403 200 421T273 439Q275 440 293 440H313Q400 440 433 409Q454 388 454 359Q454 335 439 321T402 306Q380 306 365 321T350 357V362L340 363Q339 363 326 363T303 364Q280 364 266 362Q217 352 184 313T151 215Q151 153 199 112T313 70Q341 70 357 85T381 118T394 140Q402 146 424 146Q443 146 447 144Q466 137 466 117Q466 106 457 88T429 47T374 10T291 -6Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68F" d="M43 395Q44 405 44 408T47 416T53 423T66 431H176V461Q176 500 182 518Q201 570 252 593T353 617Q399 614 418 593T437 548Q437 528 424 514T387 499Q365 499 353 511T338 537V541H328Q275 536 261 494Q260 490 260 460V431H327Q334 431 346 431T364 432Q392 432 404 425T416 393T405 362T365 355H327H260V76H319Q375 76 388 71T401 38Q401 27 400 23T395 12T379 1H58Q47 6 42 12T36 23T35 38Q35 65 53 73Q59 76 117 76H176V355H121H93Q64 355 54 362T43 395Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D690" d="M60 274Q60 337 107 386T233 436Q278 436 316 417L329 410L338 416Q384 442 427 442T489 423T509 381T494 345T460 332Q449 332 440 338Q432 341 427 348T419 360T415 365Q414 364 410 364L383 355Q406 320 406 274Q406 211 358 162T233 112Q189 112 155 128L146 133Q142 125 142 115Q142 99 150 85T175 71Q182 72 187 70Q188 70 195 70T218 70T254 69Q259 69 275 69T297 69T318 68T340 66T361 62T384 57T405 49T428 38Q495 -1 495 -76Q495 -143 427 -186T262 -229Q161 -229 94 -185T29 -73Q30 -60 33 -48T39 -26T47 -8T57 8T67 20T77 30T86 38L91 43Q91 44 86 53T75 80T70 117Q70 142 89 183L83 194Q60 232 60 274ZM321 274Q321 312 296 337T230 362Q197 362 171 338T145 274Q145 235 170 211T233 187Q273 187 297 212T321 274ZM422 -78Q422 -54 408 -38T366 -15T315 -6T255 -4H200Q198 -4 193 -4T183 -3Q148 -3 125 -26T102 -78Q102 -110 151 -132T261 -154Q321 -154 371 -132T422 -78Z"></path></g></g><g data-mml-node="mi" transform="translate(3194,-264.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>.A[1] affects the value
+read from <span class="steminline"> <svg style="vertical-align: -0.598ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.079ex" height="1.98ex" role="img" focusable="false" viewBox="0 -611 4013 875.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68A" d="M126 306Q105 306 90 321T74 359Q74 439 211 439Q268 439 276 438Q343 426 383 390T430 306Q431 301 431 190V81Q446 79 465 78T492 76T509 72T521 60T524 38Q524 11 506 3Q502 1 466 1Q426 1 406 5T379 14T355 36L345 30Q284 -6 205 -6Q135 -6 92 39T48 141Q48 182 79 212T158 256T252 278T342 285H347V290Q347 315 325 335T267 362Q258 363 224 363Q189 363 185 362H179L178 358Q178 353 178 352T176 345T174 337T170 330T165 322T158 316T150 311T139 308T126 306ZM132 140Q132 115 157 93T224 70Q269 70 302 87T344 133Q346 139 347 175V211H339Q256 209 194 190T132 140Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(3161,0)"><path data-c="1D69B" d="M327 76Q359 76 369 70T380 38Q380 10 359 1H47Q24 8 24 38Q24 54 28 61T47 76H145V355H96L47 356Q24 363 24 393Q24 409 28 416T47 431H207Q223 419 226 414T229 393V387V369Q297 437 394 437Q436 437 461 417T487 368Q487 347 473 332T438 317Q428 317 420 320T407 327T398 337T393 347T390 356L388 361Q348 356 324 345Q228 299 228 170Q228 161 228 151T229 138V76H293H327Z"></path></g></g><g data-mml-node="mi" transform="translate(3719,-256.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>, it does not affect the
 underlying value stored in that register—in particular,
-\({\tt pmpaddr}_i\)[G-1] retains its original value when
-\({\tt pmpcfg}_i\).A is changed from NAPOT to TOR/OFF then
+<span class="steminline"> <svg style="vertical-align: -0.598ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.079ex" height="1.98ex" role="img" focusable="false" viewBox="0 -611 4013 875.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68A" d="M126 306Q105 306 90 321T74 359Q74 439 211 439Q268 439 276 438Q343 426 383 390T430 306Q431 301 431 190V81Q446 79 465 78T492 76T509 72T521 60T524 38Q524 11 506 3Q502 1 466 1Q426 1 406 5T379 14T355 36L345 30Q284 -6 205 -6Q135 -6 92 39T48 141Q48 182 79 212T158 256T252 278T342 285H347V290Q347 315 325 335T267 362Q258 363 224 363Q189 363 185 362H179L178 358Q178 353 178 352T176 345T174 337T170 330T165 322T158 316T150 311T139 308T126 306ZM132 140Q132 115 157 93T224 70Q269 70 302 87T344 133Q346 139 347 175V211H339Q256 209 194 190T132 140Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D68D" d="M266 573Q266 596 277 603T314 611H352H385Q411 611 419 607T435 586V76H498Q512 67 516 60T520 38Q520 9 498 1H436Q429 1 417 1T398 0Q375 0 363 7T351 34V43L342 36Q288 -6 223 -6Q143 -6 87 58T31 216Q31 307 88 372T230 437Q292 437 342 405L351 399V535H320L289 536Q266 543 266 573ZM351 290Q347 302 337 316T302 346T244 361Q193 361 154 319T115 215Q115 152 152 111T235 70Q314 70 351 170V290Z"></path></g><g data-mml-node="mi" transform="translate(3161,0)"><path data-c="1D69B" d="M327 76Q359 76 369 70T380 38Q380 10 359 1H47Q24 8 24 38Q24 54 28 61T47 76H145V355H96L47 356Q24 363 24 393Q24 409 28 416T47 431H207Q223 419 226 414T229 393V387V369Q297 437 394 437Q436 437 461 417T487 368Q487 347 473 332T438 317Q428 317 420 320T407 327T398 337T393 347T390 356L388 361Q348 356 324 345Q228 299 228 170Q228 161 228 151T229 138V76H293H327Z"></path></g></g><g data-mml-node="mi" transform="translate(3719,-256.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>[G-1] retains its original value when
+<span class="steminline"> <svg style="vertical-align: -0.616ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.891ex" height="2.012ex" role="img" focusable="false" viewBox="0 -617 3488 889.1"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msub"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mi"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(525,0)"><path data-c="1D696" d="M133 76Q156 74 164 67T172 38Q172 9 151 1H11Q-12 8 -12 38Q-12 61 5 73Q10 75 28 76H45V355H28Q10 356 5 358Q-12 370 -12 393Q-12 419 11 431H52H70Q91 431 100 427T116 405Q163 436 200 436Q255 436 281 390L285 394Q289 398 292 400T301 407T314 415T329 423T346 429T366 434T389 436H392Q425 436 448 411Q469 390 474 360T480 268V232V203V76H497Q520 74 528 67T536 38Q536 9 515 1H396Q374 9 374 32V38Q374 73 402 76H409V191V242Q409 317 404 339T375 361Q343 361 323 332T299 264Q298 258 298 165V76H315Q338 74 346 67T354 38Q354 9 333 1H214Q192 9 192 32V38Q192 73 220 76H227V191V242Q227 317 222 339T193 361Q161 361 141 332T117 264Q116 258 116 165V76H133Z"></path></g><g data-mml-node="mi" transform="translate(1061,0)"><path data-c="1D699" d="M89 431Q93 431 104 431T121 432Q173 432 173 401V396L182 402Q237 437 305 437Q376 437 434 378T492 217Q492 146 459 93T382 17T291 -6Q261 -6 232 5T188 26L174 37Q173 37 173 -54V-146H236Q250 -155 254 -162T258 -184Q258 -213 236 -221H27Q4 -214 4 -184Q4 -169 8 -162T27 -146H89V355H58L27 356Q4 363 4 393Q4 408 8 415T27 431H89ZM409 215Q409 269 377 315T283 361Q255 361 224 344T177 297L173 290V167Q189 124 213 97T278 70Q330 70 369 111T409 215Z"></path></g><g data-mml-node="mi" transform="translate(1586,0)"><path data-c="1D68C" d="M291 -6Q196 -6 131 60T66 216Q66 296 119 361Q154 403 200 421T273 439Q275 440 293 440H313Q400 440 433 409Q454 388 454 359Q454 335 439 321T402 306Q380 306 365 321T350 357V362L340 363Q339 363 326 363T303 364Q280 364 266 362Q217 352 184 313T151 215Q151 153 199 112T313 70Q341 70 357 85T381 118T394 140Q402 146 424 146Q443 146 447 144Q466 137 466 117Q466 106 457 88T429 47T374 10T291 -6Z"></path></g><g data-mml-node="mi" transform="translate(2111,0)"><path data-c="1D68F" d="M43 395Q44 405 44 408T47 416T53 423T66 431H176V461Q176 500 182 518Q201 570 252 593T353 617Q399 614 418 593T437 548Q437 528 424 514T387 499Q365 499 353 511T338 537V541H328Q275 536 261 494Q260 490 260 460V431H327Q334 431 346 431T364 432Q392 432 404 425T416 393T405 362T365 355H327H260V76H319Q375 76 388 71T401 38Q401 27 400 23T395 12T379 1H58Q47 6 42 12T36 23T35 38Q35 65 53 73Q59 76 117 76H176V355H121H93Q64 355 54 362T43 395Z"></path></g><g data-mml-node="mi" transform="translate(2636,0)"><path data-c="1D690" d="M60 274Q60 337 107 386T233 436Q278 436 316 417L329 410L338 416Q384 442 427 442T489 423T509 381T494 345T460 332Q449 332 440 338Q432 341 427 348T419 360T415 365Q414 364 410 364L383 355Q406 320 406 274Q406 211 358 162T233 112Q189 112 155 128L146 133Q142 125 142 115Q142 99 150 85T175 71Q182 72 187 70Q188 70 195 70T218 70T254 69Q259 69 275 69T297 69T318 68T340 66T361 62T384 57T405 49T428 38Q495 -1 495 -76Q495 -143 427 -186T262 -229Q161 -229 94 -185T29 -73Q30 -60 33 -48T39 -26T47 -8T57 8T67 20T77 30T86 38L91 43Q91 44 86 53T75 80T70 117Q70 142 89 183L83 194Q60 232 60 274ZM321 274Q321 312 296 337T230 362Q197 362 171 338T145 274Q145 235 170 211T233 187Q273 187 297 212T321 274ZM422 -78Q422 -54 408 -38T366 -15T315 -6T255 -4H200Q198 -4 193 -4T183 -3Q148 -3 125 -26T102 -78Q102 -110 151 -132T261 -154Q321 -154 371 -132T422 -78Z"></path></g></g><g data-mml-node="mi" transform="translate(3194,-264.4) scale(0.707)"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></g></svg> </span>.A is changed from NAPOT to TOR/OFF then
 back to NAPOT.</p>
 </div>
 <div class="admonitionblock note">
@@ -5103,7 +5139,7 @@ the PMP settings synchronously, so no SFENCE.VMA is needed.</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="priv-csrs.html">Control and Status Registers (CSRs)</a></span>
-  <span class="next"><a href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a></span>
+  <span class="next"><a href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a></span>
 </nav>
 </article>  </div>
 </main>
@@ -5115,101 +5151,6 @@ the PMP settings synchronously, so no SFENCE.VMA is needed.</p>
                 <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
               </button>
                   <ul class="nav-versions">
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
                       <li class="component">
                         <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
@@ -5224,82 +5165,6 @@ the PMP settings synchronously, so no SFENCE.VMA is needed.</p>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

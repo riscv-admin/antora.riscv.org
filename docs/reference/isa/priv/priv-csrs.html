@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -264,10 +279,31 @@
     <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -359,7 +395,7 @@ effects on writes.</p>
 <p>The standard RISC-V ISA sets aside a 12-bit encoding space (csr[11:0])
 for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address
 (csr[11:8]) are used to encode the read and write accessibility of the
-CSRs according to privilege level as shown in <a href="#csrrwpriv">Allocation of RISC-V CSR address ranges</a>. The top two bits (csr[11:10]) indicate whether the register is read/write (<code>00</code>,<code>01</code>, or <code>10</code>) or read-only (<code>11</code>). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.</p>
+CSRs according to privilege level as shown in <a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a>. The top two bits (csr[11:10]) indicate whether the register is read/write (<code>00</code>,<code>01</code>, or <code>10</code>) or read-only (<code>11</code>). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -388,13 +424,13 @@ less-privileged software.</p>
 <p>Instructions that access a non-existent CSR are reserved.
 Attempts to access a CSR without appropriate privilege level
 raise illegal-instruction exceptions or, as described in
-<a href="hypervisor.html#sec:hcauses" class="xref page">Trap Cause Codes</a>, virtual-instruction exceptions.
+<a href="#sec:hcauses">[sec:hcauses]</a>, virtual-instruction exceptions.
 Attempts to write a read-only register raise illegal-instruction exceptions.
 A read/write register might also contain some bits that are
 read-only, in which case writes to the read-only bits are ignored.</p>
 </div>
 <div class="paragraph">
-<p><a href="#csrrwpriv">Allocation of RISC-V CSR address ranges</a> also indicates the convention to
+<p><a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a> also indicates the convention to
 allocate CSR addresses between standard and custom uses. The CSR
 addresses designated for custom uses will not be redefined by future
 standard extensions.</p>
@@ -430,14 +466,14 @@ illegal accesses. Currently, the counters are the only shadowed CSRs.</p>
 <div class="sect2">
 <h3 id="csr-listing"><a class="anchor" href="#csr-listing"></a>CSR Listing</h3>
 <div class="paragraph">
-<p><a href="#ucsrnames">Currently allocated RISC-V unprivileged CSR addresses</a>-<a href="#mcsrnames1">Currently allocated RISC-V machine-level CSR addresses</a> list the CSRs that
+<p><a href="#ucsrnames">Currently allocated RISC-V unprivileged CSR addresses.</a>-<a href="#mcsrnames1">Currently allocated RISC-V machine-level CSR addresses.</a> list the CSRs that
 have currently been allocated CSR addresses. The timers, counters, and
 floating-point CSRs are standard unprivileged CSRs. The other registers
 are used by privileged code, as described in the following chapters.
 Note that not all registers are required on all implementations.</p>
 </div>
 <table id="csrrwpriv" class="tableblock frame-all grid-all fit-content center monofont">
-<caption class="title">Table 1. Allocation of RISC-V CSR address ranges</caption>
+<caption class="title">Table 1. Allocation of RISC-V CSR address ranges.</caption>
 <colgroup>
 <col>
 <col>
@@ -741,7 +777,7 @@ Note that not all registers are required on all implementations.</p>
 </table>
 <div style="page-break-after: always;"></div>
 <table id="ucsrnames" class="tableblock frame-all grid-all stretch center">
-<caption class="title">Table 2. Currently allocated RISC-V unprivileged CSR addresses</caption>
+<caption class="title">Table 2. Currently allocated RISC-V unprivileged CSR addresses.</caption>
 <colgroup>
 <col style="width: 10%;">
 <col style="width: 10%;">
@@ -899,7 +935,7 @@ Upper 32 bits of <code>hpmcounter31</code>, RV32 only.</p></td>
 </table>
 <div style="page-break-after: always;"></div>
 <table id="scsrnames" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 3. Currently allocated RISC-V supervisor-level CSR addresses</caption>
+<caption class="title">Table 3. Currently allocated RISC-V supervisor-level CSR addresses.</caption>
 <colgroup>
 <col>
 <col>
@@ -1098,7 +1134,7 @@ Upper 32 bits of <code>stimecmp</code>, RV32 only.</p></td>
 </table>
 <div style="page-break-after: always;"></div>
 <table id="hcsrnames" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 4. Currently allocated RISC-V hypervisor and VS CSR addresses</caption>
+<caption class="title">Table 4. Currently allocated RISC-V hypervisor and VS CSR addresses.</caption>
 <colgroup>
 <col>
 <col>
@@ -1353,7 +1389,7 @@ Upper 32 bits of <code>vstimecmp</code>, RV32 only.</p></td>
 </table>
 <div style="page-break-after: always;"></div>
 <table id="mcsrnames0" class="tableblock frame-all grid-all fit-content center monocell">
-<caption class="title">Table 5. Currently allocated RISC-V machine-level CSR addresses</caption>
+<caption class="title">Table 5. Currently allocated RISC-V machine-level CSR addresses.</caption>
 <colgroup>
 <col>
 <col>
@@ -1633,7 +1669,7 @@ Physical memory protection address register.</p></td>
 </table>
 <div style="page-break-after: always;"></div>
 <table id="mcsrnames1" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 6. Currently allocated RISC-V machine-level CSR addresses</caption>
+<caption class="title">Table 6. Currently allocated RISC-V machine-level CSR addresses.</caption>
 <colgroup>
 <col>
 <col>
@@ -2634,101 +2670,6 @@ typically raises an illegal-instruction exception.</p>
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
                         </div>                        <div class="version-item is-active">
                           <div>
@@ -2741,82 +2682,6 @@ typically raises an illegal-instruction exception.</p>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

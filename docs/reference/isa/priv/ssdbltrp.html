@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="priv-history.html">
+    <link rel="prev" href="priv-cfi.html">
+    <link rel="next" href="zpm.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
@@ -298,7 +299,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -310,7 +311,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-history.html">History</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="bibliography.html">Bibliography</a>
   </li>
 </ul>
@@ -358,19 +359,33 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume II: RISC-V Privileged ISA Specification</li>
-      <li><a href="bibliography.html">Bibliography</a></li>
+      <li><a href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a></li>
     </ul>
   </nav>
 </div><div class="sect1">
-<h2 id="bibliography"><a class="anchor" href="#bibliography"></a>Bibliography</h2>
+<h2 id="ssdbltrp"><a class="anchor" href="#ssdbltrp"></a>"Ssdbltrp" Double Trap Extension, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>bibliography::[]</p>
+<p>The Ssdbltrp extension addresses a double trap (See <a href="#machine-double-trap">[machine-double-trap]</a>)
+privilege modes lower than M. It enables HS-mode to invoke a critical error
+handler in a virtual machine on a double trap in VS-mode. It also allows M-mode
+to invoke a critical error handler in the OS/Hypervisor on a double trap in
+S/HS-mode.</p>
+</div>
+<div class="paragraph">
+<p>The Ssdbltrp extension adds the <code>menvcfg</code>.DTE (See <a href="#sec:menvcfg">[sec:menvcfg]</a>) and the
+<code>sstatus</code>.SDT fields (See <a href="#sstatus">[sstatus]</a>). If the hypervisor extension is
+additionally implemented, then the extension adds the <code>henvcfg</code>.DTE (See
+<a href="#sec:henvcfg">[sec:henvcfg]</a>) and the <code>vsstatus</code>.SDT fields (See <a href="#vsstatus">[vsstatus]</a>).</p>
+</div>
+<div class="paragraph">
+<p>See <a href="#supv-double-trap">[supv-double-trap]</a> for the operational details.</p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="priv-history.html">History</a></span>
+  <span class="prev"><a href="priv-cfi.html">Control-flow Integrity(CFI)</a></span>
+  <span class="next"><a href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a></span>
 </nav>
 </article>  </div>
 </main>

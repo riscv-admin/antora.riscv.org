@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="smcdeleg.html">
+    <link rel="prev" href="sscofpmf.html">
     <link rel="next" href="priv-cfi.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -263,11 +278,32 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -676,7 +712,7 @@ into HS-mode, GVA is set to 0.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For breakpimage::oint and memory access traps that write a nonzero value to
+<p>For breakpoint and memory access traps that write a nonzero value to
 <code>stval</code>, GVA is redundant with field SPV (the two bits are set the same)
 except when the explicit memory access of an HLV, HLVX, or HSV
 instruction causes a fault. In that case, SPV=0 but GVA=1.</p>
@@ -712,9 +748,9 @@ to a VS-mode guest; their layout is the same as <code>medeleg</code> and <code>m
 <div class="title">Hypervisor exception delegation register (<code>hedeleg</code>).</div>
 <p>bytefield/hedelegreg.edn[]</p>
 </div>
-<div id="hidelegreg" class="imageblock">
+<div id="hidelegreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hidelegreg.edn" alt="hidelegreg">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1PwzAU3PsrnjwlQpbyUTFkYwAVqTDAABJieGmcJqpjW_arUqjy33FoWrVNkcpk-Z7v3vkuKESJRNZBZiTWCj6Gc5uVWhEvsanlF7CnG4gNPKCUOS5WDHZTV38LSKbdZzgJvBBY3fJK1MuKYBrBCYiFsLxUoGo54FKUxBu0S78tjfaPe_IIzfVGOG68gheDNAknHrfYcj8ANnt9n98_85h5086ggvgWMhIb4qgWlbbAHKElbzrX1ttw264LjwWiv5lCFWe8Y-KjImHt2pC7ViEjbfY3vlZWSCRR9AiRbi5N-pjG-OkPgn4jsODt7mUeeitDPe2uCpZrWZxXFl4d1v8t_5Z42fO4t0NyaXLYCX3SP9yz4DQ=?id=hidelegreg" alt="Hypervisor interrupt delegation register (`hideleg`).">
 </div>
 <div class="title">Figure 3. Hypervisor interrupt delegation register (<code>hideleg</code>).</div>
 </div>
@@ -859,9 +895,9 @@ Store/AMO guest-page fault</p></td>
 can write to indicate virtual interrupts intended for VS-mode. Bits of
 <code>hvip</code> that are not writable are read-only zeros.</p>
 </div>
-<div id="hvipreg" class="imageblock">
+<div id="hvipreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hvipreg.edn" alt="hvipreg">
+<img src="https://kroki.io/bytefield/svg/eNqVUctOwzAQvPcrVj4lQpbShxDKjQMIpMIBJEBCHDaN00S4trXeKoWq_45D02cKiJPlWc_seCbKVYHM5CF1GisDr-25TAtrWBY4q_QHiLsz6Du4Rq0znLwLWE999algMFq9xb0oCAHZWpaqmpYMowQOQMwVycKAqXSLa1WwnCFNw7ZhsnnckDtoZhfKSxcUghgMB3Ev4IS1DAMQN48v46t72RfBtHdooH8OKasFSzST0hIIz0gcTGeWgg2_XK3ifYHkZ6Yy-RFvn_hUEc9Rw61hRTR37HdKF78qpWzd5ibnhpRGVnmDMNvZqUkTVxc__EnUbAQRPV8-jONgpa2pXlciMqvz4-rireHRH6H93_J3mac9d_vbJjccbHdCk_gXQVbjOw==?id=hvipreg" alt="Hypervisor virtual-interrupt-pending register(`hvip`).">
 </div>
 <div class="title">Figure 4. Hypervisor virtual-interrupt-pending register(<code>hvip</code>).</div>
 </div>
@@ -872,9 +908,9 @@ and VSSIP of <code>hvip</code> are writable. Setting VSEIP=1 in <code>hvip</code
 VS-level external interrupt; setting VSTIP asserts a VS-level timer
 interrupt; and setting VSSIP asserts a VS-level software interrupt.</p>
 </div>
-<div id="hvipreg-standard" class="imageblock">
+<div id="hvipreg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hvipreg-standard.edn" alt="hvipreg standard">
+<img src="https://kroki.io/bytefield/svg/eNq9ks9LwzAUx-_7Kx49rUigPzKdvU_wIAgTL-LhdU3WsiwpSWDT0f_diHNat4ysB0-Bl_f5vk_7Mq4YR2u1gaIV2Eh42Z-7gitpCcd1I94geriCtIU7FKLExSqCr1vTvDPIaPcaj8YuCLTakJo1y9oCTaBXxIppwiXIRuzrgnFL1qiXblqefDd_wkfVUm2ZIa1LcGGQZ_HI1TVuiLuAKJ1ETte0KIFCYdnWEpSLWmmIjEVtnW2ptJtvYNd1cQ9NvSiT1Tkw-Q36um4PTdmFYjde8rzXdYjWZLBWPlArC9FKB2sll2idBqf9xOf57P7xR9o3jv6lngZR81Dq9Banhy_0_1IastSg5fxLkvfBfABe73-b?id=hvipreg-standard" alt="Standard portion (bits 15:0) of `hvip`.">
 </div>
 <div class="title">Figure 5. Standard portion (bits 15:0) of <code>hvip</code>.</div>
 </div>
@@ -884,15 +920,15 @@ supplement HS-level’s <code>sip</code> and <code>sie</code> respectively. The 
 indicates pending VS-level and hypervisor-specific interrupts, while
 <code>hie</code> contains enable bits for the same interrupts.</p>
 </div>
-<div id="hipreg" class="imageblock">
+<div id="hipreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hipreg.edn" alt="hipreg">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1PwzAU3PsrnjwlQpbyUTFkYwAVqTDAABJieGmcJqpjW_arUqjy33FoWrVNkcpk-Z7v3vkuKESJRNZBZiTWCj6Gc5uVWhEvsanlF7CnG4gNPKCUOS5WDHZTV38LSKbdZzgJvBBY3fJK1MuKYBrBCYiFsLxUoGo54FKUxBu0S78tjfaPe_IIzfVGOG68gheDNAknHrfYcj8ANnt9n98_85h5086ggvgWMhIb4qgWlbbAHKElbzrX1ttw264LjwWiv5lCFWe8Y-KjImHt2pC7ViEjbfY3vlZWSCRR9AiRbi5N-pjG-OkPgn4jsODt7mUeeitDPe2uCpZrWZxXFl4d1v8t_5Z42fO4t0NyaXLYCX3SP9yz4DQ=?id=hipreg" alt="Hypervisor interrupt-pending register (`hip`).">
 </div>
 <div class="title">Figure 6. Hypervisor interrupt-pending register (<code>hip</code>).</div>
 </div>
-<div id="hiereg" class="imageblock">
+<div id="hiereg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hiereg.edn" alt="hiereg">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1PwzAU3PsrnjwlQpbyUTFkYwAVqTDAABJieGmcJqpjW_arUqjy33FoWrVNkcpk-Z7v3vkuKESJRNZBZiTWCj6Gc5uVWhEvsanlF7CnG4gNPKCUOS5WDHZTV38LSKbdZzgJvBBY3fJK1MuKYBrBCYiFsLxUoGo54FKUxBu0S78tjfaPe_IIzfVGOG68gheDNAknHrfYcj8ANnt9n98_85h5086ggvgWMhIb4qgWlbbAHKElbzrX1ttw264LjwWiv5lCFWe8Y-KjImHt2pC7ViEjbfY3vlZWSCRR9AiRbi5N-pjG-OkPgn4jsODt7mUeeitDPe2uCpZrWZxXFl4d1v8t_5Z42fO4t0NyaXLYCX3SP9yz4DQ=?id=hiereg" alt="Hypervisor interrupt-enable register (`hie`).">
 </div>
 <div class="title">Figure 7. Hypervisor interrupt-enable register (<code>hie</code>).</div>
 </div>
@@ -944,15 +980,15 @@ read-only zero.</p>
 <p>The standard portions (bits 15:0) of registers <code>hip</code> and <code>hie</code> are
 formatted as shown in <a href="#hipreg-standard">Standard portion (bits 15:0) of <code>hip</code>.</a> and <a href="#hiereg-standard">Standard portion (bits 15:0) of <code>hie</code>.</a> respectively.</p>
 </div>
-<div id="hipreg-standard" class="imageblock">
+<div id="hipreg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hipreg-standard.edn" alt="hipreg standard">
+<img src="https://kroki.io/bytefield/svg/eNq1kFFLwzAUhd_3Ky55WpFAm1bFvk_xQRAqvogPt2u6lmVpSQKbjv53o5tC16WEqk-Be853cu-ZF7xEY5SGtBVYS3g5vvu0bKShJW5q8Qbk4QKiFm5RiByXawIHVdfvHFjSvQazuQ0C1WxpxetVZSAJoTfEgitaSpC1OM4FLw3doFrZ3-Lw2_wJD6Z5s-OatjbBhkHMgpmdK9xSKwCJLoldV7cogUFq-M5QlMuqUUC0QWXstnmj7P8a9l0X9NDYiXJZjIHsB0xGXJGXK_Rx3Uw-8nrijVc-a3117xLjMdGvwbGEcCAO1EN-H8vuFvePLtFJPWfTqCcfip1SmS81qPuk0bOFerX-J6b4H5LYL5OYK-kD4SGaVg==?id=hipreg-standard" alt="Standard portion (bits 15:0) of `hip`.">
 </div>
 <div class="title">Figure 8. Standard portion (bits 15:0) of <code>hip</code>.</div>
 </div>
-<div id="hiereg-standard" class="imageblock">
+<div id="hiereg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hiereg-standard.edn" alt="hiereg standard">
+<img src="https://kroki.io/bytefield/svg/eNq1kDFPwzAQhff-ilOmRshSYgdQs7cVA1MQC2K4NE4T4dqRbamFKv8dQwtSGhJZASZL9973fPfmBS_RWm0gbQTWEp7O7zEtlbSkxF0tXiG4v4K4gRUKkePmJYCTauo3DjRpn8PZ3AWBVntS8XpbWUgi6Ayx4JqUEmQtznPBS0t2qLfuNxZ9mT_g3jRXB25I4xJcGDAaztxc4544AYL4OnDrmgYlUEgtP1iCclMpDYGxqK3bNlfa_W_g2LZhB2WDKJfFGEi_wWTEFXu5Ih_XYvKRtxNvvPFZ67P7IZGNiX4NjiVEPbGnnvK7WLZe3i2HxEHqMZtGPfhQ9JLKfKle3ReN_lioV-t_YmL_kER_mUSHkt4Bk3GaKg==?id=hiereg-standard" alt="Standard portion (bits 15:0) of `hie`.">
 </div>
 <div class="title">Figure 9. Standard portion (bits 15:0) of <code>hie</code>.</div>
 </div>
@@ -1010,15 +1046,15 @@ read/write register, formatted as shown in
 guest external interrupts at this hart. Guest external interrupt number
 <em>i</em> corresponds with bit <em>i</em> in both <code>hgeip</code> and <code>hgeie</code>.</p>
 </div>
-<div id="hgeipreg" class="imageblock">
+<div id="hgeipreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hgeipreg.edn" alt="hgeipreg">
+<img src="https://kroki.io/bytefield/svg/eNq1UMtqwzAQvOcrFp1sisB2fPI9fUDSSy-FkMM6WSWisiwkuUlb_O9d1y7Y9FyQkDQ7Mzur5EQKY_QBKmdQW9hP51elWhulwkabDxC7O8gd3KMxNR7fBIzVoD8JirI_pKuEjcC3V3khfb5EKDNYgHgiL5UFq82EG1JRNujP3G2d_ZIH8R-0bm8UpGMHNoN1McAer_LYmq6xk3vgzFPzolwGhMpgTSZA4umdmQR7kQkQOe__WI8vr9vNs_yxP6R9upry8hwgHjoKETa3SN6igSfLF9-5GAQPEBzy3HmfzhUcdfEe7Wd0qOrWj1_QL6X5wJoXvwFYaI5z?id=hgeipreg" alt="Hypervisor guest external interrupt-pending register (`hgeip`).">
 </div>
 <div class="title">Figure 10. Hypervisor guest external interrupt-pending register (<code>hgeip</code>).</div>
 </div>
-<div id="hgeiereg" class="imageblock">
+<div id="hgeiereg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hgeiereg.edn" alt="hgeiereg">
+<img src="https://kroki.io/bytefield/svg/eNq1kk1PwzAMhu_7FVZOrVCkdd0B9cZhfEiDAxxAmnZwW3erSJMqcdkA9b-Tbt20btwQUqo0dvz6sZ0gpwKZrYOkVlhqWPT7d1IYzbLAqlSfIB6vIKrhFpVKMXsXsPe68otgMm2X4SjwQmDNRq6pXK0ZpmMYGDEnKwsNulS9XVHBskK78tni8eFyF3xhTc2WnKy9gheDeNKZLW5kZlRT6V7deeY--WQ6BIREYUrKQWDpw98kWIixABH57z_W_cvbfPYkd_LLsA1HPa-vA8RdQ45htmWyGhU8aP9jm5qd8AW4GjVE15AwbVmiztbGgiCd-5anxvZldq07nGWjLSlkyn2QqX8zp4bZVJeetg1PwIIuJYjg9eZ5HorDA9jsOypSo_LzsYdH4PgM2DFaHiD_Ca0b1uC8b_AR8jjmHU0cnSQ-E4q6mFPnD1QU7cw=?id=hgeiereg" alt="Hypervisor guest external interrupt-enable register (`hgeie`).">
 </div>
 <div class="title">Figure 11. Hypervisor guest external interrupt-enable register (<code>hgeie</code>).</div>
 </div>
@@ -1239,9 +1275,9 @@ XLEN=64.</p>
 controls the availability of the hardware performance monitoring
 counters to the guest virtual machine.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hcounterenreg.edn" alt="hcounterenreg">
+<img src="https://kroki.io/bytefield/svg/eNq9kk9rg0AQxe_5FMOeImVl_dOm9RoI7UEopZdSeljjGqWbVXYXkjb43btimmpEs4fQk_De783MzjhPWUa1lgqiitNCwPvxe4iyUmic0W3BvwDFN-BVsKKcJ3T9iaB1VfHNwA_rD2c2N4VAljucs2KTawgJ9ESaMokzAaLgR52zTOMtlRvTLSC_cBMeqEm5ZwpXpoIpBoHvzIwu6Q4bA1DgITOuqqgAH6KklKaVgkNdOz2K2FD-gxV1f6I8ApFme42pWOelBKQ0lRqNZ-9O0cVZkol0IndrM1hotQmrJzbQmOlNmWRgdt3H57i9V-cHMitsx-kXalBijbaXu4y6rvt3vMWgTGfNAy-c8IIx7-kFQU94jc-E5VsjDPZ76ULXg_ygs5H_aGgPXcf8AXHFiic=" alt="Hypervisor counter-enable register (`hcounteren`).">
 </div>
 <div class="title">Figure 13. Hypervisor counter-enable register (<code>hcounteren</code>).</div>
 </div>
@@ -1284,9 +1320,9 @@ values of <code>htimedelta</code> may be used to represent negative time offsets
 </tr>
 </table>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/htimedelta.edn" alt="htimedelta">
+<img src="https://kroki.io/bytefield/svg/eNplkMFugzAQRO_5ipVPQZElAigHPqC3fkHVwxLWwaqxkb0SaSL-PRsBamhOlmb8Zsbet2SQOSaoB4fWw9dy3msTPGuDvXW_oD4PcBzgA51r8PyjYHaTvREU1fSd7fYSBDGMuiN76RiqHDYithS18eCtW3RHhnWP8SJtZb5efsJvahOulPQgCRIGZZHtRI84ajFAnUolc9OAQhyhZrqyRn_uQgSVGCPL3CZEGZDgPk3ZK5s_0Y356nZse2rJMar1Q-Yn57D0Ff-IU_W3pdjWPgChoXSu" alt="Hypervisor time delta register.">
 </div>
 <div class="title">Figure 14. Hypervisor time delta register.</div>
 </div>
@@ -1308,9 +1344,9 @@ shown in <a href="#htvalreg">Hypervisor trap value register (<code>htval</code>)
 HS-mode, <code>htval</code> is written with additional exception-specific
 information, alongside <code>stval</code>, to assist software in handling the trap.</p>
 </div>
-<div id="htvalreg" class="imageblock">
+<div id="htvalreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/htvalreg.edn" alt="htvalreg">
+<img src="https://kroki.io/bytefield/svg/eNptkDFrwzAUhPf8ikNTTBHYTibvLR3aLlkKpcNzIsUiimSkR5I2-L_3hTg0pp0Ed7q7T5pvjCXmlNH0nlzAx3ieGxsDa0t757-gXh9Q9Xgi71ta7xSubnbfBvVy-CxmcylCikfdGbftGMsSE5E2JmkbEJwfdW8s6z2lrawtytvlS_iP2saTybqXBinDoi5moic6ajGgnlfvL49vulICnXuSXIWGzYk1hXUXE1RmSizQbUyCkXEehuK-obxEJ-a92_GBvLr9yPXNJcapevgP5helnq7-ALcodds=?id=htvalreg" alt="Hypervisor trap value register (`htval`).">
 </div>
 <div class="title">Figure 15. Hypervisor trap value register (<code>htval</code>).</div>
 </div>
@@ -1398,9 +1434,9 @@ information about the instruction that trapped, to assist software in
 handling the trap. The values that may be written to <code>htinst</code> on a trap
 are documented in <a href="#tinst-vals">Transformed Instruction or Pseudoinstruction for <code>mtinst</code> or <code>htinst</code></a>.</p>
 </div>
-<div id="htinstreg" class="imageblock">
+<div id="htinstreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/htinstreg.edn" alt="htinstreg">
+<img src="https://kroki.io/bytefield/svg/eNptkDFrwzAUhPf8ikNTTBHYTibvLR2SLl0KocNzIsWiimSkB0kT_N_7Qhwa006CO93dJ813xhJzymh6Ty5gM56XxsbA2tLB-W-o9ROqHi_kfUvbL4Wbm93ZoF4On8VsLkVI8ag74_YdY1liItLOJG0DgvOj7o1lfaC0l7VFeb98Df9R23gyWffSIGVY1MVM9ERHLQbU6_vH6vlNV0qgc0-Sq9CwObGmsO1igspMiQW6jUkwMi7DUDw2lNfoxHx0O3Yhs7p_ye3RJcateviP5pelns7-ADmqdlY=?id=htinstreg" alt="Hypervisor trap instruction (`htinst`) register.">
 </div>
 <div class="title">Figure 16. Hypervisor trap instruction (<code>htinst</code>) register.</div>
 </div>
@@ -1425,15 +1461,15 @@ field, which selects the address-translation scheme for guest physical
 addresses. When <code>mstatus</code>.TVM=1, attempts to read or write <code>hgatp</code> while
 executing in HS-mode will raise an illegal-instruction exception.</p>
 </div>
-<div id="rv32hgatp" class="imageblock">
+<div id="rv32hgatp" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rv32hgatp.edn" alt="rv32hgatp">
+<img src="https://kroki.io/bytefield/svg/eNrNVMFOg0AUvPcrXvYEMZsAxRS5mVQTE9HGgx6Mh6UsLXG7S5Y1VJv-u4stBVopmKjpifDezJu3w7BGRGOilMzATxlJODxvnys_FlzhmCwS9g4oOAM7hWvCWEimrwg23Sz5oOC46xdzYOhBIEWO5zSZzRW4FjSKJKISxxx4wrZ1RmOFF0TOtNrQKsEF-aAaiiXNcKon6GEwdMyBrkuSY90ANLSRXjdLiWaAHwqppTJYrddmA2XVUYouFSZ8OhcSUKaIVKid6lzsqO4elfLoGNFrJXZqOq3rdmhWbox-qFk55HVL1onB_fiqWrdtaMc5_CIQ5Tt-45IyomikSSL9rhwKpcTisNM8lFFIAjKeLh9uTVTGOt-EFIWCRfthNo9_strCX2H99Y3RY3Az7hu4kzOt89_6K9cmk7vW4BemnbBn3r96Vjet183p1H1tA436gGqXmn3ehH0CaMk0KQ==?id=rv32hgatp" alt="Hypervisor guest address translation and protection register `hgatp` when HSXLEN=32.">
 </div>
 <div class="title">Figure 17. Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=32.</div>
 </div>
-<div id="rv64hgatp" class="imageblock">
+<div id="rv64hgatp" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rv64hgatp.edn" alt="rv64hgatp">
+<img src="https://kroki.io/bytefield/svg/eNrdVE1PwkAQvfMrJntqYzYp_UDszQRNTESJBz0QD1u6hcZlt9muKUr6312E1lYoAvH71OzMvHlvX2fWCGlElJIp-AkjMYfh6jv3I8EVjsg0Zk-A-kfQTuCcMBaQ0QOCZTaNnynYbn5vtgzdCKTI8ITG44kC14JakIRU4ogDj9kqzmik8JTIsWZzrKJ4AV6LBmJGU5zoDroZOLbZ0nFJMqwTgDoO0nLThHBwwVd0pjDho4mQgFJFpNJqAyE1fwrzPDdrUKsRSnm4BeidlEBnT06v2wj9gPP44Hu67oH3dN-89fbktBqRGyirwP5172xXuf5iioozfuSSMqJoqEEi2RQOhFJiup6pazcWlICMu9ObSxMVu5AtJxsFgoXvN8Dc_mcqgl8n_NMVV9x2_phjzg85dtu_6P2zMYOvd20wuNq617_YM-9bPau9oqVl3eb30i6LOs1F7Z1aVZ77tlUvewHVs7H3?id=rv64hgatp" alt="Hypervisor guest address translation and protection register `hgatp` when HSXLEN=64 for MODE values Bare, Sv39x4, Sv48x4, and Sv57x4.">
 </div>
 <div class="title">Figure 18. Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=64 for MODE values Bare, Sv39x4, Sv48x4, and Sv57x4.</div>
 </div>
@@ -1693,15 +1729,15 @@ actually access <code>vsip</code>/<code>vsie</code> instead. However, interrupts
 HS-level continue to be indicated in the HS-level <code>sip</code> register, not in
 <code>vsip</code>, when V=1.</p>
 </div>
-<div id="vsipreg" class="imageblock">
+<div id="vsipreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsipreg.edn" alt="vsipreg">
+<img src="https://kroki.io/bytefield/svg/eNqtUU1Lw0AQvfdXDHtKkIV8FA-5eVAoVA8KKoiHSbNpQje7y-6UVEv-uxvbSNMo9OBp2Tfz3ryZFxSiRCLrIDMSawVvx3eflVoRL7Gp5Qew-yuIDdyhlDmuNgwOVVd_Ckjm3Xs4C7wQWN3yStTrimAewQjEQlheKlC1POJSlMQbtGs_LY2G5p48QXO9E44br-DFIE3CmcctttwXgD0_vS5vH3jMvGlnUEF8DRmJHXFUq0pbYI7Qkjeda-ttONh3XXiqEP1NFao4J54yF4qEtVtD7mKJrF98-POtskIiicKTtPkNzjWRbqaV8Q5BPxJY8HLzuAzZEF97CIPlWhbnoYWXnyv7juWfPE-j-zldmoxP_QWzKuCw?id=vsipreg" alt="Virtual supervisor interrupt-pending register (`vsip`).">
 </div>
 <div class="title">Figure 21. Virtual supervisor interrupt-pending register (<code>vsip</code>).</div>
 </div>
-<div id="vsiereg" class="imageblock">
+<div id="vsiereg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsiereg.edn" alt="vsiereg">
+<img src="https://kroki.io/bytefield/svg/eNqtUU1Lw0AQvfdXDHtKkIV8FA-5eVAoVA8KKoiHSbNpQje7y-6UVEv-uxvbSNMo9OBp2Tfz3ryZFxSiRCLrIDMSawVvx3eflVoRL7Gp5Qew-yuIDdyhlDmuNgwOVVd_Ckjm3Xs4C7wQWN3yStTrimAewQjEQlheKlC1POJSlMQbtGs_LY2G5p48QXO9E44br-DFIE3CmcctttwXgD0_vS5vH3jMvGlnUEF8DRmJHXFUq0pbYI7Qkjeda-ttONh3XXiqEP1NFao4J54yF4qEtVtD7mKJrF98-POtskIiicKTtPkNzjWRbqaV8Q5BPxJY8HLzuAzZEF97CIPlWhbnoYWXnyv7juWfPE-j-zldmoxP_QWzKuCw?id=vsiereg" alt="Virtual supervisor interrupt-enable register (`vsie`).">
 </div>
 <div class="title">Figure 22. Virtual supervisor interrupt-enable register (<code>vsie</code>).</div>
 </div>
@@ -1710,15 +1746,15 @@ HS-level continue to be indicated in the HS-level <code>sip</code> register, not
 formatted as shown in <a href="#vsipreg-standard">Standard portion (bits 15:0) of <code>vsip</code>.</a>
 and <a href="#vsiereg-standard">Standard portion (bits 15:0) of <code>vsie</code>.</a> respectively.</p>
 </div>
-<div id="vsipreg-standard" class="imageblock">
+<div id="vsipreg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsipreg-standard.edn" alt="vsipreg standard">
+<img src="https://kroki.io/bytefield/svg/eNrNk1FLwzAUhd_3Ky55apFAm3RT-yoOBEVhvokP6ZquxS4tSWDT0f9uald0m41tYeBT4d7znXNIEyfmCdNaKgjLnGUCXvbfXZgUQuOErbP8HdDDBfglzFmeR2z5hqDZquyDAwmqV3fiGCOQxQanPFulGgIPDoYs5hInAkSW7-c5TzReM7kyadRrxTV8Mo2KLVe4NA7GDChxJ2Yu2QabRe1o2qqSCZhBGBXSJCnYVZX7Q4T8KTIqzbcaM7FMCwlIaSY1siDBCcJFbAMoapsQi4oMb-INbHLdp8hVLepYNofaRc4sJJr2yQ5GZxNbtt8n2_sz-8vh8shh8JXzvsscLJz6RwK6v3mc3z2h9qU1b8mr3N-hTje0uG1c7BA9gp7HQAsbdK5jJL0eVR8RPYMT_TdO_qhr_QnuA-_y?id=vsipreg-standard" alt="Standard portion (bits 15:0) of `vsip`.">
 </div>
 <div class="title">Figure 23. Standard portion (bits 15:0) of <code>vsip</code>.</div>
 </div>
-<div id="vsiereg-standard" class="imageblock">
+<div id="vsiereg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsiereg-standard.edn" alt="vsiereg standard">
+<img src="https://kroki.io/bytefield/svg/eNrNk8FrgzAYxe_9Kz5yUkYgGtttXkcLg40dutvYIdZYZWmUGGi34v--OCtb25mpUNhJ-L73e-8REyfmCdNalRAWgmUSXg7ffZjkUuOEbTLxDujxCrwCFkyIiK3eEDTbMvvg4AfVqztxjBGofItTnq1TDQGBoyGLucKJBJmJw1zwROMNU2uTRkkrruGzaZTveIkL42DMgPruxMwV22KzqB1N27JgEmYQRrkySSXsq8r9IULeFBmV5juNmVyluQJUaqY0siDBGcJlbAMoapv4FpU_vAkZ2OS2T5GbWtSxbA61i5xZSDTtkx2MzvZt2V6fbPJn9pfD9YnD4CtHvsscLZz6RwJ6uHta3M9R-9Kat0Qq93eo0w0t542LHaIn0PMYaGmDLnWMfq9H1UdEL-BE_42TN-pafwKPsu_G?id=vsiereg-standard" alt="Standard portion (bits 15:0) of `vsie`.">
 </div>
 <div class="title">Figure 24. Standard portion (bits 15:0) of <code>vsie</code>.</div>
 </div>
@@ -1757,9 +1793,9 @@ the usual <code>stvec</code>, so instructions that normally read or modify <code
 actually access <code>vstvec</code> instead. When V=0, <code>vstvec</code> does not directly
 affect the behavior of the machine.</p>
 </div>
-<div id="vstvecreg" class="imageblock">
+<div id="vstvecreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vstvecreg.edn" alt="vstvecreg">
+<img src="https://kroki.io/bytefield/svg/eNrNU7FuwjAQ3fmKk6dElaXEIAZvVE0naKUitZUQg0McEtWxI8dVaFH-vU4hgkBow1J1svzO7967850T8ZgZowuguWCphMX-3NJYSYNjlqXiA9DsBvwc7pkQIVu9IdhFi_STAxlVS3fg2ESgVYkTnq4TAyMPWiCLuMaxBJmKPS54bHDG9NqqDb3mcU0-Q0O14QXObQabDIbEHVhcsxLbAKDn-es0eMA-sqaLnEnwPaCGbwxmcpUoDagwTBtrOlTa2ihgW1XucQZymcpl9APxoDm-UtK7yOxQPCbeTubBoimZkmVv67RueHPH71JzwQyPLEnlXXCojFHZeaRdiFNLAnJeJk9TFzVjU-6GAIVKRKfD4vb_pmutAf2en988o9njXdC3__-ubeM_7VrHoh22hXi9doq0X30Ba29-5w==?id=vstvecreg" alt="Virtual supervisor trap vector base address register `vstvec`.">
 </div>
 <div class="title">Figure 25. Virtual supervisor trap vector base address register <code>vstvec</code>.</div>
 </div>
@@ -1774,9 +1810,9 @@ substitutes for the usual <code>sscratch</code>, so instructions that normally r
 or modify <code>sscratch</code> actually access <code>vsscratch</code> instead. The contents
 of <code>vsscratch</code> never directly affect the behavior of the machine.</p>
 </div>
-<div id="vsscratchreg" class="imageblock">
+<div id="vsscratchreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsscratchreg.edn" alt="vsscratchreg">
+<img src="https://kroki.io/bytefield/svg/eNp9jk1rwkAQhu_-imFPhrKQD-kh93pqexFKQTxMkl2zdN0Ns4PaSv57p2iLQexp4P145p13xiIzJagHjy7A-nJPtY2BtcWd85-gXh6gGGCJ3jfYfig4u8l9GSgX4yabzQUEFA-6N27bMyxymIjYGdI2QHD-ontjWe-QtvKtyn_DP-UbtYlHk_QgBIFBVWYz0QkPWgxQb6v356dXXSgZnQYMUDxCzebIGkPbRwKVGIlldBNJZiQ4jWN2TcjvV03o_inuU2oJue3_AFU5TZzHXdlT2DeCsHwS?id=vsscratchreg" alt="Virtual supervisor scratch register `vsscratch`.">
 </div>
 <div class="title">Figure 26. Virtual supervisor scratch register <code>vsscratch</code>.</div>
 </div>
@@ -1795,9 +1831,9 @@ affect the behavior of the machine.</p>
 <p><code>vsepc</code> is a <strong>WARL</strong> register that must be able to hold the same set of values
 that <code>sepc</code> can hold.</p>
 </div>
-<div id="vsepcreg" class="imageblock">
+<div id="vsepcreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vsepcreg.edn" alt="vsepcreg">
+<img src="https://kroki.io/bytefield/svg/eNp9jk1LAzEQhu_9FUNOXSSwH8XD3u1JvRREEA-zu5NuME1CMrTVsv_dkVbpInoKPO-8T97lQAaZU4Y2OrQeXi7vqTXBsza4s-4d1MMNVBHW6FyH_ZuCc5rtB0G9ml6LxVJEkMJBj2S3I8OqhBnEgZI2Hrx1F-7IsN5h2spvTfl9_FX-RbtwpKyjGEQGTV0shCc8aAlAPW2e7-8edaVkdI7oobqFlunIGn0_hgQqMyaW0V1IMiPDaZqKa0P5d5X88E9xnyn2P-WmnqfnYVfxXPQJfCl6Yg==?id=vsepcreg" alt="Virtual supervisor exception program counter (`vsepc`).">
 </div>
 <div class="title">Figure 27. Virtual supervisor exception program counter (<code>vsepc</code>).</div>
 </div>
@@ -1816,9 +1852,9 @@ directly affect the behavior of the machine.</p>
 <p><code>vscause</code> is a <strong>WLRL</strong> register that must be able to hold the same set of
 values that <code>scause</code> can hold.</p>
 </div>
-<div id="vscausereg" class="imageblock">
+<div id="vscausereg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vscausereg.edn" alt="vscausereg">
+<img src="https://kroki.io/bytefield/svg/eNqVkUFLw0AQhe_9FcOeEmQhSXOQXKWCED0oqCAeNs2kCW52l82UREv-uxvbWGKttqeQN9-8eezzciwEkW0gMVJUCl52301SaEW8EHUl34HdXkBo4FpImYnlG4PttKk-EKK4f_VnnjMCq1teYrUqCeIAJqLI0fJCgarkTpdYEK-FXblr82CEh-UDNdMdNtw4B2cG88ifOd2KlrsBsMeH53Rxx0PmQjdGKIghybR1BxvY9L3_Cxt9s6GDCTviQi1LbYE1JCyx4w7B8VVU-R-LN4rQ2rWhfc4psOiWaKjSCq50jiefSUib8ZevlUUpCPNBIdL14WQayxusgXlP6X3qs7H2dlsiy7TMf5btn_5050aD5Kv__zKzc6res9HlFP4EdQH98g==?id=vscausereg" alt="Virtual supervisor cause register (`vscause`).">
 </div>
 <div class="title">Figure 28. Virtual supervisor cause register (<code>vscause</code>).</div>
 </div>
@@ -1837,9 +1873,9 @@ affect the behavior of the machine.</p>
 <p><code>vstval</code> is a <strong>WARL</strong> register that must be able to hold the same set of values
 that <code>stval</code> can hold.</p>
 </div>
-<div id="vstvalreg" class="imageblock">
+<div id="vstvalreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/vstvalreg.edn" alt="vstvalreg">
+<img src="https://kroki.io/bytefield/svg/eNp9jk1LAzEURff9FZesOkhgPoqL2etK3QgiiIs3naQTTJMhebTVMv_dJ63SQXQVOPfdk7vsjSXmlNGOnlzAy_k9tjYG1pa2zr9D3V-hGnFL3ne0flM4pdl9GNSr6bVYLEWEFPd6MG4zMFYlZpB6k7QNCM6fuTeW9ZbSRn5ryu_jr_Iv2sWDyXoUg8jQ1MVCeKK9lgDq6fH57uZBV0pG55ECqmu0bA6sKayHmKAyU2IZ3cUkMzKO01RcGsq_qyb0_xR3mXfkf9pNPY9Pyy7iuekTAZV64Q==?id=vstvalreg" alt="Virtual supervisor trap value register (`vstval`).">
 </div>
 <div class="title">Figure 29. Virtual supervisor trap value register (<code>vstval</code>).</div>
 </div>
@@ -1856,15 +1892,15 @@ VS-stage address translation, the first stage of two-stage translation
 for guest virtual addresses (see
 <a href="#two-stage-translation">Two-Stage Address Translation</a>).</p>
 </div>
-<div id="rv32vsatpreg" class="imageblock">
+<div id="rv32vsatpreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rv32vsatpreg.edn" alt="rv32vsatpreg">
+<img src="https://kroki.io/bytefield/svg/eNrtVE1LxDAQve-vGHJqkUC_kLW3BREEVxY9eBAP6TbdFtOkpCNdXfrfTd2ttO5W24t48BTyZt68x8sQK-YJQ9QlhIVgmYTHw7kLEyWRJizPxCuQ5Rm4BVwxISK2fiawr5bZGwcvqJ_smWUGgVYVTXm2SRECB3ogi7mmiQSZiQMueII0Z3pj1HynbW7IR2iktrykhZlghoHv2TODa1ZRUwDiu8TYLQsmYQ5hpLSRKmFX13avy_nsCiBEvkXK5DpVGkiJTCMZpnreIJXL-Dtiz9kkTWeQeUKyS1yqmI-1G6Iq2it9kZoLhjxuEESVn6o0j3aM971bjSQQ62Fxd2OTdpOq_V6QSIn46_7Yo19muuOPjfrJMlncX1_-pzY1tdXqduya_rnQ5r8aWje1Ud_VxZimzsfknvfb3gHrrPu2?id=rv32vsatpreg" alt="Virtual supervisor address translation and protection `vsatp` register when VSXLEN=32.">
 </div>
 <div class="title">Figure 30. Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=32.</div>
 </div>
-<div id="rv64vsatpreg" class="imageblock">
+<div id="rv64vsatpreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/rv64vsatpreg.edn" alt="rv64vsatpreg">
+<img src="https://kroki.io/bytefield/svg/eNrtVEFPwjAUvvMrXnraYpoMqAR3IzEmJmKIHjwYDx3tYLG0S_vMULL_bicQNwEdHIwHT8u-9773fX371kDIlCNaB3GueKbhcfNcxanRSFO-yNQrkPEZdHO44kolfPpMYF112ZuEHiufwk7gB4E1BZ3LbDZHYBE0QC6kpakGnakNrmSKdMHtzKv1o21zRd5BE7OUjuZ-gh8G_V7Y8bjlBfUFIIM-8XZdzjUwiFEukXI9nRsLxCG36N0mxnp9B6uyDBvU6CBVavEN8fziZE3GTtRkn-ccHqkZHWTukawTx0bItnZjNPn2lb5oKxVHKSoE0Sz2VaoI7OJN70ElCSR4GN3dhGSby2KdMpIYJb6mMWz9ZY53_JHPnyyT0f315f_Wjt3aZHLbNqZ_bmnDX11a41ao7-zQ_98dtOmq3UzdQbPtHUh9Fc0=?id=rv64vsatpreg" alt="Virtual supervisor address translation and protection `vsatp` register when VSXLEN=64.">
 </div>
 <div class="title">Figure 31. Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=64.</div>
 </div>
@@ -1913,9 +1949,9 @@ instructions and two privileged fence instructions.</p>
 </div>
 <div class="sect3">
 <h4 id="hypervisor-virtual-machine-load-and-store-instructions"><a class="anchor" href="#hypervisor-virtual-machine-load-and-store-instructions"></a>Hypervisor Virtual-Machine Load and Store Instructions</h4>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/hypv-virt-load-and-store.edn" alt="hypv virt load and store">
+<img src="https://kroki.io/wavedrom/svg/eNp1kc8LgjAcxe_9FbvtMqwUGXgPDAoi0wrxYNssD2lsiw7i_94mzNzC03v78XlvfNdxdo9AvgCgu9VSRAAj0JRPFgHYvkhLGUSglJKrOxBDBJNrctrs1ea_K3r0iwnHGE4nEaGKoExIjRld2WQwktW7ITKY0MrDw3GbDa2OmWsXa6e-pJRrzNJZ2nfoPC00FO-yi1bBic1i-_XYGZ_ivE9N5cOEeHG6PKfDKjFHOrBAgLRNVavPMXPx-_4LFKB5Bw==" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1985,9 +2021,9 @@ illegal-instruction exception.</p>
 </div>
 <div class="sect3">
 <h4 id="hfence.vma"><a class="anchor" href="#hfence.vma"></a>Hypervisor Memory-Management Fence Instructions</h4>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/hypv-mm-fence.edn" alt="hypv mm fence">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRNwey1YMjg0NcfZFYsbU6CN2mcN1FKUg6TdV11A1AegxQlRvDlaeV5iWXGCNpAbLVA4I8w0C6wDQue4oN0SwqS0xJKQJpSwczcOozQtOXWJwJcrN6WS6QRtFljupMc9QwUfdwc_VzdtULC_N1BOmHct1BXJAxsToKyfl5aZnAcIZ526i2FgDI1Gn-" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -2173,15 +2209,15 @@ to <code>mstatus</code> but to <code>mstatush</code>.
 <code>mstatush</code> register when the hypervisor extension is implemented and
 MXLEN=32.</p>
 </div>
-<div id="hypervisor-mstatus" class="imageblock">
+<div id="hypervisor-mstatus" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hypv-mstatus.edn" alt="hypv mstatus">
+<img src="https://kroki.io/bytefield/svg/eNrlllFr2zAUhd_7K4SeEobBkl0v9dvG1lFYwMRNGih9UGo5MXNsI2ukW8l_nzI3deQi7a6JC2NPBp1zj2Tp6rMHCU-ZlKJGYZWzrEC3T8_HMC0L6aRsneU_EB6_Q6RClyzPF-z-G0aNWmc_OaL-9m54NlBBSJQbZ8Wz5Uoi30XaIEu4cNICFVn-NJ7zVDprJpZqNs_dm3fFL0YX5QOvnUolqDDk0eGZGhds4ygB4cDDarl1xVQFChelUFPV6HG7HWou-uzyUSj5g3RYcb8qBcK1ZEJic6nvGkt5kVgKvQvIyrwRyPUe5ApArvNnF7W4fJDLA7kowKV6Q5k08TAj_tS-m1Y32B0JwjfR5ArvG3fTtCFelHnSbdfhPmakL3IczQwz4C-zDyZp_PGzSYot0vzrLQndu7azdH1q1ztbFcqy2m-r870QPGeSJ7sRKcv1S6W7tQTSNbQ96ZHZBYp6Y5N29Y8x2Tu0UZvFdLvcHnJ4U7Q3amCTZ8viz5iinqnSTilKQXsI22kXdGggLhIQFwmIiySAUIr85qJRBfGQeJYMSP8cdalPAMVAf5_reGJi2PWNUZmNjbicG_PiqbkqmhjZPI91UnbkS6t8WpDar3bb9cG_xc8-SHyk6Q1ITOjf3eTDUmIFifvq4Atb7gjCJxAuQbQ8hyT5oP_Rk7UOqAnN36i-YKz4FVkhNbMzLI6i9kS6yVfGn8zpwf8n7SYay1795egyu_cZ4n5mAN9G2kPf0pNhmP5XH5lfB89ocA==?id=hypervisor-mstatus" alt="Machine status (`mstatus`) register for RV64 when the hypervisor extension is implemented.">
 </div>
 <div class="title">Figure 32. Machine status (<code>mstatus</code>) register for RV64 when the hypervisor extension is implemented.</div>
 </div>
-<div id="hypervisor-mstatush" class="imageblock">
+<div id="hypervisor-mstatush" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hypv-mstatush.edn" alt="hypv mstatush">
+<img src="https://kroki.io/bytefield/svg/eNq9Us1LwzAUv--veOTUIoF-WUdvE1Q8FIbCPIiHdE3XYpaUJNDp6P9uxtZ1nUaqh50Cv4_3fu-9ODktiNZSQVIzUnF4PbzbpBBc44KsK_YBKL0Cv4Z7wlhGlu8I9qyqPikEUfvmThxTCKRocEmrVakh8mAAkpxKXHDgFTvgjBYar4lcmW6h14l35m9oJjZU4dpUMMUgDNyJwSVpsCEAhT4ycVVNOEwh0XSjMeHLUkhAShOpTdpMSNNfwbZt3VPr1OqkPP_Fd3P0hXZRPEZ0PUYUjRGFR1Hwxy14VucPWzgxOjstoJf50yPqPkyzPz_KBMvPv4nbtfHjYYB0vugnHFIPi5mNSm_vbNSzlfp35mg4Owr6o_ixfbf-mNNdWNQnj4aiLyb-S34=?id=hypervisor-mstatush" alt="Additional machine status (`mstatush`) register for RV32 when the hypervisor extension is implemented.  The format of `mstatus` is unchanged for RV32.">
 </div>
 <div class="title">Figure 33. Additional machine status (<code>mstatush</code>) register for RV32 when the hypervisor extension is implemented.  The format of <code>mstatus</code> is unchanged for RV32.</div>
 </div>
@@ -2351,15 +2387,15 @@ active bits for the hypervisor-added interrupts. <a href="#hypervisor-mipreg-sta
 standard portions (bits 15:0) of registers <code>mip</code> and <code>mie</code> when the
 hypervisor extension is implemented.</p>
 </div>
-<div id="hypervisor-mipreg-standard" class="imageblock">
+<div id="hypervisor-mipreg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hypv-mipreg-standard.edn" alt="hypv mipreg standard">
+<img src="https://kroki.io/bytefield/svg/eNrtkstqwzAQRff5isGrmCLwK31kW5JSqGnBpZuShdzIiahiG1mQtsH_XoWmD6VoGMgmi6wMc87cK2QN56LixugOxq3isobn3XczrprasIqvpHqHID-DuIUpV6rkL68BfNFOfghIsn4WDoY2CHSzZkshF0sDWQTOkM-FZlUNtVS7uRKVYSuuF7Ytjb7l7fK_adm8iY61NsGGQZqEAzvXfM0sgCAeBfa4ZaNtRQebvg8dmqE03dKu5bYN_FbyYyWIFZOsiNJ4RYm6pEgXFOmcIo0oUkaRUopEu3OKFHklj-Wu313fT28ffv-aS4ubyR-4t5oj7KmYIKnIoveg-SPWhkCM-dsKrA2BGHPbDngO6YFvJj7qupO0L30CGjIiSQ==?id=hypervisor-mipreg-standard" alt="Standard portion (bits 15:0) of `mip`.">
 </div>
 <div class="title">Figure 34. Standard portion (bits 15:0) of <code>mip</code>.</div>
 </div>
-<div id="hypervisor-miereg-standard" class="imageblock">
+<div id="hypervisor-miereg-standard" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/hypv-miereg-standard.edn" alt="hypv miereg standard">
+<img src="https://kroki.io/bytefield/svg/eNrtkstqwzAQRff5isGrmCLwK31kG5xSqOnCpZvShdzIiahiG0mQtsH_XoWmD6V4GMimi6wMc87cK2SNF6Lm1moD005x2cDj_rud1m1jWc3XUr1BUJxB3MGcK1Xx55cAPqmR7wKSrH8KR2MXBLrdsJWQy5WFLAJvyBdCs7qBRqr9XInasjXXS9eWRl_ybvnPtGpfhWGdS3BhkCbhyM013zAHIIgngTtu1WpXYWDb96FHM5SmO2o67tpg2Eq-rQSxYpIVURqvKFGXFOmCIp1TpAlFyihSSpFod06RokFpwPLXb2d385v856_5tLzOf8GD1QJhD2WOpCKLgwct7rE2BGJsuK3E2hCIMb_tiOeQHvlm4n9dd5IOpQ-wXiHQ?id=hypervisor-miereg-standard" alt="Standard portion (bits 15:0) of `mie`.">
 </div>
 <div class="title">Figure 35. Standard portion (bits 15:0) of <code>mie</code>.</div>
 </div>
@@ -2377,9 +2413,9 @@ shown in <a href="#mtval2reg">Machine second trap value register (<code>mtval2</
 M-mode, <code>mtval2</code> is written with additional exception-specific
 information, alongside <code>mtval</code>, to assist software in handling the trap.</p>
 </div>
-<div id="mtval2reg" class="imageblock">
+<div id="mtval2reg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtval2reg.edn" alt="mtval2reg">
+<img src="https://kroki.io/bytefield/svg/eNp9jkuLwjAUhff-iktXLRLoCxfd68qZ9YC4uLWJDaZJSS7jo_S_e51RsQzjKnDOPV--uJEKiXyAqjeoLWzu71ApZ0ko7LQ5Q_Qxh6yHFRpT4-4QwW8b9EVCXo7bZBYzCLw7ilbqfUtQpjAJsZFeKAtWm3tupCLRod_zb0X6OL6N_6S1O8kgeiYwDIo8mXHu8Si4YLev9fJTZBE7hx4tZAuoSJ5IoN21zkMUCD2xc-08WwQYxjF5BaT_T6Vt3gw7-kaTP9dFPq1_xF7aKegK9BB53w==?id=mtval2reg" alt="Machine second trap value register (`mtval2`).">
 </div>
 <div class="title">Figure 36. Machine second trap value register (<code>mtval2</code>).</div>
 </div>
@@ -2424,9 +2460,9 @@ information about the instruction that trapped, to assist software in
 handling the trap. The values that may be written to <code>mtinst</code> on a trap
 are documented in <a href="#tinst-vals">Transformed Instruction or Pseudoinstruction for <code>mtinst</code> or <code>htinst</code></a>.</p>
 </div>
-<div id="mtinstreg" class="imageblock">
+<div id="mtinstreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/mtinstreg.edn" alt="mtinstreg">
+<img src="https://kroki.io/bytefield/svg/eNp9jssKwjAQRfd-xdCVRQJ9iIvudaWuBXExtYkNpklJBnzRf3d8YhFdBe6de3KGlVRI5AMUrUFtYf18L4VyloTCRpsTRIsRpC3M0JgSt_sIHm3QZwnZuNvEgyGDwLuDqKXe1QTjBHohVtILZcFq88yNVCQa9Dv-LU9ex7fxV1q6owyiZQLDIM_iAeceD4ILdlvNp0uRRuwcWrSQTqAgeSSBdls7D1Eg9MTOpfNsEeDSdfEnIPk9lbb6M2xI20DvdZ7167vYR9sHXQEEEXoo?id=mtinstreg" alt="Machine trap instruction (`mtinst`) register.">
 </div>
 <div class="title">Figure 37. Machine trap instruction (<code>mtinst</code>) register.</div>
 </div>
@@ -2505,9 +2541,9 @@ physical address also correspond one-for-one with the structure that
 Sv32 assigns to a physical address, depicted in
 <a href="#sv32va">[sv32va]</a>.)</p>
 </div>
-<div id="sv32x4va" class="imageblock">
+<div id="sv32x4va" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/sv32x4va.edn" alt="sv32x4va">
+<img src="https://kroki.io/bytefield/svg/eNq1Ub1qwzAQ3vMUh6aYIpAsE4IfoFtLpy4hwzmWbFNFEpIgaYPfvQpN0pRggw2dDr7f425ZS4Ux-gCl09gZ2FzmqVTWRKpw3-lPIC9PwB08o9YV7j4I_LCh-5KQF_02WyxTEHh7oK3smjZCweAPiLX0VBkwnb7gWqpI9-ib1CbYVXw2P6CVPcpAXUpIYSDybJFwjweaiHNi2jY4NLCCsrI-NQU49X12JyJCkKtKQBnlMVI0u9Z6ICGij2TYmueDVmnqMSOf3cnndvLfzmJiJxt0jlaO3H_yl97fXjd8e9tj9ciyQdZhI8EqFWS8Sdb_tundg8ZUjEzLWs848zcvnjn6?id=sv32x4va" alt="Sv32x4 virtual address (guest physical address).">
 </div>
 <div class="title">Figure 38. Sv32x4 virtual address (guest physical address).</div>
 </div>
@@ -2517,9 +2553,9 @@ in <a href="#sv39x4va">Sv39x4 virtual address (guest physical address).</a>. Thi
 high end in VPN[2]. Address bits 63:41 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv39x4va" class="imageblock">
+<div id="sv39x4va" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/sv39x4va.edn" alt="sv39x4va">
+<img src="https://kroki.io/bytefield/svg/eNq1Uk9rwjAUv_spHjlZRqBNy9B-gN02PHkRD682acNiUpKAbtLvvsh0KtKCYZ4Cv7_v8TKtuUDvrYOyUyg1rE7voRRGeypwK9UXkPcXyDp4Q6Uq3HwS-GWd_ObAin6dTKYhCKzZ0ZbLpvVQpHADYs0tFRq0VCdcceHpFm0T2vL0LD6a79DK7LmjXUgIYZCzZBJwizsaiGNimNZ1qOEVysrY0OTg0PfJlYgUKTmrGJSe7z1FvWmNBeI8Wk-Grfmwlet6xMjm0Z0si-2M3zNjkZ3ZZdjiwc500DlaOXLzh3_GcvGxYuvLHPdsNsqmg2yHDQcjhOP-TzJ72h63VxhSzf9NdPVdZhGH-gFGQnRy?id=sv39x4va" alt="Sv39x4 virtual address (guest physical address).">
 </div>
 <div class="title">Figure 39. Sv39x4 virtual address (guest physical address).</div>
 </div>
@@ -2531,9 +2567,9 @@ that for an Sv48 virtual address as depicted in
 high end in VPN[3]. Address bits 63:50 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv48x4va" class="imageblock">
+<div id="sv48x4va" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/sv48x4va.edn" alt="sv48x4va">
+<img src="https://kroki.io/bytefield/svg/eNq9Ur1qwzAQ3vMUh6aYIrBkURo_QLeWTFlChnMs2aaKZCRB0ga_exWaFJdgQ0XpJPh-7rvT3bKWCkNwHspeY2dge33PpbImUIWHTr8DeXkA1sMzal3h_o3AF-u7DwlcDLtssYyFwNkjbWXXtAFEDj9ArKWjyoDp9BXXUgV6QNfEtCK_iS_mO7SyJ-lpHyvEYlDwbBFxh0caiUvF2K3v0cAjlJV1McnDeRiykYiIFbmpOJRBngJFs2-tA-IDukCmrcW0VZp6zviUnpknZvL0OTlLzcyTMxlPzGQsOTPxa2fu7NfXuFm_bovddx_inuWzLJtl80m2x0aCVcrLMCH5yylHOxLTqtX_ikYXJxJ2_Qkn3a8q?id=sv48x4va" alt="Sv48x4 virtual address (guest physical address).">
 </div>
 <div class="title">Figure 40. Sv48x4 virtual address (guest physical address).</div>
 </div>
@@ -2545,9 +2581,9 @@ that for an Sv57 virtual address as depicted in
 high end in VPN[4]. Address bits 63:59 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv57x4va" class="imageblock">
+<div id="sv57x4va" class="imageblock kroki">
 <div class="content">
-<img src="_images/bytefield/sv57x4va.edn" alt="sv57x4va">
+<img src="https://kroki.io/bytefield/svg/eNrNk79qwzAQxvc8xaEppgisP6W1H6BbS6cuIYMcS7GpIhlJkLTB716FJsUlWFDRIZPgvu_udzqdlq1UIgTnoR606A2szuexVtYErMSu1x-Anu-ADPAktG7E5h3Bt-r7TwmUj-tisYyFwNk97mS_7QLwEn4FRSsdVgZMr89xLVXAO-G2kcbKi_mUfBVt7EF6PMQKsRgwWixi3Ik9jsKpYuzWD8IAh7qxLpI8HMexmJjQ_SO6uCjUQR4CFmbTWQfIB-ECmk_l86nStKnEh2wmqzKZLP-erMxk0iqbSUkus8xmEprJJCSbmTnaxG7_-Qe8vb6s-PqnD36tsqRKkypJquWsOoitBKuUl2HG8p8zmLxgwlXdoGmytDxjXb4AM0_p2g==?id=sv57x4va" alt="Sv57x4 virtual address (guest physical address).">
 </div>
 <div class="title">Figure 41. Sv57x4 virtual address (guest physical address).</div>
 </div>
@@ -3572,9 +3608,9 @@ is one of LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH, the
 transformed instruction has the format shown in
 <a href="#transformedloadinst">Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.</a>.</p>
 </div>
-<div id="transformedloadinst" class="imageblock">
+<div id="transformedloadinst" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/transformedloadinst.edn" alt="transformedloadinst">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1ePrdVBqDSFqyxKQVJliqrKGK4qrTQvucQYSaUxLvMcU1KK9BT809KKU0twm4xQb4BbkTlWRRCfxOooJOfnpWUCAwDmWKPaWgDCBE9P?id=transformedloadinst" alt="Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.">
 </div>
 <div class="title">Figure 42. Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.</div>
 </div>
@@ -3584,27 +3620,27 @@ and is one of SB, SH, SW, SD, FSW, FSD, FSQ, or FSH, the transformed
 instruction has the format shown in
 <a href="#transformedstoreinst">Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.</a>.</p>
 </div>
-<div id="transformedstoreinst" class="imageblock">
+<div id="transformedstoreinst" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/transformedstoreinst.edn" alt="transformedstoreinst">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1ePrdVBqDSFqzRAUmSKqsgYriitNC-5xBhJpTEu4xxTUor0FPzT0opTS3CbjFBfVGyEW5k5VldCvBKro5Ccn5eWCQwBmHONamsB4PtPkA==?id=transformedstoreinst" alt="Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.">
 </div>
 <div class="title">Figure 43. Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.</div>
 </div>
 <div class="paragraph">
 <p>For a standard atomic instruction (load-reserved, store-conditional, or AMO instruction), the transformed instruction has the format shown in <a href="#transformedatomicinst">Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.</a>.</p>
 </div>
-<div id="transformedatomicinst" class="imageblock">
+<div id="transformedatomicinst" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/transformedatomicinst.edn" alt="transformedatomicinst">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1ePrdVBqDSFqyxKQVJliqrKGK4qrTQvucQYSaUxLvMcU1KK9BT809KKU0twm4xkf7ERbmWGCGU5SKoMcalKLMStyhTVM6YYtsbqKCTn56VlAsMU5n-j2loAbOxntw==?id=transformedatomicinst" alt="Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.">
 </div>
 <div class="title">Figure 44. Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.</div>
 </div>
 <div class="paragraph">
 <p>For a standard virtual-machine load/store instruction (HLV, HLVX, or HSV), the transformed instruction has the format shown in <a href="#transformedvmaccessinst">Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset</a>.</p>
 </div>
-<div id="transformedvmaccessinst" class="imageblock">
+<div id="transformedvmaccessinst" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/transformedvmaccessinst.edn" alt="transformedvmaccessinst">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1ePrdVBqDSFqyxKQVJliqrKGK4qrTQvucQYSaUxLvMcU1KK9BT809KKU0twm4xkf7ERbmXmqA4wx_BQrI5Ccn5eWiYwHGBuNqqtBQAsyFJd?id=transformedvmaccessinst" alt="Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset">
 </div>
 <div class="title">Figure 45. Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset</div>
 </div>
@@ -3810,7 +3846,7 @@ to 0. When executed in VS-mode, <code>vsstatus.SDT</code> is set to 0.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a></span>
+  <span class="prev"><a href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a></span>
   <span class="next"><a href="priv-cfi.html">Control-flow Integrity(CFI)</a></span>
 </nav>
 </article>  </div>
@@ -3825,101 +3861,6 @@ to 0. When executed in VS-mode, <code>vsstatus.SDT</code> is set to 0.</p>
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
                         </div>                        <div class="version-item is-active">
                           <div>
@@ -3932,82 +3873,6 @@ to 0. When executed in VS-mode, <code>vsstatus.SDT</code> is set to 0.</p>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

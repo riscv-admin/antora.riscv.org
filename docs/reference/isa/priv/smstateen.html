@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="smcntrpmf.html">
-    <link rel="next" href="smcdeleg.html">
+    <link rel="prev" href="machine.html">
+    <link rel="next" href="indirect-csr.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
@@ -260,7 +260,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -272,7 +272,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -359,43 +359,235 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume II: RISC-V Privileged ISA Specification</li>
-      <li><a href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a></li>
+      <li><a href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a></li>
     </ul>
   </nav>
 </div><div class="sect1">
-<h2 id="rnmi"><a class="anchor" href="#rnmi"></a>"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</h2>
+<h2 id="smstateen"><a class="anchor" href="#smstateen"></a>"Smstateen/Ssstateen" Extensions, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The base machine-level architecture supports only unresumable
-non-maskable interrupts (UNMIs), where the NMI jumps to a handler in
-machine mode, overwriting the current <code>mepc</code> and <code>mcause</code> register
-values. If the hart had been executing machine-mode code in a trap
-handler, the previous values in <code>mepc</code> and <code>mcause</code> would not be
-recoverable and so execution is not generally resumable.</p>
+<p>The implementation of optional RISC-V extensions has the potential to open
+covert channels between separate user threads, or between separate guest OSes
+running under a hypervisor. The problem occurs when an extension adds processor
+state&#8201;&#8212;&#8201;usually explicit registers, but possibly other forms of state&#8201;&#8212;&#8201;that
+the main OS or hypervisor is unaware of (and hence won&#8217;t context-switch) but
+that can be modified/written by one user thread or guest OS and
+perceived/examined/read by another.</p>
 </div>
 <div class="paragraph">
-<p>The Smrnmi extension adds support for resumable non-maskable interrupts
-(RNMIs) to RISC-V. The extension adds four new CSRs (<code>mnepc</code>, <code>mncause</code>,
-<code>mnstatus</code>, and <code>mnscratch</code>) to hold the interrupted state, and one new
-instruction, MNRET, to resume from the RNMI handler.</p>
+<p>For example, the Advanced Interrupt Architecture (AIA) for RISC-V adds
+to a hart as many as ten supervisor-level CSRs (<code>siselect</code>, <code>sireg</code>, <code>stopi</code>,
+<code>sseteipnum</code>, <code>sclreipnum</code>, <code>sseteienum</code>, <code>sclreienum</code>, <code>sclaimei</code>, <code>sieh</code>, and <code>siph</code>) and
+provides also the option for hardware to be backward-compatible with older,
+pre-AIA software. Because an older hypervisor that is oblivious to the AIA will
+not know to swap any of the AIA&#8217;s new CSRs on context switches, the registers may
+then be used as a covert channel between multiple guest OSes that run atop this
+hypervisor. Although traditional practices might consider such a communication
+channel harmless, the intense focus on security today argues that a means be
+offered to plug such channels.</p>
+</div>
+<div class="paragraph">
+<p>The <code>f</code> registers of the RISC-V floating-point extensions and the <code>v</code> registers of
+the vector extension would similarly be potential covert channels between user
+threads, except for the existence of the FS and VS fields in the <code>sstatus</code>
+register. Even if an OS is unaware of, say, the vector extension and its <code>v</code>
+registers, access to those registers is blocked when the VS field is
+initialized to zero, either at machine level or by the OS itself initializing
+<code>sstatus</code>.</p>
+</div>
+<div class="paragraph">
+<p>Obviously, one way to prevent the use of new user-level CSRs as covert channels
+would be to add to <code>mstatus</code> or <code>sstatus</code> an "XS" field for each relevant
+extension, paralleling the V extension&#8217;s VS field. However, this is not
+considered a general solution to the problem due to the number of potential
+future extensions that may add small amounts of state. Even with a 64-bit
+<code>sstatus</code> (necessitating adding <code>sstatush</code> for RV32), it is not certain there are
+enough remaining bits in <code>sstatus</code> to accommodate all future user-level
+extensions. In any event, there is no need to strain <code>sstatus</code> (and add <code>sstatush</code>)
+for this purpose. The "enable" flags that are needed to plug covert channels
+are not generally expected to require swapping on context switches of user
+threads, making them a less-than-compelling candidate for inclusion in <code>sstatus</code>.
+Hence, a new place is provided for them instead.</p>
 </div>
 <div class="sect2">
-<h3 id="rnmi-interrupt-signals"><a class="anchor" href="#rnmi-interrupt-signals"></a>RNMI Interrupt Signals</h3>
+<h3 id="state-enable-extensions"><a class="anchor" href="#state-enable-extensions"></a>State Enable Extensions</h3>
 <div class="paragraph">
-<p>The <code>rnmi</code> interrupt signals are inputs to the hart. These interrupts
-have higher priority than any other interrupt or exception on the hart
-and cannot be disabled by software. Specifically, they are not disabled
-by clearing the <code>mstatus</code>.MIE register.</p>
+<p>The Smstateen and Ssstateen extensions collectively specify machine-mode and
+supervisor-mode features. The Smstateen extension specification comprises the
+mstateen*, sstateen*, and hstateen* CSRs and their functionality. The Ssstateen
+extension specification comprises only the sstateen* and hstateen* CSRs and their
+functionality.</p>
+</div>
+<div class="paragraph">
+<p>For RV64 harts, this extension adds four new 64-bit CSRs at machine level:
+<code>mstateen0</code> (Machine State Enable 0), <code>mstateen1</code>, <code>mstateen2</code>, and <code>mstateen3</code>.</p>
+</div>
+<div class="paragraph">
+<p>If supervisor mode is implemented, another four CSRs are defined at supervisor
+level:
+<code>sstateen0</code>, <code>sstateen1</code>, <code>sstateen2</code>, and <code>sstateen3</code>.</p>
+</div>
+<div class="paragraph">
+<p>And if the hypervisor extension is implemented, another set of CSRs is added:
+<code>hstateen0</code>, <code>hstateen1</code>, <code>hstateen2</code>, and <code>hstateen3</code>.</p>
+</div>
+<div class="paragraph">
+<p>For RV32, there are CSR addresses for accessing the upper 32 bits of
+corresponding machine-level and hypervisor CSRs:
+<code>mstateen0h</code>, <code>mstateen1h</code>, <code>mstateen2h</code>, <code>mstateen3h</code>,
+<code>hstateen0h</code>, <code>hstateen1h</code>, <code>hstateen2h</code>, and <code>hstateen3h</code>.</p>
+</div>
+<div class="paragraph">
+<p>For the supervisor-level <code>sstateen</code> registers, high-half CSRs are not added at
+this time because it is expected the upper 32 bits of these registers will
+always be zeros, as explained later below.</p>
+</div>
+<div class="paragraph">
+<p>Each bit of a <code>stateen</code> CSR controls less-privileged access to an extension&#8217;s
+state, for an extension that was not deemed "worthy" of a full XS field in
+<code>sstatus</code> like the FS and VS fields for the F and V extensions. The number of
+registers provided at each level is four because it is believed that 4 * 64 =
+256 bits for machine and hypervisor levels, and 4 * 32 = 128 bits for
+supervisor level, will be adequate for many years to come, perhaps for as long
+as the RISC-V ISA is in use. The exact number four is an attempted compromise
+between providing too few bits on the one hand and going overboard with CSRs
+that will never be used on the other. A possible future doubling of the number
+of <code>stateen</code> CSRs is covered later.</p>
+</div>
+<div class="paragraph">
+<p>The <code>stateen</code> registers at each level control access to state at all
+less-privileged levels, but not at its own level. This is analogous to how the
+existing <code>counteren</code> CSRs control access to performance counter registers. Just
+as with the <code>counteren</code> CSRs, when a <code>stateen</code> CSR prevents access to state by
+less-privileged levels, an attempt in one of those privilege modes to execute
+an instruction that would read or write the protected state raises an illegal-instruction
+exception, or, if executing in VS or VU mode and the circumstances
+for a virtual-instruction  exception apply, raises a virtual-instruction
+exception instead of an illegal-instruction exception.</p>
+</div>
+<div class="paragraph">
+<p>When this extension is not implemented, all state added by an extension is
+accessible as defined by that extension.</p>
+</div>
+<div class="paragraph">
+<p>When a <code>stateen</code> CSR prevents access to state for a privilege mode, attempting to
+execute in that privilege mode an instruction that <em>implicitly</em> updates the
+state without reading it may or may not raise an illegal-instruction or virtual-instruction
+exception. Such cases must be disambiguated by being explicitly
+specified one way or the other.</p>
+</div>
+<div class="paragraph">
+<p>In some cases, the bits of the <code>stateen</code> CSRs will have a dual purpose as enables
+for the ISA extensions that introduce the controlled state.</p>
+</div>
+<div class="paragraph">
+<p>Each bit of a supervisor-level <code>sstateen</code> CSR controls user-level access (from
+U-mode or VU-mode) to an extension&#8217;s state. The intention is to allocate the
+bits of <code>sstateen</code> CSRs starting at the least-significant end, bit 0, through to
+bit 31, and then on to the next-higher-numbered <code>sstateen</code> CSR.</p>
+</div>
+<div class="paragraph">
+<p>For every bit with a defined purpose in an <code>sstateen</code> CSR, the same bit is
+defined in the matching <code>mstateen</code> CSR to control access below machine level to
+the same state. The upper 32 bits of an <code>mstateen</code> CSR (or for RV32, the
+corresponding high-half CSR) control access to state that is inherently
+inaccessible to user level, so no corresponding enable bits in the
+supervisor-level <code>sstateen</code> CSR are applicable. The intention is to allocate bits
+for this purpose starting at the most-significant end, bit 63, through to bit
+32, and then on to the next-higher <code>mstateen</code> CSR. If the rate that bits are
+being allocated from the least-significant end for <code>sstateen</code> CSRs is
+sufficiently low, allocation from the most-significant end of <code>mstateen</code> CSRs may
+be allowed to encroach on the lower 32 bits before jumping to the next-higher
+<code>mstateen</code> CSR. In that case, the bit positions of "encroaching" bits will remain
+forever read-only zeros in the matching <code>sstateen</code> CSRs.</p>
+</div>
+<div class="paragraph">
+<p>With the hypervisor extension, the <code>hstateen</code> CSRs have identical encodings to
+the <code>mstateen</code> CSRs, except controlling accesses for a virtual machine (from VS
+and VU modes).</p>
+</div>
+<div class="paragraph">
+<p>Each standard-defined bit of a <code>stateen</code> CSR is WARL and may be read-only zero or
+one, subject to the following conditions.</p>
+</div>
+<div class="paragraph">
+<p>Bits in any <code>stateen</code> CSR that are defined to control state that a hart doesn&#8217;t
+implement are read-only zeros for that hart. Likewise, all reserved bits not
+yet given a defined meaning are also read-only zeros. For every bit in an
+<code>mstateen</code> CSR that is zero (whether read-only zero or set to zero), the same bit
+appears as read-only zero in the matching <code>hstateen</code> and <code>sstateen</code> CSRs. For every
+bit in an <code>hstateen</code> CSR that is zero (whether read-only zero or set to zero),
+the same bit appears as read-only zero in <code>sstateen</code> when accessed in VS-mode.</p>
+</div>
+<div class="paragraph">
+<p>A bit in a supervisor-level <code>sstateen</code> CSR cannot be read-only one unless the
+same bit is read-only one in the matching <code>mstateen</code> CSR and, if it exists, in
+the matching <code>hstateen</code> CSR. A bit in an <code>hstateen</code> CSR cannot be read-only one
+unless the same bit is read-only one in the matching <code>mstateen</code> CSR.</p>
+</div>
+<div class="paragraph">
+<p>On reset, all writable <code>mstateen</code> bits are initialized by the hardware to zeros.
+If machine-level software changes these values, it is responsible for
+initializing the corresponding writable bits of the <code>hstateen</code> and <code>sstateen</code> CSRs
+to zeros too. Software at each privilege level should set its respective
+<code>stateen</code> CSRs to indicate the state it is prepared to allow less-privileged
+software to access. For OSes and hypervisors, this usually means the state that
+the OS or hypervisor is prepared to swap on a context switch, or to manage in
+some other way.</p>
+</div>
+<div class="paragraph">
+<p>For each <code>mstateen</code> CSR, bit 63 is defined to control access to the
+matching <code>sstateen</code> and <code>hstateen</code> CSRs. That is, bit 63 of <code>mstateen0</code> controls
+access to <code>sstateen0</code> and <code>hstateen0</code>; bit 63 of <code>mstateen1</code> controls access to
+<code>sstateen1</code> and <code>hstateen1</code>; etc. Likewise, bit 63 of each <code>hstateen</code>
+correspondingly controls access to the matching <code>sstateen</code> CSR.</p>
+</div>
+<div class="paragraph">
+<p>A hypervisor may need this control over accesses to the <code>sstateen</code> CSRs if it
+ever must emulate for a virtual machine an extension that is supposed to be
+affected by a bit in an <code>sstateen</code> CSR. Even if such emulation is uncommon,
+it should not be excluded.</p>
+</div>
+<div class="paragraph">
+<p>Machine-level software needs identical control to be able to emulate the
+hypervisor extension. That is, machine level needs control over accesses to the
+supervisor-level <code>sstateen</code> CSRs in order to emulate the <code>hstateen</code> CSRs, which
+have such control.</p>
+</div>
+<div class="paragraph">
+<p>Bit 63 of each <code>mstateen</code> CSR may be read-only zero only if the hypervisor
+extension is not implemented and the matching supervisor-level <code>sstateen</code> CSR is
+all read-only zeros. In that case, machine-level software should emulate
+attempts to access the affected <code>sstateen</code> CSR from S-mode, ignoring writes and
+returning zero for reads. Bit 63 of each <code>hstateen</code> CSR is always writable (not
+read-only).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="rnmi-handler-addresses"><a class="anchor" href="#rnmi-handler-addresses"></a>RNMI Handler Addresses</h3>
-<div class="paragraph">
-<p>The RNMI interrupt trap handler address is implementation-defined.</p>
+<h3 id="state-enable-0-registers"><a class="anchor" href="#state-enable-0-registers"></a>State Enable 0 Registers</h3>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5qpOyiwptlIw1FHIS8xNtVJQd1av1cEUdXMODsIq4RUWgiRuipAIDwjyxKrDOQS7ScFBvs5u7lilAgwDDI2xG-bvF-IaEYJVztM32BO7bxw9HbGbFhzk6eeCVQqnd1z9wnA5O9jVACQeq6OQnJ-XlgkMb6gSMxMdhZzEvFQgE8jKKC5ITE61MjQwMqmtBQBU13Yy" alt="Machine State Enable 0 Register (`mstateen0`)">
+</div>
+<div class="title">Figure 1. Machine State Enable 0 Register (<code>mstateen0</code>)</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5qpOyiwptlIw1FHIS8xNtVJQd1av1cEUdXMODsIq4RUWgiRuipAIDwjyxKrDOQTZJCMiNPj7hbhGhGCV8_QN9sTuYkdPR-ymBQd5-rlglcLpAle_MGc3d6xSwa4GIPFYHYXk_Ly0TGCYQpWYmego5CTmpQKZQFZGcUFicqqVoYGRSW0tAC6pbn4=" alt="Hypervisor State Enable 0 Register (`hstateen0`)">
+</div>
+<div class="title">Figure 2. Hypervisor State Enable 0 Register (<code>hstateen0</code>)</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5qpOyiwptlIw1FHIS8xNtVJQd1av1cEUdXMODsIq4RUWgiRuZAmXCA8I8lSv5YrVUUjOz0vLTLeCKjE20lHIScxLBanWUcgoLkhMTrUyNDAyqa0FAMO3LBk=" alt="Supervisor State Enable 0 Register (`sstateen0`)">
+</div>
+<div class="title">Figure 3. Supervisor State Enable 0 Register (<code>sstateen0</code>)</div>
 </div>
 <div class="paragraph">
-<p>RNMI also has an associated exception trap handler address, which is
-implementation defined.</p>
+<p>The C bit controls access to any and all custom state.
+The C bit of these registers is not custom state itself; it is a
+standard field of a standard CSR, either <code>mstateen0</code>, <code>hstateen0</code>, or
+<code>sstateen0</code>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -404,106 +596,53 @@ implementation defined.</p>
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-For example, some implementations might use the address specified
-in <code>mtvec</code> as the RNMI exception trap handler.
+<div class="paragraph">
+<p>The requirements that non-standard extensions must meet to be conforming are not
+relaxed due solely to changes in the value of this bit. In particular, if
+software sets this bit but does not execute any custom instructions or access
+any custom state, the software must continue to execute as specified by all
+relevant RISC-V standards, or the hardware is not standard-conforming.</p>
+</div>
 </td>
 </tr>
 </table>
 </div>
-</div>
-<div class="sect2">
-<h3 id="rnmi-csrs"><a class="anchor" href="#rnmi-csrs"></a>RNMI CSRs</h3>
 <div class="paragraph">
-<p>This extension adds additional M-mode CSRs to enable a resumable
-non-maskable interrupt (RNMI).</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/bytefield/svg/eNq1UEFqwzAQvOcVg04WReA4PvnenpKeCyGHtSPFprJkJLVJW_T3yliGpj0XFsSOZmdnpzhLRSE4j2bSNBgc8_vVKGuCUDQO-gPs8IDthCfSuqXulWH59cOnRFXHE98USQjOXkUvh0sfUJe4A-ksnVAGZtAZ11IFMZK7pG27ciXPw3_Q1t6kF1NSSGLYVTPs6Co6q99Gk9V98pyXV_W9QTSaWqk9CiffE1PiyEoG9k91eNk_Povt3Jx45JvsNl2BIshbABuN7xyFrmdr0GuUPAF-onR8FfmPwUX0Nx0rF01r3RJCjPwb18yGKg==" alt="Resumable NMI scratch register `mnscratch`">
-</div>
-<div class="title">Figure 1. Resumable NMI scratch register <code>mnscratch</code></div>
+<p>The FCSR bit controls access to <code>fcsr</code> for the case when floating-point
+instructions operate on <code>x</code> registers instead of <code>f</code> registers as specified by
+the Zfinx and related extensions (Zdinx, etc.). Whenever <code>misa.F</code> = 1, FCSR bit
+of <code>mstateen0</code> is read-only zero (and hence read-only zero in <code>hstateen0</code> and
+<code>sstateen0</code> too). For convenience, when the <code>stateen</code> CSRs are implemented and
+<code>misa.F</code> = 0, then if the FCSR bit of a controlling <code>stateen0</code> CSR is zero, all
+floating-point instructions cause an illegal-instruction exception (or virtual-instruction
+exception, if relevant), as though they all access <code>fcsr</code>, regardless of
+whether they really do.</p>
 </div>
 <div class="paragraph">
-<p>The <code>mnscratch</code> CSR holds an MXLEN-bit read-write register which enables
-the RNMI trap handler to save and restore the context that was
-interrupted.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/bytefield/svg/eNq1kcFOwzAMhu97CiunVihS200ceuMAp40DF5CmHdzW3SrSpEo8OkB9d1KWSoyBNA5IkaL8duzPv6OKamS2DvJOYaNhHe73vDaaZY1to15BrK4g7eAOlSqwfBZwjLrmjSBbDJt4FvlCYE0vd9RsdwyLBE5ErMjKWoNuVNAV1SxbtFvfbZ5MyePnM7UwB3Ky8xV8MZhno2yxl6VR-1aH6s4zh-bZ4hQQcoUFKQeRpRefSbAWiQDxT2f1tLy9l-n42MRDPAu0fgqImA4MotXUlSAmlycfYy-4DjWk15CPmRJ1uTMWBOnKm14YGwZl001PudeWFDJVo8Js2p8io9vn-jDE53DR483DMhaBrT9aKgqjqu97_53XMVq-hPhz4X8Z5RT56LWYOObZl5Y-8wOgmuQW" alt="Resumable NMI program counter `mnepc`.">
-</div>
-<div class="title">Figure 2. Resumable NMI program counter <code>mnepc</code>.</div>
+<p>The JVT bit controls access to the <code>jvt</code> CSR provided by the Zcmt extension.</p>
 </div>
 <div class="paragraph">
-<p>The <code>mnepc</code> CSR is an MXLEN-bit read-write register which on entry to
-the RNMI trap handler holds the PC of the instruction that took the
-interrupt.</p>
+<p>The SE0 bit in <code>mstateen0</code> controls access to the <code>hstateen0</code>, <code>hstateen0h</code>,
+and the <code>sstateen0</code> CSRs. The SE0 bit in <code>hstateen0</code> controls access to the
+<code>sstateen0</code> CSR.</p>
 </div>
 <div class="paragraph">
-<p>The low bit of <code>mnepc</code> (<code>mnepc[0]</code>) is always zero. On implementations
-that support only IALIGN=32, the two low bits (<code>mnepc[1:0]</code>) are always
-zero.</p>
+<p>The ENVCFG bit in <code>mstateen0</code> controls access to the <code>henvcfg</code>, <code>henvcfgh</code>,
+and the <code>senvcfg</code> CSRs. The ENVCFG bit in <code>hstateen0</code> controls access to the
+<code>senvcfg</code> CSRs.</p>
 </div>
 <div class="paragraph">
-<p>If an implementation allows IALIGN to be either 16 or 32 (by changing
-CSR <code>misa</code>, for example), then, whenever IALIGN=32, bit <code>mnepc[1]</code> is
-masked on reads so that it appears to be 0. This masking occurs also for
-the implicit read by the MNRET instruction. Though masked, <code>mnepc[1]</code>
-remains writable when IALIGN=32.</p>
+<p>The CSRIND bit in <code>mstateen0</code> controls access to the <code>siselect</code>, <code>sireg*</code>,
+<code>vsiselect</code>, and the <code>vsireg*</code> CSRs provided by the Sscsrind extensions.
+The CSRIND bit in <code>hstateen0</code> controls access to the <code>siselect</code> and the
+<code>sireg*</code>, (really <code>vsiselect</code> and <code>vsireg*</code>) CSRs provided by the Sscsrind
+extensions.</p>
 </div>
 <div class="paragraph">
-<p><code>mnepc</code> is a <strong>WARL</strong> register that must be able to hold all valid virtual
-addresses. It need not be capable of holding all possible invalid
-addresses. Prior to writing <code>mnepc</code>, implementations may convert an
-invalid address into some other invalid address that <code>mnepc</code> is capable
-of holding.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/bytefield/svg/eNqtUsFqwzAMvfcrhE8Jw9CkOYzexuhg0O6wywalBydR2jDHNra6div59zlt0jVtBxsMDMbPetKTnoIcC0FkHYyNFKWCeXvvxoVWxAtRlfID2OwGIgMPQspUZG8MDr-u_ESIk3oRDgKfCKze8BWWyxVBMoQeKHK0vFCgStniEgvilbBLX2007IIb8gWa6i06bnwGnwxGcQNbseGZlutKtdmd19wWj5O-QBhLkaJ0EFh895EIczZkwP7xzF6nkyceX0JR81iEdThoRftmgD0qQmvXhphX7YxQkNThSUBAuCVgk22Ghkqt4F7nyDpXurmHHTnyLTYMLlS20hYYqtyblGrbDoa06Z58rSxKQZg3CJGurv007lzi9TWRwcvd8zQ8itscPGCplvn5ovws2JGw9BvJ-w35Sy99zSz6nvhJtbOgo3W7sz3aE-PbPvMLEB4E9A==" alt="Resumable NMI cause `mncause`.">
-</div>
-<div class="title">Figure 3. Resumable NMI cause <code>mncause</code>.</div>
-</div>
-<div class="paragraph">
-<p>The <code>mncause</code> CSR holds the reason for the RNMI.
-If the reason is an interrupt, bit MXLEN-1 is set to 1, and the RNMI
-cause is encoded in the least-significant bits.
-If the reason is an interrupt and RNMI causes are not supported, bit MXLEN-1 is
-set to 1, and zero is written to the least-significant bits.
-If the reason is an exception within M-mode that results in a double trap as
-specified in the Smdbltrp extension, bit MXLEN-1 is set to 0 and the
-least-significant bits are set to the cause code corresponding to the
-exception that precipitated the double trap.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/bytefield/svg/eNrdVF1LwzAUffdXXPLUIoF-qbNvPkwQtjF8UEF8SNdbV8ySkkTnB_vvpq6L1m1uExERUnpzcnLuuTchXo4FM0ZpSCvOSgHXzf8lLaQwtGCTkj8B6e9DWMEp4zxjozsC81VdPiNEyezG3_OsECg5pWMsb8cGkgBaIMtR0UKAKHmDcywMnTB1a7PFwYJcb15CM_mImlZWwYpBfFDDik3pSPL7iWjUtfXcJI-StkFIOcuQa_AUPlgmwjUJCJD5iOa_2H6JAw9ddOSijouOXRQ2OmH4DtWCYezmbvSvet0BfSPe-DN_r6nCVgeewUcD5Bw1qgfMyaL_2jxxBFIaxsvR57b7lqUrJqAz85e1-oPh8F3n85YI0ppGmRiNpQKCwiZNM6maThpZLab0XijkzGBeI8bIyaqV-jiX8dkqZ97lyXnPd96m80MjmeR5u8RgvV9tmDIEtrD8dqV2qWWl52-eTLzmZLq94TZKwQalXVwFm11d_Pv78sevS9LSIoP-WZe4in44z8dEzcsUu2SdD51qF1g_lwuV9aTQkeLfJX3hKd7NePQdpVcAuFnC" alt="Resumable NMI status register `mnstatus`.">
-</div>
-<div class="title">Figure 4. Resumable NMI status register <code>mnstatus</code>.</div>
-</div>
-<div class="paragraph">
-<p>The <code>mnstatus</code> CSR holds a two-bit field, MNPP, which on entry to the
-RNMI trap handler holds the privilege mode of the interrupted context,
-encoded in the same manner as <code>mstatus</code>.MPP. It also holds a one-bit
-field, MNPV, which on entry to the RNMI trap handler holds the virtualization
-mode of the interrupted context, encoded in the same manner as
-<code>mstatus</code>.MPV.</p>
-</div>
-<div class="paragraph">
-<p>If the Zicfilp extension is implemented, <code>mnstatus</code> also holds the MNPELP
-field, which on entry to the RNMI trap handler holds the previous <code>ELP</code> state.
-When an RNMI trap is taken, MNPELP is set to <code>ELP</code> and <code>ELP</code> is set to 0.</p>
-</div>
-<div class="paragraph">
-<p><code>mnstatus</code> also holds the NMIE bit. When NMIE=1, non-maskable interrupts
-are enabled. When NMIE=0, <em>all</em> interrupts are disabled.</p>
-</div>
-<div class="paragraph">
-<p>When NMIE=0, the hart behaves as though <code>mstatus</code>.MPRV were clear,
-regardless of the current setting of <code>mstatus</code>.MPRV.</p>
-</div>
-<div class="paragraph">
-<p>Upon reset, NMIE contains the value 0.</p>
+<p>The IMSIC bit in <code>mstateen0</code> controls access to the IMSIC state, including
+CSRs <code>stopei</code> and <code>vstopei</code>, provided by the Ssaia extension. The IMSIC bit in
+<code>hstateen0</code> controls access to the guest IMSIC state, including CSRs <code>stopei</code>
+(really <code>vstopei</code>), provided by the Ssaia extension.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -513,15 +652,80 @@ regardless of the current setting of <code>mstatus</code>.MPRV.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>RNMIs are masked out of reset to give software the opportunity to
-initialize data structures and devices for subsequent RNMI handling.</p>
+<p>Setting the IMSIC bit in <code>hstateen0</code> to zero prevents a virtual machine from
+accessing the hart&#8217;s IMSIC the same as setting <code>hstatus</code>.VGEIN = 0.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Software can set NMIE to 1, but attempts to clear NMIE have no effect.</p>
+<p>The AIA bit in <code>mstateen0</code> controls access to all state introduced by the
+Ssaia extension and not controlled by either the CSRIND or the IMSIC
+bits. The AIA bit in <code>hstateen0</code> controls access to all state introduced by the
+Ssaia extension and not controlled by either the CSRIND or the IMSIC
+bits of <code>hstateen0</code>.</p>
+</div>
+<div class="paragraph">
+<p>The CONTEXT bit in <code>mstateen0</code> controls access to the <code>scontext</code> and
+<code>hcontext</code> CSRs provided by the Sdtrig extension. The CONTEXT bit in
+<code>hstateen0</code> controls access to the <code>scontext</code> CSR provided by the Sdtrig
+extension.</p>
+</div>
+<div class="paragraph">
+<p>The P1P13 bit in <code>mstateen0</code> controls access to the <code>hedelegh</code> introduced by
+Privileged Specification Version 1.13.</p>
+</div>
+<div class="paragraph">
+<p>The SRMCFG bit in <code>mstateen0</code> controls access to the <code>srmcfg</code> CSR introduced by
+the Ssqosid <a href="#ssqosid">[ssqosid]</a> extension.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="usage"><a class="anchor" href="#usage"></a>Usage</h3>
+<div class="paragraph">
+<p>After the writable bits of the machine-level <code>mstateen</code> CSRs are initialized to
+zeros on reset, machine-level software can set bits in these registers to
+enable less-privileged access to the controlled state. This may be either
+because machine-level software knows how to swap the state or, more likely,
+because machine-level software isn&#8217;t swapping supervisor-level environments.
+(Recall that the main reason the <code>mstateen</code> CSRs must exist is so machine level
+can emulate the hypervisor extension. When machine level isn&#8217;t emulating the
+hypervisor extension, it is likely there will be no need to keep any
+implemented <code>mstateen</code> bits zero.)</p>
+</div>
+<div class="paragraph">
+<p>If machine level sets any writable <code>mstateen</code> bits to nonzero, it must initialize
+the matching <code>hstateen</code> CSRs, if they exist, by writing zeros to them. And if any
+<code>mstateen</code> bits that are set to one have matching bits in the <code>sstateen</code> CSRs,
+machine-level software must also initialize those <code>sstateen</code> CSRs by writing
+zeros to them. Ordinarily, machine-level software will want to set bit 63 of
+all <code>mstateen</code> CSRs, necessitating that it write zero to all <code>hstateen</code> CSRs.</p>
+</div>
+<div class="paragraph">
+<p>Software should ensure that all writable bits of <code>sstateen</code> CSRs are initialized
+to zeros when an OS at supervisor level is first entered. The OS can then set
+bits in these registers to enable user-level access to the controlled state,
+presumably because it knows how to context-swap the state.</p>
+</div>
+<div class="paragraph">
+<p>For the <code>sstateen</code> CSRs whose access by a guest OS is permitted by bit 63 of the
+corresponding <code>hstateen</code> CSRs, a hypervisor must include the <code>sstateen</code> CSRs in the
+context it swaps for a guest OS. When it starts a new guest OS, it must ensure
+the writable bits of those <code>sstateen</code> CSRs are initialized to zeros, and it must
+emulate accesses to any other <code>sstateen</code> CSRs.</p>
+</div>
+<div class="paragraph">
+<p>If software at any privilege level does not support multiple contexts for
+less-privilege levels, then it may choose to maximize less-privileged access to
+all state by writing a value of all ones to the <code>stateen</code> CSRs at its level (the
+<code>mstateen</code> CSRs for machine level, the <code>sstateen</code> CSRs for an OS, and the <code>hstateen</code>
+CSRs for a hypervisor), without knowing all the state to which it is granting
+access. This is justified because there is no risk of a covert channel between
+execution contexts at the less-privileged level when only one context exists
+at that level. This situation is expected to be common for machine level, and
+it might also arise, for example, for a type-1 hypervisor that hosts only a
+single guest virtual machine.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -531,78 +735,56 @@ initialize data structures and devices for subsequent RNMI handling.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Normally, only reset sequences will explicitly set the NMIE bit.</p>
+<p>If a need is anticipated, the set of <code>stateen</code> CSRs could in the future be
+doubled by adding these:</p>
 </div>
-<hr>
-<div class="paragraph">
-<p>That the NMIE bit is settable does not suffice to support the nesting of
-RNMIs. To support this feature in a direct manner would have required
-allowing software to clear the NMIE bit—a design choice that would have
-contravened the concept of non-maskability.</p>
-</div>
-<div class="paragraph">
-<p>Software that wishes to minimize the latency until the next RNMI is
-taken can follow the top-half/bottom-half model, where the RNMI handler
-itself only enqueues a task to a task queue then returns. The bulk of
-the interrupt servicing is performed later, with RNMIs enabled.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-<div class="paragraph">
-<p>For the purposes of the WFI instruction, NMIE is a global interrupt
-enable, meaning that the setting of NMIE does not affect the operation
-of the WFI instruction.</p>
-</div>
-<div class="paragraph">
-<p>The other bits in <code>mnstatus</code> are <em>reserved</em>; software should write zeros
-and hardware implementations should return zeros.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="mnret-instruction"><a class="anchor" href="#mnret-instruction"></a>MNRET Instruction</h3>
-<div class="paragraph">
-<p>MNRET is an M-mode-only instruction that uses the values in <code>mnepc</code> and
-<code>mnstatus</code> to return to the program counter, privilege mode, and
-virtualization mode of the interrupted context. This instruction also
-sets <code>mnstatus</code>.NMIE.  If MNRET changes the privilege mode to a mode less privileged than M, it also sets <code>mstatus</code>.MPRV to 0.
-If the Zicfilp extension is implemented, then if the new privileged mode
-is <em>y</em>, MNRET sets <code>ELP</code> to the logical AND of <em>y</em>LPE (see <a href="#FCFIACT">[FCFIACT]</a>) and <code>mnstatus</code>.MNPELP.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="rnmi-operation"><a class="anchor" href="#rnmi-operation"></a>RNMI Operation</h3>
-<div class="paragraph">
-<p>When an RNMI interrupt is detected, the interrupted PC is written to the
-<code>mnepc</code> CSR, the type of RNMI to the <code>mncause</code> CSR, and the privilege
-mode of the interrupted context to the <code>mnstatus</code> CSR. The
-<code>mnstatus</code>.NMIE bit is cleared, masking all interrupts.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>0x38C mstateen4</code>, <code>0x39C mstateen4h</code></p>
+</li>
+<li>
+<p><code>0x38D mstateen5</code>, <code>0x39D mstateen5h</code></p>
+</li>
+<li>
+<p><code>0x38E mstateen6</code>, <code>0x39E mstateen6h</code></p>
+</li>
+<li>
+<p><code>0x38F mstateen7</code>, <code>0x39F mstateen7h</code></p>
+</li>
+<li>
+<p><code>0x18C sstateen4</code></p>
+</li>
+<li>
+<p><code>0x18D sstateen5</code></p>
+</li>
+<li>
+<p><code>0x18E sstateen6</code></p>
+</li>
+<li>
+<p><code>0x18F sstateen7</code></p>
+</li>
+<li>
+<p><code>0x68C hstateen4</code>, <code>0x69C hstateen4h</code></p>
+</li>
+<li>
+<p><code>0x68D hstateen5</code>, <code>0x69D hstateen5h</code></p>
+</li>
+<li>
+<p><code>0x68E hstateen6</code>, <code>0x69E hstateen6h</code></p>
+</li>
+<li>
+<p><code>0x68F hstateen7</code>, <code>0x69F hstateen7h</code></p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>The hart then enters machine-mode and jumps to the RNMI trap handler
-address.</p>
-</div>
-<div class="paragraph">
-<p>The RNMI handler can resume original execution using the new MNRET
-instruction, which restores the PC from <code>mnepc</code>, the privilege mode from
-<code>mnstatus</code>, and also sets <code>mnstatus</code>.NMIE, which re-enables interrupts.</p>
-</div>
-<div class="paragraph">
-<p>If the hart encounters an exception while executing in M-mode with the <code>mnstatus</code>.NMIE bit clear, the actions taken are the same as if the exception had occurred while <code>mnstatus</code>.NMIE were set, except that the program counter is set to the RNMI exception trap handler address.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The Smrnmi extension does not change the behavior of the MRET and SRET
-instructions. In particular, MRET and SRET are unaffected by the
-<code>mnstatus</code>.NMIE bit, and their execution does not alter the
-<code>mnstatus</code>.NMIE bit.</p>
+<p>These additional CSRs are not a definite part of the original proposal because
+it is unclear whether they will ever be needed, and it is believed the rate of
+consumption of bits in the first group, registers numbered 0-3, will be slow
+enough that any looming shortage will be perceptible many years in advance. At
+the moment, it is not known even how many years it may take to exhaust just
+<code>mstateen0</code>, <code>sstateen0</code>, and <code>hstateen0</code>.</p>
 </div>
 </td>
 </tr>
@@ -612,8 +794,8 @@ instructions. In particular, MRET and SRET are unaffected by the
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a></span>
-  <span class="next"><a href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a></span>
+  <span class="prev"><a href="machine.html">Machine-Level ISA, Version 1.13</a></span>
+  <span class="next"><a href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a></span>
 </nav>
 </article>  </div>
 </main>

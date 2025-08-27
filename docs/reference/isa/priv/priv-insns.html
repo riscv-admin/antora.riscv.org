@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="priv-cfi.html">
+    <link rel="prev" href="zpm.html">
     <link rel="next" href="priv-history.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -243,6 +243,15 @@
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-intro.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -252,7 +261,13 @@
     <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -264,10 +279,31 @@
     <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
@@ -338,10 +374,16 @@ defined in the RISC-V Privileged Architecture.</p>
 the ECALL and EBREAK instructions, are provided in Volume I of this
 manual.</p>
 </div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrVWd9v2jAQfu9fccoTaAvKBWg33rqNDiToA7QwqeqDIaZEC3bkmF-t-r_PEAaULtkajxI_ICRfvnO---7s4yh4dESkFBHUwoD4DO4230-1EWfSHpGJHyzBan8ADOGKBMGADH9aEFsj_5GCW3m-L54VlCMQfG6Pqf8wllBxXqwRjwp7xID5wWZ9wBc0skO1rJ6Asls8U-uCzG1lAKuMlnqFKCQMKlCTdCFtwoZjLsCKJBFSvcGAC-U0enp-Lu4j3Yst0k1Hwivo-QqaaK2mWivZt3USoZR5KUD8nHlPrGbds5ISBaVuSojQTQsgYmYyFxm5nGfeMaNicXzWuOrBQ_veR1M2lDtSn17uLSJ3VxuHJkwyrX2Wt9byAdBLwvFwyD2aZAWAji2X4e6B6r9Ect-FP5ncIdac-60LdE_PqqnHak_ospuYDoWVT7BuBAntDpVTwaDJIimmQ-lzFlm_D-F5fKRaAx54h0dvcZuIF7pp5zgOqk9S3q3NSSFznH3ka2OSRKk4RPU-iCkydTv1m-ypt3JuGOG2HmE0j_C1DuM31WGTSSrENJR2mzDyQCeUyXwXJDqYJ7n6V833Uao7VX3jzI-U4zadcLHMl2L4f6_uI6nVvapff62Xeu3L9xGtscytaKsqM0O0xkY0HdWs-NozivD3U6RpzxdySgKVp8Oxzyi0OPGAMA-6kgt62pxdS5h2kydHPEVETBYxuZn-m4KtXumLbrKmMsU8Mb3VpIrGiNo4KtM8idrQFBXNqdT-MUXFHIn648iq5otr_zZn7QIeqV3o6l82aA7Vhm4Gm0O1n-f27yN0eucV4CxYnqITRDP6IwBYXzG6564ZLdKG7TddsmaU6IptV4ft2wZAM5_NSPCHQUJ9ISmLVE2eZPSDZvyoXk3Om9e9y1ZJb44QD9AzFeOp_jCIxwn90pr-UaljPqnHujc7Wn-bOAZlemOT6fojM-M4v3lq9gu13HxA" alt="RISC-V Privileged Instructions">
+</div>
+<div class="title">Figure 1. RISC-V Privileged Instructions</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="priv-cfi.html">Control-flow Integrity(CFI)</a></span>
+  <span class="prev"><a href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a></span>
   <span class="next"><a href="priv-history.html">History</a></span>
 </nav>
 </article>  </div>
@@ -356,101 +398,6 @@ manual.</p>
                   <ul class="nav-versions">
                       <li class="component">
                         <div>
-                          <a class="title" href="../../ffh/v1.0/index.html">ACPI Functional Fixed Hardware</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../ffh/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../aia/v1.0/index.html">Advanced Interrupt Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../aia/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../etrace/v1.0/index.html">E-Trace Encapsulation Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../etrace/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../psabi/v1.0/index.html">ELF psABI Specification</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../psabi/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../iommuArch/v1.0/index.html">IOMMU Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../iommuArch/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
                           <a class="title" href="../index.html">ISA Specifications</a>
                         </div>                        <div class="version-item is-active">
                           <div>
@@ -463,82 +410,6 @@ manual.</p>
   <li class="version">
     <a href="../index.html">
       default
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../reri/v1.0/index.html">RERI Architecture</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../reri/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../qos/v1.0/index.html">RISC-V Capacity and Bandwidth QoS Register Interface</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../qos/v1.0/index.html">
-      v1.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../plic/v1.0.0/index.html">RISC-V Platform-Level Interrupt Controller</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../plic/v1.0.0/index.html">
-      v1.0.0
-    </a>
-  </li>
-</ul>                        </div>
-                        
-                      </li>
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../semihost/v1.0/index.html">semihosting</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Stable
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../semihost/v1.0/index.html">
-      v1.0
     </a>
   </li>
 </ul>                        </div>

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="ssdbltrp.html">
+    <link rel="next" href="priv-insns.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
+    <meta name="version" content="">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+
+
+<header class="header" id="antora-header">
+    <nav class="navbar">
+        <head>
+            <link data-rh="true" rel="icon" href="/img/favicon.ico">
+            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
+            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
+
+        </head>
+        <script>
+            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
+        </script>
+            <link rel="preload" as="image" href="/img/logo.svg">
+            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
+            <div class="announcementBar_mb4j" role="banner">
+                <div class="announcementBarPlaceholder_vyr4"></div>
+                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
+            <nav aria-label="Main" class="navbar ">
+                <div class="navbar__inner">
+                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                        <a class="navbar__brand" href="/">
+                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
+                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
+                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
+                            </ul>
+                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
+                        <div class="navbar-item search hide-for-print">
+                          <div id="search-field" class="field">
+                            <input id="search-input" type="text" placeholder="Search">
+                          </div>
+                        </div>
+                    <div class="navbar__items navbar__items--right">
+
+
+                      <div class="navbarSearchContainer_Bca1">
+
+                      </div>
+                    </div>
+                </div>
+                <div role="presentation" class="navbar-sidebar__backdrop"></div>
+            </nav>
+            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
+        
+
+    </nav>
+</header><div class="body">
+<div class="nav-container" data-component="isa" data-version="">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">default</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-history.html">History</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume II: RISC-V Privileged ISA Specification</li>
+      <li><a href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="Zpm"><a class="anchor" href="#Zpm"></a>Pointer Masking Extensions, Version 1.0.0</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h3>
+<div class="paragraph">
+<p>RISC-V Pointer Masking (PM) is a feature that, when enabled, causes the CPU to ignore the upper bits of the effective address (these terms will be defined more precisely in the Background section). This allows these bits to be used in whichever way the application chooses. The version of the extension being described here specifically targets <strong>tag checks</strong>: When an address is accessed, the tag stored in the masked bits can be compared against a range-based tag. This is used for dynamic safety checkers such as HWASAN cite:[HWASAN]. Such tools can be applied in all privilege modes (U, S, and M).</p>
+</div>
+<div class="paragraph">
+<p>HWASAN leverages tags in the upper bits of the address to identify memory errors such as use-after-free or buffer overflow errors. By storing a <strong>pointer tag</strong> in the upper bits of the address and checking it against a <strong>memory tag</strong> stored in a side table, it can identify whether a pointer is pointing to a valid location. Doing this without hardware support introduces significant overheads since the pointer tag needs to be manually removed for every conventional memory operation. Pointer masking support reduces these overheads.</p>
+</div>
+<div class="paragraph">
+<p>Pointer masking only adds the ability to ignore pointer tags during regular memory accesses. The tag checks themselves can be implemented in software or hardware. If implemented in software, pointer masking still provides performance benefits since non-checked accesses do not need to transform the address before every memory access. Hardware implementations are expected to provide even larger benefits due to performing tag checks out-of-band and hardening security guarantees derived from these checks. We anticipate that future extensions may build on pointer masking to support this functionality in hardware.</p>
+</div>
+<div class="paragraph">
+<p>It is worth mentioning that while HWASAN is the primary use-case for the current pointer masking extension, a number of other hardware/software features may be implemented leveraging Pointer Masking. Some of these use cases include sandboxing, object type checks and garbage collection bits in runtime systems. Note that the current version of the spec does not explicitly address these use cases, but future extensions may build on it to do so.</p>
+</div>
+<div class="paragraph">
+<p>While we describe the high-level concepts of pointer masking as if it was a single extension, it is, in reality, a family of extensions that implementations or profiles may choose to individually include or exclude (see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="background"><a class="anchor" href="#background"></a>Background</h3>
+<div class="sect3">
+<h4 id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h4>
+<div class="paragraph">
+<p>We now define basic terms. Note that these rely on the definition of an “ignore” transformation, which is defined in <a href="#sec-ignore-transform">The “Ignore” Transformation</a>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Effective address (as defined in the RISC-V Base ISA):</strong> A load/store effective address sent to the memory subsystem (e.g., as generated during the execution of load/store instructions). This does not include addresses corresponding to implicit accesses, such as page-table walks.</p>
+</li>
+<li>
+<p><strong>Masked bits:</strong> The upper PMLEN bits of an address, where PMLEN is a configurable parameter. We will use PMLEN consistently throughout this document to refer to this parameter.</p>
+</li>
+<li>
+<p><strong>Transformed address:</strong> An effective address after the ignore transformation has been applied.</p>
+</li>
+<li>
+<p><strong>Address translation mode:</strong> The MODE of the currently active address translation scheme as defined in the RISC-V privileged specification. This could, for example, refer to Bare, Sv39, Sv48, and Sv57. In accordance with the privileged specification, non-Bare translation modes are referred to as virtual-memory schemes. For the purpose of this specification, M-mode translation is treated as equivalent to Bare.</p>
+</li>
+<li>
+<p><strong>Address validity:</strong> The RISC-V privileged spec defines validity of addresses based on the address translation mode that is currently in use (e.g., Sv57, Sv48, Sv39, etc.). For a virtual address to be valid, all bits in the unused portion of the address must be the same as the Most Significant Bit (MSB) of the used portion. For example, when page-based 48-bit virtual memory (Sv48) is used, load/store effective addresses, which are 64 bits, must have bits 63–48 all set to bit 47, or else a page-fault exception will occur. For physical addresses, validity means that bits XLEN-1 to PABITS are zero, where PABITS is the number of physical address bits supported by the processor.</p>
+</li>
+<li>
+<p><strong>NVBITS:</strong> The upper bits within a virtual address that have no effect on addressing memory and are only used for validity checks. These bits depend on the currently active address translation mode. For example, in Sv48, these are bits 63-48.</p>
+</li>
+<li>
+<p><strong>VBITS:</strong> The bits within a virtual address that affect which memory is addressed. These are the bits of an address which are used to index into page tables.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sec-ignore-transform"><a class="anchor" href="#sec-ignore-transform"></a>The “Ignore” Transformation</h4>
+<div class="paragraph">
+<p>The ignore transformation differs depending on whether it applies to a virtual or physical address. For virtual addresses, it replaces the upper PMLEN bits with the sign extension of the PMLEN+1st bit.</p>
+</div>
+<div class="listingblock">
+<div class="title">"Ignore" Transformation for virtual addresses, expressed in Verilog code.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">transformed_effective_address =
+  {{PMLEN{effective_address[XLEN-PMLEN-1]}}, effective_address[XLEN-PMLEN-1:0]}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If PMLEN is less than or equal to NVBITS for the largest supported address translation mode on a given architecture, this is equivalent to ignoring a subset of NVBITS. This enables cheap implementations that modify validity checks in the CPU instead of performing the sign extension.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When applied to a physical address, including guest-physical addresses (i.e., all cases except when the active satp register&#8217;s MODE field != Bare), the ignore transformation replaces the upper PMLEN bits with 0. This includes both the case of running in M-mode and running in other privilege modes with Bare address translation mode.</p>
+</div>
+<div class="listingblock">
+<div class="title">"Ignore" Transformation for physical addresses, expressed in Verilog code.</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">transformed_effective_address =
+  {{PMLEN{0}}, effective_address[XLEN-PMLEN-1:0]}</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This definition is consistent with the way that RISC-V already handles physical and virtual addresses differently. While the unused upper bits of virtual addresses are the sign-extension of the used bits (see the definition of "address validity" in <a href="#_definitions">[_definitions]</a>), the equivalent bits in physical addresses are zero-extended. This is necessary due to their interactions with other mechanisms such as Physical Memory Protection (PMP).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When pointer masking is enabled, the ignore transformation will be applied to every explicit memory access (e.g., loads/stores, atomics operations, and floating point loads/stores). The transformation <strong>does not</strong> apply to implicit accesses such as page-table walks or instruction fetches. The set of accesses that pointer masking applies to is described in <a href="#_memory_accesses_subject_to_pointer_masking">[_memory_accesses_subject_to_pointer_masking]</a>.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pointer masking does not change the underlying address generation logic or permission checks. Under a fixed address translation mode, it is semantically equivalent to replacing a subset of instructions (e.g., loads and stores) with an instruction sequence that applies the ignore operation to the target address of this instruction and then applies the instruction to the transformed address. References to address translation and other implementation details in the text are primarily to explain design decisions and common implementation patterns.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that pointer masking is purely an arithmetic operation on the address that makes no assumption about the meaning of the addresses it is applied to. Pointer masking with the same value of PMLEN always has the same effect for the same type of address (virtual or physical). This ensures that code that relies on pointer masking does not need to be aware of the environment it runs in once pointer masking has been enabled, as long as the value of PMLEN is known, and whether or not addresses are virtual or physical. For example, the same application or library code can run in user mode, supervisor mode or M-mode (with different address translation modes) without modification.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A common scenario for such code is that addresses are generated by mmap system calls. This abstracts away the details of the underlying address translation mode from the application code. Software therefore needs to be aware of the value of PMLEN to ensure that its minimally required number of tag bits is supported. <a href="#_determining_the_value_of_pmlen">[_determining_the_value_of_pmlen]</a> covers how this value is derived.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="example"><a class="anchor" href="#example"></a>Example</h4>
+<div class="paragraph">
+<p><a href="#pm-example">Example of PM address translation for RV64 under Sv57</a> shows an example of the pointer masking transformation on a virtual address when PM is enabled for RV64 under Sv57 (PMLEN=7).</p>
+</div>
+<table id="pm-example" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Example of PM address translation for RV64 under Sv57</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Page-based profile</th>
+<th class="tableblock halign-left valign-top">Sv57 on RV64</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Effective Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xABFFFFFF12345678<br>
+NVBITS[1010101]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Mask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x01FFFFFFFFFFFFFF<br>
+NVBITS[0000000]  VBITS[11111111111111111111111111111&#8230;&#8203;111]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMLEN+1st bit from the top (i.e., bit XLEN-PMLEN-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transformed effective address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xFFFFFFFF12345678<br>
+NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If the address was a physical address rather than a virtual address with Sv57, the transformed address with PMLEN=7 would be 0x1FFFFFF12345678.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="determining-the-value-of-pmlen"><a class="anchor" href="#determining-the-value-of-pmlen"></a>Determining the Value of PMLEN</h4>
+<div class="paragraph">
+<p>From an implementation perspective, ignoring bits is deeply connected to the maximum virtual and physical address space supported by the processor (e.g., Bare, Sv48, Sv57). In particular, applying the above transformation is cheap if it covers only bits that are not used by <strong>any</strong> supported address translation mode (as it is equivalent to switching off validity checks). Masking NVBITS beyond those bits is more expensive as it requires ignoring them in the TLB tag, and even more expensive if the masked bits extend into the VBITS portion of the address (as it requires performing the actual sign extension). Similarly, when running in Bare or M mode, it is common for implementations to not use a particular number of bits at the top of the physical address range and fix them to zero. Applying the ignore transformation to those bits is cheap as well, since it will result in a valid physical address with all the upper bits fixed to 0.</p>
+</div>
+<div class="paragraph">
+<p>The current standard only supports PMLEN=XLEN-48 (i.e., PMLEN=16 in RV64) and PMLEN=XLEN-57 (i.e., PMLEN=7 in RV64). A setting has been reserved to potentially support other values of PMLEN in future standards. In such future standards, different supported values of PMLEN may be defined for each privilege mode (U/VU, S/HS, and M).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Future versions of the pointer masking extension may introduce the ability to freely configure the value of PMLEN. The current extension does not define the behavior if PMLEN was different from the values defined above. In particular, there is no guarantee that a future pointer masking extension would define the ignore operation in the same way for those values of PMLEN.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="pointer-masking-and-privilege-modes"><a class="anchor" href="#pointer-masking-and-privilege-modes"></a>Pointer Masking and Privilege Modes</h4>
+<div class="paragraph">
+<p>Pointer masking is controlled separately for different privilege modes. The subset of supported privilege modes is determined by the set of supported pointer masking extensions. Different privilege modes may have different pointer masking settings active simultaneously and the hardware will automatically apply the pointer masking settings of the currently active privilege mode. A privilege mode&#8217;s pointer masking setting is configured by bits in configuration registers of the next-higher privilege mode.</p>
+</div>
+<div class="paragraph">
+<p>Note that the pointer masking setting that is applied only depends on the active privilege mode, not on the address that is being masked. Some operating systems (e.g., Linux) may use certain bits in the address to disambiguate between different types of addresses (e.g., kernel and user-mode addresses). Pointer masking <em>does not</em> take these semantics into account and is purely an arithmetic operation on the address it is given.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Linux places kernel addresses in the upper half of the address space and user addresses in the lower half of the address space. As such, the MSB is often used to identify the type of a particular address. With pointer masking enabled, this role is now played by bit XLEN-PMLEN-1 and code that checks whether a pointer is a kernel or a user address needs to inspect this bit instead. For backward compatibility, it may be desirable that the MSB still indicates whether an address is a user or a kernel address. An operating system&#8217;s ABI may mandate this, but it does not affect the pointer masking mechanism itself. For example, the Linux ABI may choose to mandate that the MSB is not used for tagging and replicates bit XLEN-PMLEN-1 bit (note that for such a mechanism to be secure, the kernel needs to check the MSB of any user mode-supplied address and ensure that this invariant holds before using it; alternatively, it can apply the transformation from Listing 1 or 2 to ensure that the MSB is set to the correct value).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="memory-accesses-subject-to-pointer-masking"><a class="anchor" href="#memory-accesses-subject-to-pointer-masking"></a>Memory Accesses Subject to Pointer Masking</h4>
+<div class="paragraph">
+<p>Pointer masking applies to all explicit memory accesses. Currently, in the Base and Privileged ISAs, these are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Base Instruction Set</strong>: LB, LH, LW, LBU, LHU, LWU, LD, SB, SH, SW, SD.</p>
+</li>
+<li>
+<p><strong>Atomics</strong>: All instructions in RV32A and RV64A.</p>
+</li>
+<li>
+<p><strong>Floating Point</strong>: FLW, FLD, FLQ, FSW, FSD, FSQ.</p>
+</li>
+<li>
+<p><strong>Compressed</strong>: All instructions mapping to any of the above, and C.LWSP, C.LDSP, C.LQSP, C.FLWSP, C.FLDSP, C.SWSP, C.SDSP, C.SQSP, C.FSWSP, C.FSDSP.</p>
+</li>
+<li>
+<p><strong>Hypervisor Extension</strong>: HLV.*, HSV.* (in some cases; see <a href="#_ssnpm">[_ssnpm]</a>).</p>
+</li>
+<li>
+<p><strong>Cache Management Operations</strong>: All instructions in Zicbom, Zicbop and Zicboz.</p>
+</li>
+<li>
+<p><strong>Vector Extension</strong>: All vector load and store instructions in the ratified RVV 1.0 spec.</p>
+</li>
+<li>
+<p><strong>Zicfiss Extension</strong>: SSPUSH, C.SSPUSH, SSPOPCHK, C.SSPOPCHK, SSAMOSWAP.W/D.</p>
+</li>
+<li>
+<p><strong>Assorted</strong>: FENCE, FENCE.I (if the currently unused address fields become enabled in the future).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This list will grow over time as new extensions introduce new instructions that perform explicit memory accesses.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For other extensions, pointer masking applies to all explicit memory accesses by default. Future extensions may add specific language to indicate whether particular accesses are or are not included in pointer masking.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is worth noting that pointer masking is not applied to <code>SFENCE.*</code>, <code>HFENCE.*</code>, <code>SINVAL.*</code>, or <code>HINVAL.*</code>. When such an operation is invoked, it is the responsibility of the software to provide the correct address.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>MPRV and SPVP affect pointer masking as well, causing the pointer masking settings of the effective privilege mode to be applied. When MXR is in effect at the effective privilege mode where explicit memory access is performed, pointer masking does not apply.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that this includes cases where page-based virtual memory is not in effect; i.e., although MXR has no effect on permissions checks when page-based virtual memory is not in effect, it is still used in determining whether or not pointer masking should be applied.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Cache Management Operations (CMOs) must respect and take into account pointer masking. Otherwise, a few serious security problems can appear, including:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>CBO.ZERO may work as a STORE operation. If pointer masking is not respected, it would be possible to write to memory bypassing the mask enforcement.</p>
+</li>
+<li>
+<p>If CMOs did not respect pointer masking, it would be possible to weaponize this in a side-channel attack. For example, U-mode would be able to flush a physical address (without masking) that it should not be permitted to.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Pointer masking only applies to accesses generated by instructions on the CPU (including CPU extensions such as an FPU). E.g., it does not apply to accesses generated by page-table walks, the IOMMU, or devices.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Pointer Masking does not apply to DMA controllers and other devices. It is therefore the responsibility of the software to manually untag these addresses.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Misaligned accesses are supported, subject to the same limitations as in the absence of pointer masking. The behavior is identical to applying the pointer masking transformation to every constituent aligned memory access. In other words, the accessed bytes should be identical to the bytes that would be accessed if the pointer masking transformation was individually applied to every byte of the access without pointer masking. This ensures that both hardware implementations and emulation of misaligned accesses in M-mode behave the same way, and that the M-mode implementation is identical whether or not pointer masking is enabled (e.g., such an implementation may leverage MPRV to apply the correct privilege mode&#8217;s pointer masking setting).</p>
+</div>
+<div class="paragraph">
+<p>No pointer masking operations are applied when software reads/writes to CSRs, including those meant to hold addresses. If software stores tagged addresses into such CSRs, data load or data store operations based on those addresses are subject to pointer masking only if they are explicit (<a href="#_memory_accesses_subject_to_pointer_masking">[_memory_accesses_subject_to_pointer_masking]</a>) and pointer masking is enabled for the privilege mode that performs the access. The implemented WARL width of CSRs is unaffected by pointer masking (e.g., if a CSR supports 52 bits of valid addresses and pointer masking is supported with PMLEN=16, the necessary number of WARL bits remains 52 independently of whether pointer masking is enabled or disabled).</p>
+</div>
+<div class="paragraph">
+<p>In contrast to software writes, pointer masking <strong>is applied</strong> for hardware writes to a CSR (e.g., when the hardware writes the transformed address to <code>stval</code> when taking an exception). Pointer masking is also applied to the memory access address when matching address triggers in debug.</p>
+</div>
+<div class="paragraph">
+<p>For example, software is free to write a tagged or untagged address to <code>stvec</code>, but on trap delivery (e.g., due to an exception or interrupt), pointer masking <strong>will not be applied</strong> to the address of the trap handler. However, pointer masking <strong>will be applied</strong> by the hardware to any address written into <code>stval</code> when delivering an exception.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The rationale for this choice is that delivering the additional bits may add overheads in some hardware implementations. Further, pointer masking is configured per privilege mode, so all trap handlers in supervisor mode would need to be careful to configure pointer masking the same way as user mode or manually unmask (which is expensive).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="pointer-masking-extensions"><a class="anchor" href="#pointer-masking-extensions"></a>Pointer Masking Extensions</h4>
+<div class="paragraph">
+<p>Pointer masking refers to a number of separate extensions, all of which are privileged. This approach is used to capture optionality of pointer masking features. Profiles and implementations may choose to support an arbitrary subset of these extensions and must define valid ranges for their corresponding values of PMLEN.</p>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ssnpm</strong>: A supervisor-level extension that provides pointer masking for the next lower privilege mode (U-mode), and for VS- and VU-modes if the H extension is present.</p>
+</li>
+<li>
+<p><strong>Smnpm</strong>: A machine-level extension that provides pointer masking for the next lower privilege mode (S/HS if S-mode is implemented, or U-mode otherwise).</p>
+</li>
+<li>
+<p><strong>Smmpm</strong>: A machine-level extension that provides pointer masking for M-mode.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>See <a href="#_isa_extensions">[_isa_extensions]</a> for details on how each of these extensions is configured.</p>
+</div>
+<div class="paragraph">
+<p>In addition, the pointer masking standard defines two extensions that describe an execution environment but have no bearing on hardware implementations. These extensions are intended to be used in profile specifications where a User profile or a Supervisor profile can only reference User level or Supervisor level pointer masking functionality, and not the associated CSR controls that exist at a higher privilege level (i.e., in the execution environment).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sspm</strong>: An extension that indicates that there is pointer-masking support available in supervisor mode, with some facility provided in the supervisor execution environment to control pointer masking.</p>
+</li>
+<li>
+<p><strong>Supm</strong>: An extension that indicates that there is pointer-masking support available in user mode, with some facility provided in the application execution environment to control pointer masking.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The precise nature of these facilities is left to the respective execution environment.</p>
+</div>
+<div class="paragraph">
+<p>Pointer masking only applies to RV64. In RV32, trying to enable pointer masking will result in an illegal WARL write and not update the pointer masking configuration bits (see <a href="#_isa_extensions">[_isa_extensions]</a> for details). The same is the case on RV64 or larger systems when UXL/SXL/MXL is set to 1 for the corresponding privilege mode. Note that in RV32, the CSR bits introduced by pointer masking are still present, for compatibility between RV32 and larger systems with UXL/SXL/MXL set to 1. Setting UXL/SXL/MXL to 1 will clear the corresponding pointer masking configuration bits.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that setting UXL/SXL/MXL to 1 and back to 0 does not preserve the previous values of the PMM bits. This includes the case of entering an RV32 virtual machine from an RV64 hypervisor and returning.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="isa-extensions"><a class="anchor" href="#isa-extensions"></a>ISA Extensions</h3>
+<div class="paragraph">
+<p>This section describes the pointer masking extensions <code>Smmpm</code>, <code>Smnpm</code> and <code>Ssnpm</code>. All of these extensions are privileged ISA extensions and do not add any new CSRs. For the definitions of <code>Sspm</code> and <code>Supm</code>, see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Future extensions may introduce additional CSRs to allow different privilege modes to modify their own pointer masking settings. This may be required for future use cases in managed runtime systems that are not currently addressed as part of this extension.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each extension introduces a 2-bit WARL field (<code>PMM</code>) that may take on the following values to set the pointer masking settings for a particular privilege mode.</p>
+</div>
+<table id="pmm-values" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Possible values of <code>PMM</code> WARL field.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 75%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pointer masking is disabled (PMLEN=0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pointer masking is enabled with PMLEN=XLEN-57 (PMLEN=7 on RV64)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pointer masking is enabled with PMLEN=XLEN-48 (PMLEN=16 on RV64)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>All of these fields are read-only 0 on RV32 systems.</p>
+</div>
+<div class="sect3">
+<h4 id="ssnpm"><a class="anchor" href="#ssnpm"></a>Ssnpm</h4>
+<div class="paragraph">
+<p><code>Ssnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>senvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (U/VU mode), according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
+</div>
+<div class="paragraph">
+<p>In systems where the H Extension is present, <code>Ssnpm</code> also adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>henvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for VS-mode, according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>. Further, a 2-bit WARL field (<code>HUPMM</code>) is added to bits 49:48 of <code>hstatus</code>. Setting <code>hstatus.HUPMM</code> enables or disables pointer masking for <code>HLV.*</code> and <code>HSV.*</code> instructions in U-mode, according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>, when their explicit memory access is performed as though in VU-mode. In HS- and M-modes, pointer masking for these instructions is enabled or disabled by <code>senvcfg.PMM</code>, when their explicit memory access is performed as though in VU-mode. Setting <code>henvcfg.PMM</code> enables or disables pointer masking for <code>HLV.*</code> and <code>HSV.*</code> when their explicit memory access is performed as though in VS-mode.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The hypervisor should copy the value written to <code>senvcfg.PMM</code> by the guest to the <code>hstatus.HUPMM</code> field prior to invoking <code>HLV.*</code> or <code>HSV.*</code> instructions in U-mode.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The memory accesses performed by the <code>HLVX.*</code> instructions are not subject to pointer masking.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>HLVX.*</code> instructions, designed for emulating implicit access to fetch instructions from guest memory, perform memory accesses that are exempt from pointer masking to facilitate this emulation. For the same reason, pointer masking does not apply when MXR is set.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="smnpm"><a class="anchor" href="#smnpm"></a>Smnpm</h4>
+<div class="paragraph">
+<p><code>Smnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>menvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (S-/HS-mode if S-mode is implemented, or U-mode otherwise), according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The type of address determines which type of pointer masking is applied. For example, when running with virtualization in VS/VU mode with <code>vsatp.MODE</code> = Bare, physical address pointer masking (zero extension) applies.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="smmpm"><a class="anchor" href="#smmpm"></a>Smmpm</h4>
+<div class="paragraph">
+<p><code>Smmpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>mseccfg</code>. The presence of <code>Smmpm</code> implies the presence of the <code>mseccfg</code> register, even if it would not otherwise be present. Setting <code>PMM</code> enables or disables pointer masking for M mode, according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="interaction-with-sfence-vma"><a class="anchor" href="#interaction-with-sfence-vma"></a>Interaction with SFENCE.VMA</h4>
+<div class="paragraph">
+<p>Since pointer masking applies to the effective address only and does not affect any memory-management data structures, no SFENCE.VMA is required after enabling/disabling pointer masking.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="interaction-with-two-stage-address-translation"><a class="anchor" href="#interaction-with-two-stage-address-translation"></a>Interaction with Two-Stage Address Translation</h4>
+<div class="paragraph">
+<p>Guest physical addresses (GPAs) are 2 bits wider than the corresponding virtual address translation modes, resulting in additional address translation schemes Sv32x4, Sv39x4, Sv48x4, and Sv57x4 for translating guest physical addresses to supervisor physical addresses. When running with virtualization in VS/VU mode with <code>vsatp.MODE</code> = Bare, this means that those two bits may be subject to pointer masking, depending on <code>hgatp.MODE</code> and <code>senvcfg.PMM</code>/<code>henvcfg.PMM</code> (for VU/VS mode). If <code>vsatp.MODE</code> != BARE, this issue does <strong>not</strong> apply.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An implementation could mask those two bits on the TLB access path, but this can have a significant timing impact. Alternatively, an implementation may choose to "waste" TLB capacity by having up to 4 duplicate entries for each page. In this case, the pointer masking operation can be applied on the TLB refill path, where it is unlikely to affect timing. To support this approach, some TLB entries need to be flushed when PMLEN changes in a way that may affect these duplicate entries.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To support implementations where (XLEN-PMLEN) can be less than the GPA width supported by <code>hgatp.MODE</code>, hypervisors should execute an <code>HFENCE.GVMA</code> with <em>rs1</em>=<code>x0</code> if the <code>henvcfg.PMM</code> is changed from or to a value where (XLEN-PMLEN) is less than GPA width supported by the <code>hgatp</code> translation mode of that guest. Specifically, these cases are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>PMLEN=7</code> and <code>hgatp.MODE=sv57x4</code></p>
+</li>
+<li>
+<p><code>PMLEN=16</code> and <code>hgatp.MODE=sv57x4</code></p>
+</li>
+<li>
+<p><code>PMLEN=16</code> and <code>hgatp.MODE=sv48x4</code></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><code>Smmpm</code> implementations need to satisfy max(largest supported virtual address size, largest supported supervisor physical address size) &#8656; (XLEN - PMLEN) bits to avoid any masking logic on the TLB access path.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Implementation of an address-specific <code>HFENCE.GVMA</code> should either ignore the address argument, or should ignore the top masked GPA bits of entries when comparing for an address match.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="number-of-masked-bits"><a class="anchor" href="#number-of-masked-bits"></a>Number of Masked Bits</h4>
+<div class="paragraph">
+<p>As described in <a href="#_determining_the_value_of_pmlen">[_determining_the_value_of_pmlen]</a>, the supported values of PMLEN may depend on the effective privilege mode. The current standard only defines PMLEN=XLEN-48 and PMLEN=XLEN-57, but this assumption may be relaxed in future extensions and profiles. Trying to enable pointer masking in an unsupported scenario represents an illegal write to the corresponding pointer masking enable bit and follows WARL semantics. Future profiles may choose to define certain combinations of privilege modes and supported values of PMLEN as mandatory.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An option that was considered but discarded was to allow implementations to set PMLEN depending on the active addressing mode. For example, PMLEN could be set to 16 for Sv48 and to 25 for Sv39. However, having a single value of PMLEN (e.g., setting PMLEN to 16 for both Sv39 and Sv48 rather than 25) facilitates TLB implementations in designs that support Sv39 and Sv48 but not Sv57. 16 bits are sufficient for current pointer masking use cases but allow for a TLB implementation that matches against the same number of virtual tag bits independently of whether it is running with Sv39 or Sv48. However, if Sv57 is supported, tag matching may need to be conditional on the current address translation mode.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a></span>
+  <span class="next"><a href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="hidden">
+		<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer><script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
