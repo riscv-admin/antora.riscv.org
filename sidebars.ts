@@ -44,12 +44,12 @@ const sidebars: SidebarsConfig = {
         {
           type:"link",
           label:"ISA Volume 1: Priv",
-          href:"/isa",
+          href:"pathname:///docs/reference/isa/unpriv/intro.html",
         },
         {
           type:"link",
           label:"ISA Volume 2: Un-Priv",
-          href:"/isa",
+          href:"pathname:///docs/reference/isa/priv/priv-intro.html",
         },
 
       ],
