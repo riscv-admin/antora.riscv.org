@@ -26,7 +26,7 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
 
   customFields:{
-    description: "All the developer resources for the RISC-V ecosystem.",
+    description: "Developer resources for the RISC-V ecosystem.",
   },
 
   // Even if you don't use internationalization, you can use this field to set
@@ -41,12 +41,13 @@ const config: Config = {
     [
       'classic',
       {
+        debug:true,
         docs: {
           sidebarPath: './sidebars.ts',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // editUrl:
+          //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
         blog: {
           showReadingTime: true,
@@ -56,8 +57,8 @@ const config: Config = {
           },
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
+          // editUrl:
+          //   'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
@@ -71,6 +72,11 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
@@ -160,8 +166,9 @@ const config: Config = {
     },
     announcementBar: {
       id: 'announcement-bar',
+      backgroundColor: '#fdb515',
       isCloseable: true,
-      content:'congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.',
+      content:'Congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.',
     },
     footer: {
       style: 'dark',
@@ -273,7 +280,7 @@ const config: Config = {
     },
     prism: {
       theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      // darkTheme: prismThemes.dracula,
     },
   } satisfies Preset.ThemeConfig,
 };
