@@ -2,6 +2,9 @@ site:
   title: RISC-V Ratified Specifications Library
     #url: https://docs.riscv.org
 
+output:
+  dir: ./build/docs/reference
+
 content:
   sources:
   - url: https://github.com/riscv/riscv-isa-manual.git
@@ -81,12 +84,14 @@ asciidoc:
     multiple_pdfs: false
     pdf_list: ~
 
+# Temp disable for local build speedup. Re-enable for deployment. 
 runtime:
   fetch: true
-
-#antora:
-#   extensions:
-#     - '@antora/lunr-extension'
+  
+antora:
+  extensions:
+  - require: '@antora/lunr-extension'
+    index_latest_only: true
 #     - '@antora/pdf-extension'
 #     - '@antora/asciidoctor-bibtex'
 

@@ -8,41 +8,6 @@ import Heading from '@theme/Heading';
 
 import styles from './isa.module.css';
 
-function HomepageHeader() {
-  const {siteConfig} = useDocusaurusContext();
-  return (
-    <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
-        <Heading as="h1" className="hero__title">
-          {siteConfig.title}
-        </Heading>
-        <p className="hero__subtitle">{siteConfig.tagline}</p>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="{siteConfig.baseUrl}/docs/intro">
-            Docusaurus Tutorial - 5min ⏱️
-          </Link>
-        </div>
-      </div>
-    </header>
-  );
-}
-
-// export default function Home(): ReactNode {
-//   const {siteConfig} = useDocusaurusContext();
-//   return (
-//     <Layout
-//       title={`Hello from ${siteConfig.title}`}
-//       description="Description will go into a meta tag in <head />">
-//       <HomepageHeader />
-//       <main>
-//         <HomepageFeatures />
-//       </main>
-//     </Layout>
-//   );
-// }
-
 
 import ErrorBoundary from '@docusaurus/ErrorBoundary';
 import {
@@ -104,7 +69,7 @@ export default function Home(): ReactNode {
   return (
     <LayoutISA>
     <iframe 
-      src={`${siteConfig.baseUrl}site/isa/index.html`}  
+      src={`${siteConfig.baseUrl}docs/reference/isa/index.html`}  
       title="Description" 
       style={{height: '96vh', width: '100vw'}} />
     </LayoutISA>
