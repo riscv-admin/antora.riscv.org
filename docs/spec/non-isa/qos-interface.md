@@ -3,7 +3,7 @@ title: Capacity and Bandwidth QoS Register Interface
 description: ~60 character description
 id: qos
 hide_table_of_contents: true
-pdf: ../../../pdf/riscv-cbqri.pdf
+pdf: /pdf/riscv-cbqri.pdf
 ---
 
 Specifies:
