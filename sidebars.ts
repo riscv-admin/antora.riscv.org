@@ -97,7 +97,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type:'category',
-          label:'Debug, Trace & RASI',
+          label:'Debug, Trace & RAS',
           collapsed:true,
           items:[
             'spec/non-isa/debug',
