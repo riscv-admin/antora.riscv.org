@@ -1,11 +1,11 @@
-name: Build Check
+name: Deploy Portal
 
 on:
   push:
     branches: [ "main" ]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   deploy:
@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
 
     steps:
     - uses: actions/checkout@v4
@@ -38,14 +38,26 @@ jobs:
     - name: Install Docusaurus dependencies
       run: yarn install
 
-    - name: Build website
+    - name: Build Antora
+      continue-on-error: true
       run: |
         cd antora 
         npx antora antora-playbook.yml --stacktrace
-        cd ..
-        yarn build
+    
+    - name: Build Docusaurus
+      # continue-on-error: true
+      run: yarn build
 
     - name: Deploy to GitHub Pages
+      # run: yarn deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: build # The folder the action should deploy.
+
+    - name: Upload Artifact Logs
+        id: deployment
+        uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: Portal Snapshot
+          path: ./build/

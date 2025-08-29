@@ -20,14 +20,12 @@ on:
 
 jobs:
   website-checker:
-    name: $WEBSITE_URL Link Checker
+    name: Developer Portal Link Checker
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
       - name: Install Python
         uses: actions/setup-python@v5
-        with:
-          python-version: '3.8'
       - name: Setup Environment
         run: |
           pip3 install git+https://github.com/linkchecker/linkchecker.git
@@ -39,25 +37,22 @@ jobs:
             --no-warnings  \
             -t 100 \
             -o html \
-            --ignore-url /internal/* \
-            --ignore-url /some_other_directory/~.* \
-            --ignore-url /*\.extension \
-            $WEBSITE_URL > ./logs/$WEBSITE_URL.html
+            http://developer.riscv.org > ./logs/developer.riscv.org.html
 
       - name: Process Link Log
         if: always()
         continue-on-error: true
         run: |
-          echo LC_SUMMARY=$( awk '/\d* warnings found/' ./logs/$WEBSITE_URL.html) >> $GITHUB_ENV
-          echo $(awk '/\d* warnings found/' ./logs/$WEBSITE_URL.html )
+          echo LC_SUMMARY=$( awk '/\d* warnings found/' ./logs/developer.riscv.org.html) >> $GITHUB_ENV
+          echo $(awk '/\d* warnings found/' ./logs/developer.riscv.org.html )
           echo $GITHUB_ENV
 
       - name: Upload Artifact Logs
         uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
-          name: $WEBSITE_URL.html
-          path: ./logs/$WEBSITE_URL.html
+          name: developer.riscv.org.html
+          path: ./logs/developer.riscv.org.html
 
       # # Slack Notification of broken links found
       # - name: Slack Notification
