@@ -2,6 +2,7 @@ import React, { CSSProperties } from 'react';
 import styles from './styles.module.css';
 import clsx from 'clsx';
 import Button from '@site/src/components/Button';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 
 interface PdfProps {
@@ -30,7 +31,7 @@ export default function PDF({ download, title, height, width }: PdfProps) {
 
                 role='button'
             >
-          <a href={download} download={title}>Download the `{title}`</a>        
+          <a href={useBaseUrl(download)} download={title}>Download the `{title}`</a>        
       </button>
 
       <object data={download} type="application/pdf" width={pdfWidth} height={pdfHeight} >

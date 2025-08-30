@@ -89,7 +89,6 @@ const sidebars: SidebarsConfig = {
           collapsed:true,
           items:[
             'spec/non-isa/advanced-interrupt',
-            'spec/non-isa/io-mapping',
             'spec/non-isa/iommu-architecture',
             'spec/non-isa/platform-interrupt',
             'spec/non-isa/server-soc',
@@ -97,7 +96,7 @@ const sidebars: SidebarsConfig = {
         },
         {
           type:'category',
-          label:'Debug, Trace & RASI',
+          label:'Debug, Trace & RAS',
           collapsed:true,
           items:[
             'spec/non-isa/debug',
@@ -119,6 +118,7 @@ const sidebars: SidebarsConfig = {
             'spec/non-isa/semihosting',
             'spec/non-isa/sbi',
             'spec/non-isa/uefi',
+            'spec/non-isa/io-mapping',
           ],
         },
         {

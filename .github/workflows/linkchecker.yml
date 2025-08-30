@@ -1,0 +1,70 @@
+name: Link Checker
+env:
+  WEBSITE_URL: "developer.riscv.org"
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  # Automatic Schedule Trigger
+  schedule:
+    # Run on 1st day of every month
+    - cron: '0 0 1 * *'
+  # Manual Trigger
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  website-checker:
+    name: Developer Portal Link Checker
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Install Python
+        uses: actions/setup-python@v5
+      - name: Setup Environment
+        run: |
+          pip3 install git+https://github.com/linkchecker/linkchecker.git
+          mkdir ./logs
+
+      - name: Check Links
+        run: |
+          linkchecker \
+            --no-warnings  \
+            -t 100 \
+            -o html \
+            http://developer.riscv.org > ./logs/developer.riscv.org.html
+
+      - name: Process Link Log
+        if: always()
+        continue-on-error: true
+        run: |
+          echo LC_SUMMARY=$( awk '/\d* warnings found/' ./logs/developer.riscv.org.html) >> $GITHUB_ENV
+          echo $(awk '/\d* warnings found/' ./logs/developer.riscv.org.html )
+          echo $GITHUB_ENV
+
+      - name: Upload Artifact Logs
+        uses: actions/upload-artifact@v4
+        if: ${{ always() }}
+        with:
+          name: developer.riscv.org.html
+          path: ./logs/developer.riscv.org.html
+
+      # # Slack Notification of broken links found
+      # - name: Slack Notification
+      #   uses: rtCamp/action-slack-notify@v2
+      #   if: ${{ failure() }}
+      #   env:
+      #     SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+      #     SLACK_CHANNEL: channel_name
+      #     SLACK_USERNAME: Link Checker Bot
+      #     SLACK_TITLE: WARNING - broken links found on $WEBSITE_URL
+      #     MSG_MINIMAL: true
+      #     SLACK_ICON_EMOJI: ':failed:'
+      #     SLACK_MESSAGE: |
+      #       `${{ env.LC_SUMMARY }}`
+      #       link check: broken links detected on $WEBSITE_URL. Please see report artifact.

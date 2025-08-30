@@ -2,7 +2,7 @@
 title: ABI Specification
 id: abi
 hide_table_of_contents: true
-pdf: ../../../pdf/riscv-abi.pdf
+pdf: /pdf/riscv-abi.pdf
 ---
 
 Provides the processor-specific application binary interface document for RISC-V.
