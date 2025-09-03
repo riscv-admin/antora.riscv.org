@@ -269,7 +269,7 @@
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -606,7 +606,7 @@ tracking and controlling the exception behavior of a VS-mode guest.</p>
 VSXLEN), which may differ from the XLEN for HS-mode (HSXLEN). When
 HSXLEN=32, the VSXL field does not exist, and VSXLEN=32. When HSXLEN=64,
 VSXL is a <strong>WARL</strong> field that is encoded the same as the MXL field of <code>misa</code>,
-shown in <a href="#misabase">[misabase]</a>. In particular, an
+shown in <a href="machine.html#misabase" class="xref page">Encoding of MXL field in <code>misa</code></a>. In particular, an
 implementation may make VSXL be a read-only field whose value always
 ensures that VSXLEN=HSXLEN.</p>
 </div>
@@ -1389,8 +1389,8 @@ to accommodate addresses wider than the current XLEN. For RV32, the
 hypervisor extension permits guest physical addresses as wide as 34
 bits, and <code>htval</code> reports bits 33:2 of the address. This shift-by-2
 encoding of guest physical addresses matches the encoding of physical
-addresses in PMP address registers (<a href="#pmp">[pmp]</a>) and in
-page table entries (<a href="#sv32">[sv32]</a>, <a href="#sv39">[sv39]</a>, <a href="#sv48">[sv48]</a>, and <a href="#sv57">[sv57]</a>).</p>
+addresses in PMP address registers (<a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>) and in
+page table entries (<a href="supervisor.html#sv32" class="xref page">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv39" class="xref page">Sv32: Page-Based 39-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv48" class="xref page">Sv48: Page-Based 48-bit Virtual-Memory Systems</a>, and xref:supervisor.adoc#sv57["Sv57: Page-Based 57-bit Virtual-Memory System).</p>
 </div>
 <div class="paragraph">
 <p>If the least-significant two bits of a faulting guest physical address
@@ -1480,7 +1480,7 @@ executing in HS-mode will raise an illegal-instruction exception.</p>
 HSXLEN=32 and HSXLEN=64. When MODE=Bare, guest physical addresses are
 equal to supervisor physical addresses, and there is no further memory
 protection for a guest virtual machine beyond the physical memory
-protection scheme described in <a href="#pmp">[pmp]</a>. In this
+protection scheme described in <a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>. In this
 case, software must write zero to the remaining fields in <code>hgatp</code>.
 Attempting to select MODE=Bare with a nonzero pattern in the remaining fields
 has an UNSPECIFIED effect on the value that the remaining fields assume and an
@@ -1642,7 +1642,7 @@ normally read or modify <code>sstatus</code> actually access <code>vsstatus</cod
 <p>The UXL field controls the effective XLEN for VU-mode, which may differ
 from the XLEN for VS-mode (VSXLEN). When VSXLEN=32, the UXL field does
 not exist, and VU-mode XLEN=32. When VSXLEN=64, UXL is a <strong>WARL</strong> field that is
-encoded the same as the MXL field of <code>misa</code>, shown in <a href="#misabase">[misabase]</a>. In particular, an implementation may make UXL be a read-only copy of field VSXL of <code>hstatus</code>, forcing VU-mode XLEN=VSXLEN.</p>
+encoded the same as the MXL field of <code>misa</code>, shown in <a href="machine.html#misabase" class="xref page">Encoding of MXL field in <code>misa</code></a>. In particular, an implementation may make UXL be a read-only copy of field VSXL of <code>hstatus</code>, forcing VU-mode XLEN=VSXLEN.</p>
 </div>
 <div class="paragraph">
 <p>If VSXLEN is changed from 32 to a wider width, and if field UXL is not
@@ -1701,7 +1701,7 @@ store <em>as though</em> V=1.</p>
 </div>
 <div class="paragraph">
 <p>The Zicfilp extension adds the <code>SPELP</code> field that holds the previous <code>ELP</code>, and
-is updated as specified in <a href="#ZICFILP_FORWARD_TRAPS">[ZICFILP_FORWARD_TRAPS]</a>. The <code>SPELP</code> field is
+is updated as specified in <a href="priv-cfi.html#ZICFILP_FORWARD_TRAPS" class="xref page">Preserving Expected Landing Pad State on Traps</a>. The <code>SPELP</code> field is
 encoded as follows:</p>
 </div>
 <div class="ulist">
@@ -1716,7 +1716,7 @@ encoded as follows:</p>
 </div>
 <div class="paragraph">
 <p>The Ssdbltrp adds an S-mode-disable-trap (<code>SDT</code>) field extension to address
-double trap (See <a href="#supv-double-trap">[supv-double-trap]</a>) in VS-mode.</p>
+double trap (See <a href="supervisor.html#supv-double-trap" class="xref page">Double Trap Control in <code>sstatus</code> Register</a>) in VS-mode.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1985,7 +1985,7 @@ not required. For the supervisor physical address that results from
 address translation, the supervisor physical memory attributes must
 grant both <em>execute</em> and <em>read</em> permissions. (The <em>supervisor physical
 memory attributes</em> are the machine’s physical memory attributes as
-modified by physical memory protection, <a href="#pmp">[pmp]</a>, for
+modified by physical memory protection, <a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>, for
 supervisor level.)</p>
 </div>
 <div class="admonitionblock note">
@@ -2031,7 +2031,7 @@ illegal-instruction exception.</p>
 <div class="paragraph">
 <p>The hypervisor memory-management fence instructions, HFENCE.VVMA and
 HFENCE.GVMA, perform a function similar to SFENCE.VMA
-(<a href="#sfence.vma">[sfence.vma]</a>), except applying to the
+(<a href="supervisor.html#sfence.vma" class="xref page">Supervisor Memory-Management Fence Instruction</a>), except applying to the
 VS-level memory-management data structures controlled by CSR <code>vsatp</code>
 (HFENCE.VVMA) or the guest-physical memory-management data structures
 controlled by CSR <code>hgatp</code> (HFENCE.GVMA). Instruction SFENCE.VMA applies
@@ -2448,7 +2448,7 @@ capable of holding only an arbitrary subset of other 2-bit-shifted guest
 physical addresses, if any.</p>
 </div>
 <div class="paragraph">
-<p>The Ssdbltrap extension (See <a href="#ssdbltrp">[ssdbltrp]</a>) requires the implementation of
+<p>The Ssdbltrap extension (See <a href="ssdbltrp.html#ssdbltrp" class="xref page">"Ssdbltrp" Double Trap Extension, Version 1.0</a>) requires the implementation of
 the <code>mtval2</code> CSR.</p>
 </div>
 </div>
@@ -2530,18 +2530,18 @@ root page table also must be aligned to a 16 KiB boundary instead of the
 usual 4 KiB page boundary. Except as noted, all other aspects of Sv32,
 Sv39, Sv48, or Sv57 are adopted unchanged for G-stage translation.
 Non-root page tables and all page table entries (PTEs) have the same
-formats as documented in <a href="#sv32">[sv32]</a>, <a href="#sv39">[sv39]</a>, <a href="#sv48">[sv48]</a>, and <a href="#sv57">[sv57]</a>.</p>
+formats as documented in <a href="supervisor.html#sv32" class="xref page">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv39" class="xref page">Sv39: Page-Based 39-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv48" class="xref page">Sv48: Page-Based 48-bit Virtual-Memory Systems</a>, and xref:supervisor.adoc#sv57["Sv57: Page-Based 57-bit Virtual-Memory System.</p>
 </div>
 <div class="paragraph">
 <p>For Sv32x4, an incoming guest physical address is partitioned into a
 virtual page number (VPN) and page offset as shown in
 <a href="#sv32x4va">Sv32x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv32 virtual address as depicted in
-<a href="#sv32va">[sv32va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv32va" class="xref page">Sv32 virtual address</a>, except with 2 more bits at the
 high end in VPN[1]. (Note that the fields of a partitioned guest
 physical address also correspond one-for-one with the structure that
 Sv32 assigns to a physical address, depicted in
-<a href="#sv32va">[sv32va]</a>.)</p>
+<a href="supervisor.html#sv32va" class="xref page">Sv32 virtual address</a>.)</p>
 </div>
 <div id="sv32x4va" class="imageblock kroki">
 <div class="content">
@@ -2551,7 +2551,7 @@ Sv32 assigns to a physical address, depicted in
 </div>
 <div class="paragraph">
 <p>For Sv39x4, an incoming guest physical address is partitioned as shown
-in <a href="#sv39x4va">Sv39x4 virtual address (guest physical address).</a>. This partitioning is identical to that for an Sv39 virtual address as depicted in <a href="#sv39va">[sv39va]</a>, except with 2 more bits at the
+in <a href="#sv39x4va">Sv39x4 virtual address (guest physical address).</a>. This partitioning is identical to that for an Sv39 virtual address as depicted in <a href="supervisor.html#sv39va" class="xref page">"Sv39 virtual address</a>, except with 2 more bits at the
 high end in VPN[2]. Address bits 63:41 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2565,7 +2565,7 @@ guest-page-fault exception occurs.</p>
 <p>For Sv48x4, an incoming guest physical address is partitioned as shown
 in <a href="#sv48x4va">Sv48x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv48 virtual address as depicted in
-<a href="#sv48va">[sv48va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv48va" class="xref page">"Sv48 virtual address</a>, except with 2 more bits at the
 high end in VPN[3]. Address bits 63:50 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2579,7 +2579,7 @@ guest-page-fault exception occurs.</p>
 <p>For Sv57x4, an incoming guest physical address is partitioned as shown
 in <a href="#sv57x4va">Sv57x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv57 virtual address as depicted in
-<a href="#sv57va">[sv57va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv57va" class="xref page">Sv57 virtual address</a>, except with 2 more bits at the
 high end in VPN[4]. Address bits 63:59 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2626,7 +2626,7 @@ tables.</p>
 <p>The conversion of an Sv32x4, Sv39x4, Sv48x4, or Sv57x4 guest physical
 address is accomplished with the same algorithm used for Sv32, Sv39,
 Sv48, or Sv57, as presented in
-<a href="#sv32algorithm">[sv32algorithm]</a>, except that:</p>
+<a href="supervisor.html#sv32algorithm" class="xref page">Virtual Address Translation Process</a>, except that:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2739,7 +2739,7 @@ memory-management fences to complement SFENCE.VMA. These instructions
 are described in <a href="#hfence.vma">Hypervisor Memory-Management Fence Instructions</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="#pmp-vmem">[pmp-vmem]</a> discusses the intersection between
+<p><a href="machine.html#pmp-vmem" class="xref page">Physical Memory Protection and Paging</a> discusses the intersection between
 physical memory protection (PMP) and page-based address translation. It
 is noted there that, when PMP settings are modified in a manner that
 affects either the physical memory that holds page tables or the
@@ -3742,10 +3742,10 @@ nonzero value (the faulting guest physical address) is written to
 <div class="paragraph">
 <p>The defined pseudoinstruction values are designed to correspond closely
 with the encodings of basic loads and stores, as illustrated by
-<a href="#pseudoinsts-basis">Standard instructions corresponding to the special pseudoinstructions of Special pseudoinstruction values for guest-page faults.  The RV32 values are used when VSXLEN=32, and the RV64 values when VSXLEN=64..</a>.</p>
+<a href="#pseudoinsts-basis">Standard instructions corresponding to the special pseudoinstructions of Special pseudoinstruction values for guest-page faults.</a>.</p>
 </div>
 <table id="pseudoinsts-basis" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 13. Standard instructions corresponding to the special pseudoinstructions of <a href="#pseudoinsts">Special pseudoinstruction values for guest-page faults.  The RV32 values are used when VSXLEN=32, and the RV64 values when VSXLEN=64.</a>.</caption>
+<caption class="title">Table 13. Standard instructions corresponding to the special pseudoinstructions of <a href="#pseudoinsts">Special pseudoinstruction values for guest-page faults</a>.</caption>
 <colgroup>
 <col>
 <col>

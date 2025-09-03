@@ -269,7 +269,7 @@
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -385,11 +385,11 @@ instructions from the first hart being executed in a different order.
 Therefore, multithreaded code may require explicit synchronization to
 guarantee ordering between memory instructions from different harts. The
 base RISC-V ISA provides a FENCE instruction for this purpose, described
-in <a href="#fence">[fence]</a>, while the atomics extension "A" additionally defines load-reserved/store-conditional and atomic read-modify-write instructions.
+in <a href="rv32.html" class="xref page">Memory Ordering Instructionsl</a>, while the atomics extension "A" additionally defines load-reserved/store-conditional and atomic read-modify-write instructions.
 </p>
 </div>
 <div class="paragraph">
-<p>The standard ISA extension for total store ordering "Ztso" (<a href="#ztso">[ztso]</a>) augments
+<p>The standard ISA extension for total store ordering "Ztso" (<a href="ztso-st-ext.html" class="xref page">l"Ztso" Extension for Total Store Ordering</a>) augments
 RVWMO with additional rules specific to those extensions.</p>
 </div>
 <div class="paragraph">
@@ -464,7 +464,7 @@ gives rise to exactly one memory operation, with two exceptions. First,
 an unsuccessful SC instruction does not give rise to any memory
 operations. Second, FLD and FSD instructions may each give rise to
 multiple memory operations if XLEN&lt;64, as stated in
-<a href="#fld_fsd">[fld_fsd]</a> and clarified below. An aligned AMO
+<a href="d-st-ext.html" class="xref page">lDouble-Precision Load and Store Instructions</a> and clarified below. An aligned AMO
 gives rise to a single memory operation that is both a load operation
 and a store operation simultaneously.</p>
 </div>
@@ -527,7 +527,7 @@ instructions in between; the corresponding memory operations are said to
 be paired as well (except in case of a failed SC, where no store
 operation is generated). The complete list of conditions determining
 whether an SC must succeed, may succeed, or must fail is defined in
-<a href="#sec:lrsc">[sec:lrsc]</a>.</p>
+<a href="a-st-ext.html" class="xref page">l"Zalrsc" Extension for Load-Reserved/Store-Conditional Instructions</a>.</p>
 </div>
 <div class="paragraph">
 <p>Load and store operations may also carry one or more ordering
@@ -568,7 +568,7 @@ concisely and completely defined by <a href="#ppo">Preserved Program Order</a> r
 <div class="paragraph">
 <p>"RCpc" annotations are currently only used when implicitly assigned to
 every memory access per the standard extension "Ztso"
-(<a href="#ztso">[ztso]</a>). Furthermore, although the ISA does not
+(<a href="ztso-st-ext.html" class="xref page">l"Ztso" Extension for Total Store Ordering</a>). Furthermore, although the ISA does not
 currently contain native load-acquire or store-release instructions, nor
 RCpc variants thereof, the RVWMO model itself is designed to be
 forwards-compatible with the potential addition of any or all of the
