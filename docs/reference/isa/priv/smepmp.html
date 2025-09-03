@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="indirect-csr.html">
     <link rel="next" href="smcntrpmf.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -346,7 +346,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -364,11 +364,9 @@
       <li><a href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="smepmp"><a class="anchor" href="#smepmp"></a>"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h3>
 <div class="paragraph">
 <p>Being able to access the memory of a process running at a high privileged execution mode, such as the Supervisor or Machine mode, from a lower privileged mode such as the User mode, introduces an obvious attack vector since it allows for an attacker to perform privilege escalation, and tamper with the code and/or data of that process. A less obvious attack vector exists when the reverse happens, in which case an attacker instead of tampering with code and/or data that belong to a high-privileged process, can tamper with the memory of an unprivileged / less-privileged process and trick the high-privileged process to use or execute it.</p>
 </div>
@@ -414,6 +412,8 @@
 </tr>
 </table>
 </div>
+</div>
+</div>
 <div class="sect3">
 <h4 id="threat-model"><a class="anchor" href="#threat-model"></a>Threat model</h4>
 <div class="paragraph">
@@ -421,7 +421,6 @@
 </div>
 <div class="paragraph">
 <p>Without being able to protect less-privileged modes from Machine mode, it is not possible to prevent the mentioned attack vector. This becomes even more important for RISC-V than on other architectures, since implementations are allowed where a hart only has Machine and User modes available, so the whole OS will run on Machine mode instead of the non-existent Supervisor mode. In such implementations the attack surface is greatly increased, and the same kind of attacks performed on Supervisor mode and mitigated through SMAP/SMEP, can be performed on Machine mode without any available mitigations. Even on implementations with Supervisor mode present attacks are still possible against the Firmware and/or the Secure Monitor running on Machine mode.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -827,8 +826,6 @@
 </div>
 </li>
 </ol>
-</div>
-</div>
 </div>
 </div>
 <nav class="pagination">
