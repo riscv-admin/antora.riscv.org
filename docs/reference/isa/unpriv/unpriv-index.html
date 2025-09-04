@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>"Q" Extension for Quad-Precision Floating-Point, Version 2.2 :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="d-st-ext.html">
-    <link rel="next" href="zfh.html">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="../index.html">
+    <link rel="next" href="colophon.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
@@ -59,7 +59,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="unpriv-index.html">Privileged Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -128,7 +128,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -290,7 +290,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""Q" Extension for Quad-Precision Floating-Point, Version 2.2"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -305,189 +305,27 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume I: RISC-V Unprivileged ISA Specification</li>
-      <li><a href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a></li>
+      <li><a href="unpriv-index.html">Privileged Architecture</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</h1>
-<div id="preamble">
+</div><div class="sect1">
+<h2 id="the-risc-v-instruction-set-manual-volume-i-unprivileged-architecture"><a class="anchor" href="#the-risc-v-instruction-set-manual-volume-i-unprivileged-architecture"></a>The RISC-V Instruction Set Manual: Volume I: Unprivileged Architecture</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter describes the Q standard extension for 128-bit
-quad-precision binary floating-point instructions compliant with the
-IEEE 754-2008 arithmetic standard. The quad-precision binary
-floating-point instruction-set extension is named "Q"; it depends on
-the double-precision floating-point extension D. The floating-point
-registers are now extended to hold either a single, double, or
-quad-precision floating-point value (FLEN=128). The NaN-boxing scheme
-described in <a href="d-st-ext.html#nanboxing" class="xref page">NaN Boxing of Narrower Values</a> is now extended
-recursively to allow a single-precision value to be NaN-boxed inside a
-double-precision value which is itself NaN-boxed inside a quad-precision
-value.</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="quad-precision-load-and-store-instructions"><a class="anchor" href="#quad-precision-load-and-store-instructions"></a>Quad-Precision Load and Store Instructions</h3>
-<div class="paragraph">
-<p>New 128-bit variants of LOAD-FP and STORE-FP instructions are added,
-encoded with a new value for the funct3 width field.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNp1zTELwjAQhuHdX3FblgimpRSyCeIkqHPJkJpUM6SV5MCh9L97YmPawfW-e3jHYO8Smg3A2DqMEmoO0GtvJbDheRuMZXQA0IiB_ljNODud94ft8cLUxLOrsgvma5auImdsxDUqM3o5g4_ZJVQSuv7PRPHrLDOtjnaNRMETct43QsidIpqQKEgNXRctzttHq-kN6uxNSA==" alt="svg">
-</div>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNp90D0PwiAQBuDdX3EbCyZiJU3YdfVzaxhoS7UDYoDEoel_F0KVkqjr3T15895g5JVBtQAY6t5ZBiUGuAslGSD9aHQrkR8ACOeMv0Mlwuh82Z-2y90B8REnSBPslao2bMUDfUPqoe46K11cZbZI9tm37hYzP7bw9vgzzVgy3edptbDyD1p_RdY0ufH_mLUihNFQa_6OqVVcBcvHF1Y1XjA=" alt="svg">
-</div>
-</div>
-<div id="quad-ls" class="paragraph">
-<p>FLQ and FSQ are only guaranteed to execute atomically if the effective
-address is naturally aligned and XLEN=128.</p>
+<p>Version 20250508: This document is in Ratified state.</p>
 </div>
 <div class="paragraph">
-<p>FLQ and FSQ do not modify the bits being transferred; in particular, the
-payloads of non-canonical NaNs are preserved.</p>
+<p><em>This document is released under a Creative Commons Attribution 4.0 International License.</em></p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="quad-precision-computational-instructions"><a class="anchor" href="#quad-precision-computational-instructions"></a>Quad-Precision Computational Instructions</h3>
 <div class="paragraph">
-<p>A new supported format is added to the format field of most
-instructions, as shown in <a href="#fpextfmt">Format field encoding.</a></p>
-</div>
-<table id="fpextfmt" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 1. Format field encoding.</caption>
-<colgroup>
-<col>
-<col>
-<col>
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top"><em>fmt</em> field</th>
-<th class="tableblock halign-center valign-top">Mnemonic</th>
-<th class="tableblock halign-left valign-top">Meaning</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">00</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">S</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">32-bit single-precision</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">01</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">D</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">64-bit double-precision</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">10</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">H</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">16-bit half-precision</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">11</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">Q</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">128-bit quad-precision</p></td>
-</tr>
-</tbody>
-</table>
-<div class="paragraph">
-<p>The quad-precision floating-point computational instructions are defined
-analogously to their double-precision counterparts, but operate on
-quad-precision operands and produce quad-precision results.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULwEnH1uogTDKFm1SUAjQFBGAmmQJ1pKQWl2CnUEwxRpiSi2aKMVBDkC-M8PX00_d1jIBwcTmk2BBiBrJDiouSDbFRuA0xwmqIEQZlgGqEEdyItNwSVCNAqgNRMA7L00rzkktMkSIFZLmbo4uLvltwqBNQXN3NN9RH383FMwzC8fTTBYcKkB0cGBQCNje2FgBOJ4a3" alt="svg">
-</div>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUXeL9ov1dXRx0QczgkOd1GNrdRC6TeG6i1KAOkEAptsUqDsltbgEVYMxQkMumgZjoIYgX5zmFxtC1CObX1yUbIhbgxFWDUaoGozgGtJyS1A1APWrB-I23hir8cZgDbG1AAg2YyA=" alt="svg">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="quad-compute"><a class="anchor" href="#quad-compute"></a>Quad-Precision Convert and Move Instructions</h3>
-<div class="paragraph">
-<p>New floating-point-to-integer and integer-to-floating-point conversion
-instructions are added. These instructions are defined analogously to
-the double-precision-to-integer and integer-to-double-precision
-conversion instructions. FCVT.W.Q or FCVT.L.Q converts a quad-precision
-floating-point number to a signed 32-bit or 64-bit integer,
-respectively. FCVT.Q.W or FCVT.Q.L converts a 32-bit or 64-bit signed
-integer, respectively, into a quad-precision floating-point number.
-FCVT.WU.Q, FCVT.LU.Q, FCVT.Q.WU, and FCVT.Q.LU variants convert to or
-from unsigned integer values. FCVT.L[U].Q and FCVT.Q.L[U] are RV64-only
-instructions. Note FCVT.Q.L[U] always produces an exact result and is unaffected by rounding mode.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULgNOxtToInaZwnUUpQF0gANNpCtSRklpcAqNQ9Bkj9OWC9ME0GQNVB_lCCFwWFRtCbEK2qLgoGUri1GWEqSs8OjRW3wdIAKWQOChGGMGNSMstQTUCaKJ6IBjjsDStNC-5xBQpNEGWujmHhehl5pXoBcI4gSAu2IzYWgDisXGz" alt="svg">
-</div>
-</div>
-<div id="quad-cnvrt-mv" class="paragraph">
-<p>New floating-point-to-floating-point conversion instructions are added.
-These instructions are defined analogously to the double-precision
-floating-point-to-floating-point conversion instructions. FCVT.S.Q or
-FCVT.Q.S converts a quad-precision floating-point number to a
-single-precision floating-point number, or vice-versa, respectively.
-FCVT.D.Q or FCVT.Q.D converts a quad-precision floating-point number to
-a double-precision floating-point number, or vice-versa, respectively.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRNwey1f0DdN0CkBhodGytDsIsU7hZRSlALSAAM8sUqCMltbgEO4ViijHClFw0U4yBGoJ80Qlcbig2hGhHdkNxUTIWEqcJRpgmBIICIxhEgFkuqJqN4JrTcktQNQPNAumDaQMbgMPitNK85BJTpKgAWezmHBaiF6wH1g5mB-oFw9kuKOIQR8XWAgAvKIIh" alt="svg">
-</div>
-</div>
-<div id="quad-convert-interchange" class="paragraph">
-<p>Floating-point to floating-point sign-injection instructions, FSGNJ.Q,
-FSGNJN.Q, and FSGNJX.Q are defined analogously to the double-precision
-sign-injection instruction.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULUI-t1UHoMIXrKEoBqgYBmA5ToI6U1OISVA3GCA25IA0w1cZAjrpXtF-svlcETiuKDSF2IFtRXJRsiFuDEVYNRqgajOAa0nJLUDUA9asH4jI-rTQvucQUKZBAxrsFu_t5gXXE1gIA5rxhig==" alt="svg">
-</div>
-</div>
-<div id="quad-cnvrt-intch-xqqx" class="paragraph">
-<p>FMV.X.Q and FMV.Q.X instructions are not provided in RV32 or RV64, so
-quad-precision bit patterns must be moved to the integer registers via
-memory.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="quad-precision-floating-point-compare-instructions"><a class="anchor" href="#quad-precision-floating-point-compare-instructions"></a>Quad-Precision Floating-Point Compare Instructions</h3>
-<div class="paragraph">
-<p>The quad-precision floating-point compare instructions are defined
-analogously to their double-precision counterparts, but operate on
-quad-precision operands.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULUI-t1UHoMIXrKEoBqgYBmA5ToI6U1OISVA3GCA25IA0w1cZA1a6B-j4h-j6uOK0oNoTYgWxFcVGyIW4NRlg1GKFqMIJrSMstQdUA1K8eiMv4tNK85BJTpEACGe_m7AsJo9haAG8eYRw=" alt="svg">
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="quad-float-compare"><a class="anchor" href="#quad-float-compare"></a>Quad-Precision Floating-Point Classify Instruction</h3>
-<div class="paragraph">
-<p>The quad-precision floating-point classify instruction, FCLASS.Q, is
-defined analogously to its double-precision counterpart, but operates on
-quad-precision operands.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULUI-t1UHoMIXrKEoBqgYBmA5ToI6U1OISVA3GCA25aBqMgRoMDAxxWlBsCNGAbEFxUTJu9UaY6g1QVRvBVafllqCqBmpWD8RldlppXnKJKVLwgMx2c_ZxDA4Ga4mtBQA-xV8D" alt="svg">
+<p><em>This document is a derivative of the RISC-V
+unprivileged specification version 1.9.1 released under following license: ©2010-2017 Andrew Waterman, Yunsup Lee, Rimas Avižienis, David Patterson, Krste Asanović. Creative Commons Attribution 4.0 International License.</em></p>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a></span>
-  <span class="next"><a href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a></span>
+  <span class="prev"><a href="../index.html">ISA Specifications</a></span>
+  <span class="next"><a href="colophon.html">Preface</a></span>
 </nav>
 </article>  </div>
 </main>
