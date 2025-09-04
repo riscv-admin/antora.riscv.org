@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"H" Extension for Hypervisor Support, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="sscofpmf.html">
     <link rel="next" href="priv-cfi.html">
-    <meta name="generator" content="Antora 3.1.12">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
@@ -23,69 +23,12 @@
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
     <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
-
-
-<header class="header" id="antora-header">
-    <nav class="navbar">
-        <head>
-            <link data-rh="true" rel="icon" href="/img/favicon.ico">
-            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
-            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
-            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
-            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
-
-        </head>
-        <script>
-            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
-        </script>
-            <link rel="preload" as="image" href="/img/logo.svg">
-            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
-            <div class="announcementBar_mb4j" role="banner">
-                <div class="announcementBarPlaceholder_vyr4"></div>
-                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
-            <nav aria-label="Main" class="navbar ">
-                <div class="navbar__inner">
-                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
-                        <a class="navbar__brand" href="/">
-                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
-                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
-                            <ul class="dropdown__menu">
-                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
-                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
-                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
-                            </ul>
-                        </div>
-                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
-                            <ul class="dropdown__menu">
-                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
-                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
-                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
-                            </ul>
-                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
-                        <div class="navbar-item search hide-for-print">
-                          <div id="search-field" class="field">
-                            <input id="search-input" type="text" placeholder="Search">
-                          </div>
-                        </div>
-                    <div class="navbar__items navbar__items--right">
-
-
-                      <div class="navbarSearchContainer_Bca1">
-
-                      </div>
-                    </div>
-                </div>
-                <div role="presentation" class="navbar-sidebar__backdrop"></div>
-            </nav>
-            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
-        
-
-    </nav>
-</header><div class="body">
+<div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
     <div class="panels">
@@ -116,6 +59,9 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Privileged Architecture</a>
+  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
   </li>
@@ -267,7 +213,7 @@
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -344,7 +290,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""H" Extension for Hypervisor Support, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -362,8 +308,8 @@
       <li><a href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="hypervisor"><a class="anchor" href="#hypervisor"></a>"H" Extension for Hypervisor Support, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"H" Extension for Hypervisor Support, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the RISC-V hypervisor extension, which
@@ -424,6 +370,8 @@ Hypervisors can support nested virtualization analogously.</p>
 </td>
 </tr>
 </table>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="privilege-modes"><a class="anchor" href="#privilege-modes"></a>Privilege Modes</h3>
@@ -604,7 +552,7 @@ tracking and controlling the exception behavior of a VS-mode guest.</p>
 VSXLEN), which may differ from the XLEN for HS-mode (HSXLEN). When
 HSXLEN=32, the VSXL field does not exist, and VSXLEN=32. When HSXLEN=64,
 VSXL is a <strong>WARL</strong> field that is encoded the same as the MXL field of <code>misa</code>,
-shown in <a href="#misabase">[misabase]</a>. In particular, an
+shown in <a href="machine.html#misabase" class="xref page">Encoding of MXL field in <code>misa</code></a>. In particular, an
 implementation may make VSXL be a read-only field whose value always
 ensures that VSXLEN=HSXLEN.</p>
 </div>
@@ -1387,8 +1335,8 @@ to accommodate addresses wider than the current XLEN. For RV32, the
 hypervisor extension permits guest physical addresses as wide as 34
 bits, and <code>htval</code> reports bits 33:2 of the address. This shift-by-2
 encoding of guest physical addresses matches the encoding of physical
-addresses in PMP address registers (<a href="#pmp">[pmp]</a>) and in
-page table entries (<a href="#sv32">[sv32]</a>, <a href="#sv39">[sv39]</a>, <a href="#sv48">[sv48]</a>, and <a href="#sv57">[sv57]</a>).</p>
+addresses in PMP address registers (<a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>) and in
+page table entries (<a href="supervisor.html#sv32" class="xref page">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv39" class="xref page">Sv32: Page-Based 39-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv48" class="xref page">Sv48: Page-Based 48-bit Virtual-Memory Systems</a>, and xref:supervisor.adoc#sv57["Sv57: Page-Based 57-bit Virtual-Memory System).</p>
 </div>
 <div class="paragraph">
 <p>If the least-significant two bits of a faulting guest physical address
@@ -1478,7 +1426,7 @@ executing in HS-mode will raise an illegal-instruction exception.</p>
 HSXLEN=32 and HSXLEN=64. When MODE=Bare, guest physical addresses are
 equal to supervisor physical addresses, and there is no further memory
 protection for a guest virtual machine beyond the physical memory
-protection scheme described in <a href="#pmp">[pmp]</a>. In this
+protection scheme described in <a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>. In this
 case, software must write zero to the remaining fields in <code>hgatp</code>.
 Attempting to select MODE=Bare with a nonzero pattern in the remaining fields
 has an UNSPECIFIED effect on the value that the remaining fields assume and an
@@ -1640,7 +1588,7 @@ normally read or modify <code>sstatus</code> actually access <code>vsstatus</cod
 <p>The UXL field controls the effective XLEN for VU-mode, which may differ
 from the XLEN for VS-mode (VSXLEN). When VSXLEN=32, the UXL field does
 not exist, and VU-mode XLEN=32. When VSXLEN=64, UXL is a <strong>WARL</strong> field that is
-encoded the same as the MXL field of <code>misa</code>, shown in <a href="#misabase">[misabase]</a>. In particular, an implementation may make UXL be a read-only copy of field VSXL of <code>hstatus</code>, forcing VU-mode XLEN=VSXLEN.</p>
+encoded the same as the MXL field of <code>misa</code>, shown in <a href="machine.html#misabase" class="xref page">Encoding of MXL field in <code>misa</code></a>. In particular, an implementation may make UXL be a read-only copy of field VSXL of <code>hstatus</code>, forcing VU-mode XLEN=VSXLEN.</p>
 </div>
 <div class="paragraph">
 <p>If VSXLEN is changed from 32 to a wider width, and if field UXL is not
@@ -1699,7 +1647,7 @@ store <em>as though</em> V=1.</p>
 </div>
 <div class="paragraph">
 <p>The Zicfilp extension adds the <code>SPELP</code> field that holds the previous <code>ELP</code>, and
-is updated as specified in <a href="#ZICFILP_FORWARD_TRAPS">[ZICFILP_FORWARD_TRAPS]</a>. The <code>SPELP</code> field is
+is updated as specified in <a href="priv-cfi.html#ZICFILP_FORWARD_TRAPS" class="xref page">Preserving Expected Landing Pad State on Traps</a>. The <code>SPELP</code> field is
 encoded as follows:</p>
 </div>
 <div class="ulist">
@@ -1714,7 +1662,7 @@ encoded as follows:</p>
 </div>
 <div class="paragraph">
 <p>The Ssdbltrp adds an S-mode-disable-trap (<code>SDT</code>) field extension to address
-double trap (See <a href="#supv-double-trap">[supv-double-trap]</a>) in VS-mode.</p>
+double trap (See <a href="supervisor.html#supv-double-trap" class="xref page">Double Trap Control in <code>sstatus</code> Register</a>) in VS-mode.</p>
 </div>
 </div>
 <div class="sect3">
@@ -1983,7 +1931,7 @@ not required. For the supervisor physical address that results from
 address translation, the supervisor physical memory attributes must
 grant both <em>execute</em> and <em>read</em> permissions. (The <em>supervisor physical
 memory attributes</em> are the machine’s physical memory attributes as
-modified by physical memory protection, <a href="#pmp">[pmp]</a>, for
+modified by physical memory protection, <a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>, for
 supervisor level.)</p>
 </div>
 <div class="admonitionblock note">
@@ -2029,7 +1977,7 @@ illegal-instruction exception.</p>
 <div class="paragraph">
 <p>The hypervisor memory-management fence instructions, HFENCE.VVMA and
 HFENCE.GVMA, perform a function similar to SFENCE.VMA
-(<a href="#sfence.vma">[sfence.vma]</a>), except applying to the
+(<a href="supervisor.html#sfence.vma" class="xref page">Supervisor Memory-Management Fence Instruction</a>), except applying to the
 VS-level memory-management data structures controlled by CSR <code>vsatp</code>
 (HFENCE.VVMA) or the guest-physical memory-management data structures
 controlled by CSR <code>hgatp</code> (HFENCE.GVMA). Instruction SFENCE.VMA applies
@@ -2446,7 +2394,7 @@ capable of holding only an arbitrary subset of other 2-bit-shifted guest
 physical addresses, if any.</p>
 </div>
 <div class="paragraph">
-<p>The Ssdbltrap extension (See <a href="#ssdbltrp">[ssdbltrp]</a>) requires the implementation of
+<p>The Ssdbltrap extension (See <a href="ssdbltrp.html#ssdbltrp" class="xref page">"Ssdbltrp" Double Trap Extension, Version 1.0</a>) requires the implementation of
 the <code>mtval2</code> CSR.</p>
 </div>
 </div>
@@ -2528,18 +2476,18 @@ root page table also must be aligned to a 16 KiB boundary instead of the
 usual 4 KiB page boundary. Except as noted, all other aspects of Sv32,
 Sv39, Sv48, or Sv57 are adopted unchanged for G-stage translation.
 Non-root page tables and all page table entries (PTEs) have the same
-formats as documented in <a href="#sv32">[sv32]</a>, <a href="#sv39">[sv39]</a>, <a href="#sv48">[sv48]</a>, and <a href="#sv57">[sv57]</a>.</p>
+formats as documented in <a href="supervisor.html#sv32" class="xref page">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv39" class="xref page">Sv39: Page-Based 39-bit Virtual-Memory Systems</a>, <a href="supervisor.html#sv48" class="xref page">Sv48: Page-Based 48-bit Virtual-Memory Systems</a>, and xref:supervisor.adoc#sv57["Sv57: Page-Based 57-bit Virtual-Memory System.</p>
 </div>
 <div class="paragraph">
 <p>For Sv32x4, an incoming guest physical address is partitioned into a
 virtual page number (VPN) and page offset as shown in
 <a href="#sv32x4va">Sv32x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv32 virtual address as depicted in
-<a href="#sv32va">[sv32va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv32va" class="xref page">Sv32 virtual address</a>, except with 2 more bits at the
 high end in VPN[1]. (Note that the fields of a partitioned guest
 physical address also correspond one-for-one with the structure that
 Sv32 assigns to a physical address, depicted in
-<a href="#sv32va">[sv32va]</a>.)</p>
+<a href="supervisor.html#sv32va" class="xref page">Sv32 virtual address</a>.)</p>
 </div>
 <div id="sv32x4va" class="imageblock kroki">
 <div class="content">
@@ -2549,7 +2497,7 @@ Sv32 assigns to a physical address, depicted in
 </div>
 <div class="paragraph">
 <p>For Sv39x4, an incoming guest physical address is partitioned as shown
-in <a href="#sv39x4va">Sv39x4 virtual address (guest physical address).</a>. This partitioning is identical to that for an Sv39 virtual address as depicted in <a href="#sv39va">[sv39va]</a>, except with 2 more bits at the
+in <a href="#sv39x4va">Sv39x4 virtual address (guest physical address).</a>. This partitioning is identical to that for an Sv39 virtual address as depicted in <a href="supervisor.html#sv39va" class="xref page">"Sv39 virtual address</a>, except with 2 more bits at the
 high end in VPN[2]. Address bits 63:41 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2563,7 +2511,7 @@ guest-page-fault exception occurs.</p>
 <p>For Sv48x4, an incoming guest physical address is partitioned as shown
 in <a href="#sv48x4va">Sv48x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv48 virtual address as depicted in
-<a href="#sv48va">[sv48va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv48va" class="xref page">"Sv48 virtual address</a>, except with 2 more bits at the
 high end in VPN[3]. Address bits 63:50 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2577,7 +2525,7 @@ guest-page-fault exception occurs.</p>
 <p>For Sv57x4, an incoming guest physical address is partitioned as shown
 in <a href="#sv57x4va">Sv57x4 virtual address (guest physical address).</a>. This partitioning is identical to
 that for an Sv57 virtual address as depicted in
-<a href="#sv57va">[sv57va]</a>, except with 2 more bits at the
+<a href="supervisor.html#sv57va" class="xref page">Sv57 virtual address</a>, except with 2 more bits at the
 high end in VPN[4]. Address bits 63:59 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
@@ -2624,7 +2572,7 @@ tables.</p>
 <p>The conversion of an Sv32x4, Sv39x4, Sv48x4, or Sv57x4 guest physical
 address is accomplished with the same algorithm used for Sv32, Sv39,
 Sv48, or Sv57, as presented in
-<a href="#sv32algorithm">[sv32algorithm]</a>, except that:</p>
+<a href="supervisor.html#sv32algorithm" class="xref page">Virtual Address Translation Process</a>, except that:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -2737,7 +2685,7 @@ memory-management fences to complement SFENCE.VMA. These instructions
 are described in <a href="#hfence.vma">Hypervisor Memory-Management Fence Instructions</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="#pmp-vmem">[pmp-vmem]</a> discusses the intersection between
+<p><a href="machine.html#pmp-vmem" class="xref page">Physical Memory Protection and Paging</a> discusses the intersection between
 physical memory protection (PMP) and page-based address translation. It
 is noted there that, when PMP settings are modified in a manner that
 affects either the physical memory that holds page tables or the
@@ -3740,10 +3688,10 @@ nonzero value (the faulting guest physical address) is written to
 <div class="paragraph">
 <p>The defined pseudoinstruction values are designed to correspond closely
 with the encodings of basic loads and stores, as illustrated by
-<a href="#pseudoinsts-basis">Standard instructions corresponding to the special pseudoinstructions of Special pseudoinstruction values for guest-page faults.  The RV32 values are used when VSXLEN=32, and the RV64 values when VSXLEN=64..</a>.</p>
+<a href="#pseudoinsts-basis">Standard instructions corresponding to the special pseudoinstructions of Special pseudoinstruction values for guest-page faults.</a>.</p>
 </div>
 <table id="pseudoinsts-basis" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 13. Standard instructions corresponding to the special pseudoinstructions of <a href="#pseudoinsts">Special pseudoinstruction values for guest-page faults.  The RV32 values are used when VSXLEN=32, and the RV64 values when VSXLEN=64.</a>.</caption>
+<caption class="title">Table 13. Standard instructions corresponding to the special pseudoinstructions of <a href="#pseudoinsts">Special pseudoinstruction values for guest-page faults</a>.</caption>
 <colgroup>
 <col>
 <col>
@@ -3840,8 +3788,6 @@ SIE=SPIE, and SPIE=1, and lastly sets <code>pc</code>=<code>vsepc</code>.</p>
 <p>If the Ssdbltrp extension is implemented, when <code>SRET</code> is executed in HS-mode,
 if the new privilege mode is VU, the <code>SRET</code> instruction sets <code>vsstatus.SDT</code>
 to 0. When executed in VS-mode, <code>vsstatus.SDT</code> is set to 0.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
