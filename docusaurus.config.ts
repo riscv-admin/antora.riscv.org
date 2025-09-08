@@ -156,10 +156,10 @@ const config: Config = {
           href: 'https://riscv.org/community/calendar/', 
           position: 'left'
         },
-        {
-          type: 'search',
-          position:'right',
-        },
+        // {
+        //   type: 'search',
+        //   position:'right',
+        // },
 
       ],
     },
@@ -247,41 +247,41 @@ const config: Config = {
     //     }),
     //   ],
     // ],
-    algolia: {
-      // The application ID provided by Algolia
-      appId: 'MGVPU7BN22',
+    // algolia: {
+    //   // The application ID provided by Algolia
+    //   appId: 'MGVPU7BN22',
 
-      // Public API key: it is safe to commit it
-      apiKey: 'ef9c7ba70e519af1a95f10289726cd53',
+    //   // Public API key: it is safe to commit it
+    //   apiKey: 'ef9c7ba70e519af1a95f10289726cd53',
 
-      indexName: 'crawler_all',
+    //   indexName: 'crawler_all',
 
-      // Optional: see doc section below
-      contextualSearch: false,
+    //   // Optional: see doc section below
+    //   contextualSearch: false,
 
-      // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
-      externalUrlRegex: 'riscv\\.org|lf-riscv\\.atlassian\\.net',
+    //   // Optional: Specify domains where the navigation should occur through window.location instead on history.push. Useful when our Algolia config crawls multiple documentation sites and we want to navigate with window.location.href to them.
+    //   externalUrlRegex: 'riscv\\.org|lf-riscv\\.atlassian\\.net',
 
-      // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
-      replaceSearchResultPathname: {
-        from: '/docs/', // or as RegExp: /\/docs\//
-        to: '/',
-      },
+    //   // Optional: Replace parts of the item URLs from Algolia. Useful when using the same search index for multiple deployments using a different baseUrl. You can use regexp or string in the `from` param. For example: localhost:3000 vs myCompany.com/docs
+    //   replaceSearchResultPathname: {
+    //     from: '/docs/', // or as RegExp: /\/docs\//
+    //     to: '/',
+    //   },
 
-      // Optional: Algolia search parameters
-      searchParameters: {
-        facetFilters:[],
-        facets:[],
-      },
+    //   // Optional: Algolia search parameters
+    //   searchParameters: {
+    //     facetFilters:[],
+    //     facets:[],
+    //   },
 
-      // Optional: path for search page that enabled by default (`false` to disable it)
-      searchPagePath: 'search',
+    //   // Optional: path for search page that enabled by default (`false` to disable it)
+    //   searchPagePath: 'search',
 
-      // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
-      insights: true,
+    //   // Optional: whether the insights feature is enabled or not on Docsearch (`false` by default)
+    //   insights: true,
 
-      //... other Algolia params
-    },
+    //   //... other Algolia params
+    // },
     prism: {
       theme: prismThemes.github,
       // darkTheme: prismThemes.dracula,
