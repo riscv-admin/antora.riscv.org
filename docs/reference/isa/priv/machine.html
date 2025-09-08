@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>Machine-Level ISA, Version 1.13 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="priv-csrs.html">
     <link rel="next" href="smstateen.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -23,6 +23,8 @@
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
     <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
@@ -116,6 +118,9 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Privileged Architecture</a>
+  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
   </li>
@@ -267,7 +272,7 @@
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -344,12 +349,106 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="Machine-Level ISA, Version 1.13"
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/priv/pages/machine.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unpriv</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Priv</a></li>
+          </ul>
+        </div>
+        <script>
+          (function() {
+            const btn = document.getElementById('pdfDropdownButton');
+            const menu = document.getElementById('pdfDropdownMenu');
+            btn.addEventListener('click', function(e) {
+              e.preventDefault();
+              const expanded = btn.getAttribute('aria-expanded') === 'true';
+              btn.setAttribute('aria-expanded', !expanded);
+              menu.hidden = expanded;
+            });
+            document.addEventListener('click', function(e) {
+              if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                btn.setAttribute('aria-expanded', 'false');
+                menu.hidden = true;
+              }
+            });
+          })();
+        </script>
+        <style>
+          .dropdown-menu {
+            position: absolute;
+            left: 0;
+            background: #FDB515;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #003262;
+            outline: none;
+            color: white;
+          }
+          .dropdown-item:focus {
+            background-color: #003262;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
     </div>
   </div>
 </aside>
@@ -362,8 +461,8 @@
       <li><a href="machine.html">Machine-Level ISA, Version 1.13</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="machine"><a class="anchor" href="#machine"></a>Machine-Level ISA, Version 1.13</h2>
+</div><h1 id="page-title" class="page">Machine-Level ISA, Version 1.13</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the machine-level operations available in
@@ -374,6 +473,8 @@ features that are too difficult or expensive to implement in hardware
 directly. The RISC-V machine-level ISA contains a common core that is
 extended depending on which other privilege levels are supported and
 other details of the hardware implementation.</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="machine-level-csrs"><a class="anchor" href="#machine-level-csrs"></a>Machine-Level CSRs</h3>
@@ -880,15 +981,15 @@ keeps track of and controls the hart’s current operating state. A
 restricted view of <code>mstatus</code> appears as the <code>sstatus</code> register in the
 S-level ISA.</p>
 </div>
-<div id="mstatusreg-rv32" class="imageblock">
+<div id="mstatusreg-rv32" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/mstatusreg-rv321.edn" alt="mstatusreg rv321">
+<img src="https://kroki.io/wavedrom/svg/eNqd0U0LgkAQgOF7v2JuXvbgSnTYY2ggtDDs-gXiwWQ1obbIbuJ_zy6R4CzR-ZkXhpnxYToB5QZgPPXPQQBwBra-GgFejir2JrZqOo4ocmXyv0wj3aV7kqQj04hLCj6U6ZILv6JYIjr94M6LNf7eWWXkzqkks0JRlGRkleSkaEVfLjoiiWGypN1vDw7fUjFobrbtOzFeamvmkfls5-FeN0ZwP9hO0wspUrw3?id=mstatusreg-rv32" alt="Machine-mode status (`mstatus`) register for RV32">
 </div>
 <div class="title">Figure 6. Machine-mode status (<code>mstatus</code>) register for RV32</div>
 </div>
-<div id="mstatusreg" class="imageblock">
+<div id="mstatusreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/mstatusreg.edn" alt="mstatusreg">
+<img src="https://kroki.io/wavedrom/svg/eNqd0kELgjAUB_B7n-LdvOygIgS7FVoIDsamUxAPJsuEsshu4nevLqXhG-H5tz97_N_r77qmkK8A-kPz6CiAQ6AtL5qClXIRWgOZNRkGGJlibFlMcjyXbFFihpjkfEruh5TMHWoXGDPOjb4zx7M5Hs8sFDpzwtBYJjCKFZqKU1SkwJsLIo6iH09pbVjwt5Qki4ylyVkffWs4Apz2aoOvQS26b1M37Kcb1_7v-P23FASqa3tsatqfy1a_nngETt2trDR1bNcbhifBhQkY?id=mstatusreg" alt="Machine-mode status (`mstatus`) register for RV64">
 </div>
 <div class="title">Figure 7. Machine-mode status (<code>mstatus</code>) register for RV64</div>
 </div>
@@ -896,9 +997,9 @@ S-level ISA.</p>
 <p>For RV32 only, <code>mstatush</code> is a 32-bit read/write register formatted as
 shown in <a href="#mstatushreg">Additional machine-mode status (<code>mstatush</code>) register  for RV32.</a>. Bits 30:4 of <code>mstatush</code> generally contain the same fields found in bits 62:36 of <code>mstatus</code> for RV64. Fields SD, SXL, and UXL do not exist in <code>mstatush</code>.</p>
 </div>
-<div id="mstatushreg" class="imageblock">
+<div id="mstatushreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/mstatushreg.edn" alt="mstatushreg">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw0VHIS8xNtVJQDw8I8lSv1UGSM4TLBTu54pLyxS3lHuaIU1dAGC4pfO7wDXD1CcAp6RKCImWEaWasjkJyfl5aZrpVdU5iXipIkY5CRnFBYnKqlaGBkUltLQAz31DE?id=mstatushreg" alt="Additional machine-mode status (`mstatush`) register  for RV32.">
 </div>
 <div class="title">Figure 8. Additional machine-mode status (<code>mstatush</code>) register  for RV32.</div>
 </div>
@@ -1264,7 +1365,7 @@ less privileged than M also sets MPRV=0.</p>
 <div class="paragraph">
 <p>The MXR (Make eXecutable Readable) bit modifies the privilege with which
 loads access virtual memory. When MXR=0, only loads from pages marked
-readable (R=1 in <a href="#sv32pte">[sv32pte]</a>) will succeed. When
+readable (R=1 in <a href="supervisor.html#sv32pte" class="xref page">Sv32 page table entry</a>) will succeed. When
 MXR=1, loads from pages marked either readable or executable (R=1 or
 X=1) will succeed. MXR has no effect when page-based virtual memory is
 not in effect. MXR is read-only 0 if S-mode is not supported.</p>
@@ -1297,7 +1398,7 @@ following the rules in <a href="#xlen-control">Base ISA Control in <code>mstatus
 <p>The SUM (permit Supervisor User Memory access) bit modifies the
 privilege with which S-mode loads and stores access virtual memory. When
 SUM=0, S-mode memory accesses to pages that are accessible by U-mode
-(U=1 in <a href="#sv32pte">[sv32pte]</a>) will fault. When SUM=1, these
+(U=1 in <a href="supervisor.html#sv32pte" class="xref page">Sv32 page table entry</a>) will fault. When SUM=1, these
 accesses are permitted. SUM has no effect when page-based virtual memory
 is not in effect. Note that, while SUM is ordinarily ignored when not
 executing in S-mode, it <em>is</em> in effect when MPRV=1 and MPP=S. SUM is
@@ -1504,7 +1605,7 @@ read-only 0 when S-mode is not supported.</p>
 <td class="content">
 <div class="paragraph">
 <p>Trapping SRET is necessary to emulate the hypervisor extension (see
-<a href="#hypervisor">[hypervisor]</a>) on implementations that do not
+<a href="hypervisor.html#hypervisor" class="xref page">"H" Extension for Hypervisor Support</a>) on implementations that do not
 provide it.</p>
 </div>
 </td>
@@ -2071,7 +2172,7 @@ interrupts, unless the interrupt results in a user-level context swap.</p>
 <h5 id="previous-expected-landing-pad-elp-state-in-mstatus-register"><a class="anchor" href="#previous-expected-landing-pad-elp-state-in-mstatus-register"></a>Previous Expected Landing Pad (ELP) State in <code>mstatus</code> Register</h5>
 <div class="paragraph">
 <p>The Zicfilp extension adds the <code>SPELP</code> and <code>MPELP</code> fields that hold the previous
-<code>ELP</code>, and are updated as specified in <a href="#ZICFILP_FORWARD_TRAPS">[ZICFILP_FORWARD_TRAPS]</a>. The
+<code>ELP</code>, and are updated as specified in <a href="priv-cfi.html#ZICFILP_FORWARD_TRAPS" class="xref page">Preserving Expected Landing Pad State on Traps</a>. The
 <strong><em>x</em></strong><code>PELP</code> fields are encoded as follows:</p>
 </div>
 <div class="ulist">
@@ -3343,10 +3444,10 @@ the cause for the exception. The following encodings are defined:</p>
 <p>0 - No information provided.</p>
 </li>
 <li>
-<p>2 - Landing Pad Fault. Defined by the Zicfilp extension (<a href="#priv-forward">[priv-forward]</a>).</p>
+<p>2 - Landing Pad Fault. Defined by the Zicfilp extension (<a href="priv-cfi.html#priv-forward" class="xref page">Landing Pad (Zicfilp)</a>).</p>
 </li>
 <li>
-<p>3 - Shadow Stack Fault. Defined by the Zicfiss extension (<a href="#priv-backward">[priv-backward]</a>).</p>
+<p>3 - Shadow Stack Fault. Defined by the Zicfiss extension (<a href="priv-cfi.html#priv-backward" class="xref page">Shadow Stack (Zicfiss)</a>).</p>
 </li>
 </ul>
 </div>
@@ -3423,9 +3524,9 @@ as shown in <a href="#menvcfgreg">Machine environment configuration (<code>menvc
 certain characteristics of the execution environment for modes less
 privileged than M.</p>
 </div>
-<div id="menvcfgreg" class="imageblock">
+<div id="menvcfgreg" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/menvcfgreg.edn" alt="menvcfgreg">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQd_P091Wv1cEqFx4Q5IlLzifAFZdUcDCalBFcytnJE6c2ZydnNzySUahyRiZ4nImwMMAX1XdGpkT5ziUEt0tccEo5uoTilAtw8sVtZnCIM1guVkchOT8vLTPdqjonMS8VqAjoy4zigsTkVCtDAyOT2loAOdx-Fg==?id=menvcfgreg" alt="Machine environment configuration (`menvcfg`) register.">
 </div>
 <div class="title">Figure 24. Machine environment configuration (<code>menvcfg</code>) register.</div>
 </div>
@@ -3483,7 +3584,7 @@ Successor device output and memory writes (SW implied)</p></td>
 <td class="content">
 <div class="paragraph">
 <p>Bit FIOM is needed in <code>menvcfg</code> so M-mode can emulate the hypervisor
-extension of <a href="#hypervisor">[hypervisor]</a>, which has an
+extension of <a href="hypervisor.html#hypervisor" class="xref page">"H" Extension for Hypervisor Support</a>, which has an
 equivalent FIOM bit in the hypervisor CSR <code>henvcfg</code>.</p>
 </div>
 </td>
@@ -3504,7 +3605,7 @@ with the hypervisor extension, <code>henvcfg</code>.PBMTE is read-only zero if
 <p>After changing <code>menvcfg</code>.PBMTE, executing an SFENCE.VMA instruction with
 <em>rs1</em>=<code>x0</code> and <em>rs2</em>=<code>x0</code> suffices to synchronize address-translation caches
 with respect to the altered interpretation of page-table entries' PBMT fields.
-See <a href="#hyp-mm-fences">[hyp-mm-fences]</a> for additional synchronization requirements when the
+See <a href="hypervisor.html#hyp-mm-fences" class="xref page">Memory-Management Fences</a> for additional synchronization requirements when the
 hypervisor extension is implemented.</p>
 </div>
 <div class="paragraph">
@@ -3538,7 +3639,7 @@ A/D bits need be set, hence Svade is implemented when ADUE=0.
 </table>
 </div>
 <div class="paragraph">
-<p>If the Smcdeleg extension is implemented, the CDE (Counter Delegation Enable) bit controls whether Zicntr and Zihpm counters can be delegated to S-mode. When CDE=1, the Smcdeleg extension is enabled, see <a href="#smcdeleg">[smcdeleg]</a>. When CDE=0, the Smcdeleg and Ssccfg extensions appear to be not implemented. If Smcdeleg is not implemented, CDE is read-only zero.</p>
+<p>If the Smcdeleg extension is implemented, the CDE (Counter Delegation Enable) bit controls whether Zicntr and Zihpm counters can be delegated to S-mode. When CDE=1, the Smcdeleg extension is enabled, see <a href="smcdeleg.html#smcdeleg" class="xref page">"Smcdeleg/Ssccfg" Counter Delegation Extensions</a>. When CDE=0, the Smcdeleg and Ssccfg extensions appear to be not implemented. If Smcdeleg is not implemented, CDE is read-only zero.</p>
 </div>
 <div class="paragraph">
 <p>The definition of the STCE field is furnished by the Sstc extension.</p>
@@ -3617,9 +3718,9 @@ not exist.</p>
 <p><code>mseccfg</code> is an optional 64-bit read/write register, formatted as
 shown in <a href="#mseccfg">Machine security configuration (<code>mseccfg</code>) register.</a>, that controls security features.</p>
 </div>
-<div id="mseccfg" class="imageblock">
+<div id="mseccfg" class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/mseccfg.edn" alt="mseccfg">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQ9_X1Ua_VwSEVHoBLLsjHCVXKFC4VHhDkiUtbaLCrqwsuyWB8kr4-Aa4ockaGeGw0gssF-PqiSBkbYGiL1VFIzs9Ly0y3qs5JzEsFKjLRUcgoLkhMTrUyNDAyqa0FAG1dWWE=?id=mseccfg" alt="Machine security configuration (`mseccfg`) register.">
 </div>
 <div class="title">Figure 25. Machine security configuration (<code>mseccfg</code>) register.</div>
 </div>
@@ -3786,9 +3887,9 @@ eventually, but not necessarily immediately.</p>
 <h3 id="machine-mode-privileged-instructions"><a class="anchor" href="#machine-mode-privileged-instructions"></a>Machine-Mode Privileged Instructions</h3>
 <div class="sect3">
 <h4 id="environment-call-and-breakpoint"><a class="anchor" href="#environment-call-and-breakpoint"></a>Environment Call and Breakpoint</h4>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/mm-env-call.edn" alt="mm env call">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUQ-ODA5x9UUwYnVqdRCaTeGai1KQNJoC1RuAMapyY7jytNK85BJjJC1AtnpAkGcYjMJpT7EhERYZGqHaZGiEpAnEUXd1dvTxAdFOQa6O3uo6sUDtsToKyfl5aZnAAII52Ki2FgDvfFSH" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -3851,9 +3952,9 @@ not increment the <code>minstret</code> CSR.</p>
 <p>Instructions to return from trap are encoded under the PRIV minor
 opcode.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/trap-return.edn" alt="trap return">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUQ-ODA5x9VWP1anVQegxhespSkFSbwpUb4Cm1BiuNK00L7nEGEk5kK0eEOQZhtvwYkMCphsaoRpvaISkAcRR9w1yDdEPBhLqOrFAnbE6Csn5eWmZwDCAOdCothYAgSZOOQ==" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -3905,9 +4006,9 @@ privileged modes, and optionally available to U-mode. This instruction
 may raise an illegal-instruction exception when TW=1 in <code>mstatus</code>, as
 described in <a href="#virt-control">Virtualization Support in <code>mstatus</code> Register</a>.</p>
 </div>
-<div class="imageblock">
+<div class="imageblock kroki">
 <div class="content">
-<img src="_images/wavedrom/wfi.edn" alt="wfi">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUQ-ODA5x9VWP1anVQegxhespSkFSbwpUb4Cm1BiuNK00L7nEGEk5kK0eEOQZhtvwYkMCphsaoRpvaISkAcRRD3fzVNeJBeqJ1VFIzs9LywT6HuY0o9paALPnTHo=" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -4813,10 +4914,10 @@ are <strong>WARL</strong>.</p>
 <td class="content">
 <div class="paragraph">
 <p>The Sv32 page-based virtual-memory scheme described in
-<a href="#sv32">[sv32]</a> supports 34-bit physical addresses for
+<a href="supervisor.html#sv32" class="xref page">Sv32: Page-Based 32-bit Virtual-Memory Systems</a> supports 34-bit physical addresses for
 RV32, so the PMP scheme must support addresses wider than XLEN for RV32.
 The Sv39 and Sv48 page-based virtual-memory schemes described in
-<a href="#sv39">[sv39]</a> and <a href="#sv48">[sv48]</a> support a
+<a href="supervisor.html#sv39" class="xref page">Sv32: Page-Based 39-bit Virtual-Memory Systems</a> and <a href="supervisor.html#sv48" class="xref page">Sv48: Page-Based 48-bit Virtual-Memory Systems</a> support a
 56-bit physical address space, so the RV64 PMP address registers impose
 the same limit.</p>
 </div>
@@ -5107,7 +5208,7 @@ in RV32D), even when the store address is naturally aligned.</p>
 <div class="paragraph">
 <p>The Physical Memory Protection mechanism is designed to compose with the
 page-based virtual memory systems described in
-<a href="#supervisor">[supervisor]</a>. When paging is enabled,
+<a href="supervisor.html#supervisor" class="xref page">Sv48: Supervisor-Level ISA</a>. When paging is enabled,
 instructions that access virtual memory may result in multiple
 physical-memory accesses, including implicit references to the page
 tables. The PMP checks apply to all of these accesses. The effective
@@ -5126,14 +5227,12 @@ are modified, M-mode software must synchronize the PMP settings with the
 virtual memory system and any PMP or address-translation caches. This is
 accomplished by executing an SFENCE.VMA instruction with <em>rs1</em>=<code>x0</code> and
 <em>rs2</em>=<code>x0</code>, after the PMP CSRs are written.
-See <a href="#hyp-mm-fences">[hyp-mm-fences]</a> for additional synchronization requirements when the
+See <a href="hypervisor.html#hyp-mm-fences" class="xref page">Memory-Management Fences</a> for additional synchronization requirements when the
 hypervisor extension is implemented.</p>
 </div>
 <div class="paragraph">
 <p>If page-based virtual memory is not implemented, memory accesses check
 the PMP settings synchronously, so no SFENCE.VMA is needed.</p>
-</div>
-</div>
 </div>
 </div>
 </div>
