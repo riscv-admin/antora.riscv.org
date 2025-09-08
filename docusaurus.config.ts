@@ -87,6 +87,7 @@ const config: Config = {
       logo: {
         alt: 'RISC-V Logo',
         src: 'img/logo.svg',
+        href: 'https://riscv.org',
       },
       items: [
         // {to: '/isa', label: 'Specifications', position: 'left'},
@@ -118,38 +119,38 @@ const config: Config = {
             },
           ]
         },
-        {
-          label:'Developers',
-          position:'left',
-          items:[
-            {
-              type: 'doc',
-              docId: 'spec/intro',
-              label: 'Specification Developers',
-              // docsPluginId: 'tool1',
-              to:"/docs/spec/intro",
-            },
-            {
-              type: 'doc',
-              docId: 'hardware/overview',
-              label: 'Hardware Developers',
-              // docsPluginId: 'tool1',
-              to:"/docs/hardware/overview",
-            },
-            {
-              type: 'doc',
-              docId: 'software/overview',
-              label: 'Software Developers',
-              // docsPluginId: 'tool1',
-              to:"/docs/software/overview",
-            },
-          ]
-        },
-        {
-          label: 'Blog',
-          to: '/blog',  
-          position: 'left'
-        },
+        // {
+        //   label:'Developers',
+        //   position:'left',
+        //   items:[
+        //     {
+        //       type: 'doc',
+        //       docId: 'spec/intro',
+        //       label: 'Specification Developers',
+        //       // docsPluginId: 'tool1',
+        //       to:"/docs/spec/intro",
+        //     },
+        //     {
+        //       type: 'doc',
+        //       docId: 'hardware/overview',
+        //       label: 'Hardware Developers',
+        //       // docsPluginId: 'tool1',
+        //       to:"/docs/hardware/overview",
+        //     },
+        //     {
+        //       type: 'doc',
+        //       docId: 'software/overview',
+        //       label: 'Software Developers',
+        //       // docsPluginId: 'tool1',
+        //       to:"/docs/software/overview",
+        //     },
+        //   ]
+        // },
+        // {
+        //   label: 'Blog',
+        //   to: '/blog',  
+        //   position: 'left'
+        // },
         {
           label: 'Events', 
           href: 'https://riscv.org/community/calendar/', 
