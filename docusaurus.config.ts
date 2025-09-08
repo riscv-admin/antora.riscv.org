@@ -181,11 +181,7 @@ const config: Config = {
           items: [
             {
               label: 'Specifications',
-              to: '/docs/reference/',
-            },
-            {
-              label: 'The ISA',
-              to: '/docs/reference/isa/unpriv/intro.html',
+              href: '/docs/spec/reference',
             },
           ],
         },
