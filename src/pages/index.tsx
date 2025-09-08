@@ -20,10 +20,10 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="pathname:///docs/reference/isa/index.html"
+            to="pathname:///docs/spec/reference"
             target="_self"
             >
-            View the Specification
+            View the Specifications
           </Link>
         </div>
       </div>

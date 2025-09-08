@@ -83,14 +83,13 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'Home',
       logo: {
         alt: 'RISC-V Logo',
         src: 'img/logo.svg',
         href: 'https://riscv.org',
       },
       items: [
-        // {to: '/isa', label: 'Specifications', position: 'left'},
+        {to: '/', label: 'Home', position: 'left'},
         {
           label:'Specifications',
           position:'left',
@@ -100,7 +99,7 @@ const config: Config = {
               docId: 'spec/isa',
               label: 'ISA',
               // docsPluginId: 'tool1',
-              to:"/docs/spec/intro",
+              to:"/docs/spec/reference",
             },
             {
               type: 'doc',
@@ -125,10 +124,10 @@ const config: Config = {
         //   items:[
         //     {
         //       type: 'doc',
-        //       docId: 'spec/intro',
+        //       docId: 'spec/reference',
         //       label: 'Specification Developers',
         //       // docsPluginId: 'tool1',
-        //       to:"/docs/spec/intro",
+        //       to:"/docs/spec/reference",
         //     },
         //     {
         //       type: 'doc',
@@ -182,7 +181,7 @@ const config: Config = {
           items: [
             {
               label: 'Example',
-              to: '/docs/spec/intro',
+              to: '/docs/spec/reference',
             },
           ],
         },
