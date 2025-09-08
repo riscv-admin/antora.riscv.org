@@ -180,8 +180,12 @@ const config: Config = {
           title: 'Docs',
           items: [
             {
-              label: 'Example',
-              to: '/docs/spec/reference',
+              label: 'Specifications',
+              to: '/docs/reference/',
+            },
+            {
+              label: 'The ISA',
+              to: '/docs/reference/isa/unpriv/intro.html',
             },
           ],
         },
