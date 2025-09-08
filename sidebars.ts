@@ -76,73 +76,65 @@ const sidebars: SidebarsConfig = {
         },
 
       ],
+    },    
+    {
+      type:'category',
+      label:'Processor Infrastructure',
+      collapsed:true,
+      items:[
+        'spec/non-isa/advanced-interrupt',
+        'spec/non-isa/iommu-architecture',
+        'spec/non-isa/platform-interrupt',
+        'spec/non-isa/server-soc',
+      ],
     },
     {
-      type:'category', 
-      label: 'Non-ISA',
+      type:'category',
+      label:'Debug, Trace & RAS',
       collapsed:true,
-      // link: {type: 'doc', id:'spec/non-isa'},
       items:[
-        {
-          type:'category',
-          label:'Processor Infrastructure',
-          collapsed:true,
-          items:[
-            'spec/non-isa/advanced-interrupt',
-            'spec/non-isa/iommu-architecture',
-            'spec/non-isa/platform-interrupt',
-            'spec/non-isa/server-soc',
-          ],
-        },
-        {
-          type:'category',
-          label:'Debug, Trace & RAS',
-          collapsed:true,
-          items:[
-            'spec/non-isa/debug',
-            'spec/non-isa/efficient-trace',
-            'spec/non-isa/n-trace',
-            'spec/non-isa/qos',
-            'spec/non-isa/reri',
-            'spec/non-isa/trace-conectors',
-            'spec/non-isa/trace-control-interface',
-            'spec/non-isa/unformatted-trace',
-          ],
-        },
-        {
-          type:'category',
-          label:'Platform Software',
-          collapsed:true,
-          items:[
-            'spec/non-isa/functional-fixed',
-            'spec/non-isa/semihosting',
-            'spec/non-isa/sbi',
-            'spec/non-isa/uefi',
-            'spec/non-isa/io-mapping',
-          ],
-        },
-        {
-          type:'category',
-          label:'Application Software',
-          collapsed:true,
-          items:[
-            'spec/non-isa/abi',
-          ],
-        },
-        // {
-        //   type:'category',
-        //   label:'Glossary'
-        //   collapsed:true,
-        //   items:[
-        //     Terms,
-        //     Acronyms,
-        //     extensions-list,
-        //     csr,
-        //   ],
-        // },
+        'spec/non-isa/debug',
+        'spec/non-isa/efficient-trace',
+        'spec/non-isa/n-trace',
+        'spec/non-isa/qos',
+        'spec/non-isa/reri',
+        'spec/non-isa/trace-conectors',
+        'spec/non-isa/trace-control-interface',
+        'spec/non-isa/unformatted-trace',
       ],
-      
     },
+    {
+      type:'category',
+      label:'Platform Software',
+      collapsed:true,
+      items:[
+        'spec/non-isa/functional-fixed',
+        'spec/non-isa/semihosting',
+        'spec/non-isa/sbi',
+        'spec/non-isa/uefi',
+        'spec/non-isa/io-mapping',
+      ],
+    },
+    {
+      type:'category',
+      label:'Application Software',
+      collapsed:true,
+      items:[
+        'spec/non-isa/abi',
+      ],
+    },
+    // {
+    //   type:'category',
+    //   label:'Glossary'
+    //   collapsed:true,
+    //   items:[
+    //     Terms,
+    //     Acronyms,
+    //     extensions-list,
+    //     csr,
+    //   ],
+    // },
+    
     // {
     //   type:'category',
     //   label:'Non-ISA Specifications',

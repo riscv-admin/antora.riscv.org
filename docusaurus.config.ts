@@ -93,30 +93,7 @@ const config: Config = {
         {
           label:'Specifications',
           position:'left',
-          items:[
-            {
-              type: 'doc',
-              docId: 'spec/isa',
-              label: 'ISA',
-              // docsPluginId: 'tool1',
-              to:"/docs/spec/reference",
-            },
-            {
-              type: 'doc',
-              docId: 'spec/profiles',
-              label: 'Profiles',
-              // docsPluginId: 'tool1',
-              to:"/docs/spec/profiles",
-            },
-            {
-              
-              // href: '/docs/category/non-isa-specifications',
-              label: 'Non-ISA',
-              docId: 'spec/non-isa',
-              // docsPluginId: 'tool1',
-              to:"/docs/spec/non-isa",
-            },
-          ]
+          to:"/docs/spec/reference",
         },
         // {
         //   label:'Developers',
