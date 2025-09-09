@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01 :: RISC-V Ratified Specifications Library</title>
-    <link rel="prev" href="a-st-ext.html">
-    <link rel="next" href="zacas.html">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="unpriv-index.html">
+    <link rel="next" href="colophon.html">
     <meta name="generator" content="Antora 3.1.12">
     <script>
 !function (theme, navWidth) {
@@ -121,7 +121,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -166,7 +166,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -352,13 +352,13 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
-        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/unpriv/pages/zawrs.adoc">
+        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/unpriv/pages/unpriv-contributors.adoc">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="24"
@@ -461,158 +461,129 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume I: RISC-V Unprivileged ISA Specification</li>
-      <li><a href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a></li>
+      <li><a href="unpriv-contributors.html">Preamble</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</h1>
-<div id="preamble">
+</div><div class="sect1">
+<h2 id="preable"><a class="anchor" href="#preable"></a>Preable</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Zawrs extension defines a pair of instructions to be used in polling loops
-that allows a core to enter a low-power state and wait on a store to a memory
-location. Waiting for a memory location to be updated is a common pattern in
-many use cases such as:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Contenders for a lock waiting for the lock variable to be updated.</p>
-</li>
-<li>
-<p>Consumers waiting on the tail of an empty queue for the producer to queue
-work/data. The producer may be code executing on a RISC-V hart, an accelerator
-device, an external I/O agent.</p>
-</li>
-<li>
-<p>Code waiting on a flag to be set in memory indicative of an event occurring.
-For example, software on a RISC-V hart may wait on a "done" flag to be set in
-memory by an accelerator device indicating completion of a job previously
-submitted to the device.</p>
-</li>
-</ol>
+<p><em>This document is a derivative of “The RISC-V Instruction Set Manual, Volume I: User-Level ISA
+Version 2.1” released under the following license: ©2010-2017 Andrew Waterman, Yunsup Lee,
+David Patterson, Krste Asanović. Creative Commons Attribution 4.0 International License.
+Please cite as: “The RISC-V Instruction Set Manual, Volume I: User-Level ISA, Document
+Version 20191214-draft”, Editors Andrew Waterman and Krste Asanović, RISC-V Foundation,
+December 2019.</em></p>
 </div>
 <div class="paragraph">
-<p>Such use cases involve polling on memory locations, and such busy loops can be a
-wasteful expenditure of energy. To mitigate the wasteful looping in such usages,
-a <code>WRS.NTO</code> (WRS-with-no-timeout) instruction is provided. Instead of polling
-for a store to a specific memory location, software registers a reservation set
-that includes all the bytes of the memory location using the <code>LR</code> instruction.
-Then a subsequent <code>WRS.NTO</code> instruction would cause the hart to temporarily
-stall execution in a low-power state until a store occurs to the reservation set
-or an interrupt is observed.</p>
+<p><em>This document is released under a Creative Commons Attribution 4.0 International License.</em></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributors"><a class="anchor" href="#contributors"></a>Contributors</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Contributors to all versions of the spec in alphabetical order:
+Derek Atkins,
+Arvind,
+Krste Asanović,
+Rimas Avižienis,
+Jacob Bachmeyer,
+Christopher F. Batten,
+Allen J. Baum,
+Abel Bernabeu,
+Alex Bradbury,
+Scott Beamer,
+Hans Boehm,
+Preston Briggs,
+Christopher Celio,
+Chuanhua Chang,
+David Chisnall,
+Paul Clayton,
+Palmer Dabbelt,
+L Peter Deutsch,
+Ken Dockser,
+Paul Donahue,
+Aaron Durbin,
+Roger Espasa,
+Greg Favor,
+Andy Glew,
+Shaked Flur,
+Stefan Freudenberger,
+Marc Gauthier,
+Andy Glew,
+Jan Gray,
+Gianluca Guida,
+Michael Hamburg,
+John Hauser,
+Christian Herber,
+John Ingalls,
+David Horner,
+Bruce Hoult,
+Bill Huffman,
+Alexandre Joannou,
+Olof Johansson,
+Ben Keller,
+David Kruckemyer,
+Tariq Kurd,
+Yunsup Lee,
+Paul Loewenstein,
+Daniel Lustig,
+Yatin Manerkar,
+Luc Maranget,
+Ben Marshall,
+Margaret Martonosi,
+Phil McCoy,
+Nathan Menhorn,
+Christoph Müllner,
+Joseph Myers,
+Vijayanand Nagarajan,
+Torbjørn Viem Ness,
+Rishiyur Nikhil,
+Jonas Oberhauser,
+Stefan O&#8217;Rear,
+Markku-Juhani O. Saarinen,
+Albert Ou,
+John Ousterhout,
+Daniel Page,
+David Patterson,
+Christopher Pulte,
+Jose Renau,
+Josh Scheid,
+Colin Schmidt,
+Peter Sewell,
+Susmit Sarkar,
+Ved Shanbhogue,
+Brent Spinney,
+Brendan Sweeney,
+Michael Taylor,
+Wesley Terpstra,
+Matt Thomas,
+Tommy Thorn,
+Philipp Tomsich,
+Caroline Trippel,
+Ray VanDeWalker,
+Muralidaran Vijayaraghavan,
+Megan Wachs,
+Paul Wamsley,
+Andrew Waterman,
+Robert Watson,
+David Weaver,
+Derek Williams,
+Claire Wolf,
+Andrew Wright,
+Reinoud Zandijk,
+and Sizhuo Zhang.</p>
 </div>
 <div class="paragraph">
-<p>Sometimes the program waiting on a memory update may also need to carry out a
-task at a future time or otherwise place an upper bound on the wait. To support
-such use cases a second instruction <code>WRS.STO</code> (WRS-with-short-timeout) is
-provided that works like <code>WRS.NTO</code> but bounds the stall duration to an
-implementation-define short timeout such that the stall is terminated on the
-timeout if no other conditions have occurred to terminate the stall. The
-program using this instruction may then determine if its deadline has been
-reached.</p>
+<p>Please contact RISC-V International to suggest corrections.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The instructions in the Zawrs extension are only useful in conjunction with the
-LR instruction, which is provided by the Zalrsc component of the A extension.</p>
-</div>
-</td>
-</tr>
-</table>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="Zawrs"><a class="anchor" href="#Zawrs"></a>Wait-on-Reservation-Set Instructions</h3>
-<div class="paragraph">
-<p>The <code>WRS.NTO</code> and <code>WRS.STO</code> instructions cause the hart to temporarily stall
-execution in a low-power state as long as the reservation set is valid and no
-pending interrupts, even if disabled, are observed. For <code>WRS.STO</code> the stall
-duration is bounded by an implementation defined short timeout. These
-instructions are available in all privilege modes.</p>
-</div>
-<div class="imageblock kroki">
-<div class="content">
-<img src="https://kroki.io/wavedrom/svg/eNp9z0ELgjAYBuB7v-K7LWHEpomwe8cKmhAhHtY2Tagpc0Eg_veWZIYHry_P-_J9ndUlg2wF0F0r1zJIMBjx0AxQ3chaaYRBOGe9QfzC091-TV5JFKAcejy14l_Lqr8GmbEIw-iKp5EuWrDxZG1LFyANZ6s0HHWGzie-OaRHfzRRgY-HgA8BVd8vcgyyNkVVsu4ujP5MYri1jZCaURJu-_4NU5lUDw==" alt="svg">
-</div>
-</div>
-<div style="page-break-after: always;"></div>
-<div class="paragraph">
-<p>Hart execution may be stalled while the following conditions are all satisfied:</p>
-</div>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>The reservation set is valid</p>
-</li>
-<li>
-<p>If <code>WRS.STO</code>, a "short" duration since start of stall has not elapsed</p>
-</li>
-<li>
-<p>No pending interrupt is observed (see the rules below)</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p>While stalled, an implementation is permitted to occasionally terminate the
-stall and complete execution for any reason.</p>
-</div>
-<div class="paragraph">
-<p><code>WRS.NTO</code> and <code>WRS.STO</code> instructions follow the rules of the <code>WFI</code> instruction
-for resuming execution on a pending  interrupt.</p>
-</div>
-<div class="paragraph">
-<p>When the <code>TW</code> (Timeout Wait) bit in <code>mstatus</code> is set and <code>WRS.NTO</code> is executed
-in any privilege mode other than M mode, and it does not complete within an
-implementation-specific bounded time limit, the <code>WRS.NTO</code> instruction will cause
-an illegal-instruction exception.</p>
-</div>
-<div class="paragraph">
-<p>When executing in VS or VU mode, if the <code>VTW</code> bit is set in <code>hstatus</code>, the
-<code>TW</code> bit in <code>mstatus</code> is clear, and the <code>WRS.NTO</code> does not complete within an
-implementation-specific bounded time limit, the <code>WRS.NTO</code> instruction will cause
-a virtual-instruction  exception.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>Since the <code>WRS.STO</code> and <code>WRS.NTO</code> instructions can complete execution for
-reasons other than stores to the reservation set, software will likely need
-a means of looping until the required stores have occurred.</p>
-</div>
-<div class="paragraph">
-<p>The duration of a <code>WRS.STO</code> instruction&#8217;s timeout may vary significantly within
-and among implementations. In typical implementations this duration should be
-roughly in the range of 10 to 100 times an on-chip cache miss latency or a
-cacheless access to main memory.</p>
-</div>
-<div class="paragraph">
-<p><code>WRS.NTO</code>, unlike <code>WFI</code>, is not specified to cause an illegal-instruction
-exception if executed in U-mode when the governing <code>TW</code> bit is 0. <code>WFI</code> is
-typically not expected to be used in U-mode and on many systems may promptly
-cause an illegal-instruction exception if used at U-mode. Unlike <code>WFI</code>,
-<code>WRS.NTO</code> is expected to be used by software in U-mode when waiting on
-memory but without a deadline for that wait.</p>
-</div>
-</td>
-</tr>
-</table>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a></span>
-  <span class="next"><a href="zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a></span>
+  <span class="prev"><a href="unpriv-index.html">Unprivileged Architecture</a></span>
+  <span class="next"><a href="colophon.html">Preface</a></span>
 </nav>
 </article>  </div>
 </main>
