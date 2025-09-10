@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>RISC-V Unprivileged Architecture :: RISC-V Ratified Specifications Library</title>
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="../index.html">
     <link rel="next" href="unpriv-contributors.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
+    <meta name="antora-ui-version" content="cd2ec491aa8454af76d7315e04a031f43ee78c0c"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -352,7 +352,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="RISC-V Unprivileged Architecture"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -385,7 +385,7 @@
           GitHub Project
         </a>
 
-        <div class="dropdown">
+        <div class="dropdown-toc">
           <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
             <span>Download PDFs</span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -393,33 +393,56 @@
             </svg>
           </a>
           <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unpriv</a></li>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Priv</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
           </ul>
         </div>
-        <script>
-          (function() {
-            const btn = document.getElementById('pdfDropdownButton');
-            const menu = document.getElementById('pdfDropdownMenu');
-            btn.addEventListener('click', function(e) {
-              e.preventDefault();
-              const expanded = btn.getAttribute('aria-expanded') === 'true';
-              btn.setAttribute('aria-expanded', !expanded);
-              menu.hidden = expanded;
-            });
-            document.addEventListener('click', function(e) {
-              if (!btn.contains(e.target) && !menu.contains(e.target)) {
-                btn.setAttribute('aria-expanded', 'false');
-                menu.hidden = true;
-              }
-            });
-          })();
-        </script>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
         <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
           .dropdown-menu {
             position: absolute;
+            top: 100%;
             left: 0;
-            background: #FDB515;
+            background: #f9f9f9;
             border: 1px solid #000000;
             border-radius: 4px;
             min-width: 180px;
@@ -435,12 +458,11 @@
             user-select: none;
           }
           .dropdown-item:hover{
-            background-color: #003262;
+            background-color: #cccccc;
             outline: none;
-            color: white;
           }
           .dropdown-item:focus {
-            background-color: #003262;
+            background-color: #cccccc;
             outline: none;
           }
           .chevron {
@@ -464,12 +486,16 @@
       <li><a href="unpriv-index.html">Unprivileged Architecture</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">RISC-V Unprivileged Architecture</h1>
-<div class="sect1 text-center">
-<h2 id="the-risc-v-instruction-set-manual-volume-i"><a class="anchor" href="#the-risc-v-instruction-set-manual-volume-i"></a>The RISC-V Instruction Set Manual: Volume I</h2>
+</div><div class="sect1 text-center">
+<h2 id="the-risc-v-instruction-set-manual"><a class="anchor" href="#the-risc-v-instruction-set-manual"></a>The RISC-V Instruction Set Manual</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="unprivileged-architecture"><a class="anchor" href="#unprivileged-architecture"></a>Unprivileged Architecture</h3>
+<h3 id="volume-1-unprivileged-architecture"><a class="anchor" href="#volume-1-unprivileged-architecture"></a>Volume 1: Unprivileged Architecture</h3>
+<div class="imageblock">
+<div class="content">
+<img src="_images/risc-v_logo.svg" alt="risc v logo">
+</div>
+</div>
 <div class="paragraph text-center">
 <p>Version 20250508: This document is in Ratified state.</p>
 </div>
