@@ -46,15 +46,25 @@ const sidebars: SidebarsConfig = {
           label:'The ISA Specification',
           // link: {type: 'doc', id: 'spec/isa'},
           items:[
+            // {
+            //   type:"link",
+            //   label:"ISA Volume 1: Priv",
+            //   href:"pathname:///docs/reference/isa/unpriv/intro.html",
+            // },
+            // {
+            //   type:"link",
+            //   label:"ISA Volume 2: Un-Priv",
+            //   href:"pathname:///docs/reference/isa/priv/priv-intro.html",
+            // },
             {
-              type:"link",
+              type:"doc",
               label:"ISA Volume 1: Priv",
-              href:"pathname:///docs/reference/isa/unpriv/intro.html",
+              id:"spec/isa1",
             },
             {
-              type:"link",
+              type:"doc",
               label:"ISA Volume 2: Un-Priv",
-              href:"pathname:///docs/reference/isa/priv/priv-intro.html",
+              id:"spec/isa2",
             },
 
           ],
