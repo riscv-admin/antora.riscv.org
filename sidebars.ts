@@ -113,11 +113,13 @@ const sidebars: SidebarsConfig = {
           label:'Platform Software',
           collapsed:true,
           items:[
+            'spec/non-isa/brs',
             'spec/non-isa/functional-fixed',
+            'spec/non-isa/io-mapping',
+            'spec/non-isa/rpmi',
             'spec/non-isa/semihosting',
             'spec/non-isa/sbi',
             'spec/non-isa/uefi',
-            'spec/non-isa/io-mapping',
           ],
         },
         {
@@ -126,6 +128,7 @@ const sidebars: SidebarsConfig = {
           collapsed:true,
           items:[
             'spec/non-isa/abi',
+            'spec/non-isa/vector-c',
           ],
         },
         // {
