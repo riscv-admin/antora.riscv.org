@@ -1,0 +1,35 @@
+root_level: 0
+component_versions: '*'
+asciidoc:
+  attributes:
+    allow-uri-read: ''
+    kroki-fetch-diagram: ~
+    source-highlighter: rouge
+    mathematical-format: svg
+    mathematical-inline: true
+    #pdf-theme: styles/themes/riscv-pdf.yml
+    #pdf-fontsdir: styles/fonts
+   # title-logo-image: image:risc-v_logo.png["RISC-V International Logo",pdfwidth=3.25in,align=center]
+   # bibtex-file: src/resources/riscv-spec.bib
+   # bibtex-order: alphabetical
+   # bibtex-style: apa
+   # bibtex-format: asciidoc
+   # bibtex-throw: false
+    stem: latexmath
+    sectnums:
+    sectnumlevels: 5
+    toc: left
+    toclevels: 5
+    company: RISC-V
+    url-riscv: https://riscv.org
+    doctype: book
+    :icons: font
+
+build:
+  command: bundle exec asciidoctor-pdf -r asciidoctor-kroki --trace
+
+converters:
+  - name: pdf
+    backend: pdf
+    file_extension: .pdf
+    command: asciidoctor-pdf

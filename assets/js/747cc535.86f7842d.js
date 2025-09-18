@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs_riscv_org=self.webpackChunkdocs_riscv_org||[]).push([[1552],{7637:o=>{o.exports=JSON.parse('{"metadata":{"permalink":"/antora.riscv.org/blog","page":1,"postsPerPage":10,"totalPages":1,"totalCount":4,"blogDescription":"Blog","blogTitle":"Blog"}}')}}]);

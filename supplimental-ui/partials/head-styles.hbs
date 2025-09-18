@@ -1,0 +1,15 @@
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/site.css">
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/search.css">
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/page-search.css">
+    <link rel="stylesheet" href="{{{uiRootPath}}}/css/vendor/{{#if (asciidocExtensionRegistered '@asciidoctor/tabs')}}asciidoctor{{else}}spring{{/if}}-tabs.css">
+    {{#if env.SITE_ASCIINEMA_PROVIDER}}
+    {{> asciinema-styles}}
+    {{/if}}
+
