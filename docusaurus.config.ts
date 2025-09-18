@@ -20,7 +20,7 @@ const config: Config = {
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'jjscheel', // Usually your GitHub org/user name.
-  projectName: 'docs.riscv.org', // Usually your repo name.
+  projectName: 'antora.riscv.org', // Usually your repo name.
   deploymentBranch: 'gh-pages',
 
   onBrokenLinks: 'throw',
