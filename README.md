@@ -1,6 +1,6 @@
 # Website
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator. This site is deployed at https://developer.riscv.org/.
+This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator. This site is deployed via GitHub pages at https://jjscheel.github.io/antora.riscv.org/.
 
 ### Installation
 
