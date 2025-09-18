@@ -58,12 +58,12 @@ const sidebars: SidebarsConfig = {
             // },
             {
               type:"doc",
-              label:"ISA Volume 1: Priv",
+              label:"ISA Volume 1: UnPrivileged",
               id:"spec/isa1",
             },
             {
               type:"doc",
-              label:"ISA Volume 2: Un-Priv",
+              label:"ISA Volume 2: Privileged",
               id:"spec/isa2",
             },
 
