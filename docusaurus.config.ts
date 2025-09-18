@@ -86,7 +86,8 @@ const config: Config = {
     navbar: {
       logo: {
         alt: 'RISC-V Logo',
-        src: 'img/logo.svg',
+        // src: 'img/logo.svg',
+        src: 'antora.riscv.org/img/logo.svg',
         href: 'https://riscv.org',
       },
       items: [
