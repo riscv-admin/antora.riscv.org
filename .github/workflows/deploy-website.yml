@@ -18,11 +18,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'yarn'
+    #- name: Use Node.js ${{ matrix.node-version }}
+    #  uses: actions/setup-node@v4
+    #  with:
+    #    node-version: ${{ matrix.node-version }}
+    #    cache: 'yarn'
     - name: Install Ruby
       uses: ruby/setup-ruby@v1
       with:
@@ -35,8 +35,8 @@ jobs:
         bundle install
         npm install
 
-    - name: Install Docusaurus dependencies
-      run: yarn install
+    #- name: Install Docusaurus dependencies
+    #  run: yarn install
 
     - name: Build Antora
       continue-on-error: true
@@ -44,9 +44,9 @@ jobs:
         cd antora 
         npx antora antora-playbook.yml --stacktrace
     
-    - name: Build Docusaurus
+    #- name: Build Docusaurus
       # continue-on-error: true
-      run: yarn build
+    #  run: yarn build
 
     - name: Deploy to GitHub Pages
       # run: yarn deploy
