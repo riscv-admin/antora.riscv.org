@@ -487,7 +487,8 @@
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0</h1>
-<div id="preamble">
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Being able to access the memory of a process running at a high privileged execution mode, such as the Supervisor or Machine mode, from a lower privileged mode such as the User mode, introduces an obvious attack vector since it allows for an attacker to perform privilege escalation, and tamper with the code and/or data of that process. A less obvious attack vector exists when the reverse happens, in which case an attacker instead of tampering with code and/or data that belong to a high-privileged process, can tamper with the memory of an unprivileged / less-privileged process and trick the high-privileged process to use or execute it.</p>
@@ -534,10 +535,8 @@
 </tr>
 </table>
 </div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="threat-model"><a class="anchor" href="#threat-model"></a>Threat model</h4>
+<div class="sect2">
+<h3 id="threat-model"><a class="anchor" href="#threat-model"></a>Threat model</h3>
 <div class="paragraph">
 <p>However, there are no such mechanisms available on Machine mode in the current (v1.11) Privileged Spec. It is not possible for a PMP rule to be <strong>enforced</strong> only on non-Machine modes and <strong>denied</strong> on Machine mode, to only allow access to a memory region by less-privileged modes. It is only possible to have a <strong>locked</strong> rule that will be <strong>enforced</strong> on all modes, or a rule that will be <strong>enforced</strong> on non-Machine modes and be <strong>ignored</strong> by Machine mode. So for any physical memory region which is not protected with a Locked rule, Machine mode has unlimited access, including the ability to execute it.</p>
 </div>
@@ -545,8 +544,11 @@
 <p>Without being able to protect less-privileged modes from Machine mode, it is not possible to prevent the mentioned attack vector. This becomes even more important for RISC-V than on other architectures, since implementations are allowed where a hart only has Machine and User modes available, so the whole OS will run on Machine mode instead of the non-existent Supervisor mode. In such implementations the attack surface is greatly increased, and the same kind of attacks performed on Supervisor mode and mitigated through SMAP/SMEP, can be performed on Machine mode without any available mitigations. Even on implementations with Supervisor mode present attacks are still possible against the Firmware and/or the Secure Monitor running on Machine mode.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mseccfg_csr"><a class="anchor" href="#mseccfg_csr"></a>mseccfg CSR</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="mseccfg_csr"><a class="anchor" href="#mseccfg_csr"></a>mseccfg CSR</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -625,8 +627,8 @@
 </li>
 </ol>
 </div>
-<div class="sect3">
-<h4 id="truth-table-when-mseccfg-mml-is-set"><a class="anchor" href="#truth-table-when-mseccfg-mml-is-set"></a>Truth table when mseccfg.MML is set</h4>
+<div class="sect2">
+<h3 id="truth-table-when-mseccfg-mml-is-set"><a class="anchor" href="#truth-table-when-mseccfg-mml-is-set"></a>Truth table when mseccfg.MML is set</h3>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -778,21 +780,25 @@
 <p><strong>: *Locked</strong> rules cannot be removed or modified until a <strong>PMP reset</strong>, unless <code>mseccfg.RLB</code> is set.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="visual-representation"><a class="anchor" href="#visual-representation"></a>Visual representation</h4>
+<div class="sect2">
+<h3 id="visual-representation"><a class="anchor" href="#visual-representation"></a>Visual representation</h3>
 <div class="paragraph">
 <p>images::smepmp-visual-representation.png[]</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="smepmp-software-discovery"><a class="anchor" href="#smepmp-software-discovery"></a>Smepmp software discovery</h3>
+</div>
+<div class="sect1">
+<h2 id="smepmp-software-discovery"><a class="anchor" href="#smepmp-software-discovery"></a>Smepmp software discovery</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Since all fields defined on <code>mseccfg</code> as part of this extension are locked when set (<code>MMWP</code>/<code>MML</code>) or locked when cleared (<code>RLB</code>), software can&#8217;t poll them for determining the presence of Smepmp. It is expected that BootROM will set <code>mseccfg.MMWP</code> and/or <code>mseccfg.MML</code> during early boot, before jumping to the firmware, so that the firmware will be able to determine the presence of Smepmp by reading <code>mseccfg</code> and checking the state of <code>mseccfg.MMWP</code> and <code>mseccfg.MML</code>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="rationale"><a class="anchor" href="#rationale"></a>Rationale</h3>
+</div>
+<div class="sect1">
+<h2 id="rationale"><a class="anchor" href="#rationale"></a>Rationale</h2>
+<div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -948,6 +954,7 @@
 </div>
 </li>
 </ol>
+</div>
 </div>
 </div>
 <nav class="pagination">
