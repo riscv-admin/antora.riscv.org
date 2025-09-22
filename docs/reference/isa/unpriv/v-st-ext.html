@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -19,75 +19,142 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="0db9473aa7aacb66056c4e1844f8562e47b0597c"> 
+    <meta name="antora-ui-version" content="b3ea053ce3f3c97a6cba8b0d56e45388b38b1920"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
     <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
-
-
-<header class="header" id="antora-header">
-    <nav class="navbar">
-        <head>
-            <link data-rh="true" rel="icon" href="/img/favicon.ico">
-            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
-            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
-            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
-            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
-            <link rel="stylesheet" type="text/css" href="/antora.riscv.org/docs/reference/_/docusaurus-styles-copy-08-25.css">
-
-        </head>
-        <script>
-            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
-        </script>
-            <link rel="preload" as="image" href="/antora.riscv.org/img/logo.svg">
-            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
-            <div class="announcementBar_mb4j" role="banner">
-                <div class="announcementBarPlaceholder_vyr4"></div>
-                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
-            <nav aria-label="Main" class="navbar ">
-                <div class="navbar__inner">
-                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
-                        <a class="navbar__brand" href="/">
-                            <div class="navbar__logo"><img src="/antora.riscv.org/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/antora.riscv.org/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
-                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
-                            <ul class="dropdown__menu">
-                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
-                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
-                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
-                            </ul>
-                        </div>
-                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
-                            <ul class="dropdown__menu">
-                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
-                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
-                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
-                            </ul>
-                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
-                        <div class="navbar-item search hide-for-print">
-                          <div id="search-field" class="field">
-                            <input id="search-input" type="text" placeholder="Search">
-                          </div>
-                        </div>
-                    <div class="navbar__items navbar__items--right">
-
-
-                      <div class="navbarSearchContainer_Bca1">
-
-                      </div>
-                    </div>
-                </div>
-                <div role="presentation" class="navbar-sidebar__backdrop"></div>
-            </nav>
-            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
-        
-
-    </nav>
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv-org">
+        <img id="springlogo" class="block" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivilege</a>
+            <a class="navbar-item" href="priv/priv-index.html">Privilege</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
+              Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
+              Interrupt Architecture</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
+              Architecture Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
+              Interrupt Controller Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
+              SOC Specification</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <li class="navbar-item navbar-item-special-3">Debug, Trace, RAS</li>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Efficient Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Capacity and Bandwidth QoS Register Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Debug</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">N-Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">RERI Architecture</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Connectors</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Control Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation</a>
+            <li class="navbar-item navbar-item-special-3">Platform Software</li>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Boot and Runtime Services</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Functional Fixed Hardware</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">IO Mapping Table</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Platform Management Interface Specification</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Semihosting</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Supervisor Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">UEFI Protocol</a>
+            <li class="navbar-item navbar-item-special-3">Application Enablement</li>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Application Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/">Vector C Intrinsic</a>
+          </div>
+        </div>
+      <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Events</a>
+          </div>
+        </div>
+      </div>
+            <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Events</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
 </header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
 <div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
@@ -12895,11 +12962,16 @@ the mask element group is set).</p>
 </div>
 
 </div>
-<footer class="hidden">
-		<script src="../../_/js/vendor/lunr.js"></script>
-<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
-<script async src="../../search-index.js"></script>
-</footer><script src="../../_/js/vendor/import.js"></script>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <img id="RISC-V" src="../../_/img/risc-v_logo.svg" alt="RISC-V">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
 <script src="../../_/js/site.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
