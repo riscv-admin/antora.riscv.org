@@ -1,0 +1,3770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="smctr.html">
+    <link rel="next" href="sstc.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="e743aae4b2d14a92e2c9e271f074d0f3cf0a7ea4"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/favicon.ico" type="image/x-icon">
+  </head>
+  <body class="article">
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20250508</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-history.html">History</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/edit/v20250508/modules/priv/pages/supervisor.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume II: RISC-V Privileged ISA Specification</li>
+      <li><a href="supervisor.html">Supervisor-Level ISA, Version 1.13</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="supervisor"><a class="anchor" href="#supervisor"></a>Supervisor-Level ISA, Version 1.13</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter describes the RISC-V supervisor-level architecture, which
+contains a common core that is used with various supervisor-level
+address translation and protection schemes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Supervisor mode is deliberately restricted in terms of interactions with
+underlying physical hardware, such as physical memory and device
+interrupts, to support clean virtualization. In this spirit, certain
+supervisor-level facilities, including requests for timer and
+interprocessor interrupts, are provided by implementation-specific
+mechanisms. In some systems, a supervisor execution environment (SEE)
+provides these facilities in a manner specified by a supervisor binary
+interface (SBI). Other systems supply these facilities directly, through
+some other implementation-defined mechanism.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="supervisor-csrs"><a class="anchor" href="#supervisor-csrs"></a>Supervisor CSRs</h3>
+<div class="paragraph">
+<p>A number of CSRs are provided for the supervisor.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The supervisor should only view CSR state that should be visible to a
+supervisor-level operating system. In particular, there is no
+information about the existence (or non-existence) of higher privilege
+levels (machine level or other) visible in the CSRs accessible by the
+supervisor.</p>
+</div>
+<div class="paragraph">
+<p>Many supervisor CSRs are a subset of the equivalent machine-mode CSR,
+and the machine-mode chapter should be read first to help understand the
+supervisor-level CSR descriptions.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sstatus"><a class="anchor" href="#sstatus"></a>Supervisor Status (<code>sstatus</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>sstatus</code> register is an SXLEN-bit read/write register formatted as
+shown in <a href="#sstatusreg-rv32">Supervisor-mode status (<code>sstatus</code>) register when SXLEN=32.</a> when SXLEN=32
+and <a href="#sstatusreg">Supervisor-mode status (<code>sstatus</code>) register when SXLEN=64.</a> when SXLEN=64. The <code>sstatus</code>
+register keeps track of the processor&#8217;s current operating state.</p>
+</div>
+<div id="sstatusreg-rv32" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQDw8I8lSv1cEqF-zpiiplTJy2AHR9CLlQJ5xS-I0MQJUygkuFBUcbWhnE4pLGNBUh54ZfawQ2aSLdG-qLS8o3Ioi8QHX1CcAp6RKCKmVGnJkuIJlYHYXk_Ly0zHSr6pzEvFSgEmAQZBQXJCanWhkaGJnU1gIAFTeeWw==?id=sstatusreg-rv32" alt="Supervisor-mode status (`sstatus`) register when SXLEN=32.">
+</div>
+<div class="title">Figure 1. Supervisor-mode status (<code>sstatus</code>) register when SXLEN=32.</div>
+</div>
+<div id="sstatusreg" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQDw8I8lSv1cEqF-zpiiplTJy2AHR9CLlQJ5xS-I0MQJUygkuFBUcbWhnE4pLGNBUh54ZfawQ2aSLdG-qLS8o3Ioi8QHX1CcAp6RKCKmVOlP9DI3wwfWhkSZx7XEAysToKyfl5aZnpVtU5iXmpQCUmOgoZxQWJyalWhgZGJrW1AMn4rsc=?id=sstatusreg" alt="Supervisor-mode status (`sstatus`) register when SXLEN=64.">
+</div>
+<div class="title">Figure 2. Supervisor-mode status (<code>sstatus</code>) register when SXLEN=64.</div>
+</div>
+<div class="paragraph">
+<p>The SPP bit indicates the privilege level at which a hart was executing
+before entering supervisor mode. When a trap is taken, SPP is set to 0
+if the trap originated from user mode, or 1 otherwise. When an SRET
+instruction (see <a href="#otherpriv">[otherpriv]</a>) is executed to
+return from the trap handler, the privilege level is set to user mode if
+the SPP bit is 0, or supervisor mode if the SPP bit is 1; SPP is then
+set to 0.</p>
+</div>
+<div class="paragraph">
+<p>The SIE bit enables or disables all interrupts in supervisor mode. When
+SIE is clear, interrupts are not taken while in supervisor mode. When
+the hart is running in user-mode, the value in SIE is ignored, and
+supervisor-level interrupts are enabled. The supervisor can disable
+individual interrupt sources using the <code>sie</code> CSR.</p>
+</div>
+<div class="paragraph">
+<p>The SPIE bit indicates whether supervisor interrupts were enabled prior
+to trapping into supervisor mode. When a trap is taken into supervisor
+mode, SPIE is set to SIE, and SIE is set to 0. When an SRET instruction
+is executed, SIE is set to SPIE, then SPIE is set to 1.</p>
+</div>
+<div class="paragraph">
+<p>The <code>sstatus</code> register is a subset of the <code>mstatus</code> register.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In a straightforward implementation, reading or writing any field in
+<code>sstatus</code> is equivalent to reading or writing the homonymous field in
+<code>mstatus</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect4">
+<h5 id="base-isa-control-in-sstatus-register"><a class="anchor" href="#base-isa-control-in-sstatus-register"></a>Base ISA Control in <code>sstatus</code> Register</h5>
+<div class="paragraph">
+<p>The UXL field controls the value of XLEN for U-mode, termed <em>UXLEN</em>,
+which may differ from the value of XLEN for S-mode, termed <em>SXLEN</em>. The
+encoding of UXL is the same as that of the MXL field of <code>misa</code>, shown in
+<a href="#misabase">[misabase]</a>.</p>
+</div>
+<div class="paragraph">
+<p>When SXLEN=32, the UXL field does not exist, and UXLEN=32. When
+SXLEN=64, it is a <strong>WARL</strong> field that encodes the current value of UXLEN. In
+particular, an implementation may make UXL be a read-only field whose
+value always ensures that UXLEN=SXLEN.</p>
+</div>
+<div class="paragraph">
+<p>If UXLEN≠SXLEN, instructions executed in the narrower
+mode must ignore source register operand bits above the configured XLEN,
+and must sign-extend results to fill the widest supported XLEN in the
+destination register.</p>
+</div>
+<div class="paragraph">
+<p>If UXLEN <span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.28ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2333.6 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="3C" d="M694 -11T694 -19T688 -33T678 -40Q671 -40 524 29T234 166L90 235Q83 240 83 250Q83 261 91 266Q664 540 678 540Q681 540 687 534T694 519T687 505Q686 504 417 376L151 250L417 124Q686 -4 687 -5Q694 -11 694 -19Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1833.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> SXLEN, user-mode instruction-fetch addresses
+and load and store effective addresses are taken modulo
+<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="9.27ex" height="2.041ex" role="img" focusable="false" viewBox="0 -846 4097.5 902"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="msup" transform="translate(500,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="55" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q57 680 180 680Q315 680 324 683H335V637H302Q262 636 251 634T233 622L232 418V291Q232 189 240 145T280 67Q325 24 389 24Q454 24 506 64T571 183Q575 206 575 410V598Q569 608 565 613T541 627T489 637H472V683H481Q496 680 598 680T715 683H724V637H707Q634 633 622 598L621 399Q620 194 617 180Q617 179 615 171Q595 83 531 31T389 -22Q304 -22 226 33T130 192Q129 201 128 412V622Z"></path><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z" transform="translate(750,0)"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(1500,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(2125,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2806,0)"></path></g></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3597.5,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>. For example, when UXLEN=32 and SXLEN=64,
+user-mode memory accesses reference the lowest 4 GiB of the address space.</p>
+</div>
+<div class="paragraph">
+<p>Some HINT instructions are encoded as integer computational instructions that
+overwrite their destination register with its current value, e.g.,
+<code>c.addi x8, 0</code>.
+When such a HINT is executed with XLEN &lt; SXLEN and bits SXLEN..XLEN of the
+destination register not all equal to bit XLEN-1, it is implementation-defined
+whether bits SXLEN..XLEN of the destination register are unchanged or are
+overwritten with copies of bit XLEN-1.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This definition allows implementations to elide register writeback for
+some HINTs, while allowing them to execute other HINTs in the same manner as
+other integer computational instructions.
+The implementation choice is observable only by S-mode with SXLEN &gt; UXLEN; it
+is invisible to U-mode.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="sum"><a class="anchor" href="#sum"></a>Memory Privilege in <code>sstatus</code> Register</h5>
+<div class="paragraph">
+<p>The MXR (Make eXecutable Readable) bit modifies the privilege with which
+loads access virtual memory. When MXR=0, only loads from pages marked
+readable (R=1 in <a href="#sv32pte">Sv32 page table entry.</a>) will succeed. When
+MXR=1, loads from pages marked either readable or executable (R=1 or
+X=1) will succeed. MXR has no effect when page-based virtual memory is
+not in effect.</p>
+</div>
+<div class="paragraph">
+<p>The SUM (permit Supervisor User Memory access) bit modifies the
+privilege with which S-mode loads and stores access virtual memory. When
+SUM=0, S-mode memory accesses to pages that are accessible by U-mode
+(U=1 in <a href="#sv32pte">Sv32 page table entry.</a>) will fault. When SUM=1, these
+accesses are permitted. SUM has no effect when page-based virtual memory
+is not in effect, nor when executing in U-mode. Note that S-mode can
+never execute instructions from user pages, regardless of the state of
+SUM.</p>
+</div>
+<div class="paragraph">
+<p>SUM is read-only 0 if <code>satp</code>.MODE is read-only 0.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SUM mechanism prevents supervisor software from inadvertently
+accessing user memory. Operating systems can execute the majority of
+code with SUM clear; the few code segments that should access user
+memory can temporarily set SUM.</p>
+</div>
+<div class="paragraph">
+<p>The SUM mechanism does not avail S-mode software of permission to
+execute instructions in user code pages. Legitimate use cases for
+execution from user memory in supervisor context are rare in general and
+nonexistent in POSIX environments. However, bugs in supervisors that
+lead to arbitrary code execution are much easier to exploit if the
+supervisor exploit code can be stored in a user buffer at a virtual
+address chosen by an attacker.</p>
+</div>
+<div class="paragraph">
+<p>Some non-POSIX single address space operating systems do allow certain
+privileged software to partially execute in supervisor mode, while most
+programs run in user mode, all in a shared address space. This use case
+can be realized by mapping the physical code pages at multiple virtual
+addresses with different permissions, possibly with the assistance of
+the instruction page-fault handler to direct supervisor software to use
+the alternate mapping.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="endianness-control-in-sstatus-register"><a class="anchor" href="#endianness-control-in-sstatus-register"></a>Endianness Control in <code>sstatus</code> Register</h5>
+<div class="paragraph">
+<p>The UBE bit is a <strong>WARL</strong> field that controls the endianness of explicit memory
+accesses made from U-mode, which may differ from the endianness of
+memory accesses in S-mode. An implementation may make UBE be a read-only
+field that always specifies the same endianness as for S-mode.</p>
+</div>
+<div class="paragraph">
+<p>UBE controls whether explicit load and store memory accesses made from
+U-mode are little-endian (UBE=0) or big-endian (UBE=1).</p>
+</div>
+<div class="paragraph">
+<p>UBE has no effect on instruction fetches, which are <em>implicit</em> memory
+accesses that are always little-endian.</p>
+</div>
+<div class="paragraph">
+<p>For <em>implicit</em> accesses to supervisor-level memory management data
+structures, such as page tables, S-mode endianness always applies and
+UBE is ignored.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Standard RISC-V ABIs are expected to be purely little-endian-only or
+big-endian-only, with no accommodation for mixing endianness.
+Nevertheless, endianness control has been defined so as to permit an OS
+of one endianness to execute user-mode programs of the opposite
+endianness.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="previous-expected-landing-pad-elp-state-in-sstatus-register"><a class="anchor" href="#previous-expected-landing-pad-elp-state-in-sstatus-register"></a>Previous Expected Landing Pad (ELP) State in <code>sstatus</code> Register</h5>
+<div class="paragraph">
+<p>Access to the <code>SPELP</code> field, added by Zicfilp, accesses the homonymous
+fields of <code>mstatus</code> when <code>V=0</code>, and the homonymous fields of <code>vsstatus</code>
+when <code>V=1</code>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="supv-double-trap"><a class="anchor" href="#supv-double-trap"></a>Double Trap Control in <code>sstatus</code> Register</h5>
+<div class="paragraph">
+<p>The S-mode-disable-trap (<code>SDT</code>) bit is a WARL field introduced by the Ssdbltrp
+extension to address double trap (See <a href="#machine-double-trap">[machine-double-trap]</a>) at privilege
+modes lower than M.</p>
+</div>
+<div class="paragraph">
+<p>When the <code>SDT</code> bit is set to 1 by an explicit CSR write, the <code>SIE</code> (Supervisor
+Interrupt Enable) bit is cleared to 0. This clearing occurs regardless of the
+value written, if any, to the <code>SIE</code> bit by the same write. The <code>SIE</code> bit can
+only be set to 1 by an explicit CSR write if the <code>SDT</code> bit is being set to 0 by
+the same write or is already 0.</p>
+</div>
+<div class="paragraph">
+<p>When a trap is to be taken into S-mode, if the <code>SDT</code> bit is currently 0,
+it is then set to 1, and the trap is delivered as expected. However, if <code>SDT</code> is
+already set to 1, then this is an <em>unexpected trap</em>. In the event of an
+<em>unexpected trap</em>, a double-trap exception trap is delivered into M-mode. To
+deliver this trap, the hart writes registers, except <code>mcause</code> and <code>mtval2</code>, with
+the same information that the <em>unexpected trap</em> would have written if it was
+taken into M-mode. The <code>mtval2</code> register is then set to what would be otherwise
+written into the <code>mcause</code> register by the <em>unexpected trap</em>. The <code>mcause</code>
+register is set to 16, the double-trap exception code.</p>
+</div>
+<div class="paragraph">
+<p>An <code>SRET</code> instruction sets the <code>SDT</code> bit to 0.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>After a trap handler has saved the state, such as <code>scause</code>, <code>sepc</code>,
+and <code>stval</code>, needed for resuming from the trap and is reentrant, it
+should clear the <code>SDT</code> bit.</p>
+</div>
+<div class="paragraph">
+<p>Resetting the <code>SDT</code> by an <code>SRET</code> enables the trap handler to detect a double
+trap that may occur during the tail phase, where it restores critical state
+to return from a trap.</p>
+</div>
+<div class="paragraph">
+<p>The consequence of this specification is that if a critical error condition was
+caused by a guest-page fault, then the GPA will not be available in <code>mtval2</code>
+when the double trap is delivered to M-mode. This condition arises if the
+HS-mode invokes a hypervisor virtual-machine load or store instruction when
+<code>SDT</code> is 1 and the instruction raises a guest-page fault. The use of such an
+instruction in this phase of trap handling is not common. However, not recording
+the GPA is considered benign because, if required, it can still be obtained&#8201;&#8212;&#8201;albeit with added effort&#8201;&#8212;&#8201;through the process of walking the page tables.</p>
+</div>
+<div class="paragraph">
+<p>For a double trap that originates in VS-mode, M-mode should redirect the exception
+to HS-mode by copying the values of M-mode CSRs updated by the trap to HS-mode
+CSRs and should use an <code>MRET</code> to resume execution at the address in <code>stvec</code>.</p>
+</div>
+<div class="paragraph">
+<p>Supervisor Software Events (SSE), an extension to the SBI, provide a
+mechanism for supervisor software to register and service system events
+emanating from an SBI implementation, such as firmware or a hypervisor. In the
+event of a double trap, HS-mode and M-mode can utilize the SSE mechanism to
+invoke a critical-error handler in VS-mode or S/HS-mode, respectively.
+Additionally, the implementation of an SSE protocol can be considered as an
+optional measure to aid in the recovery from such critical errors.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-trap-vector-base-address-stvec-register"><a class="anchor" href="#supervisor-trap-vector-base-address-stvec-register"></a>Supervisor Trap Vector Base Address (<code>stvec</code>)  Register</h4>
+<div class="paragraph">
+<p>The <code>stvec</code> register is an SXLEN-bit read/write register that holds trap
+vector configuration, consisting of a vector base address (BASE) and a
+vector mode (MODE).</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrNU8FqwkAQvfsVw54SykJMxMLeLE1P2kI9tCAeNmajoetu2EzRVvz3bpoEa21ClEJ7WnZm3rzhzRsnFglHNDmwTPJUwax6dyzRCmnC16l8AzK5gn4Gd1zKiC9eCJTZPH0X4A_2c7fn2EZg9IauRLpcIQw8OAryWBiaKFCprOJSJEjX3CwtW-DVxQX4JBrprchpZjvYZhD4bs_GDd9Qmyg62mnzjCsYAou0sUw57PZ790sRmT6Pw3vaJ3XpNTAUW6RcLVbaAMmRGyTNeL8RKVTcgjswBmcyeo3IVsYWOc4W7WY0DWeVcsyfd5WAoc7qL31VRkiOIgZWbPyneKQR9fo0czyNU1ACcZ5Gj2OX1AbdlHYjkZbxd1u6nZfdNPGnHS8fmUwebsOua_x3qgV_pNpvOrg07-F4-4MuJz684Lo-AB6FyME=" alt="Supervisor trap vector base address (`stvec`) register.">
+</div>
+<div class="title">Figure 3. Supervisor trap vector base address (<code>stvec</code>) register.</div>
+</div>
+<div class="paragraph">
+<p>The BASE field in <code>stvec</code> is a  field that can hold any valid virtual or
+physical address, subject to the following alignment constraints: the
+address must be 4-byte aligned, and MODE settings other than Direct
+might impose additional alignment constraints on the value in the BASE
+field.
+Note that the CSR contains only bits XLEN-1 through 2 of the address BASE.
+When used as an address, the lower two bits are filled with zeroes to obtain
+an XLEN-bit address that is always aligned on a 4-byte boundary.</p>
+</div>
+<table id="stvec-mode" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 1. Encoding of <code>stvec</code> MODE field.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-right valign-top">Value</th>
+<th class="tableblock halign-center valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">0<br>
+1<br>
+&#8805;2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Direct<br>
+Vectored</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All exceptions set <code>pc</code> to BASE.<br>
+Asynchronous interrupts set <code>pc</code> to BASE+4&#215;cause.<br>
+<em>Reserved</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The encoding of the MODE field is shown in
+<a href="#stvec-mode">Encoding of <code>stvec</code> MODE field.</a>. When MODE=Direct, all traps into
+supervisor mode cause the <code>pc</code> to be set to the address in the BASE
+field. When MODE=Vectored, all synchronous exceptions into supervisor
+mode cause the <code>pc</code> to be set to the address in the BASE field, whereas
+interrupts cause the <code>pc</code> to be set to the address in the BASE field
+plus four times the interrupt cause number. For example, a
+supervisor-mode timer interrupt (see <a href="#scauses">Supervisor cause (<code>scause</code>) register values after trap. Synchronous exception priorities are given by [exception-priority].</a>)
+causes the <code>pc</code> to be set to BASE+<code>0x14</code>. Setting MODE=Vectored may
+impose a stricter alignment constraint on BASE.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h4>
+<div class="paragraph">
+<p>The <code>sip</code> register is an SXLEN-bit read/write register containing
+information on pending interrupts, while <code>sie</code> is the corresponding
+SXLEN-bit read/write register containing interrupt enable bits.
+Interrupt cause number <em>i</em> (as reported in CSR <code>scause</code>,
+<a href="#scause">Supervisor Cause (<code>scause</code>) Register</a>) corresponds with bit <em>i</em> in both <code>sip</code> and
+<code>sie</code>. Bits 15:0 are allocated to standard interrupt causes only, while
+bits 16 and above are designated for platform use.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1rwzAU3PMrHppsisAfoYO3Di0E0g7t0ELp8BzLsYksCekFpw3-75WbuMRxA-kkdE9373QXFKJEIusgMxJrBe_Hc5-VWhEvsanlJ7DHG4gNPKCUOa42DA5TV38JSObdRzgLvBBY3fJK1OuKYB7BCMRCWF4qULU84lKUxBu0a78tjYbHPXmC5nonHDdewYtBmoQzj1tsuR8Ae3lb3j_xmHnPzqCC-BYyEjviqFaVtsAcoSXvOdfWu3Cw77rwVCC6TBWqOCeeMheKhLVbQ-5qiYy0Ga58q6yQSKKArI_jLzzXRLqZTsZ_CPqVwILXu-dlyIb22kMXLNeyOO8svD6uS5Z_yvqv50lzv8mlyTjpb_Nt4AQ=" alt="Supervisor interrupt-pending register (`sip`).">
+</div>
+<div class="title">Figure 4. Supervisor interrupt-pending register (<code>sip</code>).</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqVUT1rwzAU3PMrHppsisAfoYO3Di0E0g7t0ELp8BzLsYksCekFpw3-75WbuMRxA-kkdE9373QXFKJEIusgMxJrBe_Hc5-VWhEvsanlJ7DHG4gNPKCUOa42DA5TV38JSObdRzgLvBBY3fJK1OuKYB7BCMRCWF4qULU84lKUxBu0a78tjYbHPXmC5nonHDdewYtBmoQzj1tsuR8Ae3lb3j_xmHnPzqCC-BYyEjviqFaVtsAcoSXvOdfWu3Cw77rwVCC6TBWqOCeeMheKhLVbQ-5qiYy0Ga58q6yQSKKArI_jLzzXRLqZTsZ_CPqVwILXu-dlyIb22kMXLNeyOO8svD6uS5Z_yvqv50lzv8mlyTjpb_Nt4AQ=" alt="Supervisor interrupt-enable register (`sie`).">
+</div>
+<div class="title">Figure 5. Supervisor interrupt-enable register (<code>sie</code>).</div>
+</div>
+<div class="paragraph">
+<p>An interrupt <em>i</em> will trap to S-mode if both of the following are true:
+(a) either the current privilege mode is S and the SIE bit in the
+<code>sstatus</code> register is set, or the current privilege mode has less
+privilege than S-mode; and (b) bit <em>i</em> is set in both <code>sip</code> and <code>sie</code>.</p>
+</div>
+<div class="paragraph">
+<p>These conditions for an interrupt trap to occur must be evaluated in a
+bounded amount of time from when an interrupt becomes, or ceases to be,
+pending in <code>sip</code>, and must also be evaluated immediately following the
+execution of an SRET instruction or an explicit write to a CSR on which
+these interrupt trap conditions expressly depend (including <code>sip</code>, <code>sie</code>
+and <code>sstatus</code>).</p>
+</div>
+<div class="paragraph">
+<p>Interrupts to S-mode take priority over any interrupts to lower
+privilege modes.</p>
+</div>
+<div class="paragraph">
+<p>Each individual bit in register <code>sip</code> may be writable or may be
+read-only. When bit <em>i</em> in <code>sip</code> is writable, a pending interrupt <em>i</em>
+can be cleared by writing 0 to this bit. If interrupt <em>i</em> can become
+pending but bit <em>i</em> in <code>sip</code> is read-only, the implementation must
+provide some other mechanism for clearing the pending interrupt (which
+may involve a call to the execution environment).</p>
+</div>
+<div class="paragraph">
+<p>A bit in <code>sie</code> must be writable if the corresponding interrupt can ever
+become pending. Bits of <code>sie</code> that are not writable are read-only zero.</p>
+</div>
+<div class="paragraph">
+<p>The standard portions (bits 15:0) of registers <code>sip</code> and <code>sie</code> are
+formatted as shown in Figures <a href="#sipreg-standard">Standard portion (bits 15:0) of <code>sip</code>.</a>
+and <a href="#siereg-standard">Standard portion (bits 15:0) of <code>sie</code>.</a> respectively.</p>
+</div>
+<div id="sipreg-standard" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrdk8FLwzAUxu_7Kx45rUigTTudvYoDQVGYN_HwuqZrMUtLEth09H83tStuzpVm4MVT4b3v-_JL-t445RkaozTElcBCwsvuu42zUhqa4aoQ70AeLiCoYIZCJLh4I9B2dfHBgUX1qzca2yBQ5ZrmvFjmBiIfDoqYckUzCbIQu7rgmaErVEt7Wuh34sZ8VE3KDde0sgk2DELmjWxd4ZraRpNoaXWFEq4gTkplT9KwrWtvT0SCCbEqwzeGolzkpQKiDSpDeizRkYXLtM8Qko6E9aiYO4nvSHI9BGTqzHHpiDEZghE5YzDX_zIE4-uJTzT3Rmz6I8F5EP1vmIPGuLkQkPubx9ndE-n2r90wv_Z-N51MI_PbNsXN9HyOad5n-qtnZINWbYgo_NdJwVlj_QmxN_bw?id=sipreg-standard" alt="Standard portion (bits 15:0) of `sip`.">
+</div>
+<div class="title">Figure 6. Standard portion (bits 15:0) of <code>sip</code>.</div>
+</div>
+<div id="siereg-standard" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrdk8FLwzAUxu_7Kx45tUigTTudvcoGguJh3sTD65quxSwtSWDT0f_d1K24OVeagRdPhfe-78sv6XtexnM0RmlIaoGlhJf9d5vklTQ0x1Up3oE8XkFYwwyFSHHxRmDX1eUHBxY3r_7Is0GgqjUteLksDMQBHBUx44rmEmQp9nXBc0NXqJb2tCjoxK35pJpWG65pbRNsGETMH9m6wjW1jTbR0uoaJdxAklbKnqRh2zT-gYiEY2JVhm8MRbkoKgVEG1SG9FjiEwuXWZ8hIh0J61Exd5LAkeR2CMjEmePaEWM8BCN2xmCu_2UIxtcTn2kejNjkR4LzIAbfMEcNr70QkIe7p9n9lHT7t9uwoPF_N51NI_PpLsXN9HyJad5n-qtnZINWbYgo-tdJ4UVj_QlS5vbE?id=siereg-standard" alt="Standard portion (bits 15:0) of `sie`.">
+</div>
+<div class="title">Figure 7. Standard portion (bits 15:0) of <code>sie</code>.</div>
+</div>
+<div class="paragraph">
+<p>Bits <code>sip</code>.SEIP and <code>sie</code>.SEIE are the interrupt-pending and
+interrupt-enable bits for supervisor-level external interrupts. If
+implemented, SEIP is read-only in <code>sip</code>, and is set and cleared by the
+execution environment, typically through a platform-specific interrupt
+controller.</p>
+</div>
+<div class="paragraph">
+<p>Bits <code>sip</code>.STIP and <code>sie</code>.STIE are the interrupt-pending and
+interrupt-enable bits for supervisor-level timer interrupts. If
+implemented, STIP is read-only in <code>sip</code>, and is set and cleared by the
+execution environment.</p>
+</div>
+<div class="paragraph">
+<p>Bits <code>sip</code>.SSIP and <code>sie</code>.SSIE are the interrupt-pending and
+interrupt-enable bits for supervisor-level software interrupts. If
+implemented, SSIP is writable in <code>sip</code> and may also be set to 1 by a
+platform-specific interrupt controller.</p>
+</div>
+<div class="paragraph">
+<p>If the Sscofpmf extension is implemented, bits <code>sip</code>.LCOFIP and <code>sie</code>.LCOFIE
+are the interrupt-pending and interrupt-enable bits for local-counter-overflow
+interrupts.
+LCOFIP is read-write in <code>sip</code> and reflects the occurrence of a local
+counter-overflow overflow interrupt request resulting from any of the
+<code>mhpmevent<em>n</em></code>.OF bits being set.
+If the Sscofpmf extension is not implemented, <code>sip</code>.LCOFIP and <code>sie</code>.LCOFIE are
+read-only zeros.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Interprocessor interrupts are sent to other harts by
+implementation-specific means, which will ultimately cause the SSIP bit
+to be set in the recipient hart’s <code>sip</code> register.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Each standard interrupt type (SEI, STI, SSI, or LCOFI) may not be implemented,
+in which case the corresponding interrupt-pending and interrupt-enable
+bits are read-only zeros. All bits in <code>sip</code> and <code>sie</code> are <strong>WARL</strong> fields. The
+implemented interrupts may be found by writing one to every bit location
+in <code>sie</code>, then reading back to see which bit positions hold a one.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <code>sip</code> and <code>sie</code> registers are subsets of the <code>mip</code> and <code>mie</code>
+registers. Reading any implemented field, or writing any writable field,
+of <code>sip</code>/<code>sie</code> effects a read or write of the homonymous field of
+<code>mip</code>/<code>mie</code>.</p>
+</div>
+<div class="paragraph">
+<p>Bits 3, 7, and 11 of <code>sip</code> and <code>sie</code> correspond to the machine-mode
+software, timer, and external interrupts, respectively. Since most
+platforms will choose not to make these interrupts delegatable from
+M-mode to S-mode, they are shown as 0 in
+<a href="#sipreg-standard">Standard portion (bits 15:0) of <code>sip</code>.</a> and <a href="#siereg-standard">Standard portion (bits 15:0) of <code>sie</code>.</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Multiple simultaneous interrupts destined for supervisor mode are
+handled in the following decreasing priority order: SEI, SSI, STI, LCOFI.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-timers-and-performance-counters"><a class="anchor" href="#supervisor-timers-and-performance-counters"></a>Supervisor Timers and Performance Counters</h4>
+<div class="paragraph">
+<p>Supervisor software uses the same hardware performance monitoring
+facility as user-mode software, including the <code>time</code>, <code>cycle</code>, and
+<code>instret</code> CSRs. The implementation should provide a mechanism to modify
+the counter values.</p>
+</div>
+<div class="paragraph">
+<p>The implementation must provide a facility for scheduling timer
+interrupts in terms of the real-time counter, <code>time</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="counter-enable-scounteren-register"><a class="anchor" href="#counter-enable-scounteren-register"></a>Counter-Enable (<code>scounteren</code>) Register</h4>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNq9kkFLwzAUx-_7FI-cViSlTarTXgXRQ0HEi4iHdE3XYpaWJLDp6Hc3xTkbSmoP6inwfr__e-Ely4KXzBilIW0FqyU8H89DWjbS4JJta_EGKDuDuIUbJkTO1q8IPqmu3zmQpHsJFkvbCFSzwxWvN5WBJAKnyAqucClB1uJYF7w0eMvUxk6j0Zfch0fVvNlzjVvbwTYDSoKFrSu2wxYAojGy19UtswlI80bZURoOXRc4VjTHIlezrMuTtYLU8L3BTK6rRgHShimD_NELb5LLYiJ3fsoRv5TMkegcifSSD8ZTMBrBIb29z4bP5UZ7GE3A4eO4MAzDE4qTUXCwvBFLJhj1sbuH73Euecx85PrJIaOF_vTpfk8idLCsOb3I_0rxX0kf0ECNRQ==" alt="Counter-enable (`scounteren`) register">
+</div>
+<div class="title">Figure 8. Counter-enable (<code>scounteren</code>) register</div>
+</div>
+<div class="paragraph">
+<p>The counter-enable (<code>scounteren</code>) CSR is a 32-bit register that
+controls the availability of the hardware performance monitoring
+counters to U-mode.</p>
+</div>
+<div class="paragraph">
+<p>When the CY, TM, IR, or HPM<em>n</em> bit in the <code>scounteren</code> register is
+clear, attempts to read the <code>cycle</code>, <code>time</code>, <code>instret</code>, or <code>hpmcountern</code>
+register while executing in U-mode will cause an illegal-instruction
+exception. When one of these bits is set, access to the corresponding
+register is permitted.</p>
+</div>
+<div class="paragraph">
+<p><code>scounteren</code> must be implemented. However, any of the bits may be
+read-only zero, indicating reads to the corresponding counter will cause
+an exception when executing in U-mode. Hence, they are effectively
+<strong>WARL</strong> fields.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The setting of a bit in <code>mcounteren</code> does not affect whether the
+corresponding bit in <code>scounteren</code> is writable. However, U-mode may only
+access a counter if the corresponding bits in <code>scounteren</code> and
+<code>mcounteren</code> are both set.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-scratch-sscratch-register"><a class="anchor" href="#supervisor-scratch-sscratch-register"></a>Supervisor Scratch (<code>sscratch</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>sscratch</code> CSR is an SXLEN-bit read/write register, dedicated
+for use by the supervisor. Typically, <code>sscratch</code> is used to hold a
+pointer to the hart-local supervisor context while the hart is executing
+user code.
+At the beginning of a trap handler, software normally uses a CSRRW
+instruction to swap <code>sscratch</code> with an integer register to obtain an
+initial working register.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNp1jstqwzAQRff5ikGrmCLwI3Thfbtqu-mmULoY21IsokhmNJAX_vdMSFKcJl0Jzp17dOedschMCerBowvwfXkPtY2BtcW18ztQ709QDPCK3jfYrhSc0-T2BsrF-JPN5iICihvdG7fsGRY53EDsDGkbIDh_4d5Y1mukpfxW5dfjU_mONnFrkh7EIDKoymwmnHCjJQD1-fX28qELJZvTgAGKZ6jZbFljaPtIoBIjsWxuIsmKBIdxzKaC_P-qCd3f4rSZUkvIbf8rqMrxwbhJfCs7AtmmewQ=" alt="Supervisor Scratch Register">
+</div>
+<div class="title">Figure 9. Supervisor Scratch Register</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="supervisor-exception-program-counter-sepc-register"><a class="anchor" href="#supervisor-exception-program-counter-sepc-register"></a>Supervisor Exception Program Counter (<code>sepc</code>) Register</h4>
+<div class="paragraph">
+<p><code>sepc</code> is an SXLEN-bit read/write CSR formatted as shown in
+<a href="#epcreg">Supervisor exception program counter register.</a>. The low bit of <code>sepc</code> (<code>sepc[0]</code>) is always zero. On implementations that support only IALIGN=32, the two low bits (<code>sepc[1:0]</code>) are always zero.</p>
+</div>
+<div class="paragraph">
+<p>If an implementation allows IALIGN to be either 16 or 32 (by changing
+CSR <code>misa</code>, for example), then, whenever IALIGN=32, bit <code>sepc[1]</code> is
+masked on reads so that it appears to be 0. This masking occurs also for
+the implicit read by the SRET instruction. Though masked, <code>sepc[1]</code>
+remains writable when IALIGN=32.</p>
+</div>
+<div class="paragraph">
+<p><code>sepc</code> is a <strong>WARL</strong> register that must be able to hold all valid virtual
+addresses. It need not be capable of holding all possible invalid
+addresses. Prior to writing <code>sepc</code>, implementations may convert an
+invalid address into some other invalid address that <code>sepc</code> is capable
+of holding.</p>
+</div>
+<div class="paragraph">
+<p>When a trap is taken into S-mode, <code>sepc</code> is written with the virtual
+address of the instruction that was interrupted or that encountered the
+exception. Otherwise, <code>sepc</code> is never written by the implementation,
+though it may be explicitly written by software.</p>
+</div>
+<div id="epcreg" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNp1jrtqAzEQRXt_xaDKSxDsw6TYPq6cNGkCxsXs7sgrLEtCGrATs_-eCXHCOo9KcO-co7scyCBzytBGh9bD9vpeWhM8a4NH615BPd5BFWGNznXYHxR8ttm-EdSraVcsliKCFE56JLsfGVYl3IQ4UNLGg7fumjsyrI-Y9vJbU34df8C_0i6cKesoBpFBUxcLyROetBSgnl82D0-6UrI5R_RQ3UPLdGaNvh9DApUZE8vmLiRZkeEyTcVcUP6Pkh9-gnMyU-y_4aae_hg2q29F79YneVQ=?id=epcreg" alt="Supervisor exception program counter register.">
+</div>
+<div class="title">Figure 10. Supervisor exception program counter register.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="scause"><a class="anchor" href="#scause"></a>Supervisor Cause (<code>scause</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>scause</code> CSR is an SXLEN-bit read-write register formatted as
+shown in <a href="#scausereg">Supervisor Cause (<code>scause</code>) register.</a>. When a trap is taken into
+S-mode, <code>scause</code> is written with a code indicating the event that
+caused the trap. Otherwise, <code>scause</code> is never written by the
+implementation, though it may be explicitly written by software.</p>
+</div>
+<div class="paragraph">
+<p>The Interrupt bit in the <code>scause</code> register is set if the trap was caused
+by an interrupt. The Exception Code field contains a code identifying
+the last exception or interrupt. <a href="#scauses">Supervisor cause (<code>scause</code>) register values after trap. Synchronous exception priorities are given by [exception-priority].</a> lists
+the possible exception codes for the current supervisor ISAs. The
+Exception Code is a <strong>WLRL</strong> field. It is required to hold the values 0–31
+(i.e., bits 4–0 must be implemented), but otherwise it is only
+guaranteed to hold supported exception codes.</p>
+</div>
+<div id="scausereg" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqdUk1Pg0AQvfdXTPYEMZsAJR64mpqYVA960MR4WMrQEpfdzTJNUcJ_d7HFtlAO9UTy5n3tMF6GuSCyFSRGikLB--HbJLlWxHNRFvIL2OMNhAbuhZSpWH0y2E-r4hshitsPf-Y5I7B6xzdYrDcEcQBnoMjQ8lyBKuQBl5gTL4Vdu7R50JM78QhNdY0VN87BmcE88mcOt2LH3QDYy9ty8cRD5jpXRii4hSTV1uVV0LStP6ZGf9QwgoSwJi7UaqMtsIqEJTZtEByl8UCKKhsKT5UPitDaraFjz3PrRb1CQ4VWcKcznK7Y5fQxTULa9KF8qyxKQZh1CJEuL026tY_x82d6XSAw73X5vPRZfwu7_Z9lqZbZ8AL8ybUMNvqPxr83cbny6f6uOIAjNRpyfwBzUQWL?id=scausereg" alt="Supervisor Cause (`scause`) register.">
+</div>
+<div class="title">Figure 11. Supervisor Cause (<code>scause</code>) register.</div>
+</div>
+<table id="scauses" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Supervisor cause (<code>scause</code>) register values after trap. Synchronous exception priorities are given by <a href="#exception-priority">[exception-priority]</a>.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-right valign-top">Interrupt</th>
+<th class="tableblock halign-right valign-top">Exception Code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1<br>
+1</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">0<br>
+1<br>
+2-4<br>
+5<br>
+6-8<br>
+9<br>
+10-12<br>
+13<br>
+14-15<br>
+&#8805;16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved</em><br>
+Supervisor software interrupt<br>
+<em>Reserved</em><br>
+Supervisor timer interrupt<br>
+<em>Reserved</em><br>
+Supervisor external interrupt<br>
+<em>Reserved</em><br>
+Counter-overflow interrupt<br>
+<em>Reserved</em><br>
+<em>Designated for platform use</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+0</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">0<br>
+1<br>
+2<br>
+3<br>
+4<br>
+5<br>
+6<br>
+7<br>
+8<br>
+9<br>
+10-11<br>
+12<br>
+13<br>
+14<br>
+15<br>
+16-17<br>
+18<br>
+19<br>
+20-23<br>
+24-31<br>
+32-47<br>
+48-63<br>
+&#8805;64</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction address misaligned<br>
+Instruction access fault<br>
+Illegal instruction<br>
+Breakpoint<br>
+Load address misaligned<br>
+Load access fault<br>
+Store/AMO address misaligned<br>
+Store/AMO access fault<br>
+Environment call from U-mode<br>
+Environment call from S-mode<br>
+<em>Reserved</em><br>
+Instruction page fault<br>
+Load page fault<br>
+<em>Reserved</em><br>
+Store/AMO page fault<br>
+<em>Reserved</em><br>
+Software check<br>
+Hardware error<br>
+<em>Reserved</em><br>
+<em>Designated for custom use</em><br>
+<em>Reserved</em><br>
+<em>Designated for custom use</em><br>
+<em>Reserved</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="supervisor-trap-value-stval-register"><a class="anchor" href="#supervisor-trap-value-stval-register"></a>Supervisor Trap Value (<code>stval</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>stval</code> CSR is an SXLEN-bit read-write register formatted as
+shown in <a href="#stvalreg">Supervisor Trap Value register.</a>. When a trap is taken into
+S-mode, <code>stval</code> is written with exception-specific information to assist
+software in handling the trap. Otherwise, <code>stval</code> is never written by
+the implementation, though it may be explicitly written by software. The
+hardware platform will specify which exceptions must set <code>stval</code>
+informatively, which may unconditionally set it to zero, and which may
+exhibit either behavior, depending on the underlying event that caused the
+exception.</p>
+</div>
+<div class="paragraph">
+<p>If <code>stval</code> is written with a nonzero value when a breakpoint,
+address-misaligned, access-fault, or page-fault exception occurs on an
+instruction fetch, load, or store, then <code>stval</code> will contain the
+faulting virtual address.</p>
+</div>
+<div id="stvalreg" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNp1jjtPwzAUhff-iiNPjZClPCqG7DBBly5IiOGmsRsL147sK1qo8t-5iIJSHpOlc-73-Sx7Y4k5ZbSjJxfweH5PrY2BtaW9869Q91eoRtyS9x1tnxU-2-zeDOrV9FQsliJCigc9GLcbGKsSFyH1JmkbEJw_595Y1ntKO_mtKb-OP-BfaRePJutRDCJDUxcLyRMdtBRQm4e7m7WulGzOIwVU12jZHFlT2A4xQWWmxLK5i0lWZJymqZgLyv9RE_qf4JzM_EL-m27q6Y9ls_rS9A5a0XnT?id=stvalreg" alt="Supervisor Trap Value register.">
+</div>
+<div class="title">Figure 12. Supervisor Trap Value register.</div>
+</div>
+<div class="paragraph">
+<p>If <code>stval</code> is written with a nonzero value when a misaligned load or
+store causes an access-fault or page-fault exception, then <code>stval</code> will
+contain the virtual address of the portion of the access that caused the
+fault.</p>
+</div>
+<div class="paragraph">
+<p>If <code>stval</code> is written with a nonzero value when an instruction
+access-fault or page-fault exception occurs on a system with
+variable-length instructions, then <code>stval</code> will contain the virtual
+address of the portion of the instruction that caused the fault, while
+<code>sepc</code> will point to the beginning of the instruction.</p>
+</div>
+<div class="paragraph">
+<p>The <code>stval</code> register can optionally also be used to return the faulting
+instruction bits on an illegal-instruction exception (<code>sepc</code> points to
+the faulting instruction in memory). If <code>stval</code> is written with a
+nonzero value when an illegal-instruction exception occurs, then <code>stval</code>
+will contain the shortest of:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the actual faulting instruction</p>
+</li>
+<li>
+<p>the first ILEN bits of the faulting instruction</p>
+</li>
+<li>
+<p>the first SXLEN bits of the faulting instruction</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The value loaded into <code>stval</code> on an illegal-instruction exception is
+right-justified and all unused upper bits are cleared to zero.</p>
+</div>
+<div class="paragraph">
+<p>On a trap caused by a software-check exception, the <code>stval</code> register holds the
+cause for the exception. The following encodings are defined:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0 - No information provided.</p>
+</li>
+<li>
+<p>2 - Landing Pad Fault. Defined by the Zicfilp extension (<a href="#priv-forward">[priv-forward]</a>).</p>
+</li>
+<li>
+<p>3 - Shadow Stack Fault. Defined by the Zicfiss extension (<a href="#priv-backward">[priv-backward]</a>).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For other traps, <code>stval</code> is set to zero, but a future standard may
+redefine <code>stval</code>’s setting for other traps.</p>
+</div>
+<div class="paragraph">
+<p><code>stval</code> is a <strong>WARL</strong> register that must be able to hold all valid virtual
+addresses and the value 0. It need not be capable of holding all
+possible invalid addresses. Prior to writing <code>stval</code>, implementations
+may convert an invalid address into some other invalid address that
+<code>stval</code> is capable of holding. If the feature to return the faulting
+instruction bits is implemented, <code>stval</code> must also be able to hold all
+values less than <span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.002ex" height="2.041ex" role="img" focusable="false" viewBox="0 -846 2210.9 902"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="msup" transform="translate(500,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="mi" transform="translate(533,363) scale(0.707)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1710.9,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>, where <span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> is the smaller
+of SXLEN and ILEN.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sec:senvcfg"><a class="anchor" href="#sec:senvcfg"></a>Supervisor Environment Configuration (<code>senvcfg</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>senvcfg</code> CSR is an SXLEN-bit read/write register, formatted as
+shown in <a href="#senvcfg">Supervisor environment configuration register (<code>senvcfg</code>) for RV64.</a>, that controls certain
+characteristics of the U-mode execution environment.</p>
+</div>
+<div id="senvcfg" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQd_P091Wv1cEqFx4Q5IlLzifAFZdUcDCalBFcytnJE6c2ZydnNzySUahyRiZ4nImwMMAX1XfGBhjaYnUUkvPz0jLTrapzEvNSgYqARmcUFyQmp1oZGhiZ1NYCANnVWMM=?id=senvcfg" alt="Supervisor environment configuration register (`senvcfg`) for RV64.">
+</div>
+<div class="title">Figure 13. Supervisor environment configuration register (<code>senvcfg</code>) for RV64.</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UlAw1FHIS8xNtVJQd_P091Wv1cEqFx4Q5IlLzifAFZdUcDCalBFcytnJE6c2ZydnNzySUahyRiYYzozVUUjOz0vLTLeqzknMSwUp0lHIKC5ITE61MjQwMqmtBQC93EnC" alt="Supervisor environment configuration register (`senvcfg`) for RV32.">
+</div>
+<div class="title">Figure 14. Supervisor environment configuration register (<code>senvcfg</code>) for RV32.</div>
+</div>
+<div class="paragraph">
+<p>If bit FIOM (Fence of I/O implies Memory) is set to one in <code>senvcfg</code>,
+FENCE instructions executed in U-mode are modified so the requirement to
+order accesses to device I/O implies also the requirement to order main
+memory accesses. <a href="#senvcfg-FIOM">Modified interpretation of FENCE predecessor and successor sets in U-mode when FIOM=1.</a> details the modified
+interpretation of FENCE instruction bits PI, PO, SI, and SO in U-mode
+when FIOM=1.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, for U-mode when FIOM=1, if an atomic instruction that
+accesses a region ordered as device I/O has its <em>aq</em> and/or <em>rl</em> bit
+set, then that instruction is ordered as though it accesses both device
+I/O and memory.</p>
+</div>
+<div class="paragraph">
+<p>If <code>satp</code>.MODE is read-only zero (always Bare), the implementation may
+make FIOM read-only zero.</p>
+</div>
+<table id="senvcfg-FIOM" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 3. Modified interpretation of FENCE predecessor and successor sets in U-mode when FIOM=1.</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Instruction bit</th>
+<th class="tableblock halign-left valign-top">Meaning when set</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">PI<br>
+PO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Predecessor device input and memory reads (PR implied)<br>
+Predecessor device output and memory writes (PW implied)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">SI<br>
+SO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Successor device input and memory reads (SR implied)<br>
+Successor device output and memory writes (SW implied)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Bit FIOM exists for a specific circumstance when an I/O device is being
+emulated for U-mode and both of the following are true: (a) the emulated
+device has a memory buffer that should be I/O space but is actually
+mapped to main memory via address translation, and (b) multiple physical
+harts are involved in accessing this emulated device from U-mode.</p>
+</div>
+<div class="paragraph">
+<p>A hypervisor running in S-mode without the benefit of the hypervisor
+extension of <a href="#hypervisor">[hypervisor]</a> may need to emulate
+a device for U-mode if paravirtualization cannot be employed. If the
+same hypervisor provides a virtual machine (VM) with multiple virtual
+harts, mapped one-to-one to real harts, then multiple harts may
+concurrently access the emulated device, perhaps because: (a) the guest
+OS within the VM assigns device interrupt handling to one hart while the
+device is also accessed by a different hart outside of an interrupt
+handler, or (b) control of the device (or partial control) is being
+migrated from one hart to another, such as for interrupt load balancing
+within the VM. For such cases, guest software within the VM is expected
+to properly coordinate access to the (emulated) device across multiple
+harts using mutex locks and/or interprocessor interrupts as usual, which
+in part entails executing I/O fences. But those I/O fences may not be
+sufficient if some of the device ``I/O'' is actually main memory,
+unknown to the guest. Setting FIOM=1 modifies those fences (and all
+other I/O fences executed in U-mode) to include main memory, too.</p>
+</div>
+<div class="paragraph">
+<p>Software can always avoid the need to set FIOM by never using main
+memory to emulate a device memory buffer that should be I/O space.
+However, this choice usually requires trapping all U-mode accesses to
+the emulated buffer, which might have a noticeable impact on
+performance. The alternative offered by FIOM is sufficiently inexpensive
+to implement that we consider it worth supporting even if only rarely
+enabled.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The definition of the CBZE field is furnished by the Zicboz extension.</p>
+</div>
+<div class="paragraph">
+<p>The definitions of the CBCFE and CBIE fields are furnished by the Zicbom
+extension.</p>
+</div>
+<div class="paragraph">
+<p>The definition of the PMM field is furnished by the Ssnpm extension.</p>
+</div>
+<div class="paragraph">
+<p>The Zicfilp extension adds the <code>LPE</code> field in <code>senvcfg</code>. When the <code>LPE</code> field is
+set to 1, the Zicfilp extension is enabled in VU/U-mode. When the <code>LPE</code> field is
+0, the Zicfilp extension is not enabled in VU/U-mode and the following rules
+apply to VU/U-mode:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The hart does not update the <code>ELP</code> state; it remains as <code>NO_LP_EXPECTED</code>.</p>
+</li>
+<li>
+<p>The <code>LPAD</code> instruction operates as a no-op.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The Zicfiss extension adds the <code>SSE</code> field in <code>senvcfg</code>. When the <code>SSE</code> field is
+set to 1, the Zicfiss extension is activated in VU/U-mode. When the <code>SSE</code> field
+is 0, the Zicfiss extension remains inactive in VU/U-mode, and the following
+rules apply:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>32-bit Zicfiss instructions will revert to their behavior as defined by Zimop.</p>
+</li>
+<li>
+<p>16-bit Zicfiss instructions will revert to their behavior as defined by Zcmop.</p>
+</li>
+<li>
+<p>When <code>menvcfg.SSE</code> is one, <code>SSAMOSWAP.W/D</code> raises an illegal-instruction
+exception in U-mode and a virtual-instruction  exception in VU-mode.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="satp"><a class="anchor" href="#satp"></a>Supervisor Address Translation and Protection (<code>satp</code>) Register</h4>
+<div class="paragraph">
+<p>The <code>satp</code> CSR is an SXLEN-bit read/write register, formatted as
+shown in <a href="#rv32satp">Supervisor address translation and protection (<code>satp</code>) register when SXLEN=32.</a> for SXLEN=32 and
+<a href="#rv64satp">Supervisor address translation and protection (<code>satp</code>) register when SXLEN=64, for MODE values Bare, Sv39, Sv48, and Sv57.</a> for SXLEN=64, which controls
+supervisor-mode address translation and protection. This register holds
+the physical page number (PPN) of the root page table, i.e., its
+supervisor physical address divided by 4 KiB; an address space identifier
+(ASID), which facilitates address-translation fences on a
+per-address-space basis; and the MODE field, which selects the current
+address-translation scheme. Further details on the access to this
+register are described in <a href="#virt-control">[virt-control]</a>.</p>
+</div>
+<div id="rv32satp" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrtVE1Lw0AQvfdXDHtKkIV8VKm5FaogWC168CAeNs2mDW53w2Yk1ZL_7sY2JUkbTS_iwdOSN-_NTN4-1op4zBB1BkEqWCLheXduglhJpDFbJeIdyPQM3BSumRAhm78S2Faz5IODNyxe7IFlGoFWOV3yZLFEGDrQAFnENY0lyETscMFjpCumF2aa71TkUnyAhmrNM5qaDqYZ-J49MLhmOTUFIL5LzLpZyiSMIAiVNqMy2BSF3WA5e5YPAfI1UibnS6WBZMg0km6p5-2l5y0pl9F3wsZmJ810OpVHRtaF0_vJVeeftrQBqrT6pG9Sc8GQRyWCqFbHKuWlHeLN3a1yJBDrafxwa5MqSfk2FyRUImrnx-6y98Cl0zf-StRPK5Px483k37VTXZvN7vrG9M-ZNvpV0-qu9XquLvuQag8TuBdN3idgN_t2?id=rv32satp" alt="Supervisor address translation and protection (`satp`) register when SXLEN=32.">
+</div>
+<div class="title">Figure 15. Supervisor address translation and protection (<code>satp</code>) register when SXLEN=32.</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Storing a PPN in <code>satp</code>, rather than a physical address, supports a
+physical address space larger than 4 GiB for RV32.</p>
+</div>
+<div class="paragraph">
+<p>The <code>satp</code>.PPN field might not be capable of holding all physical page
+numbers. Some platform standards might place constraints on the values
+<code>satp</code>.PPN may assume, e.g., by requiring that all physical page numbers
+corresponding to main memory be representable.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="rv64satp" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrtVMFOg0AQvfcrJnuCmE2gUBK5NakmJlYbPXgwHpaytMTtLlnGUG34dxdbarFFaQ_GgyfCm3nzHsPLWDFPGKLOIcwESyU8bp6rMFESacIWqXgFMj4DN4NLJkTEps8E1tU8fePQ98snu2eZQaBVQec8nc0RfAcaIIu5pokEmYoNLniCdMH0zKh5Tt1ckffQSC15TjMzwQwDr2_3DK5ZQU0BSOARYzfPmIQBhMiXSJmczpUGkiPTaNxGShv9HFZlaTeoTiuVy_gb4uD8ZE3fP1HT__zO4EhNp5V5QHKXOL4dXXS1G6LK6lf6IjUXDHlcIYhqcahSRWAfb3q3Kkkg1sPw7tomdS6LdcpIpET8NY125z9zvOOPfP5kmQzvr0b_Wzt2a5PJTdeY_rmlBb-6tMZV2O7MddoPgBt0atu5TW6_2fYO46MVuw==?id=rv64satp" alt="Supervisor address translation and protection (`satp`) register when SXLEN=64, for MODE values Bare, Sv39, Sv48, and Sv57.">
+</div>
+<div class="title">Figure 16. Supervisor address translation and protection (<code>satp</code>) register when SXLEN=64, for MODE values Bare, Sv39, Sv48, and Sv57.</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We store the ASID and the page table base address in the same CSR to
+allow the pair to be changed atomically on a context switch. Swapping
+them non-atomically could pollute the old virtual address space with new
+translations, or vice-versa. This approach also slightly reduces the
+cost of a context switch.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="#satp-mode">Encoding of <code>satp</code> MODE field.</a> shows the encodings of the MODE field when
+SXLEN=32 and SXLEN=64. When MODE=Bare, supervisor virtual addresses are
+equal to supervisor physical addresses, and there is no additional
+memory protection beyond the physical memory protection scheme described
+in <a href="#pmp">[pmp]</a>. To select MODE=Bare, software must write
+zero to the remaining fields of <code>satp</code> (bits 30–0 when SXLEN=32, or bits
+59–0 when SXLEN=64). Attempting to select MODE=Bare with a nonzero
+pattern in the remaining fields has an UNSPECIFIED effect on the value that the
+remaining fields assume and an UNSPECIFIED effect on address translation and
+protection behavior.</p>
+</div>
+<div class="paragraph">
+<p>When SXLEN=32, the <code>satp</code> encodings corresponding to MODE=Bare and
+ASID[8:7]=3 are designated for custom use, whereas the encodings
+corresponding to MODE=Bare and ASID[8:7]≠3 are reserved
+for future standard use. When SXLEN=64, all <code>satp</code> encodings
+corresponding to MODE=Bare are reserved for future standard use.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Version 1.11 of this standard stated that the remaining fields in <code>satp</code>
+had no effect when MODE=Bare. Making these fields reserved facilitates
+future definition of additional translation and protection modes,
+particularly in RV32, for which all patterns of the existing MODE field
+have already been allocated.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When SXLEN=32, the only other valid setting for MODE is Sv32, a paged
+virtual-memory scheme described in <a href="#sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>.</p>
+</div>
+<div class="paragraph">
+<p>When SXLEN=64, three paged virtual-memory schemes are defined: Sv39,
+Sv48, and Sv57, described in <a href="#sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>, <a href="#sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>,
+and <a href="#sv57">Sv57: Page-Based 57-bit Virtual-Memory System</a>, respectively. One additional scheme, Sv64, will be
+defined in a later version of this specification. The remaining MODE
+settings are reserved for future use and may define different
+interpretations of the other fields in <code>satp</code>.</p>
+</div>
+<div class="paragraph">
+<p>Implementations are not required to support all MODE settings, and if
+<code>satp</code> is written with an unsupported MODE, the entire write has no
+effect; no fields in <code>satp</code> are modified.</p>
+</div>
+<div class="paragraph">
+<p>The number of ASID bits is UNSPECIFIED and may be zero. The number of implemented
+ASID bits, termed <em>ASIDLEN</em>, may be determined by writing one to every
+bit position in the ASID field, then reading back the value in <code>satp</code> to
+see which bit positions in the ASID field hold a one. The
+least-significant bits of ASID are implemented first: that is, if
+ASIDLEN <span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.28ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2333.6 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="3E" d="M84 520Q84 528 88 533T96 539L99 540Q106 540 253 471T544 334L687 265Q694 260 694 250T687 235Q685 233 395 96L107 -40H101Q83 -38 83 -20Q83 -19 83 -17Q82 -10 98 -1Q117 9 248 71Q326 108 378 132L626 250L378 368Q90 504 86 509Q84 513 84 520Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1833.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> 0, ASID[ASIDLEN-1:0] is writable. The maximal
+value of ASIDLEN, termed ASIDMAX, is 9 for Sv32 or 16 for Sv39, Sv48,
+and Sv57.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<table id="satp-mode" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 4. Encoding of <code>satp</code> MODE field.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top" colspan="3">SXLEN=32</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Value</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Bare<br>
+Sv32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No translation or protection.<br>
+Page-based 32-bit virtual addressing (see <a href="#sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><strong>SXLEN=64</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Value</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Description</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+1-7<br>
+8<br>
+9<br>
+10<br>
+11<br>
+12-13<br>
+14-15</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Bare<br>
+-<br>
+Sv39<br>
+Sv48<br>
+Sv57<br>
+Sv64<br>
+-<br>
+-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No translation or protection.<br>
+<em>Reserved for standard use</em><br>
+Page-based 39-bit virtual addressing (see <a href="#sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>).<br>
+Page-based 48-bit virtual addressing (see <a href="#sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>).<br>
+Page-based 57-bit virtual addressing (see <a href="#sv57">Sv57: Page-Based 57-bit Virtual-Memory System</a>).<br>
+<em>Reserved for page-based 64-bit virtual addressing.</em><br>
+<em>Reserved for standard use</em><br>
+<em>Designated for custom use</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For many applications, the choice of page size has a substantial
+performance impact. A large page size increases TLB reach and loosens
+the associativity constraints on virtually indexed, physically tagged
+caches. At the same time, large pages exacerbate internal fragmentation,
+wasting physical memory and possibly cache capacity.</p>
+</div>
+<div class="paragraph">
+<p>After much deliberation, we have settled on a conventional page size of
+4 KiB for both RV32 and RV64. We expect this decision to ease the
+porting of low-level runtime software and device drivers. The TLB reach
+problem is ameliorated by transparent superpage support in modern
+operating systems. cite:[transparent-superpages] Additionally, multi-level TLB hierarchies are quite
+inexpensive relative to the multi-level cache hierarchies whose address
+space they map.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <code>satp</code> CSR is considered <em>active</em> when the effective privilege
+mode is S-mode or U-mode. Executions of the address-translation
+algorithm may only begin using a given value of <code>satp</code> when <code>satp</code> is
+active.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Translations that began while <code>satp</code> was active are not required to
+complete or terminate when <code>satp</code> is no longer active, unless an
+SFENCE.VMA instruction matching the address and ASID is executed. The
+SFENCE.VMA instruction must be used to ensure that updates to the
+address-translation data structures are observed by subsequent implicit
+reads to those structures by a hart.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that writing <code>satp</code> does not imply any ordering constraints between
+page-table updates and subsequent address translations, nor does it
+imply any invalidation of address-translation caches. If the new address
+space’s page tables have been modified, or if an ASID is reused, it may
+be necessary to execute an SFENCE.VMA instruction (see
+<a href="#sfence.vma">Supervisor Memory-Management Fence Instruction</a>) after, or in some cases before, writing
+<code>satp</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Not imposing upon implementations to flush address-translation caches
+upon <code>satp</code> writes reduces the cost of context switches, provided a
+sufficiently large ASID space.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supervisor-instructions"><a class="anchor" href="#supervisor-instructions"></a>Supervisor Instructions</h3>
+<div class="paragraph">
+<p>In addition to the SRET instruction defined in <a href="#otherpriv">[otherpriv]</a>, one new supervisor-level instruction is provided.</p>
+</div>
+<div class="sect3">
+<h4 id="sfence.vma"><a class="anchor" href="#sfence.vma"></a>Supervisor Memory-Management Fence Instruction</h4>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVddRSCwpKQIqUjcHstWDI4NDXH3VY2t1EJpMEZqKUpA0mII0GKCqNUaoTSvNSy4xRlIPYqsHBHmG4Ta-2BDd_LLElJQiPBqM0DUkFmemoKo3R3OTOYan3Vz9nF31wnwdwRpjawFgRlbo" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The supervisor memory-management fence instruction SFENCE.VMA is used to
+synchronize updates to in-memory memory-management data structures with
+current execution. Instruction execution causes implicit reads and
+writes to these data structures; however, these implicit references are
+ordinarily not ordered with respect to explicit loads and stores.
+Executing an SFENCE.VMA instruction guarantees that any previous stores
+already visible to the current RISC-V hart are ordered before certain
+implicit references by subsequent instructions in that hart to the
+memory-management data structures. The specific set of operations
+ordered by SFENCE.VMA is determined by <em>rs1</em> and <em>rs2</em>, as described
+below. SFENCE.VMA is also used to invalidate entries in the
+address-translation cache associated with a hart (see <a href="#sv32algorithm">Virtual Address Translation Process</a>). Further details on the behavior of this instruction are described in <a href="#virt-control">[virt-control]</a> and <a href="#pmp-vmem">[pmp-vmem]</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SFENCE.VMA is used to flush any local hardware caches related to
+address translation. It is specified as a fence rather than a TLB flush
+to provide cleaner semantics with respect to which instructions are
+affected by the flush operation and to support a wider variety of
+dynamic caching structures and memory-management schemes. SFENCE.VMA is
+also used by higher privilege levels to synchronize page table writes
+and the address translation hardware.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>SFENCE.VMA orders only the local hart’s implicit references to the
+memory-management data structures.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Consequently, other harts must be notified separately when the
+memory-management data structures have been modified. One approach is to
+use 1) a local data fence to ensure local writes are visible globally,
+then 2) an interprocessor interrupt to the other thread, then 3) a local
+SFENCE.VMA in the interrupt handler of the remote thread, and finally 4)
+signal back to originating thread that operation is complete. This is,
+of course, the RISC-V analog to a TLB shootdown.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For the common case that the translation data structures have only been
+modified for a single address mapping (i.e., one page or superpage),
+<em>rs1</em> can specify a virtual address within that mapping to effect a
+translation fence for that mapping only. Furthermore, for the common
+case that the translation data structures have only been modified for a
+single address-space identifier, <em>rs2</em> can specify the address space.
+The behavior of SFENCE.VMA depends on <em>rs1</em> and <em>rs2</em> as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If <em>rs1</em>=<code>x0</code> and <em>rs2</em>=<code>x0</code>, the fence orders all reads and writes
+made to any level of the page tables, for all address spaces. The fence
+also invalidates all address-translation cache entries, for all address
+spaces.</p>
+</li>
+<li>
+<p>If <em>rs1</em>=<code>x0</code> and <em>rs2</em>&#8800;<code>x0</code>, the fence orders all
+reads and writes made to any level of the page tables, but only for the
+address space identified by integer register <em>rs2</em>. Accesses to <em>global</em>
+mappings (see <a href="#translation">Addressing and Memory Protection</a>) are not ordered. The
+fence also invalidates all address-translation cache entries matching
+the address space identified by integer register <em>rs2</em>, except for
+entries containing global mappings.</p>
+</li>
+<li>
+<p>If <em>rs1</em>&#8800;<code>x0</code> and <em>rs2</em>=<code>x0</code>, the fence orders only
+reads and writes made to leaf page table entries corresponding to the
+virtual address in <em>rs1</em>, for all address spaces. The fence also
+invalidates all address-translation cache entries that contain leaf page
+table entries corresponding to the virtual address in <em>rs1</em>, for all
+address spaces.</p>
+</li>
+<li>
+<p>If <em>rs1</em>&#8800;<code>x0</code> and <em>rs2</em>&#8800;<code>x0</code>, the
+fence orders only reads and writes made to leaf page table entries
+corresponding to the virtual address in <em>rs1</em>, for the address space
+identified by integer register <em>rs2</em>. Accesses to global mappings are
+not ordered. The fence also invalidates all address-translation cache
+entries that contain leaf page table entries corresponding to the
+virtual address in <em>rs1</em> and that match the address space identified by
+integer register <em>rs2</em>, except for entries containing global mappings.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If the value held in <em>rs1</em> is not a valid virtual address, then the
+SFENCE.VMA instruction has no effect. No exception is raised in this
+case.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is always legal to over-fence, e.g., by fencing only based on a
+subset of the bits in <em>rs1</em> and/or <em>rs2</em>, and/or by simply treating all
+SFENCE.VMA instructions as having <em>rs1</em>=<code>x0</code> and/or <em>rs2</em>=<code>x0</code>. For
+example, simpler implementations can ignore the virtual address in <em>rs1</em>
+and the ASID value in <em>rs2</em> and always perform a global fence. The
+choice not to raise an exception when an invalid virtual address is held
+in <em>rs1</em> facilitates this type of simplification.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When <em>rs2</em>&#8800;<code>x0</code>, bits SXLEN-1:ASIDMAX of the value held
+in <em>rs2</em> are reserved for future standard use. Until their use is
+defined by a standard extension, they should be zeroed by software and
+ignored by current implementations. Furthermore, if
+ASIDLEN&lt;ASIDMAX, the implementation shall ignore bits
+ASIDMAX-1:ASIDLEN of the value held in <em>rs2</em>.</p>
+</div>
+<div class="paragraph">
+<p>An implicit read of the memory-management data structures may return any
+translation for an address that was valid at any time since the most
+recent SFENCE.VMA that subsumes that address. The ordering implied by
+SFENCE.VMA does not place implicit reads and writes to the
+memory-management data structures into the global memory order in a way
+that interacts cleanly with the standard RVWMO ordering rules. In
+particular, even though an SFENCE.VMA orders prior explicit accesses
+before subsequent implicit accesses, and those implicit accesses are
+ordered before their associated explicit accesses, SFENCE.VMA does not
+necessarily place prior explicit accesses before subsequent explicit
+accesses in the global memory order. These implicit loads also need not
+otherwise obey normal program order semantics with respect to prior
+loads or stores to the same address.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A consequence of this specification is that an implementation may use
+any translation for an address that was valid at any time since the most
+recent SFENCE.VMA that subsumes that address. In particular, if a leaf
+PTE is modified but a subsuming SFENCE.VMA is not executed, either the
+old translation or the new translation will be used, but the choice is
+unpredictable. The behavior is otherwise well-defined.</p>
+</div>
+<div class="paragraph">
+<p>In a conventional TLB design, it is possible for multiple entries to
+match a single address if, for example, a page is upgraded to a
+superpage without first clearing the original non-leaf PTE’s valid bit
+and executing an SFENCE.VMA with <em>rs1</em>=<code>x0</code>. In this case, a similar
+remark applies: it is unpredictable whether the old non-leaf PTE or the
+new leaf PTE is used, but the behavior is otherwise well defined.</p>
+</div>
+<div class="paragraph">
+<p>Another consequence of this specification is that it is generally unsafe
+to update a PTE using a set of stores of a width less than the width of
+the PTE, as it is legal for the implementation to read the PTE at any
+time, including when only some of the partial stores have taken effect.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>This specification permits the caching of PTEs whose V (Valid) bit is
+clear. Operating systems must be written to cope with this possibility,
+but implementers are reminded that eagerly caching invalid PTEs will
+reduce performance by causing additional page faults.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Implementations must only perform implicit reads of the translation data
+structures pointed to by the current contents of the <code>satp</code> register or
+a subsequent valid (V=1) translation data structure entry, and must only
+raise exceptions for implicit accesses that are generated as a result of
+instruction execution, not those that are performed speculatively.</p>
+</div>
+<div class="paragraph">
+<p>Changes to the <code>sstatus</code> fields SUM and MXR take effect immediately,
+without the need to execute an SFENCE.VMA instruction. Changing
+<code>satp</code>.MODE from Bare to other modes and vice versa also takes effect
+immediately, without the need to execute an SFENCE.VMA instruction.
+Likewise, changes to <code>satp</code>.ASID take effect immediately.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The following common situations typically require executing an
+SFENCE.VMA instruction:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>When software recycles an ASID (i.e., reassociates it with a different
+page table), it should <em>first</em> change <code>satp</code> to point to the new page
+table using the recycled ASID, <em>then</em> execute SFENCE.VMA with <em>rs1</em>=<code>x0</code>
+and <em>rs2</em> set to the recycled ASID. Alternatively, software can execute
+the same SFENCE.VMA instruction while a different ASID is loaded into
+<code>satp</code>, provided the next time <code>satp</code> is loaded with the recycled ASID,
+it is simultaneously loaded with the new page table.</p>
+</li>
+<li>
+<p>If the implementation does not provide ASIDs, or software chooses to
+always use ASID 0, then after every <code>satp</code> write, software should
+execute SFENCE.VMA with <em>rs1</em>=<code>x0</code>. In the common case that no global
+translations have been modified, <em>rs2</em> should be set to a register other
+than <code>x0</code> but which contains the value zero, so that global translations
+are not flushed.</p>
+</li>
+<li>
+<p>If software modifies a non-leaf PTE, it should execute SFENCE.VMA with
+<em>rs1</em>=<code>x0</code>. If any PTE along the traversal path had its G bit set, <em>rs2</em>
+must be <code>x0</code>; otherwise, <em>rs2</em> should be set to the ASID for which the
+translation is being modified.</p>
+</li>
+<li>
+<p>If software modifies a leaf PTE, it should execute SFENCE.VMA with
+<em>rs1</em> set to a virtual address within the page. If any PTE along the
+traversal path had its G bit set, <em>rs2</em> must be <code>x0</code>; otherwise, <em>rs2</em>
+should be set to the ASID for which the translation is being modified.</p>
+</li>
+<li>
+<p>For the special cases of increasing the permissions on a leaf PTE and
+changing an invalid PTE to a valid leaf, software may choose to execute
+the SFENCE.VMA lazily. After modifying the PTE but before executing
+SFENCE.VMA, either the new or old permissions will be used. In the
+latter case, a page-fault exception might occur, at which point software
+should execute SFENCE.VMA in accordance with the previous bullet point.</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If a hart employs an address-translation cache, that cache must appear
+to be private to that hart. In particular, the meaning of an ASID is
+local to a hart; software may choose to use the same ASID to refer to
+different address spaces on different harts.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A future extension could redefine ASIDs to be global across the SEE,
+enabling such options as shared translation caches and hardware support
+for broadcast TLB shootdown. However, as OSes have evolved to
+significantly reduce the scope of TLB shootdowns using novel
+ASID-management techniques, we expect the local-ASID scheme to remain
+attractive for its simplicity and possibly better scalability.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For implementations that make <code>satp</code>.MODE read-only zero (always Bare),
+attempts to execute an SFENCE.VMA instruction might raise an
+illegal-instruction exception.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sv32"><a class="anchor" href="#sv32"></a>Sv32: Page-Based 32-bit Virtual-Memory Systems</h3>
+<div class="paragraph">
+<p>When Sv32 is written to the MODE field in the <code>satp</code> register (see
+<a href="#satp">Supervisor Address Translation and Protection (<code>satp</code>) Register</a>), the supervisor operates in a 32-bit paged
+virtual-memory system. In this mode, supervisor and user virtual
+addresses are translated into supervisor physical addresses by
+traversing a radix-tree page table. Sv32 is supported when SXLEN=32 and
+is designed to include mechanisms sufficient for supporting modern
+Unix-based operating systems.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The initial RISC-V paged virtual-memory architectures have been designed
+as straightforward implementations to support existing operating
+systems. We have architected page table layouts to support a hardware
+page-table walker. Software TLB refills are a performance bottleneck on
+high-performance systems, and are especially troublesome with decoupled
+specialized coprocessors. An implementation can choose to implement
+software TLB refills using a machine-mode trap handler as an extension
+to M-mode.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>Some ISAs architecturally expose <em>virtually indexed, physically tagged</em>
+caches, in that accesses to the same physical address via different
+virtual addresses might not be coherent unless the virtual addresses lie
+within the same cache set. Implicitly, this specification does not
+permit such behavior to be architecturally exposed.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="translation"><a class="anchor" href="#translation"></a>Addressing and Memory Protection</h4>
+<div class="paragraph">
+<p>Sv32 implementations support a 32-bit virtual address space, divided
+into pages. An Sv32 virtual address is partitioned into a virtual page
+number (VPN) and page offset, as shown in <a href="#sv32va">Sv32 virtual address.</a>.
+When Sv32 virtual memory mode is selected in the MODE field of the
+<code>satp</code> register, supervisor virtual addresses are translated into
+supervisor physical addresses via a two-level page table. The 20-bit VPN
+is translated into a 22-bit physical page number (PPN), while the 12-bit
+page offset is untranslated. The resulting supervisor-level physical
+addresses are then checked using any physical memory protection
+structures (<a href="#pmp">[pmp]</a>), before being directly
+converted to machine-level physical addresses. If necessary,
+supervisor-level physical addresses are zero-extended to the number of
+physical address bits found in the implementation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For example, consider an RV32 system supporting 34 bits of physical
+address. When the value of <code>satp</code>.MODE is Sv32, a 34-bit physical
+address is produced directly, and therefore no zero extension is needed.
+When the value of <code>satp</code>.MODE is Bare, the 32-bit virtual address is
+translated (unmodified) into a 32-bit physical address, and then that
+physical address is zero-extended into a 34-bit machine-level physical
+address.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="sv32va" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqdj01PwyAYx-_7FE84rTEkQKeHfgBvmp12WXZ4ukJLZECAZNOl310Wp2vVLroTyf_t9zBvpMKUQoTKG9QW1uf3WClnE1W40-YVyNMdcA-PaEyN2xcCH27UbxLEot8Us3keguD2tJO67RIsGIxEbGSgyoLV5qwbqRLdYWgzrWSf4VP5h1q7g4zU54U8BqUoZlkPuKfZAFJyks-NHi3cQ5XkIVG0284FIDFhSPna2oXMj3Ds-2JYFWKyKm1zrXg7k9_K5Bfmwz-ZbLL5C3JYXC2f13zz1eZsvHuy2bTtsZXglIoyXTLiG4KzQf_K7_8YEwPSOPYOzqDvOw==?id=sv32va" alt="Sv32 virtual address.">
+</div>
+<div class="title">Figure 17. Sv32 virtual address.</div>
+</div>
+<div class="paragraph">
+<p>Sv32 page tables consist of 2<sup>10</sup> page-table entries
+(PTEs), each of four bytes. A page table is exactly the size of a page
+and must always be aligned to a page boundary. The physical page number
+of the root page table is stored in the <code>satp</code> register.</p>
+</div>
+<div id="sv32pa" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqdkE1vwiAYx-9-iiecbBYSoG6HfoDdtng3Hp5aaMkQCJDoNP3uYuZmu61m80Tyf_sB80YqTClEqLxBbWF1OY-VcjZRhVtt3oG8PAD38IzG1Lh5I_DhRn2QIBb9upjN8xAEt6Od1G2XYMFgJGIjA1UWrDYX3UiV6BZDm2kl-wyfyz_U2u1lpD4v5DEoRTHLesAdzQaQsiT5utGjhUeoktwninbTuQAkJgwp37Z2IfMjHPu-GFaFmKxK29wq8ruZ_F4mvzKf_slkk81fkMPicvm64uuvNmfj3bPNpm2PrQSnVJTpmhHfEIP_4OzG69nfYoM1MY6dAMro7zM=?id=sv32pa" alt="SV32 physical address.">
+</div>
+<div class="title">Figure 18. SV32 physical address.</div>
+</div>
+<div id="sv32pte" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrVksFLwzAUxu_7Kx45rUggabupvQmiJ2VMdMLYIV3TtZilJQlsOvq_m7mtNI4G9eYpfO-X7315jwwznjNjlIakFqyUMD-euySvpME5W5fiHdDDBdAa7pgQKVu-IThQXX5wCONmEQyGthGoaoMLXq4KAzEBp8gyrnAuQZbiWBc8N3jN1MqmReR0eW8-q6bVlmtc2w62GURhMLB1xTbYAkARRfa5umYSxpAYvjWYyWVRKUDaMGXsa9NK2XwNu6YJutaQ9Fq5zDxGet0aR7_MpKTX6s_8iuyDVz546YNjHxz5YOyDkQ-GPkh9kJzBLp1MHud00e6Xhq55j0kHExdPn2Yt--a8RY68ceW9K59d-erKmSunrnxB7kQ07Ezzo09FCfj3fpgP_rb_fw4_ARA9kWI=?id=sv32pte" alt="Sv32 page table entry.">
+</div>
+<div class="title">Figure 19. Sv32 page table entry.</div>
+</div>
+<div class="paragraph">
+<p>The PTE format for Sv32 is shown in <a href="#sv32pte">Sv32 page table entry.</a>.
+The V bit indicates whether the PTE is valid; if it is 0, all other bits
+in the PTE are don’t-cares and may be used freely by software. The
+permission bits, R, W, and X, indicate whether the page is readable,
+writable, and executable, respectively. When all three are zero, the PTE
+is a pointer to the next level of the page table; otherwise, it is a
+leaf PTE. Writable pages must also be marked readable; the contrary
+combinations are reserved for future use. <a href="#pteperm">Encoding of PTE R/W/X fields.</a>
+summarizes the encoding of the permission bits.</p>
+</div>
+<table id="pteperm" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 5. Encoding of PTE R/W/X fields.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">X</th>
+<th class="tableblock halign-center valign-top">W</th>
+<th class="tableblock halign-center valign-top">R</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+0<br>
+0<br>
+0<br>
+1<br>
+1<br>
+1<br>
+1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+0<br>
+1<br>
+1<br>
+0<br>
+0<br>
+1<br>
+1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+1<br>
+0<br>
+1<br>
+0<br>
+1<br>
+0<br>
+1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pointer to next level of page table.<br>
+Read-only page.<br>
+<em>Reserved for future use.</em><br>
+Read-write page.<br>
+Execute-only page.<br>
+Read-execute page.<br>
+<em>Reserved for future use.</em><br>
+Read-write-execute page.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Attempting to fetch an instruction from a page that does not have
+execute permissions raises a fetch page-fault exception. Attempting to
+execute a load or load-reserved instruction whose effective address lies
+within a page without read permissions raises a load page-fault
+exception. Attempting to execute a store, store-conditional, or AMO
+instruction whose effective address lies within a page without write
+permissions raises a store page-fault exception.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>AMOs never raise load page-fault exceptions. Since any unreadable page
+is also unwritable, attempting to perform an AMO on an unreadable page
+always raises a store page-fault exception.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The U bit indicates whether the page is accessible to user mode. U-mode
+software may only access the page when U=1. If the SUM bit in the
+<code>sstatus</code> register is set, supervisor mode software may also access
+pages with U=1. However, supervisor code normally operates with the SUM
+bit clear, in which case, supervisor code will fault on accesses to
+user-mode pages. Irrespective of SUM, the supervisor may not execute
+code on pages with U=1.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An alternative PTE format would support different permissions for
+supervisor and user. We omitted this feature because it would be largely
+redundant with the SUM mechanism (see <a href="#sum">Memory Privilege in <code>sstatus</code> Register</a>) and would require more encoding space in the PTE.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The G bit designates a <em>global</em> mapping. Global mappings are those that
+exist in all address spaces. For non-leaf PTEs, the global setting
+implies that all mappings in the subsequent levels of the page table are
+global. Note that failing to mark a global mapping as global merely
+reduces performance, whereas marking a non-global mapping as global is a
+software bug that, after switching to an address space with a different
+non-global mapping for that address range, can unpredictably result in
+either mapping being used.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Global mappings need not be stored redundantly in address-translation
+caches for multiple ASIDs. Additionally, they need not be flushed from
+local address-translation caches when an SFENCE.VMA instruction is
+executed with <em>rs2</em>&#8800;<code>x0</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The RSW field is reserved for use by supervisor software; the
+implementation shall ignore this field.</p>
+</div>
+<div class="paragraph">
+<p>Each leaf PTE contains an accessed (A) and dirty (D) bit. The A bit
+indicates the virtual page has been read, written, or fetched from since
+the last time the A bit was cleared. The D bit indicates the virtual
+page has been written since the last time the D bit was cleared.</p>
+</div>
+<div class="paragraph">
+<p>Two schemes to manage the A and D bits are defined:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <em>Svade</em> extension: when a virtual page is accessed and the A bit is
+clear, or is written and the D bit is clear, a page-fault exception is
+raised.</p>
+</li>
+<li>
+<p>When the Svade extension is not implemented, the following scheme applies.<br>
+                                                                          <br>
+When a virtual page is accessed and the A bit is clear, the PTE is
+updated to set the A bit.  When the virtual page is written and the D
+bit is clear, the PTE is updated to set the D bit. When G-stage address
+translation is in use and is not Bare, the G-stage virtual pages may be
+accessed or written by implicit accesses to VS-level memory management
+data structures, such as page tables.                                <br>
+                                                                     <br>
+When two-stage address translation is in use, an explicit access may
+cause both VS-stage and G-stage PTEs to be updated. The following rules
+apply to all PTE updates caused by an explicit or an implicit memory
+accesses.                                                            <br>
+                                                                     <br>
+The PTE update must be atomic with respect to other accesses to the
+PTE, and must atomically perform all tablewalk checks for that leaf
+PTE as part of, and before, conditionally updating the PTE value.
+Updates of the A bit may be performed as a result of speculation, even
+if the associated memory access ultimately is not performed
+architecturally. However, updates to the D bit, resulting from an
+explicit store, must be exact (i.e., non-speculative), and observed in
+program order by the local hart. When two-stage address translation is
+active, updates to the D bit in G-stage PTEs may be performed by an
+implicit access to a VS-stage PTE, if the G-stage PTE provides write
+permission, before any speculative access to the VS-stage PTE.       <br>
+                                                                     <br>
+The PTE update must appear in the global memory order before the
+memory access that caused the PTE update and before any subsequent
+explicit memory access to that virtual page by the local hart. The
+ordering on loads and stores provided by FENCE instructions and the
+acquire/release bits on atomic instructions also orders the PTE updates
+associated with those loads and stores as observed by remote harts.  <br>
+                                                                     <br>
+The PTE update is not required to be atomic with respect to the memory
+access that caused the update and a trap may occur between the PTE
+update and the memory access that caused the PTE update. If a trap
+occurs then the A and/or D bit may be updated but the memory access
+that caused the PTE update might not occur. The hart must not perform
+the memory access that caused the PTE update before the PTE update is
+globally visible.                                                    <br>
+                                                                     <br>
+The page tables must be located in memory with hardware page-table
+write access and <em>RsrvEventual</em> PMA.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All harts in a system must employ the same PTE-update scheme as each
+other.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The PTE updates due to memory accesses ordered-after a FENCE are not
+themselves ordered by the FENCE.</p>
+</div>
+<div class="paragraph">
+<p>Simpler implementations may order the Page Table Entry (PTE) update
+to precede all subsequent explicit memory accesses, as opposed to
+ensuring that the PTE update is precisely sequenced before subsequent
+explicit memory accesses to the associated virtual page.</p>
+</div>
+<div class="paragraph">
+<p>Prior versions of this specification required PTE A bit updates to be
+exact, but allowing the A bit to be updated as a result of speculation
+simplifies the implementation of address translation prefetchers. System
+software typically uses the A bit as a page replacement policy hint, but
+does not require exactness for functional correctness. On the other
+hand, D bit updates are still required to be exact and performed in
+program order, as the D bit affects the functional correctness of page
+eviction.</p>
+</div>
+<div class="paragraph">
+<p>Implementations are of course still permitted to perform both A and D
+bit updates only in an exact manner.</p>
+</div>
+<div class="paragraph">
+<p>In both cases, requiring atomicity ensures that the PTE update will not
+be interrupted by other intervening writes to the page table, as such
+interruptions could lead to A/D bits being set on PTEs that have been
+reused for other purposes, on memory that has been reclaimed for other
+purposes, and so on. Simple implementations may instead generate
+page-fault exceptions.</p>
+</div>
+<div class="paragraph">
+<p>The A and D bits are never cleared by the implementation. If the
+supervisor software does not rely on accessed and/or dirty bits, e.g. if
+it does not swap memory pages to secondary storage or if the pages are
+being used to map I/O space, it should always set them to 1 in the PTE
+to improve performance.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Any level of PTE may be a leaf PTE, so in addition to 4 KiB pages, Sv32
+supports 4 MiB <em>megapages</em>. A megapage must be virtually and physically
+aligned to a 4 MiB boundary; a page-fault exception is raised if the
+physical address is insufficiently aligned.</p>
+</div>
+<div class="paragraph">
+<p>For non-leaf PTEs, the D, A, and U bits are reserved for future standard
+use. Until their use is defined by a standard extension, they must be
+cleared by software for forward compatibility.</p>
+</div>
+<div class="paragraph">
+<p>For implementations with both page-based virtual memory and the "A"
+standard extension, the LR/SC reservation set must lie completely within
+a single base physical page (i.e., a naturally aligned 4 KiB physical-memory
+region).</p>
+</div>
+<div class="paragraph">
+<p>On some implementations, misaligned loads, stores, and instruction
+fetches may also be decomposed into multiple accesses, some of which may
+succeed before a page-fault exception occurs. In particular, a
+portion of a misaligned store that passes the exception check may become
+visible, even if another portion fails the exception check. The same behavior
+may manifest for stores wider than XLEN bits (e.g., the FSD instruction
+in RV32D), even when the store address is naturally aligned.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sv32algorithm"><a class="anchor" href="#sv32algorithm"></a>Virtual Address Translation Process</h4>
+<div class="paragraph">
+<p>A virtual address <em>va</em> is translated into a physical address <em>pa</em> as follows:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Let <em>a</em> be <code>satp</code>.<em>ppn</em>×PAGESIZE, and let <em>i</em>=LEVELS-1. (For Sv32, PAGESIZE=2<sup>12</sup> and LEVELS=2.) The <code>satp</code> register must be
+<em>active</em>, i.e., the effective privilege mode must be S-mode or U-mode.</p>
+</li>
+<li>
+<p>Let <em>pte</em> be the value of the PTE at address <em>a</em>+<em>va</em>.<em>vpn</em>[<em>i</em>]×PTESIZE. (For Sv32, PTESIZE=4.)  If accessing <em>pte</em> violates a PMA or PMP check, raise an access-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>If <em>pte</em>.<em>v</em>=0, or if <em>pte</em>.<em>r</em>=0 and <em>pte</em>.<em>w</em>=1, or if any bits or encodings that are reserved for future standard use are set within <em>pte</em>, stop and raise a page-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>Otherwise, the PTE is valid. If <em>pte</em>.<em>r</em>=1 or <em>pte</em>.<em>x</em>=1, go to step 5. Otherwise, this PTE is a pointer to the next level of the page table. Let <em>i=i</em>-1. If <em>i</em>&lt;0, stop and raise a page-fault exception corresponding to the original access type. Otherwise, let
+<em>a</em>=<em>pte</em>.<em>ppn</em>×PAGESIZE and go to step 2.</p>
+</li>
+<li>
+<p>A leaf PTE has been reached. If <em>i&gt;0</em> and <em>pte</em>.<em>ppn</em>[<em>i</em>-1:0] ≠ 0, this is a misaligned superpage; stop and raise a page-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>Determine if the requested memory access is allowed by the <em>pte</em>.<em>u</em> bit, given the current privilege mode and the value of the SUM and MXR fields of the <strong>mstatus</strong> register. If not, stop and raise a page-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>Determine if the requested memory access is allowed by the <em>pte</em>.<em>r</em>, <em>pte</em>.<em>w</em>, and <em>pte</em>.<em>x</em> bits, given the Shadow Stack Memory Protection rules. If not, stop and raise an access-fault exception.</p>
+</li>
+<li>
+<p>Determine if the requested memory access is allowed by the <em>pte</em>.<em>r</em>, <em>pte</em>.<em>w</em>, and <em>pte</em>.<em>x</em> bits. If not, stop and raise a page-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>If <em>pte</em>.<em>a</em>=0, or if the original memory access is a store and <em>pte</em>.<em>d</em>=0:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the Svade extension is implemented, stop and raise a page-fault exception corresponding to the original access type.</p>
+</li>
+<li>
+<p>If a store to <em>pte</em> would violate a PMA or PMP check,
+raise an access-fault exception corresponding to the original access
+type.</p>
+</li>
+<li>
+<p>Perform the following steps atomically:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Compare <em>pte</em> to the value of the PTE at address <em>a</em>+<em>va.vpn</em>[<em>i</em>]×PTESIZE.</p>
+</li>
+<li>
+<p>If the values match, set <em>pte</em>.<em>a</em> to 1 and, if the
+original memory access is a store, also set <em>pte</em>.<em>d</em> to 1.</p>
+</li>
+<li>
+<p>If the comparison fails, return to step 2.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The translation is successful. The translated physical address is
+given as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><em>pa.pgoff</em> = <em>va.pgoff</em>.</p>
+</li>
+<li>
+<p>If <em>i</em>&gt;0, then this is a superpage translation and <em>pa.ppn</em>[<em>i</em>-1:0] = <em>va.vpn</em>[<em>i</em>-1:0].</p>
+</li>
+<li>
+<p><em>pa.ppn</em>[LEVELS-1:<em>i</em>] = <em>pte</em>.<em>ppn</em>[LEVELS-1:<em>i</em>].</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>All implicit accesses to the address-translation data structures in this
+algorithm are performed using width PTESIZE.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This implies, for example, that an Sv48 implementation may not use two
+separate 4B reads to non-atomically access a single 8B PTE, and that A/D
+bit updates performed by the implementation are treated as atomically
+updating the entire PTE, rather than just the A and/or D bit alone (even
+though the PTE value does not otherwise change).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The results of implicit address-translation reads in step 2 may be held
+in a read-only, incoherent <em>address-translation cache</em> but not shared
+with other harts. The address-translation cache may hold an arbitrary
+number of entries, including an arbitrary number of entries for the same
+address and ASID. Entries in the address-translation cache may then
+satisfy subsequent step 2 reads if the ASID associated with the entry
+matches the ASID loaded in step 0 or if the entry is associated with a
+<em>global</em> mapping. To ensure that implicit reads observe writes to the
+same memory locations, an SFENCE.VMA instruction must be executed after
+the writes to flush the relevant cached translations.</p>
+</div>
+<div class="paragraph">
+<p>The address-translation cache cannot be used in step 9; accessed and
+dirty bits may only be updated in memory directly.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is permitted for multiple address-translation cache entries to
+co-exist for the same address. This represents the fact that in a
+conventional TLB hierarchy, it is possible for multiple entries to match
+a single address if, for example, a page is upgraded to a superpage
+without first clearing the original non-leaf PTE’s valid bit and
+executing an SFENCE.VMA with <em>rs1</em>=<code>x0</code>, or if multiple TLBs exist in
+parallel at a given level of the hierarchy. In this case, just as if an
+SFENCE.VMA is not executed between a write to the memory-management
+tables and subsequent implicit read of the same address: it is
+unpredictable whether the old non-leaf PTE or the new leaf PTE is used,
+but the behavior is otherwise well defined.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Implementations may also execute the address-translation algorithm
+speculatively at any time, for any virtual address, as long as <code>satp</code> is
+active (as defined in <a href="#satp">Supervisor Address Translation and Protection (<code>satp</code>) Register</a>). Such speculative
+executions have the effect of pre-populating the address-translation
+cache.</p>
+</div>
+<div class="paragraph">
+<p>Speculative executions of the address-translation algorithm behave as
+non-speculative executions of the algorithm do, except that they must
+not set the dirty bit for a PTE, they must not trigger an exception, and
+they must not create address-translation cache entries if those entries
+would have been invalidated by any SFENCE.VMA instruction executed by
+the hart since the speculative execution of the algorithm began.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For instance, it is illegal for both non-speculative and speculative
+executions of the translation algorithm to begin, read the level 2 page
+table, pause while the hart executes an SFENCE.VMA with
+<em>rs1</em>=<em>rs2</em>=<code>x0</code>, then resume using the now-stale level 2 PTE, as
+subsequent implicit reads could populate the address-translation cache
+with stale PTEs.</p>
+</div>
+<div class="paragraph">
+<p>In many implementations, an SFENCE.VMA instruction with <em>rs1</em>=<code>x0</code> will
+therefore either terminate all previously-launched speculative
+executions of the address-translation algorithm (for the specified ASID,
+if applicable), or simply wait for them to complete (in which case any
+address-translation cache entries created will be invalidated by the
+SFENCE.VMA as appropriate). Likewise, an SFENCE.VMA instruction with
+<em>rs1</em>≠<code>x0</code> generally must either ensure that
+previously-launched speculative executions of the address-translation
+algorithm (for the specified ASID, if applicable) are prevented from
+creating new address-translation cache entries mapping leaf PTEs, or
+wait for them to complete.</p>
+</div>
+<div class="paragraph">
+<p>A consequence of implementations being permitted to read the translation
+data structures arbitrarily early and speculatively is that at any time,
+all page table entries reachable by executing the algorithm may be
+loaded into the address-translation cache.</p>
+</div>
+<div class="paragraph">
+<p>Although it would be uncommon to place page tables in non-idempotent
+memory, there is no explicit prohibition against doing so. Since the
+algorithm may only touch page tables reachable from the root page table
+indicated in <code>satp</code>, the range of addresses that an implementation&#8217;s
+page table walker will touch is fully under supervisor control.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>The algorithm does not admit the possibility of ignoring high-order PPN
+bits for implementations with narrower physical addresses.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sv39"><a class="anchor" href="#sv39"></a>Sv39: Page-Based 39-bit Virtual-Memory System</h3>
+<div class="paragraph">
+<p>This section describes a simple paged virtual-memory system for
+SXLEN=64, which supports 39-bit virtual address spaces. The design of
+Sv39 follows the overall scheme of Sv32, and this section details only
+the differences between the schemes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We specified multiple virtual memory systems for RV64 to relieve the
+tension between providing a large address space and minimizing
+address-translation cost. For many systems, 39 bits of virtual-address space is
+ample, and so Sv39 suffices. Sv48 increases the virtual address space to
+48 bits, but increases the physical memory capacity dedicated to page tables,
+the latency of page-table traversals, and the size of hardware
+structures that store virtual addresses. Sv57 increases the virtual
+address space, page table capacity requirement, and translation latency
+even further.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="addressing-and-memory-protection"><a class="anchor" href="#addressing-and-memory-protection"></a>Addressing and Memory Protection</h4>
+<div class="paragraph">
+<p>Sv39 implementations support a 39-bit virtual address space, divided
+into pages. An Sv39 address is partitioned as shown in
+<a href="#sv39va">Sv39 virtual address.</a>. Instruction fetch addresses and load and
+store effective addresses, which are 64 bits, must have bits 63–39 all
+equal to bit 38, or else a page-fault exception will occur. The 27-bit
+VPN is translated into a 44-bit PPN via a three-level page table, while
+the 12-bit page offset is untranslated.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When mapping between narrower and wider addresses, RISC-V zero-extends a
+narrower physical address to a wider size. The mapping between 64-bit
+virtual addresses and the 39-bit usable address space of Sv39 is not
+based on zero extension but instead follows an entrenched convention
+that allows an OS to use one or a few of the most-significant bits of a
+full-size (64-bit) virtual address to quickly distinguish user and
+supervisor address regions.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="sv39va" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqtkc9LwzAUx-_7Kx49rUggScvU_gHeFE9exg6va9IGsyQkgU1H_3cznNuqdmDxFPj-eJ8X3rwREmP0ASqnURlYHt99Ja2JROJG6TfIHm-AOXhArWtcv2bw6Qb1LoCX_SqfzdMg8HZLOqHaLkJJYSBiIzyRBozSR10LGckGfZtoBf0KH8o_1NruRCAuTUjDoOD5LOketyQZkBV3WVo3OEwNqKLYRYJm3VkPWYjoY9q2tj7xA-z7Ph9U6WhVmOZKkd9PZnI2lUknMxmfyGTnZW__yKSjzV-Ql8WX56clX53ai-HYg8uuunTUddgKsFIGEU8RVn7Dny-7GP_c_4UuTsPKYewDBL8pCA==?id=sv39va" alt="Sv39 virtual address.">
+</div>
+<div class="title">Figure 20. Sv39 virtual address.</div>
+</div>
+<div id="sv39pa" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNqtUU9LwzAUv-9TPHJakUCSduL6Abwpu48dXtekLWZJSQKbjn53M5zaKh0YPAV-f997WdZSYQjOQ9lr7Axsr--5VNYEqvDQ6VcgT3fAe3hErSvcvxD4YH33JkEUwy5bLGMQOHukreyaNkDBYAJiLR1VBkynr7iWKtADuia25exTfDH_Qit7kp72MSGGQS6yRcQdHmkkgKxWJI7rezRQQBnkKVA0-9Y6ID6gC3HayrrY7-E8DNnYmrNZqzT1DaNYJ3cKntrJkju5SOzkPLnzT6cdGzeb563YfbkfprEXlt9k2SzbYyPBKuVlmEgmV77_puaXW_-baPQ1P1Tv2mco1g==?id=sv39pa" alt="Sv39 physical address.">
+</div>
+<div class="title">Figure 21. Sv39 physical address.</div>
+</div>
+<div id="sv39pte" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrVk0tvwjAMx-98CisnqilSk5bnbdO0nUCIPZiEOASa0mqlrZJosCG--4J4LUMNKDvtVNk_23_HtesRj5lSQkK3zFiaw3j_XXfjIlc4Zos0-wTUuwFSwgPLsimbvSPYUZl-caDhZuLV6roQiGKJE57OEwWhD4aTRVzgOIc8zfb-jMcKL5iYa7XAPwRvk8-802LFJS51BV0MAurVtF-wJdYAUDNAut1pIbSEhPVm4xmUWimxUn9LZcl0L9BVfKUwy2dJIQBJxYTSc6hKbYTHVPorleeRLTGoTLykSduOmrTlrEk6jpqk7a7pO2p2nCVdJ9uyrpcNNmwwtEHrOVivwXoM_hn8SfvICB7c9Z5PIzMLDbnk4oNHR94w-WDQH9PJkYbnlFipX0mHT6MqdG_2f2uaj6b5YppvpjkyzaFpviJzcOTi3zqsnXXHdoO0nHjz9PJrDuSvQfSaIOK8jP8AfgO4H1ip?id=sv39pte" alt="Sv39 page table entry.">
+</div>
+<div class="title">Figure 22. Sv39 page table entry.</div>
+</div>
+<div class="paragraph">
+<p>Sv39 page tables contain 2<sup>9</sup> page table entries (PTEs),
+eight bytes each. A page table is exactly the size of a page and must
+always be aligned to a page boundary. The physical page number of the
+root page table is stored in the <code>satp</code> register&#8217;s PPN field.</p>
+</div>
+<div class="paragraph">
+<p>The PTE format for Sv39 is shown in <a href="#sv39pte">Sv39 page table entry.</a>.
+Bits 9-0 have the same meaning as for Sv32. Bit 63 is reserved for use
+by the Svnapot extension in <a href="#svnapot">"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a>. If Svnapot is not
+implemented, bit 63 remains reserved and must be zeroed by software for
+forward compatibility, or else a page-fault exception is raised. Bits
+62-61 are reserved for use by the Svpbmt extension in
+<a href="#svpbmt">"Svpbmt" Extension for Page-Based Memory Types, Version 1.0</a>. If Svpbmt is not implemented, bits 62-61 remain
+reserved and must be zeroed by software for forward compatibility, or
+else a page-fault exception is raised. Bits 60-54 are reserved for
+future standard use and, until their use is defined by some standard
+extension, must be zeroed by software for forward compatibility. If any
+of these bits are set, a page-fault exception is raised.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We reserved several PTE bits for a possible extension that improves
+support for sparse address spaces by allowing page-table levels to be
+skipped, reducing memory usage and TLB refill latency. These reserved
+bits may also be used to facilitate research experimentation. The cost
+is reducing the physical address space, but is presently ample. When it
+no longer suffices, the reserved bits that remain unallocated could be
+used to expand the physical address space.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Any level of PTE may be a leaf PTE, so in addition to 4 KiB pages, Sv39
+supports 2 MiB <em>megapages</em> and 1 GiB <em>gigapages</em>, each of which must be virtually and physically aligned to a boundary equal to its size. A page-fault exception is raised if the physical address is insufficiently aligned.</p>
+</div>
+<div class="paragraph">
+<p>The algorithm for virtual-to-physical address translation is the same as
+in <a href="#sv32algorithm">Virtual Address Translation Process</a>, except LEVELS equals 3 and PTESIZE equals 8.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sv48"><a class="anchor" href="#sv48"></a>Sv48: Page-Based 48-bit Virtual-Memory System</h3>
+<div class="paragraph">
+<p>This section describes a simple paged virtual-memory system for
+SXLEN=64, which supports 48-bit virtual address spaces. Sv48 is intended
+for systems for which a 39-bit virtual address space is insufficient. It
+closely follows the design of Sv39, simply adding an additional level of
+page table, and so this chapter only details the differences between the
+two schemes.</p>
+</div>
+<div class="paragraph">
+<p>Implementations that support Sv48 must also support Sv39.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Systems that support Sv48 can also support Sv39 at essentially no cost,
+and so should do so to maintain compatibility with supervisor software
+that assumes Sv39.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="addressing-and-memory-protection-1"><a class="anchor" href="#addressing-and-memory-protection-1"></a>Addressing and Memory Protection</h4>
+<div class="paragraph">
+<p>Sv48 implementations support a 48-bit virtual address space, divided
+into pages. An Sv48 address is partitioned as shown in
+<a href="#sv48va">Sv48 virtual address.</a>. Instruction fetch addresses and load and
+store effective addresses, which are 64 bits, must have bits 63–48 all
+equal to bit 47, or else a page-fault exception will occur. The 36-bit
+VPN is translated into a 44-bit PPN via a four-level page table, while
+the 12-bit page offset is untranslated.</p>
+</div>
+<div id="sv48va" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrNkrFqwzAQhvc8xaEppggs2biNH6BbQ6YuIcM5lmxTRTKSIGmD370KTdqUYENFhk6C___vvpN081pI9N46KHuFnYb1-TyW0mhPJe469Q7k5QFYD8-oVIXbNwJfrus-BPB82CSzeWgE1uxpK7qm9ZCn8EvEWlgqNehOnXUlpKc7tE2gZeklfCq-UStzEI72oUNoBhlPZkG3uKfBOHUM07oeNTAoK2MDycFxGJKrEMkfySWVQenFwVPU29ZYIM6j9WS8NFuMlgpdTxU-xTPTSCZfRDM5i2Wm0UzGI5mMRTMjn3Ziz_68ja-r5TrbfM9R3Lp80mWTbjrq9tgIMFI64Uci97zlzyoW_yZ0tXBFxFd_ApK8rv8=?id=sv48va" alt="Sv48 virtual address.">
+</div>
+<div class="title">Figure 23. Sv48 virtual address.</div>
+</div>
+<div id="sv48pa" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNq9kkFuwjAQRfecYpQVUWUpdgKFHKC7VuwRiwmxk6jGjmxL0KLcvUalJClKJLJgZWn-__PGY89zLtA5YyGtJVYKttfznAqtHBF4qOQXBO8vQGt4Qykz3H8G8Kva6psDS5pdOJv7RmD0kZS8KkoHSQS9IubcEKFAVfJal1w4ckBTeFoc_Zkv4btqpk_cktp38M0gZuHM1w0eiRcgWCwCP66tUUECqeMnR1DtS20gsA6N89Nm2ni-hXPThN1ovB6McpWPBVe3YPwoMxqMjjPZejKT0anMaDKTsolMSiczH1ptN7jZfGzj3S296re9qKxVl_cqHVWjQbXGgoMWwnLXs_T28drONXz19nMsn2HqvO4_1w9b-2N_?id=sv48pa" alt="Sv48 physical address.">
+</div>
+<div class="title">Figure 24. Sv48 physical address.</div>
+</div>
+<div id="sv48pte" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrVk0tvwjAMx-_7FFZPoKlSm5TnbdO0nUCIPZiEOASaQrWSVkk02BDffUG8lqEalp12quyf_7bj2pWYJ0xrqaBdZCwVMNx9V-0kF9pP2DzNPsDrXENYwD3LsjGbvHmwpSr95ECi9ah6VTGJQOYLf8bT6UxDFIDlZDGXfiJApNnOn_FE-3Mmp6YaDfbBG_GJd5wvufILk8EkA0qqV8Yv2cI3ALw69Uy741yaEgpW63XVogSlIUqDDVUFE0CgrflS-0xMZrkET2kmtZlDmbQWHaThDykXMSakpcJzNWmjtF28Jq071yRNx5qk4TzbsOUubbpLA8eXunfrOtsGutQYrGEwwiB6hOgNoicYnMDvtOtZwb3bztNxZHaiPldcvvP4wKnNe73ukI4wSlAaHml0SoNS2n8clKE7-3U3tvlgm8-2-WqbA9vs2-aLZ481PPsv90uJbuB2VMhFXRTV-l1Q9McgcklQ6LzP_wB-AUcalEU=?id=sv48pte" alt="Sv48 page table entry.">
+</div>
+<div class="title">Figure 25. Sv48 page table entry.</div>
+</div>
+<div class="paragraph">
+<p>The PTE format for Sv48 is shown in <a href="#sv48pte">Sv48 page table entry.</a>.
+Bits 63-54 and 9-0 have the same meaning as for Sv39. Any level of PTE
+may be a leaf PTE, so in addition to pages, Sv48 supports <em>megapages</em>,
+<em>gigapages</em>, and <em>terapages</em>, each of which must be virtually and
+physically aligned to a boundary equal to its size. A page-fault
+exception is raised if the physical address is insufficiently aligned.</p>
+</div>
+<div class="paragraph">
+<p>The algorithm for virtual-to-physical address translation is the same as
+in <a href="#sv32algorithm">Virtual Address Translation Process</a>, except LEVELS equals 4 and
+PTESIZE equals 8.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sv57"><a class="anchor" href="#sv57"></a>Sv57: Page-Based 57-bit Virtual-Memory System</h3>
+<div class="paragraph">
+<p>This section describes a simple paged virtual-memory system designed for
+RV64 systems, which supports 57-bit virtual address spaces. Sv57 is
+intended for systems for which a 48-bit virtual address space is
+insufficient. It closely follows the design of Sv48, simply adding an
+additional level of page table, and so this chapter only details the
+differences between the two schemes.</p>
+</div>
+<div class="paragraph">
+<p>Implementations that support Sv57 must also support Sv48.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Systems that support Sv57 can also support Sv48 at essentially no cost,
+and so should do so to maintain compatibility with supervisor software
+that assumes Sv48.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="addressing-and-memory-protection-2"><a class="anchor" href="#addressing-and-memory-protection-2"></a>Addressing and Memory Protection</h4>
+<div class="paragraph">
+<p>Sv57 implementations support a 57-bit virtual address space, divided
+into pages. An Sv57 address is partitioned as shown in
+<a href="#sv57va">Sv57 virtual address.</a>. Instruction fetch addresses and load and
+store effective addresses, which are 64 bits, must have bits 63–57 all
+equal to bit 56, or else a page-fault exception will occur. The 45-bit
+VPN is translated into a 44-bit PPN via a five-level page table, while
+the 12-bit page offset is untranslated.</p>
+</div>
+<div id="sv57va" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrNksFqwzAQRO_5isWnmCKwZaeO_QG9tfTUS8hhHUu2qSIZSZC0wf9ehaaJnRJDdMpJsLMzb1g0rxhHa7WBohPYSlid3kPBlbSE47YVXxC8PkHcwQsKUeLmM4Bf1bTfDGjar8PZ3AWBVjvSsLZuLKQRjIZYMU24BNmK01wwbskWde1oSfS3fDT_m5ZqzwzpXIILg4SGMzfXuCNOgGDxHLi6pkPngMKyvSUoN43SEBiL2rq2pdKOb-DQ9-HQmi7PVnplZbKaMmbezCT3ZCZLf2bkyaS5N5PGvszImxlTT2Z8Kbu4k3nXaYfGj_e3Vbq-cMexRzWZVOmkGk-q0U21w5qB4twwe17Jrprnw2PdussjLg3-Rzbe-gHK654Z?id=sv57va" alt="Sv57 virtual address.">
+</div>
+<div class="title">Figure 26. Sv57 virtual address.</div>
+</div>
+<div id="sv57pa" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrFkkFvwiAYhu_-ii892SwkQFtn-wN22-LdeKAW2mYIDZDoZvrfh5nT1sVmctmJ5Hvf53sIYV5xwZwzFopOslbB-nweC6GVQ4LtWvkB0esTkA5emJQl275H8J3a9pMDTftNPJv7RWD0HjW8rRsHKYbRkFXcIKFAtfI8l1w4tGOm9rYE_5RP8K9pqQ_cos5v8MsgofHMzw3bIx9AlGWRv67tmCegcPzgEFPbRhuIrGPG-duW2ni_hWPfx0M0XV5QeoNyVU2Bz8HOJA90JstwJw500jzYSUmoEwc7Cb2LTjsJCXbiR5RDcLV6W6ebC52N157SZDKlkymZTPE1XYzTjtUctBCWu1Fl2Ll-xOz-u-T_VVr86X_ctL4Anp6d-Q==?id=sv57pa" alt="Sv57 physical address.">
+</div>
+<div class="title">Figure 27. Sv57 physical address.</div>
+</div>
+<div id="sv57pte" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/bytefield/svg/eNrVlU1vwjAMhu_8Cqsn0FSpSUMp3DZN2wmE2AeTEIdAU6hW2iqNBhvivy8I1hFYQ4l22E6V_dh5Y8t16gELqRA8h04W0yiB0f677oRpIuyQLqL4HazuFaAM7mgcT-j01YIdzaMPBphsxo1aXR4EPF3acxbN5gKIA4qTBozbYQJJFO_9MQuFvaB8JtVc5yt4m3zinaQrltuZPEEeBi5u1KSf06UtAViea8nrTlIuJXJYbzYNhWItRVrqbGme0QQIdARbCZsm03nKwcoF5UL2oSy1SYpU9yiVJYEu0TXWRI6hZttY0jdUbGnbroNNHSQ6qB0T7ZRoh8Q5gYe0ZynB_ZvuY9EyrB40YDnjbywoeEvl_X6vDA0ehmXoVr3AtWreq-aTar6o5lA1B6r5bKmVo7Pt3jXhzJDsaioPIqRKFK4ShIxn4B_AAyp3cPHXHrf_5zCv0r7CFy4P4pWm6rcHaRprui1DTdcz1sS-oSZuGWuitqEm8s01HTNNzaBdPI5ySY7I-Ps9O6WulmItRVrqlNHfLNA_fKsrPeh_I0hT3Sc8aWCe?id=sv57pte" alt="Sv57 page table entry.">
+</div>
+<div class="title">Figure 28. Sv57 page table entry.</div>
+</div>
+<div class="paragraph">
+<p>The PTE format for Sv57 is shown in <a href="#sv57pte">Sv57 page table entry.</a>.
+Bits 63–54 and 9–0 have the same meaning as for Sv39. Any level of PTE
+may be a leaf PTE, so in addition to pages, Sv57 supports <em>megapages</em>,
+<em>gigapages</em>, <em>terapages</em>, and <em>petapages</em>, each of which must be
+virtually and physically aligned to a boundary equal to its size. A
+page-fault exception is raised if the physical address is insufficiently
+aligned.</p>
+</div>
+<div class="paragraph">
+<p>The algorithm for virtual-to-physical address translation is the same as
+in <a href="#sv32algorithm">Virtual Address Translation Process</a>, except LEVELS equals 5 and
+PTESIZE equals 8.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="svnapot"><a class="anchor" href="#svnapot"></a>"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Sv39, Sv48, and Sv57, when a PTE has N=1, the PTE represents a
+translation that is part of a range of contiguous virtual-to-physical
+translations with the same values for PTE bits 5–0. Such ranges must be
+of a naturally aligned power-of-2 (NAPOT) granularity larger than the
+base page size.</p>
+</div>
+<div class="paragraph">
+<p>The Svnapot extension depends on the Sv39 extension.</p>
+</div>
+<table id="ptenapot" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 6. Page table entry encodings when <em>pte</em>.N=1</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">i</th>
+<th class="tableblock halign-center valign-top"><em>pte</em>.<em>ppn</em>[<em>i</em>]</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top"><em>pte</em>.<em>napot_bits</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+&#8805;1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>x xxxx xxx1</code><br>
+<code>x xxxx xx1x</code><br>
+<code>x xxxx x1xx</code><br>
+<code>x xxxx 1000</code><br>
+<code>x xxxx 0xxx</code><br>
+<code>x xxxx xxxx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved</em><br>
+<em>Reserved</em><br>
+<em>Reserved</em><br>
+64 KiB contiguous region<br>
+<em>Reserved</em><br>
+<em>Reserved</em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-<br>
+-<br>
+-<br>
+4<br>
+-<br>
+-</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>NAPOT PTEs behave identically to non-NAPOT PTEs within the
+address-translation algorithm in <a href="#sv32algorithm">Virtual Address Translation Process</a>,
+except that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the encoding in <em>pte</em> is valid according to
+<a href="#ptenapot">Page table entry encodings when <em>pte</em>.N=1</a>, then instead of returning the original
+value of <em>pte</em>, implicit reads of a NAPOT PTE return a copy
+of <em>pte</em> in which <em>pte</em>.<em>ppn</em>[<em>i</em>][<em>pte</em>.<em>napot_bits</em>-1:0] is replaced by
+<em>vpn</em>[<em>i</em>][<em>pte</em>.<em>napot_bits</em>-1:0]. If the encoding in <em>pte</em> is reserved according to
+<a href="#ptenapot">Page table entry encodings when <em>pte</em>.N=1</a>, then a page-fault exception must be raised.</p>
+</li>
+<li>
+<p>Implicit reads of NAPOT page table entries may create
+address-translation cache entries mapping
+<em>a</em> + <em>j</em>×PTESIZE to a copy of <em>pte</em> in which <em>pte</em>.<em>ppn</em>[<em>i</em>][<em>pte</em>.<em>napot_bits</em>-1:0]
+is replaced by <em>vpn[i][pte.napot_bits</em>-1:0], for any or all <em>j</em> such that
+<em>j</em> &gt;&gt; <em>napot_bits</em> = <em>vpn</em>[<em>i</em>] &gt;&gt; <em>napot_bits</em>, all for the address space identified in <em>satp</em> as loaded by step 1.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The motivation for a NAPOT PTE is that it can be cached in a TLB as one
+or more entries representing the contiguous region as if it were a
+single (large) page covered by a single translation. This compaction can
+help relieve TLB pressure in some scenarios. The encoding is designed to
+fit within the pre-existing Sv39, Sv48, and Sv57 PTE formats so as not
+to disrupt existing implementations or designs that choose not to
+implement the scheme. It is also designed so as not to complicate the
+definition of the address-translation algorithm.</p>
+</div>
+<div class="paragraph">
+<p>The address translation cache abstraction captures the behavior that
+would result from the creation of a single TLB entry covering the entire
+NAPOT region. It is also designed to be consistent with implementations
+that support NAPOT PTEs by splitting the NAPOT region into TLB entries
+covering any smaller power-of-two region sizes. For example, a 64 KiB
+NAPOT PTE might trigger the creation of 16 standard 4 KiB TLB entries,
+all with contents generated from the NAPOT PTE (even if the PTEs for the
+other 4 KiB regions have different contents).</p>
+</div>
+<div class="paragraph">
+<p>In typical usage scenarios, NAPOT PTEs in the same region will have the
+same attributes, same PPNs, and same values for bits 5-0. RSW remains
+reserved for supervisor software control. It is the responsibility of
+the OS and/or hypervisor to configure the page tables in such a way that
+there are no inconsistencies between NAPOT PTEs and other NAPOT or
+non-NAPOT PTEs that overlap the same address range. If an update needs
+to be made, the OS generally should first mark all of the PTEs invalid,
+then issue SFENCE.VMA instruction(s) covering all 4 KiB regions within
+the range (either via a single SFENCE.VMA with <em>rs1</em>=<code>x0</code>, or with
+multiple SFENCE.VMA instructions with <em>rs1</em>≠<code>x0</code>), then update the PTE(s), as described in <a href="#sfence.vma">Supervisor Memory-Management Fence Instruction</a>, unless any inconsistencies are known to be benign. If any inconsistencies do exist, then the effect is the same as when SFENCE.VMA
+is used incorrectly: one of the translations will be chosen, but the
+choice is unpredictable.</p>
+</div>
+<div class="paragraph">
+<p>If an implementation chooses to use a NAPOT PTE (or cached version
+thereof), it might not consult the PTE directly specified by the
+algorithm in <a href="#sv32algorithm">Virtual Address Translation Process</a> at all. Therefore, the D
+and A bits may not be identical across all mappings of the same address
+range even in typical use cases The operating system must query all
+NAPOT aliases of a page to determine whether that page has been accessed
+and/or is dirty. If the OS manually sets the A and/or D bits for a page,
+it is recommended that the OS also set the A and/or D bits for other
+NAPOT aliases as appropriate in order to avoid unnecessary traps.</p>
+</div>
+<div class="paragraph">
+<p>Just as with normal PTEs, TLBs are permitted to cache NAPOT PTEs whose V
+(Valid) bit is clear.</p>
+</div>
+<div class="paragraph">
+<p>Depending on need, the NAPOT scheme may be extended to other
+intermediate page sizes and/or to other levels of the page table in the
+future. The encoding is designed to accommodate other NAPOT sizes should
+that need arise. For example:</p>
+</div>
+<div class="paragraph">
+<p>__</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">i</th>
+<th class="tableblock halign-center valign-top"><em>pte</em>.<em>ppn</em>[<em>i</em>]</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top"><em>pte</em>.<em>napot_bits</em></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+0<br>
+0<br>
+0<br>
+0<br>
+&#8230;&#8203;<br>
+1<br>
+1<br>
+&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>x xxxx xxx1</code><br>
+<code>x xxxx xx10</code><br>
+<code>x xxxx x100</code><br>
+<code>x xxxx 1000</code><br>
+<code>x xxx1 0000</code><br>
+&#8230;&#8203;<br>
+<code>x xxxx xxx1</code><br>
+<code>x xxxx xx10</code><br>
+&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 KiB contiguous region<br>
+16 KiB contiguous region<br>
+32 KiB contiguous region<br>
+64 KiB contiguous region<br>
+128 KiB contiguous region<br>
+&#8230;&#8203;<br>
+4 MiB contiguous region<br>
+8 MiB contiguous region<br>
+&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1<br>
+2<br>
+3<br>
+4<br>
+5<br>
+&#8230;&#8203;<br>
+1<br>
+2<br>
+&#8230;&#8203;</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>In such a case, an implementation may or may not support all options.
+The discoverability mechanism for this extension would be extended to
+allow system software to determine which sizes are supported.</p>
+</div>
+<div class="paragraph">
+<p>Other sizes may remain deliberately excluded, so that PPN bits not being
+used to indicate a valid NAPOT region size (e.g., the least-significant
+bit of <em>pte</em>.<em>ppn</em>[<em>i</em>]) may be repurposed for other uses in the
+future.</p>
+</div>
+<div class="paragraph">
+<p>However, in case finer-grained intermediate page size support proves not
+to be useful, we have chosen to standardize only 64 KiB support as a
+first step.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="svpbmt"><a class="anchor" href="#svpbmt"></a>"Svpbmt" Extension for Page-Based Memory Types, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In Sv39, Sv48, and Sv57, bits 62-61 of a leaf page table entry indicate
+the use of page-based memory types that override the PMA(s) for the
+associated memory pages. The encoding for the PBMT bits is captured in
+<a href="#pbmt">Encodings for PBMT field in Sv39, Sv48, and Sv57 PTEs.</a>.</p>
+</div>
+<div class="paragraph">
+<p>The Svpbmt extension depends on the Sv39 extension.</p>
+</div>
+<table id="pbmt" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 7. Encodings for PBMT field in Sv39, Sv48, and Sv57 PTEs.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Mode</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Requested Memory Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">PMA<br>
+NC<br>
+IO<br>
+-</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0<br>
+1<br>
+2<br>
+3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None<br>
+Non-cacheable, idempotent, weakly-ordered (RVWMO), main memory<br>
+Non-cacheable, non-idempotent, strongly-ordered (I/O ordering), I/O<br>
+<em>Reserved for future standard use</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Implementations may override additional PMAs not explicitly listed in
+<a href="#pbmt">Encodings for PBMT field in Sv39, Sv48, and Sv57 PTEs.</a>.
+For example, to be consistent with the characteristics of a typical I/O region,
+a misaligned memory access to a page with PBMT=IO might raise an exception,
+even if the underlying region were main memory and the same access would have
+succeeded for PBMT=PMA.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Future extensions may provide more and/or finer-grained control over
+which PMAs can be overridden.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For non-leaf PTEs, bits 62-61 are reserved for future standard use.
+Until their use is defined by a standard extension, they must be cleared
+by software for forward compatibility, or else a page-fault exception is
+raised.</p>
+</div>
+<div class="paragraph">
+<p>For leaf PTEs, setting bits 62-61 to the value 3 is reserved for future
+standard use. Until this value is defined by a standard extension, using
+this reserved value in a leaf PTE raises a page-fault exception.</p>
+</div>
+<div class="paragraph">
+<p>When PBMT settings override a main memory page into I/O or vice versa,
+memory accesses to such pages obey the memory ordering rules of the
+final effective attribute, as follows.</p>
+</div>
+<div class="paragraph">
+<p>If the underlying physical memory attribute for a page is I/O, and the
+page has PBMT=NC, then accesses to that page obey RVWMO. However,
+accesses to such pages are considered to be <em>both</em> I/O and main memory
+accesses for the purposes of FENCE, <em>.aq</em>, and <em>.rl</em>.</p>
+</div>
+<div class="paragraph">
+<p>If the underlying physical memory attribute for a page is main memory,
+and the page has PBMT=IO, then accesses to that page obey strong channel
+0 I/O ordering rules.
+However, accesses to
+such pages are considered to be <em>both</em> I/O and main memory accesses for
+the purposes of FENCE, <em>.aq</em>, and <em>.rl</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A device driver written to rely on I/O strong ordering rules will not
+operate correctly if the address range is mapped with PBMT=NC. As such,
+this configuration is discouraged.</p>
+</div>
+<div class="paragraph">
+<p>It will often still be useful to map physical I/O regions using PBMT=NC
+so that write combining and speculative accesses can be performed. Such
+optimizations will likely improve performance when applied with adequate
+care.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When Svpbmt is used with non-zero PBMT encodings, it is possible for
+multiple virtual aliases of the same physical page to exist
+simultaneously with different memory attributes. It is also possible for
+a U-mode or S-mode mapping through a PTE with Svpbmt enabled to observe
+different memory attributes for a given region of physical memory than a
+concurrent access to the same page performed by M-mode or when
+MODE=Bare. In such cases, the behaviors dictated by the attributes
+(including coherence, which is otherwise unaffected) may be violated.</p>
+</div>
+<div class="paragraph">
+<p>Accessing the same location using different attributes that are both
+non-cacheable (e.g., NC and IO) does not cause loss of coherence, but
+might result in weaker memory ordering than the stricter attribute
+ordinarily guarantees. Executing a <code>fence iorw, iorw</code> instruction
+between such accesses suffices to prevent loss of memory ordering.</p>
+</div>
+<div class="paragraph">
+<p>Accessing the same location using different cacheability attributes may
+cause loss of coherence. Executing the following sequence between such
+accesses prevents both loss of coherence and loss of memory ordering:
+<code>fence iorw, iorw</code>, followed by <code>cbo.flush</code> to an address of that
+location, followed by a <code>fence iorw, iorw</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It follows that, if the same location might later be referenced using
+the original attributes, then this sequence must be repeated beforehand.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>In certain cases, a weaker sequence might suffice to prevent loss of
+coherence. These situations will be detailed following the forthcoming
+formalization of the interaction of the RVWMO memory model with the
+instructions in the Zicbom extension.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When two-stage address translation is enabled within the H extension,
+the page-based memory types are also applied in two stages. First, if
+<code>hgatp</code>.MODE is not equal to zero, non-zero G-stage PTE PBMT bits
+override the attributes in the PMA to produce an intermediate set of
+attributes. Otherwise, the PMAs serve as the intermediate attributes.
+Second, if <code>vsatp</code>.MODE is not equal to zero, non-zero VS-stage PTE PBMT
+bits override the intermediate attributes to produce the final set of
+attributes used by accesses to the page in question. Otherwise, the
+intermediate attributes are used as the final set of attributes.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+These final attributes apply to implicit and explicit accesses that
+are subject to both stages of address translation.
+For accesses that are not subject to the first stage of address translation,
+e.g. VS-stage page-table accesses, the intermediate attributes apply instead.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="svinval"><a class="anchor" href="#svinval"></a>"Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Svinval extension splits SFENCE.VMA, HFENCE.VVMA, and HFENCE.GVMA
+instructions into finer-grained invalidation and ordering operations
+that can be more efficiently batched or pipelined on certain classes of
+high-performance implementation.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OoBQZ5huG0qNoRbhWJTWWJKShEebUbYtSUWZ6ag6jJHc6M5mhsh4eHpF-booxfm6wjWHFsLABjYWsE=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The SINVAL.VMA instruction invalidates any address-translation cache
+entries that an SFENCE.VMA instruction with the same values of <em>rs1</em> and
+<em>rs2</em> would invalidate. However, unlike SFENCE.VMA, SINVAL.VMA
+instructions are only ordered with respect to SFENCE.VMA,
+SFENCE.W.INVAL, and SFENCE.INVAL.IR instructions as defined below.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OoBQZ5huG0qNoRbhc8mFC1GRGkxR3OcOZrjIAHh5urn7KoXrufpF-boAzYgthYAdgxYcQ==" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OoBQZ5huG0qNoRbhc8mFC1G2LUYomoxR3OcOZrjIAHh5urn7Krn6Rfm6KPnGQQ2IbYWAM76WLY=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The SFENCE.W.INVAL instruction guarantees that any previous stores
+already visible to the current RISC-V hart are ordered before subsequent
+SINVAL.VMA instructions executed by the same hart. The SFENCE.INVAL.IR
+instruction guarantees that any previous SINVAL.VMA instructions
+executed by the current hart are ordered before subsequent implicit
+references by that hart to the memory-management data structures.</p>
+</div>
+<div class="paragraph">
+<p>When executed in order (but not necessarily consecutively) by a single
+hart, the sequence SFENCE.W.INVAL, SINVAL.VMA, and SFENCE.INVAL.IR has
+the same effect as a hypothetical SFENCE.VMA instruction in which:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the values of <em>rs1</em> and <em>rs2</em> for the SFENCE.VMA are the same as those
+used in the SINVAL.VMA,</p>
+</li>
+<li>
+<p>reads and writes prior to the SFENCE.W.INVAL are considered to be
+those prior to the SFENCE.VMA, and</p>
+</li>
+<li>
+<p>reads and writes following the SFENCE.INVAL.IR are considered to be
+those subsequent to the SFENCE.VMA.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OoBQZ5huG0qNoRbhWJTWWJKShEebUbYtSUWZ6ag6jJHc6M5mhvB4eHh6Rfm6KMXFubrCNYdWwsAc5BbDA==" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OoBQZ5huG0qNoRbhWJTemJKShEebUbYtZXlZqag6jJHc6M5mhvB4eHh6Rfm6KPnHubrCNYdWwsAb7ha_Q==" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>If the hypervisor extension is implemented, the Svinval extension also
+provides two additional instructions: HINVAL.VVMA and HINVAL.GVMA. These
+have the same semantics as SINVAL.VMA, except that they combine with
+SFENCE.W.INVAL and SFENCE.INVAL.IR to replace HFENCE.VVMA and
+HFENCE.GVMA, respectively, instead of SFENCE.VMA. In addition,
+HINVAL.GVMA uses VMIDs instead of ASIDs.</p>
+</div>
+<div class="paragraph">
+<p>SINVAL.VMA, HINVAL.VVMA, and HINVAL.GVMA require the same permissions
+and raise the same exceptions as SFENCE.VMA, HFENCE.VVMA, and
+HFENCE.GVMA, respectively. In particular, an attempt to execute any of
+these instructions in U-mode always raises an illegal-instruction
+exception, and an attempt to execute SINVAL.VMA or HINVAL.GVMA in S-mode
+or HS-mode when <code>mstatus</code>.TVM=1 also raises an illegal-instruction
+exception. An attempt to execute HINVAL.VVMA or HINVAL.GVMA in VS-mode
+or VU-mode, or to execute SINVAL.VMA in VU-mode, raises a
+virtual-instruction exception. When <code>hstatus</code>.VTVM=1, an attempt to execute
+SINVAL.VMA in VS-mode also raises a virtual-instruction  exception.</p>
+</div>
+<div class="paragraph">
+<p>Attempting to execute SFENCE.W.INVAL or SFENCE.INVAL.IR in U-mode
+raises an illegal-instruction exception.
+Doing so in VU-mode raises a virtual-instruction exception.
+SFENCE.W.INVAL and SFENCE.INVAL.IR are unaffected by the <code>mstatus</code>.TVM and
+<code>hstatus</code>.VTVM fields and hence are always permitted in S-mode and VS-mode.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>SFENCE.W.INVAL and SFENCE.INVAL.IR instructions do not need to be
+trapped when <code>mstatus</code>.TVM=1 or when <code>hstatus</code>.VTVM=1, as they only have
+ordering effects but no visible side effects. Trapping of the SINVAL.VMA
+instruction is sufficient to enable emulation of the intended overall
+TLB maintenance functionality.</p>
+</div>
+<div class="paragraph">
+<p>In typical usage, software will invalidate a range of virtual addresses
+in the address-translation caches by executing an SFENCE.W.INVAL
+instruction, executing a series of SINVAL.VMA, HINVAL.VVMA, or
+HINVAL.GVMA instructions to the addresses (and optionally ASIDs or
+VMIDs) in question, and then executing an SFENCE.INVAL.IR instruction.</p>
+</div>
+<div class="paragraph">
+<p>High-performance implementations will be able to pipeline the
+address-translation cache invalidation operations, and will defer any
+pipeline stalls or other memory ordering enforcement until an
+SFENCE.W.INVAL, SFENCE.INVAL.IR, SFENCE.VMA, HFENCE.GVMA, or HFENCE.VVMA
+instruction is executed.</p>
+</div>
+<div class="paragraph">
+<p>Simpler implementations may implement SINVAL.VMA, HINVAL.VVMA, and
+HINVAL.GVMA identically to SFENCE.VMA, HFENCE.VVMA, and HFENCE.GVMA,
+respectively, while implementing SFENCE.W.INVAL and SFENCE.INVAL.IR
+instructions as no-ops.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:svadu"><a class="anchor" href="#sec:svadu"></a>"Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Svadu extension adds support and CSR controls for hardware updating of PTE A/D bits.</p>
+</div>
+<div class="paragraph">
+<p>If the Svadu extension is implemented, the <code>menvcfg</code>.ADUE field is writable.
+If the hypervisor extension is additionally implemented, the <code>henvcfg</code>.ADUE
+field is also writable.
+See <a href="#sec:menvcfg">[sec:menvcfg]</a> and <a href="#sec:henvcfg">[sec:henvcfg]</a> for the definitions of those fields.</p>
+</div>
+<div class="paragraph">
+<p><a href="#translation">Addressing and Memory Protection</a> defines the semantics of hardware updating of A/D bits.  When
+hardware updating of A/D bits is disabled, the Svade extension, which mandates
+exceptions when A/D bits need be set, instead takes effect.
+The Svade extension is also defined in <a href="#translation">Addressing and Memory Protection</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="sec:svvptc"><a class="anchor" href="#sec:svvptc"></a>"Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When the Svvptc extension is implemented, explicit stores by a hart that update
+the Valid bit of leaf and/or non-leaf PTEs from 0 to 1 and are visible to a hart
+will eventually become visible within a bounded timeframe to subsequent implicit
+accesses by that hart to such PTEs.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Svvptc relieves an operating system from executing certain memory-management
+instructions, such as <code>SFENCE.VMA</code> or <code>SINVAL.VMA</code>, which would normally be used
+to synchronize the hart&#8217;s address-translation caches when a memory-resident PTE
+is changed from Invalid to Valid. Synchronizing the hart&#8217;s address-translation
+caches with other forms of updates to a memory-resident PTE, including when a
+PTE is changed from Valid to Invalid, requires the use of suitable
+memory-management instructions. Svvptc guarantees that a change to a PTE from
+Invalid to Valid is made visible within a bounded time, thereby making the
+execution of these memory-management instructions redundant. The performance
+benefit of eliding these instructions outweighs the cost of an occasional
+gratuitous additional page fault that may occur.</p>
+</div>
+<div class="paragraph">
+<p>Depending on the microarchitecture, some possible ways to facilitate
+implementation of Svvptc include: not having any address-translation caches, not
+storing Invalid PTEs in the address-translation caches, automatically evicting
+Invalid PTEs using a bounded timer, or making address-translation caches
+coherent with store instructions that modify PTEs.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ssqosid"><a class="anchor" href="#ssqosid"></a>"Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Quality of Service (QoS) is defined as the minimal end-to-end performance
+guaranteed in advance by a service level agreement (SLA) to a workload.
+Performance metrics might include measures such as instructions per cycle (IPC),
+latency of service, etc.</p>
+</div>
+<div class="paragraph">
+<p>When multiple workloads execute concurrently on modern processors—equipped with
+large core counts, multiple cache hierarchies, and multiple memory
+controllers—the performance of any given workload becomes less deterministic, or
+even non-deterministic, due to shared resource contention.</p>
+</div>
+<div class="paragraph">
+<p>To manage performance variability, system software needs resource allocation and
+monitoring capabilities. These capabilities allow for the reservation of
+resources like cache and bandwidth, thus meeting individual performance targets
+while minimizing interference. For resource management, hardware should provide
+monitoring features that allow system software to profile workload resource
+consumption and allocate resources accordingly.</p>
+</div>
+<div class="paragraph">
+<p>To facilitate this, the QoS Identifiers extension (Ssqosid) introduces the
+<code>srmcfg</code> register, which configures a hart with two identifiers: a Resource
+Control ID (<code>RCID</code>) and a Monitoring Counter ID (<code>MCID</code>). These identifiers
+accompany each request issued by the hart to shared resource controllers.</p>
+</div>
+<div class="paragraph">
+<p>Additional metadata, like the nature of the memory access and the ID of the
+originating supervisor domain, can accompany <code>RCID</code> and <code>MCID</code>. Resource
+controllers may use this metadata for differentiated service such as a different
+capacity allocation for code storage vs. data storage. Resource controllers can
+use this data for security policies such as not exposing statistics of one
+security domain to another.</p>
+</div>
+<div class="paragraph">
+<p>These identifiers are crucial for the RISC-V Capacity and Bandwidth Controller
+QoS Register Interface (CBQRI) specification, which provides methods for setting
+resource usage limits and monitoring resource consumption. The <code>RCID</code> controls
+resource allocations, while the <code>MCID</code> is used for tracking resource usage.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The Ssqosid extension does not require that S-mode mode be implemented.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="supervisor-resource-management-configuration-srmcfg-register"><a class="anchor" href="#supervisor-resource-management-configuration-srmcfg-register"></a>Supervisor Resource Management Configuration (<code>srmcfg</code>) register</h3>
+<div class="paragraph">
+<p>The <code>srmcfg</code> register is an SXLEN-bit read/write register used to configure a
+Resource Control ID (<code>RCID</code>) and a Monitoring Counter ID (<code>MCID</code>). Both <code>RCID</code>
+and <code>MCID</code> are WARL fields. The register is formatted as shown in <a href="#SRMCFG64">Supervisor Resource Management Configuration (<code>srmcfg</code>) register for SXLEN=64</a>
+when SXLEN=64 and <a href="#SRMCFG32">Supervisor Resource Management Configuration (<code>srmcfg</code>) register for SXLEN=32</a> when SXLEN=32.</p>
+</div>
+<div class="paragraph">
+<p>The <code>RCID</code> and <code>MCID</code> accompany each request made by the hart to shared resource
+controllers. The <code>RCID</code> is used to determine the resource allocations (e.g.,
+cache occupancy limits, memory bandwidth limits, etc.) to enforce. The <code>MCID</code> is
+used to identify a counter to monitor resource usage.</p>
+</div>
+<div id="SRMCFG64" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjA00lHIS8xNtVJQD3L2dFGv1UHIKZjA5cIDgjxR5JD0-aLrMzbD0Bero5Ccn5eWmW5VnZOYlwpUBNSfUVyQmJxqZWhgZFJbCwAWPiwp?id=SRMCFG64" alt="Supervisor Resource Management Configuration (`srmcfg`) register for SXLEN=64">
+</div>
+<div class="title">Figure 29. Supervisor Resource Management Configuration (<code>srmcfg</code>) register for SXLEN=64</div>
+</div>
+<div id="SRMCFG32" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjA00lHIS8xNtVJQD3L2dFGv1UHIKZjA5cIDgjxR5JD0-RKhL1ZHITk_Ly0z3ao6JzEvFWSAjkJGcUFicqqVoYGRSW0tABHXLBM=?id=SRMCFG32" alt="Supervisor Resource Management Configuration (`srmcfg`) register for SXLEN=32">
+</div>
+<div class="title">Figure 30. Supervisor Resource Management Configuration (<code>srmcfg</code>) register for SXLEN=32</div>
+</div>
+<div class="paragraph">
+<p>The <code>RCID</code> and <code>MCID</code> configured in the <code>srmcfg</code> CSR apply to all privilege
+modes of software execution on that hart by default, but this behavior may be
+overridden by future extensions.</p>
+</div>
+<div class="paragraph">
+<p>If extension Smstateen is implemented together with Ssqosid, then Ssqosid also
+requires the SRMCFG bit in <code>mstateen0</code> to be implemented.
+If <code>mstateen0</code>.SRMCFG is 0, attempts to access <code>srmcfg</code> in privilege modes
+less privileged than M-mode raise an illegal-instruction exception.
+If <code>mstateen0</code>.SRMCFG is 1 or if extension Smstateen is not implemented,
+attempts to access <code>srmcfg</code> when <code>V=1</code> raise a virtual-instruction exception.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A reset value of 0 is suggested for the <code>RCID</code> field matching resource
+controllers' default behavior of associating all capacity with <code>RCID=0</code>. The
+<code>MCID</code> reset value does not affect functionality and may be
+implementation-defined.</p>
+</div>
+<div class="paragraph">
+<p>Typically, fewer bits are allocated for <code>RCID</code> (e.g., to support tens of RCIDs)
+than for <code>MCID</code> (e.g., to support hundreds of MCIDs). A common <code>RCID</code> is usually
+used to group apps or VMs, pooling resource allocations to meet collective SLAs.
+If an SLA breach occurs, unique MCIDs enable granular monitoring, aiding
+decisions on resource adjustment, associating a different <code>RCID</code> with a subset
+of members, or migrating members to other machines. The larger pool of MCIDs
+speeds up this analysis.</p>
+</div>
+<div class="paragraph">
+<p>The <code>RCID</code> and <code>MCID</code> in <code>srmcfg</code> apply across all privilege levels on the hart.
+Typically, higher-privilege modes don&#8217;t modify <code>srmcfg</code>, as they often serve
+lower-privileged tasks. If differentiation is needed, higher privilege code can
+update <code>srmcfg</code> and restore it before returning to a lower privilege level.</p>
+</div>
+<div class="paragraph">
+<p>In VM environments, hypervisors usually manage resource allocations, keeping
+the Guest OS out of QoS flows. If needed, the hypervisor can virtualize
+<code>srmcfg</code> CSR for a VM using the virtual-instruction exceptions triggered upon
+Guest access. If the direct selection of <code>RCID</code> and <code>MCID</code> by the VM becomes
+common and emulation overhead is an issue, future extensions may allow VS-mode
+to use a selector for a hypervisor-configured set of CSRs holding <code>RCID</code> and
+<code>MCID</code> values designated for that Guest OS use.</p>
+</div>
+<div class="paragraph">
+<p>During context switches, the supervisor may choose to execute with the <code>srmcfg</code>
+of the outgoing context to attribute the execution to it. Prior to restoring
+the new context, it switches to the new VM&#8217;s <code>srmcfg</code>. The supervisor can also
+use a separate configuration for execution not to be attributed to either
+contexts.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a></span>
+  <span class="next"><a href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="supervisor.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../v20240411/priv/supervisor.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="hidden">
+		<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+</footer><script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
