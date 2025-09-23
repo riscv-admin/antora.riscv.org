@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>"B" Extension for Bit Manipulation, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="zc.html">
     <link rel="next" href="v-st-ext.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -19,143 +19,73 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="b3ea053ce3f3c97a6cba8b0d56e45388b38b1920"> 
+    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
-    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://riscv-org">
-        <img id="springlogo" class="block" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
-      </a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">ISA</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivilege</a>
-            <a class="navbar-item" href="priv/priv-index.html">Privilege</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
-              Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Profiles</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Non-ISA Hardware</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
-              Interrupt Architecture</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
-              Architecture Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
-              Interrupt Controller Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
-              SOC Specification</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Software</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">Debug, Trace, RAS</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Efficient Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Capacity and Bandwidth QoS Register Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Debug</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">N-Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">RERI Architecture</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Connectors</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Control Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Unformatted Trace and Diagnostic Data Packet
-              Encapsulation</a>
-            <li class="navbar-item navbar-item-special-3">Platform Software</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Boot and Runtime Services</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Functional Fixed Hardware</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">IO Mapping Table</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Platform Management Interface Specification</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Semihosting</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Supervisor Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">UEFI Protocol</a>
-            <li class="navbar-item navbar-item-special-3">Application Enablement</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Application Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Vector C Intrinsic</a>
-          </div>
-        </div>
-      <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-            <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <label class="theme-toggler">
-      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
-      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
-          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-          <path fill="currentColor"
-            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
-          </path>
-        </svg>
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
-          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path fill="currentColor"
-            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
-          </path>
-        </svg></span>
-      <span class="text">light</span>
-    </label>
-  </nav>
-</header>
-<script>
-  !function (theme) {
-    if (theme === 'dark') {
-      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
-    }
-  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script>
-<div class="body">
+
+
+<header class="header" id="antora-header">
+    <nav class="navbar">
+        <head>
+            <link data-rh="true" rel="icon" href="/img/favicon.ico">
+            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
+            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
+
+        </head>
+        <script>
+            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
+        </script>
+            <link rel="preload" as="image" href="/img/logo.svg">
+            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
+            <div class="announcementBar_mb4j" role="banner">
+                <div class="announcementBarPlaceholder_vyr4"></div>
+                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
+            <nav aria-label="Main" class="navbar ">
+                <div class="navbar__inner">
+                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                        <a class="navbar__brand" href="/">
+                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
+                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
+                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
+                            </ul>
+                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
+                        <div class="navbar-item search hide-for-print">
+                          <div id="search-field" class="field">
+                            <input id="search-input" type="text" placeholder="Search">
+                          </div>
+                        </div>
+                    <div class="navbar__items navbar__items--right">
+
+
+                      <div class="navbarSearchContainer_Bca1">
+
+                      </div>
+                    </div>
+                </div>
+                <div role="presentation" class="navbar-sidebar__backdrop"></div>
+            </nav>
+            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
+        
+
+    </nav>
+</header><div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
     <div class="panels">
@@ -186,12 +116,6 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
-  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="colophon.html">Preface</a>
   </li>
@@ -322,7 +246,7 @@
     <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+    <a class="nav-link"  href="../priv/priv-contributors.html">Contributors</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
@@ -343,7 +267,7 @@
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -420,128 +344,12 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""B" Extension for Bit Manipulation, Version 1.0.0"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
-        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/unpriv/pages/b-st-ext.adoc">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-          ><path
-              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
-            ></path></svg>
-          Edit this Page
-        </a>
-              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="512px"
-            id="Layer_1"
-            version="1.1"
-            viewBox="0 0 512 512"
-            width="512px"
-          ><style type="text/css"><
-              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
-                class="st0"
-                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
-              ></path></g></svg>
-          GitHub Project
-        </a>
-
-        <div class="dropdown-toc">
-          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
-            <span>Download PDFs</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
-          </ul>
-        </div>
-       <script>
-  (function() {
-    const btn = document.getElementById('pdfDropdownButton');
-    const menu = document.getElementById('pdfDropdownMenu');
-
-    // Toggle dropdown on button click
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-      menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus(); // return focus to button
-      }
-    });
-
-    // Close dropdown on Escape key press
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus();
-      }
-    });
-  })();
-</script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 0px;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #cccccc;
-            outline: none;
-          }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
-      
     </div>
   </div>
 </aside>
@@ -554,18 +362,15 @@
       <li><a href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">"B" Extension for Bit Manipulation, Version 1.0.0</h1>
-<div id="preamble">
+</div><div class="sect1">
+<h2 id="bits"><a class="anchor" href="#bits"></a>"B" Extension for Bit Manipulation, Version 1.0.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The B standard extension comprises instructions provided by the Zba, Zbb, and
 Zbs extensions.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="preface"><a class="anchor" href="#preface"></a>Zb* Overview</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="preface"><a class="anchor" href="#preface"></a>Zb* Overview</h3>
 <div class="paragraph">
 <p>The bit-manipulation (bitmanip) extension collection is comprised of several component extensions to the base RISC-V architecture that are intended to provide some combination of code size reduction, performance improvement, and energy reduction.
 While the instructions are intended to have general use, some instructions are more useful in some domains than others.
@@ -580,10 +385,8 @@ Thus, when implementing extensions with overlapping instructions, there is no re
 <p>The bitmanip extensions are defined for RV32 and RV64.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="word-instructions"><a class="anchor" href="#word-instructions"></a>Word Instructions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="word-instructions"><a class="anchor" href="#word-instructions"></a>Word Instructions</h3>
 <div class="paragraph">
 <p>The bitmanip extension follows the convention in RV64 that <em>w</em>-suffixed instructions (without a dot before the <em>w</em>) ignore the upper 32 bits of their inputs, operate on the least-significant 32-bits as signed values and produce a 32-bit signed result that is sign-extended to XLEN.</p>
 </div>
@@ -594,18 +397,14 @@ Thus, when implementing extensions with overlapping instructions, there is no re
 <p>Bitmanip instructions with the suffix <em>.b</em>, <em>.h</em> and <em>.w</em> only look at the least significant 8-bits, 16-bits and 32-bits of the input (respectively) and produce an XLEN-wide result that is sign-extended or zero-extended, based on the specific instruction.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>Pseudocode for instruction semantics</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>Pseudocode for instruction semantics</h3>
 <div class="paragraph">
 <p>The semantics of each instruction in <a href="#insns-b">Instructions (in alphabetical order)</a> is expressed in a SAIL-like syntax.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="extensions"><a class="anchor" href="#extensions"></a>Extensions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="extensions"><a class="anchor" href="#extensions"></a>Extensions</h3>
 <div class="paragraph">
 <p>The first group of bitmanip extensions to be released for Public Review are:</p>
 </div>
@@ -1085,8 +884,8 @@ along with their specific mapping:</p>
 </tr>
 </tbody>
 </table>
-<div class="sect2">
-<h3 id="zba"><a class="anchor" href="#zba"></a>Zba: Address generation</h3>
+<div class="sect3">
+<h4 id="zba"><a class="anchor" href="#zba"></a>Zba: Address generation</h4>
 <div class="paragraph">
 <p>The Zba instructions can be used to accelerate the generation of addresses that index into arrays of basic types (halfword, word, doubleword) using both unsigned word-sized and XLEN-sized indices: a shifted index is added to a base address.</p>
 </div>
@@ -1166,10 +965,10 @@ along with their specific mapping:</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="zbb"><a class="anchor" href="#zbb"></a>Zbb: Basic bit-manipulation</h3>
 <div class="sect3">
-<h4 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>Logical with negate</h4>
+<h4 id="zbb"><a class="anchor" href="#zbb"></a>Zbb: Basic bit-manipulation</h4>
+<div class="sect4">
+<h5 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>Logical with negate</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1223,8 +1022,8 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>Count leading/trailing zero bits</h4>
+<div class="sect4">
+<h5 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>Count leading/trailing zero bits</h5>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1268,8 +1067,8 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="count-population"><a class="anchor" href="#count-population"></a>Count population</h4>
+<div class="sect4">
+<h5 id="count-population"><a class="anchor" href="#count-population"></a>Count population</h5>
 <div class="paragraph">
 <p>These instructions count the number of set bits (1-bits). This is also
 commonly referred to as population count.</p>
@@ -1305,8 +1104,8 @@ commonly referred to as population count.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>Integer minimum/maximum</h4>
+<div class="sect4">
+<h5 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>Integer minimum/maximum</h5>
 <div class="paragraph">
 <p>The integer minimum/maximum instructions are arithmetic R-type
 instructions that return the smaller/larger of two operands.</p>
@@ -1354,8 +1153,8 @@ instructions that return the smaller/larger of two operands.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="sign-extension-and-zero-extension"><a class="anchor" href="#sign-extension-and-zero-extension"></a>Sign extension and zero extension</h4>
+<div class="sect4">
+<h5 id="sign-extension-and-zero-extension"><a class="anchor" href="#sign-extension-and-zero-extension"></a>Sign extension and zero extension</h5>
 <div class="paragraph">
 <p>These instructions perform the sign extension or zero extension of the least significant 8 bits or 16 bits of the source register.</p>
 </div>
@@ -1399,8 +1198,8 @@ instructions that return the smaller/larger of two operands.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>Bitwise rotation</h4>
+<div class="sect4">
+<h5 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>Bitwise rotation</h5>
 <div class="paragraph">
 <p>Bitwise rotation instructions are similar to the shift-logical operations from the base spec. However, where the shift-logical
 instructions shift in zeros, the rotate instructions shift in the bits that were shifted out of the other side of the value.
@@ -1477,8 +1276,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="or-combine"><a class="anchor" href="#or-combine"></a>OR Combine</h4>
+<div class="sect4">
+<h5 id="or-combine"><a class="anchor" href="#or-combine"></a>OR Combine</h5>
 <div class="paragraph">
 <p><strong>orc.b</strong> sets the bits of each byte in the result <em>rd</em> to all zeros if no bit within the respective byte of <em>rs</em> is set, or to all ones if any bit within the respective byte of <em>rs</em> is set.</p>
 </div>
@@ -1510,8 +1309,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>Byte-reverse</h4>
+<div class="sect4">
+<h5 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>Byte-reverse</h5>
 <div class="paragraph">
 <p><strong>rev8</strong> reverses the byte-ordering of <em>rs</em>.</p>
 </div>
@@ -1541,8 +1340,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="zbc"><a class="anchor" href="#zbc"></a>Zbc: Carry-less multiplication</h3>
+<div class="sect3">
+<h4 id="zbc"><a class="anchor" href="#zbc"></a>Zbc: Carry-less multiplication</h4>
 <div class="paragraph">
 <p>Carry-less multiplication is the multiplication in the polynomial ring over GF(2).</p>
 </div>
@@ -1589,8 +1388,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="zbs"><a class="anchor" href="#zbs"></a>Zbs: Single-bit instructions</h3>
+<div class="sect3">
+<h4 id="zbs"><a class="anchor" href="#zbs"></a>Zbs: Single-bit instructions</h4>
 <div class="paragraph">
 <p>The single-bit instructions provide a mechanism to set, clear, invert, or extract
 a single bit in a register. The bit is specified by its index.</p>
@@ -1662,8 +1461,8 @@ a single bit in a register. The bit is specified by its index.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>Zbkb: Bit-manipulation for Cryptography</h3>
+<div class="sect3">
+<h4 id="zbkb"><a class="anchor" href="#zbkb"></a>Zbkb: Bit-manipulation for Cryptography</h4>
 <div class="paragraph">
 <p>This extension contains instructions essential for implementing
 common operations in cryptographic workloads.</p>
@@ -1783,8 +1582,8 @@ common operations in cryptographic workloads.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>Zbkc: Carry-less multiplication for Cryptography</h3>
+<div class="sect3">
+<h4 id="zbkc"><a class="anchor" href="#zbkc"></a>Zbkc: Carry-less multiplication for Cryptography</h4>
 <div class="paragraph">
 <p>Carry-less multiplication is the multiplication in the polynomial ring over
 GF(2). This is a critical operation in some cryptographic workloads,
@@ -1823,8 +1622,8 @@ efficiently implement the GHASH operation, which is part of this workload.</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>Zbkx: Crossbar permutations</h3>
+<div class="sect3">
+<h4 id="zbkx"><a class="anchor" href="#zbkx"></a>Zbkx: Crossbar permutations</h4>
 <div class="paragraph">
 <p>These instructions implement a "lookup table" for 4 and 8 bit elements
 inside the general purpose registers.
@@ -1872,12 +1671,10 @@ latency does not depend on the (secret) data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="insns-b"><a class="anchor" href="#insns-b"></a>Instructions (in alphabetical order)</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>add.uw</h3>
+<h3 id="insns-b"><a class="anchor" href="#insns-b"></a>Instructions (in alphabetical order)</h3>
+<div class="sect3">
+<h4 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>add.uw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1945,8 +1742,8 @@ X(rd) = base + index;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>andn</h3>
+<div class="sect3">
+<h4 id="insns-andn"><a class="anchor" href="#insns-andn"></a>andn</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2012,8 +1809,8 @@ X(rd) = base + index;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>bclr</h3>
+<div class="sect3">
+<h4 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>bclr</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2076,8 +1873,8 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>bclri</h3>
+<div class="sect3">
+<h4 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>bclri</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2151,8 +1948,8 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bext"><a class="anchor" href="#insns-bext"></a>bext</h3>
+<div class="sect3">
+<h4 id="insns-bext"><a class="anchor" href="#insns-bext"></a>bext</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2215,8 +2012,8 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>bexti</h3>
+<div class="sect3">
+<h4 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>bexti</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2290,8 +2087,8 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-binv"><a class="anchor" href="#insns-binv"></a>binv</h3>
+<div class="sect3">
+<h4 id="insns-binv"><a class="anchor" href="#insns-binv"></a>binv</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2354,8 +2151,8 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>binvi</h3>
+<div class="sect3">
+<h4 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>binvi</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2429,8 +2226,8 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bset"><a class="anchor" href="#insns-bset"></a>bset</h3>
+<div class="sect3">
+<h4 id="insns-bset"><a class="anchor" href="#insns-bset"></a>bset</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2493,8 +2290,8 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>bseti</h3>
+<div class="sect3">
+<h4 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>bseti</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2568,8 +2365,8 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>clmul</h3>
+<div class="sect3">
+<h4 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>clmul</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2645,8 +2442,8 @@ X[rd] = output</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>clmulh</h3>
+<div class="sect3">
+<h4 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>clmulh</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2722,8 +2519,8 @@ X[rd] = output</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>clmulr</h3>
+<div class="sect3">
+<h4 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>clmulr</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2813,8 +2610,8 @@ a <strong>clmul</strong>, then bit-reversing the output.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-clz"><a class="anchor" href="#insns-clz"></a>clz</h3>
+<div class="sect3">
+<h4 id="insns-clz"><a class="anchor" href="#insns-clz"></a>clz</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2884,8 +2681,8 @@ X[rd] = (xlen - 1) - HighestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>clzw</h3>
+<div class="sect3">
+<h4 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>clzw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2956,8 +2753,8 @@ X[rd] = 31 - HighestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>cpop</h3>
+<div class="sect3">
+<h4 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>cpop</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3043,8 +2840,8 @@ The GCC builtin function <code>__builtin_popcountl (unsigned long x)</code> for 
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>cpopw</h3>
+<div class="sect3">
+<h4 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>cpopw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3111,8 +2908,8 @@ X[rd] = bitcount</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>ctz</h3>
+<div class="sect3">
+<h4 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>ctz</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3183,8 +2980,8 @@ X[rd] = LowestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>ctzw</h3>
+<div class="sect3">
+<h4 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>ctzw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3254,8 +3051,8 @@ X[rd] = LowestSetBit32(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-max"><a class="anchor" href="#insns-max"></a>max</h3>
+<div class="sect3">
+<h4 id="insns-max"><a class="anchor" href="#insns-max"></a>max</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3342,8 +3139,8 @@ implementations that are so optimized can fuse them together.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>maxu</h3>
+<div class="sect3">
+<h4 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>maxu</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3411,8 +3208,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-min"><a class="anchor" href="#insns-min"></a>min</h3>
+<div class="sect3">
+<h4 id="insns-min"><a class="anchor" href="#insns-min"></a>min</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3480,8 +3277,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-minu"><a class="anchor" href="#insns-minu"></a>minu</h3>
+<div class="sect3">
+<h4 id="insns-minu"><a class="anchor" href="#insns-minu"></a>minu</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3549,8 +3346,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>orc.b</h3>
+<div class="sect3">
+<h4 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>orc.b</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3621,8 +3418,8 @@ X[rd] = output;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>orn</h3>
+<div class="sect3">
+<h4 id="insns-orn"><a class="anchor" href="#insns-orn"></a>orn</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3688,8 +3485,8 @@ X[rd] = output;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>pack</h3>
+<div class="sect3">
+<h4 id="insns-pack"><a class="anchor" href="#insns-pack"></a>pack</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3770,8 +3567,8 @@ extensions are implemented).
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>packh</h3>
+<div class="sect3">
+<h4 id="insns-packh"><a class="anchor" href="#insns-packh"></a>packh</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3836,8 +3633,8 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>packw</h3>
+<div class="sect3">
+<h4 id="insns-packw"><a class="anchor" href="#insns-packw"></a>packw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3920,8 +3717,8 @@ extensions are implemented).
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>rev8</h3>
+<div class="sect3">
+<h4 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>rev8</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4039,8 +3836,8 @@ XLEN-32 and XLEN-16, respectively.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-brev8"><a class="anchor" href="#insns-brev8"></a>brev8</h3>
+<div class="sect3">
+<h4 id="insns-brev8"><a class="anchor" href="#insns-brev8"></a>brev8</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4105,8 +3902,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>rol</h3>
+<div class="sect3">
+<h4 id="insns-rol"><a class="anchor" href="#insns-rol"></a>rol</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4177,8 +3974,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>rolw</h3>
+<div class="sect3">
+<h4 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>rolw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4248,8 +4045,8 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>ror</h3>
+<div class="sect3">
+<h4 id="insns-ror"><a class="anchor" href="#insns-ror"></a>ror</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4320,8 +4117,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>rori</h3>
+<div class="sect3">
+<h4 id="insns-rori"><a class="anchor" href="#insns-rori"></a>rori</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4403,8 +4200,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>roriw</h3>
+<div class="sect3">
+<h4 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>roriw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4476,8 +4273,8 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>rorw</h3>
+<div class="sect3">
+<h4 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>rorw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4547,8 +4344,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>sext.b</h3>
+<div class="sect3">
+<h4 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>sext.b</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4609,8 +4406,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>sext.h</h3>
+<div class="sect3">
+<h4 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>sext.h</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4671,8 +4468,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>sh1add</h3>
+<div class="sect3">
+<h4 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>sh1add</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4733,8 +4530,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>sh1add.uw</h3>
+<div class="sect3">
+<h4 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>sh1add.uw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4799,8 +4596,8 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>sh2add</h3>
+<div class="sect3">
+<h4 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>sh2add</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4861,8 +4658,8 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>sh2add.uw</h3>
+<div class="sect3">
+<h4 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>sh2add.uw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4928,8 +4725,8 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>sh3add</h3>
+<div class="sect3">
+<h4 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>sh3add</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4990,8 +4787,8 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>sh3add.uw</h3>
+<div class="sect3">
+<h4 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>sh3add.uw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5055,8 +4852,8 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>slli.uw</h3>
+<div class="sect3">
+<h4 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>slli.uw</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5132,8 +4929,8 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>unzip</h3>
+<div class="sect3">
+<h4 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>unzip</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5219,8 +5016,8 @@ directly.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>xnor</h3>
+<div class="sect3">
+<h4 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>xnor</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5286,8 +5083,8 @@ directly.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-xperm8"><a class="anchor" href="#insns-xperm8"></a>xperm8</h3>
+<div class="sect3">
+<h4 id="insns-xperm8"><a class="anchor" href="#insns-xperm8"></a>xperm8</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5364,8 +5161,8 @@ function clause execute ( XPERM8 (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-xperm4"><a class="anchor" href="#insns-xperm4"></a>xperm4</h3>
+<div class="sect3">
+<h4 id="insns-xperm4"><a class="anchor" href="#insns-xperm4"></a>xperm4</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5442,8 +5239,8 @@ function clause execute ( XPERM4 (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>zext.h</h3>
+<div class="sect3">
+<h4 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>zext.h</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5529,8 +5326,8 @@ function clause execute ( XPERM4 (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect2">
-<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>zip</h3>
+<div class="sect3">
+<h4 id="insns-zip"><a class="anchor" href="#insns-zip"></a>zip</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5616,12 +5413,10 @@ directly.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>Software optimization guide</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="strlen"><a class="anchor" href="#strlen"></a>strlen</h3>
+<h3 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>Software optimization guide</h3>
+<div class="sect3">
+<h4 id="strlen"><a class="anchor" href="#strlen"></a>strlen</h4>
 <div class="paragraph">
 <p>The <strong>orc.b</strong> instruction allows for the efficient detection of <strong>NUL</strong> bytes in an XLEN-sized chunk of data:</p>
 </div>
@@ -5709,8 +5504,8 @@ strlen:
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="strcmp"><a class="anchor" href="#strcmp"></a>strcmp</h3>
+<div class="sect3">
+<h4 id="strcmp"><a class="anchor" href="#strcmp"></a>strcmp</h4>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">#include &lt;sys/asm.h&gt;
@@ -5774,6 +5569,7 @@ strcmp:
 </div>
 </div>
 </div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a></span>
   <span class="next"><a href="v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a></span>
@@ -5814,16 +5610,11 @@ strcmp:
 </div>
 
 </div>
-<footer class="footer flex">
-    <div id="RISC-V footer">
-        <img id="RISC-V" src="../../_/img/risc-v_logo.svg" alt="RISC-V">
-        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
-        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
-    
-    </div>
-
-</footer>
-<script src="../../_/js/vendor/import.js"></script>
+<footer class="hidden">
+		<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer><script src="../../_/js/vendor/import.js"></script>
 <script src="../../_/js/site.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>

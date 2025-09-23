@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>"F" Extension for Single-Precision Floating-Point, Version 2.2 :: RISC-V Ratified Specifications Library</title>
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="cmo.html">
     <link rel="next" href="d-st-ext.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -19,143 +19,73 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="b3ea053ce3f3c97a6cba8b0d56e45388b38b1920"> 
+    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
-    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://riscv-org">
-        <img id="springlogo" class="block" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
-      </a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">ISA</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivilege</a>
-            <a class="navbar-item" href="priv/priv-index.html">Privilege</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
-              Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Profiles</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Non-ISA Hardware</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
-              Interrupt Architecture</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
-              Architecture Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
-              Interrupt Controller Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
-              SOC Specification</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Software</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">Debug, Trace, RAS</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Efficient Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Capacity and Bandwidth QoS Register Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Debug</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">N-Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">RERI Architecture</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Connectors</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Control Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Unformatted Trace and Diagnostic Data Packet
-              Encapsulation</a>
-            <li class="navbar-item navbar-item-special-3">Platform Software</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Boot and Runtime Services</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Functional Fixed Hardware</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">IO Mapping Table</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Platform Management Interface Specification</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Semihosting</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Supervisor Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">UEFI Protocol</a>
-            <li class="navbar-item navbar-item-special-3">Application Enablement</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Application Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Vector C Intrinsic</a>
-          </div>
-        </div>
-      <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-            <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <label class="theme-toggler">
-      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
-      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
-          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-          <path fill="currentColor"
-            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
-          </path>
-        </svg>
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
-          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path fill="currentColor"
-            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
-          </path>
-        </svg></span>
-      <span class="text">light</span>
-    </label>
-  </nav>
-</header>
-<script>
-  !function (theme) {
-    if (theme === 'dark') {
-      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
-    }
-  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script>
-<div class="body">
+
+
+<header class="header" id="antora-header">
+    <nav class="navbar">
+        <head>
+            <link data-rh="true" rel="icon" href="/img/favicon.ico">
+            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
+            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
+
+        </head>
+        <script>
+            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
+        </script>
+            <link rel="preload" as="image" href="/img/logo.svg">
+            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
+            <div class="announcementBar_mb4j" role="banner">
+                <div class="announcementBarPlaceholder_vyr4"></div>
+                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
+            <nav aria-label="Main" class="navbar ">
+                <div class="navbar__inner">
+                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                        <a class="navbar__brand" href="/">
+                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
+                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
+                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
+                            </ul>
+                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
+                        <div class="navbar-item search hide-for-print">
+                          <div id="search-field" class="field">
+                            <input id="search-input" type="text" placeholder="Search">
+                          </div>
+                        </div>
+                    <div class="navbar__items navbar__items--right">
+
+
+                      <div class="navbarSearchContainer_Bca1">
+
+                      </div>
+                    </div>
+                </div>
+                <div role="presentation" class="navbar-sidebar__backdrop"></div>
+            </nav>
+            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
+        
+
+    </nav>
+</header><div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
     <div class="panels">
@@ -186,12 +116,6 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
-  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="colophon.html">Preface</a>
   </li>
@@ -322,7 +246,7 @@
     <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+    <a class="nav-link"  href="../priv/priv-contributors.html">Contributors</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
@@ -343,7 +267,7 @@
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -420,128 +344,12 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""F" Extension for Single-Precision Floating-Point, Version 2.2"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
-        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/unpriv/pages/f-st-ext.adoc">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-          ><path
-              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
-            ></path></svg>
-          Edit this Page
-        </a>
-              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="512px"
-            id="Layer_1"
-            version="1.1"
-            viewBox="0 0 512 512"
-            width="512px"
-          ><style type="text/css"><
-              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
-                class="st0"
-                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
-              ></path></g></svg>
-          GitHub Project
-        </a>
-
-        <div class="dropdown-toc">
-          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
-            <span>Download PDFs</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
-          </ul>
-        </div>
-       <script>
-  (function() {
-    const btn = document.getElementById('pdfDropdownButton');
-    const menu = document.getElementById('pdfDropdownMenu');
-
-    // Toggle dropdown on button click
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-      menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus(); // return focus to button
-      }
-    });
-
-    // Close dropdown on Escape key press
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus();
-      }
-    });
-  })();
-</script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 0px;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #cccccc;
-            outline: none;
-          }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
-      
     </div>
   </div>
 </aside>
@@ -554,8 +362,8 @@
       <li><a href="f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">"F" Extension for Single-Precision Floating-Point, Version 2.2</h1>
-<div id="preamble">
+</div><div class="sect1">
+<h2 id="single-float"><a class="anchor" href="#single-float"></a>"F" Extension for Single-Precision Floating-Point, Version 2.2</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the standard instruction-set extension for
@@ -563,11 +371,8 @@ single-precision floating-point, which is named "F" and adds
 single-precision floating-point computational instructions compliant
 with the IEEE 754-2008 arithmetic standard cite:[ieee754-2008]. The F extension depends on the "Zicsr" extension for control and status register access.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="f-register-state"><a class="anchor" href="#f-register-state"></a>F Register State</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="f-register-state"><a class="anchor" href="#f-register-state"></a>F Register State</h3>
 <div class="paragraph">
 <p>The F extension adds 32 floating-point registers, <code>f0-f31</code>, each 32
 bits wide, and a floating-point control and status register <code>fcsr</code>,
@@ -731,10 +536,8 @@ floating-point register file state can reduce context-switch overhead.</p>
 </tbody>
 </table>
 </div>
-</div>
-<div class="sect1">
-<h2 id="floating-point-control-and-status-register"><a class="anchor" href="#floating-point-control-and-status-register"></a>Floating-Point Control and Status Register</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="floating-point-control-and-status-register"><a class="anchor" href="#floating-point-control-and-status-register"></a>Floating-Point Control and Status Register</h3>
 <div class="paragraph">
 <p>The floating-point control and status register, <code>fcsr</code>, is a RISC-V
 control and status register (CSR). It is a 32-bit read/write register
@@ -928,10 +731,8 @@ ultimately chose to omit these instructions to keep the ISA simple.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="nan-generation-and-propagation"><a class="anchor" href="#nan-generation-and-propagation"></a>NaN Generation and Propagation</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="nan-generation-and-propagation"><a class="anchor" href="#nan-generation-and-propagation"></a>NaN Generation and Propagation</h3>
 <div class="paragraph">
 <p>Except when otherwise stated, if the result of a floating-point
 operation is NaN, it is the canonical NaN. The canonical NaN has a
@@ -984,10 +785,8 @@ provide exceptional default values.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="subnormal-arithmetic"><a class="anchor" href="#subnormal-arithmetic"></a>Subnormal Arithmetic</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="subnormal-arithmetic"><a class="anchor" href="#subnormal-arithmetic"></a>Subnormal Arithmetic</h3>
 <div class="paragraph">
 <p>Operations on subnormal numbers are handled in accordance with the IEEE 754-2008 standard.
 </p>
@@ -1013,10 +812,8 @@ signals.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="single-precision-load-and-store-instructions"><a class="anchor" href="#single-precision-load-and-store-instructions"></a>Single-Precision Load and Store Instructions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-precision-load-and-store-instructions"><a class="anchor" href="#single-precision-load-and-store-instructions"></a>Single-Precision Load and Store Instructions</h3>
 <div class="paragraph">
 <p>Floating-point loads and stores use the same base+offset addressing mode as the integer base ISAs, with a base address in register <em>rs1</em> and a 12-bit signed byte offset. The FLW instruction loads a single-precision floating-point value from memory into floating-point register <em>rd</em>. FSW stores a single-precision value from floating-point register <em>rs2</em> to memory.</p>
 </div>
@@ -1038,13 +835,11 @@ address is naturally aligned.</p>
 <p>FLW and FSW do not modify the bits being transferred; in particular, the payloads of non-canonical NaNs are preserved.</p>
 </div>
 <div class="paragraph">
-<p>As described in <a href="rv32.html#ldst" class="xref page">SP load and store</a>, the execution environment defines whether misaligned floating-point loads and stores are handled invisibly or raise a contained or fatal trap.</p>
+<p>As described in <a href="#ldst">[ldst]</a>, the execution environment defines whether misaligned floating-point loads and stores are handled invisibly or raise a contained or fatal trap.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="single-float-compute"><a class="anchor" href="#single-float-compute"></a>Single-Precision Floating-Point Computational Instructions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-float-compute"><a class="anchor" href="#single-float-compute"></a>Single-Precision Floating-Point Computational Instructions</h3>
 <div class="paragraph">
 <p>Floating-point arithmetic instructions with one or two source operands
 use the R-type format with the OP-FP major opcode. FADD.S and FMUL.S
@@ -1139,17 +934,17 @@ instruction format. R4-type instructions specify three source registers (<em>rs1
 </div>
 <div class="paragraph">
 <p>FMADD.S multiplies the values in <em>rs1</em> and <em>rs2</em>, adds the value in
-<em>rs3</em>, and writes the final result to <em>rd</em>. FMADD.S computes (<em>rs1</em><span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span><em>rs2</em>) + <em>rs3</em>.</p>
+<em>rs3</em>, and writes the final result to <em>rd</em>. FMADD.S computes (<em>rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2</em>)(<em><span class="steminline"> <svg style="vertical-align: -0.452ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="39.367ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 17400 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="merror" data-mjx-error="Undefined control sequence \+"><rect data-background="true" width="17400" height="950" y="-200"></rect><g data-mml-node="mtext" style="font-family: serif;"><text data-variant="-explicitFont" transform="scale(1,-1)" font-size="884px">Undefined control sequence \+</text></g></g></g></g></svg> </span>rs3</em>).</p>
 </div>
 <div class="paragraph">
 <p>FMSUB.S multiplies the values in <em>rs1</em> and <em>rs2</em>, subtracts the value in <em>rs3</em>, and writes the final result to <em>rd</em>. FMSUB.S computes
-<em>(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2) - rs3</em>.</p>
+<em>(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2)<span class="steminline"> <svg style="vertical-align: -0.452ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="39.367ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 17400 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="merror" data-mjx-error="Undefined control sequence \-"><rect data-background="true" width="17400" height="950" y="-200"></rect><g data-mml-node="mtext" style="font-family: serif;"><text data-variant="-explicitFont" transform="scale(1,-1)" font-size="884px">Undefined control sequence \-</text></g></g></g></g></svg> </span>rs3</em>.</p>
 </div>
 <div class="paragraph">
-<p>FNMSUB.S multiplies the values in <em>rs1</em> and <em>rs2</em>, negates the product, adds the value in <em>rs3</em>, and writes the final result to <em>rd</em>. FNMSUB.S computes <em>(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2)+ rs3</em>.</p>
+<p>FNMSUB.S multiplies the values in <em>rs1</em> and <em>rs2</em>, negates the product, adds the value in <em>rs3</em>, and writes the final result to <em>rd</em>. FNMSUB.S computes <em>-(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2)<span class="steminline"> <svg style="vertical-align: -0.452ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="39.367ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 17400 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="merror" data-mjx-error="Undefined control sequence \+"><rect data-background="true" width="17400" height="950" y="-200"></rect><g data-mml-node="mtext" style="font-family: serif;"><text data-variant="-explicitFont" transform="scale(1,-1)" font-size="884px">Undefined control sequence \+</text></g></g></g></g></svg> </span>rs3</em>.</p>
 </div>
 <div class="paragraph">
-<p>FNMADD.S multiplies the values in <em>rs1</em> and <em>rs2</em>, negates the product, subtracts the value in <em>rs3</em>, and writes the final result to <em>rd</em>. FNMADD.S computes <em>-(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2) - rs3</em>.</p>
+<p>FNMADD.S multiplies the values in <em>rs1</em> and <em>rs2</em>, negates the product, subtracts the value in <em>rs3</em>, and writes the final result to <em>rd</em>. FNMADD.S computes <em>-(rs1<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>rs2)<span class="steminline"> <svg style="vertical-align: -0.452ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="39.367ex" height="2.149ex" role="img" focusable="false" viewBox="0 -750 17400 950"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="merror" data-mjx-error="Undefined control sequence \-"><rect data-background="true" width="17400" height="950" y="-200"></rect><g data-mml-node="mtext" style="font-family: serif;"><text data-variant="-explicitFont" transform="scale(1,-1)" font-size="884px">Undefined control sequence \-</text></g></g></g></g></svg> </span>rs3</em>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1218,10 +1013,8 @@ invalid exception for the operation <span class="steminline"> <svg style="vertic
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="single-precision-floating-point-conversion-and-move-instructions"><a class="anchor" href="#single-precision-floating-point-conversion-and-move-instructions"></a>Single-Precision Floating-Point Conversion and Move Instructions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-precision-floating-point-conversion-and-move-instructions"><a class="anchor" href="#single-precision-floating-point-conversion-and-move-instructions"></a>Single-Precision Floating-Point Conversion and Move Instructions</h3>
 <div class="paragraph">
 <p>Floating-point-to-integer and integer-to-floating-point conversion
 instructions are encoded in the OP-FP major opcode space. FCVT.W.S or
@@ -1398,10 +1191,8 @@ representing integer values in the floating-point registers by defining conversi
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="single-precision-floating-point-compare-instructions"><a class="anchor" href="#single-precision-floating-point-compare-instructions"></a>Single-Precision Floating-Point Compare Instructions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-precision-floating-point-compare-instructions"><a class="anchor" href="#single-precision-floating-point-compare-instructions"></a>Single-Precision Floating-Point Compare Instructions</h3>
 <div class="paragraph">
 <p>Floating-point compare instructions (FEQ.S, FLT.S, FLE.S) perform the
 specified comparison between floating-point registers
@@ -1438,10 +1229,8 @@ but it is nevertheless an unfortunate incongruity in the ISA.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="single-precision-floating-point-classify-instruction"><a class="anchor" href="#single-precision-floating-point-classify-instruction"></a>Single-Precision Floating-Point Classify Instruction</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="single-precision-floating-point-classify-instruction"><a class="anchor" href="#single-precision-floating-point-classify-instruction"></a>Single-Precision Floating-Point Classify Instruction</h3>
 <div class="paragraph">
 <p>The FCLASS.S instruction examines the value in floating-point register
 <em>rs1</em> and writes to integer register <em>rd</em> a 10-bit mask that indicates
@@ -1514,6 +1303,7 @@ FCLASS.S does not set the floating-point exception flags.
 </table>
 </div>
 </div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a></span>
   <span class="next"><a href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a></span>
@@ -1554,16 +1344,11 @@ FCLASS.S does not set the floating-point exception flags.
 </div>
 
 </div>
-<footer class="footer flex">
-    <div id="RISC-V footer">
-        <img id="RISC-V" src="../../_/img/risc-v_logo.svg" alt="RISC-V">
-        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
-        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
-    
-    </div>
-
-</footer>
-<script src="../../_/js/vendor/import.js"></script>
+<footer class="hidden">
+		<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer><script src="../../_/js/vendor/import.js"></script>
 <script src="../../_/js/site.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>

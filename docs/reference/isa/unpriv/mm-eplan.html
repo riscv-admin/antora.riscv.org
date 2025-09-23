@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>RVWMO Explanatory Material, Version 0.1 :: RISC-V Ratified Specifications Library</title>
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="naming.html">
     <link rel="next" href="mm-formal.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -19,143 +19,73 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="b3ea053ce3f3c97a6cba8b0d56e45388b38b1920"> 
+    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
-    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://riscv-org">
-        <img id="springlogo" class="block" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
-      </a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">ISA</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivilege</a>
-            <a class="navbar-item" href="priv/priv-index.html">Privilege</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
-              Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Profiles</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Non-ISA Hardware</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
-              Interrupt Architecture</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
-              Architecture Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
-              Interrupt Controller Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
-              SOC Specification</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Software</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">Debug, Trace, RAS</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Efficient Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Capacity and Bandwidth QoS Register Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Debug</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">N-Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">RERI Architecture</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Connectors</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Control Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Unformatted Trace and Diagnostic Data Packet
-              Encapsulation</a>
-            <li class="navbar-item navbar-item-special-3">Platform Software</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Boot and Runtime Services</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Functional Fixed Hardware</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">IO Mapping Table</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Platform Management Interface Specification</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Semihosting</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Supervisor Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">UEFI Protocol</a>
-            <li class="navbar-item navbar-item-special-3">Application Enablement</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Application Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Vector C Intrinsic</a>
-          </div>
-        </div>
-      <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-            <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <label class="theme-toggler">
-      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
-      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
-          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-          <path fill="currentColor"
-            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
-          </path>
-        </svg>
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
-          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path fill="currentColor"
-            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
-          </path>
-        </svg></span>
-      <span class="text">light</span>
-    </label>
-  </nav>
-</header>
-<script>
-  !function (theme) {
-    if (theme === 'dark') {
-      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
-    }
-  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script>
-<div class="body">
+
+
+<header class="header" id="antora-header">
+    <nav class="navbar">
+        <head>
+            <link data-rh="true" rel="icon" href="/img/favicon.ico">
+            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
+            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
+
+        </head>
+        <script>
+            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
+        </script>
+            <link rel="preload" as="image" href="/img/logo.svg">
+            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
+            <div class="announcementBar_mb4j" role="banner">
+                <div class="announcementBarPlaceholder_vyr4"></div>
+                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
+            <nav aria-label="Main" class="navbar ">
+                <div class="navbar__inner">
+                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                        <a class="navbar__brand" href="/">
+                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
+                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
+                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
+                            </ul>
+                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
+                        <div class="navbar-item search hide-for-print">
+                          <div id="search-field" class="field">
+                            <input id="search-input" type="text" placeholder="Search">
+                          </div>
+                        </div>
+                    <div class="navbar__items navbar__items--right">
+
+
+                      <div class="navbarSearchContainer_Bca1">
+
+                      </div>
+                    </div>
+                </div>
+                <div role="presentation" class="navbar-sidebar__backdrop"></div>
+            </nav>
+            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
+        
+
+    </nav>
+</header><div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
     <div class="panels">
@@ -186,12 +116,6 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
-  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="colophon.html">Preface</a>
   </li>
@@ -322,7 +246,7 @@
     <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+    <a class="nav-link"  href="../priv/priv-contributors.html">Contributors</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
@@ -343,7 +267,7 @@
     <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -420,128 +344,12 @@
   <div class="content">
     <div
       class="toc"
-      data-title="RVWMO Explanatory Material, Version 0.1"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
-        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/unpriv/pages/mm-eplan.adoc">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-          ><path
-              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
-            ></path></svg>
-          Edit this Page
-        </a>
-              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="512px"
-            id="Layer_1"
-            version="1.1"
-            viewBox="0 0 512 512"
-            width="512px"
-          ><style type="text/css"><
-              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
-                class="st0"
-                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
-              ></path></g></svg>
-          GitHub Project
-        </a>
-
-        <div class="dropdown-toc">
-          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
-            <span>Download PDFs</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
-          </ul>
-        </div>
-       <script>
-  (function() {
-    const btn = document.getElementById('pdfDropdownButton');
-    const menu = document.getElementById('pdfDropdownMenu');
-
-    // Toggle dropdown on button click
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-      menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus(); // return focus to button
-      }
-    });
-
-    // Close dropdown on Escape key press
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus();
-      }
-    });
-  })();
-</script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 0px;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #cccccc;
-            outline: none;
-          }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
-      
     </div>
   </div>
 </aside>
@@ -554,10 +362,10 @@
       <li><a href="mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">RVWMO Explanatory Material, Version 0.1</h1>
-<div id="preamble">
+</div><div class="sect1">
+<h2 id="rvwmo-explanatory-material-version-0-1"><a class="anchor" href="#rvwmo-explanatory-material-version-0-1"></a>Appendix A: RVWMO Explanatory Material, Version 0.1</h2>
 <div class="sectionbody">
-<div class="paragraph">
+<div id="mm-explain" class="paragraph">
 <p>This section provides more explanation for RVWMO
 <a href="rvwmo.html" class="xref page">"RVWMO Memory Consistency Model</a>, using more informal
 language and concrete examples. These are intended to clarify the
@@ -565,14 +373,11 @@ meaning and intent of the axioms and preserved program order rules. This
 appendix should be treated as commentary; all normative material is
 provided in <a href="rvwmo.html" class="xref page">"RVWMO Memory Consistency Model</a> and in the rest of
 the main body of the ISA specification. All currently known
-discrepancies are listed in <a href="mm-formal.html#discrepanciesl" class="xref page">Known Issues</a>. Any
+discrepancies are listed in <a href="#discrepancies">Known Issues</a>. Any
 other discrepancies are unintentional.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="whyrvwmo"><a class="anchor" href="#whyrvwmo"></a>Why RVWMO?</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="whyrvwmo"><a class="anchor" href="#whyrvwmo"></a>Why RVWMO?</h3>
 <div class="paragraph">
 <p>Memory consistency models fall along a loose spectrum from weak to
 strong. Weak memory models allow more hardware implementation
@@ -616,10 +421,8 @@ that implementation. However, these fences must remain present in the
 code if compatibility with non-Ztso implementations is desired.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="litmustests"><a class="anchor" href="#litmustests"></a>Litmus Tests</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="litmustests"><a class="anchor" href="#litmustests"></a>Litmus Tests</h3>
 <div class="paragraph">
 <p>The explanations in this chapter make use of <em>litmus tests</em>, or small
 programs designed to test or highlight one particular aspect of a memory
@@ -809,7 +612,7 @@ These diagrams use a notation that is common in the memory model
 literature for constraining the set of possible global memory orders
 that could produce the execution in question. It is also the basis for
 the <em>herd</em> models presented in
-<a href="mm-formal.html#sec:herd" class="xref page">Formal Axiomatic Specification in Herd</a>. This notation is explained in
+<a href="#sec:herd">[sec:herd]</a>. This notation is explained in
 <a href="#litmus-key">A key for the litmus test diagrams drawn in this appendix</a>. Of the listed relations, rf edges between
 harts, co edges, fr edges, and ppo edges directly constrain the global
 memory order (as do fence, addr, data, and some ctrl edges, via ppo).
@@ -867,16 +670,14 @@ use as part of the RISC-V compliance test suite as well.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="explaining-the-rvwmo-rules"><a class="anchor" href="#explaining-the-rvwmo-rules"></a>Explaining the RVWMO Rules</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="explaining-the-rvwmo-rules"><a class="anchor" href="#explaining-the-rvwmo-rules"></a>Explaining the RVWMO Rules</h3>
 <div class="paragraph">
 <p>In this section, we provide explanation and examples for all of the
 RVWMO rules and axioms.</p>
 </div>
-<div class="sect2">
-<h3 id="preserved-program-order-and-global-memory-order"><a class="anchor" href="#preserved-program-order-and-global-memory-order"></a>Preserved Program Order and Global Memory Order</h3>
+<div class="sect3">
+<h4 id="preserved-program-order-and-global-memory-order"><a class="anchor" href="#preserved-program-order-and-global-memory-order"></a>Preserved Program Order and Global Memory Order</h4>
 <div class="paragraph">
 <p>Preserved program order represents the subset of program order that must
 be respected within the global memory order. Conceptually, events from
@@ -917,8 +718,8 @@ the most recent store to the same address in the global memory order, as
 described below.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="loadvalueaxiom"><a class="anchor" href="#loadvalueaxiom"></a>Load value axiom</h3>
+<div class="sect3">
+<h4 id="loadvalueaxiom"><a class="anchor" href="#loadvalueaxiom"></a>Load value axiom</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -927,7 +728,7 @@ described below.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a href="rvwmo.html#ax-load" class="xref page">Load Value Axiom</a>: Each byte of each load <em>i</em> returns the value written
+<p><a href="#ax-load">[ax-load]</a>: Each byte of each load <em>i</em> returns the value written
 to that byte by the store that is the latest in global memory order among
 the following stores:</p>
 </div>
@@ -1250,8 +1051,8 @@ correct</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="atomicityaxiom"><a class="anchor" href="#atomicityaxiom"></a>Atomicity axiom</h3>
+<div class="sect3">
+<h4 id="atomicityaxiom"><a class="anchor" href="#atomicityaxiom"></a>Atomicity axiom</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1354,8 +1155,8 @@ are expected to be rare compared to scenarios where the intervening
 store may simply fall onto the same cache line.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mm-progress"><a class="anchor" href="#mm-progress"></a>Progress axiom</h3>
+<div class="sect3">
+<h4 id="mm-progress"><a class="anchor" href="#mm-progress"></a>Progress axiom</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1394,8 +1195,8 @@ the eventual visibility of all stores (or successors thereof) to all
 harts.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mm-overlap"><a class="anchor" href="#mm-overlap"></a>Overlapping-Address Orderings (<a href="#overlapping-ordering">Rules 1-3</a>)</h3>
+<div class="sect3">
+<h4 id="mm-overlap"><a class="anchor" href="#mm-overlap"></a>Overlapping-Address Orderings (<a href="#overlapping-ordering">Rules 1-3</a>)</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1718,8 +1519,8 @@ misaligned memory accesses are being used, the overlapping-address PPO
 rules apply to each of the component memory accesses independently.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mm-fence"><a class="anchor" href="#mm-fence"></a>Fences (<a href="#overlapping-ordering">Rule 4</a>)</h3>
+<div class="sect3">
+<h4 id="mm-fence"><a class="anchor" href="#mm-fence"></a>Fences (<a href="#overlapping-ordering">Rule 4</a>)</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1790,8 +1591,8 @@ manner. Fences in RISC-V are not cumulative, as they are in some
 non-multi-copy-atomic memory models.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="sec:memory:acqrel"><a class="anchor" href="#sec:memory:acqrel"></a>Explicit Synchronization (<a href="#overlapping-ordering">Rules 5-8</a>)</h3>
+<div class="sect3">
+<h4 id="sec:memory:acqrel"><a class="anchor" href="#sec:memory:acqrel"></a>Explicit Synchronization (<a href="#overlapping-ordering">Rules 5-8</a>)</h4>
 <div class="admonitionblock important">
 <table>
 <tr>
@@ -1922,8 +1723,8 @@ does not syntactically depend on the value returned by the paired LR.</p>
 not cumulative.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="sec:memory:dependencies"><a class="anchor" href="#sec:memory:dependencies"></a>Syntactic Dependencies (<a href="#overlapping-ordering">Rules 9-11</a>)</h3>
+<div class="sect3">
+<h4 id="sec:memory:dependencies"><a class="anchor" href="#sec:memory:dependencies"></a>Syntactic Dependencies (<a href="#overlapping-ordering">Rules 9-11</a>)</h4>
 <div id="ppo-addr" class="admonitionblock important">
 <table>
 <tr>
@@ -2173,8 +1974,8 @@ both <code>F</code> instructions to a later CSR instruction accessing the CSR
 flag in question.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="memory-ppopipeline"><a class="anchor" href="#memory-ppopipeline"></a>Pipeline Dependencies (<a href="#overlapping-ordering">Rules 12-13</a>)</h3>
+<div class="sect3">
+<h4 id="memory-ppopipeline"><a class="anchor" href="#memory-ppopipeline"></a>Pipeline Dependencies (<a href="#overlapping-ordering">Rules 12-13</a>)</h4>
 <div id="addrdatarfi" class="admonitionblock important">
 <table>
 <tr>
@@ -2458,21 +2259,19 @@ addresses do indeed overlap.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="beyond-main-memory"><a class="anchor" href="#beyond-main-memory"></a>Beyond Main Memory</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="beyond-main-memory"><a class="anchor" href="#beyond-main-memory"></a>Beyond Main Memory</h3>
 <div class="paragraph">
 <p>RVWMO does not currently attempt to formally describe how FENCE.I,
 SFENCE.VMA, I/O fences, and PMAs behave. All of these behaviors will be
 described by future formalizations. In the meantime, the behavior of
-FENCE.I is described in <a href="zifencei.html" class="xref page">"Zifencei" Extension for Instruction-Fetch Fence</a>, the
+FENCE.I is described in <a href="zifencei.html" class="xref page">zifencei.adoc</a>, the
 behavior of SFENCE.VMA is described in the RISC-V Instruction Set
 Privileged Architecture Manual, and the behavior of I/O fences and the
 effects of PMAs are described below.</p>
 </div>
-<div class="sect2">
-<h3 id="coherence-and-cacheability"><a class="anchor" href="#coherence-and-cacheability"></a>Coherence and Cacheability</h3>
+<div class="sect3">
+<h4 id="coherence-and-cacheability"><a class="anchor" href="#coherence-and-cacheability"></a>Coherence and Cacheability</h4>
 <div class="paragraph">
 <p>The RISC-V Privileged ISA defines Physical Memory Attributes (PMAs)
 which specify, among other things, whether portions of the address space
@@ -2518,8 +2317,8 @@ legal. This distinction does not affect the memory model.</p>
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="io-ordering"><a class="anchor" href="#io-ordering"></a>I/O Ordering</h3>
+<div class="sect3">
+<h4 id="io-ordering"><a class="anchor" href="#io-ordering"></a>I/O Ordering</h4>
 <div class="paragraph">
 <p>For I/O, the load value axiom and atomicity axiom in general do not
 apply, as both reads and writes might have device-specific side effects
@@ -2630,10 +2429,8 @@ those external devices and buses.</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="memory_porting"><a class="anchor" href="#memory_porting"></a>Code Porting and Mapping Guidelines</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="memory_porting"><a class="anchor" href="#memory_porting"></a>Code Porting and Mapping Guidelines</h3>
 <table id="tsomappings" class="tableblock frame-all grid-all fit-content center">
 <caption class="title">Table 12. Mappings from TSO operations to RISC-V operations</caption>
 <colgroup>
@@ -3305,10 +3102,8 @@ all memory:</p>
 require platform-specific SW (e.g., memory-mapped I/O).</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="implementation-guidelines"><a class="anchor" href="#implementation-guidelines"></a>Implementation Guidelines</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="implementation-guidelines"><a class="anchor" href="#implementation-guidelines"></a>Implementation Guidelines</h3>
 <div class="paragraph">
 <p>The RVWMO and RVTSO memory models by no means preclude
 microarchitectures from employing sophisticated speculation techniques
@@ -3588,8 +3383,8 @@ model rules, and hence it is forbidden. Write subsumption may in other
 cases be legal, if for example there were no data dependency between (d)
 and (e).</p>
 </div>
-<div class="sect2">
-<h3 id="possible-future-extensions"><a class="anchor" href="#possible-future-extensions"></a>Possible Future Extensions</h3>
+<div class="sect3">
+<h4 id="possible-future-extensions"><a class="anchor" href="#possible-future-extensions"></a>Possible Future Extensions</h4>
 <div class="paragraph">
 <p>We expect that any or all of the following possible future extensions
 would be compatible with the RVWMO memory model:</p>
@@ -3615,12 +3410,10 @@ would be compatible with the RVWMO memory model:</p>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="discrepancies"><a class="anchor" href="#discrepancies"></a>Known Issues</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="mixedrsw"><a class="anchor" href="#mixedrsw"></a>Mixed-size RSW</h3>
+<h3 id="discrepancies"><a class="anchor" href="#discrepancies"></a>Known Issues</h3>
+<div class="sect3">
+<h4 id="mixedrsw"><a class="anchor" href="#mixedrsw"></a>Mixed-size RSW</h4>
 <table id="rsw1" class="tableblock frame-all grid-all fit-content center">
 <caption class="title">Table 19. Mixed-size discrepancy (permitted by axiomatic models, forbidden by operational model)</caption>
 <colgroup>
@@ -3826,6 +3619,7 @@ of this rule to RVWMO.</p>
 </div>
 </div>
 </div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="naming.html">ISA Extension Naming Conventions</a></span>
   <span class="next"><a href="mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a></span>
@@ -3866,16 +3660,11 @@ of this rule to RVWMO.</p>
 </div>
 
 </div>
-<footer class="footer flex">
-    <div id="RISC-V footer">
-        <img id="RISC-V" src="../../_/img/risc-v_logo.svg" alt="RISC-V">
-        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
-        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
-    
-    </div>
-
-</footer>
-<script src="../../_/js/vendor/import.js"></script>
+<footer class="hidden">
+		<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer><script src="../../_/js/vendor/import.js"></script>
 <script src="../../_/js/site.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>

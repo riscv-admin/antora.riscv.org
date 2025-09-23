@@ -1,0 +1,1639 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="colophon.html">
+    <link rel="next" href="rv32.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="e743aae4b2d14a92e2c9e271f074d0f3cf0a7ea4"> 
+    <meta name="version" content="v20240411">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="false">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv-org">
+        <img id="springlogo" class="block" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivileged</a>
+            <a class="navbar-item" href="priv/priv-index.html">Privileged</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
+              Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
+              Interrupt Architecture</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
+              Architecture Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
+              Interrupt Controller Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
+              SOC Specification</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#Efficient-Trace-for-RISC-V">Efficient Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Capacity-and-Bandwidth-QoS-Register-Interface">QoS Register Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#The-RISC-V-Debug-Specification">Debug</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-N-Trace-(Nexus-based-Trace)">N-Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-RERI-Architecture-Specification">RERI Architecture</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Trace-Connectors">Trace Connectors</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Trace-Control-Interface">Trace Control Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#Unformatted-Trace-%26-Diagnostic-Data-Packet-Encapsulation-for-RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation</a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Boot-and-Runtime-Services-Specification-(BRS)">Boot and Runtime Services</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Functional-Fixed-Hardware-Specification">Functional Fixed Hardware</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IO-Mapping-Table-Specification">IO Mapping Table</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Management-Interface-Specification-(RPMI)">Platform Management Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Semihosting">Semihosting</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Supervisor-Binary-Interface-Specification">Supervisor Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-UEFI-Protocol-Specification">UEFI Protocol</a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-ABIs-Specification">Application Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Vector-C-Intrinsic-Specification">Vector C Intrinsic</a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20240411">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20240411</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Preface</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-history.html">History</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/edit/v20240411/modules/unpriv/pages/intro.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume I: RISC-V Unprivileged ISA Specification</li>
+      <li><a href="intro.html">Introduction</a></li>
+    </ul>
+  </nav>
+</div><div class="admonitionblock important latest">
+  <table>
+    <tbody><tr>
+      <td class="icon">
+        <i class="fa icon-important" title="Important"></i>
+      </td>
+      <td class="content">
+        <div class="paragraph">
+          <p> For the latest stable version, please use <a href="../../v20250508/unpriv/intro.html">ISA Specifications v20250508</a>!</p>
+        </div>
+      </td>
+    </tr></tbody>
+  </table>
+</div>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RISC-V (pronounced "risk-five") is a new instruction-set architecture
+(ISA) that was originally designed to support computer architecture
+research and education, but which we now hope will also become a
+standard free and open architecture for industry implementations. Our
+goals in defining RISC-V include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A completely <em>open</em> ISA that is freely available to academia and
+industry.</p>
+</li>
+<li>
+<p>A <em>real</em> ISA suitable for direct native hardware implementation, not
+just simulation or binary translation.</p>
+</li>
+<li>
+<p>An ISA that avoids "over-architecting" for a particular
+microarchitecture style (e.g., microcoded, in-order, decoupled,
+out-of-order) or implementation technology (e.g., full-custom, ASIC,
+FPGA), but which allows efficient implementation in any of these.</p>
+</li>
+<li>
+<p>An ISA separated into a <em>small</em> base integer ISA, usable by itself as
+a base for customized accelerators or for educational purposes, and
+optional standard extensions, to support general-purpose software
+development.</p>
+</li>
+<li>
+<p>Support for the revised 2008 IEEE-754 floating-point standard. cite:[ieee754-2008]</p>
+</li>
+<li>
+<p>An ISA supporting extensive ISA extensions and specialized variants.</p>
+</li>
+<li>
+<p>Both 32-bit and 64-bit address space variants for applications,
+operating system kernels, and hardware implementations.</p>
+</li>
+<li>
+<p>An ISA with support for highly parallel multicore or manycore
+implementations, including heterogeneous multiprocessors.</p>
+</li>
+<li>
+<p>Optional <em>variable-length instructions</em> to both expand available
+instruction encoding space and to support an optional <em>dense instruction
+encoding</em> for improved performance, static code size, and energy
+efficiency.</p>
+</li>
+<li>
+<p>A fully virtualizable ISA to ease hypervisor development.</p>
+</li>
+<li>
+<p>An ISA that simplifies experiments with new privileged architecture
+designs.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Commentary on our design decisions is formatted as in this paragraph.
+This non-normative text can be skipped if the reader is only interested
+in the specification itself.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The name RISC-V was chosen to represent the fifth major RISC ISA design
+from UC Berkeley (RISC-I cite:[riscI-isca1981], RISC-II cite:[Katevenis:1983], SOAR cite:[Ungar:1984], and SPUR cite:[spur-jsscc1989] were the first
+four). We also pun on the use of the Roman numeral "V" to signify
+"variations" and "vectors", as support for a range of architecture
+research, including various data-parallel accelerators, is an explicit
+goal of the ISA design.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+The RISC-V ISA is defined avoiding implementation details as much as
+possible (although commentary is included on implementation-driven
+decisions) and should be read as the software-visible interface to a
+wide variety of implementations rather than as the design of a
+particular hardware artifact. The RISC-V manual is structured in two
+volumes. This volume covers the design of the base <em>unprivileged</em>
+instructions, including optional unprivileged ISA extensions.
+Unprivileged instructions are those that are generally usable in all
+privilege modes in all privileged architectures, though behavior might
+vary depending on privilege mode and privilege architecture. The second
+volume provides the design of the first ("classic") privileged
+architecture. The manuals use IEC 80000-13:2008 conventions, with a byte
+of 8 bits.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the unprivileged ISA design, we tried to remove any dependence on
+particular microarchitectural features, such as cache line size, or on
+privileged architecture details, such as page translation. This is both
+for simplicity and to allow maximum flexibility for alternative
+microarchitectures or alternative privileged architectures.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="risc-v-hardware-platform-terminology"><a class="anchor" href="#risc-v-hardware-platform-terminology"></a>RISC-V Hardware Platform Terminology</h3>
+<div class="paragraph">
+<p>A RISC-V hardware platform can contain one or more RISC-V-compatible
+processing cores together with other non-RISC-V-compatible cores,
+fixed-function accelerators, various physical memory structures, I/O
+devices, and an interconnect structure to allow the components to
+communicate.
+</p>
+</div>
+<div class="paragraph">
+<p>A component is termed a <em>core</em> if it contains an independent instruction
+fetch unit. A RISC-V-compatible core might support multiple
+RISC-V-compatible hardware threads, or <em>harts</em>, through multithreading.
+</p>
+</div>
+<div class="paragraph">
+<p>A RISC-V core might have additional specialized instruction-set
+extensions or an added <em>coprocessor</em>. We use the term <em>coprocessor</em> to
+refer to a unit that is attached to a RISC-V core and is mostly
+sequenced by a RISC-V instruction stream, but which contains additional
+architectural state and instruction-set extensions, and possibly some
+limited autonomy relative to the primary RISC-V instruction stream.</p>
+</div>
+<div class="paragraph">
+<p>We use the term <em>accelerator</em> to refer to either a non-programmable
+fixed-function unit or a core that can operate autonomously but is
+specialized for certain tasks. In RISC-V systems, we expect many
+programmable accelerators will be RISC-V-based cores with specialized
+instruction-set extensions and/or customized coprocessors. An important
+class of RISC-V accelerators are I/O accelerators, which offload I/O
+processing tasks from the main application cores.
+</p>
+</div>
+<div class="paragraph">
+<p>The system-level organization of a RISC-V hardware platform can range
+from a single-core microcontroller to a many-thousand-node cluster of
+shared-memory manycore server nodes. Even small systems-on-a-chip might
+be structured as a hierarchy of multicomputers and/or multiprocessors to
+modularize development effort or to provide secure isolation between
+subsystems.
+</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="risc-v-software-execution-environments-and-harts"><a class="anchor" href="#risc-v-software-execution-environments-and-harts"></a>RISC-V Software Execution Environments and Harts</h3>
+<div class="paragraph">
+<p>The behavior of a RISC-V program depends on the execution environment in
+which it runs. A RISC-V execution environment interface (EEI) defines
+the initial state of the program, the number and type of harts in the
+environment including the privilege modes supported by the harts, the
+accessibility and attributes of memory and I/O regions, the behavior of
+all legal instructions executed on each hart (i.e., the ISA is one
+component of the EEI), and the handling of any interrupts or exceptions
+raised during execution including environment calls. Examples of EEIs
+include the Linux application binary interface (ABI), or the RISC-V
+supervisor binary interface (SBI). The implementation of a RISC-V
+execution environment can be pure hardware, pure software, or a
+combination of hardware and software. For example, opcode traps and
+software emulation can be used to implement functionality not provided
+in hardware. Examples of execution environment implementations include:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>"Bare metal" hardware platforms where harts are directly implemented
+by physical processor threads and instructions have full access to the
+physical address space. The hardware platform defines an execution
+environment that begins at power-on reset.</p>
+</li>
+<li>
+<p>RISC-V operating systems that provide multiple user-level execution
+environments by multiplexing user-level harts onto available physical
+processor threads and by controlling access to memory via virtual
+memory.</p>
+</li>
+<li>
+<p>RISC-V hypervisors that provide multiple supervisor-level execution
+environments for guest operating systems.</p>
+</li>
+<li>
+<p>RISC-V emulators, such as Spike, QEMU or rv8, which emulate RISC-V
+harts on an underlying x86 system, and which can provide either a
+user-level or a supervisor-level execution environment.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A bare hardware platform can be considered to define an EEI, where the
+accessible harts, memory, and other devices populate the environment,
+and the initial state is that at power-on reset. Generally, most
+software is designed to use a more abstract interface to the hardware,
+as more abstract EEIs provide greater portability across different
+hardware platforms. Often EEIs are layered on top of one another, where
+one higher-level EEI uses another lower-level EEI.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+From the perspective of software running in a given execution
+environment, a hart is a resource that autonomously fetches and executes
+RISC-V instructions within that execution environment. In this respect,
+a hart behaves like a hardware thread resource even if time-multiplexed
+onto real hardware by the execution environment. Some EEIs support the
+creation and destruction of additional harts, for example, via
+environment calls to fork new harts.</p>
+</div>
+<div class="paragraph">
+<p>The execution environment is responsible for ensuring the eventual
+forward progress of each of its harts. For a given hart, that
+responsibility is suspended while the hart is exercising a mechanism
+that explicitly waits for an event, such as the wait-for-interrupt
+instruction defined in Volume II of this specification; and that
+responsibility ends if the hart is terminated. The following events
+constitute forward progress:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The retirement of an instruction.</p>
+</li>
+<li>
+<p>A trap, as defined in <a href="#trap-defn">Section 1.6</a>.</p>
+</li>
+<li>
+<p>Any other event defined by an extension to constitute forward
+progress.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The term hart was introduced in the work on Lithe cite:[lithe-pan-hotpar09] and cite:[lithe-pan-pldi10] to provide a term to
+represent an abstract execution resource as opposed to a software thread
+programming abstraction.</p>
+</div>
+<div class="paragraph">
+<p>The important distinction between a hardware thread (hart) and a
+software thread context is that the software running inside an execution
+environment is not responsible for causing progress of each of its
+harts; that is the responsibility of the outer execution environment. So
+the environment&#8217;s harts operate like hardware threads from the
+perspective of the software inside the execution environment.</p>
+</div>
+<div class="paragraph">
+<p>An execution environment implementation might time-multiplex a set of
+guest harts onto fewer host harts provided by its own execution
+environment but must do so in a way that guest harts operate like
+independent hardware threads. In particular, if there are more guest
+harts than host harts then the execution environment must be able to
+preempt the guest harts and must not wait indefinitely for guest
+software on a guest hart to "yield" control of the guest hart.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="risc-v-isa-overview"><a class="anchor" href="#risc-v-isa-overview"></a>RISC-V ISA Overview</h3>
+<div class="paragraph">
+<p>A RISC-V ISA is defined as a base integer ISA, which must be present in
+any implementation, plus optional extensions to the base ISA. The base
+integer ISAs are very similar to that of the early RISC processors
+except with no branch delay slots and with support for optional
+variable-length instruction encodings. A base is carefully restricted to
+a minimal set of instructions sufficient to provide a reasonable target
+for compilers, assemblers, linkers, and operating systems (with
+additional privileged operations), and so provides a convenient ISA and
+software toolchain "skeleton" around which more customized processor
+ISAs can be built.</p>
+</div>
+<div class="paragraph">
+<p>Although it is convenient to speak of <em>the</em> RISC-V ISA, RISC-V is
+actually a family of related ISAs, of which there are currently four
+base ISAs. Each base integer instruction set is characterized by the
+width of the integer registers and the corresponding size of the address
+space and by the number of integer registers. There are two primary base
+integer variants, RV32I and RV64I, described in
+<a href="#rv32">[rv32]</a> and <a href="#rv64">[rv64]</a>, which provide 32-bit
+or 64-bit address spaces respectively. We use the term XLEN to refer to
+the width of an integer register in bits (either 32 or 64).
+<a href="#rv32e">Chapter 6</a> describes the RV32E and RV64E subset variants of the
+RV32I or RV64I base instruction sets respectively, which have been added to support small
+microcontrollers, and which have half the number of integer registers.
+<a href="#rv128">Chapter 8</a> sketches a future RV128I variant of the
+base integer instruction set supporting a flat 128-bit address space
+(XLEN=128). The base integer instruction sets use a two&#8217;s-complement
+representation for signed integer values.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Although 64-bit address spaces are a requirement for larger systems, we
+believe 32-bit address spaces will remain adequate for many embedded and
+client devices for decades to come and will be desirable to lower memory
+traffic and energy consumption. In addition, 32-bit address spaces are
+sufficient for educational purposes. A larger flat 128-bit address space
+might eventually be required, so we ensured this could be accommodated
+within the RISC-V ISA framework.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The four base ISAs in RISC-V are treated as distinct base ISAs. A common
+question is why is there not a single ISA, and in particular, why is
+RV32I not a strict subset of RV64I? Some earlier ISA designs (SPARC,
+MIPS) adopted a strict superset policy when increasing address space
+size to support running existing 32-bit binaries on new 64-bit hardware.</p>
+</div>
+<div class="paragraph">
+<p>The main advantage of explicitly separating base ISAs is that each base
+ISA can be optimized for its needs without requiring to support all the
+operations needed for other base ISAs. For example, RV64I can omit
+instructions and CSRs that are only needed to cope with the narrower
+registers in RV32I. The RV32I variants can use encoding space otherwise
+reserved for instructions only required by wider address-space variants.</p>
+</div>
+<div class="paragraph">
+<p>The main disadvantage of not treating the design as a single ISA is that
+it complicates the hardware needed to emulate one base ISA on another
+(e.g., RV32I on RV64I). However, differences in addressing and
+illegal-instruction traps generally mean some mode switch would be required in
+hardware in any case even with full superset instruction encodings, and
+the different RISC-V base ISAs are similar enough that supporting
+multiple versions is relatively low cost. Although some have proposed
+that the strict superset design would allow legacy 32-bit libraries to
+be linked with 64-bit code, this is impractical in practice, even with
+compatible encodings, due to the differences in software calling
+conventions and system-call interfaces.</p>
+</div>
+<div class="paragraph">
+<p>The RISC-V privileged architecture provides fields in <code>misa</code> to control
+the unprivileged ISA at each level to support emulating different base
+ISAs on the same hardware. We note that newer SPARC and MIPS ISA
+revisions have deprecated support for running 32-bit code unchanged on
+64-bit systems.</p>
+</div>
+<div class="paragraph">
+<p>A related question is why there is a different encoding for 32-bit adds
+in RV32I (ADD) and RV64I (ADDW)? The ADDW opcode could be used for
+32-bit adds in RV32I and ADDD for 64-bit adds in RV64I, instead of the
+existing design which uses the same opcode ADD for 32-bit adds in RV32I
+and 64-bit adds in RV64I with a different opcode ADDW for 32-bit adds in
+RV64I. This would also be more consistent with the use of the same LW
+opcode for 32-bit load in both RV32I and RV64I. The very first versions
+of RISC-V ISA did have a variant of this alternate design, but the
+RISC-V design was changed to the current choice in January 2011. Our
+focus was on supporting 32-bit integers in the 64-bit ISA not on
+providing compatibility with the 32-bit ISA, and the motivation was to
+remove the asymmetry that arose from having not all opcodes in RV32I
+have a *W suffix (e.g., ADDW, but AND not ANDW). In hindsight, this was
+perhaps not well-justified and a consequence of designing both ISAs at
+the same time as opposed to adding one later to sit on top of another,
+and also from a belief we had to fold platform requirements into the ISA
+spec which would imply that all the RV32I instructions would have been
+required in RV64I. It is too late to change the encoding now, but this
+is also of little practical consequence for the reasons stated above.</p>
+</div>
+<div class="paragraph">
+<p>It has been noted we could enable the *W variants as an extension to
+RV32I systems to provide a common encoding across RV64I and a future
+RV32 variant.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>RISC-V has been designed to support extensive customization and
+specialization. Each base integer ISA can be extended with one or more
+optional instruction-set extensions. An extension may be categorized as
+either standard, custom, or non-conforming. For this purpose, we divide
+each RISC-V instruction-set encoding space (and related encoding spaces
+such as the CSRs) into three disjoint categories: <em>standard</em>,
+<em>reserved</em>, and <em>custom</em>. Standard extensions and encodings are defined
+by RISC-V International; any extensions not defined by RISC-V International are
+<em>non-standard</em>. Each base ISA and its standard extensions use only
+standard encodings, and shall not conflict with each other in their uses
+of these encodings. Reserved encodings are currently not defined but are
+saved for future standard extensions; once thus used, they become
+standard encodings. Custom encodings shall never be used for standard
+extensions and are made available for vendor-specific non-standard
+extensions. Non-standard extensions are either custom extensions, that
+use only custom encodings, or <em>non-conforming</em> extensions, that use any
+standard or reserved encoding. Instruction-set extensions are generally
+shared but may provide slightly different functionality depending on the
+base ISA. <a href="#extending">[extending]</a> describes various ways
+of extending the RISC-V ISA. We have also developed a naming convention
+for RISC-V base instructions and instruction-set extensions, described
+in detail in <a href="#naming">[naming]</a>.</p>
+</div>
+<div class="paragraph">
+<p>To support more general software development, a set of standard
+extensions are defined to provide integer multiply/divide, atomic
+operations, and single and double-precision floating-point arithmetic.
+The base integer ISA is named "I" (prefixed by RV32 or RV64 depending
+on integer register width), and contains integer computational
+instructions, integer loads, integer stores, and control-flow
+instructions. The standard integer multiplication and division extension
+is named "M", and adds instructions to multiply and divide values held
+in the integer registers. The standard atomic instruction extension,
+denoted by "A", adds instructions that atomically read, modify, and
+write memory for inter-processor synchronization. The standard
+single-precision floating-point extension, denoted by "F", adds
+floating-point registers, single-precision computational instructions,
+and single-precision loads and stores. The standard double-precision
+floating-point extension, denoted by "D", expands the floating-point
+registers, and adds double-precision computational instructions, loads,
+and stores. The standard "C" compressed instruction extension provides
+narrower 16-bit forms of common instructions.</p>
+</div>
+<div class="paragraph">
+<p>Beyond the base integer ISA and these standard extensions, we believe
+it is rare that a new instruction will provide a significant benefit for
+all applications, although it may be very beneficial for a certain
+domain. As energy efficiency concerns are forcing greater
+specialization, we believe it is important to simplify the required
+portion of an ISA specification. Whereas other architectures usually
+treat their ISA as a single entity, which changes to a new version as
+instructions are added over time, RISC-V will endeavor to keep the base
+and each standard extension constant over time, and instead layer new
+instructions as further optional extensions. For example, the base
+integer ISAs will continue as fully supported standalone ISAs,
+regardless of any subsequent extensions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="memory"><a class="anchor" href="#memory"></a>Memory</h3>
+<div class="paragraph">
+<p>A RISC-V hart has a single byte-addressable address space of
+<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="8.07ex" height="2.041ex" role="img" focusable="false" viewBox="0 -846 3567.1 902"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="msup" transform="translate(500,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3067.1,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> bytes for all memory accesses. A <em>word</em> of
+memory is defined as 32&#160;bits (4&#160;bytes). Correspondingly, a <em>halfword</em> is 16&#160;bits (2&#160;bytes), a
+<em>doubleword</em> is 64&#160;bits (8&#160;bytes), and a <em>quadword</em> is 128&#160;bits (16&#160;bytes). The memory address space is
+circular, so that the byte at address <span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="11.967ex" height="2.099ex" role="img" focusable="false" viewBox="0 -846 5289.6 928"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="msup" transform="translate(500,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(3289.4,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(4289.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4789.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> is
+adjacent to the byte at address zero. Accordingly, memory address
+computations done by the hardware ignore overflow and instead wrap
+around modulo <span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="8.07ex" height="2.041ex" role="img" focusable="false" viewBox="0 -846 3567.1 902"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="msup" transform="translate(500,0)"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mtext"><path data-c="58" d="M270 0Q252 3 141 3Q46 3 31 0H23V46H40Q129 50 161 88Q165 94 244 216T324 339Q324 341 235 480T143 622Q133 631 119 634T57 637H37V683H46Q64 680 172 680Q297 680 318 683H329V637H324Q307 637 286 632T263 621Q263 618 322 525T384 431Q385 431 437 511T489 593Q490 595 490 599Q490 611 477 622T436 637H428V683H437Q455 680 566 680Q661 680 676 683H684V637H667Q585 634 551 599Q548 596 478 491Q412 388 412 387Q412 385 514 225T620 62Q628 53 642 50T695 46H726V0H717Q699 3 591 3Q466 3 445 0H434V46H440Q454 46 476 51T499 64Q499 67 463 124T390 238L353 295L350 292Q348 290 343 283T331 265T312 236T286 195Q219 88 218 84Q218 70 234 59T272 46H280V0H270Z"></path><path data-c="4C" d="M128 622Q121 629 117 631T101 634T58 637H25V683H36Q48 680 182 680Q324 680 348 683H360V637H333Q273 637 258 635T233 622L232 342V129Q232 57 237 52Q243 47 313 47Q384 47 410 53Q470 70 498 110T536 221Q536 226 537 238T540 261T542 272T562 273H582V268Q580 265 568 137T554 5V0H25V46H58Q100 47 109 49T128 61V622Z" transform="translate(750,0)"></path><path data-c="45" d="M128 619Q121 626 117 628T101 631T58 634H25V680H597V676Q599 670 611 560T625 444V440H585V444Q584 447 582 465Q578 500 570 526T553 571T528 601T498 619T457 629T411 633T353 634Q266 634 251 633T233 622Q233 622 233 621Q232 619 232 497V376H286Q359 378 377 385Q413 401 416 469Q416 471 416 473V493H456V213H416V233Q415 268 408 288T383 317T349 328T297 330Q290 330 286 330H232V196V114Q232 57 237 52Q243 47 289 47H340H391Q428 47 452 50T505 62T552 92T584 146Q594 172 599 200T607 247T612 270V273H652V270Q651 267 632 137T610 3V0H25V46H58Q100 47 109 49T128 61V619Z" transform="translate(1375,0)"></path><path data-c="4E" d="M42 46Q74 48 94 56T118 69T128 86V634H124Q114 637 52 637H25V683H232L235 680Q237 679 322 554T493 303L578 178V598Q572 608 568 613T544 627T492 637H475V683H483Q498 680 600 680Q706 680 715 683H724V637H707Q634 633 622 598L621 302V6L614 0H600Q585 0 582 3T481 150T282 443T171 605V345L172 86Q183 50 257 46H274V0H265Q250 3 150 3Q48 3 33 0H25V46H42Z" transform="translate(2056,0)"></path></g></g></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(3067.1,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>.</p>
+</div>
+<div class="paragraph">
+<p>The execution environment determines the mapping of hardware resources
+into a hart&#8217;s address space. Different address ranges of a hart&#8217;s
+address space may (1) be vacant, or (2) contain <em>main memory</em>, or
+(3) contain one or more <em>I/O devices</em>. Reads and writes of I/O devices
+may have visible side effects, but accesses to main memory cannot.
+Although it is possible for the execution environment to call everything
+in a hart&#8217;s address space an I/O device, it is usually expected that
+some portion will be specified as main memory.</p>
+</div>
+<div class="paragraph">
+<p>When a RISC-V platform has multiple harts, the address spaces of any two
+harts may be entirely the same, or entirely different, or may be partly
+different but sharing some subset of resources, mapped into the same or
+different address ranges.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For a purely "bare metal" environment, all harts may see an identical
+address space, accessed entirely by physical addresses. However, when
+the execution environment includes an operating system employing address
+translation, it is common for each hart to be given a virtual address
+space that is largely or entirely its own.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+Executing each RISC-V machine instruction entails one or more memory
+accesses, subdivided into <em>implicit</em> and <em>explicit</em> accesses. For each
+instruction executed, an <em>implicit</em> memory read (instruction fetch) is
+done to obtain the encoded instruction to execute. Many RISC-V
+instructions perform no further memory accesses beyond instruction
+fetch. Specific load and store instructions perform an <em>explicit</em> read
+or write of memory at an address determined by the instruction. The
+execution environment may dictate that instruction execution performs
+other <em>implicit</em> memory accesses (such as to implement address
+translation) beyond those documented for the unprivileged ISA.</p>
+</div>
+<div class="paragraph">
+<p>The execution environment determines what portions of the non-vacant
+address space are accessible for each kind of memory access. For
+example, the set of locations that can be implicitly read for
+instruction fetch may or may not have any overlap with the set of
+locations that can be explicitly read by a load instruction; and the set
+of locations that can be explicitly written by a store instruction may
+be only a subset of locations that can be read. Ordinarily, if an
+instruction attempts to access memory at an inaccessible address, an
+exception is raised for the instruction. Vacant locations in the address
+space are never accessible.</p>
+</div>
+<div class="paragraph">
+<p>Except when specified otherwise, implicit reads that do not raise an
+exception and that have no side effects may occur arbitrarily early and
+speculatively, even before the machine could possibly prove that the
+read will be needed. For instance, a valid implementation could attempt
+to read all of main memory at the earliest opportunity, cache as many
+fetchable (executable) bytes as possible for later instruction fetches,
+and avoid reading main memory for instruction fetches ever again. To
+ensure that certain implicit reads are ordered only after writes to the
+same memory locations, software must execute specific fence or
+cache-control instructions defined for this purpose (such as the FENCE.I
+instruction defined in <a href="#zifencei">[zifencei]</a>).
+</p>
+</div>
+<div class="paragraph">
+<p>The memory accesses (implicit or explicit) made by a hart may appear to
+occur in a different order as perceived by another hart or by any other
+agent that can access the same memory. This perceived reordering of
+memory accesses is always constrained, however, by the applicable memory
+consistency model. The default memory consistency model for RISC-V is
+the RISC-V Weak Memory Ordering (RVWMO), defined in
+<a href="#memorymodel">[memorymodel]</a> and in appendices. Optionally,
+an implementation may adopt the stronger model of Total Store Ordering,
+as defined in <a href="#ztso">[ztso]</a>. The execution environment
+may also add constraints that further limit the perceived reordering of
+memory accesses. Since the RVWMO model is the weakest model allowed for
+any RISC-V implementation, software written for this model is compatible
+with the actual memory consistency rules of all RISC-V implementations.
+As with implicit reads, software must execute fence or cache-control
+instructions to ensure specific ordering of memory accesses beyond the
+requirements of the assumed memory consistency model and execution
+environment.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="base-instruction-length-encoding"><a class="anchor" href="#base-instruction-length-encoding"></a>Base Instruction-Length Encoding</h3>
+<div class="paragraph">
+<p>The base RISC-V ISA has fixed-length 32-bit instructions that must be
+naturally aligned on 32-bit boundaries. However, the standard RISC-V
+encoding scheme is designed to support ISA extensions with
+variable-length instructions, where each instruction can be any number
+of 16-bit instruction <em>parcels</em> in length and parcels are naturally
+aligned on 16-bit boundaries. The standard compressed ISA extension
+described in <a href="#compressed">[compressed]</a> reduces code size by
+providing compressed 16-bit instructions and relaxes the alignment
+constraints to allow all instructions (16 bit and 32 bit) to be aligned
+on any 16-bit boundary to improve code density.</p>
+</div>
+<div class="paragraph">
+<p>We use the term IALIGN (measured in bits) to refer to the
+instruction-address alignment constraint the implementation enforces.
+IALIGN is 32 bits in the base ISA, but some ISA extensions, including
+the compressed ISA extension, relax IALIGN to 16 bits. IALIGN may not
+take on any value other than 16 or 32.
+</p>
+</div>
+<div class="paragraph">
+<p>We use the term ILEN (measured in bits) to refer to the maximum
+instruction length supported by an implementation, and which is always a
+multiple of IALIGN. For implementations supporting only a base
+instruction set, ILEN is 32 bits. Implementations supporting longer
+instructions have larger values of ILEN.</p>
+</div>
+<div class="paragraph">
+<p><a href="#instlengthcode">Table 1</a> illustrates the standard
+RISC-V instruction-length encoding convention. All the 32-bit
+instructions in the base ISA have their lowest two bits set to "11". The
+optional compressed 16-bit instruction-set extensions have their lowest
+two bits equal to <code>00</code>, <code>01</code>, or <code>10</code>.</p>
+</div>
+<div class="sect3">
+<h4 id="expanded-instruction-length-encoding"><a class="anchor" href="#expanded-instruction-length-encoding"></a>Expanded Instruction-Length Encoding</h4>
+<div class="paragraph">
+<p>A portion of the 32-bit instruction-encoding space has been tentatively
+allocated for instructions longer than 32 bits. The entirety of this
+space is reserved at this time, and the following proposal for encoding
+instructions longer than 32 bits is not considered frozen.
+</p>
+</div>
+<div class="paragraph">
+<p>Standard instruction-set extensions encoded with more than 32 bits have
+additional low-order bits set to <code>1</code>, with the conventions for 48-bit
+and 64-bit lengths shown in
+<a href="#instlengthcode">Table 1</a>. Instruction lengths
+between 80 bits and 176 bits are encoded using a 3-bit field in bits
+[14:12] giving the number of 16-bit words in addition to the first
+5<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.028ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2222.4 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1722.4,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>16-bit words. The encoding with bits [14:12] set to
+"111" is reserved for future longer instruction encodings.</p>
+</div>
+<table id="instlengthcode" class="tableblock frame-all grid-all fit-content">
+<caption class="title">Table 1. RISC-V instruction length encoding. Only the 16-bit and 32-bit encodings are considered frozen at this time.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-center valign-top">xxxxxxxxxxxxxxaa</th>
+<th class="tableblock halign-left valign-top">16-bit (aa&#8800;11)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxxxxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxbbb11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32-bit (bbb&#8800;111)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.16ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2722.9 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1222.4,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1722.7,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2222.9,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>xxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxxxxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxx011111</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">48-bit</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.16ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2722.9 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1222.4,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1722.7,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2222.9,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>xxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxxxxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxx0111111</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64-bit</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.16ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2722.9 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1222.4,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1722.7,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2222.9,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>xxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxxxxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xnnnxxxxx1111111</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(80+16*nnn)-bit, nnn&#8800;111</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.16ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2722.9 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1222.4,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="mo" transform="translate(1722.7,0)"><path data-c="22C5" d="M78 250Q78 274 95 292T138 310Q162 310 180 294T199 251Q199 226 182 208T139 190T96 207T78 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2222.9,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>xxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">xxxxxxxxxxxxxxxx</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">x111xxxxx1111111</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for &#8805;192-bits</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Byte Address:</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">base+4</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">base+2</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">base</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Given the code size and energy savings of a compressed format, we wanted
+to build in support for a compressed format to the ISA encoding scheme
+rather than adding this as an afterthought, but to allow simpler
+implementations we didn&#8217;t want to make the compressed format mandatory.
+We also wanted to optionally allow longer instructions to support
+experimentation and larger instruction-set extensions. Although our
+encoding convention required a tighter encoding of the core RISC-V ISA,
+this has several beneficial effects.
+</p>
+</div>
+<div class="paragraph">
+<p>An implementation of the standard IMAFD ISA need only hold the
+most-significant 30 bits in instruction caches (a 6.25% saving). On
+instruction cache refills, any instructions encountered with either low
+bit clear should be recoded into illegal 30-bit instructions before
+storing in the cache to preserve illegal-instruction exception behavior.</p>
+</div>
+<div class="paragraph">
+<p>Perhaps more importantly, by condensing our base ISA into a subset of
+the 32-bit instruction word, we leave more space available for
+non-standard and custom extensions. In particular, the base RV32I ISA
+uses less than 1/8 of the encoding space in the 32-bit instruction word.
+As described <a href="#extending">[extending]</a>, an implementation that does not require support
+for the standard compressed instruction extension can map 3 additional non-conforming
+30-bit instruction spaces into the 32-bit fixed-width format, while preserving
+support for standard &#8805;32-bit instruction-set
+extensions. Further, if the implementation also does not need
+instructions &gt;32-bits in length, it can recover a further
+four major opcodes for non-conforming extensions.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Encodings with bits [15:0] all zeros are defined as illegal
+instructions. These instructions are considered to be of minimal length:
+16 bits if any 16-bit instruction-set extension is present, otherwise 32
+bits. The encoding with bits [ILEN-1:0] all ones is also illegal; this
+instruction is considered to be ILEN bits long.</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We consider it a feature that any length of instruction containing all
+zero bits is not legal, as this quickly traps erroneous jumps into
+zeroed memory regions. Similarly, we also reserve the instruction
+encoding containing all ones to be an illegal instruction, to catch the
+other common pattern observed with unprogrammed non-volatile memory
+devices, disconnected memory buses, or broken memory devices.</p>
+</div>
+<div class="paragraph">
+<p>Software can rely on a naturally aligned 32-bit word containing zero to
+act as an illegal instruction on all RISC-V implementations, to be used
+by software where an illegal instruction is explicitly desired. Defining
+a corresponding known illegal value for all ones is more difficult due
+to the variable-length encoding. Software cannot generally use the
+illegal value of ILEN bits of all 1s, as software might not know ILEN
+for the eventual target machine (e.g., if software is compiled into a
+standard binary library used by many different machines). Defining a
+32-bit word of all ones as illegal was also considered, as all machines
+must support a 32-bit instruction size, but this requires the
+instruction-fetch unit on machines with ILEN &gt;32 report an
+illegal-instruction exception rather than an access-fault exception when
+such an instruction borders a protection boundary, complicating
+variable-instruction-length fetch and decode.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>
+RISC-V base ISAs have either little-endian or big-endian memory systems,
+with the privileged architecture further defining bi-endian operation.
+Instructions are stored in memory as a sequence of 16-bit little-endian
+parcels, regardless of memory system endianness. Parcels forming one
+instruction are stored at increasing halfword addresses, with the
+lowest-addressed parcel holding the lowest-numbered bits in the
+instruction specification.
+
+</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We originally chose little-endian byte ordering for the RISC-V memory
+system because little-endian systems are currently dominant commercially
+(all x86 systems; iOS, Android, and Windows for ARM). A minor point is
+that we have also found little-endian memory systems to be more natural
+for hardware designers. However, certain application areas, such as IP
+networking, operate on big-endian data structures, and certain legacy
+code bases have been built assuming big-endian processors, so we have
+defined big-endian and bi-endian variants of RISC-V.</p>
+</div>
+<div class="paragraph">
+<p>We have to fix the order in which instruction parcels are stored in
+memory, independent of memory system endianness, to ensure that the
+length-encoding bits always appear first in halfword address order. This
+allows the length of a variable-length instruction to be quickly
+determined by an instruction-fetch unit by examining only the first few
+bits of the first 16-bit instruction parcel.</p>
+</div>
+<div class="paragraph">
+<p>We further make the instruction parcels themselves little-endian to
+decouple the instruction encoding from the memory system endianness
+altogether. This design benefits both software tooling and bi-endian
+hardware. Otherwise, for instance, a RISC-V assembler or disassembler
+would always need to know the intended active endianness, despite that
+in bi-endian systems, the endianness mode might change dynamically
+during execution. In contrast, by giving instructions a fixed
+endianness, it is sometimes possible for carefully written software to
+be endianness-agnostic even in binary form, much like
+position-independent code.</p>
+</div>
+<div class="paragraph">
+<p>The choice to have instructions be only little-endian does have
+consequences, however, for RISC-V software that encodes or decodes
+machine instructions. Big-endian JIT compilers, for example, must swap
+the byte order when storing to instruction memory.</p>
+</div>
+<div class="paragraph">
+<p>Once we had decided to fix on a little-endian instruction encoding, this
+naturally led to placing the length-encoding bits in the LSB positions
+of the instruction format to avoid breaking up opcode fields.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="trap-defn"><a class="anchor" href="#trap-defn"></a>Exceptions, Traps, and Interrupts</h3>
+<div class="paragraph">
+<p>We use the term <em>exception</em> to refer to an unusual condition occurring
+at run time associated with an instruction in the current RISC-V hart.
+We use the term <em>interrupt</em> to refer to an external asynchronous event
+that may cause a RISC-V hart to experience an unexpected transfer of
+control. We use the term <em>trap</em> to refer to the transfer of control to a
+trap handler caused by either an exception or an interrupt.
+
+
+</p>
+</div>
+<div class="paragraph">
+<p>The instruction descriptions in following chapters describe conditions
+that can raise an exception during execution. The general behavior of
+most RISC-V EEIs is that a trap to some handler occurs when an exception
+is signaled on an instruction (except for floating-point exceptions,
+which, in the standard floating-point extensions, do not cause traps).
+The manner in which interrupts are generated, routed to, and enabled by
+a hart depends on the EEI.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Our use of "exception" and "trap" is compatible with that in the
+IEEE-754 floating-point standard.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>How traps are handled and made visible to software running on the hart
+depends on the enclosing execution environment. From the perspective of
+software running inside an execution environment, traps encountered by a
+hart at runtime can have four different effects:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Contained Trap</dt>
+<dd>
+<p>The trap is visible to, and handled by, software running inside the
+execution environment. For example, in an EEI providing both
+supervisor and user mode on harts, an ECALL by a user-mode hart will
+generally result in a transfer of control to a supervisor-mode handler
+running on the same hart. Similarly, in the same environment, when a
+hart is interrupted, an interrupt handler will be run in supervisor
+mode on the hart.</p>
+</dd>
+<dt class="hdlist1">Requested Trap</dt>
+<dd>
+<p>The trap is a synchronous exception that is an explicit call to the
+execution environment requesting an action on behalf of software
+inside the execution environment. An example is a system call. In this
+case, execution may or may not resume on the hart after the requested
+action is taken by the execution environment. For example, a system
+call could remove the hart or cause an orderly termination of the
+entire execution environment.</p>
+</dd>
+<dt class="hdlist1">Invisible Trap</dt>
+<dd>
+<p>The trap is handled transparently by the execution environment and
+execution resumes normally after the trap is handled. Examples include
+emulating missing instructions, handling non-resident page faults in a
+demand-paged virtual-memory system, or handling device interrupts for
+a different job in a multiprogrammed machine. In these cases, the
+software running inside the execution environment is not aware of the
+trap (we ignore timing effects in these definitions).</p>
+</dd>
+<dt class="hdlist1">Fatal Trap</dt>
+<dd>
+<p>The trap represents a fatal failure and causes the execution
+environment to terminate execution. Examples include failing a
+virtual-memory page-protection check or allowing a watchdog timer to
+expire. Each EEI should define how execution is terminated and
+reported to an external environment.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><a href="#trapcharacteristics">Table 2</a> shows the characteristics of each
+kind of trap.</p>
+</div>
+<table id="trapcharacteristics" class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-center valign-top">Contained</th>
+<th class="tableblock halign-center valign-top">Requested</th>
+<th class="tableblock halign-center valign-top">Invisible</th>
+<th class="tableblock halign-center valign-top">Fatal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Execution terminates</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No<sup>1</sup></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software is oblivious</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes<sup>2</sup></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Handled by environment</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><a href="#trapcharacteristics">Table 2</a> Characteristics of traps: 1) Termination may be requested. 2) Imprecise fatal traps might be observable by software.</p>
+</div>
+<div class="paragraph">
+<p>The EEI defines for each trap whether it is handled precisely, though
+the recommendation is to maintain preciseness where possible. Contained
+and requested traps can be observed to be imprecise by software inside
+the execution environment. Invisible traps, by definition, cannot be
+observed to be precise or imprecise by software running inside the
+execution environment. Fatal traps can be observed to be imprecise by
+software running inside the execution environment, if known-errorful
+instructions do not cause immediate termination.</p>
+</div>
+<div class="paragraph">
+<p>Because this document describes unprivileged instructions, traps are
+rarely mentioned. Architectural means to handle contained traps are
+defined in the privileged architecture manual, along with other features
+to support richer EEIs. Unprivileged instructions that are defined
+solely to cause requested traps are documented here. Invisible traps
+are, by their nature, out of scope for this document. Instruction
+encodings that are not defined here and not defined by some other means
+may cause a fatal trap.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="unspecified-behaviors-and-values"><a class="anchor" href="#unspecified-behaviors-and-values"></a>UNSPECIFIED Behaviors and Values</h3>
+<div class="paragraph">
+<p>The architecture fully describes what implementations must do and any
+constraints on what they may do. In cases where the architecture
+intentionally does not constrain implementations, the term UNSPECIFIED is
+explicitly used.
+
+</p>
+</div>
+<div class="paragraph">
+<p>The term UNSPECIFIED refers to a behavior or value that is intentionally
+unconstrained. The definition of these behaviors or values is open to
+extensions, platform standards, or implementations. Extensions, platform
+standards, or implementation documentation may provide normative content
+to further constrain cases that the base architecture defines as UNSPECIFIED.</p>
+</div>
+<div class="paragraph">
+<p>Like the base architecture, extensions should fully describe allowable
+behavior and values and use the term UNSPECIFIED for cases that are intentionally
+unconstrained. These cases may be constrained or defined by other
+extensions, platform standards, or implementations.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="colophon.html">Preface</a></span>
+  <span class="next"><a href="rv32.html">RV32I Base Integer Instruction Set</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../v20250508/index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../v20250508/unpriv/intro.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="intro.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <img id="RISC-V" src="../../../_/img/risc-v_logo.svg" alt="RISC-V">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>

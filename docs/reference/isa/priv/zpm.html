@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Pointer Masking Extensions, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="ssdbltrp.html">
     <link rel="next" href="priv-insns.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -11,7 +11,7 @@
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
   if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
-}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)')?.matches && 'light'),
   localStorage && localStorage.getItem('nav-width'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -19,143 +19,73 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="b3ea053ce3f3c97a6cba8b0d56e45388b38b1920"> 
+    <meta name="antora-ui-version" content="1ea0d9f81bc80a15c1f560d76c5d8bddea1856e2"> 
     <meta name="version" content="">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
-    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="icon" href="../../_/favicon.ico" type="image/x-icon">
   </head>
   <body class="article">
-<header class="header">
-  <nav class="navbar">
-    <div class="navbar-brand">
-      <a class="navbar-item" href="https://riscv-org">
-        <img id="springlogo" class="block" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
-      </a>
-      <button class="navbar-burger" data-target="topbar-nav">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
-    <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">ISA</a>
-          <div class="navbar-dropdown">
-            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivilege</a>
-            <a class="navbar-item" href="priv/priv-index.html">Privilege</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
-              Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Profiles</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
-            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Non-ISA Hardware</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
-              Interrupt Architecture</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
-              Architecture Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
-              Interrupt Controller Specification</a>
-            <a class="navbar-item"
-              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
-              SOC Specification</a>
-          </div>
-        </div>
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Software</a>
-          <div class="navbar-dropdown" style="min-width: 280px">
-            <li class="navbar-item navbar-item-special-3">Debug, Trace, RAS</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Efficient Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Capacity and Bandwidth QoS Register Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Debug</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">N-Trace</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">RERI Architecture</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Connectors</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Trace Control Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Unformatted Trace and Diagnostic Data Packet
-              Encapsulation</a>
-            <li class="navbar-item navbar-item-special-3">Platform Software</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Boot and Runtime Services</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Functional Fixed Hardware</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">IO Mapping Table</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Platform Management Interface Specification</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Semihosting</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Supervisor Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">UEFI Protocol</a>
-            <li class="navbar-item navbar-item-special-3">Application Enablement</li>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Application Binary Interface</a>
-            <a class="navbar-item" href="https://riscv.atlassian.net/">Vector C Intrinsic</a>
-          </div>
-        </div>
-      <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-            <div id="topbar-nav" class="navbar-menu">
-      <div class="navbar-end">
-        <div class="navbar-item has-dropdown is-hoverable">
-          <a class="navbar-link" href="#">Events</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <label class="theme-toggler">
-      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
-      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
-          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-          <path fill="currentColor"
-            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
-          </path>
-        </svg>
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
-          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-          <path fill="currentColor"
-            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
-          </path>
-        </svg></span>
-      <span class="text">light</span>
-    </label>
-  </nav>
-</header>
-<script>
-  !function (theme) {
-    if (theme === 'dark') {
-      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
-    }
-  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script>
-<div class="body">
+
+
+<header class="header" id="antora-header">
+    <nav class="navbar">
+        <head>
+            <link data-rh="true" rel="icon" href="/img/favicon.ico">
+            <link data-rh="true" rel="canonical" href="https://developer.riscv.org/ref">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="en">
+            <link data-rh="true" rel="alternate" href="https://developer.riscv.org/ref" hreflang="x-default">
+            <link data-rh="true" rel="preconnect" href="https://MGVPU7BN22-dsn.algolia.net" crossorigin="anonymous">
+            <link rel="stylesheet" type="text/css" href="/docs/reference/_/docusaurus-styles-copy-08-25.css">
+
+        </head>
+        <script>
+            !function(){function t(t){document.documentElement.setAttribute("data-theme",t)}var e=function(){try{return new URLSearchParams(window.location.search).get("docusaurus-theme")}catch(t){}}()||function(){try{return window.localStorage.getItem("theme")}catch(t){}}();t(null!==e?e:"light")}(),function(){try{const a=new URLSearchParams(window.location.search).entries();for(var[t,e]of a)if(t.startsWith("docusaurus-data-")){var n=t.replace("docusaurus-data-","data-");document.documentElement.setAttribute(n,e)}}catch(t){}}(),document.documentElement.setAttribute("data-announcement-bar-initially-dismissed",function(){try{return"true"===localStorage.getItem("docusaurus.announcement.dismiss")}catch(t){}return!1}())
+        </script>
+            <link rel="preload" as="image" href="/img/logo.svg">
+            <div role="region" aria-label="Skip to main content"><a class="skipToContent_fXgn" href="#__docusaurus_skipToContent_fallback">Skip to main content</a></div>
+            <div class="announcementBar_mb4j" role="banner">
+                <div class="announcementBarPlaceholder_vyr4"></div>
+                <div class="content_knG7 announcementBarContent_xLdY">congratulations, you found the RISC-V Developer Portal! 🎉 . This site is under active development and not meant for public consumption yet.</div><button type="button" aria-label="Close" class="clean-btn close closeButton_CVFx announcementBarClose_gvF7"><svg viewBox="0 0 15 15" width="14" height="14"><g stroke="currentColor" stroke-width="3.1"><path d="M.75.75l13.5 13.5M14.25.75L.75 14.25"></path></g></svg></button></div>
+            <nav aria-label="Main" class="navbar ">
+                <div class="navbar__inner">
+                    <div class="navbar__items"><button aria-label="Toggle navigation bar" aria-expanded="false" class="navbar__toggle clean-btn" type="button"><svg width="30" height="30" viewBox="0 0 30 30" aria-hidden="true"><path stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" d="M4 7h22M4 15h22M4 23h22"></path></svg></button>
+                        <a class="navbar__brand" href="/">
+                            <div class="navbar__logo"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--light_NVdE"><img src="/img/logo.svg" alt="RISC-V Logo" class="themedComponent_mlkZ themedComponent--dark_xIcU"></div><b class="navbar__title text--truncate">Home</b></a>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Specifications</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/isa">ISA</a></li>
+                                <li><a class="dropdown__link" href="/docs/spec/profiles">Profiles</a></li>
+                                <li><a class="dropdown__link" docid="spec/non-isa" href="/docs/spec/non-isa">Non-ISA</a></li>
+                            </ul>
+                        </div>
+                        <div class="navbar__item dropdown dropdown--hoverable"><a href="#" aria-haspopup="true" aria-expanded="false" role="button" class="navbar__link">Developers</a>
+                            <ul class="dropdown__menu">
+                                <li><a class="dropdown__link" href="/docs/spec/intro">Specification Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/hardware/overview">Hardware Developers</a></li>
+                                <li><a class="dropdown__link" href="/docs/software/overview">Software Developers</a></li>
+                            </ul>
+                        </div><a class="navbar__item navbar__link" href="/blog">Blog</a><a href="https://riscv.org/community/calendar/" target="_blank" rel="noopener noreferrer" class="navbar__item navbar__link">Events<svg width="13.5" height="13.5" aria-hidden="true" viewBox="0 0 24 24" class="iconExternalLink_nPIU"><path fill="currentColor" d="M21 13v10h-21v-19h12v2h-10v15h17v-8h2zm3-12h-10.988l4.035 4-6.977 7.07 2.828 2.828 6.977-7.07 4.125 4.172v-11z"></path></svg></a></div>
+                        <div class="navbar-item search hide-for-print">
+                          <div id="search-field" class="field">
+                            <input id="search-input" type="text" placeholder="Search">
+                          </div>
+                        </div>
+                    <div class="navbar__items navbar__items--right">
+
+
+                      <div class="navbarSearchContainer_Bca1">
+
+                      </div>
+                    </div>
+                </div>
+                <div role="presentation" class="navbar-sidebar__backdrop"></div>
+            </nav>
+            <div id="__docusaurus_skipToContent_fallback" class="main-wrapper mainWrapper__tJE"></div>
+        
+
+    </nav>
+</header><div class="body">
 <div class="nav-container" data-component="isa" data-version="">
   <aside class="nav">
     <div class="panels">
@@ -186,12 +116,6 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../unpriv/unpriv-index.html">Unprivileged Architecture</a>
-  </li>
-  <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="../unpriv/unpriv-contributors.html">Preamble</a>
-  </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
   </li>
@@ -322,7 +246,7 @@
     <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="priv-contributors.html">Preamble</a>
+    <a class="nav-link"  href="priv-contributors.html">Contributors</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="priv-preface.html">Preface</a>
@@ -343,7 +267,7 @@
     <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+    <a class="nav-link"  href="#smepmp.adoc">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
@@ -420,128 +344,12 @@
   <div class="content">
     <div
       class="toc"
-      data-title="Pointer Masking Extensions, Version 1.0.0"
+      data-title=""
       data-levels="2"
     >
       <div class="toc-menu"></div>
     </div>
     <div class="sidebar-links">
-        <a href="https://github.com/riscv/riscv-isa-manual/edit/antora-refactor/modules/priv/pages/zpm.adoc">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-          ><path
-              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
-            ></path></svg>
-          Edit this Page
-        </a>
-              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="512px"
-            id="Layer_1"
-            version="1.1"
-            viewBox="0 0 512 512"
-            width="512px"
-          ><style type="text/css"><
-              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
-                class="st0"
-                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
-              ></path></g></svg>
-          GitHub Project
-        </a>
-
-        <div class="dropdown-toc">
-          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
-            <span>Download PDFs</span>
-            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <polyline points="6 9 12 15 18 9"></polyline>
-            </svg>
-          </a>
-          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
-          </ul>
-        </div>
-       <script>
-  (function() {
-    const btn = document.getElementById('pdfDropdownButton');
-    const menu = document.getElementById('pdfDropdownMenu');
-
-    // Toggle dropdown on button click
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', !expanded);
-      menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
-    });
-
-    // Close dropdown when clicking outside
-    document.addEventListener('click', function(e) {
-      if (!btn.contains(e.target) && !menu.contains(e.target)) {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus(); // return focus to button
-      }
-    });
-
-    // Close dropdown on Escape key press
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' || e.key === 'Esc') {
-        btn.setAttribute('aria-expanded', 'false');
-        menu.hidden = true;
-        btn.focus();
-      }
-    });
-  })();
-</script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 0px;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #cccccc;
-            outline: none;
-          }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
-      
     </div>
   </div>
 </aside>
@@ -554,10 +362,11 @@
       <li><a href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a></li>
     </ul>
   </nav>
-</div><h1 id="page-title" class="page">Pointer Masking Extensions, Version 1.0.0</h1>
-<div class="sect1">
-<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+</div><div class="sect1">
+<h2 id="Zpm"><a class="anchor" href="#Zpm"></a>Pointer Masking Extensions, Version 1.0.0</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h3>
 <div class="paragraph">
 <p>RISC-V Pointer Masking (PM) is a feature that, when enabled, causes the CPU to ignore the upper bits of the effective address (these terms will be defined more precisely in the Background section). This allows these bits to be used in whichever way the application chooses. The version of the extension being described here specifically targets <strong>tag checks</strong>: When an address is accessed, the tag stored in the masked bits can be compared against a range-based tag. This is used for dynamic safety checkers such as HWASAN cite:[HWASAN]. Such tools can be applied in all privilege modes (U, S, and M).</p>
 </div>
@@ -571,15 +380,13 @@
 <p>It is worth mentioning that while HWASAN is the primary use-case for the current pointer masking extension, a number of other hardware/software features may be implemented leveraging Pointer Masking. Some of these use cases include sandboxing, object type checks and garbage collection bits in runtime systems. Note that the current version of the spec does not explicitly address these use cases, but future extensions may build on it to do so.</p>
 </div>
 <div class="paragraph">
-<p>While we describe the high-level concepts of pointer masking as if it was a single extension, it is, in reality, a family of extensions that implementations or profiles may choose to individually include or exclude (see <a href="#_pointer_masking_extensions">Pointer Masking Extensions</a>).</p>
+<p>While we describe the high-level concepts of pointer masking as if it was a single extension, it is, in reality, a family of extensions that implementations or profiles may choose to individually include or exclude (see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>).</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="background"><a class="anchor" href="#background"></a>Background</h2>
-<div class="sectionbody">
 <div class="sect2">
-<h3 id="_definitions"><a class="anchor" href="#_definitions"></a>Definitions</h3>
+<h3 id="background"><a class="anchor" href="#background"></a>Background</h3>
+<div class="sect3">
+<h4 id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h4>
 <div class="paragraph">
 <p>We now define basic terms. Note that these rely on the definition of an “ignore” transformation, which is defined in <a href="#sec-ignore-transform">The “Ignore” Transformation</a>.</p>
 </div>
@@ -609,8 +416,8 @@
 </ul>
 </div>
 </div>
-<div class="sect2">
-<h3 id="sec-ignore-transform"><a class="anchor" href="#sec-ignore-transform"></a>The “Ignore” Transformation</h3>
+<div class="sect3">
+<h4 id="sec-ignore-transform"><a class="anchor" href="#sec-ignore-transform"></a>The “Ignore” Transformation</h4>
 <div class="paragraph">
 <p>The ignore transformation differs depending on whether it applies to a virtual or physical address. For virtual addresses, it replaces the upper PMLEN bits with the sign extension of the PMLEN+1st bit.</p>
 </div>
@@ -653,14 +460,14 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>This definition is consistent with the way that RISC-V already handles physical and virtual addresses differently. While the unused upper bits of virtual addresses are the sign-extension of the used bits (see the definition of "address validity" in <a href="#_definitions">Definitions</a>), the equivalent bits in physical addresses are zero-extended. This is necessary due to their interactions with other mechanisms such as Physical Memory Protection (PMP).</p>
+<p>This definition is consistent with the way that RISC-V already handles physical and virtual addresses differently. While the unused upper bits of virtual addresses are the sign-extension of the used bits (see the definition of "address validity" in <a href="#_definitions">[_definitions]</a>), the equivalent bits in physical addresses are zero-extended. This is necessary due to their interactions with other mechanisms such as Physical Memory Protection (PMP).</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>When pointer masking is enabled, the ignore transformation will be applied to every explicit memory access (e.g., loads/stores, atomics operations, and floating point loads/stores). The transformation <strong>does not</strong> apply to implicit accesses such as page-table walks or instruction fetches. The set of accesses that pointer masking applies to is described in <a href="#_memory_accesses_subject_to_pointer_masking">Memory Accesses Subject to Pointer Masking</a>.</p>
+<p>When pointer masking is enabled, the ignore transformation will be applied to every explicit memory access (e.g., loads/stores, atomics operations, and floating point loads/stores). The transformation <strong>does not</strong> apply to implicit accesses such as page-table walks or instruction fetches. The set of accesses that pointer masking applies to is described in <a href="#_memory_accesses_subject_to_pointer_masking">[_memory_accesses_subject_to_pointer_masking]</a>.</p>
 </div>
 <div class="admonitionblock warning">
 <table>
@@ -687,15 +494,15 @@
 </td>
 <td class="content">
 <div class="paragraph">
-<p>A common scenario for such code is that addresses are generated by mmap system calls. This abstracts away the details of the underlying address translation mode from the application code. Software therefore needs to be aware of the value of PMLEN to ensure that its minimally required number of tag bits is supported. <a href="#_determining_the_value_of_pmlen">Determining the Value of PMLEN</a> covers how this value is derived.</p>
+<p>A common scenario for such code is that addresses are generated by mmap system calls. This abstracts away the details of the underlying address translation mode from the application code. Software therefore needs to be aware of the value of PMLEN to ensure that its minimally required number of tag bits is supported. <a href="#_determining_the_value_of_pmlen">[_determining_the_value_of_pmlen]</a> covers how this value is derived.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="example"><a class="anchor" href="#example"></a>Example</h3>
+<div class="sect3">
+<h4 id="example"><a class="anchor" href="#example"></a>Example</h4>
 <div class="paragraph">
 <p><a href="#pm-example">Example of PM address translation for RV64 under Sv57</a> shows an example of the pointer masking transformation on a virtual address when PM is enabled for RV64 under Sv57 (PMLEN=7).</p>
 </div>
@@ -741,8 +548,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>If the address was a physical address rather than a virtual address with Sv57, the transformed address with PMLEN=7 would be 0x1FFFFFF12345678.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_determining_the_value_of_pmlen"><a class="anchor" href="#_determining_the_value_of_pmlen"></a>Determining the Value of PMLEN</h3>
+<div class="sect3">
+<h4 id="determining-the-value-of-pmlen"><a class="anchor" href="#determining-the-value-of-pmlen"></a>Determining the Value of PMLEN</h4>
 <div class="paragraph">
 <p>From an implementation perspective, ignoring bits is deeply connected to the maximum virtual and physical address space supported by the processor (e.g., Bare, Sv48, Sv57). In particular, applying the above transformation is cheap if it covers only bits that are not used by <strong>any</strong> supported address translation mode (as it is equivalent to switching off validity checks). Masking NVBITS beyond those bits is more expensive as it requires ignoring them in the TLB tag, and even more expensive if the masked bits extend into the VBITS portion of the address (as it requires performing the actual sign extension). Similarly, when running in Bare or M mode, it is common for implementations to not use a particular number of bits at the top of the physical address range and fix them to zero. Applying the ignore transformation to those bits is cheap as well, since it will result in a valid physical address with all the upper bits fixed to 0.</p>
 </div>
@@ -764,8 +571,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="pointer-masking-and-privilege-modes"><a class="anchor" href="#pointer-masking-and-privilege-modes"></a>Pointer Masking and Privilege Modes</h3>
+<div class="sect3">
+<h4 id="pointer-masking-and-privilege-modes"><a class="anchor" href="#pointer-masking-and-privilege-modes"></a>Pointer Masking and Privilege Modes</h4>
 <div class="paragraph">
 <p>Pointer masking is controlled separately for different privilege modes. The subset of supported privilege modes is determined by the set of supported pointer masking extensions. Different privilege modes may have different pointer masking settings active simultaneously and the hardware will automatically apply the pointer masking settings of the currently active privilege mode. A privilege mode&#8217;s pointer masking setting is configured by bits in configuration registers of the next-higher privilege mode.</p>
 </div>
@@ -787,8 +594,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_memory_accesses_subject_to_pointer_masking"><a class="anchor" href="#_memory_accesses_subject_to_pointer_masking"></a>Memory Accesses Subject to Pointer Masking</h3>
+<div class="sect3">
+<h4 id="memory-accesses-subject-to-pointer-masking"><a class="anchor" href="#memory-accesses-subject-to-pointer-masking"></a>Memory Accesses Subject to Pointer Masking</h4>
 <div class="paragraph">
 <p>Pointer masking applies to all explicit memory accesses. Currently, in the Base and Privileged ISAs, these are:</p>
 </div>
@@ -807,7 +614,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p><strong>Compressed</strong>: All instructions mapping to any of the above, and C.LWSP, C.LDSP, C.LQSP, C.FLWSP, C.FLDSP, C.SWSP, C.SDSP, C.SQSP, C.FSWSP, C.FSDSP.</p>
 </li>
 <li>
-<p><strong>Hypervisor Extension</strong>: HLV.*, HSV.* (in some cases; see <a href="#_ssnpm">Ssnpm</a>).</p>
+<p><strong>Hypervisor Extension</strong>: HLV.*, HSV.* (in some cases; see <a href="#_ssnpm">[_ssnpm]</a>).</p>
 </li>
 <li>
 <p><strong>Cache Management Operations</strong>: All instructions in Zicbom, Zicbop and Zicboz.</p>
@@ -916,7 +723,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>Misaligned accesses are supported, subject to the same limitations as in the absence of pointer masking. The behavior is identical to applying the pointer masking transformation to every constituent aligned memory access. In other words, the accessed bytes should be identical to the bytes that would be accessed if the pointer masking transformation was individually applied to every byte of the access without pointer masking. This ensures that both hardware implementations and emulation of misaligned accesses in M-mode behave the same way, and that the M-mode implementation is identical whether or not pointer masking is enabled (e.g., such an implementation may leverage MPRV to apply the correct privilege mode&#8217;s pointer masking setting).</p>
 </div>
 <div class="paragraph">
-<p>No pointer masking operations are applied when software reads/writes to CSRs, including those meant to hold addresses. If software stores tagged addresses into such CSRs, data load or data store operations based on those addresses are subject to pointer masking only if they are explicit (<a href="#_memory_accesses_subject_to_pointer_masking">Memory Accesses Subject to Pointer Masking</a>) and pointer masking is enabled for the privilege mode that performs the access. The implemented WARL width of CSRs is unaffected by pointer masking (e.g., if a CSR supports 52 bits of valid addresses and pointer masking is supported with PMLEN=16, the necessary number of WARL bits remains 52 independently of whether pointer masking is enabled or disabled).</p>
+<p>No pointer masking operations are applied when software reads/writes to CSRs, including those meant to hold addresses. If software stores tagged addresses into such CSRs, data load or data store operations based on those addresses are subject to pointer masking only if they are explicit (<a href="#_memory_accesses_subject_to_pointer_masking">[_memory_accesses_subject_to_pointer_masking]</a>) and pointer masking is enabled for the privilege mode that performs the access. The implemented WARL width of CSRs is unaffected by pointer masking (e.g., if a CSR supports 52 bits of valid addresses and pointer masking is supported with PMLEN=16, the necessary number of WARL bits remains 52 independently of whether pointer masking is enabled or disabled).</p>
 </div>
 <div class="paragraph">
 <p>In contrast to software writes, pointer masking <strong>is applied</strong> for hardware writes to a CSR (e.g., when the hardware writes the transformed address to <code>stval</code> when taking an exception). Pointer masking is also applied to the memory access address when matching address triggers in debug.</p>
@@ -939,8 +746,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_pointer_masking_extensions"><a class="anchor" href="#_pointer_masking_extensions"></a>Pointer Masking Extensions</h3>
+<div class="sect3">
+<h4 id="pointer-masking-extensions"><a class="anchor" href="#pointer-masking-extensions"></a>Pointer Masking Extensions</h4>
 <div class="paragraph">
 <p>Pointer masking refers to a number of separate extensions, all of which are privileged. This approach is used to capture optionality of pointer masking features. Profiles and implementations may choose to support an arbitrary subset of these extensions and must define valid ranges for their corresponding values of PMLEN.</p>
 </div>
@@ -961,7 +768,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </ul>
 </div>
 <div class="paragraph">
-<p>See <a href="#_isa_extensions">ISA Extensions</a> for details on how each of these extensions is configured.</p>
+<p>See <a href="#_isa_extensions">[_isa_extensions]</a> for details on how each of these extensions is configured.</p>
 </div>
 <div class="paragraph">
 <p>In addition, the pointer masking standard defines two extensions that describe an execution environment but have no bearing on hardware implementations. These extensions are intended to be used in profile specifications where a User profile or a Supervisor profile can only reference User level or Supervisor level pointer masking functionality, and not the associated CSR controls that exist at a higher privilege level (i.e., in the execution environment).</p>
@@ -980,7 +787,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>The precise nature of these facilities is left to the respective execution environment.</p>
 </div>
 <div class="paragraph">
-<p>Pointer masking only applies to RV64. In RV32, trying to enable pointer masking will result in an illegal WARL write and not update the pointer masking configuration bits (see <a href="#_isa_extensions">ISA Extensions</a> for details). The same is the case on RV64 or larger systems when UXL/SXL/MXL is set to 1 for the corresponding privilege mode. Note that in RV32, the CSR bits introduced by pointer masking are still present, for compatibility between RV32 and larger systems with UXL/SXL/MXL set to 1. Setting UXL/SXL/MXL to 1 will clear the corresponding pointer masking configuration bits.</p>
+<p>Pointer masking only applies to RV64. In RV32, trying to enable pointer masking will result in an illegal WARL write and not update the pointer masking configuration bits (see <a href="#_isa_extensions">[_isa_extensions]</a> for details). The same is the case on RV64 or larger systems when UXL/SXL/MXL is set to 1 for the corresponding privilege mode. Note that in RV32, the CSR bits introduced by pointer masking are still present, for compatibility between RV32 and larger systems with UXL/SXL/MXL set to 1. Setting UXL/SXL/MXL to 1 will clear the corresponding pointer masking configuration bits.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -998,12 +805,10 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </div>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_isa_extensions"><a class="anchor" href="#_isa_extensions"></a>ISA Extensions</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="isa-extensions"><a class="anchor" href="#isa-extensions"></a>ISA Extensions</h3>
 <div class="paragraph">
-<p>This section describes the pointer masking extensions <code>Smmpm</code>, <code>Smnpm</code> and <code>Ssnpm</code>. All of these extensions are privileged ISA extensions and do not add any new CSRs. For the definitions of <code>Sspm</code> and <code>Supm</code>, see <a href="#Zpm">Pointer Masking Extensions, Version 1.0.0</a>.</p>
+<p>This section describes the pointer masking extensions <code>Smmpm</code>, <code>Smnpm</code> and <code>Ssnpm</code>. All of these extensions are privileged ISA extensions and do not add any new CSRs. For the definitions of <code>Sspm</code> and <code>Supm</code>, see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1056,8 +861,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <div class="paragraph">
 <p>All of these fields are read-only 0 on RV32 systems.</p>
 </div>
-<div class="sect2">
-<h3 id="_ssnpm"><a class="anchor" href="#_ssnpm"></a>Ssnpm</h3>
+<div class="sect3">
+<h4 id="ssnpm"><a class="anchor" href="#ssnpm"></a>Ssnpm</h4>
 <div class="paragraph">
 <p><code>Ssnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>senvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (U/VU mode), according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
 </div>
@@ -1096,8 +901,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="smnpm"><a class="anchor" href="#smnpm"></a>Smnpm</h3>
+<div class="sect3">
+<h4 id="smnpm"><a class="anchor" href="#smnpm"></a>Smnpm</h4>
 <div class="paragraph">
 <p><code>Smnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>menvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (S-/HS-mode if S-mode is implemented, or U-mode otherwise), according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
 </div>
@@ -1116,20 +921,20 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="smmpm"><a class="anchor" href="#smmpm"></a>Smmpm</h3>
+<div class="sect3">
+<h4 id="smmpm"><a class="anchor" href="#smmpm"></a>Smmpm</h4>
 <div class="paragraph">
 <p><code>Smmpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>mseccfg</code>. The presence of <code>Smmpm</code> implies the presence of the <code>mseccfg</code> register, even if it would not otherwise be present. Setting <code>PMM</code> enables or disables pointer masking for M mode, according to the values in <a href="#pmm-values">Possible values of <code>PMM</code> WARL field.</a>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="interaction-with-sfence-vma"><a class="anchor" href="#interaction-with-sfence-vma"></a>Interaction with SFENCE.VMA</h3>
+<div class="sect3">
+<h4 id="interaction-with-sfence-vma"><a class="anchor" href="#interaction-with-sfence-vma"></a>Interaction with SFENCE.VMA</h4>
 <div class="paragraph">
 <p>Since pointer masking applies to the effective address only and does not affect any memory-management data structures, no SFENCE.VMA is required after enabling/disabling pointer masking.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="interaction-with-two-stage-address-translation"><a class="anchor" href="#interaction-with-two-stage-address-translation"></a>Interaction with Two-Stage Address Translation</h3>
+<div class="sect3">
+<h4 id="interaction-with-two-stage-address-translation"><a class="anchor" href="#interaction-with-two-stage-address-translation"></a>Interaction with Two-Stage Address Translation</h4>
 <div class="paragraph">
 <p>Guest physical addresses (GPAs) are 2 bits wider than the corresponding virtual address translation modes, resulting in additional address translation schemes Sv32x4, Sv39x4, Sv48x4, and Sv57x4 for translating guest physical addresses to supervisor physical addresses. When running with virtualization in VS/VU mode with <code>vsatp.MODE</code> = Bare, this means that those two bits may be subject to pointer masking, depending on <code>hgatp.MODE</code> and <code>senvcfg.PMM</code>/<code>henvcfg.PMM</code> (for VU/VS mode). If <code>vsatp.MODE</code> != BARE, this issue does <strong>not</strong> apply.</p>
 </div>
@@ -1181,10 +986,10 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>Implementation of an address-specific <code>HFENCE.GVMA</code> should either ignore the address argument, or should ignore the top masked GPA bits of entries when comparing for an address match.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="number-of-masked-bits"><a class="anchor" href="#number-of-masked-bits"></a>Number of Masked Bits</h3>
+<div class="sect3">
+<h4 id="number-of-masked-bits"><a class="anchor" href="#number-of-masked-bits"></a>Number of Masked Bits</h4>
 <div class="paragraph">
-<p>As described in <a href="#_determining_the_value_of_pmlen">Determining the Value of PMLEN</a>, the supported values of PMLEN may depend on the effective privilege mode. The current standard only defines PMLEN=XLEN-48 and PMLEN=XLEN-57, but this assumption may be relaxed in future extensions and profiles. Trying to enable pointer masking in an unsupported scenario represents an illegal write to the corresponding pointer masking enable bit and follows WARL semantics. Future profiles may choose to define certain combinations of privilege modes and supported values of PMLEN as mandatory.</p>
+<p>As described in <a href="#_determining_the_value_of_pmlen">[_determining_the_value_of_pmlen]</a>, the supported values of PMLEN may depend on the effective privilege mode. The current standard only defines PMLEN=XLEN-48 and PMLEN=XLEN-57, but this assumption may be relaxed in future extensions and profiles. Trying to enable pointer masking in an unsupported scenario represents an illegal write to the corresponding pointer masking enable bit and follows WARL semantics. Future profiles may choose to define certain combinations of privilege modes and supported values of PMLEN as mandatory.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1199,6 +1004,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 </div>
@@ -1243,16 +1049,11 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </div>
 
 </div>
-<footer class="footer flex">
-    <div id="RISC-V footer">
-        <img id="RISC-V" src="../../_/img/risc-v_logo.svg" alt="RISC-V">
-        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
-        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
-    
-    </div>
-
-</footer>
-<script src="../../_/js/vendor/import.js"></script>
+<footer class="hidden">
+		<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+</footer><script src="../../_/js/vendor/import.js"></script>
 <script src="../../_/js/site.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
