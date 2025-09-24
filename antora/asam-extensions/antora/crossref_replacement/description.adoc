@@ -1,0 +1,46 @@
+= Local anchor reference conversion
+
+The pipeline replaces local references in AsciiDoc files (`<<reference,text>>`) in case the link must point to another page.
+Since the original intention of including all files in one single main.adoc does not work in Antora (or rather: it does not make sense), this helps with translating an Asciidoctor project to an Antora version.
+
+NOTE: The current implementation only works if the link can point to a page where the anchor is located natively.
+If the link is imported with an `include` macro, the extension does not find it currently.
+
+
+Using Asciidoctor, it is typical to create one main file and include content from separate files.
+With this approach, each section or chapter can be managed separately while still compiling everything into a single final document.
+However, in Antora these sections or chapters stay separate in most cases since the idea is to be able to access them individually and independently.
+
+When working with documents originally intended for a single-file-inclusion strategy, local references that only work if other files are also included will not work for the individual pages in Antora.
+To circumvent this problem, the ASAM Antora extensions analyze all pages and try to find the source file of the reference.
+If the content is included in multiple pages, pages in the navigation structured are prioritized over unlisted pages.
+
+Note, however, that this approach has limitations and should only be used if switching to a more Antora-native approach is too difficult!
+
+== Configuration
+To activate this feature, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+local_to_global_references: true
+----
+
+.Configuration with activated local anchor replacement
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    local_to_global_references: true
+----
+====
+
+
+== How it works
+The extension parses all files and first creates a map of standard anchors (NOT auto-generated from sections and titles, though!).
+Next, every page is also analyzed regarding local links.
+
+If a link points to an anchor on that page, nothing is changed.
+Otherwise, the extension tries to find a file where the corresponding anchor is found.
+If at least one matching file is found in the previously created map, the local link is replaced with a global xref call to that page.

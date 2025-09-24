@@ -1,0 +1,60 @@
+= Keywords overview page
+The ASAM Antora extension generates an overview page that lists all keywords used in the Antora pages.
+The location and the (virtual) filename can be configured in the site.yml (Antora playbook).
+
+For more, see https://asam-ev.github.io/asam-project-guide/asamprojectguide/project-guide/extensions/pipeline-keyword_overview.html[ASAM Project Guide^]
+
+== Configuration
+To activate this extension, add the following configuration to the extension attributes:
+[source, YAML]
+----
+keywords:
+  create_overview: true
+----
+
+By default, the overview page is created in the ROOT module with the name "0_used-keywords.adoc".
+
+To change the module, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+module: "my_module"
+----
+
+To change the filename, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+filename: "new_filename.adoc"
+----
+
+To change the path within the module where the file is to be located, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+path: "folder/path"
+----
+
+.Configuration for a keywords overview page to the folder "content" in the module "standard" with the filename "0_keywords_found.adoc"
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    keywords:
+      create_overview: true
+      path: "content"
+      module: "standard"
+      filename: "0_keywords_found.adoc"
+----
+====
+
+== How it works
+The extension uses the created keywords map that is required for multiple ASAM extensions.
+
+The page's content is created with a basic header.
+From the map, all keywords are translated into sections and their corresponding pages are changed into bullet points with cross-references to those pages.
+
+Finally, if a file with the given name at the specified location is found, that virtual file's content is overwritten.
+Otherwise, a new virtual file is created and this content added to it.

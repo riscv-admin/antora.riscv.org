@@ -1,0 +1,35 @@
+= Attachments generator
+This extensions automatically zips a given folder and adds it to a target folder as attachment.
+
+== Configuration
+The extension is active by default but only acts if a certain asciidoc parameter has been set in the component.
+
+To enable the attachments generator within a component, add the following configuration to respective antora.yml file:
+
+[source, YAML]
+----
+generate-attachments: [["id/of/folder/", "path/in/attachments/output_file_of_folder.zip", "clean"], ["id/of/file", "path/in/attachments/output_file.zip"]]
+----
+
+The optional third entry, "clean", controls whether the source files are removed from the Antora content aggregate (set to "clean") or not (not set or set to anything but "clean").
+
+.Configuration for three downloadable attachments, where the source files are all located in sepearte folders ("Examples", "Model", and "Schema") inside the Antora attachments folder and the Model and the Schema source files are removed (clean)
+====
+[source,YAML]
+----
+asciidoc:
+  attributes:
+    generate-attachments: [["attachment$Examples/", "generated/ASAM_OpenSCENARIO_{page-component-version}_Examples.zip"], ["attachment$Model/", "generated/ASAM_OpenSCENARIO_{page-component-version}_Model.zip", "clean"], ["attachment$Schema/", "generated/ASAM_OpenSCENARIO_{page-component-version}_Schema.zip", "clean"]]
+    page-download-links: [["generated/ASAM_OpenSCENARIO_{page-component-version}_Model.zip","OpenSCENARIO Enterprise Architect UML model"],["generated/ASAM_OpenSCENARIO_{page-component-version}_Schema.zip", "OpenSCENARIO XSD schema"],["generated/ASAM_OpenSCENARIO_{page-component-version}_Examples.zip","OpenSCENARIO Examples"]]
+----
+====
+
+== Notes
+This extension supports the use of the Antora attribute `page-component-version` in the output file name, which is replaced with the version of this component.
+It also supports a new custom derived attribute, `page-component-version-hyphenated`, which uses the `page-component-version` attribute as input and replaces all dots with hyphens.
+
+To make the download button available, use the `page-download-links` attribute which is interpreted by the ASAM UI.
+
+== How it works
+The extension checks each component for the generate-attachments attribute.
+If it is found, it tries to zip all files within the provided path and name the zip file according to the second entry of each item in the array.

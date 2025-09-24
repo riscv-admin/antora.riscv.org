@@ -1,0 +1,54 @@
+= Enterprise Architect converter
+An extension that converts HTML output from Enterprise Architect into adoc content for Antora.
+The source content must be included in the repository and the corresponding configuration in the respective component descriptor is required.
+
+== Configuration
+=== Site
+On site level, the following configuration is required to activate the extension:
+
+[source, YAML]
+----
+enterprise_architect: true
+----
+
+.Site configuration to activate the extensions
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    enterprise_architect: true
+----
+====
+
+=== Component
+Additionally, each component that has Enterprise Architect content must also specify Asciidoctor attributes in its component descriptor.
+At least one of the following attributes has to be defined:
+
+[source, YAML]
+----
+ea_module: "My_Module"
+ea_module_path: "folder"
+ea_input_path: "src"
+----
+
+NOTE: The default values are: ea_module = "ROOT", ea_module_path = "", ea_input_path = "_attachments".
+
+
+.Component configuration if the source content is located in the "Home" module, the source files are in the folder "src" and the output is to be put directly at root of the module
+====
+[source,YAML]
+----
+asciidoc:
+  attributes:
+    ea_module: "Home"
+    ea_input_path: "src"
+----
+====
+
+== How it works
+The extension (JavaScript) first calls a helper script, written in python, that converts the HTML content from the Enterprise Architect output into usable AsciiDoc content.
+Then, the created files are read and added as virtual files to the Antora pipeline.
+
+NOTE: This could be streamlined in the future by including the python functionality directly as JS code.

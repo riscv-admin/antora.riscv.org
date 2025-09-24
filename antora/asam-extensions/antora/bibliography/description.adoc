@@ -1,0 +1,124 @@
+= ASAM Bibliography
+As of now, Antora does not support bibliographies out of the box.
+The Asciidoctor features and extensions do not work for JavaScript and distributed content.
+Rather, they are typically written in Ruby and expect all content to be in one output file (which is not the case with Antora).
+
+To solve this, ASAM has implemented a custom extension for Antora to support bibtex files and bibtex-style references for the most relevant types.
+Note that the only format currently supported is IEEE and that the number of types is limited to the list below.
+
+== Configuration
+To enable the bibliography feature in general, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+bibliography: true
+----
+
+.Configuration example
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    bibliography: true
+----
+====
+
+
+To enable the bibliography within a component, add the following configuration to respective antora.yml file:
+
+[source, YAML]
+----
+asamBibliography: "module:path/to/file.bib"
+----
+
+.Configuration for a component where the bibliography file with the name "asambib.bib" is located in the module "standard" and the folder "bibliography"
+====
+[source,YAML]
+----
+asciidoc:
+  attributes:
+    asamBibliography: 'standard:bibliography/asambib.bib'
+----
+====
+
+== Notes
+The module is optional if all relevant pages are located within the same module anyway.
+
+All entries get an anchor with the following syntax: `bib-<entry-id>`, where `<entry-id>` is the id of the bibliography entry.
+
+The following types and respective fields are currently supported:
+
+|===
+|Type|Fields
+
+|book
+a| * author
+* editor
+* title
+* volume
+* number
+* series
+* address
+* publisher
+* month
+* year
+* pages
+* url
+
+|inbook
+a| * author
+* chapter
+* title
+* volume
+* number
+* series
+* edition
+* address
+* publisher
+* month
+* year
+* pages
+* url
+
+|proceedings
+a| * editor
+* title
+* booktitle
+* volume
+* number
+* series
+* address
+* publisher
+* organization
+* month
+* year
+* pages
+* annote
+
+|techreport
+a| * title
+* number
+* institution
+* address
+* month
+* year
+* url
+
+|misc
+a|* author
+* title
+* howpublished
+* month
+* year
+
+|===
+
+== How it works
+The extension first finds the listed bibliography file (.bib) and parses its content.
+Once Antora has classified all files, it first identifies the (first) page for each component-version combination where the `bibliography::[]` macro is called. +
+It then sorts the pages and replaces each cite:[] macro with a link to the relevant bibliography page and the entry there, using the entry-id as input for the anchor, if the id was found in the bibliography file.
+If it is the first citation of that entry, it gets the next available integer (starting with 1) as Ref number, which also shows up in the created link as reftext.
+
+After all citations have been replaced, the extension creates the bibliography page by sorting the bibliography entries by Ref number and then replacing the `bibliography::[]` call in its body with a formatted string containing all cited sources in numerical order.

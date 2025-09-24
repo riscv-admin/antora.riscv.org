@@ -1,0 +1,74 @@
+= Doxygen converter
+Doxygen already outputs content in HTML form.
+However, to use this in an Antora environment, the body must be extracted and included correctly.
+Also, separating or augmenting the sections used in the output allows Asciidoctor to create the TOC automatically.
+
+This extension provides the features to Antora to
+
+. Build the Doxygen content from a given source in a given version
+// TODO: Remove building from Antora pipeline and get generated content either from the source or a different repo / location. This will massively save time and remove the need to add doxygen-specific features to the Antora Docker image.
+. Update the generated content to work with Antora
+. Add the created (relevant) content to the Antora content
+. Run this for all relevant components and versions, using attributes set in the respective component descriptor.
+
+== Configuration
+=== Site
+On site level, the following configuration is required to activate the extension:
+
+[source, YAML]
+----
+doxygen: true
+----
+
+.Site configuration to activate the extensions
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    doxygen: true
+----
+====
+
+=== Component
+Additionally, each component that has Doxygen content must also specify Asciidoctor attributes in its component descriptor.
+At least one of the following attributes has to be defined:
+
+[source, YAML]
+----
+doxygen_interface_version: "v3.2.0"                         # The interface version that needs to be retrieved
+doxygen_document_date: "01.01.2000"                         # The date associated with the document (optional)
+doxygen_module: "ROOT"                                      # The module in which the output is stored
+doxygen_module_path: "doxy"                                 # Path within module
+doxygen_source_repo: "https://example.com/source-repo.git"  # Repository from which to fetch the doxygen input files
+doxygen_source_folder: source-repo                          # Folder name into which the repo is cloned. Can be left empty if repo name and folder are identical.
+----
+
+NOTE: The default values are: doxygen_interface_version = null, doxygen_document_date = null, doxygen_module = "ROOT", doxygen_module_path = "".
+
+.Component configuration if the target module is "Home", the version "v3.3.1" is required, and the documented date is "01.06.2022". The doxygen source repo is set to https://github.com/OpenSimulationInterface/open-simulation-interface.git
+====
+[source,YAML]
+----
+asciidoc:
+  attributes:
+    doxygen_module: "Home"
+    doxygen_interface_version: "v3.3.1"
+    doxygen_document_date: "01.06.2022"
+    doxygen_source_repo: "https://github.com/OpenSimulationInterface/open-simulation-interface.git"
+----
+====
+
+== How it works
+The extensions consists of two parts:
+
+* The Antora extension written in JavaScript.
+It controls the overall operation and converts the doxygen output into Antora-compatible files as well as transfers the output as virtual files to the Antora pipeline.
+* A shell script responsible for the Doxygen operations (retrieving the repo, the builder, and creating the initial output)
+
+NOTE: The shell script may become obsolete once the different OSI repositories have been merged, if the Doxygen output is kept and does not have to be created for each version over and over again.
+
+The Antora extension runs for each component-version-configuration in Antora and checks if this version requests a Doxygen conversion.
+If so, it determines all required variables and first triggers the Shell script, then converts the content.
+After the adoc content has been created virtually, it then integrates them into the Antora content aggregate and deletes the temporarily created doxygen files.

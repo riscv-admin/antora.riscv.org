@@ -1,0 +1,58 @@
+= Orphan pages and partials
+The ASAM Antora extension finds all pages not listed in any nav.adoc and puts a warning in the console output.
+If configured, these pages can also automatically be listed under a separated navigation entry (e.g. "orphans") at the end of the Antora document.
+Additionally, it optionally lists all partials that are not included in at least one hosted page.
+Finally, it optionally lists all pages and partials that currently use a "draft" section.
+
+For more, see https://asam-ev.github.io/asam-project-guide/asamprojectguide/project-guide/extensions/pipeline-orphan_pages.html[ASAM Project Guide^]
+
+== Configuration
+The orphan_pages extension is always active.
+To activate the optional features "listing unused partials" and "listing files with draft sections", add the following configuration to the extension attributes::
+[source, YAML]
+----
+list_unused_partials: true
+----
+
+To add the found orphan pages to the navigation, add the following configuration to the extension attributes:
+[source, YAML]
+----
+add_to_navigation: true
+----
+
+By default, the standard name under which orphan pages are then added, is 'Unlisted pages'.
+To give it a different name, add the following configuration to the extension attributes:
+
+[source, YAML]
+----
+unlisted_pages_heading: "Orphan pages"
+----
+
+.Configuration for adding orphan pages under the label "Lost and found" and listing all unused partials and content with draft flags.
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    add_to_navigation: true
+    unlisted_pages_heading: "Lost and found"
+    list_unused_partials: true
+----
+====
+
+== How it works
+This is an extension based on an example provided by the Antora project.
+The example is documented in full https://docs.antora.org/antora/latest/extend/extension-tutorial/[here^].
+The source code can be found in the https://gitlab.com/antora/antora/-/blob/main/docs/modules/extend/examples/unlisted-pages-extension.js[Antora repository^]
+
+The custom ASAM changes include:
+
+* Listing unused partials
+* Listing files with the draft tag
+* Parsing specific plantuml content (for osc2)
+
+Here, the extension checks all relevant files for the include macro.
+Then, all included partials are deducted from the total list of partials and the remaining ones are listed by the logger.
+Additionally, all partials and all pages (both published and unpublished) are scanned for the entry "ifdef::draft[]".
+If this is found, the file is marked as a file including draft content and listed by the logger afterwards as well.

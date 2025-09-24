@@ -1,0 +1,31 @@
+= Mixing of xref styles
+
+== Configuration
+To activate this extension, add the following configuration to the extension attributes::
+[source, YAML]
+----
+alternate_xref_style: value <1>
+----
+<1> `value` may be "full", "short", or "basic".
+See https://docs.asciidoctor.org/asciidoc/latest/macros/xref-text-and-style/[window=_blank] for more information.
+
+
+.Configuration for using "full" xrefstyle for Anchor links.
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    alternate_xref_style: 'full'
+----
+====
+
+== How it works
+The extension processes each page, first applying the valid Antora reftext attribute to the page, depending on the chosen style.
+It then processes the file's content line by line and checks each found xref macro. +
+All macros that already have attributes set in the brackets or are links to images or figures are skipped.
+If an anchor is used and the link points to another page, the correct link text is determined and applied.
+Otherwise, the xrefstyle attribute is set within the macro to overwrite any global setting temporarily.
+
+IMPORTANT: `\<<link>>` type of links are not parsed!

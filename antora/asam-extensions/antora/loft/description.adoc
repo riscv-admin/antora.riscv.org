@@ -1,0 +1,38 @@
+= List Of Figures and Tables (LOFT)
+This extension creates a list of figures and a list of tables that fulfill the ASAM requirements.
+These are then added to new pages or, if the pages already exist, replace their original content.
+
+== Configuration
+To activate the loft extension, add the following configuration to the extension attributes:
+[source,YAML]
+----
+loft: true
+----
+
+.Configuration if the extension is located in the folder "asam-antora-extensions"
+====
+[source,YAML]
+----
+antora:
+  extensions:
+  - require: './asam-antora-extensions/asam-antora_extension.js'
+    loft: true
+----
+====
+
+== How it works
+IMPORTANT: This extension will only work for figures and tables with valid ASAM anchors.
+
+The extension uses the created list of anchors from the core modules.
+It assumes that the provided map is already pre-sorted by occurrence.
+It separates the anchor map into a map of figures and a map of tables.
+
+Then, for each map a new page content is created with the standard header.
+Each entry in the map is converted into an entry in the table, where the reftext is determined from the respective title.
+
+The resulting content is then stored as a virtual file with the path "<module>/pages/loft/<filename>.adoc", where "<module>" is the module of the last entry in the list of navigation files and "<filename>" is "list_of_figures" or "list_of_tables" respectively.
+If such a file already exists, the file's content is instead overwritten by the new file to prevent duplicate file errors.
+
+NOTE: If a file is created, that virtual file is also added to the last navigation file in the list.
+If an existing file is modified, the navigation file is not changed.
+Thus, if a file with exactly this name already exists but is not listed in any navigation file, it will not show up in the navigation tree unless it is listed automatically be e.g. the 'orphan_pages' extension.

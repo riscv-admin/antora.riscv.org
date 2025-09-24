@@ -1,0 +1,45 @@
+image: node:10.14.2-stretch
+stages: [pages, trigger]
+build_pages:
+  stage: pages
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - if: $CI_PIPELINE_SOURCE == "pipeline"
+  tags:
+    -  asciidoc
+  image:
+    name: ghcr.io/asam-ev/project-guide-docker:4
+    entrypoint: [""]
+  script:
+    - antora --stacktrace --fetch --clean site.yml
+  artifacts:
+    paths:
+      - public/
+
+pages:
+  stage: pages
+  image: busybox
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "trigger"
+    - if: $CI_PIPELINE_SOURCE == "pipeline"
+  tags:
+    - asciidoc
+  script:
+    - echo "The site will be deployed to $CI_PAGES_URL"
+  artifacts:
+    paths:
+    - public
+  needs:
+    - job: build_pages
+      artifacts: true
+
+trigger_ui:
+  stage: trigger
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  trigger:
+    project: common/antora-ui
+    branch: main
+  

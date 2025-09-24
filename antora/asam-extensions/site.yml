@@ -1,0 +1,67 @@
+site:
+  title: Antora Extensions
+  # url: "https://hostename/hostpath <1>
+  start_page: ASAM_Antora_Extensions::index.adoc
+
+# tag::content[]
+content:
+  sources:
+    - url: .
+      branches: [main]
+      start_path: docs
+      edit_url: 'https://code.asam.net/common/asam-antora-extensions/-/blob/{refname}/{path}'
+    - url: https://code.asam.net/common/antora-ui.git
+      branches: [main]
+      start_path: preview-src
+      edit_url: 'https://code.asam.net/common/antora-ui/-/blob/{refname}/{path}'
+    # - url: https://code.asam.net/common/asam-antora-extensions.git
+# end::content[]
+
+ui:
+  bundle:
+    url: https://code.asam.net/common/antora-ui/-/jobs/artifacts/main/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+  # supplemental_files: ./supplemental_ui
+
+output:
+  clean: true
+  dir: ./public
+
+runtime:
+  fetch: true
+
+# tag::attributes[]
+asciidoc:
+  attributes:
+    page-pagination: true
+    hide-uri-scheme: ""
+    # Allow URI read to retrieve SVG on compilation
+    allow-uri-read: true
+    # use SVG unless otherwise specified
+    kroki-default-format: svg
+    # Make SVG inline so that we can get interactive (can be overridden by schema with "opts=none")
+    kroki-default-options: interactive
+    # sectnums: "@"
+    xrefstyle: short@
+    listing-caption: Code
+    page-feedbacktype: gitlab@
+    page-feedbackurl: 'mailto:code+common-antora-ui-154-issue-@asam.net'
+    experimental: ""
+    
+# end::attributes[]
+
+# start::extensions[]
+  extensions:
+  - asciidoctor-kroki
+  - './asam-asciidoctor_extensions.js'
+  - './asam-asciidoctor_extensions-registered.js'
+
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+    - require: './asam-antora_extension.js'
+      loft: true
+      local_to_global_references: true    
+
+# end::extensions[]
+

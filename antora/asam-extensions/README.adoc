@@ -1,0 +1,290 @@
+= ASAM's Antora and Asciidoctor extensions
+
+ifndef::use-antora-rules[]
+IMPORTANT: Access the documentation on https://common.pages.asam.net/asam-antora-extensions[GitLab pages^].
+endif::[]
+
+This repository contains ASAM's Antora and Asciidoctor extensions.
+It contains a collection of features that can be added to the Antora pipeline through the playbook and/or the CLI as well as Asciidoctor extensions that work together with the Antora extensions.
+They are designed to be used with Antora, not base Asciidoctor!
+
+TIP: For more information on how to write an Antora extension, see https://docs.antora.org/antora/latest/extend/extensions/[the official extension guide] and check out the relevant https://gitlab.com/antora/antora/-/tree/main/packages[package repositories], particularly their `devdocs` folders.
+
+
+== Motivation
+Antora and Asciidoctor already provide a rich set of features and macros.
+However, not all functions that ASAM requires for an efficient and partially automated content structuring are present by default.
+For this reason, an Antora extension was created.
+
+
+== Structure
+The extensions in this repo are bundled in three main extensions:
+
+* link:asam-antora_extension.js[]: Collects all extensions for the Antora pipeline.
+* link:asam-asciidoctor_extensions-registered.js[]: Contains all extensions that use the "register" function in Asciidoctor.
+* link:asam-asciidoctor_extensions.js[]: Contains all extensions that register as anonymous functions in Asciidoctor.
+
+To get access to all the features, you must add all three to the Antora site.yml file under the asciidoctor and antora extensions attribute respectively.
+See <<Setup>> below for more information.
+
+All addons or sub-extensions are sorted by type ("antora" or "asciidoctor") and contained in their individual folders.
+If an extension consists of multiple functions, these may be further split into feature functions and helper functions.
+Note that some feature require both an Antora and an Asciidoctor extension to work as expected.
+
+In addition to the extension scripts, the folder "core" also contains core features that are shared between multiple extensions.
+These, in particular, deal with the interpretation and change of base .adoc content.
+
+
+== Setup
+To add the ASAM extensions to an Antora project, follow these steps:
+
+. Download or check out this repository into the project.
+Alternatively, add it as a submodule and update it to point to master, not a specific commit.
+. You need to activate the extensions in your project file ('site.yml').
+To do so, the asciidoc.extensions attribute and the antora.extensions attribute must be updated.
+If your project file already contains these entries, you only need to add the missing lines (see below).
+Otherwise, open the project's 'site.yml' file and edit it as follows:
++
+[source,YAML]
+----
+asciidoc:
+  extensions:
+  # there may be other extensions above or below
+  - './path-to-extensions/asam-asciidoctor_extensions-registered.js'
+  - './path-to-extensions/asam-asciidoctor_extensions.js'
+
+  # ...
+antora:
+  extensions:
+  # add the following line
+  - require: './path-to-extensions/asam-antora_extension.js'
+    # add any number of config values for the Antora extensions here without bullet points
+----
+, where you replace `path-to-extensions` with the path to the copied/checked out extensions and add any attributes you require in separate lines after the Antora extension.
+. Optionally, add configuration of Asciidoctor attributes either to the site.yml (to apply them to each and every page of every component and every version) or to one or more component descriptors (to apply them to each and every page in that component-version-combination).
+If you want to be able to unset a set attribute on a lower level, set it with an `@` sign (see https://docs.antora.org/antora/latest/component-attributes/#soft-set).
+Check the table below and the list of features at the end of this document for more information on available settings and their implications.
+
+NOTE: Some extensions have dependencies that the  official Antora Docker image does not contain.
+The Antora image provided by ASAM, however, is already set up that every extension's dependencies are supported and included.
+ASAM, therefore, recommends always using the provided Docker image when building an Antora project.
+
+
+== ASAM extensions
+This repository contains the following extensions:
+
+[cols="4h,2,2,1,8"]
+|===
+|Feature |Antora |Asciidoctor | Active by default |Notes
+
+|Support for the <<ASAM Antora macros>>
+|link:antora/asam_macros/asam_macros.js[asam_macros.js]
+|None
+|yes
+a| * autonav: Automatic navigation file creation based on folder structure
+* related: Creates section for related pages based on keywords attribute.
+* reference: Creates bullet-point list for related pages based on keywords attribute.
+* role-related: Creates list of pages with a specific user role listed in them.
+* pages: Creates a list of all pages in a given folder.
+May be configured to include also all pages in all subfolders, or start in a specific subfolder.
+
+|Creating zipped attachments
+|link:antora/attachments_generator/attachments_generator.js[attachments_generator.js]
+|None
+|yes
+a|Zips files and folders.
+
+|Support for the <<ASAM Bibliography>>
+|link:antora/bibliography/bibliography.js[bibliography.js]
+|None
+|no
+a|Supports a limited set of bibtex fields and types.
+
+|Identifying and (optionally) listing <<Orphan pages>>
+|link:antora/orphan_pages/orphan_pages.js[orphan_pages.js]
+|None
+|yes
+|This is based on a provided example from Antora.
+Additionally, it optionally lists unused partials as well as files with the "draft" tag.
+
+|Creating a <<Keyword-overview page>>
+|link:antora/keywords_overview/keywords_overview.js[keywords_overview.js]
+|None
+|no
+|Requires that at least one page in each component-version-combination has the keywords attribute.
+
+|<<Sequential numbering in Antora>>
+|link:antora/consistent_numbering/numbered_titles.js[numbered_titles.js]
+|link:asciidoctor/consistent_numbering/sectnumsoffset_antora.js[sectnumsoffset_antora.js]
+|yes
+|This is required and reused by Antora features for <<ISO-2145 style>>.
+To make most use of this extension, activate section numbers with the `sectnums` attribute either in the site.yml, in the component descriptor, or for each file selectively.
+The extension also supports some standard Asciidoctor section styles, like "appendix" and "bibliography".
+Apply these in the respective nav.adoc file.
+
+|Section numbers in <<ISO-2145 style>>
+|link:antora/consistent_numbering/numbered_titles.js[numbered_titles.js]
+|link:asciidoctor/consistent_numbering/sectnums_to_iso.js[sectnums_to_iso.js]
+|no
+|This requires and reuses Antora features from <<Sequential numbering in Antora>>
+
+|Replacement of <<Local to global reference replacement,local references with global references>> for cross-page referencing
+|link:antora/crossref_replacement/crossref_replacement.js[crossref_replacement.js]
+|None
+|no
+|This will only work with anchors following the ASAM schema.
+Check the Editorial Guide in the Project Guide for more information.
+
+|Doxygen output conversion
+|link:antora/doxygen_converter/doxygen_extension.js[doxygen_extension.js]
+|None
+|no
+|The `workdir` attribute is shared with the Enterprise Architect extension.
+It must be set if the Antora pipeline does not run in the folder where the site.yml file lies but accesses it from another folder.
+This can be the case if the Antora Docker image is set up this way.
+Note that this extension runs per component/version and requires additional configuration in each antora.yml file.
+
+|Enterprise Architect output conversion
+|link:antora/ea_converter/ea_extension.js[ea_extension.js]
+|None
+|no
+|The `workdir` attribute is shared with the Doxygen extension.
+It must be set if the Antora pipeline does not run in the folder where the site.yml file lies but accesses it from another folder.
+This can be the case if the Antora Docker image is set up this way.
+Note that this extension runs per component/version and requires additional configuration in each antora.yml file.
+
+|Support for tabs-based tables
+|link:ascciidoctor/tabs-block/extension.js[extension.js]
+|None
+|yes
+|Requires the link:ascciidoctor/tabs-block/behavior.js[behavior.js] script to be included in the Antora UI.
+This is the case by default for the standard ASAM Antora UI.
+
+|Converting Asciidoctor mapping to Antora navigation
+|link:antora/nav_from_index/nav_from_index.js[nav_from_index.js]
+|None
+|yes
+|Converts an mapping with includes for Asciidoctor into a navigation file for Antora with xrefs.
+
+|List of figures and tables
+|link:antora/loft/loft.js[loft.js]
+|None
+|no
+|Creates a list of figures and tables that comply with the ASAM anchor requirements.
+
+|Mixing different xref styles
+|link:antora/reference_style_mixing/reference_style_mixing.js[reference_style_mixing.js]
+|None
+|no
+|Allows to change the xref style for all page xrefs.
+
+|===
+
+
+NOTE: All following examples assume the extension is located under "./asam-antora_extensions", where "." is the location of the "site.yml" file (the Antora playbook).
+
+
+== General configuration
+The following table describes general configuration on using the extension:
+
+|===
+|Attribute |Description |Default |Example
+
+|id
+|Defines an id by witch the extension can be specifically called from the CLI.
+|none
+|`id: asam-extension`
+
+|enabled
+|De-/activates this extension by default.
+If deactivated, the extension must be explicitly called from the CLI.
+Only relevant in combination with `id`.
+|true
+|`enabled: false`
+|===
+
+.Example
+====
+[source,yaml]
+----
+- id: asam-extensions
+  enabled: false
+  require: './antora_extensions/asam-extension.js'
+----
+====
+
+ifndef::use-antora-rules[]
+== Extensions in detail
+
+:antora_mapping: true
+
+include::antora/asam_macros/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/attachments_generator/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/bibliography/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/consistent_numbering/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/crossref_replacement/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/doxygen_converter/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/ea_converter/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/keywords_overview/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/orphan_pages/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/nav_from_index/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/loft/description.adoc[leveloffset=+2]
+
+ifndef::use-antora-rules[]
+---
+endif::[]
+
+include::antora/reference_style_mixing/description.adoc[leveloffset=+2]
+
+endif::[]
+:!antora_mapping:
