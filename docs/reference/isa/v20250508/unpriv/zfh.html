@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="q-st-ext.html">
+    <link rel="next" href="bfloat16.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="4e781e908c0839f61e1eae386f55a3da6330bb12"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv-org">
+        <img id="springlogo" class="block" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="unpriv/unpriv-index.html">Unprivileged</a>
+            <a class="navbar-item" href="priv/priv-index.html">Privileged</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications#ISA-Specifications">More
+              Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <li class="navbar-item navbar-item-special-3">RVA23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVA23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RVB23 Profile</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RVB23-Profile">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">More Versions</a>
+            <li class="navbar-item navbar-item-special-3">RISC-V Profiles</li>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Profiles">Published</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">More Versions</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Advanced-Interrupt-Architecture">Advanced
+              Interrupt Architecture</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IOMMU-Architecture-Specification">IOMMU
+              Architecture Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Level-Interrupt-Controller-Specification">Platform-Level
+              Interrupt Controller Specification</a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Server-SOC-Specification">Server
+              SOC Specification</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#Efficient-Trace-for-RISC-V">Efficient Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Capacity-and-Bandwidth-QoS-Register-Interface">QoS Register Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#The-RISC-V-Debug-Specification">Debug</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-N-Trace-(Nexus-based-Trace)">N-Trace</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-RERI-Architecture-Specification">RERI Architecture</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Trace-Connectors">Trace Connectors</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Trace-Control-Interface">Trace Control Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#Unformatted-Trace-%26-Diagnostic-Data-Packet-Encapsulation-for-RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation</a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Boot-and-Runtime-Services-Specification-(BRS)">Boot and Runtime Services</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Functional-Fixed-Hardware-Specification">Functional Fixed Hardware</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-IO-Mapping-Table-Specification">IO Mapping Table</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Platform-Management-Interface-Specification-(RPMI)">Platform Management Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Semihosting">Semihosting</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Supervisor-Binary-Interface-Specification">Supervisor Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-UEFI-Protocol-Specification">UEFI Protocol</a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-ABIs-Specification">Application Binary Interface</a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed#RISC-V-Vector-C-Intrinsic-Specification">Vector C Intrinsic</a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20250508</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-history.html">History</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/edit/v20250508/modules/unpriv/pages/zfh.adoc">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Edit this Page
+        </a>
+              <a href="https://github.com/riscv/riscv-isa-manual" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css"><
+              .st0{fill-rule:evenodd;clip-rule:evenodd;} ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume I: RISC-V Unprivileged ISA Specification</li>
+      <li><a href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="zfh-and-zfhmin-extensions-for-half-precision-floating-point-version-1-0"><a class="anchor" href="#zfh-and-zfhmin-extensions-for-half-precision-floating-point-version-1-0"></a>"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter describes the Zfh standard extension for 16-bit
+half-precision binary floating-point instructions compliant with the
+IEEE 754-2008 arithmetic standard. The Zfh extension depends on the
+single-precision floating-point extension, F. The NaN-boxing scheme
+described in <a href="#nanboxing">[nanboxing]</a> is extended to allow a
+half-precision value to be NaN-boxed inside a single-precision value
+(which may be recursively NaN-boxed inside a double- or quad-precision
+value when the D or Q extension is present).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This extension primarily provides instructions that consume
+half-precision operands and produce half-precision results. However, it
+is also common to compute on half-precision data using higher
+intermediate precision. Although this extension provides explicit
+conversion instructions that suffice to implement that pattern, future
+extensions might further accelerate such computation with additional
+instructions that implicitly widen their operands—e.g.,
+half<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.028ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2222.4 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1722.4,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>half<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.028ex" height="1.882ex" role="img" focusable="false" viewBox="0 -750 2222.4 832"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1722.4,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>single<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.782ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2555.6 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2055.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>single—or
+implicitly narrow their results—e.g.,
+half<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.028ex" height="1.882ex" role="img" focusable="false" viewBox="0 -750 2222.4 832"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(722.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1722.4,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>single<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.782ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 2555.6 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(2055.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>half.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="half-precision-load-and-store-instructions"><a class="anchor" href="#half-precision-load-and-store-instructions"></a>Half-Precision Load and Store Instructions</h3>
+<div class="paragraph">
+<p>New 16-bit variants of LOAD-FP and STORE-FP instructions are added,
+encoded with a new value for the funct3 width field.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp1zTELwjAQBeDdX3FblgimpRSyCSIOgu4lQ2pSzdBGkgOH0v9ugo0xg-O9ex9vdvrOodsAzL1Bz6GlAJMcNQdinzerNAkBgER0oUfacJLzZX_YHq9ELDTDJkOnPugXNhEq7bFUdVYvo_CxwqTqqE7_hzz7LhVDvfS6VKyiSZlx7BjjOxGaSbEqMjsMXuP6jFwsbww8Td8=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sEh_kGuum4B6rG1Ogidpgidmbm50SZWBrEgvTCdpiCd-WlpxaklEDkUzcYIzeWZKSUZEFvhmo1Bmj1w2ldUbAjVgGZfUmJxKh5dRth1FRclo2oCBgqSzwwNrUxBXkMJE6jPIHIgzbG1AP0uXuc=" alt="svg">
+</div>
+</div>
+<div id="sp-load-store" class="paragraph">
+<p>FLH and FSH are only guaranteed to execute atomically if the effective
+address is naturally aligned.</p>
+</div>
+<div class="paragraph">
+<p>FLH and FSH do not modify the bits being transferred; in particular, the
+payloads of non-canonical NaNs are preserved. FLH NaN-boxes the result
+written to <em>rd</em>, whereas FSH ignores all but the lower 16 bits in <em>rs2</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="half-precision-computational-instructions"><a class="anchor" href="#half-precision-computational-instructions"></a>Half-Precision Computational Instructions</h3>
+<div class="paragraph">
+<p>A new supported format is added to the format field of most
+instructions, as shown in <a href="#tab:fpextfmth">Format field encoding.</a>.</p>
+</div>
+<table id="tab:fpextfmth" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 1. Format field encoding.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><em>fmt</em> field</th>
+<th class="tableblock halign-center valign-top">Mnemonic</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">00</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32-bit single-precision</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">01</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">D</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64-bit double-precision</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">H</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16-bit half-precision</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Q</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">128-bit quad-precision</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The half-precision floating-point computational instructions are defined
+analogously to their single-precision counterparts, but operate on
+half-precision operands and produce half-precision results.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULwEnH1uogTDKFm1SUAjQFBGAmmQJ1pKQWl2CnUEwxRpiSCzIFZoQxUHWQL1AESvp6-un7OkZABXA5pNgQ4hJkhxQXJYNEsdG4zTHCao4RVB8KbYBqihHclLTcElRTgMrVPUBakAkcTkgrzUsuMUWKHRBb3c3RxUXfLTjUCczxDfXRd3PxDINwPP10oQHkFhwYFAI2OLYWAL7fh9M=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUXeL9ov1dXRx0QczgkOd1GNrdRC6TeG6i1KAOkEAptsUqDsltbgEVYMxQkMumgZjoIYgX5zmFxtC1CObX1yUbIhbgxFWDUaoGozgGtJyS1A1APWre-A23hgpqKBmG4NVx9YCAOkIYrc=" alt="svg">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="half-precision-conversion-and-move-instructions"><a class="anchor" href="#half-precision-conversion-and-move-instructions"></a>Half-Precision Conversion and Move Instructions</h3>
+<div class="paragraph">
+<p>New floating-point-to-integer and integer-to-floating-point conversion
+instructions are added. These instructions are defined analogously to
+the single-precision-to-integer and integer-to-single-precision
+conversion instructions. FCVT.W.H or FCVT.L.H converts a half-precision
+floating-point number to a signed 32-bit or 64-bit integer,
+respectively. FCVT.H.W or FCVT.H.L converts a 32-bit or 64-bit signed
+integer, respectively, into a half-precision floating-point number.
+FCVT.WU.H, FCVT.LU.H, FCVT.H.WU, and FCVT.H.LU variants convert to or
+from unsigned integer values. FCVT.L[U].H and FCVT.H.L[U] are RV64-only
+instructions.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpm6vrqPsH6LoFwOnYWh2EblOE7qIUiE5k3aZAXSmpxSUwCkWvMZLeXEy9xkBNQb4QAqedxYZwjch2FhclQ0ncOo2w6gyPDo3V9wESKGwUU4wQpqTllmCYAjRX3QMoCiRwWZ5WmpdcYooa0CDL3ZzDQvQy80r0PGAcDxAXbE5sLQDn4XVv" alt="svg">
+</div>
+</div>
+<div id="half-prec-conv-and-mv" class="paragraph">
+<p>New floating-point-to-floating-point conversion instructions are added.
+These instructions are defined analogously to the double-precision
+floating-point-to-floating-point conversion instructions. FCVT.S.H or
+FCVT.H.S converts a half-precision floating-point number to a
+single-precision floating-point number, or vice-versa, respectively. If
+the D extension is present, FCVT.D.H or FCVT.H.D converts a
+half-precision floating-point number to a double-precision
+floating-point number, or vice-versa, respectively. If the Q extension
+is present, FCVT.Q.H or FCVT.H.Q converts a half-precision
+floating-point number to a quad-precision floating-point number, or
+vice-versa, respectively.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpm6vrqPsH6LoFEE3H1uogTDdFmF6UAjEZ2XRToK6U1OISYigUc42RzM3FNNcYqCnIFzeB043FhnDDkN1YXJSMhwwOcsZjohFWEz1A-qC0C5QORDXFCGFKWm4JhilGWE0A0bjcklaal1xiihq_ILe4OYeF6AXrecCYHnrBMKYLsqgLjBmILApxdWwtAHZjmdk=" alt="svg">
+</div>
+</div>
+<div id="half-prec-flpt-to-flpt-conv" class="paragraph">
+<p>Floating-point to floating-point sign-injection instructions, FSGNJ.H,
+FSGNJN.H, and FSGNJX.H are defined analogously to the single-precision
+sign-injection instruction.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULUI-t1UHoMIXrKEoBqgYBmA5ToI6U1OISVA3GcA1ppXnJJcYgTTAdQI66V7RfrL5XBE5big0h1iDbUlyUbIhbgxFWDUaoGowQzsotQdUA1K_ugct4sCdMkcIJZLxbsLufF1hHbC0AfUpi1Q==" alt="svg">
+</div>
+</div>
+<div id="flt-to-flt-sgn-inj-instr" class="paragraph">
+<p>Instructions are provided to move bit patterns between the
+floating-point and integer registers. FMV.X.H moves the half-precision
+value in floating-point register <em>rs1</em> to a representation in IEEE
+754-2008 standard encoding in integer register <em>rd</em>, filling the upper
+XLEN-16 bits with copies of the floating-point number&#8217;s sign bit.</p>
+</div>
+<div class="paragraph">
+<p>FMV.H.X moves the half-precision value encoded in IEEE 754-2008 standard
+encoding from the lower 16 bits of integer register <em>rs1</em> to the
+floating-point register <em>rd</em>, NaN-boxing the result.</p>
+</div>
+<div class="paragraph">
+<p>FMV.X.H and FMV.H.X do not modify the bits being transferred; in
+particular, the payloads of non-canonical NaNs are preserved.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULgNOxtToInaZwnUUpQF0gANNpCtSRklpcAqNQ9Bkj9OWC9ME0GQNVGxgYQElcVhUbQuxCtqq4KBlK4tRlhKkLbBOqDiO4jrTcElQdQAPUPcAYhx1ppXnJJaZIwQeyw803TC9CzwPK8tCLAOuOrQUAuRJpXw==" alt="svg">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="flt-pt-to-int-move"><a class="anchor" href="#flt-pt-to-int-move"></a>Half-Precision Floating-Point Compare Instructions</h3>
+<div class="paragraph">
+<p>The half-precision floating-point compare instructions are defined
+analogously to their single-precision counterparts, but operate on
+half-precision operands.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRN1fXUfcP0HULUI-t1UHoMIXrKEoBqgYBmA5ToI6U1OISVA3GCA25IA0w1cZA1a6B-j4h-j6uOK0oNoTYgWxFcVGyIW4NRlg1GKFqMIJrSMstQdUA1K_ugcv4tNK85BJTpEACGe_m7AsJo9haAG0dYRM=" alt="svg">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="half-pr-flt-pt-compare"><a class="anchor" href="#half-pr-flt-pt-compare"></a>Half-Precision Floating-Point Classify Instruction</h3>
+<div class="paragraph">
+<p>The half-precision floating-point classify instruction, FCLASS.H, is
+defined analogously to its single-precision counterpart, but operates on
+half-precision operands.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUchLzE21UlDPL0jOT0lV11FILCkpAqpRNwey1f0DdN0C1GNrdRBaTOFailKASkAApsVUXUc9JbW4BFWDMUJDLpoGY6AGAwNDnBYUG0I0IFmgoF5clIxbgxGGBnUDVNVGcNVpuSWoqoGa1T1wmZ1WmpdcYooUQCCz3Zx9HIODwVpiawG4sF86" alt="svg">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="half-pr-flt-class"><a class="anchor" href="#half-pr-flt-class"></a>"Zfhmin" Standard Extension for Minimal Half-Precision Floating-Point</h3>
+<div class="paragraph">
+<p>This section describes the Zfhmin standard extension, which provides
+minimal support for 16-bit half-precision binary floating-point
+instructions. The Zfhmin extension is a subset of the Zfh extension,
+consisting only of data transfer and conversion instructions. Like Zfh,
+the Zfhmin extension depends on the single-precision floating-point
+extension, F. The expectation is that Zfhmin software primarily uses the
+half-precision format for storage, performing most computation in higher
+precision.</p>
+</div>
+<div class="paragraph">
+<p>The Zfhmin extension includes the following instructions from the Zfh
+extension: FLH, FSH, FMV.X.H, FMV.H.X, FCVT.S.H, and FCVT.H.S. If the D
+extension is present, the FCVT.D.H and FCVT.H.D instructions are also
+included. If the Q extension is present, the FCVT.Q.H and FCVT.H.Q
+instructions are additionally included.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Zfhmin does not include the FSGNJ.H instruction, because it suffices to
+instead use the FSGNJ.S instruction to move half-precision values
+between floating-point registers.</p>
+</div>
+<div class="paragraph">
+<p>Half-precision addition, subtraction, multiplication, division, and
+square-root operations can be faithfully emulated by converting the
+half-precision operands to single-precision, performing the operation
+using single-precision arithmetic, then converting back to
+half-precision. cite:[roux:hal-01091186] Performing half-precision fused multiply-addition using
+this method incurs a 1-ulp error on some inputs for the RNE and RMM
+rounding modes.</p>
+</div>
+<div class="paragraph">
+<p>Conversion from 8- or 16-bit integers to half-precision can be emulated
+by first converting to single-precision, then converting to
+half-precision. Conversion from 32-bit integer can be emulated by first
+converting to double-precision. If the D extension is not present and a
+1-ulp error under RNE or RMM is tolerable, 32-bit integers can be first
+converted to single-precision instead. The same remark applies to
+conversions from 64-bit integers without the Q extension.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a></span>
+  <span class="next"><a href="bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Stable
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="zfh.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../v20240411/unpriv/zfh.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
