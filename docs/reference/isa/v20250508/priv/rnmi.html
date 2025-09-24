@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="smcntrpmf.html">
     <link rel="next" href="smcdeleg.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -413,7 +413,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -547,8 +547,8 @@
       <li><a href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="rnmi"><a class="anchor" href="#rnmi"></a>"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>The base machine-level architecture supports only unresumable
@@ -564,8 +564,11 @@ recoverable and so execution is not generally resumable.</p>
 <code>mnstatus</code>, and <code>mnscratch</code>) to hold the interrupted state, and one new
 instruction, MNRET, to resume from the RNMI handler.</p>
 </div>
-<div class="sect2">
-<h3 id="rnmi-interrupt-signals"><a class="anchor" href="#rnmi-interrupt-signals"></a>RNMI Interrupt Signals</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="rnmi-interrupt-signals"><a class="anchor" href="#rnmi-interrupt-signals"></a>RNMI Interrupt Signals</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>rnmi</code> interrupt signals are inputs to the hart. These interrupts
 have higher priority than any other interrupt or exception on the hart
@@ -573,8 +576,10 @@ and cannot be disabled by software. Specifically, they are not disabled
 by clearing the <code>mstatus</code>.MIE register.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="rnmi-handler-addresses"><a class="anchor" href="#rnmi-handler-addresses"></a>RNMI Handler Addresses</h3>
+</div>
+<div class="sect1">
+<h2 id="rnmi-handler-addresses"><a class="anchor" href="#rnmi-handler-addresses"></a>RNMI Handler Addresses</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The RNMI interrupt trap handler address is implementation-defined.</p>
 </div>
@@ -596,8 +601,10 @@ in <code>mtvec</code> as the RNMI exception trap handler.
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="rnmi-csrs"><a class="anchor" href="#rnmi-csrs"></a>RNMI CSRs</h3>
+</div>
+<div class="sect1">
+<h2 id="rnmi-csrs"><a class="anchor" href="#rnmi-csrs"></a>RNMI CSRs</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This extension adds additional M-mode CSRs to enable a resumable
 non-maskable interrupt (RNMI).</p>
@@ -745,8 +752,10 @@ of the WFI instruction.</p>
 and hardware implementations should return zeros.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="mnret-instruction"><a class="anchor" href="#mnret-instruction"></a>MNRET Instruction</h3>
+</div>
+<div class="sect1">
+<h2 id="mnret-instruction"><a class="anchor" href="#mnret-instruction"></a>MNRET Instruction</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>MNRET is an M-mode-only instruction that uses the values in <code>mnepc</code> and
 <code>mnstatus</code> to return to the program counter, privilege mode, and
@@ -756,8 +765,10 @@ If the Zicfilp extension is implemented, then if the new privileged mode
 is <em>y</em>, MNRET sets <code>ELP</code> to the logical AND of <em>y</em>LPE (see <a href="#FCFIACT">[FCFIACT]</a>) and <code>mnstatus</code>.MNPELP.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="rnmi-operation"><a class="anchor" href="#rnmi-operation"></a>RNMI Operation</h3>
+</div>
+<div class="sect1">
+<h2 id="rnmi-operation"><a class="anchor" href="#rnmi-operation"></a>RNMI Operation</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>When an RNMI interrupt is detected, the interrupted PC is written to the
 <code>mnepc</code> CSR, the type of RNMI to the <code>mncause</code> CSR, and the privilege
@@ -792,7 +803,6 @@ instructions. In particular, MRET and SRET are unaffected by the
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>

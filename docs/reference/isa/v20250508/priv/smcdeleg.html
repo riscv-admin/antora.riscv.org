@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"Smcdeleg" Counter Delegation Extension, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="rnmi.html">
     <link rel="next" href="smdbltrp.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -413,7 +413,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""Smcdeleg" Counter Delegation Extension, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -547,8 +547,8 @@
       <li><a href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="smcdeleg"><a class="anchor" href="#smcdeleg"></a>"Smcdeleg" Counter Delegation Extension, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"Smcdeleg" Counter Delegation Extension, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>In modern “Rich OS” environments, hardware performance monitoring
@@ -588,8 +588,11 @@ architecture and Supervisor-level extension, ‘ccfg’ for Counter
 Configuration) provides access to delegated counters, and to new
 supervisor-level state.</p>
 </div>
-<div class="sect2">
-<h3 id="counter-delegation"><a class="anchor" href="#counter-delegation"></a>Counter Delegation</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="counter-delegation"><a class="anchor" href="#counter-delegation"></a>Counter Delegation</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The <code>mcounteren</code> register allows M-mode to provide the next-lower
 privilege mode with read access to select counters. When the Smcdeleg/Ssccfg
@@ -767,8 +770,10 @@ subset of the counter configuration registers. Counter configuration
 register bit 62 (MINH) is read-only 0 when accessed through <code>sireg*</code>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="supervisor-counter-inhibit-scountinhibit-register"><a class="anchor" href="#supervisor-counter-inhibit-scountinhibit-register"></a>Supervisor Counter Inhibit (<code>scountinhibit</code>) Register</h3>
+</div>
+<div class="sect1">
+<h2 id="supervisor-counter-inhibit-scountinhibit-register"><a class="anchor" href="#supervisor-counter-inhibit-scountinhibit-register"></a>Supervisor Counter Inhibit (<code>scountinhibit</code>) Register</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Smcdeleg/Ssccfg defines a new <code>scountinhibit</code> register, a masked alias of
 <code>mcountinhibit</code>. For counters delegated to S-mode, the associated
@@ -783,16 +788,20 @@ is enabled, attempts to access <code>scountinhibit</code> from VS-mode or VU-mod
 raise a virtual-instruction  exception.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="virtualizing-scountovf"><a class="anchor" href="#virtualizing-scountovf"></a>Virtualizing <code>scountovf</code></h3>
+</div>
+<div class="sect1">
+<h2 id="virtualizing-scountovf"><a class="anchor" href="#virtualizing-scountovf"></a>Virtualizing <code>scountovf</code></h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>For implementations that support Smcdeleg/Ssccfg, Sscofpmf, and the H
 extension, when <code>menvcfg</code>.CDE=1, attempts to read <code>scountovf</code> from VS-mode
 or VU-mode raise a virtual-instruction  exception.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="virtualizing-local-counter-overflow-interrupts"><a class="anchor" href="#virtualizing-local-counter-overflow-interrupts"></a>Virtualizing Local-Counter-Overflow Interrupts</h3>
+</div>
+<div class="sect1">
+<h2 id="virtualizing-local-counter-overflow-interrupts"><a class="anchor" href="#virtualizing-local-counter-overflow-interrupts"></a>Virtualizing Local-Counter-Overflow Interrupts</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>For implementations that support Smcdeleg, Sscofpmf, and Smaia, the
 local-counter-overflow interrupt (LCOFI) bit (bit 13) in each of CSRs
@@ -822,7 +831,6 @@ and <code>hvien</code> is implemented and writable.</p>
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>

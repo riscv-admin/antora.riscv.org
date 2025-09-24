@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>Control and Status Registers (CSRs) :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="priv-intro.html">
     <link rel="next" href="machine.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -413,7 +413,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="Control and Status Registers (CSRs)"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -547,8 +547,8 @@
       <li><a href="priv-csrs.html">Control and Status Registers (CSRs)</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="priv-csrs"><a class="anchor" href="#priv-csrs"></a>Control and Status Registers (CSRs)</h2>
+</div><h1 id="page-title" class="page">Control and Status Registers (CSRs)</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>The SYSTEM major opcode is used to encode all privileged instructions in
@@ -574,8 +574,11 @@ level, they are also accessible at all higher privilege levels.</p>
 <p>Standard CSRs do not have side effects on reads but may have side
 effects on writes.</p>
 </div>
-<div class="sect2">
-<h3 id="csr-address-mapping-conventions"><a class="anchor" href="#csr-address-mapping-conventions"></a>CSR Address Mapping Conventions</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csr-address-mapping-conventions"><a class="anchor" href="#csr-address-mapping-conventions"></a>CSR Address Mapping Conventions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The standard RISC-V ISA sets aside a 12-bit encoding space (csr[11:0])
 for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address
@@ -648,8 +651,10 @@ illegal accesses. Currently, the counters are the only shadowed CSRs.</p>
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="csr-listing"><a class="anchor" href="#csr-listing"></a>CSR Listing</h3>
+</div>
+<div class="sect1">
+<h2 id="csr-listing"><a class="anchor" href="#csr-listing"></a>CSR Listing</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p><a href="#ucsrnames">Currently allocated RISC-V unprivileged CSR addresses.</a>-<a href="#mcsrnames1">Currently allocated RISC-V machine-level CSR addresses.</a> list the CSRs that
 have currently been allocated CSR addresses. The timers, counters, and
@@ -1853,14 +1858,16 @@ Debug scratch register 1.</p></td>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="csr-field-specifications"><a class="anchor" href="#csr-field-specifications"></a>CSR Field Specifications</h3>
+</div>
+<div class="sect1">
+<h2 id="csr-field-specifications"><a class="anchor" href="#csr-field-specifications"></a>CSR Field Specifications</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The following definitions and abbreviations are used in specifying the
 behavior of fields within the CSRs.</p>
 </div>
-<div class="sect3">
-<h4 id="reserved-writes-preserve-values-reads-ignore-values-wpri"><a class="anchor" href="#reserved-writes-preserve-values-reads-ignore-values-wpri"></a>Reserved Writes Preserve Values, Reads Ignore Values (WPRI)</h4>
+<div class="sect2">
+<h3 id="reserved-writes-preserve-values-reads-ignore-values-wpri"><a class="anchor" href="#reserved-writes-preserve-values-reads-ignore-values-wpri"></a>Reserved Writes Preserve Values, Reads Ignore Values (WPRI)</h3>
 <div class="paragraph">
 <p>Some whole read/write fields are reserved for future use. Software
 should ignore the values read from these fields, and should preserve the
@@ -1890,8 +1897,8 @@ general that can be problematic if intermediate values are not legal.</p>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="writeread-only-legal-values-wlrl"><a class="anchor" href="#writeread-only-legal-values-wlrl"></a>Write/Read Only Legal Values (WLRL)</h4>
+<div class="sect2">
+<h3 id="writeread-only-legal-values-wlrl"><a class="anchor" href="#writeread-only-legal-values-wlrl"></a>Write/Read Only Legal Values (WLRL)</h3>
 <div class="paragraph">
 <p>Some read/write CSR fields specify behavior for only a subset of
 possible bit encodings, with other bit encodings reserved. Software
@@ -1926,8 +1933,8 @@ illegal value, but the value returned should deterministically depend on
 the illegal written value and the value of the field prior to the write.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="write-any-values-reads-legal-values-warl"><a class="anchor" href="#write-any-values-reads-legal-values-warl"></a>Write Any Values, Reads Legal Values (WARL)</h4>
+<div class="sect2">
+<h3 id="write-any-values-reads-legal-values-warl"><a class="anchor" href="#write-any-values-reads-legal-values-warl"></a>Write Any Values, Reads Legal Values (WARL)</h3>
 <div class="paragraph">
 <p>Some read/write CSR fields are only defined for a subset of bit
 encodings, but allow any value to be written while guaranteeing to
@@ -1945,8 +1952,10 @@ written value and the architectural state of the hart.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="csr-field-modulation"><a class="anchor" href="#csr-field-modulation"></a>CSR Field Modulation</h3>
+</div>
+<div class="sect1">
+<h2 id="csr-field-modulation"><a class="anchor" href="#csr-field-modulation"></a>CSR Field Modulation</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>If a write to one CSR changes the set of legal values allowed for a
 field of a second CSR, then unless specified otherwise, the second CSR&#8217;s
@@ -1984,8 +1993,10 @@ affected CSR and thus does not trigger any side effects specified for
 that CSR.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="implicit-reads-of-csrs"><a class="anchor" href="#implicit-reads-of-csrs"></a>Implicit Reads of CSRs</h3>
+</div>
+<div class="sect1">
+<h2 id="implicit-reads-of-csrs"><a class="anchor" href="#implicit-reads-of-csrs"></a>Implicit Reads of CSRs</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Implementations sometimes perform <em>implicit</em> reads of CSRs. (For
 example, all S-mode instruction fetches implicitly read the <code>satp</code> CSR.)
@@ -1995,8 +2006,10 @@ of the CSR, using a CSR-access instruction in a sufficient privilege
 mode.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="csrwidthmodulation"><a class="anchor" href="#csrwidthmodulation"></a>CSR Width Modulation</h3>
+</div>
+<div class="sect1">
+<h2 id="csrwidthmodulation"><a class="anchor" href="#csrwidthmodulation"></a>CSR Width Modulation</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>If the width of a CSR is changed (for example, by changing SXLEN or
 UXLEN, as described in <a href="#xlen-control">[xlen-control]</a>), the
@@ -2033,8 +2046,10 @@ at the same positions in the temporary register.</p>
 does not trigger any side effects.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="explicit-accesses-to-csrs-wider-than-xlen"><a class="anchor" href="#explicit-accesses-to-csrs-wider-than-xlen"></a>Explicit Accesses to CSRs Wider than XLEN</h3>
+</div>
+<div class="sect1">
+<h2 id="explicit-accesses-to-csrs-wider-than-xlen"><a class="anchor" href="#explicit-accesses-to-csrs-wider-than-xlen"></a>Explicit Accesses to CSRs Wider than XLEN</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>If a standard CSR is wider than XLEN bits, then an explicit read
 of the CSR returns the register&#8217;s least-significant XLEN bits,
@@ -2057,7 +2072,6 @@ the base RISC-V instruction set is RV32 (XLEN=32).
 For RV64 (when XLEN=64), the addresses of all standard high-half CSRs
 are reserved, so an attempt to access a high-half CSR
 typically raises an illegal-instruction exception.</p>
-</div>
 </div>
 </div>
 </div>

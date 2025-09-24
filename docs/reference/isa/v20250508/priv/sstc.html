@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="supervisor.html">
     <link rel="next" href="sscofpmf.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -413,7 +413,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -547,8 +547,8 @@
       <li><a href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="Sstc"><a class="anchor" href="#Sstc"></a>"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>The current Privileged arch specification only defines a hardware mechanism for
@@ -573,10 +573,13 @@ extension for VS-mode.</p>
 extensions, and 'tc' for timecmp). This extension adds the S-level stimecmp CSR
 and the VS-level vstimecmp CSR.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="machine-and-supervisor-level-additions"><a class="anchor" href="#machine-and-supervisor-level-additions"></a>Machine and Supervisor Level Additions</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="machine-and-supervisor-level-additions"><a class="anchor" href="#machine-and-supervisor-level-additions"></a>Machine and Supervisor Level Additions</h3>
-<div class="sect3">
-<h4 id="supervisor-timer-stimecmp-register"><a class="anchor" href="#supervisor-timer-stimecmp-register"></a>Supervisor Timer (<code>stimecmp</code>) Register</h4>
+<h3 id="supervisor-timer-stimecmp-register"><a class="anchor" href="#supervisor-timer-stimecmp-register"></a>Supervisor Timer (<code>stimecmp</code>) Register</h3>
 <div class="paragraph">
 <p>This extension adds this new CSR.</p>
 </div>
@@ -639,8 +642,8 @@ takes advantage of stimecmp directly.)</p>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="machine-interrupt-mip-and-mie-registers"><a class="anchor" href="#machine-interrupt-mip-and-mie-registers"></a>Machine Interrupt (<code>mip</code> and <code>mie</code>) Registers</h4>
+<div class="sect2">
+<h3 id="machine-interrupt-mip-and-mie-registers"><a class="anchor" href="#machine-interrupt-mip-and-mie-registers"></a>Machine Interrupt (<code>mip</code> and <code>mie</code>) Registers</h3>
 <div class="paragraph">
 <p>This extension modifies the description of the STIP/STIE bits in these
 registers as follows:</p>
@@ -656,8 +659,8 @@ interrupt signal resulting from stimecmp. This timer interrupt signal is
 cleared by writing <code>stimecmp</code> with a value greater than the current time value.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h4>
+<div class="sect2">
+<h3 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h3>
 <div class="paragraph">
 <p>This extension modifies the description of the STIP/STIE bits in these
 registers as follows:</p>
@@ -673,8 +676,8 @@ value that respectively is less than or equal to, or greater than, the current
 time value.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="machine-counter-enable-mcounteren-register"><a class="anchor" href="#machine-counter-enable-mcounteren-register"></a>Machine Counter-Enable (<code>mcounteren</code>) Register</h4>
+<div class="sect2">
+<h3 id="machine-counter-enable-mcounteren-register"><a class="anchor" href="#machine-counter-enable-mcounteren-register"></a>Machine Counter-Enable (<code>mcounteren</code>) Register</h3>
 <div class="paragraph">
 <p>This extension adds to the description of the TM bit in this register as
 follows:</p>
@@ -690,10 +693,12 @@ in VS-mode if implemented and not otherwise prevented by the TM bit in
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="hypervisor-extension-additions"><a class="anchor" href="#hypervisor-extension-additions"></a>Hypervisor Extension Additions</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="hypervisor-extension-additions"><a class="anchor" href="#hypervisor-extension-additions"></a>Hypervisor Extension Additions</h3>
-<div class="sect3">
-<h4 id="virtual-supervisor-timer-vstimecmp-register"><a class="anchor" href="#virtual-supervisor-timer-vstimecmp-register"></a>Virtual Supervisor Timer (<code>vstimecmp</code>) Register</h4>
+<h3 id="virtual-supervisor-timer-vstimecmp-register"><a class="anchor" href="#virtual-supervisor-timer-vstimecmp-register"></a>Virtual Supervisor Timer (<code>vstimecmp</code>) Register</h3>
 <div class="paragraph">
 <p>This extension adds this new CSR.</p>
 </div>
@@ -740,8 +745,8 @@ facility, while new VS-mode software takes advantage of vstimecmp directly.)</p>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="hypervisor-interrupt-hvip-hip-and-hie-registers"><a class="anchor" href="#hypervisor-interrupt-hvip-hip-and-hie-registers"></a>Hypervisor Interrupt (<code>hvip</code>, <code>hip</code>, and <code>hie</code>) Registers</h4>
+<div class="sect2">
+<h3 id="hypervisor-interrupt-hvip-hip-and-hie-registers"><a class="anchor" href="#hypervisor-interrupt-hvip-hip-and-hie-registers"></a>Hypervisor Interrupt (<code>hvip</code>, <code>hip</code>, and <code>hie</code>) Registers</h3>
 <div class="paragraph">
 <p>This extension modifies the description of the VSTIP/VSTIE bits in the hip/hie
 registers as follows:</p>
@@ -757,8 +762,8 @@ than, the current (<code>time</code> + <code>htimedelta</code>) value. The <code
 while V=0 as well as V=1.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="hypervisor-counter-enable-hcounteren-register"><a class="anchor" href="#hypervisor-counter-enable-hcounteren-register"></a>Hypervisor Counter-Enable (<code>hcounteren</code>) Register</h4>
+<div class="sect2">
+<h3 id="hypervisor-counter-enable-hcounteren-register"><a class="anchor" href="#hypervisor-counter-enable-hcounteren-register"></a>Hypervisor Counter-Enable (<code>hcounteren</code>) Register</h3>
 <div class="paragraph">
 <p>This extension adds to the description of the TM bit in this register as
 follows:</p>
@@ -772,8 +777,10 @@ When this bit and the same bit in <code>mcounteren</code> are both set, access t
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="environment-config-menvcfg-and-henvcfg-support"><a class="anchor" href="#environment-config-menvcfg-and-henvcfg-support"></a>Environment Config (<code>menvcfg</code> and <code>henvcfg</code>) Support</h3>
+</div>
+<div class="sect1">
+<h2 id="environment-config-menvcfg-and-henvcfg-support"><a class="anchor" href="#environment-config-menvcfg-and-henvcfg-support"></a>Environment Config (<code>menvcfg</code> and <code>henvcfg</code>) Support</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Enable/disable bits for this extension are provided in the new <code>menvcfg</code> /
 <code>henvcfg</code> CSRs.</p>
@@ -795,7 +802,6 @@ if this extension is not implemented. Further, if the H extension is implemented
 <code>stimecmp</code> (really <code>vstimecmp</code>) when V = 1 raises a virtual-instruction  exception,
 and VSTIP in hip reverts to its defined behavior as if this extension is not
 implemented.</p>
-</div>
 </div>
 </div>
 </div>

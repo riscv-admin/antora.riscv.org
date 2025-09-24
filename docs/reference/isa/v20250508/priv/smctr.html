@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"Smctr" Control Transfer Records Extension, Version 1.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="smdbltrp.html">
     <link rel="next" href="supervisor.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -413,7 +413,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""Smctr" Control Transfer Records Extension, Version 1.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -547,8 +547,8 @@
       <li><a href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="smctr"><a class="anchor" href="#smctr"></a>"Smctr" Control Transfer Records Extension, Version 1.0</h2>
+</div><h1 id="page-title" class="page">"Smctr" Control Transfer Records Extension, Version 1.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>A method for recording control flow transfer history is valuable not only for performance profiling but also for debugging. Control flow transfers refer to jump instructions (including function calls and returns), taken branch instructions, traps, and trap returns.  Profiling tools, such as Linux perf, collect control transfer history when sampling software execution, thereby enabling tools, like AutoFDO, to identify hot paths for optimization.</p>
@@ -574,10 +574,13 @@
 <div class="paragraph">
 <p>Smctr and Ssctr depend on both the implementation of S-mode and the Sscsrind extension.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csrs"><a class="anchor" href="#csrs"></a>CSRs</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="csrs"><a class="anchor" href="#csrs"></a>CSRs</h3>
-<div class="sect3">
-<h4 id="machine-control-transfer-records-control-register-mctrctl"><a class="anchor" href="#machine-control-transfer-records-control-register-mctrctl"></a>Machine Control Transfer Records Control Register (<code>mctrctl</code>)</h4>
+<h3 id="machine-control-transfer-records-control-register-mctrctl"><a class="anchor" href="#machine-control-transfer-records-control-register-mctrctl"></a>Machine Control Transfer Records Control Register (<code>mctrctl</code>)</h3>
 <div class="paragraph">
 <p>The <code>mctrctl</code> register is a 64-bit read/write register that enables and configures the CTR capability.</p>
 </div>
@@ -704,8 +707,8 @@
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="supervisor-control-transfer-records-control-register-sctrctl"><a class="anchor" href="#supervisor-control-transfer-records-control-register-sctrctl"></a>Supervisor Control Transfer Records Control Register (<code>sctrctl</code>)</h4>
+<div class="sect2">
+<h3 id="supervisor-control-transfer-records-control-register-sctrctl"><a class="anchor" href="#supervisor-control-transfer-records-control-register-sctrctl"></a>Supervisor Control Transfer Records Control Register (<code>sctrctl</code>)</h3>
 <div class="paragraph">
 <p>The <code>sctrctl</code> register provides supervisor mode access to a subset of <code>mctrctl</code>.</p>
 </div>
@@ -713,8 +716,8 @@
 <p>Bits 2 and 9 in <code>sctrctl</code> are read-only 0. As a result, the M and MTE fields in <code>mctrctl</code> are not accessible through <code>sctrctl</code>.  All other <code>mctrctl</code> fields are accessible through <code>sctrctl</code>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="virtual-supervisor-control-transfer-records-control-register-vsctrctl"><a class="anchor" href="#virtual-supervisor-control-transfer-records-control-register-vsctrctl"></a>Virtual Supervisor Control Transfer Records Control Register (<code>vsctrctl</code>)</h4>
+<div class="sect2">
+<h3 id="virtual-supervisor-control-transfer-records-control-register-vsctrctl"><a class="anchor" href="#virtual-supervisor-control-transfer-records-control-register-vsctrctl"></a>Virtual Supervisor Control Transfer Records Control Register (<code>vsctrctl</code>)</h3>
 <div class="paragraph">
 <p>If the H extension is implemented, the <code>vsctrctl</code> register is a 64-bit read/write register that is VS-mode&#8217;s version of supervisor register <code>sctrctl</code>.  When V=1, <code>vsctrctl</code> substitutes for the usual <code>sctrctl</code>, so instructions that normally read or modify <code>sctrctl</code> actually access <code>vsctrctl</code> instead.</p>
 </div>
@@ -777,8 +780,8 @@
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="supervisor-control-transfer-records-depth-register-sctrdepth"><a class="anchor" href="#supervisor-control-transfer-records-depth-register-sctrdepth"></a>Supervisor Control Transfer Records Depth Register (<code>sctrdepth</code>)</h4>
+<div class="sect2">
+<h3 id="supervisor-control-transfer-records-depth-register-sctrdepth"><a class="anchor" href="#supervisor-control-transfer-records-depth-register-sctrdepth"></a>Supervisor Control Transfer Records Depth Register (<code>sctrdepth</code>)</h3>
 <div class="paragraph">
 <p>The 32-bit <code>sctrdepth</code> register specifies the depth of the CTR buffer.</p>
 </div>
@@ -839,8 +842,8 @@
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="supervisor-control-transfer-records-status-register-sctrstatus"><a class="anchor" href="#supervisor-control-transfer-records-status-register-sctrstatus"></a>Supervisor Control Transfer Records Status Register (<code>sctrstatus</code>)</h4>
+<div class="sect2">
+<h3 id="supervisor-control-transfer-records-status-register-sctrstatus"><a class="anchor" href="#supervisor-control-transfer-records-status-register-sctrstatus"></a>Supervisor Control Transfer Records Status Register (<code>sctrstatus</code>)</h3>
 <div class="paragraph">
 <p>The 32-bit <code>sctrstatus</code> register grants access to CTR status information and is updated by the hardware whenever CTR is active.  CTR is active when the current privilege mode is enabled for recording and CTR is not frozen.</p>
 </div>
@@ -941,8 +944,10 @@ and software should ignore but preserve any fields that it does not recognize.  
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="entry-registers"><a class="anchor" href="#entry-registers"></a>Entry Registers</h3>
+</div>
+<div class="sect1">
+<h2 id="entry-registers"><a class="anchor" href="#entry-registers"></a>Entry Registers</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Control transfer records are stored in a CTR buffer, such that each buffer entry stores information about a single transfer.  The CTR buffer entries are logically accessed via the indirect register access mechanism defined by the Sscsrind extension. The <code>siselect</code> index range 0x200 through 0x2FF is reserved for CTR logical entries 0 through 255. When <code>siselect</code> holds a value in this range, <code>sireg</code> provides access to <code>ctrsource</code>, <code>sireg2</code> provides access to <code>ctrtarget</code>, and <code>sireg3</code> provides access to <code>ctrdata</code>.  <code>sireg4</code>, <code>sireg5</code>, and <code>sireg6</code> are read-only 0.</p>
 </div>
@@ -952,8 +957,8 @@ and software should ignore but preserve any fields that it does not recognize.  
 <div class="paragraph">
 <p>See <a href="#state-enable-access-control">State Enable Access Control</a> for cases where CTR accesses from S-mode and VS-mode may be restricted.</p>
 </div>
-<div class="sect3">
-<h4 id="control-transfer-record-source-register-ctrsource"><a class="anchor" href="#control-transfer-record-source-register-ctrsource"></a>Control Transfer Record Source Register (<code>ctrsource</code>)</h4>
+<div class="sect2">
+<h3 id="control-transfer-record-source-register-ctrsource"><a class="anchor" href="#control-transfer-record-source-register-ctrsource"></a>Control Transfer Record Source Register (<code>ctrsource</code>)</h3>
 <div class="paragraph">
 <p>The <code>ctrsource</code> register contains the source program counter, which is the <code>pc</code> of the recorded control transfer instruction, or the epc of the recorded trap.  The valid (V) bit is set by the hardware when a transfer is recorded in the selected CTR buffer entry, and implies that data in <code>ctrsource</code>, <code>ctrtarget</code>, and <code>ctrdata</code> is valid for this entry.</p>
 </div>
@@ -981,8 +986,8 @@ and software should ignore but preserve any fields that it does not recognize.  
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="control-transfer-record-target-register-ctrtarget"><a class="anchor" href="#control-transfer-record-target-register-ctrtarget"></a>Control Transfer Record Target Register (<code>ctrtarget</code>)</h4>
+<div class="sect2">
+<h3 id="control-transfer-record-target-register-ctrtarget"><a class="anchor" href="#control-transfer-record-target-register-ctrtarget"></a>Control Transfer Record Target Register (<code>ctrtarget</code>)</h3>
 <div class="paragraph">
 <p>The <code>ctrtarget</code> register contains the target (destination) program counter
 of the recorded transfer. The optional MISP bit is set by the hardware
@@ -1000,8 +1005,8 @@ is read-only 0 when not implemented.</p>
 <div class="title">Figure 6. Control Transfer Record Target Register Format for MXLEN=64</div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="control-transfer-record-metadata-register-ctrdata"><a class="anchor" href="#control-transfer-record-metadata-register-ctrdata"></a>Control Transfer Record Metadata Register (<code>ctrdata</code>)</h4>
+<div class="sect2">
+<h3 id="control-transfer-record-metadata-register-ctrdata"><a class="anchor" href="#control-transfer-record-metadata-register-ctrdata"></a>Control Transfer Record Metadata Register (<code>ctrdata</code>)</h3>
 <div class="paragraph">
 <p>The <code>ctrdata</code> register contains metadata for the recorded transfer. This
 register must be implemented, though all fields within it are optional.
@@ -1068,10 +1073,12 @@ CC[15:12]) and Cycle Count Mantissa (CCM, in CC[11:0]). See
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="instructions"><a class="anchor" href="#instructions"></a>Instructions</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="instructions"><a class="anchor" href="#instructions"></a>Instructions</h3>
-<div class="sect3">
-<h4 id="supervisor-ctr-clear-instruction"><a class="anchor" href="#supervisor-ctr-clear-instruction"></a>Supervisor CTR Clear Instruction</h4>
+<h3 id="supervisor-ctr-clear-instruction"><a class="anchor" href="#supervisor-ctr-clear-instruction"></a>Supervisor CTR Clear Instruction</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvuqxOgollQVAlRa1OggDTBEGFKWgajYFaTZA6DNC1meM0JdWmpdcYgxUDNNojKYRp4XFhmAbcVlogqzP0EgH2UJDIyQLwRz1YOeQIGefIAUNgwpDAxNNVPtjawGWzlWv" alt="svg">
@@ -1098,8 +1105,10 @@ CC[15:12]) and Cycle Count Mantissa (CCM, in CC[11:0]). See
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="state-enable-access-control"><a class="anchor" href="#state-enable-access-control"></a>State Enable Access Control</h3>
+</div>
+<div class="sect1">
+<h2 id="state-enable-access-control"><a class="anchor" href="#state-enable-access-control"></a>State Enable Access Control</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>When Smstateen is implemented, the <code>mstateen0</code>.CTR bit controls access to CTR register state from privilege modes less privileged than M-mode.  When <code>mstateen0</code>.CTR=1, accesses to CTR register state behave as described in <a href="#csrs">CSRs</a> and <a href="#entry-registers">Entry Registers</a> above, while SCTRCLR behaves as described in <a href="#supervisor-ctr-clear-instruction">Supervisor CTR Clear Instruction</a>.  When <code>mstateen0</code>.CTR=0 and the privilege mode is less privileged than M-mode, the following operations raise an illegal-instruction exception:</p>
 </div>
@@ -1171,8 +1180,10 @@ CC[15:12]) and Cycle Count Mantissa (CCM, in CC[11:0]). See
 </table>
 </div>
 </div>
-<div class="sect2">
-<h3 id="behavior"><a class="anchor" href="#behavior"></a>Behavior</h3>
+</div>
+<div class="sect1">
+<h2 id="behavior"><a class="anchor" href="#behavior"></a>Behavior</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>CTR records qualified control transfers.  Control transfers are qualified if they meet the following criteria:</p>
 </div>
@@ -1212,8 +1223,8 @@ CC[15:12]) and Cycle Count Mantissa (CCM, in CC[11:0]). See
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="privilege-mode-transitions"><a class="anchor" href="#privilege-mode-transitions"></a>Privilege Mode Transitions</h4>
+<div class="sect2">
+<h3 id="privilege-mode-transitions"><a class="anchor" href="#privilege-mode-transitions"></a>Privilege Mode Transitions</h3>
 <div class="paragraph">
 <p>Transfers that change the privilege mode are a special case. What is
 recorded, if anything, depends on whether the source privilege mode
@@ -1288,8 +1299,8 @@ or trap return).</p>
 </tr>
 </tbody>
 </table>
-<div class="sect4">
-<h5 id="virtualization-mode-transitions"><a class="anchor" href="#virtualization-mode-transitions"></a>Virtualization Mode Transitions</h5>
+<div class="sect3">
+<h4 id="virtualization-mode-transitions"><a class="anchor" href="#virtualization-mode-transitions"></a>Virtualization Mode Transitions</h4>
 <div class="paragraph">
 <p>Transitions between VS/VU-mode and M/HS-mode are unique in that they effect a change in the active CTR control register, and hence the CTR configuration.  What is recorded, if anything, on these virtualization mode transitions depends upon fields from both <code>[ms]ctrctl</code> and <code>vsctrctl</code>.</p>
 </div>
@@ -1324,8 +1335,8 @@ or trap return).</p>
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="external-traps"><a class="anchor" href="#external-traps"></a>External Traps</h5>
+<div class="sect3">
+<h4 id="external-traps"><a class="anchor" href="#external-traps"></a>External Traps</h4>
 <div class="paragraph">
 <p>External traps are traps from a privilege mode enabled for CTR recording to a privilege mode that is not enabled for CTR recording.  By default external traps are not recorded, but privileged software running in the target mode of the trap can opt-in to allowing CTR to record external traps into that mode. The <code><em>x</em>ctrctl</code>.<em>x</em>TE bits allow M-mode, S-mode, and VS-mode to opt-in separately.</p>
 </div>
@@ -1444,8 +1455,8 @@ record.</em></p>
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="transfer-type-filtering"><a class="anchor" href="#transfer-type-filtering"></a>Transfer Type Filtering</h4>
+<div class="sect2">
+<h3 id="transfer-type-filtering"><a class="anchor" href="#transfer-type-filtering"></a>Transfer Type Filtering</h3>
 <div class="paragraph">
 <p>Default CTR behavior, when all transfer type filter bits (<code><em>x</em>ctrctl</code>[47:32]) are unimplemented or 0, is to record all control transfers within enabled privileged modes. By setting transfer type filter bits, software can opt out of recording select transfer types, or opt into recording non-default operations.  All transfer type filter bits are optional.</p>
 </div>
@@ -1662,8 +1673,8 @@ in the
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="cycle-counting"><a class="anchor" href="#cycle-counting"></a>Cycle Counting</h4>
+<div class="sect2">
+<h3 id="cycle-counting"><a class="anchor" href="#cycle-counting"></a>Cycle Counting</h3>
 <div class="paragraph">
 <p>The <code>ctrdata</code> register may optionally include a count of CPU cycles elapsed since the prior CTR record.  The elapsed cycle count value is represented by the CC field, which has a 12-bit mantissa component (Cycle Count Mantissa, or CCM) and a 4-bit exponent component (Cycle Count Exponent, or CCE).</p>
 </div>
@@ -1762,8 +1773,8 @@ calls and returns.</p>
 <p>The CC value is valid only when the Cycle Count Valid (CCV) bit is set.  If CCV=0, the CC value might not hold the correct count of elapsed active cycles since the last recorded transfer.  The next record will have CCV=0 after a write to <code><em>x</em>ctrctl</code>, or execution of SCTRCLR, since CtrCycleCounter is reset.  CCV should additionally be cleared after any other implementation-specific scenarios where active cycles might not be counted in CtrCycleCounter.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="ras-return-address-stack-emulation-mode"><a class="anchor" href="#ras-return-address-stack-emulation-mode"></a>RAS (Return Address Stack) Emulation Mode</h4>
+<div class="sect2">
+<h3 id="ras-return-address-stack-emulation-mode"><a class="anchor" href="#ras-return-address-stack-emulation-mode"></a>RAS (Return Address Stack) Emulation Mode</h3>
 <div class="paragraph">
 <p>When the optional <code><em>x</em>ctrctl</code>.RASEMU bit is implemented and set to 1, transfer recording behavior is altered to emulate the behavior of a return-address stack (RAS).</p>
 </div>
@@ -1834,8 +1845,8 @@ an implementation may opt to record CCV=0 for all calls, or those whose parent c
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="freeze"><a class="anchor" href="#freeze"></a>Freeze</h4>
+<div class="sect2">
+<h3 id="freeze"><a class="anchor" href="#freeze"></a>Freeze</h3>
 <div class="paragraph">
 <p>When <code>sctrstatus</code>.FROZEN=1, transfer recording is inhibited.  This bit can be set by hardware, as described below, or by software.</p>
 </div>
@@ -1901,11 +1912,12 @@ recording is desired.</em></p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="custom-extensions"><a class="anchor" href="#custom-extensions"></a>Custom Extensions</h3>
+</div>
+<div class="sect1">
+<h2 id="custom-extensions"><a class="anchor" href="#custom-extensions"></a>Custom Extensions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Any custom CTR extension must be associated with a non-zero value within the designated custom bits in <code><em>x</em>ctrctl</code>.  When the custom bits hold a non-zero value that enables a custom extension, the extension may alter standard CTR behavior, and may define new custom status fields within <code>sctrstatus</code> or the CTR <a href="#_entry_registers">Entry Registers</a>.  All custom status fields, and standard status fields whose behavior is altered by the custom extension, must revert to standard behavior when the custom bits hold zero.  This includes read-only 0 behavior for any bits undefined by any implemented standard extensions.</p>
-</div>
 </div>
 </div>
 </div>
