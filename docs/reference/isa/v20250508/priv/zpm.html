@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>Pointer Masking Extensions, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="ssdbltrp.html">
     <link rel="next" href="priv-insns.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -416,7 +416,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="Pointer Masking Extensions, Version 1.0.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -550,11 +550,10 @@
       <li><a href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a></li>
     </ul>
   </nav>
-</div><div class="sect1">
-<h2 id="Zpm"><a class="anchor" href="#Zpm"></a>Pointer Masking Extensions, Version 1.0.0</h2>
+</div><h1 id="page-title" class="page">Pointer Masking Extensions, Version 1.0.0</h1>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h3>
 <div class="paragraph">
 <p>RISC-V Pointer Masking (PM) is a feature that, when enabled, causes the CPU to ignore the upper bits of the effective address (these terms will be defined more precisely in the Background section). This allows these bits to be used in whichever way the application chooses. The version of the extension being described here specifically targets <strong>tag checks</strong>: When an address is accessed, the tag stored in the masked bits can be compared against a range-based tag. This is used for dynamic safety checkers such as HWASAN [<a href="bibliography.html#bib-hwasan" class="xref page">87</a>]. Such tools can be applied in all privilege modes (U, S and M).</p>
 </div>
@@ -571,10 +570,12 @@
 <p>While we describe the high-level concepts of pointer masking as if it was a single extension, it is, in reality, a family of extensions that implementations or profiles may choose to individually include or exclude (see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>).</p>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="background"><a class="anchor" href="#background"></a>Background</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="background"><a class="anchor" href="#background"></a>Background</h3>
-<div class="sect3">
-<h4 id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h4>
+<h3 id="definitions"><a class="anchor" href="#definitions"></a>Definitions</h3>
 <div class="paragraph">
 <p>We now define basic terms. Note that these rely on the definition of an “ignore” transformation, which is defined in <a href="#sec-ignore-transform">The “Ignore” Transformation</a>.</p>
 </div>
@@ -604,8 +605,8 @@
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="sec-ignore-transform"><a class="anchor" href="#sec-ignore-transform"></a>The “Ignore” Transformation</h4>
+<div class="sect2">
+<h3 id="sec-ignore-transform"><a class="anchor" href="#sec-ignore-transform"></a>The “Ignore” Transformation</h3>
 <div class="paragraph">
 <p>The ignore transformation differs depending on whether it applies to a virtual or physical address. For virtual addresses, it replaces the upper PMLEN bits with the sign extension of the PMLEN+1st bit.</p>
 </div>
@@ -689,8 +690,8 @@
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="example"><a class="anchor" href="#example"></a>Example</h4>
+<div class="sect2">
+<h3 id="example"><a class="anchor" href="#example"></a>Example</h3>
 <div class="paragraph">
 <p>Table 1 shows an example of the pointer masking transformation on a virtual address when PM is enabled for RV64 under Sv57 (PMLEN=7).</p>
 </div>
@@ -736,8 +737,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>If the address was a physical address rather than a virtual address with Sv57, the transformed address with PMLEN=7 would be 0x1FFFFFF12345678.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="determining-the-value-of-pmlen"><a class="anchor" href="#determining-the-value-of-pmlen"></a>Determining the Value of PMLEN</h4>
+<div class="sect2">
+<h3 id="determining-the-value-of-pmlen"><a class="anchor" href="#determining-the-value-of-pmlen"></a>Determining the Value of PMLEN</h3>
 <div class="paragraph">
 <p>From an implementation perspective, ignoring bits is deeply connected to the maximum virtual and physical address space supported by the processor (e.g., Bare, Sv48, Sv57). In particular, applying the above transformation is cheap if it covers only bits that are not used by <strong>any</strong> supported address translation mode (as it is equivalent to switching off validity checks). Masking NVBITS beyond those bits is more expensive as it requires ignoring them in the TLB tag, and even more expensive if the masked bits extend into the VBITS portion of the address (as it requires performing the actual sign extension). Similarly, when running in Bare or M mode, it is common for implementations to not use a particular number of bits at the top of the physical address range and fix them to zero. Applying the ignore transformation to those bits is cheap as well, since it will result in a valid physical address with all the upper bits fixed to 0.</p>
 </div>
@@ -759,8 +760,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="pointer-masking-and-privilege-modes"><a class="anchor" href="#pointer-masking-and-privilege-modes"></a>Pointer Masking and Privilege Modes</h4>
+<div class="sect2">
+<h3 id="pointer-masking-and-privilege-modes"><a class="anchor" href="#pointer-masking-and-privilege-modes"></a>Pointer Masking and Privilege Modes</h3>
 <div class="paragraph">
 <p>Pointer masking is controlled separately for different privilege modes. The subset of supported privilege modes is determined by the set of supported pointer masking extensions. Different privilege modes may have different pointer masking settings active simultaneously and the hardware will automatically apply the pointer masking settings of the currently active privilege mode. A privilege mode&#8217;s pointer masking setting is configured by bits in configuration registers of the next-higher privilege mode.</p>
 </div>
@@ -782,8 +783,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="memory-accesses-subject-to-pointer-masking"><a class="anchor" href="#memory-accesses-subject-to-pointer-masking"></a>Memory Accesses Subject to Pointer Masking</h4>
+<div class="sect2">
+<h3 id="memory-accesses-subject-to-pointer-masking"><a class="anchor" href="#memory-accesses-subject-to-pointer-masking"></a>Memory Accesses Subject to Pointer Masking</h3>
 <div class="paragraph">
 <p>Pointer masking applies to all explicit memory accesses. Currently, in the Base and Privileged ISAs, these are:</p>
 </div>
@@ -934,8 +935,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="pointer-masking-extensions"><a class="anchor" href="#pointer-masking-extensions"></a>Pointer Masking Extensions</h4>
+<div class="sect2">
+<h3 id="pointer-masking-extensions"><a class="anchor" href="#pointer-masking-extensions"></a>Pointer Masking Extensions</h3>
 <div class="paragraph">
 <p>Pointer masking refers to a number of separate extensions, all of which are privileged. This approach is used to capture optionality of pointer masking features. Profiles and implementations may choose to support an arbitrary subset of these extensions and must define valid ranges for their corresponding values of PMLEN.</p>
 </div>
@@ -993,8 +994,10 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="isa-extensions"><a class="anchor" href="#isa-extensions"></a>ISA Extensions</h3>
+</div>
+<div class="sect1">
+<h2 id="isa-extensions"><a class="anchor" href="#isa-extensions"></a>ISA Extensions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This section describes the pointer masking extensions <code>Smmpm</code>, <code>Smnpm</code> and <code>Ssnpm</code>. All of these extensions are privileged ISA extensions and do not add any new CSRs. For the definitions of <code>Sspm</code> and <code>Supm</code>, see <a href="#_pointer_masking_extensions">[_pointer_masking_extensions]</a>.</p>
 </div>
@@ -1049,8 +1052,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <div class="paragraph">
 <p>All of these fields are read-only 0 on RV32 systems.</p>
 </div>
-<div class="sect3">
-<h4 id="ssnpm"><a class="anchor" href="#ssnpm"></a>Ssnpm</h4>
+<div class="sect2">
+<h3 id="ssnpm"><a class="anchor" href="#ssnpm"></a>Ssnpm</h3>
 <div class="paragraph">
 <p><code>Ssnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>senvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (U/VU mode), according to the values in Table 2.</p>
 </div>
@@ -1089,8 +1092,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="smnpm"><a class="anchor" href="#smnpm"></a>Smnpm</h4>
+<div class="sect2">
+<h3 id="smnpm"><a class="anchor" href="#smnpm"></a>Smnpm</h3>
 <div class="paragraph">
 <p><code>Smnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>menvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (S-/HS-mode if S-mode is implemented, or U-mode otherwise), according to the values in Table 2.</p>
 </div>
@@ -1109,20 +1112,20 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="smmpm"><a class="anchor" href="#smmpm"></a>Smmpm</h4>
+<div class="sect2">
+<h3 id="smmpm"><a class="anchor" href="#smmpm"></a>Smmpm</h3>
 <div class="paragraph">
 <p><code>Smmpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>mseccfg</code>. The presence of <code>Smmpm</code> implies the presence of the <code>mseccfg</code> register, even if it would not otherwise be present. Setting <code>PMM</code> enables or disables pointer masking for M mode, according to the values in Table 2.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="interaction-with-sfence-vma"><a class="anchor" href="#interaction-with-sfence-vma"></a>Interaction with SFENCE.VMA</h4>
+<div class="sect2">
+<h3 id="interaction-with-sfence-vma"><a class="anchor" href="#interaction-with-sfence-vma"></a>Interaction with SFENCE.VMA</h3>
 <div class="paragraph">
 <p>Since pointer masking applies to the effective address only and does not affect any memory-management data structures, no SFENCE.VMA is required after enabling/disabling pointer masking.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="interaction-with-two-stage-address-translation"><a class="anchor" href="#interaction-with-two-stage-address-translation"></a>Interaction with Two-Stage Address Translation</h4>
+<div class="sect2">
+<h3 id="interaction-with-two-stage-address-translation"><a class="anchor" href="#interaction-with-two-stage-address-translation"></a>Interaction with Two-Stage Address Translation</h3>
 <div class="paragraph">
 <p>Guest physical addresses (GPAs) are 2 bits wider than the corresponding virtual address translation modes, resulting in additional address translation schemes Sv32x4, Sv39x4, Sv48x4 and Sv57x4 for translating guest physical addresses to supervisor physical addresses. When running with virtualization in VS/VU mode with <code>vsatp.MODE</code> = Bare, this means that those two bits may be subject to pointer masking, depending on <code>hgatp.MODE</code> and <code>senvcfg.PMM</code>/<code>henvcfg.PMM</code> (for VU/VS mode). If <code>vsatp.MODE</code> != BARE, this issue does <strong>not</strong> apply.</p>
 </div>
@@ -1174,8 +1177,8 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>Implementation of an address-specific <code>HFENCE.GVMA</code> should either ignore the address argument, or should ignore the top masked GPA bits of entries when comparing for an address match.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="number-of-masked-bits"><a class="anchor" href="#number-of-masked-bits"></a>Number of Masked Bits</h4>
+<div class="sect2">
+<h3 id="number-of-masked-bits"><a class="anchor" href="#number-of-masked-bits"></a>Number of Masked Bits</h3>
 <div class="paragraph">
 <p>As described in <a href="#_determining_the_value_of_pmlen">[_determining_the_value_of_pmlen]</a>, the supported values of PMLEN may depend on the effective privilege mode. The current standard only defines PMLEN=XLEN-48 and PMLEN=XLEN-57, but this assumption may be relaxed in future extensions and profiles. Trying to enable pointer masking in an unsupported scenario represents an illegal write to the corresponding pointer masking enable bit and follows WARL semantics. Future profiles may choose to define certain combinations of privilege modes and supported values of PMLEN as mandatory.</p>
 </div>
@@ -1192,7 +1195,6 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </td>
 </tr>
 </table>
-</div>
 </div>
 </div>
 </div>

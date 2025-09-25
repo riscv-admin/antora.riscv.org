@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>RV64I Base Integer Instruction Set, Version 2.1 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="rv32e.html">
     <link rel="next" href="zifencei.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -392,7 +392,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="RV64I Base Integer Instruction Set, Version 2.1"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -540,8 +540,8 @@
     </tr></tbody>
   </table>
 </div>
-<div class="sect1">
-<h2 id="rv64"><a class="anchor" href="#rv64"></a>RV64I Base Integer Instruction Set, Version 2.1</h2>
+<h1 id="page-title" class="page">RV64I Base Integer Instruction Set, Version 2.1</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the RV64I base integer instruction set, which
@@ -549,15 +549,20 @@ builds upon the RV32I variant described in <a href="#rv32">[rv32]</a>.
 This chapter presents only the differences with RV32I, so should be read
 in conjunction with the earlier chapter.</p>
 </div>
-<div class="sect2">
-<h3 id="register-state"><a class="anchor" href="#register-state"></a>Register State</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="register-state"><a class="anchor" href="#register-state"></a>Register State</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>RV64I widens the integer registers and supported user address space to
 64 bits (XLEN=64 in <a href="#gprs">[gprs]</a>).</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="integer-computational-instructions"><a class="anchor" href="#integer-computational-instructions"></a>Integer Computational Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="integer-computational-instructions"><a class="anchor" href="#integer-computational-instructions"></a>Integer Computational Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Most integer computational instructions operate on XLEN-bit values.
 Additional instruction variants are provided to manipulate 32-bit values
@@ -594,8 +599,8 @@ ensure reasonable performance for 32-bit values.</p>
 <p>
 </p>
 </div>
-<div class="sect3">
-<h4 id="integer-register-immediate-instructions"><a class="anchor" href="#integer-register-immediate-instructions"></a>Integer Register-Immediate Instructions</h4>
+<div class="sect2">
+<h3 id="integer-register-immediate-instructions"><a class="anchor" href="#integer-register-immediate-instructions"></a>Integer Register-Immediate Instructions</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqNzrEOgjAQBuCdp7itS0lsK8F0M2FhILo5EAak1TAUSHsOhvDulggUN8dr_--_G61-SigjgPHeopOQUoCuNloC6YemV5r4B4Aa0focSf1ILtc4L4pYcFJRwPfgw6eJho4kdFj19fuOZO5Q2mHgfM9F4I9X16BYKlY_z-ScZfntj_2ObQf87He2Cfq414zTVbfGlIzJQ-XFqhmfeR77P63aGvWS2MrEFFXTB7SyXcE=" alt="svg">
@@ -691,8 +696,8 @@ with LD, AUIPC with JALR, etc. in RV64I is
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>Integer Register-Register Operations</h4>
+<div class="sect2">
+<h3 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>Integer Register-Register Operations</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4ByKSusREWRqyOQkllAdAYi1odhOmmCNOLUiAmI5tuCtKfklpcQpCGG2-EbLwxwvi00rzkEmNUx4O46sE-PvrBQT5gZpAjiHJ0cQmHyoSDpCCcUCcQxzGcCJ8UG8K9guKT4qJkQ4I03HgTnMYb4TTeiCCN3XhztIAyxxLLBmAAZhnCWQZYWBBZpGDiiq0FAHkrmak=" alt="svg">
@@ -722,8 +727,10 @@ results to 64 bits. The shift amount is given by <em>rs2[4:0]</em>.
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="load-and-store-instructions"><a class="anchor" href="#load-and-store-instructions"></a>Load and Store Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="load-and-store-instructions"><a class="anchor" href="#load-and-store-instructions"></a>Load and Store Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>RV64I extends the address space to 64 bits. The execution environment
 will define what portions of the address space are legal to access.</p>
@@ -753,8 +760,10 @@ store 64-bit, 32-bit, 16-bit, and 8-bit values from the low bits of
 register <em>rs2</em> to memory respectively.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="rv64i-hints"><a class="anchor" href="#rv64i-hints"></a>HINT Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="rv64i-hints"><a class="anchor" href="#rv64i-hints"></a>HINT Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>All instructions that are microarchitectural HINTs in RV32I (see
 <a href="#rv32">[rv32]</a>) are also HINTs in RV64I.
@@ -980,7 +989,6 @@ no standard HINTs will ever be defined in this subspace.</p>
 </tr>
 </tbody>
 </table>
-</div>
 </div>
 </div>
 <nav class="pagination">

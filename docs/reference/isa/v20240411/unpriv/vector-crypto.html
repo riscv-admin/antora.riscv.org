@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>Cryptography Extensions: Vector Instructions, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="scalar-crypto.html">
     <link rel="next" href="rv-32-64g.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -392,7 +392,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title="Cryptography Extensions: Vector Instructions, Version 1.0.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -540,8 +540,8 @@
     </tr></tbody>
   </table>
 </div>
-<div class="sect1">
-<h2 id="cryptography-extensions-vector-instructions-version-1-0-0"><a class="anchor" href="#cryptography-extensions-vector-instructions-version-1-0-0"></a>Cryptography Extensions: Vector Instructions, Version 1.0.0</h2>
+<h1 id="page-title" class="page">Cryptography Extensions: Vector Instructions, Version 1.0.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>This document describes the Vector Cryptography extensions to the
@@ -554,8 +554,11 @@ subject of a follow-on new extension. Ratified extensions are never
 revised.
 For more information, see <a href="http://riscv.org/spec-state">here</a>.</p>
 </div>
-<div class="sect2">
-<h3 id="crypto_vector_introduction"><a class="anchor" href="#crypto_vector_introduction"></a>Introduction</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_introduction"><a class="anchor" href="#crypto_vector_introduction"></a>Introduction</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This document describes the proposed <em>vector</em> cryptography
 extensions for RISC-V.
@@ -567,8 +570,8 @@ describes
 cryptographic instruction proposals for smaller cores which do not
 implement the vector extension.</p>
 </div>
-<div class="sect3">
-<h4 id="crypto_vector_audience"><a class="anchor" href="#crypto_vector_audience"></a>Intended Audience</h4>
+<div class="sect2">
+<h3 id="crypto_vector_audience"><a class="anchor" href="#crypto_vector_audience"></a>Intended Audience</h3>
 <div class="paragraph">
 <p>Cryptography is a specialized subject, requiring people with many different
 backgrounds to cooperate in its secure and efficient implementation.
@@ -630,8 +633,8 @@ specification. An understanding of their real-world usage will help with this.</
 but they are the ones we considered most while writing it.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="crypto_vector_sail_specifications"><a class="anchor" href="#crypto_vector_sail_specifications"></a>Sail Specifications</h4>
+<div class="sect2">
+<h3 id="crypto_vector_sail_specifications"><a class="anchor" href="#crypto_vector_sail_specifications"></a>Sail Specifications</h3>
 <div class="paragraph">
 <p>RISC-V maintains a
 <a href="https://github.com/riscv/sail-riscv">formal model</a>
@@ -698,8 +701,8 @@ the formal model Github
 <a href="https://github.com/riscv/sail-riscv">repository</a>.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="crypto_vector_policies"><a class="anchor" href="#crypto_vector_policies"></a>Policies</h4>
+<div class="sect2">
+<h3 id="crypto_vector_policies"><a class="anchor" href="#crypto_vector_policies"></a>Policies</h3>
 <div class="paragraph">
 <p>In creating this proposal, we tried to adhere to the following
 policies:</p>
@@ -748,8 +751,8 @@ the execution of these instructions shall not vary with different input values.<
 </ul>
 </div>
 </div>
-<div class="sect3">
-<h4 id="crypto-vector-element-groups"><a class="anchor" href="#crypto-vector-element-groups"></a>Element Groups</h4>
+<div class="sect2">
+<h3 id="crypto-vector-element-groups"><a class="anchor" href="#crypto-vector-element-groups"></a>Element Groups</h3>
 <div class="paragraph">
 <p>Many vector crypto instructions operate on operands that are wider than elements (which are currently limited
 to 64 bits wide).
@@ -919,8 +922,8 @@ See <a href="#crypto-vector-instruction-constraints">Instruction Constraints</a>
 for vector crypto instructions.</p>
 </div>
 </div>
-<div class="sect3">
-<h4 id="crypto-vector-instruction-constraints"><a class="anchor" href="#crypto-vector-instruction-constraints"></a>Instruction Constraints</h4>
+<div class="sect2">
+<h3 id="crypto-vector-instruction-constraints"><a class="anchor" href="#crypto-vector-instruction-constraints"></a>Instruction Constraints</h3>
 <div class="paragraph">
 <p>The following is a quick reference for the various constraints of specific Vector Crypto instructions.</p>
 </div>
@@ -1144,8 +1147,8 @@ overlap this <code>vs2</code> register group.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="crypto-vector-scalar-instructions"><a class="anchor" href="#crypto-vector-scalar-instructions"></a>Vector-Scalar Instructions</h4>
+<div class="sect2">
+<h3 id="crypto-vector-scalar-instructions"><a class="anchor" href="#crypto-vector-scalar-instructions"></a>Vector-Scalar Instructions</h3>
 <div class="paragraph">
 <p>The RISC-V Vector Extension defines three encodings for Vector-Scalar operations which get their scalar operand from a GPR or FP register:</p>
 </div>
@@ -1229,8 +1232,8 @@ crypto instructions allow the round key to be specified as a scalar element grou
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="crypto-vector-software-portability"><a class="anchor" href="#crypto-vector-software-portability"></a>Software Portability</h4>
+<div class="sect2">
+<h3 id="crypto-vector-software-portability"><a class="anchor" href="#crypto-vector-software-portability"></a>Software Portability</h3>
 <div class="paragraph">
 <p>The following contains some guidelines that enable the portability of vector-crypto-based code
 to implementations with different values for <code>VLEN</code></p>
@@ -1311,8 +1314,10 @@ likely be too burdensome for <code>VLEN</code>=64 implementations.</p>
 </div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="crypto_vector_extensions"><a class="anchor" href="#crypto_vector_extensions"></a>Extensions Overview</h3>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_extensions"><a class="anchor" href="#crypto_vector_extensions"></a>Extensions Overview</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The section introduces all of the  extensions in the Vector Cryptography
 Instruction Set Extension Specification.</p>
@@ -1358,8 +1363,8 @@ progress.</p>
 </tr>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zvbb"><a class="anchor" href="#zvbb"></a><code>Zvbb</code> - Vector Basic Bit-manipulation</h4>
+<div class="sect2">
+<h3 id="zvbb"><a class="anchor" href="#zvbb"></a><code>Zvbb</code> - Vector Basic Bit-manipulation</h3>
 <div class="paragraph">
 <p>Vector basic bit-manipulation instructions.</p>
 </div>
@@ -1433,8 +1438,8 @@ progress.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvbc"><a class="anchor" href="#zvbc"></a><code>Zvbc</code> - Vector Carryless Multiplication</h4>
+<div class="sect2">
+<h3 id="zvbc"><a class="anchor" href="#zvbc"></a><code>Zvbc</code> - Vector Carryless Multiplication</h3>
 <div class="paragraph">
 <p>General purpose carryless multiplication instructions which are commonly used in cryptography
 and hashing (e.g., Elliptic curve cryptography, GHASH, CRC).</p>
@@ -1466,8 +1471,8 @@ and hashing (e.g., Elliptic curve cryptography, GHASH, CRC).</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkb"><a class="anchor" href="#zvkb"></a><code>Zvkb</code> - Vector Cryptography Bit-manipulation</h4>
+<div class="sect2">
+<h3 id="zvkb"><a class="anchor" href="#zvkb"></a><code>Zvkb</code> - Vector Cryptography Bit-manipulation</h3>
 <div class="paragraph">
 <p>Vector bit-manipulation instructions that are essential
 for implementing common cryptographic workloads securely &amp;
@@ -1526,8 +1531,8 @@ in the Zvbb extension: vbrev.v, vclz.v, vctz.v, vcpop.v, and vwsll.[vv,vx,vi].</
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkg"><a class="anchor" href="#zvkg"></a><code>Zvkg</code> - Vector GCM/GMAC</h4>
+<div class="sect2">
+<h3 id="zvkg"><a class="anchor" href="#zvkg"></a><code>Zvkg</code> - Vector GCM/GMAC</h3>
 <div class="paragraph">
 <p>Instructions to enable the efficient implementation of GHASH<sub>H</sub> which is used in Galois/Counter Mode (GCM) and
 Galois Message Authentication Code (GMAC).</p>
@@ -1598,8 +1603,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkned"><a class="anchor" href="#zvkned"></a><code>Zvkned</code> - NIST Suite: Vector AES Block Cipher</h4>
+<div class="sect2">
+<h3 id="zvkned"><a class="anchor" href="#zvkned"></a><code>Zvkned</code> - NIST Suite: Vector AES Block Cipher</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 encryption, decryption and key-schedule
@@ -1686,8 +1691,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvknh"><a class="anchor" href="#zvknh"></a><code>Zvknh[ab]</code> - NIST Suite: Vector SHA-2 Secure Hash</h4>
+<div class="sect2">
+<h3 id="zvknh"><a class="anchor" href="#zvknh"></a><code>Zvknh[ab]</code> - NIST Suite: Vector SHA-2 Secure Hash</h3>
 <div class="paragraph">
 <p>Instructions for accelerating SHA-2 as defined in FIPS PUB 180-4 Secure Hash Standard (SHS)</p>
 </div>
@@ -1785,8 +1790,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvksed"><a class="anchor" href="#zvksed"></a><code>Zvksed</code> - ShangMi Suite: SM4 Block Cipher</h4>
+<div class="sect2">
+<h3 id="zvksed"><a class="anchor" href="#zvksed"></a><code>Zvksed</code> - ShangMi Suite: SM4 Block Cipher</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 encryption, decryption and key-schedule
@@ -1846,8 +1851,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvksh"><a class="anchor" href="#zvksh"></a><code>Zvksh</code> - ShangMi Suite: SM3 Secure Hash</h4>
+<div class="sect2">
+<h3 id="zvksh"><a class="anchor" href="#zvksh"></a><code>Zvksh</code> - ShangMi Suite: SM3 Secure Hash</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 functions of the SM3 Hash Function.</p>
@@ -1910,8 +1915,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=8</code>.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkn"><a class="anchor" href="#zvkn"></a><code>Zvkn</code> - NIST Algorithm Suite</h4>
+<div class="sect2">
+<h3 id="zvkn"><a class="anchor" href="#zvkn"></a><code>Zvkn</code> - NIST Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -1961,8 +1966,8 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=8</code>.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvknc"><a class="anchor" href="#zvknc"></a><code>Zvknc</code> - NIST Algorithm Suite with carryless multiply</h4>
+<div class="sect2">
+<h3 id="zvknc"><a class="anchor" href="#zvknc"></a><code>Zvknc</code> - NIST Algorithm Suite with carryless multiply</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2005,8 +2010,8 @@ vector carryless multiply extension to enable AES-GCM.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkng"><a class="anchor" href="#zvkng"></a><code>Zvkng</code> - NIST Algorithm Suite with GCM</h4>
+<div class="sect2">
+<h3 id="zvkng"><a class="anchor" href="#zvkng"></a><code>Zvkng</code> - NIST Algorithm Suite with GCM</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2049,8 +2054,8 @@ GCM/GMAC extension to enable high-performace AES-GCM.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvks"><a class="anchor" href="#zvks"></a><code>Zvks</code> - ShangMi Algorithm Suite</h4>
+<div class="sect2">
+<h3 id="zvks"><a class="anchor" href="#zvks"></a><code>Zvks</code> - ShangMi Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2100,8 +2105,8 @@ GCM/GMAC extension to enable high-performace AES-GCM.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvksc"><a class="anchor" href="#zvksc"></a><code>Zvksc</code> - ShangMi Algorithm Suite with carryless multiplication</h4>
+<div class="sect2">
+<h3 id="zvksc"><a class="anchor" href="#zvksc"></a><code>Zvksc</code> - ShangMi Algorithm Suite with carryless multiplication</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2144,8 +2149,8 @@ vector carryless multiply extension to enable SM4-GCM.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvksg"><a class="anchor" href="#zvksg"></a><code>Zvksg</code> - ShangMi Algorithm Suite with GCM</h4>
+<div class="sect2">
+<h3 id="zvksg"><a class="anchor" href="#zvksg"></a><code>Zvksg</code> - ShangMi Algorithm Suite with GCM</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2188,8 +2193,8 @@ GCM/GMAC extension to enable high-performace SM4-GCM.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="zvkt"><a class="anchor" href="#zvkt"></a><code>Zvkt</code> - Vector Data-Independent Execution Latency</h4>
+<div class="sect2">
+<h3 id="zvkt"><a class="anchor" href="#zvkt"></a><code>Zvkt</code> - Vector Data-Independent Execution Latency</h3>
 <div class="paragraph">
 <p>The Zvkt extension requires all implemented instructions from the following list to be
 executed with data-independent execution latency as defined in the
@@ -2235,8 +2240,8 @@ also needs to be kept secret.</p>
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="all-zvbb-instructions"><a class="anchor" href="#all-zvbb-instructions"></a>All <a href="#zvbb">Zvbb</a>  instructions</h5>
+<div class="sect3">
+<h4 id="all-zvbb-instructions"><a class="anchor" href="#all-zvbb-instructions"></a>All <a href="#zvbb">Zvbb</a>  instructions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2287,8 +2292,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="all-zvbc-instructions"><a class="anchor" href="#all-zvbc-instructions"></a>All <a href="#zvbc">Zvbc</a> instructions</h5>
+<div class="sect3">
+<h4 id="all-zvbc-instructions"><a class="anchor" href="#all-zvbc-instructions"></a>All <a href="#zvbc">Zvbc</a> instructions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2297,8 +2302,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="addsub"><a class="anchor" href="#addsub"></a>add/sub</h5>
+<div class="sect3">
+<h4 id="addsub"><a class="anchor" href="#addsub"></a>add/sub</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2319,8 +2324,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="addsub-with-carry"><a class="anchor" href="#addsub-with-carry"></a>add/sub with carry</h5>
+<div class="sect3">
+<h4 id="addsub-with-carry"><a class="anchor" href="#addsub-with-carry"></a>add/sub with carry</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2338,8 +2343,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="compare-and-set"><a class="anchor" href="#compare-and-set"></a>compare and set</h5>
+<div class="sect3">
+<h4 id="compare-and-set"><a class="anchor" href="#compare-and-set"></a>compare and set</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2360,8 +2365,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="copy"><a class="anchor" href="#copy"></a>copy</h5>
+<div class="sect3">
+<h4 id="copy"><a class="anchor" href="#copy"></a>copy</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2376,8 +2381,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="extend"><a class="anchor" href="#extend"></a>extend</h5>
+<div class="sect3">
+<h4 id="extend"><a class="anchor" href="#extend"></a>extend</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2389,8 +2394,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="logical"><a class="anchor" href="#logical"></a>logical</h5>
+<div class="sect3">
+<h4 id="logical"><a class="anchor" href="#logical"></a>logical</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2420,8 +2425,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="multiply"><a class="anchor" href="#multiply"></a>multiply</h5>
+<div class="sect3">
+<h4 id="multiply"><a class="anchor" href="#multiply"></a>multiply</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2439,8 +2444,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="multiply-add"><a class="anchor" href="#multiply-add"></a>multiply-add</h5>
+<div class="sect3">
+<h4 id="multiply-add"><a class="anchor" href="#multiply-add"></a>multiply-add</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2467,8 +2472,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="integer-merge"><a class="anchor" href="#integer-merge"></a>Integer Merge</h5>
+<div class="sect3">
+<h4 id="integer-merge"><a class="anchor" href="#integer-merge"></a>Integer Merge</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2477,8 +2482,8 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="permute"><a class="anchor" href="#permute"></a>permute</h5>
+<div class="sect3">
+<h4 id="permute"><a class="anchor" href="#permute"></a>permute</h4>
 <div class="paragraph">
 <p>In the <code>.vv</code> and <code>.xv</code> forms of the <code>vragather[ei16]</code> instructions,
 the values in <code>vs1</code> and <code>rs1</code> are used for control and therefore are exempt from DIEL.</p>
@@ -2494,8 +2499,8 @@ the values in <code>vs1</code> and <code>rs1</code> are used for control and the
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="shift"><a class="anchor" href="#shift"></a>shift</h5>
+<div class="sect3">
+<h4 id="shift"><a class="anchor" href="#shift"></a>shift</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2510,8 +2515,8 @@ the values in <code>vs1</code> and <code>rs1</code> are used for control and the
 </ul>
 </div>
 </div>
-<div class="sect4">
-<h5 id="slide"><a class="anchor" href="#slide"></a>slide</h5>
+<div class="sect3">
+<h4 id="slide"><a class="anchor" href="#slide"></a>slide</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2710,10 +2715,12 @@ from DIEL.</p>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_insns"><a class="anchor" href="#crypto_vector_insns"></a>Instructions</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="crypto_vector_insns"><a class="anchor" href="#crypto_vector_insns"></a>Instructions</h3>
-<div class="sect3">
-<h4 id="insns-vaesdf"><a class="anchor" href="#insns-vaesdf"></a>vaesdf.[vv,vs]</h4>
+<h3 id="insns-vaesdf"><a class="anchor" href="#insns-vaesdf"></a>vaesdf.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2864,8 +2871,8 @@ on the data being operated upon.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaesdm"><a class="anchor" href="#insns-vaesdm"></a>vaesdm.[vv,vs]</h4>
+<div class="sect2">
+<h3 id="insns-vaesdm"><a class="anchor" href="#insns-vaesdm"></a>vaesdm.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3018,8 +3025,8 @@ on the data being operated upon.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaesef"><a class="anchor" href="#insns-vaesef"></a>vaesef.[vv,vs]</h4>
+<div class="sect2">
+<h3 id="insns-vaesef"><a class="anchor" href="#insns-vaesef"></a>vaesef.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3170,8 +3177,8 @@ on the data being operated upon.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaesem"><a class="anchor" href="#insns-vaesem"></a>vaesem.[vv,vs]</h4>
+<div class="sect2">
+<h3 id="insns-vaesem"><a class="anchor" href="#insns-vaesem"></a>vaesem.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3323,8 +3330,8 @@ on the data being operated upon.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaeskf1"><a class="anchor" href="#insns-vaeskf1"></a>vaeskf1.vi</h4>
+<div class="sect2">
+<h3 id="insns-vaeskf1"><a class="anchor" href="#insns-vaeskf1"></a>vaeskf1.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3491,8 +3498,8 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaeskf2"><a class="anchor" href="#insns-vaeskf2"></a>vaeskf2.vi</h4>
+<div class="sect2">
+<h3 id="insns-vaeskf2"><a class="anchor" href="#insns-vaeskf2"></a>vaeskf2.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3668,8 +3675,8 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vaesz"><a class="anchor" href="#insns-vaesz"></a>vaesz.vs</h4>
+<div class="sect2">
+<h3 id="insns-vaesz"><a class="anchor" href="#insns-vaesz"></a>vaesz.vs</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3826,8 +3833,8 @@ This instruction only exists in the <code>.vs</code> form because the <code>.vv<
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vandn"><a class="anchor" href="#insns-vandn"></a>vandn.[vv,vx]</h4>
+<div class="sect2">
+<h3 id="insns-vandn"><a class="anchor" href="#insns-vandn"></a>vandn.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4006,8 +4013,8 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vbrev"><a class="anchor" href="#insns-vbrev"></a>vbrev.v</h4>
+<div class="sect2">
+<h3 id="insns-vbrev"><a class="anchor" href="#insns-vbrev"></a>vbrev.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4091,8 +4098,8 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vbrev8"><a class="anchor" href="#insns-vbrev8"></a>vbrev8.v</h4>
+<div class="sect2">
+<h3 id="insns-vbrev8"><a class="anchor" href="#insns-vbrev8"></a>vbrev8.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4196,8 +4203,8 @@ This byte-wise instruction is defined for all SEWs to eliminate the need to chan
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vclmul"><a class="anchor" href="#insns-vclmul"></a>vclmul.[vv,vx]</h4>
+<div class="sect2">
+<h3 id="insns-vclmul"><a class="anchor" href="#insns-vclmul"></a>vclmul.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4345,8 +4352,8 @@ function clmul(x, y, width) = {
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vclmulh"><a class="anchor" href="#insns-vclmulh"></a>vclmulh.[vv,vx]</h4>
+<div class="sect2">
+<h3 id="insns-vclmulh"><a class="anchor" href="#insns-vclmulh"></a>vclmulh.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4474,8 +4481,8 @@ function clmulh(x, y, width) = {
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vclz"><a class="anchor" href="#insns-vclz"></a>vclz.v</h4>
+<div class="sect2">
+<h3 id="insns-vclz"><a class="anchor" href="#insns-vclz"></a>vclz.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4564,8 +4571,8 @@ function clmulh(x, y, width) = {
 </dl>
 </div>
 </div>
-<div class="sect3">
-<h4 id="insns-vcpop"><a class="anchor" href="#insns-vcpop"></a>vcpop.v</h4>
+<div class="sect2">
+<h3 id="insns-vcpop"><a class="anchor" href="#insns-vcpop"></a>vcpop.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4648,8 +4655,8 @@ function clmulh(x, y, width) = {
 </dl>
 </div>
 </div>
-<div class="sect3">
-<h4 id="insns-vctz"><a class="anchor" href="#insns-vctz"></a>vctz.v</h4>
+<div class="sect2">
+<h3 id="insns-vctz"><a class="anchor" href="#insns-vctz"></a>vctz.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4736,8 +4743,8 @@ function clmulh(x, y, width) = {
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vghsh"><a class="anchor" href="#insns-vghsh"></a>vghsh.vv</h4>
+<div class="sect2">
+<h3 id="insns-vghsh"><a class="anchor" href="#insns-vghsh"></a>vghsh.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4946,8 +4953,8 @@ a future extension might define a vector-scalar version of this instruction wher
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vgmul"><a class="anchor" href="#insns-vgmul"></a>vgmul.vv</h4>
+<div class="sect2">
+<h3 id="insns-vgmul"><a class="anchor" href="#insns-vgmul"></a>vgmul.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5157,8 +5164,8 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vrev8"><a class="anchor" href="#insns-vrev8"></a>vrev8.v</h4>
+<div class="sect2">
+<h3 id="insns-vrev8"><a class="anchor" href="#insns-vrev8"></a>vrev8.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5262,8 +5269,8 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vrol"><a class="anchor" href="#insns-vrol"></a>vrol.[vv,vx]</h4>
+<div class="sect2">
+<h3 id="insns-vrol"><a class="anchor" href="#insns-vrol"></a>vrol.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5432,8 +5439,8 @@ function clause execute (VROL_VX(vs2, rs1, vd)) = {
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vror"><a class="anchor" href="#insns-vror"></a>vror.[vv,vx,vi]</h4>
+<div class="sect2">
+<h3 id="insns-vror"><a class="anchor" href="#insns-vror"></a>vror.[vv,vx,vi]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5607,8 +5614,8 @@ function clause execute (VROR_VI(vs2, imm[5:0], vd)) = {
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsha2c"><a class="anchor" href="#insns-vsha2c"></a>vsha2c[hl].vv</h4>
+<div class="sect2">
+<h3 id="insns-vsha2c"><a class="anchor" href="#insns-vsha2c"></a>vsha2c[hl].vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5871,8 +5878,8 @@ function ROTR(x,n) = (x &gt;&gt; n) | (x &lt;&lt; SEW - n)</code></pre>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsha2ms"><a class="anchor" href="#insns-vsha2ms"></a>vsha2ms.vv</h4>
+<div class="sect2">
+<h3 id="insns-vsha2ms"><a class="anchor" href="#insns-vsha2ms"></a>vsha2ms.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6124,8 +6131,8 @@ function SHR (x,n) = x &gt;&gt; n</code></pre>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsm3c"><a class="anchor" href="#insns-vsm3c"></a>vsm3c.vi</h4>
+<div class="sect2">
+<h3 id="insns-vsm3c"><a class="anchor" href="#insns-vsm3c"></a>vsm3c.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6389,8 +6396,8 @@ function P_0(X) = ((X) ^ ROL32((X),  9) ^ ROL32((X), 17))</code></pre>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsm3me"><a class="anchor" href="#insns-vsm3me"></a>vsm3me.vv</h4>
+<div class="sect2">
+<h3 id="insns-vsm3me"><a class="anchor" href="#insns-vsm3me"></a>vsm3me.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6602,8 +6609,8 @@ values to be preserved for generating the next 8 words.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsm4k"><a class="anchor" href="#insns-vsm4k"></a>vsm4k.vi</h4>
+<div class="sect2">
+<h3 id="insns-vsm4k"><a class="anchor" href="#insns-vsm4k"></a>vsm4k.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6851,8 +6858,8 @@ let ck : list(bits(32)) = [|
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vsm4r"><a class="anchor" href="#insns-vsm4r"></a>vsm4r.[vv,vs]</h4>
+<div class="sect2">
+<h3 id="insns-vsm4r"><a class="anchor" href="#insns-vsm4r"></a>vsm4r.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -7072,8 +7079,8 @@ function sm4_round(X, S) = \
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-vwsll"><a class="anchor" href="#insns-vwsll"></a>vwsll.[vv,vx,vi]</h4>
+<div class="sect2">
+<h3 id="insns-vwsll"><a class="anchor" href="#insns-vwsll"></a>vwsll.[vv,vx,vi]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -7253,8 +7260,10 @@ function clause execute (VWSLL_VI(vs2, uimm[4:0], vd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 </div>
-<div class="sect2">
-<h3 id="crypto_vector_instructions"><a class="anchor" href="#crypto_vector_instructions"></a>Crypto Vector Cryptographic Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_instructions"><a class="anchor" href="#crypto_vector_instructions"></a>Crypto Vector Cryptographic Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>OP-VE (0x77)
 Crypto Vector instructions except Zvbb and Zvbc</p>
@@ -7671,8 +7680,10 @@ Crypto Vector instructions except Zvbb and Zvbc</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="crypto_vector_instructions_Zvbb_Zvbc"><a class="anchor" href="#crypto_vector_instructions_Zvbb_Zvbc"></a>Vector Bitmanip and Carryless Multiply Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_instructions_Zvbb_Zvbc"><a class="anchor" href="#crypto_vector_instructions_Zvbb_Zvbc"></a>Vector Bitmanip and Carryless Multiply Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>OP-V (0x57)
 <strong>Zvbb</strong>, <strong>Zvkb</strong>, and <strong>Zvbc</strong> Vector instructions <strong>in bold</strong></p>
@@ -8952,8 +8963,10 @@ Crypto Vector instructions except Zvbb and Zvbc</p>
 </tbody>
 </table>
 </div>
-<div class="sect2">
-<h3 id="crypto_vector_appx_sail"><a class="anchor" href="#crypto_vector_appx_sail"></a>Supporting Sail Code</h3>
+</div>
+<div class="sect1">
+<h2 id="crypto_vector_appx_sail"><a class="anchor" href="#crypto_vector_appx_sail"></a>Supporting Sail Code</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>This section contains the supporting Sail code referenced by the
 instruction descriptions throughout the specification.
@@ -9354,7 +9367,6 @@ function sm4_subword(x) = {
   sm4_sbox(x[15.. 8]) @
   sm4_sbox(x[ 7.. 0])
 }</code></pre>
-</div>
 </div>
 </div>
 </div>

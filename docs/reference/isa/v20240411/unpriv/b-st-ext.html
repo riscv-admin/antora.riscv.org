@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <title>"B" Extension for Bit Manipulation, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
     <link rel="prev" href="zc.html">
     <link rel="next" href="v-st-ext.html">
     <meta name="generator" content="Antora 3.1.12">
@@ -392,7 +392,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title=""
+      data-title=""B" Extension for Bit Manipulation, Version 1.0.0"
       data-levels="2"
     >
       <div class="toc-menu"></div>
@@ -540,15 +540,18 @@
     </tr></tbody>
   </table>
 </div>
-<div class="sect1">
-<h2 id="bits"><a class="anchor" href="#bits"></a>"B" Extension for Bit Manipulation, Version 1.0.0</h2>
+<h1 id="page-title" class="page">"B" Extension for Bit Manipulation, Version 1.0.0</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
 <p>The B standard extension comprises instructions provided by the Zba, Zbb, and
 Zbs extensions.</p>
 </div>
-<div class="sect2">
-<h3 id="preface"><a class="anchor" href="#preface"></a>Bit-manipulation a, b, c and s extensions grouped for public review and ratification</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="preface"><a class="anchor" href="#preface"></a>Bit-manipulation a, b, c and s extensions grouped for public review and ratification</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The bit-manipulation (bitmanip) extension collection is comprised of several component extensions to the base RISC-V architecture that are intended to provide some combination of code size reduction, performance improvement, and energy reduction.
 While the instructions are intended to have general use, some instructions are more useful in some domains than others.
@@ -566,8 +569,10 @@ Most of the instructions are expected to be forward compatible with RV128.
 While the shift-immediate instructions are defined to have at most a 6-bit immediate field, a 7th bit is available in the encoding space should this be needed for RV128.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="word-instructions"><a class="anchor" href="#word-instructions"></a>Word Instructions</h3>
+</div>
+<div class="sect1">
+<h2 id="word-instructions"><a class="anchor" href="#word-instructions"></a>Word Instructions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The bitmanip extension follows the convention in RV64 that <em>w</em>-suffixed instructions (without a dot before the <em>w</em>) ignore the upper 32 bits of their inputs, operate on the least-significant 32-bits as signed values and produce a 32-bit signed result that is sign-extended to XLEN.</p>
 </div>
@@ -578,14 +583,18 @@ While the shift-immediate instructions are defined to have at most a 6-bit immed
 <p>Bitmanip instructions with the suffix <em>.b</em>, <em>.h</em> and <em>.w</em> only look at the least significant 8-bits, 16-bits and 32-bits of the input (respectively) and produce an XLEN-wide result that is sign-extended or zero-extended, based on the specific instruction.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>Pseudocode for instruction semantics</h3>
+</div>
+<div class="sect1">
+<h2 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>Pseudocode for instruction semantics</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The semantics of each instruction in <a href="#insns">Instructions (in alphabetical order)</a> is expressed in a SAIL-like syntax.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="extensions"><a class="anchor" href="#extensions"></a>Extensions</h3>
+</div>
+<div class="sect1">
+<h2 id="extensions"><a class="anchor" href="#extensions"></a>Extensions</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>The first group of bitmanip extensions to be released for Public Review are:</p>
 </div>
@@ -1065,8 +1074,8 @@ along with their specific mapping:</p>
 </tr>
 </tbody>
 </table>
-<div class="sect3">
-<h4 id="zba"><a class="anchor" href="#zba"></a>Zba: Address generation</h4>
+<div class="sect2">
+<h3 id="zba"><a class="anchor" href="#zba"></a>Zba: Address generation</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1166,8 +1175,8 @@ along with their specific mapping:</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zbb"><a class="anchor" href="#zbb"></a>Zbb: Basic bit-manipulation</h4>
+<div class="sect2">
+<h3 id="zbb"><a class="anchor" href="#zbb"></a>Zbb: Basic bit-manipulation</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1182,8 +1191,8 @@ along with their specific mapping:</p>
 </tr>
 </table>
 </div>
-<div class="sect4">
-<h5 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>Logical with negate</h5>
+<div class="sect3">
+<h4 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>Logical with negate</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1237,8 +1246,8 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>Count leading/trailing zero bits</h5>
+<div class="sect3">
+<h4 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>Count leading/trailing zero bits</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1282,8 +1291,8 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="count-population"><a class="anchor" href="#count-population"></a>Count population</h5>
+<div class="sect3">
+<h4 id="count-population"><a class="anchor" href="#count-population"></a>Count population</h4>
 <div class="paragraph">
 <p>These instructions count the number of set bits (1-bits). This is also
 commonly referred to as population count.</p>
@@ -1319,8 +1328,8 @@ commonly referred to as population count.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>Integer minimum/maximum</h5>
+<div class="sect3">
+<h4 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>Integer minimum/maximum</h4>
 <div class="paragraph">
 <p>The integer minimum/maximum instructions are arithmetic R-type
 instructions that return the smaller/larger of two operands.</p>
@@ -1368,8 +1377,8 @@ instructions that return the smaller/larger of two operands.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="sign-and-zero-extension"><a class="anchor" href="#sign-and-zero-extension"></a>Sign- and zero-extension</h5>
+<div class="sect3">
+<h4 id="sign-and-zero-extension"><a class="anchor" href="#sign-and-zero-extension"></a>Sign- and zero-extension</h4>
 <div class="paragraph">
 <p>These instructions perform the sign-extension or zero-extension of the least significant 8 bits or 16 bits of the source register.</p>
 </div>
@@ -1413,8 +1422,8 @@ instructions that return the smaller/larger of two operands.</p>
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>Bitwise rotation</h5>
+<div class="sect3">
+<h4 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>Bitwise rotation</h4>
 <div class="paragraph">
 <p>Bitwise rotation instructions are similar to the shift-logical operations from the base spec. However, where the shift-logical
 instructions shift in zeros, the rotate instructions shift in the bits that were shifted out of the other side of the value.
@@ -1491,8 +1500,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 </div>
-<div class="sect4">
-<h5 id="or-combine"><a class="anchor" href="#or-combine"></a>OR Combine</h5>
+<div class="sect3">
+<h4 id="or-combine"><a class="anchor" href="#or-combine"></a>OR Combine</h4>
 <div class="paragraph">
 <p><strong>orc.b</strong> sets the bits of each byte in the result <em>rd</em> to all zeros if no bit within the respective byte of <em>rs</em> is set, or to all ones if any bit within the respective byte of <em>rs</em> is set.</p>
 </div>
@@ -1524,8 +1533,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </tbody>
 </table>
 </div>
-<div class="sect4">
-<h5 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>Byte-reverse</h5>
+<div class="sect3">
+<h4 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>Byte-reverse</h4>
 <div class="paragraph">
 <p><strong>rev8</strong> reverses the byte-ordering of <em>rs</em>.</p>
 </div>
@@ -1555,8 +1564,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 </div>
-<div class="sect3">
-<h4 id="zbc"><a class="anchor" href="#zbc"></a>Zbc: Carry-less multiplication</h4>
+<div class="sect2">
+<h3 id="zbc"><a class="anchor" href="#zbc"></a>Zbc: Carry-less multiplication</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1617,8 +1626,8 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zbs"><a class="anchor" href="#zbs"></a>Zbs: Single-bit instructions</h4>
+<div class="sect2">
+<h3 id="zbs"><a class="anchor" href="#zbs"></a>Zbs: Single-bit instructions</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1704,8 +1713,8 @@ a single bit in a register. The bit is specified by its index.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zbkb"><a class="anchor" href="#zbkb"></a>Zbkb: Bit-manipulation for Cryptography</h4>
+<div class="sect2">
+<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>Zbkb: Bit-manipulation for Cryptography</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1839,8 +1848,8 @@ common operations in cryptographic workloads.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zbkc"><a class="anchor" href="#zbkc"></a>Zbkc: Carry-less multiplication for Cryptography</h4>
+<div class="sect2">
+<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>Zbkc: Carry-less multiplication for Cryptography</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1893,8 +1902,8 @@ efficiently implement the GHASH operation, which is part of this workload.</p>
 </tbody>
 </table>
 </div>
-<div class="sect3">
-<h4 id="zbkx"><a class="anchor" href="#zbkx"></a>Zbkx: Crossbar permutations</h4>
+<div class="sect2">
+<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>Zbkx: Crossbar permutations</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1956,10 +1965,12 @@ latency does not depend on the (secret) data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="insns"><a class="anchor" href="#insns"></a>Instructions (in alphabetical order)</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="insns"><a class="anchor" href="#insns"></a>Instructions (in alphabetical order)</h3>
-<div class="sect3">
-<h4 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>add.uw</h4>
+<h3 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2027,8 +2038,8 @@ X(rd) = base + index;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-andn"><a class="anchor" href="#insns-andn"></a>andn</h4>
+<div class="sect2">
+<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>andn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2094,8 +2105,8 @@ X(rd) = base + index;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>bclr</h4>
+<div class="sect2">
+<h3 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>bclr</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2158,8 +2169,8 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>bclri</h4>
+<div class="sect2">
+<h3 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>bclri</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2233,8 +2244,8 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bext"><a class="anchor" href="#insns-bext"></a>bext</h4>
+<div class="sect2">
+<h3 id="insns-bext"><a class="anchor" href="#insns-bext"></a>bext</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2297,8 +2308,8 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>bexti</h4>
+<div class="sect2">
+<h3 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>bexti</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2372,8 +2383,8 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-binv"><a class="anchor" href="#insns-binv"></a>binv</h4>
+<div class="sect2">
+<h3 id="insns-binv"><a class="anchor" href="#insns-binv"></a>binv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2436,8 +2447,8 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>binvi</h4>
+<div class="sect2">
+<h3 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>binvi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2511,8 +2522,8 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bset"><a class="anchor" href="#insns-bset"></a>bset</h4>
+<div class="sect2">
+<h3 id="insns-bset"><a class="anchor" href="#insns-bset"></a>bset</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2575,8 +2586,8 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>bseti</h4>
+<div class="sect2">
+<h3 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>bseti</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2650,8 +2661,8 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>clmul</h4>
+<div class="sect2">
+<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>clmul</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2727,8 +2738,8 @@ X[rd] = output</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>clmulh</h4>
+<div class="sect2">
+<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>clmulh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2804,8 +2815,8 @@ X[rd] = output</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>clmulr</h4>
+<div class="sect2">
+<h3 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>clmulr</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2895,8 +2906,8 @@ a <strong>clmul</strong>, then bit-reversing the output.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-clz"><a class="anchor" href="#insns-clz"></a>clz</h4>
+<div class="sect2">
+<h3 id="insns-clz"><a class="anchor" href="#insns-clz"></a>clz</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2966,8 +2977,8 @@ X[rd] = (xlen - 1) - HighestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>clzw</h4>
+<div class="sect2">
+<h3 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>clzw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3038,8 +3049,8 @@ X[rd] = 31 - HighestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>cpop</h4>
+<div class="sect2">
+<h3 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>cpop</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3125,8 +3136,8 @@ The GCC builtin function <code>__builtin_popcountl (unsigned long x)</code> for 
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>cpopw</h4>
+<div class="sect2">
+<h3 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>cpopw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3193,8 +3204,8 @@ X[rd] = bitcount</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>ctz</h4>
+<div class="sect2">
+<h3 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>ctz</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3265,8 +3276,8 @@ X[rd] = LowestSetBit(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>ctzw</h4>
+<div class="sect2">
+<h3 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>ctzw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3336,8 +3347,8 @@ X[rd] = LowestSetBit32(rs);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-max"><a class="anchor" href="#insns-max"></a>max</h4>
+<div class="sect2">
+<h3 id="insns-max"><a class="anchor" href="#insns-max"></a>max</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3424,8 +3435,8 @@ implementations that are so optimized can fuse them together.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>maxu</h4>
+<div class="sect2">
+<h3 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>maxu</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3493,8 +3504,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-min"><a class="anchor" href="#insns-min"></a>min</h4>
+<div class="sect2">
+<h3 id="insns-min"><a class="anchor" href="#insns-min"></a>min</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3562,8 +3573,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-minu"><a class="anchor" href="#insns-minu"></a>minu</h4>
+<div class="sect2">
+<h3 id="insns-minu"><a class="anchor" href="#insns-minu"></a>minu</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3631,8 +3642,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>orc.b</h4>
+<div class="sect2">
+<h3 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>orc.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3703,8 +3714,8 @@ X[rd] = output;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-orn"><a class="anchor" href="#insns-orn"></a>orn</h4>
+<div class="sect2">
+<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>orn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3770,8 +3781,8 @@ X[rd] = output;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-pack"><a class="anchor" href="#insns-pack"></a>pack</h4>
+<div class="sect2">
+<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>pack</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3835,8 +3846,8 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-packh"><a class="anchor" href="#insns-packh"></a>packh</h4>
+<div class="sect2">
+<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>packh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3901,8 +3912,8 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-packw"><a class="anchor" href="#insns-packw"></a>packw</h4>
+<div class="sect2">
+<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>packw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3968,8 +3979,8 @@ X(rd) = EXTS(hi_half @ lo_half);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>rev8</h4>
+<div class="sect2">
+<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>rev8</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4087,8 +4098,8 @@ XLEN-32 and XLEN-16, respectively.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-revb"><a class="anchor" href="#insns-revb"></a>rev.b</h4>
+<div class="sect2">
+<h3 id="insns-revb"><a class="anchor" href="#insns-revb"></a>rev.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4153,8 +4164,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-rol"><a class="anchor" href="#insns-rol"></a>rol</h4>
+<div class="sect2">
+<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>rol</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4225,8 +4236,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>rolw</h4>
+<div class="sect2">
+<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>rolw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4296,8 +4307,8 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-ror"><a class="anchor" href="#insns-ror"></a>ror</h4>
+<div class="sect2">
+<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>ror</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4368,8 +4379,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-rori"><a class="anchor" href="#insns-rori"></a>rori</h4>
+<div class="sect2">
+<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>rori</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4451,8 +4462,8 @@ X(rd) = result;</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>roriw</h4>
+<div class="sect2">
+<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>roriw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4524,8 +4535,8 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>rorw</h4>
+<div class="sect2">
+<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>rorw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4595,8 +4606,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>sext.b</h4>
+<div class="sect2">
+<h3 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>sext.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4657,8 +4668,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>sext.h</h4>
+<div class="sect2">
+<h3 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>sext.h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4719,8 +4730,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>sh1add</h4>
+<div class="sect2">
+<h3 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>sh1add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4781,8 +4792,8 @@ X(rd) = EXTS(result);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>sh1add.uw</h4>
+<div class="sect2">
+<h3 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>sh1add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4847,8 +4858,8 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>sh2add</h4>
+<div class="sect2">
+<h3 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>sh2add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4909,8 +4920,8 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>sh2add.uw</h4>
+<div class="sect2">
+<h3 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>sh2add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4976,8 +4987,8 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>sh3add</h4>
+<div class="sect2">
+<h3 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>sh3add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5038,8 +5049,8 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>sh3add.uw</h4>
+<div class="sect2">
+<h3 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>sh3add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5103,8 +5114,8 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>slli.uw</h4>
+<div class="sect2">
+<h3 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>slli.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5180,8 +5191,8 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>unzip</h4>
+<div class="sect2">
+<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>unzip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5266,8 +5277,8 @@ directly.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>xnor</h4>
+<div class="sect2">
+<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>xnor</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5333,8 +5344,8 @@ directly.</p>
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-xpermb"><a class="anchor" href="#insns-xpermb"></a>xperm.b</h4>
+<div class="sect2">
+<h3 id="insns-xpermb"><a class="anchor" href="#insns-xpermb"></a>xperm.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5411,8 +5422,8 @@ function clause execute ( XPERM_B (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-xpermn"><a class="anchor" href="#insns-xpermn"></a>xperm.n</h4>
+<div class="sect2">
+<h3 id="insns-xpermn"><a class="anchor" href="#insns-xpermn"></a>xperm.n</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5489,8 +5500,8 @@ function clause execute ( XPERM_N (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>zext.h</h4>
+<div class="sect2">
+<h3 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>zext.h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5576,8 +5587,8 @@ function clause execute ( XPERM_N (rs2,rs1,rd)) = {
 </table>
 <div style="page-break-after: always;"></div>
 </div>
-<div class="sect3">
-<h4 id="insns-zip"><a class="anchor" href="#insns-zip"></a>zip</h4>
+<div class="sect2">
+<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>zip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5663,10 +5674,12 @@ directly.</p>
 </table>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>Software optimization guide</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>Software optimization guide</h3>
-<div class="sect3">
-<h4 id="strlen"><a class="anchor" href="#strlen"></a>strlen</h4>
+<h3 id="strlen"><a class="anchor" href="#strlen"></a>strlen</h3>
 <div class="paragraph">
 <p>The <strong>orc.b</strong> instruction allows for the efficient detection of <strong>NUL</strong> bytes in an XLEN-sized chunk of data:</p>
 </div>
@@ -5754,8 +5767,8 @@ strlen:
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="strcmp"><a class="anchor" href="#strcmp"></a>strcmp</h4>
+<div class="sect2">
+<h3 id="strcmp"><a class="anchor" href="#strcmp"></a>strcmp</h3>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">#include &lt;sys/asm.h&gt;
@@ -5814,7 +5827,6 @@ strcmp:
   ret
 
 .size   strcmp, .-strcmp</code></pre>
-</div>
 </div>
 </div>
 </div>
