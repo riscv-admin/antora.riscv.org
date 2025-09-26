@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bibliography :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="../priv/priv-history.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="441ade68fade6e703344a4138c1e8beac6e34346"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img id="riscvlogo" class="block" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+    </div>
+<div class="navbar-end">
+<div class="navbar-item home">
+  <a class="navbar-link" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed" aria-label="Home">
+    <!-- Inline Home SVG -->
+    <svg class="nav-home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+  </a>
+</div>
+</div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+              Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+              Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+              Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+              SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient Trace< <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20250508</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-history.html">History</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Bibliography</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Bibliography"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Open an Issue
+        </a>
+        <a href="https://github.com/riscv/riscv-isa-manual" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Bibliography</li>
+      <li><a href="bibliography.html">Bibliography</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Bibliography</h1>
+<div class="paragraph">
+<p><a id="bib-riscv-elf-psabi"></a>[1] <em>RISC-V ELF psABI Specification</em>, \urlhttps://github.com/riscv/riscv-elf-psabi-doc/.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-riscvtr2"></a>[2] <em>The RISC-V Instruction Set Manual, Volume I: Base
+                  User-Level ISA Version 2.0</em>, UCB/EECS-2014-54, EECS Department, University of California, Berkeley, May 2014.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-riscvtr"></a>[3] <em>The RISC-V Instruction Set Manual, Volume I: Base
+                  User-Level ISA</em>, UCB/EECS-2011-62, EECS Department, University of California, Berkeley, May 2011.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ieee754-2008"></a>[4] <em>ANSI/IEEE Std 754-2008, IEEE standard for
+                  floating-point arithmetic</em>, 2008.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-risci-isca1981"></a>[5] D. A. Patterson and C. H. S'equin, "RISC I: A Reduced Instruction Set VLSI Computer" in <em>ISCA</em>. 1981, pp. 443-458.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-katevenis:1983"></a>[6] K. M. G.H. and S. R. W. and P. D. A. and S. C. H., "The RISC II micro-architecture" in <em>Proceedings VLSI 83 Conference</em>. August 1983.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ungar:1984"></a>[7] D. Ungar and R. Blau and P. Foley and D. Samples and D. Patterson, "Architecture of SOAR: Smalltalk on a RISC" in <em>ISCA</em>. Ann Arbor, MI:, 1984, pp. 188&#8212;&#8203;197.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-spur-jsscc1989"></a>[8] D. D. Lee and S. I. Kong and M. D. H. a. . . . . . . . . . . . . . . . . . G. S. Taylor and D. A. Hodges and R. . . . . . . . . . . . . . . . . . H. Katz and D. A. Patterson, "A VLSI Chip Set for a Multiprocessor
+                  Workstation&#8212;&#8203;Part I: An RISC Microprocessor with
+                  Coprocessor Interface and Support for Symbolic
+                  Processing", <em>IEEE JSSC</em>, vol. 24, no. 6, December 1989. pp. 1688&#8212;&#8203;1698.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-lithe-pan-hotpar09"></a>[9] H. Pan and B. Hindman and K. Asanovi'c, "Lithe: Enabling Efficient Composition of Parallel Libraries" in <em>Proceedings of the 1st USENIX Workshop on Hot Topics in Parallelism (HotPar~'09)</em>. Berkeley, CA:, March 2009.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-lithe-pan-pldi10"></a>[10] H. Pan and B. Hindman and K. Asanovi'c, "Composing Parallel Software Efficiently with Lithe" in <em>31st Conference on Programming Language Design and Implementation</em>. Toronto, Canada:, June 2010.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-riscv-asm-manual"></a>[11] <em>RISC-V Assembly Programmer&#8217;s Manual</em>, \urlhttps://github.com/riscv/riscv-asm-manual.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-jtseng:sbbci"></a>[12] J. Tseng and K. Asanovi'c, "Energy-Efficient Register Access" in <em>Proc. of the 13th Symposium on Integrated Circuits and
+                  Systems Design</em>. Manaus, Brazil:, September 2000, pp. 377&#8212;&#8203;384.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-heil-tr1996"></a>[13] <em>Selective Dual Path Execution</em>, University of Wisconsin - Madison, November 1996.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-klauser-1998"></a>[14] K. A. and A. T. and G. D. and C. B., "Dynamic Hammock Predication for Non-Predicated Instruction Set Architectures" in <em>Proceedings of the 1998 International Conference on Parallel Architectures and Compilation Techniques</em>, PACT '98. Washington, DC, USA:, 1998.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-kim-micro2005"></a>[15] K. Hyesoon and M. Onur and S. Jared and P. Y. N., "Wish Branches: Combining Conditional Branching and Predication for Adaptive Predicated Execution" in <em>Proceedings of the 38th annual IEEE/ACM International Symposium on Microarchitecture</em>, MICRO 38. 2005, pp. 43&#8212;&#8203;54.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ibmpower7"></a>[16] S. Balaram et al., "IBM POWER7 multicore server processor", <em>IBM Journal of Research and Development</em>, vol. 55, no. 3, 2011. pp. 1&#8212;&#8203;1.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-majc"></a>[17] T. Marc and C. Jeffrey and C. Shailender and C. A. W. and T. S. Sheung, "The MAJC Architecture: A Synthesis of Parallelism and Scalability", <em>IEEE Micro</em>, vol. 20, no. 6, November 2000. pp. 12&#8212;&#8203;25.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-gharachorloo90memoryconsistency"></a>[18] K. Gharachorloo and D. Lenoski and J. Laudon and P. Gibbons and A. Gupta and J. . . . . . . . . . . . . . . . . . Hennessy, "Memory Consistency and Event Ordering in Scalable
+                  Shared-Memory Multiprocessors" in <em>In Proceedings of the 17th Annual International
+                  Symposium on Computer Architecture</em>. 1990, pp. 15&#8212;&#8203;26.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-rajwar:2001:sle"></a>[19] R. Ravi and G. J. R., "Speculative lock elision: enabling highly concurrent multithreaded execution" in <em>Proceedings of the 34th annual ACM/IEEE International Symposium on Microarchitecture</em>, MICRO 34. IEEE Computer Society, 2001, pp. 294&#8212;&#8203;305.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-queue"></a>[20] M. M. M. and S. M. L., "Simple, Fast, and Practical Non-Blocking and Blocking Concurrent Queue Algorithms" in <em>Proceedings of the Fifteenth Annual ACM Symposium on Principles of Distributed Computing</em>, PODC '96. New York, NY, USA:, Association for Computing Machinery, 1996, pp. 267–275, Available: <a href="https://doi.org/10.1145/248052.248106" class="bare">https://doi.org/10.1145/248052.248106</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-roux:hal-01091186"></a>[21] Roux and Pierre, "Innocuous Double Rounding of Basic Arithmetic Operations", <em>Journal of Formalized Reasoning</em>, vol. 7, no. 1, Nov 2014. pp. 131-142, [Online]. Available: <a href="https://hal.archives-ouvertes.fr/hal-01091186" class="bare">https://hal.archives-ouvertes.fr/hal-01091186</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-stretch"></a>[22] W. Buchholz, <em>Planning a computer system: Project Stretch</em>. McGraw-Hill Book Company, 1962.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ibm360"></a>[23] G. M. Amdahl and G. A. Blaauw and F. P. B. Jr., "Architecture of the IBM System/360", <em>IBM Journal of R. \&amp; D.</em>, vol. 8, no. 2, 1964.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-cdc6600"></a>[24] Thornton and J. E., "Parallel Operation in the Control Data 6600" in <em>Proceedings of the October 27-29, 1964, Fall Joint Computer Conference, Part II: Very High Speed Computer Systems</em>, AFIPS '64 (Fall, part II). 1965, pp. 33&#8212;&#8203;40.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-waterman-ms"></a>[25] .</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-waterman-phd"></a>[26] .</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-sail"></a>[27] <em>SAIL ISA Specification Language</em>. [Online]. Available: <a href="https://github.com/rems-project/sail" class="bare">https://github.com/rems-project/sail</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-lsyrr:04"></a>[28] L. R. B and S. ZJ and Y. Y. Lisa and R. R. L and R. M. JB, "On permutation operations in cipher design" in <em>International Conference on Information Technology: Coding and Computing, 2004. Proceedings. ITCC 2004.</em>, vol. 2. IEEE, 2004, pp. 569&#8212;&#8203;577.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nist:fips:180:4"></a>[29] NIST, <em>Secure Hash Standard (SHS)</em>, Federal Information Processing Standards Publication FIPS 180-4, August 2015. [Online]. Available: <a href="https://doi.org/10.6028/NIST.FIPS.180-4" class="bare">https://doi.org/10.6028/NIST.FIPS.180-4</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nist:fips:197"></a>[30] NIST, <em>Advanced Encryption Standard (AES)</em>, Federal Information Processing Standards Publication FIPS
+                  197, November 2001. [Online]. Available: <a href="https://doi.org/10.6028/NIST.FIPS.197" class="bare">https://doi.org/10.6028/NIST.FIPS.197</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mjs:lwsha:20"></a>[31] M. O. Saarinen, <em>Lightweight SHA ISA</em>, \urlhttps://github.com/mjosaarinen/lwsha_isa, 03 2020.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-tubake:18"></a>[32] M. S. Turan and E. Barker and J. K. a. . . . K. A. McKay and M. L. Baish and M. Boyle, <em>Recommendation for the Entropy Sources Used for Random Bit
+    Generation</em>, NIST Special Publication SP 800-90B, January 2018.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-kisc11"></a>[33] W. Killmann and W. Schindler, <em>A Proposal for: Functionality classes for random number
+    generators</em>, AIS 20 / AIS 31, Version 2.0, English Translation, BSI, September 2011. [Online]. Available: <a href="https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Zertifizierung/Interpretationen/AIS_31_Functionality_classes_for_random_number_generators_e.html" class="bare">https://www.bsi.bund.de/SharedDocs/Downloads/DE/BSI/Zertifizierung/Interpretationen/AIS_31_Functionality_classes_for_random_number_generators_e.html</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-bake15"></a>[34] E. Barker and J. Kelsey, <em>Recommendation for Random Number Generation Using
+    Deterministic Random Bit Generators</em>, NIST Special Publication SP 800-90A Revision 1, June 2015.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-bakero:21"></a>[35] E. Barker and J. Kelsey and A. R. a. . . . M. S. Turan and D. Buller and A. Kaufer, <em>Recommendation for Random Bit Generator (RBG)
+    Constructions</em>, Draft NIST Special Publication SP 800-90C, March 2021.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ni16"></a>[36] NIST, <em>Submission Requirements and Evaluation Criteria for the
+    Post-Quantum Cryptography Standardization Process</em>, Official Call for Proposals, National Institute for
+    Standards and Technology, December 2016. [Online]. Available: <a href="http://csrc.nist.gov/groups/ST/post-quantum-crypto/documents/call-for-proposals-final-dec-2016.pdf" class="bare">http://csrc.nist.gov/groups/ST/post-quantum-crypto/documents/call-for-proposals-final-dec-2016.pdf</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-is16"></a>[37] <em>Information technology&#8201;&#8212;&#8201;Security techniques&#8201;&#8212;&#8201;Testing
+    methods for the mitigation of non-invasive attack classes
+    against cryptographic modules</em>, ISO/IEC 17825:2016, International Organization for Standardization, 2016.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mjs:lwaes:20"></a>[38] M. O. Saarinen, <em>Lightweight AES ISA</em>, \urlhttps://github.com/mjosaarinen/lwaes_isa, 01 2020.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mnpsw:20"></a>[39] M. Ben and N. G. Richard and P. Dan and S. M. O. and W. Claire, "The design of scalar AES Instruction Set Extensions for RISC-V", <em>IACR Transactions on Cryptographic Hardware and Embedded Systems</em>, vol. 2021, no. 1, Dec. 2020. pp. 109-136, [Online]. Available: <a href="https://tches.iacr.org/index.php/TCHES/article/view/8729" class="bare">https://tches.iacr.org/index.php/TCHES/article/view/8729</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mpp:19"></a>[40] <em>XCrypto: a cryptographic ISE for RISC-V</em>, 1.0.0, 2019. [Online]. Available: <a href="https://github.com/scarv/xcrypto" class="bare">https://github.com/scarv/xcrypto</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nist:gcm"></a>[41] M. Dworkin, <em>Recommendation for Block Cipher Modes of Operation:
+                  Galois/Counter Mode (GCM) and GMAC</em>, NIST Special Publication SP 800-38D, November 2007. [Online]. Available: <a href="https://doi.org/10.6028/NIST.SP.800-38D" class="bare">https://doi.org/10.6028/NIST.SP.800-38D</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nist:fips:202"></a>[42] NIST, <em>SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions</em>, Federal Information Processing Standards Publication FIPS
+                  202, August 2015. [Online]. Available: <a href="https://doi.org/10.6028/NIST.FIPS.202" class="bare">https://doi.org/10.6028/NIST.FIPS.202</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:present"></a>[43] B. Andrey et al., "PRESENT: An ultra-lightweight block cipher" in <em>International workshop on cryptographic hardware and embedded systems</em>. Springer, 2007, pp. 450&#8212;&#8203;466.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:rectangle"></a>[44] Z. Wentao and B. Zhenzhen and L. Dongdai and R. Vincent and Y. Bohan and V. Ingrid, "RECTANGLE: a bit-slice lightweight block cipher suitable for multiple platforms", <em>Science China Information Sciences</em>, vol. 58, no. 12, 2015. pp. 1&#8212;&#8203;15.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:gift"></a>[45] B. Subhadeep and P. S. Kumar and P. Thomas and S. Yu and S. S. Meng and T. Yosuke, "GIFT: a small present" in <em>International Conference on Cryptographic Hardware and Embedded Systems</em>. Springer, 2017, pp. 321&#8212;&#8203;345.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:twine"></a>[46] S. Tomoyasu and M. Kazuhiko and M. Sumio and K. Eita, "TWINE: A Lightweight Block Cipher for Multiple Platforms" in <em>International Conference on Selected Areas in Cryptography</em>. Springer, 2012, pp. 339&#8212;&#8203;354.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:skinny"></a>[47] B. Christof et al., "The SKINNY family of block ciphers and its low-latency variant MANTIS" in <em>Annual International Cryptology Conference</em>. Springer, 2016, pp. 123&#8212;&#8203;153.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:midori"></a>[48] B. Subhadeep et al., "Midori: A block cipher for low energy" in <em>International Conference on the Theory and Application of Cryptology and Information Security</em>. Springer, 2015, pp. 411&#8212;&#8203;436.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:camellia"></a>[49] A. Kazumaro et al., "Camellia: A 128-bit block cipher suitable for multiple platforms—design andanalysis" in <em>International Workshop on Selected Areas in Cryptography</em>. Springer, 2000, pp. 39&#8212;&#8203;56.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-block:aria"></a>[50] K. Daesung et al., "New block cipher: ARIA" in <em>International Conference on Information Security and Cryptology</em>. Springer, 2003, pp. 432&#8212;&#8203;445.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-gbt:sm4"></a>[51] <em>GB/T 32907-2016: SM4 Block Cipher Algorithm</em>, Also GM/T 0002-2012. Standardization Administration of China, August 2016. [Online]. Available: <a href="http://www.gmbz.org.cn/upload/2018-04-04/1522788048733065000.pdf" class="bare">http://www.gmbz.org.cn/upload/2018-04-04/1522788048733065000.pdf</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-sa21"></a>[52] M. O. Saarinen, <em>On Entropy and Bit Patterns of Ring Oscillator Jitter</em>, Preprint, February 2021. [Online]. Available: <a href="https://arxiv.org/abs/2102.02196" class="bare">https://arxiv.org/abs/2102.02196</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nicc21"></a>[53] NIST and CCCS, <em>Implementation Guidance for FIPS 140-3 and the
+    Cryptographic Module Validation Program</em>, CMVP, May 2021. [Online]. Available: <a href="https://csrc.nist.gov/CSRC/media/Projects/cryptographic-module-validation-program/documents/fips%20140-3/FIPS%20140-3%20IG.pdf" class="bare">https://csrc.nist.gov/CSRC/media/Projects/cryptographic-module-validation-program/documents/fips%20140-3/FIPS%20140-3%20IG.pdf</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-cr17"></a>[54] C. Criteria, <em>Common Methodology for Information Technology Security
+    Evaluation: Evaluation methodology</em>, Specification: Version 3.1 Revision 5, April 2017. [Online]. Available: <a href="https://commoncriteriaportal.org/cc/" class="bare">https://commoncriteriaportal.org/cc/</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ni19"></a>[55] NIST, <em>Security Requirements for Cryptographic Modules</em>, Federal Information Processing Standards Publication FIPS
+    140-3, March 2019. [Online]. Available: <a href="https://doi.org/10.6028/NIST.FIPS.140-3" class="bare">https://doi.org/10.6028/NIST.FIPS.140-3</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ne51"></a>[56]</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ns15"></a>[57] NSA/CSS, <em>Commercial National Security Algorithm Suite</em>, August 2015. [Online]. Available: <a href="https://apps.nsa.gov/iaarchive/programs/iad-initiatives/cnsa-suite.cfm" class="bare">https://apps.nsa.gov/iaarchive/programs/iad-initiatives/cnsa-suite.cfm</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-bafoka:12"></a>[58] R. Bardou and R. Focardi and Y. K. a. . . . L. Simionato and G. Steel and J. Tsay, "Efficient Padding Oracle Attacks on Cryptographic
+    Hardware" in <em>Advances in Cryptology - CRYPTO 2012 - 32nd Annual
+    Cryptology Conference, Santa Barbara, CA, USA, August
+    19-23, 2012. Proceedings</em>. 2012, pp. 608&#8212;&#8203;625.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mosuei:20"></a>[59] D. Moghimi and B. Sunar and T. E. a. . . . N. Heninger, "TPM-FAIL: TPM meets Timing and Lattice Attacks" in <em>29th USENIX Security Symposium (USENIX Security 20)</em>. USENIX Association, August 2020, pp. To appear, Available: <a href="https://www.usenix.org/conference/usenixsecurity20/presentation/moghimi-tpm" class="bare">https://www.usenix.org/conference/usenixsecurity20/presentation/moghimi-tpm</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-an20"></a>[60] R. J. Anderson, <em>Security engineering - a guide to building dependable
+    distributed systems (3. ed.)</em>. Wiley, December 2020, Available: <a href="https://www.cl.cam.ac.uk/~rja14/book.html" class="bare">https://www.cl.cam.ac.uk/~rja14/book.html</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-kascve13"></a>[61] D. Karaklajic and J. Schmidt and I. . . . Verbauwhede, "Hardware Designer&#8217;s Guide to Fault Attacks", <em>IEEE Trans. Very Large Scale Integr. Syst.</em>, vol. 21, no. 12, 2013. pp. 2295&#8212;&#8203;2306.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-evpo16"></a>[62] D. Evtyushkin and D. V. Ponomarev, "Covert Channels through Random Number Generator:
+    Mechanisms, Capacity Estimation and Mitigations" in <em>Proceedings of the 2016 ACM SIGSAC Conference on
+    Computer and Communications Security, Vienna, Austria,
+    October 24-28, 2016</em>. 2016, pp. 843&#8212;&#8203;857.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-balumi:11"></a>[63] M. Baudet and D. Lubicz and J. M. a. . . . A. Tassiaux, "On the Security of Oscillator-Based Random Number
+    Generators", <em>J. Cryptology</em>, vol. 24, no. 2, 2011. pp. 398&#8212;&#8203;425.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-am17"></a>[64] AMD, <em>AMD Random Number Generator</em>, AMD TechDocs, June 2017. [Online]. Available: <a href="https://www.amd.com/system/files/TechDocs/amd-random-number-generator.pdf" class="bare">https://www.amd.com/system/files/TechDocs/amd-random-number-generator.pdf</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ar17"></a>[65] ARM, <em>ARM TrustZone True Random Number Generator: Technical Reference Manual</em>, ARM 100976\_0000\_00\_en (rev. r0p0), May 2017. [Online]. Available: <a href="http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.100976_0000_00_en" class="bare">http://infocenter.arm.com/help/index.jsp?topic=/com.arm.doc.100976_0000_00_en</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-libabo:13"></a>[66] J. S. Liberty et al., "True hardware random number generation implemented in the
+    32-nm SOI POWER7+ processor", <em>IBM J. Res. Dev.</em>, vol. 57, no. 6, 2013.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-vadr10"></a>[67] M. Varchola and M. Drutarovsk'y, "New High Entropy Element for FPGA Based True Random
+    Number Generators" in <em>Cryptographic Hardware and Embedded Systems, CHES 2010,
+    12th International Workshop, Santa Barbara, CA, USA, August
+    17-20, 2010. Proceedings</em>. 2010, pp. 351&#8212;&#8203;365.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-hakoma12"></a>[68] M. Hamburg and P. Kocher and M. E. Marson, <em>Analysis of Intel&#8217;s Ivy Bridge Digital Random Number
+    Generator</em>, Technical Report, Cryptography Research (Prepared for
+    Intel), March 2012.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-vafiau:10"></a>[69] B. Valtchanov and V. Fischer and A. A. a. . . . F. Bernard, "Characterization of randomness sources in ring
+    oscillator-based true random number generators in FPGAs" in <em>13th IEEE International Symposium on Design and
+    Diagnostics of Electronic Circuits and Systems, DDECS
+    2010, Vienna, Austria, April 14-16, 2010</em>. 2010, pp. 48&#8212;&#8203;53.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ba86"></a>[70] P. Bak, "The Devil&#8217;s Staircase", <em>Phys. Today</em>, vol. 39, no. 12, December 1986. pp. 38&#8212;&#8203;45.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mamo09"></a>[71] A. T. Markettos and S. W. Moore, "The Frequency Injection Attack on Ring-Oscillator-Based
+    True Random Number Generators" in <em>Cryptographic Hardware and Embedded Systems - CHES 2009,
+    11th International Workshop, Lausanne, Switzerland,
+    September 6-9, 2009, Proceedings</em>. 2009, pp. 317&#8212;&#8203;331.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-ra20"></a>[72] Rambus, <em>TRNG-IP-76 / EIP-76 Family of FIPS Approved True Random
+    Generators</em>, Commercial Crypto IP. Formerly (2017) available from
+    Inside Secure., 2020. [Online]. Available: <a href="https://www.rambus.com/security/crypto-accelerator-hardware-cores/basic-crypto-blocks/trng-ip-76/" class="bare">https://www.rambus.com/security/crypto-accelerator-hardware-cores/basic-crypto-blocks/trng-ip-76/</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-bl86"></a>[73] M. Blum, "Independent unbiased coin flips from a correlated biased
+    source&#8201;&#8212;&#8201;A finite state Markov chain", <em>Combinatorica</em>, vol. 6, no. 2, 1986. pp. 97&#8212;&#8203;108.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-la08"></a>[74] P. Lacharme, "Post-Processing Functions for a Biased Physical Random
+    Number Generator" in <em>Fast Software Encryption, 15th International Workshop,
+    FSE 2008, Lausanne, Switzerland, February 10-13, 2008,
+    Revised Selected Papers</em>. 2008, pp. 334&#8212;&#8203;342.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-me18"></a>[75] J. P. Mechalas, <em>Intel Digital Random Number Generator (DRNG) Software
+    Implementation Guide</em>, Intel Technical Report, Version 2.1, October 2018. [Online]. Available: <a href="https://software.intel.com/content/www/us/en/develop/articles/intel-digital-random-number-generator-drng-software-implementation-guide.html" class="bare">https://software.intel.com/content/www/us/en/develop/articles/intel-digital-random-number-generator-drng-software-implementation-guide.html</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-mu20"></a>[76] S. M\"uller, <em>Documentation and Analysis of the Linux Random Number
+    Generator, Version 3.6</em>, Prepared for BSI by atsec information security GmbH, April 2020. [Online]. Available: <a href="https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Studies/LinuxRNG/LinuxRNG_EN.pdf" class="bare">https://www.bsi.bund.de/SharedDocs/Downloads/EN/BSI/Publications/Studies/LinuxRNG/LinuxRNG_EN.pdf</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-it19"></a>[77] ITU, <em>Quantum noise random number generator architecture</em>, Recommendation ITU-T X.1702, November 2019. [Online]. Available: <a href="https://www.itu.int/rec/T-REC-X.1702-201911-I/en" class="bare">https://www.itu.int/rec/T-REC-X.1702-201911-I/en</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-huhe20"></a>[78] D. Hurley-Smith and J. C. Hern'andez-Castro, "Quantum Leap and Crash: Searching and Finding Bias in
+    Quantum Random Number Generators", <em>ACM Transactions on Privacy and Security</em>, vol. 23, no. 3, June 2020. pp. 1&#8212;&#8203;25.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-sh94"></a>[79] P. W. Shor, "Algorithms for quantum computation: Discrete logarithms
+    and factoring" in <em>35th Annual Symposium on Foundations of Computer Science,
+    Santa Fe, New Mexico, USA, 20-22 November 1994</em>. IEEE, 1994, pp. 124&#8212;&#8203;134, Available: <a href="https://arxiv.org/abs/quant-ph/9508027" class="bare">https://arxiv.org/abs/quant-ph/9508027</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-blblsh86"></a>[80] L. Blum and M. Blum and M. Shub, "A Simple Unpredictable Pseudo-Random Number Generator", <em>SIAM J. Comput.</em>, vol. 15, no. 2, 1986. pp. 364&#8212;&#8203;383.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-gr96"></a>[81] L. K. Grover, "A Fast Quantum Mechanical Algorithm for Database Search" in <em>Proceedings of the Twenty-eighth Annual ACM Symposium on
+    Theory of Computing</em>, STOC '96. ACM, 1996, pp. 212&#8212;&#8203;219, Available: <a href="http://arxiv.org/pdf/quant-ph/9605043" class="bare">http://arxiv.org/pdf/quant-ph/9605043</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-janaro:20"></a>[82] S. Jaques and M. Naehrig and M. R. a. . . . F. Virdia, "Implementing Grover Oracles for Quantum Key Search on
+    AES and LowMC" in <em>Advances in Cryptology - EUROCRYPT 2020 - 39th Annual
+    International Conference on the Theory and Applications of
+    Cryptographic Techniques, Zagreb, Croatia, May 10-14, 2020,
+    Proceedings, Part II</em>. 2020, pp. 280&#8212;&#8203;310, Available: <a href="https://arxiv.org/pdf/1910.01700.pdf" class="bare">https://arxiv.org/pdf/1910.01700.pdf</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-nist:fips:186:4"></a>[83] NIST, <em>Digital Signature Standard (DSS)</em>, Federal Information Processing Standards Publication FIPS 186-4, July 2013. [Online]. Available: <a href="https://doi.org/10.6028/NIST.FIPS.186-4" class="bare">https://doi.org/10.6028/NIST.FIPS.186-4</a></p>
+</div>
+<div class="paragraph">
+<p><a id="bib-goldbergvm"></a>[84] Goldberg and R. P., "Survey of virtual machine research", <em>Computer</em>, vol. 7, no. 6, June 1974. pp. 34-45.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-debug_spec"></a>[85]</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-transparent-superpages"></a>[86] N. Juan and I. Sitaram and D. Peter and C. Alan, "Practical, Transparent Operating System Support for Superpages", <em>SIGOPS Oper. Syst. Rev.</em>, vol. 36, no. SI, dec 2002. pp. 89&#8212;&#8203;104, [Online]. Available: <a href="https://doi.org/10.1145/844128.844138" class="bare">https://doi.org/10.1145/844128.844138</a>.</p>
+</div>
+<div class="paragraph">
+<p><a id="bib-hwasan"></a>[87] K. S. a. . . . . . . . . . . . . . . . . . E. S. a. . . . . . . . . . . . . . . . . . A. S. a. . . . . . . . . . . . . . . . . . V. T. a. . . . . . . . . . . . . . . . . . D. Vyukov, "Memory Tagging and how it improves C/C++ memory safety", <em>CoRR</em>, vol. abs/1802.09517, 2018. [Online]. Available: <a href="http://arxiv.org/abs/1802.09517" class="bare">http://arxiv.org/abs/1802.09517</a></p>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="../priv/priv-history.html">History</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="bibliography.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../v20240411/biblio/bibliography.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../../index.html">Last Published ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>

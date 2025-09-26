@@ -1,0 +1,2497 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RV32I Base Integer Instruction Set, Version 2.1 :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="intro.html">
+    <link rel="next" href="rv32e.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="441ade68fade6e703344a4138c1e8beac6e34346"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img id="riscvlogo" class="block" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+    </div>
+<div class="navbar-end">
+<div class="navbar-item home">
+  <a class="navbar-link" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed" aria-label="Home">
+    <!-- Inline Home SVG -->
+    <svg class="nav-home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+    </svg>
+  </a>
+</div>
+</div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+              Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+              Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+              Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+              SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient Trace< <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20250508</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-history.html">History</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Bibliography</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../biblio/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="RV32I Base Integer Instruction Set, Version 2.1"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Open an Issue
+        </a>
+        <a href="https://github.com/riscv/riscv-isa-manual" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume I: RISC-V Unprivileged ISA Specification</li>
+      <li><a href="rv32.html">RV32I Base Integer Instruction Set</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">RV32I Base Integer Instruction Set, Version 2.1</h1>
+<div class="sect1">
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter describes the RV32I base integer instruction set.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>RV32I was designed to be sufficient to form a compiler target and to
+support modern operating system environments. The ISA was also designed
+to reduce the hardware required in a minimal implementation. RV32I
+contains 40 unique instructions, though a simple implementation might
+cover the ECALL/EBREAK instructions with a single SYSTEM hardware
+instruction that always traps and might be able to implement the FENCE
+instruction as a NOP, reducing base instruction count to 38 total. RV32I
+can emulate almost any other ISA extension (except the A extension,
+which requires additional hardware support for atomicity).</p>
+</div>
+<div class="paragraph">
+<p>In practice, a hardware implementation including the machine-mode
+privileged architecture will also require the 6 CSR instructions.</p>
+</div>
+<div class="paragraph">
+<p>Subsets of the base integer ISA might be useful for pedagogical
+purposes, but the base has been defined such that there should be little
+incentive to subset a real hardware implementation beyond omitting
+support for misaligned memory accesses and treating all SYSTEM
+instructions as a single trap.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The standard RISC-V assembly language syntax is documented in the
+Assembly Programmer&#8217;s Manual [<a href="../biblio/bibliography.html#bib-riscv-asm-manual" class="xref page">11</a>].</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Most of the commentary for RV32I also applies to the RV64I base.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="programmers-model-for-base-integer-isa"><a class="anchor" href="#programmers-model-for-base-integer-isa"></a>Programmers' Model for Base Integer ISA</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="#gprs">RISC-V base unprivileged integer register state.</a> shows the unprivileged state for the base
+integer ISA. For RV32I, the 32 <code>x</code> registers are each 32 bits wide,
+i.e., <code>XLEN=32</code>. Register <code>x0</code> is hardwired with all bits equal to 0.
+General purpose registers <code>x1-x31</code> hold values that various
+instructions interpret as a collection of Boolean values, or as two&#8217;s
+complement signed binary integers or unsigned binary integers.</p>
+</div>
+<div class="paragraph">
+<p>There is one additional unprivileged register: the program counter <code>pc</code>
+holds the address of the current instruction.</p>
+</div>
+<table id="gprs" class="tableblock frame-all grid-rows" style="width: 50%;">
+<caption class="title">Table 1. RISC-V base unprivileged integer register state.</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><span class="small">XLEN-1</span></th>
+<th class="tableblock halign-center valign-top"></th>
+<th class="tableblock halign-right valign-top"><span class="small">0</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x0/zero</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x1</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x2</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x3</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x4</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x5</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x6</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x7</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x8</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x9</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x10</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x11</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x12</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x13</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x14</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x15</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x16</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x17</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x18</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x19</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x20</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x21</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x22</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x23</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x24</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x25</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x26</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x27</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x28</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x29</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x30</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">x31</span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><span class="small">pc</span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There is no dedicated stack pointer or subroutine return address link
+register in the Base Integer ISA; the instruction encoding allows any
+<code>x</code> register to be used for these purposes. However, the standard
+software calling convention uses register <code>x1</code> to hold the return
+address for a call, with register <code>x5</code> available as an alternate link
+register. The standard calling convention uses register <code>x2</code> as the
+stack pointer.</p>
+</div>
+<div class="paragraph">
+<p>Hardware might choose to accelerate function calls and returns that use
+<code>x1</code> or <code>x5</code>. See the descriptions of the JAL and JALR instructions.</p>
+</div>
+<div class="paragraph">
+<p>The optional compressed 16-bit instruction format is designed around the
+assumption that <code>x1</code> is the return address register and <code>x2</code> is the
+stack pointer. Software using other conventions will operate correctly
+but may have greater code size.</p>
+</div>
+<div class="paragraph">
+<p>The number of available architectural registers can have large impacts
+on code size, performance, and energy consumption. Although 16 registers
+would arguably be sufficient for an integer ISA running compiled code,
+it is impossible to encode a complete ISA with 16 registers in 16-bit
+instructions using a 3-address format. Although a 2-address format would
+be possible, it would increase instruction count and lower efficiency.
+We wanted to avoid intermediate instruction sizes (such as Xtensa&#8217;s
+24-bit instructions) to simplify base hardware implementations, and once
+a 32-bit instruction size was adopted, it was straightforward to support
+32 integer registers. A larger number of integer registers also helps
+performance on high-performance code, where there can be extensive use
+of loop unrolling, software pipelining, and cache tiling.</p>
+</div>
+<div class="paragraph">
+<p>For these reasons, we chose a conventional size of 32 integer registers
+for RV32I. Dynamic register usage tends to be dominated by a few
+frequently accessed registers, and register file implementations can be
+optimized to reduce access energy for the frequently accessed
+registers [<a href="../biblio/bibliography.html#bib-jtseng:sbbci" class="xref page">12</a>]. The optional compressed 16-bit instruction format mostly
+only accesses 8 registers and hence can provide a dense instruction
+encoding, while additional instruction-set extensions could support a
+much larger register space (either flat or hierarchical) if desired.</p>
+</div>
+<div class="paragraph">
+<p>For resource-constrained embedded applications, we have defined the
+RV32E subset, which only has 16 registers
+(<a href="rv32e.html" class="xref page">RV32E and RV64E Base Integer Instruction Sets</a>).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="base-instruction-formats"><a class="anchor" href="#base-instruction-formats"></a>Base Instruction Formats</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the base RV32I ISA, there are four core instruction formats
+(R/I/S/U), as shown in <a href="#base_instr">Base instruction formats</a>. All are a fixed 32
+bits in length. The base ISA has <code>IALIGN=32</code>, meaning that instructions must be aligned on a four-byte boundary in memory. An
+instruction-address-misaligned exception is generated on a taken branch
+or unconditional jump if the target address is not <code>IALIGN-bit</code> aligned.
+This exception is reported on the branch or jump instruction, not on the
+target instruction. No instruction-address-misaligned exception is
+generated for a conditional branch that is not taken.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The alignment constraint for base ISA instructions is relaxed to a
+two-byte boundary when instruction extensions with 16-bit lengths or
+other odd multiples of 16-bit lengths are added (i.e., IALIGN=16).</p>
+</div>
+<div class="paragraph">
+<p>Instruction-address-misaligned exceptions are reported on the branch or
+jump that would cause instruction misalignment to help debugging, and to
+simplify hardware design for systems with IALIGN=32, where these are the
+only places where misalignment can occur.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The behavior upon decoding a reserved instruction is UNSPECIFIED.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some platforms may require that opcodes reserved for standard use raise
+an illegal-instruction exception. Other platforms may permit reserved
+opcode space be used for non-conforming extensions.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The RISC-V ISA keeps the source (<em>rs1</em> and <em>rs2</em>) and destination (<em>rd</em>)
+registers at the same position in all formats to simplify decoding.
+Except for the 5-bit immediates used in CSR instructions
+(<a href="#csrinsts">[csrinsts]</a>), immediates are always
+sign-extended, and are generally packed towards the leftmost available
+bits in the instruction and have been allocated to reduce hardware
+complexity. In particular, the sign bit for all immediates is always in
+bit 31 of the instruction to speed sign-extension circuitry.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjBEyaaV5ySXGOPUVG-KWMkKRMkcz01y9litWRyE5Py8tE-jq6pzEpNQcIF2UmZ5RAlQUpBtSWQB0cG0tAFSbP_U=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjBEyaaV5ySXGOPUVG6JIGRrpwKQyc3OjDQ2tDGJBCmJ1FJLz89Iygc6rzklMSs0B0kWZ6RklQIWeuiGVBUCX1dYCAA7jORk=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImQzc3OjTawMYlHkjRHyaaV5ySXGuHQXFRviljJCkTJHtdPQ0MoUaClXrI5Ccn5eWibQ-dU5iUmpOUC6KDM9owSoLlg3pLIA6PLaWgCEyUIu" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjAwQUpm5udHGhlaGRrHqtVyxOgrJ-XlpmUBrqnMSk1JzgHRRZnpGCVBhqG5IZQHQhtpaAK3QKR4=" alt="svg">
+</div>
+</div>
+<div id="base_instr" class="paragraph">
+<p>RISC-V base instruction formats. Each immediate subfield is labeled with the bit position (imm[x]) in the immediate value being produced, rather than the bit position within the instruction&#8217;s immediate field as is usually done.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Decoding register specifiers is usually on the critical paths in
+implementations, and so the instruction format was chosen to keep all
+register specifiers at the same position in all formats at the expense
+of having to move immediate bits across formats (a property shared with
+RISC-IV aka. SPUR [<a href="../biblio/bibliography.html#bib-spur-jsscc1989" class="xref page">8</a>]).</p>
+</div>
+<div class="paragraph">
+<p>In practice, most immediates are either small or require all XLEN bits.
+We chose an asymmetric immediate split (12 bits in regular instructions
+plus a special load-upper-immediate instruction with 20 bits) to
+increase the opcode space available for regular instructions.</p>
+</div>
+<div class="paragraph">
+<p>Immediates are sign-extended because we did not observe a benefit to
+using zero extension for some immediates as in the MIPS ISA and wanted
+to keep the ISA as simple as possible.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="immediate-encoding-variants"><a class="anchor" href="#immediate-encoding-variants"></a>Immediate Encoding Variants</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>There are a further two variants of the instruction formats (B/J) based
+on the handling of immediates, as shown in <a href="#baseinstformatsimm">Base instruction formats immediate variants.</a>.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjBEyaaV5ySXGOPUVG-KWMkKRMkcz01y9litWRyE5Py8tE-jq6pzEpNQcIF2UmZ5RAlQUpBtSWQB0cG0tAFSbP_U=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjBEyaaV5ySXGOPUVG6JIGRrpwKQyc3OjDQ2tDGJBCmJ1FJLz89Iygc6rzklMSs0B0kWZ6RklQIWeuiGVBUCX1dYCAA7jORk=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImQzc3OjTawMYlHkjRHyaaV5ySXGuHQXFRviljJCkTJHtdPQ0MoUaClXrI5Ccn5eWibQ-dU5iUmpOUC6KDM9owSoLlg3pLIA6PLaWgCEyUIu" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp1z7EKwyAUBdA9X_G2LBaqSVpw7DdkE4fEaipEDWqHVvz3uomFrPdwee8mLzcKrANIq46Bwh0B2MVICr07hHvKPqOquCrDmDc2VtPGsJH--VBdva2IQ6NTVR_wOZGGbu1NfKUTP3-YFOs4AuGs0mV2Us7GoL9FMUGwL6vcS-r19oql8LjMn6Psz_kHV9RViw==" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVa_VQciaImSLUlBkjAx0YDKZubnRxoZWhkax6rVcsToKyfl5aZlAW6pzEpNSc4B0UWZ6RglQYahuSGUB0ILaWgCQaCj-" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp1z70KwyAUBeA9T3G3LBa8QmjrI3TuJhnyY1IhajAuqfjuvZsY6Hq_c-DcFPQqQTUAaTTxkHBnAG6wWkLr98nPus2saFc0zJU8ihhrFT4lir5KYEkoxItxVrW5xP9lwcmansHk3WJoflq8i4f5kqJgsA2j3ugazPqJVHjd3udOf-T8A8R8RZU=" alt="svg">
+</div>
+</div>
+<div id="baseinstformatsimm" class="paragraph">
+<p>The only difference between the S and B formats is that the 12-bit
+immediate field is used to encode branch offsets in multiples of 2 in
+the B format. Instead of shifting all bits in the instruction-encoded
+immediate left by one in hardware as is conventionally done, the middle
+bits (imm[10:1]) and sign bit stay in fixed positions, while the lowest
+bit in S format (inst[7]) encodes a high-order bit in B format.</p>
+</div>
+<div class="paragraph">
+<p>Similarly, the only difference between the U and J formats is that the
+20-bit immediate is shifted left by 12 bits to form U immediates and by
+1 bit to form J immediates. The location of instruction bits in the U
+and J format immediates is chosen to maximize overlap with the other
+formats and with each other.</p>
+</div>
+<div class="paragraph">
+<p><a href="#immtypes">Immediate types</a> shows the immediates produced by
+each of the base instruction formats, and is labeled to show which
+instruction bit (inst[<em>y</em>]) produces each bit of the immediate value.</p>
+</div>
+<div id="immtypes" class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDUUVDIS8xNtVJQjzYyiFWv1UHImSDkMvOKS6KNTKyMDFGVmKEpMTawMjJFVWKEZMWjhikKEHWGsQpADkhhrI5Ccn5eWma6VXVafl5JcWYVUKWhkY5CTmJSao5VdVFmekYJUK-nbmZubmpKZmJJqnptbS0AeCk-rA==?id=immtypes&reftext=Immediate%20types" alt="Types of immediate produced by RISC-V instructions.">
+</div>
+<div class="title">Figure 1. Types of immediate produced by RISC-V instructions.</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDUUVDIS8xNtVJQjzaPVa_VQUiZIKQy84pLog0NrSxQVZihqTA2sDIyRVVihGTBo4YpChB1hrEKQA5IYayOQnJ-XlpmulV1Wn5eSXFmFVCloZGOQk5iUmqOVXVRZnpGCVBvsG5mbm5qSmZiSap6bW0tACfjPlw=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNpdzD0OAiEQhuHeU0y3DSaAv5nSaxAKVlmcZGGThUpC4iE8oScRY8yK5eR95suzdQhqBZB7ShFBMIBgvEXoeFfYErZLoBCTEgKPuhH7P7HhKHct-VlXhzZJzr7peX_AZ0FoqMfbaQbnKQzkMA9TSJFuVQrJYDS9HTHP5K6p_p7W5L29kEm2K6W8AJGSRLo=" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNpdzrEKwyAQxvG9T3GbiwXPLO29RyfJYNKLPYgGolPEd29JKSGd_z8-vrpyIHAXgDpIyQRoNSQfmUAZ1fQRbhp-QVIuDu-Etj8RRH0inSFr_six4jrcW69hXNIkgeq0pJJl4--N2Q88U10lvMrHP64SIz_FF1attTdySDfT" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNpdjUEKwjAQRfeeYnbZREhiFZ0j9Aqli1bTONCk0GRlCHgIT-hJrBSpyXJ47_2JszYIzQ4g9hQ8guQArrMagQmW-AaqDZDzoVEVKtlmyqlQDgLVMVf-5hslcnYucnlBqYpc8Z_yfr5g_SJbWI6v13K4Tm4gg3GYXPD00Gszdr0eMc5k7mFp6z1Zq2_UBc1SSh9N308B" alt="Types of immediate produced by RISC-V instructions.">
+</div>
+<div class="title">Figure 2. Types of immediate produced by RISC-V instructions.</div>
+</div>
+<div class="paragraph">
+<p>The fields are labeled with the instruction bits used to construct their value.  Sign extensions always uses inst[31].</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Sign extension is one of the most critical operations on immediates
+(particularly for XLEN&gt;32), and in RISC-V the sign bit for
+all immediates is always held in bit 31 of the instruction to allow
+sign extension to proceed in parallel with instruction decoding.</p>
+</div>
+<div class="paragraph">
+<p>Although more complex implementations might have separate adders for
+branch and jump calculations and so would not benefit from keeping the
+location of immediate bits constant across types of instruction, we
+wanted to reduce the hardware cost of the simplest implementations. By
+rotating bits in the instruction encoding of B and J immediates instead
+of using dynamic hardware multiplexers to multiply the immediate by 2, we
+reduce instruction signal fanout and immediate multiplexer costs by around a
+factor of 2. The scrambled immediate encoding will add negligible time
+to static or ahead-of-time compilation. For dynamic generation of
+instructions, there is some small additional overhead, but the most
+common short forward branches have straightforward immediate encodings.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="integer-computational-instructions"><a class="anchor" href="#integer-computational-instructions"></a>Integer Computational Instructions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Most integer computational instructions operate on <code>XLEN</code> bits of values
+held in the integer register file. Integer computational instructions
+are either encoded as register-immediate operations using the I-type
+format or as register-register operations using the R-type format. The
+destination is register <em>rd</em> for both register-immediate and
+register-register instructions. No integer computational instructions
+cause arithmetic exceptions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We did not include special instruction-set support for overflow checks
+on integer arithmetic operations in the base instruction set, as many
+overflow checks can be cheaply implemented using RISC-V branches.
+Overflow checking for unsigned addition requires only a single
+additional branch instruction after the addition:
+<code>add t0, t1, t2; bltu t0, t1, overflow</code>.</p>
+</div>
+<div class="paragraph">
+<p>For signed addition, if one operand&#8217;s sign is known, overflow checking
+requires only a single branch after the addition:
+<code>addi t0, t1, +imm; blt t0, t1, overflow</code>. This covers the common case
+of addition with an immediate operand.</p>
+</div>
+<div class="paragraph">
+<p>For general signed addition, three additional instructions after the
+addition are required, leveraging the observation that the sum should be
+less than one of the operands if and only if the other operand is
+negative.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">         add t0, t1, t2
+         slti t3, t2, 0
+         slt t4, t0, t1
+         bne t3, t4, overflow</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In RV64I, checks of 32-bit signed additions can be optimized further by
+comparing the results of ADD and ADDW on the operands.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="integer-register-immediate-instructions"><a class="anchor" href="#integer-register-immediate-instructions"></a>Integer Register-Immediate Instructions</h3>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4Bup6-vkis2FodhAmmCBOKUiC6kU0wBelLSS0ugdMouo0RutNK85JLjKEmwLSD-OqOLi6e-sE-IZ7RobFgvh-Q7x_kqR8BJHC7ptgQ7hwU1xQXJcMoFL2GRjowvZm5udGGhlYGIOtgeg2NQLo8dYFyqSmZiSWpcBVYBGNruWJrATlKYzc=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>ADDI adds the sign-extended 12-bit immediate to register <em>rs1</em>.
+Arithmetic overflow is ignored and the result is simply the low XLEN
+bits of the result. ADDI <em>rd, rs1, 0</em> is used to implement the MV <em>rd,
+rs1</em> assembler pseudoinstruction.</p>
+</div>
+<div class="paragraph">
+<p>SLTI (set less than immediate) places the value 1 in register <em>rd</em> if
+register <em>rs1</em> is less than the sign-extended immediate when both are
+treated as signed numbers, else 0 is written to <em>rd</em>. SLTIU is similar
+but compares the values as unsigned numbers (i.e., the immediate is
+first sign-extended to XLEN bits then treated as an unsigned number).
+Note, SLTIU <em>rd, rs1, 1</em> sets <em>rd</em> to 1 if <em>rs1</em> equals zero, otherwise
+sets <em>rd</em> to 0 (assembler pseudoinstruction SEQZ <em>rd, rs</em>).</p>
+</div>
+<div class="paragraph">
+<p>ANDI, ORI, XORI are logical operations that perform bitwise AND, OR, and
+XOR on register <em>rs1</em> and the sign-extended 12-bit immediate and place
+the result in <em>rd</em>. Note, XORI <em>rd, rs1, -1</em> performs a bitwise logical
+inversion of register <em>rs1</em> (assembler pseudoinstruction NOT <em>rd, rs</em>).</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4Bup6-vlhZsbU6CLNMEWYVpUDMQTbLFKQvJbW4BINGMcUYYUpaaV5yiTHUJJgxIL56sI-PJ5gOgtGOnrgdU2wIdw2KY4qLktEoXEZk5uZGm1gZxILMQTUiIzG3BCaFm4dirjmquYaGVqYg9chhbgBGxkaxtVyxtQBHW3SD" alt="svg">
+</div>
+</div>
+<div id="int-comp-slli-srli-srai" class="paragraph">
+<p>Shifts by a constant are encoded as a specialization of the I-type
+format. The operand to be shifted is in <em>rs1</em>, and the shift amount is
+encoded in the lower 5 bits of the I-immediate field. The right shift
+type is encoded in bit 30. SLLI is a logical left shift (zeros are
+shifted into the lower bits); SRLI is a logical right shift (zeros are
+shifted into the upper bits); and SRAI is an arithmetic right shift (the
+original sign bit is copied into the vacated upper bits).</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKAEFiSUkRUKG6OZCv7hPqCaIcQz0DnNVja3UQ2k0R2otSoFqRtZuC9KWkFpfAaRTtRgY6MO2ZubnRxoZWhkaxQKUw7UYGIH2hukDJ1JTMxJJUhBJsorG1XLG1AEuvPl0=" alt="svg">
+</div>
+</div>
+<div id="int-comp-lui-aiupc" class="paragraph">
+<p>LUI (load upper immediate) is used to build 32-bit constants and uses
+the U-type format. LUI places the 32-bit U-immediate value into the
+destination register <em>rd</em>, filling in the lowest 12 bits with zeros.</p>
+</div>
+<div class="paragraph">
+<p>AUIPC (add upper immediate to <code>pc</code>) is used to build <code>pc</code>-relative
+addresses and uses the U-type format. AUIPC forms a 32-bit offset from
+the U-immediate, filling in the lowest 12 bits with zeros, adds this
+offset to the address of the AUIPC instruction, then places the result
+in register <em>rd</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The assembly syntax for <code>lui</code> and <code>auipc</code> does not represent the lower
+12 bits of the U-immediate, which are always zero.</p>
+</div>
+<div class="paragraph">
+<p>The AUIPC instruction supports two-instruction sequences to access
+arbitrary offsets from the PC for both control-flow transfers and data
+accesses. The combination of an AUIPC and the 12-bit immediate in a JALR
+can transfer control to any 32-bit PC-relative address, while an AUIPC
+plus the 12-bit immediate offset in regular load or store instructions
+can access any 32-bit PC-relative data address.</p>
+</div>
+<div class="paragraph">
+<p>The current PC can be obtained by setting the U-immediate to 0. Although
+a JAL +4 instruction could also be used to obtain the local PC (of the
+instruction following the JAL), it might cause pipeline breaks in
+simpler microarchitectures or pollute BTB structures in more complex
+microarchitectures.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>Integer Register-Register Operations</h3>
+<div class="paragraph">
+<p>RV32I defines several arithmetic R-type operations. All operations read
+the <em>rs1</em> and <em>rs2</em> registers as source operands and write the result
+into register <em>rd</em>. The <em>funct7</em> and <em>funct3</em> fields select the type of
+operation.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4BWMjYWh2EKaYIU4pSICYgm2IK0pOSWlyCSUMoFMOMEYalleYllxhDDYSZBuKrO7q46Af7hESHxoJ5fi76_kH6Ef5BIF6wj49-cJAPmBnqBGQ64nZtsSHcuSiuLS5KNsRJ4zbNCKdpRjhpFNPM0TwPigDkyDCAIWOj2Fqu2FoAHBV5dA==" alt="svg">
+</div>
+</div>
+<div id="int-reg-reg" class="paragraph">
+<p>ADD performs the addition of <em>rs1</em> and <em>rs2</em>. SUB performs the
+subtraction of <em>rs2</em> from <em>rs1</em>. Overflows are ignored and the low XLEN
+bits of results are written to the destination <em>rd</em>. SLT and SLTU
+perform signed and unsigned compares respectively, writing 1 to <em>rd</em> if
+<em>rs1</em> &lt; <em>rs2</em>, 0 otherwise. Note, SLTU <em>rd</em>, <em>x0</em>, <em>rs2</em> sets <em>rd</em> to 1 if
+<em>rs2</em> is not equal to zero, otherwise sets <em>rd</em> to zero (assembler
+pseudoinstruction SNEZ <em>rd, rs</em>). AND, OR, and XOR perform bitwise
+logical operations.</p>
+</div>
+<div class="paragraph">
+<p>SLL, SRL, and SRA perform logical left, logical right, and arithmetic
+right shifts on the value in register <em>rs1</em> by the shift amount held in
+the lower 5 bits of register <em>rs2</em>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="nop-instruction"><a class="anchor" href="#nop-instruction"></a>NOP Instruction</h3>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4Bup6-vuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OqOLi6euG0qNoRbhc8mQyMdmJbM3NxoQ0Mrg1igMpgWQyOYHq7YWgAGTEe2" alt="svg">
+</div>
+</div>
+<div id="nop" class="paragraph">
+<p>The NOP instruction does not change any architecturally visible state,
+except for advancing the <code>pc</code> and incrementing any applicable
+performance counters. NOP is encoded as ADDI <em>x0, x0, 0</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>NOPs can be used to align code segments to microarchitecturally
+significant address boundaries, or to leave space for inline code
+modifications. Although there are many possible ways to encode a NOP, we
+define a canonical NOP encoding to allow microarchitectural
+optimizations as well as for more readable disassembly output. The other
+NOP encodings are made available for <a href="#rv32i-hints">"Zfh" and "HINT Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>ADDI was chosen for the NOP encoding as this is most likely to take
+fewest resources to execute across a range of systems (if not optimized
+away in decode). In particular, the instruction only reads one register.
+Also, an ADDI functional unit is more likely to be available in a
+superscalar design as adds are the most common operation. In particular,
+address-generation functional units can execute ADDI using the same
+hardware needed for base+offset address calculations, while
+register-register ADD or logical/shift operations require additional
+hardware.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="control-transfer-instructions"><a class="anchor" href="#control-transfer-instructions"></a>Control Transfer Instructions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RV32I provides two types of control transfer instructions: unconditional
+jumps and conditional branches. Control transfer instructions in RV32I
+do <em>not</em> have architecturally visible delay slots.</p>
+</div>
+<div class="paragraph">
+<p>If an instruction access-fault or instruction page-fault exception
+occurs on the target of a jump or taken branch, the exception is
+reported on the target instruction, not on the jump or branch
+instruction.</p>
+</div>
+<div class="sect2">
+<h3 id="unconditional-jumps"><a class="anchor" href="#unconditional-jumps"></a>Unconditional Jumps</h3>
+<div class="paragraph">
+<p>The jump and link (JAL) instruction uses the J-type format, where the
+J-immediate encodes a signed offset in multiples of 2 bytes. The offset
+is sign-extended and added to the address of the jump instruction to
+form the jump target address. Jumps can therefore target a
+&#177;1 MiB range. JAL stores the address of the instruction
+following the jump ('pc'+4) into register <em>rd</em>. The standard software
+calling convention uses 'x1' as the return address register and 'x5' as
+an alternate link register.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The alternate link register supports calling millicode routines (e.g.,
+those to save and restore registers in compressed code) while preserving
+the regular return address register. The register <code>x5</code> was chosen as the
+alternate link register as it maps to a temporary in the standard
+calling convention, and has an encoding that is only one bit different
+than the regular link register.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Plain unconditional jumps (assembler pseudoinstruction J) are encoded as
+a JAL with <em>rd</em>=<code>x0</code>.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp1zjEOwyAMBdC9p_DGwoCRoqRsXaveADGkCUQMQBWYgnL3ki6EVt0s-X1_51UvAuQFID9tigJ6CuBHpwWQ8JrCrAmFMaW1INKXmdxvD6J2WhNdTazzSXeHnnVMLR8qt85JvArk6hQbWo6VS8QzxC_IaHOXiVaz451gTNRJ8s_ybw9nvz2KwhS8sYvIJvgU7VYo8n1_A_WgW1Y=" alt="svg">
+</div>
+</div>
+<div id="ct-unconditional" class="paragraph">
+<p>The indirect jump instruction JALR (jump and link register) uses the
+I-type encoding. The target address is obtained by adding the
+sign-extended 12-bit I-immediate to the register <em>rs1</em>, then setting the
+least-significant bit of the result to zero. The address of the
+instruction following the jump (<code>pc</code>+4) is written to register <em>rd</em>.
+Register <code>x0</code> can be used as the destination if the result is not
+required.</p>
+</div>
+<div class="paragraph">
+<p>Plain unconditional indirect jumps (assembler pseudoinstruction JR) are
+encoded as a JALR with <em>rd</em>=<code>x0</code>.
+Procedure returns in the standard calling convention (assembler
+pseudoinstruction RET) are encoded as a JALR with <em>rd</em>=<code>x0</code>, <em>rs1</em>=<code>x1</code>, and
+<em>imm</em>=0.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp9zT0PgyAQBuC9v-I2FgbRGBO2rk2nroYB5WgckEbOyfjfC42GlqG33cdz77bgU0J_AdiGiYKEjgPM2qEE5l-jN8jiIJYmWuIh62LPbtf7gynYeXZtdos5zLdrkzMYqHBNdnadR2qKvNSz6k9YEDntJ2zQAQsnan66ybleCFmppE8n6gS9tQHp2H4eqP0Nf-5OYA==" alt="svg">
+</div>
+</div>
+<div id="ct-unconditional-2" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The unconditional jump instructions all use PC-relative addressing to
+help support position-independent code. The JALR instruction was defined
+to enable a two-instruction sequence to jump anywhere in a 32-bit
+absolute address range. A LUI instruction can first load <em>rs1</em> with the
+upper 20 bits of a target address, then JALR can add in the lower bits.
+Similarly, AUIPC then JALR can jump anywhere in a 32-bit <code>pc</code>-relative
+address range.</p>
+</div>
+<div class="paragraph">
+<p>Note that the JALR instruction does not treat the 12-bit immediate as
+multiples of 2 bytes, unlike the conditional branch instructions. This
+avoids one more immediate format in hardware. In practice, most uses of
+JALR will have either a zero immediate or be paired with a LUI or AUIPC,
+so the slight reduction in range is not significant.</p>
+</div>
+<div class="paragraph">
+<p>Clearing the least-significant bit when calculating the JALR target
+address both simplifies the hardware slightly and allows the low bit of
+function pointers to be used to store auxiliary information. Although
+there is potentially a slight loss of error checking in this case, in
+practice jumps to an incorrect instruction address will usually quickly
+raise an exception.</p>
+</div>
+<div class="paragraph">
+<p>When used with a base <em>rs1</em>=<code>x0</code>, JALR can be used to
+implement a single instruction subroutine call to the lowest or highest
+address region from anywhere in the address space, which could be used
+to implement fast calls to a small runtime library. Alternatively, an
+ABI could dedicate a general-purpose register to point to a library
+elsewhere in the address space.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The JAL and JALR instructions will generate an
+instruction-address-misaligned exception if the target address is not
+aligned to a four-byte boundary.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Instruction-address-misaligned exceptions are not possible on machines
+that support extensions with 16-bit aligned instructions, such as the
+compressed instruction-set extension, C.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Return-address prediction stacks are a common feature of
+high-performance instruction-fetch units, but require accurate detection
+of instructions used for procedure calls and returns to be effective.
+For RISC-V, hints as to the instructions' usage are encoded implicitly
+via the register numbers used. A JAL instruction should push the return
+address onto a return-address stack (RAS) only when <em>rd</em> is 'x1' or
+<code>x5</code>. JALR instructions should push/pop a RAS as shown in <a href="#rashints">Return-address stack prediction hints encoded in the register operands of a JALR instruction.</a>.</p>
+</div>
+<table id="rashints" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Return-address stack prediction hints encoded in the register operands of a JALR instruction.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><em>rd</em> is <em>x1/x5</em></th>
+<th class="tableblock halign-center valign-top"><em>rs1</em> is <em>x1/x5</em></th>
+<th class="tableblock halign-center valign-top"><em>rd</em>=<em>rs1</em></th>
+<th class="tableblock halign-left valign-top">RAS action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">None</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pop</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Push</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Pop, then push</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Push</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Some other ISAs added explicit hint bits to their indirect-jump
+instructions to guide return-address stack manipulation. We use implicit
+hinting tied to register numbers and the calling convention to reduce
+the encoding space used for these hints.</p>
+</div>
+<div class="paragraph">
+<p>When two different link registers (<code>x1</code> and <code>x5</code>) are given as <em>rs1</em> and
+<em>rd</em>, then the RAS is both popped and pushed to support coroutines. If
+<em>rs1</em> and <em>rd</em> are the same link register (either <code>x1</code> or <code>x5</code>), the RAS
+is only pushed to enable macro-op fusion of the sequences:
+<code>lui ra, imm20; jalr ra, imm12(ra)_ and _auipc ra, imm20; jalr ra, imm12(ra)</code></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="conditional-branches"><a class="anchor" href="#conditional-branches"></a>Conditional Branches</h3>
+<div class="paragraph">
+<p>All branch instructions use the B-type instruction format. The 12-bit
+B-immediate encodes signed offsets in multiples of 2 bytes. The offset
+is sign-extended and added to the address of the branch instruction to
+give the target address. The conditional branch range is
+&#177;4 KiB.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqNkD0PgjAQhnd_xW0sJFKQkHQTQ3QwJBqdCAPWljBATVsXgf9uQRSI-DHd3Xt3z3u5UtAUQzQDKE-Zkhg8E6BIcorB4BfCz9TQAkCilNBzhqdLw98vw9VmMouhNnuY28OyPI8WGFUIxQ3xyXObXc6YpGrQ_q2MfZzeh10LopzH0S8Xp70w2M39MGjT7SE6tlh_HTTZx7OFRHpsdK0UBL3FLwB7AqC1LnTleN8b_w3ZFbKwGw9A3uAng_Y_UmsVm0B4wbIUl4wXSmY3bYasur4DG-KSjw==" alt="svg">
+</div>
+</div>
+<div id="ct-conditional" class="paragraph">
+<p>Branch instructions compare two registers. BEQ and BNE take the branch
+if registers <em>rs1</em> and <em>rs2</em> are equal or unequal respectively. BLT and
+BLTU take the branch if <em>rs1</em> is less than <em>rs2</em>, using signed and
+unsigned comparison respectively. BGE and BGEU take the branch if <em>rs1</em>
+is greater than or equal to <em>rs2</em>, using signed and unsigned comparison
+respectively. Note, BGT, BGTU, BLE, and BLEU can be synthesized by
+reversing the operands to BLT, BLTU, BGE, and BGEU, respectively.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Signed array bounds may be checked with a single BLTU instruction, since
+any negative index will compare greater than any nonnegative bound.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Software should be optimized such that the sequential code path is the
+most common path, with less-frequently taken code paths placed out of
+line. Software should also assume that backward branches will be
+predicted taken and forward branches as not taken, at least the first
+time they are encountered. Dynamic predictors should quickly learn any
+predictable branch behavior.</p>
+</div>
+<div class="paragraph">
+<p>Unlike some other architectures, the RISC-V jump (JAL with <em>rd</em>=<code>x0</code>)
+instruction should always be used for unconditional branches instead of
+a conditional branch instruction with an always-true condition. RISC-V
+jumps are also PC-relative and support a much wider offset range than
+branches, and will not pollute conditional-branch prediction tables.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The conditional branches were designed to include arithmetic comparison
+operations between two registers (as also done in PA-RISC, Xtensa, and
+MIPS R6), rather than use condition codes (x86, ARM, SPARC, PowerPC), or
+to only compare one register against zero (Alpha, MIPS), or two
+registers only for equality (MIPS). This design was motivated by the
+observation that a combined compare-and-branch instruction fits into a
+regular pipeline, avoids additional condition code state or use of a
+temporary register, and reduces static code size and dynamic instruction
+fetch traffic. Another point is that comparisons against zero require
+non-trivial circuit delay (especially after the move to static logic in
+advanced processes) and so are almost as expensive as arithmetic
+magnitude compares. Another advantage of a fused compare-and-branch
+instruction is that branches are observed earlier in the front-end
+instruction stream, and so can be predicted earlier. There is perhaps an
+advantage to a design with condition codes in the case where multiple
+branches can be taken based on the same condition codes, but we believe
+this case to be relatively rare.</p>
+</div>
+<div class="paragraph">
+<p>We considered but did not include static branch hints in the instruction
+encoding. These can reduce the pressure on dynamic predictors, but
+require more instruction encoding space and software profiling for best
+results, and can result in poor performance if production runs do not
+match profiling runs.</p>
+</div>
+<div class="paragraph">
+<p>We considered but did not include conditional moves or predicated
+instructions, which can effectively replace unpredictable short forward
+branches. Conditional moves are the simpler of the two, but are
+difficult to use with conditional code that might cause exceptions
+(memory accesses and floating-point operations). Predication adds
+additional flag state to a system, additional instructions to set and
+clear flags, and additional encoding overhead on every instruction. Both
+conditional move and predicated instructions add complexity to
+out-of-order microarchitectures, adding an implicit third source operand
+due to the need to copy the original value of the destination
+architectural register into the renamed destination physical register if
+the predicate is false. Also, static compile-time decisions to use
+predication instead of branches can result in lower performance on
+inputs not included in the compiler training set, especially given that
+unpredictable branches are rare, and becoming rarer as branch prediction
+techniques improve.</p>
+</div>
+<div class="paragraph">
+<p>We note that various microarchitectural techniques exist to dynamically
+convert unpredictable short forward branches into internally predicated
+code to avoid the cost of flushing pipelines on a branch mispredict [<a href="../biblio/bibliography.html#bib-heil-tr1996" class="xref page">13</a>], [<a href="../biblio/bibliography.html#bib-klauser-1998" class="xref page">14</a>], [<a href="../biblio/bibliography.html#bib-kim-micro2005" class="xref page">15</a>] and
+have been implemented in commercial processors  [<a href="../biblio/bibliography.html#bib-ibmpower7" class="xref page">16</a>]. The simplest techniques
+just reduce the penalty of recovering from a mispredicted short forward
+branch by only flushing instructions in the branch shadow instead of the
+entire fetch pipeline, or by fetching instructions from both sides using
+wide instruction fetch or idle instruction fetch slots. More complex
+techniques for out-of-order cores add internal predicates on
+instructions in the branch shadow, with the internal predicate value
+written by the branch instruction, allowing the branch and following
+instructions to be executed speculatively and out-of-order with respect
+to other code.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The conditional branch instructions will generate an
+instruction-address-misaligned exception if the target address is not
+aligned to a four-byte boundary and the branch condition evaluates to
+true. If the branch condition evaluates to false, the
+instruction-address-misaligned exception will not be raised.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Instruction-address-misaligned exceptions are not possible on machines
+that support extensions with 16-bit aligned instructions, such as the
+compressed instruction-set extension, C.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ldst"><a class="anchor" href="#ldst"></a>Load and Store Instructions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RV32I is a load-store architecture, where only load and store
+instructions access memory and arithmetic instructions only operate on
+CPU registers. RV32I provides a 32-bit address space that is
+byte-addressed. The EEI will define what portions of the address space
+are legal to access with which instructions (e.g., some addresses might
+be read only, or support word access only). Loads with a destination of
+<code>x0</code> must still raise any exceptions and cause any other side effects
+even though the load value is discarded.</p>
+</div>
+<div class="paragraph">
+<p>The EEI will define whether the memory system is little-endian or
+big-endian. In RISC-V, endianness is byte-address invariant.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In a system for which endianness is byte-address invariant, the
+following property holds: if a byte is stored to memory at some address
+in some endianness, then a byte-sized load from that address in any
+endianness returns the stored value.</p>
+</div>
+<div class="paragraph">
+<p>In a little-endian configuration, multibyte stores write the
+least-significant register byte at the lowest memory byte address,
+followed by the other register bytes in ascending order of their
+significance. Loads similarly transfer the contents of the lesser memory
+byte addresses to the less-significant register bytes.</p>
+</div>
+<div class="paragraph">
+<p>In a big-endian configuration, multibyte stores write the
+most-significant register byte at the lowest memory byte address,
+followed by the other register bytes in descending order of their
+significance. Loads similarly transfer the contents of the greater
+memory byte addresses to the less-significant register bytes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNp1zbEKwyAQgOG9T3Gbi0NNCAG3QsdCHyA4mHi2DsYSL3QIefcqNJgUup3n93PLhA8J3Qlg6R1FCS0HGLVHCSy8hmCQpQWAJpqSY216stv9cmVq5aVqSjWZRDbeZG4w0pHXhdt5HKjeJXlmb2fo-f9EFL83eh3x6EXFN--874SQZ7WrRJWzYG1E-n7mXK0fUTJNBw==" alt="svg">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCSWlBQBlambA3nqwSH-Qa7qsbU6CF2mCF2ZubnRJlYGsUCVMF2mIF35aWnFqSUQKRS9xgi9aaV5ySXGSDpBbPXyzJSSDJz2FRUboluVlFicike9Ebr64qJkVOXAQEDyjaGhlSmyd8yRvAORA2mOrQUAK0Fd7w==" alt="svg">
+</div>
+</div>
+<div id="load-store" class="paragraph">
+<p>Load and store instructions transfer a value between the registers and
+memory. Loads are encoded in the I-type format and stores are S-type.
+The effective address is obtained by adding register <em>rs1</em> to the
+sign-extended 12-bit offset. Loads copy a value from memory to register
+<em>rd</em>. Stores copy the value in register <em>rs2</em> to memory.</p>
+</div>
+<div class="paragraph">
+<p>The LW instruction loads a 32-bit value from memory into <em>rd</em>. LH loads
+a 16-bit value from memory, then sign-extends to 32-bits before storing
+in <em>rd</em>. LHU loads a 16-bit value from memory but then zero extends to
+32-bits before storing in <em>rd</em>. LB and LBU are defined analogously for
+8-bit values. The SW, SH, and SB instructions store 32-bit, 16-bit, and
+8-bit values from the low bits of register <em>rs2</em> to memory.</p>
+</div>
+<div class="paragraph">
+<p>Regardless of EEI, loads and stores whose effective addresses are
+naturally aligned shall not raise an address-misaligned exception. Loads
+and stores whose effective address is not naturally aligned to the
+referenced datatype (i.e., the effective address is not divisible by the
+size of the access in bytes) have behavior dependent on the EEI.</p>
+</div>
+<div class="paragraph">
+<p>An EEI may guarantee that misaligned loads and stores are fully
+supported, and so the software running inside the execution environment
+will never experience a contained or fatal address-misaligned trap. In
+this case, the misaligned loads and stores can be handled in hardware,
+or via an invisible trap into the execution environment implementation,
+or possibly a combination of hardware and invisible trap depending on
+address.</p>
+</div>
+<div class="paragraph">
+<p>An EEI may not guarantee misaligned loads and stores are handled
+invisibly. In this case, loads and stores that are not naturally aligned
+may either complete execution successfully or raise an exception. The
+exception raised can be either an address-misaligned exception or an
+access-fault exception. For a memory access that would otherwise be able
+to complete except for the misalignment, an access-fault exception can
+be raised instead of an address-misaligned exception if the misaligned
+access should not be emulated, e.g., if accesses to the memory region
+have side effects. When an EEI does not guarantee misaligned loads and
+stores are handled invisibly, the EEI must define if exceptions caused
+by address misalignment result in a contained trap (allowing software
+running inside the execution environment to handle the trap) or a fatal
+trap (terminating execution).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Misaligned accesses are occasionally required when porting legacy code,
+and help performance on applications when using any form of packed-SIMD
+extension or handling externally packed data structures. Our rationale
+for allowing EEIs to choose to support misaligned accesses via the
+regular load and store instructions is to simplify the addition of
+misaligned hardware support. One option would have been to disallow
+misaligned accesses in the base ISAs and then provide some separate ISA
+support for misaligned accesses, either special instructions to help
+software handle misaligned accesses or a new hardware addressing mode
+for misaligned accesses. Special instructions are difficult to use,
+complicate the ISA, and often add new processor state (e.g., SPARC VIS
+align address offset register) or complicate access to existing
+processor state (e.g., MIPS LWL/LWR partial register writes). In
+addition, for loop-oriented packed-SIMD code, the extra overhead when
+operands are misaligned motivates software to provide multiple forms of
+loop depending on operand alignment, which complicates code generation
+and adds to loop startup overhead. New misaligned hardware addressing
+modes take considerable space in the instruction encoding or require
+very simplified addressing modes (e.g., register indirect only).</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Even when misaligned loads and stores complete successfully, these
+accesses might run extremely slowly depending on the implementation
+(e.g., when implemented via an invisible trap). Furthermore, whereas
+naturally aligned loads and stores are guaranteed to execute atomically,
+misaligned loads and stores might not, and hence require additional
+synchronization to ensure atomicity.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We do not mandate atomicity for misaligned accesses so execution
+environment implementations can use an invisible machine trap and a
+software handler to handle some or all misaligned accesses. If hardware
+misaligned support is provided, software can exploit this by simply
+using regular load and store instructions. Hardware can then
+automatically optimize accesses depending on whether runtime addresses
+are aligned.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="fence"><a class="anchor" href="#fence"></a>Memory Ordering Instructions</h2>
+<div class="sectionbody">
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56r6ewc66vq6-6rG1OgidpgidRSlAZTAtpiAtBqhqjRFq00rzkkuMkdSD2Opurn7OrrjNLzYkYIEhQnFwOFytIS4lQYSV-BNW4klQSQBhtwQQdksAYbcE4HCLCVLA5yKFoQk40CExGlsLADAYkWk=" alt="mem-order">
+</div>
+</div>
+<div id="mem-order" class="paragraph">
+<p>FENCE instructions are used to order device I/O and memory accesses as
+viewed by other RISC-V harts and external devices or coprocessors. Any
+combination of device input (I), device output (O), memory reads (R),
+and memory writes (W) may be ordered with respect to any combination of
+the same. Informally, no other RISC-V hart or external device can
+observe any operation in the <em>successor</em> set following a FENCE before
+any operation in the <em>predecessor</em> set preceding the FENCE.
+<a href="rvwmo.html" class="xref page">"RVWMO Memory Consistency Model</a> provides a precise description
+of the RISC-V memory consistency model.</p>
+</div>
+<div class="paragraph">
+<p>FENCE instructions also order memory reads and writes made by the
+hart as observed by memory reads and writes made by an external device.
+However, FENCE instructions do not order observations of events made by an external
+device using any other signaling mechanism.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A device might observe an access to a memory location via some external
+communication mechanism, e.g., a memory-mapped control register that
+drives an interrupt signal to an interrupt controller. This
+communication is outside the scope of the FENCE ordering mechanism and
+hence FENCE instructions can provide no guarantee on when a change in
+the interrupt signal is visible to the interrupt controller. Specific
+devices might provide additional ordering guarantees to reduce software
+overhead but those are outside the scope of the RISC-V memory model.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The EEI will define what I/O operations are possible, and in particular,
+which memory addresses when accessed by load and store instructions will
+be treated and ordered as device input and device output operations
+respectively rather than memory reads and writes. For example,
+memory-mapped I/O devices will typically be accessed with uncached loads
+and stores that are ordered using the I and O bits rather than the R and
+W bits. Instruction-set extensions might also describe new I/O
+instructions that will also be ordered using the I and O bits in a
+FENCE instruction.</p>
+</div>
+<table id="fm" class="tableblock frame-all grid-all stretch center">
+<caption class="title">Table 3. Fence mode encoding</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><em>fm</em> field</th>
+<th class="tableblock halign-center valign-top">Mnemonic suffix</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0000</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>none</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Normal Fence</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1000</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">.TSO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">With <code>FENCE RW,RW</code>: exclude write-to-read ordering; otherwise: <em>Reserved for future use.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>other</em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>other</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved for future use.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The FENCE mode field <em>fm</em> defines the semantics of the FENCE instruction. A <code>FENCE</code>
+(with <em>fm</em>=<code>0000</code>) orders all memory operations in its predecessor set
+before all memory operations in its successor set.</p>
+</div>
+<div class="paragraph">
+<p>A <code>FENCE.TSO</code> instruction is encoded as a FENCE instruction
+with <em>fm</em>=<code>1000</code>, <em>predecessor</em>=<code>RW</code>, and <em>successor</em>=<code>RW</code>. <code>FENCE.TSO</code> orders
+all load operations in its predecessor set before all memory operations
+in its successor set, and all store operations in its predecessor set
+before all store operations in its successor set. This leaves <code>non-AMO</code>
+store operations in the <code>FENCE.TSO&#8217;s</code> predecessor set unordered with
+<code>non-AMO</code> loads in its successor set.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Because <code>FENCE RW,RW</code> imposes a superset of the orderings that <code>FENCE.TSO</code>
+imposes, it is correct to ignore the <em>fm</em> field and implement <code>FENCE.TSO</code> as <code>FENCE RW,RW</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The unused fields in the FENCE instructions--<em>rs1</em> and <em>rd</em>--are reserved
+for finer-grain fences in future extensions. For forward compatibility,
+base implementations shall ignore these fields, and standard software
+shall zero these fields. Likewise, many <em>fm</em> and predecessor/successor
+set settings are also reserved for future use.
+Base implementations shall treat all such reserved configurations as
+<code>FENCE</code> instructions (with <em>fm</em>=<code>0000</code>), and standard software shall use only
+non-reserved configurations.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We chose a relaxed memory model to allow high performance from simple
+machine implementations and from likely future coprocessor or
+accelerator extensions. We separate out I/O ordering from memory R/W
+ordering to avoid unnecessary serialization within a device-driver hart
+and also to support alternative non-memory paths to control added
+coprocessors or I/O devices. Simple implementations may additionally
+ignore the <em>predecessor</em> and <em>successor</em> fields and always execute a
+conservative FENCE on all operations.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ecall-ebreak"><a class="anchor" href="#ecall-ebreak"></a>Environment Call and Breakpoints</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>SYSTEM</code> instructions are used to access system functionality that might
+require privileged access and are encoded using the I-type instruction
+format. These can be divided into two main classes: those that
+atomically read-modify-write control and status registers (CSRs), and
+all other potentially privileged instructions. CSR instructions are
+described in <a href="#csrinsts">[csrinsts]</a>, and the base
+unprivileged instructions are described in the following section.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SYSTEM instructions are defined to allow simpler implementations to
+always trap to a single software trap handler. More sophisticated
+implementations might execute more of each system instruction in
+hardware.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56sGRwSGuvkis2FodhAmmCBOKUlB1m4L0GEAIFD3GCD1ppXnJJcZANTBNILZ6QJBnGJzGaV2xIdg-gtYZGukgW2dohGQdmKPu6uzo4wNmOAW5OnqDtcfWAgDBsE9y" alt="svg">
+</div>
+</div>
+<div id="env-call" class="paragraph">
+<p>These two instructions cause a precise requested trap to the supporting
+execution environment.</p>
+</div>
+<div class="paragraph">
+<p>The <code>ECALL</code> instruction is used to make a service request to the execution
+environment. The <code>EEI</code> will define how parameters for the service request
+are passed, but usually these will be in defined locations in the
+integer register file.</p>
+</div>
+<div class="paragraph">
+<p>The <code>EBREAK</code> instruction is used to return control to a debugging
+environment.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>ECALL and EBREAK were previously named SCALL and SBREAK. The
+instructions have the same functionality and encoding, but were renamed
+to reflect that they can be used more generally than to call a
+supervisor-level operating system or debugger.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>EBREAK was primarily designed to be used by a debugger to cause
+execution to stop and fall back into the debugger. EBREAK is also used
+by the standard GCC compiler to mark code paths that should not be
+executed.</p>
+</div>
+<div class="paragraph">
+<p>Another use of EBREAK is to support "semihosting", where the execution
+environment includes a debugger that can provide services over an
+alternate system call interface built around the EBREAK instruction.
+Because the RISC-V base ISAs do not provide more than one EBREAK
+instruction, RISC-V semihosting uses a special sequence of instructions
+to distinguish a semihosting EBREAK from a debugger inserted EBREAK.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    slli x0, x0, 0x1f   # Entry NOP
+    ebreak              # Break to debugger
+    srai x0, x0, 7      # Exit NOP</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that these three instructions must be 32-bit-wide instructions,
+i.e., they mustn&#8217;t be among the compressed 16-bit instructions described
+in <a href="c-st-ext.html" class="xref page">"C" Extension for Compressed Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>The shift NOP instructions are still considered available for use as
+HINTs.</p>
+</div>
+<div class="paragraph">
+<p>Semihosting is a form of service call and would be more naturally
+encoded as an ECALL using an existing ABI, but this would require the
+debugger to be able to intercept ECALLs, which is a newer addition to
+the debug standard. We intend to move over to using ECALLs with a
+standard ABI, in which case, semihosting can share a service ABI with an
+existing standard.</p>
+</div>
+<div class="paragraph">
+<p>We note that ARM processors have also moved to using SVC instead of BKPT
+for semihosting calls in newer designs.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="hint-instructions"><a class="anchor" href="#hint-instructions"></a>HINT Instructions</h2>
+<div class="sectionbody">
+<div id="rv32i-hints" class="paragraph">
+<p>RV32I reserves a large encoding space for HINT instructions, which are
+usually used to communicate performance hints to the microarchitecture.
+Like the NOP instruction, HINTs do not change any architecturally
+visible state, except for advancing the <code>pc</code> and any applicable
+performance counters. Implementations are always allowed to ignore the
+encoded hints.</p>
+</div>
+<div class="paragraph">
+<p>Most RV32I HINTs are encoded as integer computational instructions with
+<em>rd</em>=<code>x0</code>. The other RV32I HINTs are encoded as FENCE instructions with
+a null predecessor or successor set and with <em>fm</em>=0.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>These HINT encodings have been chosen so that simple implementations can
+ignore HINTs altogether, and instead execute a HINT as a regular
+instruction that happens not to mutate the architectural state. For
+example, ADD is a HINT if the destination register is <code>x0</code>; the five-bit
+<em>rs1</em> and <em>rs2</em> fields encode arguments to the HINT. However, a simple
+implementation can simply execute the HINT as an ADD of <em>rs1</em> and <em>rs2</em>
+that writes <code>x0</code>, which has no architecturally visible effect.</p>
+</div>
+<div class="paragraph">
+<p>As another example, a FENCE instruction with a zero <em>pred</em> field and a
+zero <em>fm</em> field is a HINT; the <em>succ</em>, <em>rs1</em>, and <em>rd</em> fields encode the
+arguments to the HINT. A simple implementation can simply execute the
+HINT as a FENCE that orders the null set of prior memory accesses before
+whichever subsequent memory accesses are encoded in the <em>succ</em> field.
+Since the intersection of the predecessor and successor sets is null,
+the instruction imposes no memory orderings, and so it has no
+architecturally visible effect.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="#t-rv32i-hints">RV32I HINT instructions.</a> lists all RV32I HINT code points. 91% of the
+HINT space is reserved for standard HINTs. The remainder of the HINT
+space is designated for custom HINTs: no standard HINTs will ever be
+defined in this subspace.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We anticipate standard hints to eventually include memory-system spatial
+and temporal locality hints, branch prediction hints, thread-scheduling
+hints, security tags, and instrumentation flags for simulation/emulation.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table id="t-rv32i-hints" class="tableblock frame-all grid-all stretch center">
+<caption class="title">Table 4. RV32I HINT instructions.</caption>
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Instruction</th>
+<th class="tableblock halign-left valign-top">Constraints</th>
+<th class="tableblock halign-center valign-top">Code Points</th>
+<th class="tableblock halign-left valign-top">Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LUI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="8"><p class="tableblock"><code><em>Designated for future standard use</em></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AUIPC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADDI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, and either <em>rs1</em>&#8800;<code>x0</code> or <em>imm</em>&#8800;0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.816ex" height="2.088ex" role="img" focusable="false" viewBox="0 -841 3012.6 923"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ANDI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.903ex" role="img" focusable="false" viewBox="0 -841 1290.1 841"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ORI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.903ex" role="img" focusable="false" viewBox="0 -841 1290.1 841"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XORI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.903ex" role="img" focusable="false" viewBox="0 -841 1290.1 841"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>&#8800;<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.947ex" height="2.072ex" role="img" focusable="false" viewBox="0 -833.9 3512.6 915.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z"></path><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z" transform="translate(500,0)"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>=<code>x0</code>, <em>rs2</em>&#8800;<code>x2-x5</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">28</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>=<code>x0</code>, <em>rs2</em>=<code>x2-x5</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">(<em>rs2</em>=<code>x2</code>) NTL.P1<br>
+(<em>rs2</em>=<code>x3</code>) NTL.PALL<br>
+(<em>rs2</em>=<code>x4</code>) NTL.S1<br>
+(<em>rs2</em>=<code>x5</code>) NTL.ALL</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>=<code>x0</code>, <em>shamt</em>=31</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Semihosting entry marker</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRAI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>=<code>x0</code>, <em>shamt</em>=7</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Semihosting exit marker</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="11"><p class="tableblock"><code><em>Designated for future standard use</em></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">XOR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, <em>rs1</em>&#8800;<code>x0</code>, <em>fm</em>=0, and either <em>pred</em>=0 or <em>succ</em>=0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.947ex" height="2.072ex" role="img" focusable="false" viewBox="0 -833.9 3512.6 915.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z" transform="translate(500,0)"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>&#8800;<code>x0</code>, <em>rs1</em>=<code>x0</code>, <em>fm</em>=0, and either <em>pred</em>=0 or <em>succ</em>=0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="7.947ex" height="2.072ex" role="img" focusable="false" viewBox="0 -833.9 3512.6 915.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z" transform="translate(500,0)"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<em>rs1</em>=<code>x0</code>, <em>fm</em>=0, <em>pred</em>=0, <em>succ</em>&#8800;0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">15</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<em>rs1</em>=<code>x0</code>, <em>fm</em>=0, <em>pred</em>&#8800;W, <em>succ</em>=0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">15</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<em>rs1</em>=<code>x0</code>, <em>fm</em>=0, <em>pred</em>=W, <em>succ</em>=0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PAUSE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLTI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.903ex" role="img" focusable="false" viewBox="0 -841 1290.1 841"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-middle" rowspan="7"><p class="tableblock"><code><em>Designated for custom use</em></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLTIU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.903ex" role="img" focusable="false" viewBox="0 -841 1290.1 841"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="37" d="M55 458Q56 460 72 567L88 674Q88 676 108 676H128V672Q128 662 143 655T195 646T364 644H485V605L417 512Q408 500 387 472T360 435T339 403T319 367T305 330T292 284T284 230T278 162T275 80Q275 66 275 52T274 28V19Q270 2 255 -10T221 -22Q210 -22 200 -19T179 0T168 40Q168 198 265 368Q285 400 349 489L395 552H302Q128 552 119 546Q113 543 108 522T98 479L95 458V455H55V458Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, and either <em>rs1</em>&#8800;<code>x0</code> or <em>shamt</em>&#8800;31</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.816ex" height="2.072ex" role="img" focusable="false" viewBox="0 -833.9 3012.6 915.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRLI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRAI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code>, and either <em>rs1</em>&#8800;<code>x0</code> or <em>shamt</em>&#8800;7</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="6.816ex" height="2.072ex" role="img" focusable="false" viewBox="0 -833.9 3012.6 915.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g><g data-mml-node="mo" transform="translate(1512.3,0)"><path data-c="2212" d="M84 237T84 250T98 270H679Q694 262 694 250T679 230H98Q84 237 84 250Z"></path></g><g data-mml-node="mn" transform="translate(2512.6,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SLTU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>rd</em>=<code>x0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><span class="steminline"> <svg style="vertical-align: 0; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="2.919ex" height="1.887ex" role="img" focusable="false" viewBox="0 -833.9 1290.1 833.9"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="msup"><g data-mml-node="mn"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g><g data-mml-node="TeXAtom" transform="translate(533,363) scale(0.707)" data-mjx-texclass="ORD"><g data-mml-node="mn"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path><path data-c="30" d="M96 585Q152 666 249 666Q297 666 345 640T423 548Q460 465 460 320Q460 165 417 83Q397 41 362 16T301 -15T250 -22Q224 -22 198 -16T137 16T82 83Q39 165 39 320Q39 494 96 585ZM321 597Q291 629 250 629Q208 629 178 597Q153 571 145 525T137 333Q137 175 145 125T181 46Q209 16 250 16Q290 16 318 46Q347 76 354 130T362 333Q362 478 354 524T321 597Z" transform="translate(500,0)"></path></g></g></g></g></g></svg> </span></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>slli x0, x0, 0x1f</code> and <code>srai x0, x0, 7</code> were previously designated as
+custom HINTs, but they have been appropriated for use in semihosting calls, as
+described in <a href="#ecall-ebreak">Environment Call and Breakpoints</a>.
+To reflect their usage in practice, the base ISA spec has been changed to
+designate them as standard HINTs.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="intro.html">Introduction</a></span>
+  <span class="next"><a href="rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="rv32.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../v20240411/unpriv/rv32.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../../index.html">Last Published ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
