@@ -1,0 +1,2230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Control and Status Registers (CSRs) :: RISC-V Ratified Specifications Library</title>
+    <link rel="prev" href="priv-intro.html">
+    <link rel="next" href="machine.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="4cf5b19048bedd12b162c683c689be1dbf2179b6"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img id="springlogo" class="block" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+      </a>
+    </div>
+<div class="navbar-end">
+  <div class="navbar-item home">
+    <a class="navbar-link" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed">
+      <!-- Home icon only -->
+      <svg class="nav-home-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+    </a>
+  </div>
+</div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+              Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+              Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+              Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item"
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+              SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient Trace< <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">v20250508</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-history.html">History</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Bibliography</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../biblio/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Control and Status Registers (CSRs)"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Open an Issue
+        </a>
+        <a href="https://github.com/riscv/riscv-isa-manual" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <div class="dropdown-toc">
+          <a href="#" id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+            <span>Download PDFs</span>
+            <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </a>
+          <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/unpriv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/priv-isa-asciidoc.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+          </ul>
+        </div>
+       <script>
+  (function() {
+    const btn = document.getElementById('pdfDropdownButton');
+    const menu = document.getElementById('pdfDropdownMenu');
+
+    // Toggle dropdown on button click
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', !expanded);
+      menu.hidden = expanded;
+      if (!expanded) {
+        menu.querySelector('.dropdown-item')?.focus();
+      }
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!btn.contains(e.target) && !menu.contains(e.target)) {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus(); // return focus to button
+      }
+    });
+
+    // Close dropdown on Escape key press
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        btn.setAttribute('aria-expanded', 'false');
+        menu.hidden = true;
+        btn.focus();
+      }
+    });
+  })();
+</script>
+
+        <style>
+          .dropdown-toc{
+            position: relative;
+            display: inline-block;
+          }
+          .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #f9f9f9;
+            border: 1px solid #000000;
+            border-radius: 4px;
+            min-width: 180px;
+            z-index: 1000;
+            list-style-type: none;
+          }
+          .dropdown-item {
+            padding-left: 0px;
+            display: block;
+            color: #000000;
+            text-decoration: none;
+            white-space: nowrap;
+            user-select: none;
+          }
+          .dropdown-item:hover{
+            background-color: #cccccc;
+            outline: none;
+          }
+          .dropdown-item:focus {
+            background-color: #cccccc;
+            outline: none;
+          }
+          .chevron {
+            stroke-width: 2.5;
+            transition: transform 0.2s ease;
+          }
+          [aria-expanded="true"] .chevron {
+            transform: rotate(180deg);
+          }
+        </style>
+      
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume II: RISC-V Privileged ISA Specification</li>
+      <li><a href="priv-csrs.html">Control and Status Registers (CSRs)</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">Control and Status Registers (CSRs)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>The SYSTEM major opcode is used to encode all privileged instructions in
+the RISC-V ISA. These can be divided into two main classes: those that
+atomically read-modify-write control and status registers (CSRs), which
+are defined in the Zicsr extension, and all other privileged
+instructions. The privileged architecture requires the Zicsr extension;
+which other privileged instructions are required depends on the
+privileged-architecture feature set.</p>
+</div>
+<div class="paragraph">
+<p>In addition to the unprivileged state described in Volume I of this
+manual, an implementation may contain additional CSRs, accessible by
+some subset of the privilege levels using the CSR instructions described
+in Volume I. In this chapter, we map out the CSR address space. The
+following chapters describe the function of each of the CSRs according
+to privilege level, as well as the other privileged instructions which
+are generally closely associated with a particular privilege level. Note
+that although CSRs and instructions are associated with one privilege
+level, they are also accessible at all higher privilege levels.</p>
+</div>
+<div class="paragraph">
+<p>Standard CSRs do not have side effects on reads but may have side
+effects on writes.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csr-address-mapping-conventions"><a class="anchor" href="#csr-address-mapping-conventions"></a>CSR Address Mapping Conventions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The standard RISC-V ISA sets aside a 12-bit encoding space (csr[11:0])
+for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address
+(csr[11:8]) are used to encode the read and write accessibility of the
+CSRs according to privilege level as shown in <a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a>. The top two bits (csr[11:10]) indicate whether the register is read/write (<code>00</code>,<code>01</code>, or <code>10</code>) or read-only (<code>11</code>). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The CSR address convention uses the upper bits of the CSR address to
+encode default access privileges. This simplifies error checking in the
+hardware and provides a larger CSR space, but does constrain the mapping
+of CSRs into the address space.</p>
+</div>
+<div class="paragraph">
+<p>Implementations might allow a more-privileged level to trap otherwise
+permitted CSR accesses by a less-privileged level to allow these
+accesses to be intercepted. This change should be transparent to the
+less-privileged software.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Instructions that access a non-existent CSR are reserved.
+Attempts to access a CSR without appropriate privilege level
+raise illegal-instruction exceptions or, as described in
+<a href="#sec:hcauses">[sec:hcauses]</a>, virtual-instruction exceptions.
+Attempts to write a read-only register raise illegal-instruction exceptions.
+A read/write register might also contain some bits that are
+read-only, in which case writes to the read-only bits are ignored.</p>
+</div>
+<div class="paragraph">
+<p><a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a> also indicates the convention to
+allocate CSR addresses between standard and custom uses. The CSR
+addresses designated for custom uses will not be redefined by future
+standard extensions.</p>
+</div>
+<div class="paragraph">
+<p>Machine-mode standard read-write CSRs <code>0x7A0</code>-<code>0x7BF</code> are reserved for
+use by the debug system. Of these CSRs, <code>0x7A0</code>-<code>0x7AF</code> are accessible
+to machine mode, whereas <code>0x7B0</code>-<code>0x7BF</code> are only visible to debug mode.
+Implementations should raise illegal-instruction exceptions on
+machine-mode access to the latter set of registers.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Effective virtualization requires that as many instructions run natively
+as possible inside a virtualized environment, while any privileged
+accesses trap to the virtual machine monitor. [<a href="../biblio/bibliography.html#bib-goldbergvm" class="xref page">84</a>] CSRs that are read-only
+at some lower privilege level are shadowed into separate CSR addresses
+if they are made read-write at a higher privilege level. This avoids
+trapping permitted lower-privilege accesses while still causing traps on
+illegal accesses. Currently, the counters are the only shadowed CSRs.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csr-listing"><a class="anchor" href="#csr-listing"></a>CSR Listing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="#ucsrnames">Currently allocated RISC-V unprivileged CSR addresses.</a>-<a href="#mcsrnames1">Currently allocated RISC-V machine-level CSR addresses.</a> list the CSRs that
+have currently been allocated CSR addresses. The timers, counters, and
+floating-point CSRs are standard unprivileged CSRs. The other registers
+are used by privileged code, as described in the following chapters.
+Note that not all registers are required on all implementations.</p>
+</div>
+<table id="csrrwpriv" class="tableblock frame-all grid-all fit-content center monofont">
+<caption class="title">Table 1. Allocation of RISC-V CSR address ranges.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock">CSR Address</p></td>
+<td class="tableblock halign-center valign-top" colspan="2" rowspan="2"><p class="tableblock">Hex</p></td>
+<td class="tableblock halign-center valign-top" colspan="3" rowspan="2"><p class="tableblock">Use and Accessibility</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[11:10]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[9:8]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">[7:4]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="8"><p class="tableblock">Unprivileged and User-Level CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x000-0x0FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x400-0x4FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x800-0x8FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xC00-0xC7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xC80-0xCBF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xCC0-0xCFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="8"><p class="tableblock">Supervisor-Level CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x100-0x1FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x500-0x57F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x580-0x5BF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x5C0-0x5FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x900-0x97F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x980-0x9BF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x9C0-0x9FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xD00-0xD7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xD80-0xDBF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xDC0-0xDFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="8"><p class="tableblock">Hypervisor and VS CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x200-0x2FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x600-0x67F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x680-0x6BF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x6C0-0x6FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xA00-0xA7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xA80-0xABF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xAC0-0xAFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xE00-0xE7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xE80-0xEBF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xEC0-0xEFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="8"><p class="tableblock">Machine-Level CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>XXXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x300-0x3FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x700-0x77F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>100X</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x780-0x79F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1010</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x7A0-0x7AF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write debug CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1011</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x7B0-0x7BF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Debug-mode-only CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0x7C0-0x7FF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xB00-0xB7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xB80-0xBBF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xBC0-0xBFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read/write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0XXX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xF00-0xF7F</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>10XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xF80-0xFBF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Standard read-only</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>11XX</code></p></td>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock"><code>0xFC0-0xFFF</code></p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">Custom read-only</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table id="ucsrnames" class="tableblock frame-all grid-all stretch center">
+<caption class="title">Table 2. Currently allocated RISC-V unprivileged CSR addresses.</caption>
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Privilege</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Floating-Point CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x001</code><br>
+<code>0x002</code><br>
+<code>0x003</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URW<br>
+URW<br>
+URW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>fflags</code><br>
+<code>frm</code><br>
+<code>fcsr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Floating-Point Accrued Exceptions.<br>
+Floating-Point Dynamic Rounding Mode.<br>
+Floating-Point Control and Status Register (<code>frm</code> +<code>fflags</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Vector CSRs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x008</code><br>
+<code>0x009</code><br>
+<code>0x00A</code><br>
+<code>0x00F</code><br>
+<code>0xC20</code><br>
+<code>0xC21</code><br>
+<code>0xC22</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URW<br>
+URW<br>
+URW<br>
+URW<br>
+URO<br>
+URO<br>
+URO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vstart</code><br>
+<code>vxsat</code><br>
+<code>vxrm</code><br>
+<code>vcsr</code><br>
+<code>vl</code><br>
+<code>vtype</code><br>
+<code>vlenb</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vector start position.<br>
+Fixed-point accrued saturation flag.<br>
+Fixed-point rounding mode.<br>
+Vector control and status register.<br>
+Vector length.<br>
+Vector data type register.<br>
+Vector register length in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Zicfiss extension CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x011</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URW<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ssp</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shadow Stack Pointer.<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Entropy Source Extension CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x015</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URW<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>seed</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Seed for cryptographic random bit generators.<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Zcmt Extension CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x017</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URW<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>jvt</code><br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Table jump base vector and control register.<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Unprivileged Counter/Timers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xC00</code><br>
+<code>0xC01</code><br>
+<code>0xC02</code><br>
+<code>0xC03</code><br>
+<code>0xC04</code><br>
+ &#160;<br>
+<code>0xC1F</code><br>
+<code>0xC80</code><br>
+<code>0xC81</code><br>
+<code>0xC82</code><br>
+<code>0xC83</code><br>
+<code>0xC84</code><br>
+&#160;<br>
+<code>0xC9F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">URO<br>
+URO<br>
+URO<br>
+URO<br>
+URO<br>
+&#160;<br>
+URO<br>
+URO<br>
+URO<br>
+URO<br>
+URO<br>
+URO<br>
+&#160;<br>
+URO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cycle</code><br>
+<code>time</code><br>
+<code>instret</code><br>
+<code>hpmcounter3</code><br>
+<code>hpmcounter4</code><br>
+&#8942;<br>
+<code>hpmcounter31</code><br>
+<code>cycleh</code><br>
+<code>timeh</code><br>
+<code>instreth</code><br>
+<code>hpmcounter3h</code><br>
+<code>hpmcounter4h</code><br>
+&#8942;<br>
+<code>hpmcounter31h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cycle counter for RDCYCLE instruction.<br>
+Timer for RDTIME instruction.<br>
+Instructions-retired counter for RDINSTRET instruction.<br>
+Performance-monitoring counter.<br>
+Performance-monitoring counter.<br>
+&#160;<br>
+Performance-monitoring counter.<br>
+Upper 32 bits of <code>cycle</code>, RV32 only.<br>
+Upper 32 bits of <code>time</code>, RV32 only.<br>
+Upper 32 bits of <code>instret</code>, RV32 only.<br>
+Upper 32 bits of <code>hpmcounter3</code>, RV32 only.<br>
+Upper 32 bits of <code>hpmcounter4</code>, RV32 only.<br>
+&#160;<br>
+Upper 32 bits of <code>hpmcounter31</code>, RV32 only.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table id="scsrnames" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 3. Currently allocated RISC-V supervisor-level CSR addresses.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Privilege</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor Trap Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x100</code><br>
+<code>0x104</code><br>
+<code>0x105</code><br>
+<code>0x106</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW<br>
+SRW<br>
+SRW<br>
+SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sstatus</code><br>
+<code>sie</code><br>
+<code>stvec</code><br>
+<code>scounteren</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor status register.<br>
+Supervisor interrupt-enable register.<br>
+Supervisor trap handler base address.<br>
+Supervisor counter enable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor Configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x10A</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>senvcfg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor environment configuration register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor Counter Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x120</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scountinhibit</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor counter-inhibit register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor Trap Handling</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x140</code><br>
+<code>0x141</code><br>
+<code>0x142</code><br>
+<code>0x143</code><br>
+<code>0x144</code><br>
+<code>0xDA0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW<br>
+SRW<br>
+SRW<br>
+SRW<br>
+SRW<br>
+SRO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sscratch</code><br>
+<code>sepc</code><br>
+<code>scause</code><br>
+<code>stval</code><br>
+<code>sip</code><br>
+<code>scountovf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor scratch register.<br>
+Supervisor exception program counter.<br>
+Supervisor trap cause.<br>
+Supervisor trap value.<br>
+Supervisor interrupt pending.<br>
+Supervisor count overflow.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor Protection and Translation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x180</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>satp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor address translation and protection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Debug/Trace Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x5A8</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>scontext</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor-mode context register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Supervisor State Enable Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x10C</code><br>
+ <code>0x10D</code><br>
+ <code>0x10E</code><br>
+ <code>0x10F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRW<br>
+ SRW<br>
+ SRW<br>
+ SRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sstateen0</code><br>
+ <code>sstateen1</code><br>
+ <code>sstateen2</code><br>
+ <code>sstateen3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor State Enable 0 Register.<br>
+ Supervisor State Enable 1 Register.<br>
+ Supervisor State Enable 2 Register.<br>
+ Supervisor State Enable 3 Register.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table id="hcsrnames" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 4. Currently allocated RISC-V hypervisor and VS CSR addresses.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Privilege</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor Trap Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x600</code><br>
+<code>0x602</code><br>
+<code>0x603</code><br>
+<code>0x604</code><br>
+<code>0x606</code><br>
+<code>0x607</code><br>
+<code>0x612</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hstatus</code><br>
+<code>hedeleg</code><br>
+<code>hideleg</code><br>
+<code>hie</code><br>
+<code>hcounteren</code><br>
+<code>hgeie</code><br>
+<code>hedelegh</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor status register.<br>
+Hypervisor exception delegation register.<br>
+Hypervisor interrupt delegation register.<br>
+Hypervisor interrupt-enable register.<br>
+Hypervisor counter enable.<br>
+Hypervisor guest external interrupt-enable register.<br>
+Upper 32 bits of <code>hedeleg</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor Trap Handling</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x643</code><br>
+<code>0x644</code><br>
+<code>0x645</code><br>
+<code>0x64A</code><br>
+<code>0xE12</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>htval</code><br>
+<code>hip</code><br>
+<code>hvip</code><br>
+<code>htinst</code><br>
+<code>hgeip</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor trap value.<br>
+Hypervisor interrupt pending.<br>
+Hypervisor virtual interrupt pending.<br>
+Hypervisor trap instruction (transformed).<br>
+Hypervisor guest external interrupt pending.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor Configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x60A</code><br>
+<code>0x61A</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>henvcfg</code><br>
+<code>henvcfgh</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor environment configuration register.<br>
+Upper 32 bits of <code>henvcfg</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor Protection and Translation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x680</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hgatp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor guest address translation and protection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Debug/Trace Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x6A8</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hcontext</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor-mode context register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor Counter/Timer Virtualization Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x605</code><br>
+<code>0x615</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>htimedelta</code><br>
+<code>htimedeltah</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Delta for VS/VU-mode timer.<br>
+Upper 32 bits of <code>htimedelta</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Hypervisor State Enable Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x60C</code><br>
+ <code>0x60D</code><br>
+ <code>0x60E</code><br>
+ <code>0x60F</code><br>
+ <code>0x61C</code><br>
+ <code>0x61D</code><br>
+ <code>0x61E</code><br>
+ <code>0x61F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+ HRW<br>
+ HRW<br>
+ HRW<br>
+ HRW<br>
+ HRW<br>
+ HRW<br>
+ HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hstateen0</code> <br>
+ <code>hstateen1</code> <br>
+ <code>hstateen2</code> <br>
+ <code>hstateen3</code> <br>
+ <code>hstateen0h</code><br>
+ <code>hstateen1h</code><br>
+ <code>hstateen2h</code><br>
+ <code>hstateen3h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor State Enable 0 Register.<br>
+ Hypervisor State Enable 1 Register.<br>
+ Hypervisor State Enable 2 Register.<br>
+ Hypervisor State Enable 3 Register.<br>
+ Upper 32 bits of Hypervisor State Enable 0 Register, RV32 only.<br>
+ Upper 32 bits of Hypervisor State Enable 1 Register, RV32 only.<br>
+ Upper 32 bits of Hypervisor State Enable 2 Register, RV32 only.<br>
+ Upper 32 bits of Hypervisor State Enable 3 Register, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Virtual Supervisor Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x200</code><br>
+<code>0x204</code><br>
+<code>0x205</code><br>
+<code>0x240</code><br>
+<code>0x241</code><br>
+<code>0x242</code><br>
+<code>0x243</code><br>
+<code>0x244</code><br>
+<code>0x280</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vsstatus</code><br>
+<code>vsie</code><br>
+<code>vstvec</code><br>
+<code>vsscratch</code><br>
+<code>vsepc</code><br>
+<code>vscause</code><br>
+<code>vstval</code><br>
+<code>vsip</code><br>
+<code>vsatp</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual supervisor status register.<br>
+Virtual supervisor interrupt-enable register.<br>
+Virtual supervisor trap handler base address.<br>
+Virtual supervisor scratch register.<br>
+Virtual supervisor exception program counter.<br>
+Virtual supervisor trap cause.<br>
+Virtual supervisor trap value.<br>
+Virtual supervisor interrupt pending.<br>
+Virtual supervisor address translation and protection.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table id="mcsrnames0" class="tableblock frame-all grid-all fit-content center monocell">
+<caption class="title">Table 5. Currently allocated RISC-V machine-level CSR addresses.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Privilege</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Information Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xF11</code><br>
+<code>0xF12</code><br>
+<code>0xF13</code><br>
+<code>0xF14</code><br>
+<code>0xF15</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRO<br>
+MRO<br>
+MRO<br>
+MRO<br>
+MRO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mvendorid</code><br>
+<code>marchid</code><br>
+<code>mimpid</code><br>
+<code>mhartid</code><br>
+<code>mconfigptr</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vendor ID.<br>
+Architecture ID.<br>
+Implementation ID.<br>
+Hardware thread ID.<br>
+Pointer to configuration data structure.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Trap Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x300</code><br>
+<code>0x301</code><br>
+<code>0x302</code><br>
+<code>0x303</code><br>
+<code>0x304</code><br>
+<code>0x305</code><br>
+<code>0x306</code><br>
+<code>0x310</code><br>
+<code>0x312</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mstatus</code><br>
+<code>misa</code><br>
+<code>medeleg</code><br>
+<code>mideleg</code><br>
+<code>mie</code><br>
+<code>mtvec</code><br>
+<code>mcounteren</code><br>
+<code>mstatush</code><br>
+<code>medelegh</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine status register.<br>
+ISA and extensions<br>
+Machine exception delegation register.<br>
+Machine interrupt delegation register.<br>
+Machine interrupt-enable register.<br>
+Machine trap-handler base address.<br>
+Machine counter enable.<br>
+Additional machine status register, RV32 only.<br>
+Upper 32 bits of <code>medeleg</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Trap Handling</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x340</code><br>
+<code>0x341</code><br>
+<code>0x342</code><br>
+<code>0x343</code><br>
+<code>0x344</code><br>
+<code>0x34A</code><br>
+<code>0x34B</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mscratch</code><br>
+<code>mepc</code><br>
+<code>mcause</code><br>
+<code>mtval</code><br>
+<code>mip</code><br>
+<code>mtinst</code><br>
+<code>mtval2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine scratch register.<br>
+Machine exception program counter.<br>
+Machine trap cause.<br>
+Machine trap value.<br>
+Machine interrupt pending.<br>
+Machine trap instruction (transformed).<br>
+Machine second trap value.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x30A</code><br>
+<code>0x31A</code><br>
+<code>0x747</code><br>
+<code>0x757</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>menvcfg</code><br>
+<code>menvcfgh</code><br>
+<code>mseccfg</code><br>
+<code>mseccfgh</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine environment configuration register.<br>
+Upper 32 bits of <code>menvcfg</code>, RV32 only.<br>
+Machine security configuration register.<br>
+Upper 32 bits of <code>mseccfg</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Memory Protection</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x3A0</code><br>
+<code>0x3A1</code><br>
+<code>0x3A2</code><br>
+<code>0x3A3</code><br>
+&#160;<br>
+<code>0x3AE</code><br>
+<code>0x3AF</code><br>
+<code>0x3B0</code><br>
+<code>0x3B1</code><br>
+&#160;<br>
+<code>0x3EF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>pmpcfg0</code><br>
+<code>pmpcfg1</code><br>
+<code>pmpcfg2</code><br>
+<code>pmpcfg3</code><br>
+&#8943;<br>
+<code>pmpcfg14</code><br>
+<code>pmpcfg15</code><br>
+<code>pmpaddr0</code><br>
+<code>pmpaddr1</code><br>
+&#8943;<br>
+<code>pmpaddr63</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Physical memory protection configuration.<br>
+Physical memory protection configuration, RV32 only.<br>
+Physical memory protection configuration.<br>
+Physical memory protection configuration, RV32 only.<br>
+&#160;<br>
+Physical memory protection configuration.<br>
+Physical memory protection configuration, RV32 only.<br>
+Physical memory protection address register.<br>
+Physical memory protection address register.<br>
+&#160;<br>
+Physical memory protection address register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine State Enable Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x30C</code><br>
+ <code>0x30D</code><br>
+ <code>0x30E</code><br>
+ <code>0x30F</code><br>
+ <code>0x31C</code><br>
+ <code>0x31D</code><br>
+ <code>0x31E</code><br>
+ <code>0x31F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+ MRW<br>
+ MRW<br>
+ MRW<br>
+ MRW<br>
+ MRW<br>
+ MRW<br>
+ MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mstateen0</code> <br>
+ <code>mstateen1</code> <br>
+ <code>mstateen2</code> <br>
+ <code>mstateen3</code> <br>
+ <code>mstateen0h</code><br>
+ <code>mstateen1h</code><br>
+ <code>mstateen2h</code><br>
+ <code>mstateen3h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine State Enable 0 Register.<br>
+ Machine State Enable 1 Register.<br>
+ Machine State Enable 2 Register.<br>
+ Machine State Enable 3 Register.<br>
+ Upper 32 bits of Machine State Enable 0 Register, RV32 only.<br>
+ Upper 32 bits of Machine State Enable 1 Register, RV32 only.<br>
+ Upper 32 bits of Machine State Enable 2 Register, RV32 only.<br>
+ Upper 32 bits of Machine State Enable 3 Register, RV32 only.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table id="mcsrnames1" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 6. Currently allocated RISC-V machine-level CSR addresses.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Number</th>
+<th class="tableblock halign-left valign-top">Privilege</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Non-Maskable Interrupt Handling</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x740</code><br>
+<code>0x741</code><br>
+<code>0x742</code><br>
+<code>0x744</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mnscratch</code><br>
+<code>mnepc</code><br>
+<code>mncause</code><br>
+<code>mnstatus</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Resumable NMI scratch register.<br>
+Resumable NMI program counter.<br>
+Resumable NMI cause.<br>
+Resumable NMI status.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Counter/Timers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xB00</code><br>
+<code>0xB02</code><br>
+<code>0xB03</code><br>
+<code>0xB04</code><br>
+&#160;<br>
+<code>0xB1F</code><br>
+<code>0xB80</code><br>
+<code>0xB82</code><br>
+<code>0xB83</code><br>
+<code>0xB84</code><br>
+&#160;<br>
+<code>0xB9F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mcycle</code><br>
+<code>minstret</code><br>
+<code>mhpmcounter3</code><br>
+<code>mhpmcounter4</code><br>
+&#8942;<br>
+<code>mhpmcounter31</code><br>
+<code>mcycleh</code><br>
+<code>minstreth</code><br>
+<code>mhpmcounter3h</code><br>
+<code>mhpmcounter4h</code><br>
+&#8942;
+<code>mhpmcounter31h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine cycle counter.<br>
+Machine instructions-retired counter.<br>
+Machine performance-monitoring counter.<br>
+Machine performance-monitoring counter.<br>
+&#160;<br>
+Machine performance-monitoring counter.<br>
+Upper 32 bits of <code>mcycle</code>, RV32 only.<br>
+Upper 32 bits of <code>minstret</code>, RV32 only.<br>
+Upper 32 bits of <code>mhpmcounter3</code>, RV32 only.<br>
+Upper 32 bits of <code>mhpmcounter4</code>, RV32 only.<br>
+&#160;<br>
+Upper 32 bits of <code>mhpmcounter31</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Machine Counter Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x320</code><br>
+<code>0x323</code><br>
+<code>0x324</code><br>
+&#160;<br>
+<code>0x33F</code><br>
+<code>0x723</code><br>
+<code>0x724</code><br>
+&#160;<br>
+<code>0x73F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW<br>
+MRW<br>
+MRW<br>
+&#160;<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mcountinhibit</code><br>
+<code>mhpmevent3</code><br>
+<code>mhpmevent4</code><br>
+&#8942;<br>
+<code>mhpmevent31</code><br>
+<code>mhpmevent3h</code><br>
+<code>mhpmevent4h</code><br>
+&#8942;<br>
+<code>mhpmevent31h</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine counter-inhibit register.<br>
+Machine performance-monitoring event selector.<br>
+Machine performance-monitoring event selector.<br>
+&#160;<br>
+Machine performance-monitoring event selector.<br>
+Upper 32 bits of <code>mhpmevent3</code>, RV32 only.<br>
+Upper 32 bits of <code>mhpmevent4</code>, RV32 only.<br>
+&#160;<br>
+Upper 32 bits of <code>mhpmevent31</code>, RV32 only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Debug/Trace Registers (shared with Debug Mode)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x7A0</code><br>
+<code>0x7A1</code> <br>
+<code>0x7A2</code> <br>
+<code>0x7A3</code><br>
+<code>0x7A8</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>tselect</code><br>
+<code>tdata1</code><br>
+<code>tdata2</code><br>
+<code>tdata3</code><br>
+<code>mcontext</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug/Trace trigger register select.<br>
+First Debug/Trace trigger data register.<br>
+Second Debug/Trace trigger data register.<br>
+Third Debug/Trace trigger data register.<br>
+Machine-mode context register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="4"><p class="tableblock">Debug Mode Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x7B0</code><br>
+<code>0x7B1</code><br>
+<code>0x7B2</code><br>
+<code>0x7B3</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DRW<br>
+DRW<br>
+DRW<br>
+DRW<br></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>dcsr</code><br>
+<code>dpc</code><br>
+<code>dscratch0</code><br>
+<code>dscratch1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug control and status register.<br>
+Debug program counter.<br>
+Debug scratch register 0.<br>
+Debug scratch register 1.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csr-field-specifications"><a class="anchor" href="#csr-field-specifications"></a>CSR Field Specifications</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The following definitions and abbreviations are used in specifying the
+behavior of fields within the CSRs.</p>
+</div>
+<div class="sect2">
+<h3 id="reserved-writes-preserve-values-reads-ignore-values-wpri"><a class="anchor" href="#reserved-writes-preserve-values-reads-ignore-values-wpri"></a>Reserved Writes Preserve Values, Reads Ignore Values (WPRI)</h3>
+<div class="paragraph">
+<p>Some whole read/write fields are reserved for future use. Software
+should ignore the values read from these fields, and should preserve the
+values held in these fields when writing values to other fields of the
+same register. For forward compatibility, implementations that do not
+furnish these fields must make them read-only zero. These fields are
+labeled <strong>WPRI</strong> in the register descriptions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>To simplify the software model, any backward-compatible future
+definition of previously reserved fields within a CSR must cope with the
+possibility that a non-atomic read/modify/write sequence is used to
+update other fields in the CSR. Alternatively, the original CSR
+definition must specify that subfields can only be updated atomically,
+which may require a two-instruction clear bit/set bit sequence in
+general that can be problematic if intermediate values are not legal.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="writeread-only-legal-values-wlrl"><a class="anchor" href="#writeread-only-legal-values-wlrl"></a>Write/Read Only Legal Values (WLRL)</h3>
+<div class="paragraph">
+<p>Some read/write CSR fields specify behavior for only a subset of
+possible bit encodings, with other bit encodings reserved. Software
+should not write anything other than legal values to such a field, and
+should not assume a read will return a legal value unless the last write
+was of a legal value, or the register has not been written since another
+operation (e.g., reset) set the register to a legal value. These fields
+are labeled <strong>WLRL</strong> in the register descriptions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Hardware implementations need only implement enough state bits to
+differentiate between the supported values, but must always return the
+complete specified bit-encoding of any supported value when read.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Implementations are permitted but not required to raise an
+illegal-instruction exception if an instruction attempts to write a
+non-supported value to a <strong>WLRL</strong> field. Implementations can return arbitrary
+bit patterns on the read of a <strong>WLRL</strong> field when the last write was of an
+illegal value, but the value returned should deterministically depend on
+the illegal written value and the value of the field prior to the write.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="write-any-values-reads-legal-values-warl"><a class="anchor" href="#write-any-values-reads-legal-values-warl"></a>Write Any Values, Reads Legal Values (WARL)</h3>
+<div class="paragraph">
+<p>Some read/write CSR fields are only defined for a subset of bit
+encodings, but allow any value to be written while guaranteeing to
+return a legal value whenever read. Assuming that writing the CSR has no
+other side effects, the range of supported values can be determined by
+attempting to write a desired setting then reading to see if the value
+was retained. These fields are labeled <strong>WARL</strong> in the register descriptions.</p>
+</div>
+<div class="paragraph">
+<p>Implementations will not raise an exception on writes of unsupported
+values to a <strong>WARL</strong> field. Implementations can return any legal value on the
+read of a <strong>WARL</strong> field when the last write was of an illegal value, but the
+legal value returned should deterministically depend on the illegal
+written value and the architectural state of the hart.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csr-field-modulation"><a class="anchor" href="#csr-field-modulation"></a>CSR Field Modulation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If a write to one CSR changes the set of legal values allowed for a
+field of a second CSR, then unless specified otherwise, the second CSR&#8217;s
+field immediately gets an <code>UNSPECIFIED</code> value from among its new legal values. This
+is true even if the field&#8217;s value before the write remains legal after
+the write; the value of the field may be changed in consequence of the
+write to the controlling CSR.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>As a special case of this rule, the value written to one CSR may control
+whether a field of a second CSR is writable (with multiple legal values)
+or is read-only. When a write to the controlling CSR causes the second
+CSR&#8217;s field to change from previously read-only to now writable, that
+field immediately gets an <code>UNSPECIFIED</code> but legal value, unless specified otherwise.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>Some CSR fields are, when writable, defined as aliases of other CSR
+fields. Let <em>x</em> be such a CSR field, and let <em>y</em> be the CSR field it aliases when writable. If a write to a controlling CSR causes field <em>x</em> to change from previously read-only to now writable, the new value of <em>x</em> is not <code>UNSPECIFIED</code> but instead immediately reflects the existing value of its alias <em>y</em>, as required.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A change to the value of a CSR for this reason is not a write to the
+affected CSR and thus does not trigger any side effects specified for
+that CSR.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="implicit-reads-of-csrs"><a class="anchor" href="#implicit-reads-of-csrs"></a>Implicit Reads of CSRs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Implementations sometimes perform <em>implicit</em> reads of CSRs. (For
+example, all S-mode instruction fetches implicitly read the <code>satp</code> CSR.)
+Unless otherwise specified, the value returned by an implicit read of a
+CSR is the same value that would have been returned by an explicit read
+of the CSR, using a CSR-access instruction in a sufficient privilege
+mode.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="csrwidthmodulation"><a class="anchor" href="#csrwidthmodulation"></a>CSR Width Modulation</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If the width of a CSR is changed (for example, by changing SXLEN or
+UXLEN, as described in <a href="#xlen-control">[xlen-control]</a>), the
+values of the <em>writable</em> fields and bits of the new-width CSR are,
+unless specified otherwise, determined from the previous-width CSR as
+though by this algorithm:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The value of the previous-width CSR is copied to a temporary register
+of the same width.</p>
+</li>
+<li>
+<p>For the read-only bits of the previous-width CSR, the bits at the same
+positions in the temporary register are set to zeros.</p>
+</li>
+<li>
+<p>The width of the temporary register is changed to the new width. If
+the new width <em>W</em> is narrower than the previous width, the
+least-significant <em>W</em> bits of the temporary register are
+retained and the more-significant bits are discarded. If the new width
+is wider than the previous width, the temporary register is
+zero-extended to the wider width.</p>
+</li>
+<li>
+<p>Each writable field of the new-width CSR takes the value of the bits
+at the same positions in the temporary register.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Changing the width of a CSR is not a read or write of the CSR and thus
+does not trigger any side effects.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="explicit-accesses-to-csrs-wider-than-xlen"><a class="anchor" href="#explicit-accesses-to-csrs-wider-than-xlen"></a>Explicit Accesses to CSRs Wider than XLEN</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If a standard CSR is wider than XLEN bits, then an explicit read
+of the CSR returns the register&#8217;s least-significant XLEN bits,
+and an explicit write to the CSR modifies only the register&#8217;s
+least-significant XLEN bits, leaving the upper bits unchanged.</p>
+</div>
+<div class="paragraph">
+<p>Some standard CSRs, such as the counter CSRs of extension
+Zicntr, are always 64 bits, even when XLEN=32 (RV32).
+For each such 64-bit CSR (for example, counter <code>time</code>),
+a corresponding 32-bit <em>high-half CSR</em> is usually defined with
+the same name but with the letter &#8216;h&#8217; appended at the end (<code>timeh</code>).
+The high-half CSR aliases bits 63:32 of its namesake
+64-bit CSR, thus providing a way for RV32 software
+to read and modify the otherwise-unreachable 32 bits.</p>
+</div>
+<div class="paragraph">
+<p>Standard high-half CSRs are accessible only when
+the base RISC-V instruction set is RV32 (XLEN=32).
+For RV64 (when XLEN=64), the addresses of all standard high-half CSRs
+are reserved, so an attempt to access a high-half CSR
+typically raises an illegal-instruction exception.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="priv-intro.html">Introduction</a></span>
+  <span class="next"><a href="machine.html">Machine-Level ISA, Version 1.13</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="priv-csrs.html">
+      v20250508
+    </a>
+  </li>
+  <li class="version">
+    <a href="../../v20240411/priv/priv-csrs.html">
+      v20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../../../index.html">Last Published ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="../../../index.html">
+      default
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async src="../../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
