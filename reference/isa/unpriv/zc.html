@@ -1,0 +1,4404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>"Zc*" Extension for Code Size Reduction, Version 1.0.0 :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/isa/unpriv/zc.html">
+    <link rel="prev" href="c-st-ext.html">
+    <link rel="next" href="b-st-ext.html">
+    <meta name="generator" content="Antora 3.1.12">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="a77d8df9079b0843cebbced82fb4a054f6f79cce"> 
+    <meta name="version" content="v20250508">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+<div class="navbar-brand">
+  <a class="navbar-item" href="https://riscv.org">
+    <img id="riscvlogo" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+  </a>
+</div>
+    </div>
+<div class="navbar-end">
+<div class="navbar-item home">
+  <a class="navbar-link" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568530/RISC-V+Technical+Specifications+Proposed" aria-label="Library">
+Library</a>
+</div>
+</div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">ISA</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Profiles</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Non-ISA Hardware</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+              Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+              Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+              Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" 
+              href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+              SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient Trace< <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted Trace and Diagnostic Data Packet
+              Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Platform Software</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+        </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">App Enablement</a>
+          <div class="navbar-dropdown" style="min-width: 280px">
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+            <a class="navbar-item" target="_blank" rel="noopener noreferrer" href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+    <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z"/>
+  </svg></a>
+          </div>
+        </div>
+    </div>
+    <label class="theme-toggler">
+      <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+      <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+          class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+          <path fill="currentColor"
+            d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+          </path>
+        </svg>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun" class="svg-inline--fa fa-sun sun"
+          role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+          <path fill="currentColor"
+            d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+          </path>
+        </svg></span>
+      <span class="text">light</span>
+    </label>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20250508">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">ISA Specifications</span>
+  <span class="version">Latest</span>
+  <button class="browse-version" id="browse-version">
+    <svg
+      height="24px"
+      id="Layer_1"
+      style="enable-background:new 0 0 512 512;"
+      version="1.1"
+      viewBox="0 0 512 512"
+      width="24px"
+      xml:space="preserve"
+    ><g><path
+          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
+        ></path><path
+          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
+        ></path><path
+          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
+        ></path></g></svg>
+  </button>
+  </div><ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-index.html">Unprivileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32.html">RV32I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv32e.html">RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv64.html">RV64I Base Integer Instruction Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zifencei.html">"Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicsr.html">"Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="counters.html">"Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintntl.html">"Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zihintpause.html">"Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zimop.html">"Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zicond.html">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="m-st-ext.html">"M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="a-st-ext.html">"A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zawrs.html">"Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zacas.html">"Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zabha.html">"Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rvwmo.html">RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ztso-st-ext.html">"Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="cmo.html">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="f-st-ext.html">"F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="d-st-ext.html">"D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="q-st-ext.html">"Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfh.html">"Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="bfloat16.html">"BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfa.html">"Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zfinx.html">"Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="v-st-ext.html">"V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="scalar-crypto.html">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-crypto.html">Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="unpriv-cfi.html">Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="naming.html">ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-eplan.html">Appendix A: RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="mm-formal.html">Appendix B: Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="vector-examples.html">Appendix C: Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="calling-convention.html">Appendix D: Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-index.html">Privileged Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-csrs.html">Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/machine.html">Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smstateen.html">"Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/indirect-csr.html">"Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smepmp.html">"Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcntrpmf.html">"Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/rnmi.html">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smcdeleg.html">"Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smdbltrp.html">"Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/smctr.html">"Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/supervisor.html">Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sstc.html">"Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/sscofpmf.html">"Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/hypervisor.html">"H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-cfi.html">Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/ssdbltrp.html">"Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/zpm.html">Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-insns.html">RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../priv/priv-history.html">History</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Bibliography</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../biblio/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""Zc*" Extension for Code Size Reduction, Version 1.0.0"
+      data-levels="2"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-isa-manual" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">ISA Specifications</a></li>
+      <li>Volume I: RISC-V Unprivileged ISA Specification</li>
+      <li><a href="zc.html">"Zc*" Extension for Code Size Reduction, Version 1.0.0</a></li>
+    </ul>
+  </nav>
+</div><h1 id="page-title" class="page">"Zc*" Extension for Code Size Reduction, Version 1.0.0</h1>
+<div class="sect1">
+<h2 id="zc-overview"><a class="anchor" href="#zc-overview"></a>Zc* Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Zc* is a group of extensions that define subsets of the existing C extension (Zca, Zcd, Zcf) and new extensions which only contain 16-bit encodings.</p>
+</div>
+<div class="paragraph">
+<p>Zcm* all reuse the encodings for <em>c.fld</em>, <em>c.fsd</em>, <em>c.fldsp</em>, <em>c.fsdsp</em>.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Zc* extension overview</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1111%;">
+<col style="width: 11.1112%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Instruction</th>
+<th class="tableblock halign-left valign-top">Zca</th>
+<th class="tableblock halign-left valign-top">Zcf</th>
+<th class="tableblock halign-left valign-top">Zcd</th>
+<th class="tableblock halign-left valign-top">Zcb</th>
+<th class="tableblock halign-left valign-top">Zcmp</th>
+<th class="tableblock halign-left valign-top">Zcmt</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>The Zca extension is added as way to refer to instructions in the C extension that do not include the floating-point loads and stores</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">C excl. c.f*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>The Zcf extension is added as a way to refer to compressed single-precision floating-point load/stores</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.flw</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rv32</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.flwsp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rv32</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fsw</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rv32</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fswsp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">rv32</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>The Zcd extension is added as a way to refer to compressed double-precision floating-point load/stores</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fld</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fldsp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fsd</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.fsdsp</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>Simple operations for use on all architectures</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lbu</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lh</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lhu</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sb</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sh</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.b</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sext.b</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.h</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sext.h</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.w</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.mul</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.not</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>PUSH/POP and double move which overlap with <em>c.fsdsp</em>. Complex operations intended for embedded CPUs</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.push</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.pop</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.popret</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.popretz</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.mva01s</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.mvsa01</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock"><strong>Table jump which overlaps with <em>c.fsdsp</em>. Complex operations intended for embedded CPUs</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.jt</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.jalt</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yes</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="C"><a class="anchor" href="#C"></a>C</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The C extension is the superset of the following extensions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Zca</p>
+</li>
+<li>
+<p>Zcf if F is specified (RV32 only)</p>
+</li>
+<li>
+<p>Zcd if D is specified</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>As C defines the same instructions as Zca, Zcf and Zcd, the rule is that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>C always implies Zca</p>
+</li>
+<li>
+<p>C+F implies Zcf (RV32 only)</p>
+</li>
+<li>
+<p>C+D implies Zcd</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zce"><a class="anchor" href="#zce"></a>Zce</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Zce extension is intended to be used for microcontrollers, and includes all relevant Zc extensions.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Specifying Zce on RV32 without F includes Zca, Zcb, Zcmp, Zcmt</p>
+</li>
+<li>
+<p>Specifying Zce on RV32 with F includes Zca, Zcb, Zcmp, Zcmt <em>and</em> Zcf</p>
+</li>
+<li>
+<p>Specifying Zce on RV64 always includes Zca, Zcb, Zcmp, Zcmt</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Zcf doesn&#8217;t exist for RV64</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Therefore common ISA strings can be updated as follows to include the relevant Zc extensions, for example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RV32IMC becomes RV32IM_Zce</p>
+</li>
+<li>
+<p>RV32IMCF becomes RV32IMF_Zce</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="misaC"><a class="anchor" href="#misaC"></a>MISA.C</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>MISA.C is set if the following extensions are selected:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Zca and not F</p>
+</li>
+<li>
+<p>Zca, Zcf and F (but not D) is specified (RV32 only)</p>
+</li>
+<li>
+<p>Zca, Zcf and Zcd if D is specified (RV32 only)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>this configuration excludes Zcmp, Zcmt</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Zca, Zcd if D is specified (RV64 only)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>this configuration excludes Zcmp, Zcmt</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zca"><a class="anchor" href="#zca"></a>Zca</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Zca extension is added as way to refer to instructions in the C extension that do not include the floating-point loads and stores.</p>
+</div>
+<div class="paragraph">
+<p>Therefore it <em>excluded</em> all 16-bit floating point loads and stores: <em>c.flw</em>, <em>c.flwsp</em>, <em>c.fsw</em>, <em>c.fswsp</em>, <em>c.fld</em>, <em>c.fldsp</em>, <em>c.fsd</em>, <em>c.fsdsp</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>the C extension only includes F/D instructions when D and F are also specified</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zcf-rv32-only"><a class="anchor" href="#zcf-rv32-only"></a>Zcf (RV32 only)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Zcf is the existing set of compressed single precision floating point loads and stores: <em>c.flw</em>, <em>c.flwsp</em>, <em>c.fsw</em>, <em>c.fswsp</em>.</p>
+</div>
+<div class="paragraph">
+<p>Zcf is only relevant to RV32, it cannot be specified for RV64.</p>
+</div>
+<div class="paragraph">
+<p>The Zcf extension depends on the <a href="#zca">Zca</a> and F extensions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zcd"><a class="anchor" href="#zcd"></a>Zcd</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Zcd is the existing set of compressed double precision floating point loads and stores: <em>c.fld</em>, <em>c.fldsp</em>, <em>c.fsd</em>, <em>c.fsdsp</em>.</p>
+</div>
+<div class="paragraph">
+<p>The Zcd extension depends on the <a href="#zca">Zca</a> and D extensions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="zcb"><a class="anchor" href="#zcb"></a>Zcb</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Zcb has simple code-size saving instructions which are easy to implement on all CPUs.</p>
+</div>
+<div class="paragraph">
+<p>All encodings are currently reserved for all architectures, and have no conflicts with any existing extensions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zcb can be implemented on <em>any</em> CPU as the instructions are 16-bit versions of existing 32-bit instructions from the application class profile.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Zcb extension depends on the <a href="#zca">Zca</a> extension.</p>
+</div>
+<div class="paragraph">
+<p>As shown on the individual instruction pages, many of the instructions in Zcb depend upon another extension being implemented. For example, <em>c.mul</em> is only implemented if M or Zmmul is implemented, and <em>c.sext.b</em> is only implemented if Zbb is implemented.</p>
+</div>
+<div class="paragraph">
+<p>The <em>c.mul</em> encoding uses the CA register format along with other instructions such as <em>c.sub</em>, <em>c.xor</em> etc.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+  <em>c.sext.w</em> is a pseudoinstruction for <em>c.addiw rd, 0</em> (RV64)
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.1428%;">
+<col style="width: 7.1428%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.143%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">RV32</th>
+<th class="tableblock halign-center valign-top">RV64</th>
+<th class="tableblock halign-left valign-top">Mnemonic</th>
+<th class="tableblock halign-left valign-top">Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lbu <em>rd'</em>, uimm(<em>rs1'</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_lbu">Load unsigned byte, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lhu <em>rd'</em>, uimm(<em>rs1'</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_lhu">Load unsigned halfword, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lh <em>rd'</em>, uimm(<em>rs1'</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_lh">Load signed halfword, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sb <em>rs2'</em>, uimm(<em>rs1'</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_sb">Store byte, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sh <em>rs2'</em>, uimm(<em>rs1'</em>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_sh">Store halfword, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.b <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_zext_b">Zero extend byte, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sext.b <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_sext_b">Sign extend byte, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.h <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_zext_h">Zero extend halfword, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sext.h <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_sext_h">Sign extend halfword, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.zext.w <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_zext_w">Zero extend word, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.not <em>rsd'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_not">Bitwise not, 16-bit encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.mul <em>rsd'</em>, <em>rs2'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-c_mul">Multiply, 16-bit encoding</a></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Zcmp"><a class="anchor" href="#Zcmp"></a>Zcmp</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The Zcmp extension is a set of instructions which may be executed as a series of existing 32-bit RISC-V instructions.</p>
+</div>
+<div class="paragraph">
+<p>This extension reuses some encodings from <em>c.fsdsp</em>.  Therefore it is <em>incompatible</em> with <a href="#zcd">Zcd</a>,
+ which is included when C and D extensions are both present.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zcmp is primarily targeted at embedded class CPUs due to implementation complexity. Additionally, it is not compatible with architecture class profiles.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Zcmp extension depends on the <a href="#zca">Zca</a> extension.</p>
+</div>
+<div class="paragraph">
+<p>The PUSH/POP assembly syntax uses several variables, the meaning of which are:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>reg_list</em> is a list containing 1 to 13 registers (ra and 0 to 12 s registers)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>valid values: {ra}, \{ra, s0}, \{ra, s0-s1}, \{ra, s0-s2}, &#8230;&#8203;, \{ra, s0-s8}, \{ra, s0-s9}, \{ra, s0-s11}</p>
+</li>
+<li>
+<p>note that \{ra, s0-s10} is <em>not</em> valid, giving 12 lists not 13 for better encoding</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>stack_adj</em> is the total size of the stack frame.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>valid values vary with register list length and the specific encoding, see the instruction pages for details.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.1428%;">
+<col style="width: 7.1428%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.143%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">RV32</th>
+<th class="tableblock halign-center valign-top">RV64</th>
+<th class="tableblock halign-left valign-top">Mnemonic</th>
+<th class="tableblock halign-left valign-top">Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.push <em>{reg_list}, -stack_adj</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_push">cm.push</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.pop <em>{reg_list}, stack_adj</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_pop">cm.pop</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.popret <em>{reg_list}, stack_adj</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_popret">cm.popret</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.popretz <em>{reg_list}, stack_adj</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_popretz">cm.popretz</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.mva01s <em>rs1', rs2'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_mva01s">Move two s0-s7 registers into a0-a1</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.mvsa01 <em>r1s', r2s'</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_mvsa01">Move a0-a1 into two different s0-s7 registers</a></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Zcmt"><a class="anchor" href="#Zcmt"></a>Zcmt</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Zcmt adds the table jump instructions and also adds the jvt CSR. The jvt CSR requires a
+state enable if Smstateen is implemented. See <a href="#csrs-jvt">jvt CSR, table jump base vector and control register</a> for details.</p>
+</div>
+<div class="paragraph">
+<p>This extension reuses some encodings from <em>c.fsdsp</em>.  Therefore it is <em>incompatible</em> with <a href="#zcd">Zcd</a>,
+ which is included when C and D extensions are both present.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zcmt is primarily targeted at embedded class CPUs due to implementation complexity. Additionally, it is not compatible with RVA profiles.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The Zcmt extension depends on the <a href="#zca">Zca</a> and Zicsr extensions.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 7.1428%;">
+<col style="width: 7.1428%;">
+<col style="width: 28.5714%;">
+<col style="width: 57.143%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">RV32</th>
+<th class="tableblock halign-center valign-top">RV64</th>
+<th class="tableblock halign-left valign-top">Mnemonic</th>
+<th class="tableblock halign-left valign-top">Instruction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.jt <em>index</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_jt">Jump via table</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.jalt <em>index</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#insns-cm_jalt">Jump and link via table</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Zc_formats"><a class="anchor" href="#Zc_formats"></a>Zc instruction formats</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Several instructions in this specification use the following new instruction formats.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 11.7647%;">
+<col style="width: 17.647%;">
+<col style="width: 11.7647%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8823%;">
+<col style="width: 5.8829%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Format</th>
+<th class="tableblock halign-left valign-top">instructions</th>
+<th class="tableblock halign-left valign-top">15:10</th>
+<th class="tableblock halign-left valign-top">9</th>
+<th class="tableblock halign-left valign-top">8</th>
+<th class="tableblock halign-left valign-top">7</th>
+<th class="tableblock halign-left valign-top">6</th>
+<th class="tableblock halign-left valign-top">5</th>
+<th class="tableblock halign-left valign-top">4</th>
+<th class="tableblock halign-left valign-top">3</th>
+<th class="tableblock halign-left valign-top">2</th>
+<th class="tableblock halign-left valign-top">1</th>
+<th class="tableblock halign-left valign-top">0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CLB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lbu</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs1'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">uimm</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rd'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sb</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs1'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">uimm</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs2'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CLH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.lhu, c.lh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs1'</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uimm</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rd'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.sh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs1'</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uimm</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rs2'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">c.[sz]ext.*, c.not</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">rd'/rs1'</p></td>
+<td class="tableblock halign-left valign-top" colspan="5"><p class="tableblock">funct5</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMMV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.mvsa01 cm.mva01s</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">r1s'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">funct2</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock">r2s'</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMJT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.jt cm.jalt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="8"><p class="tableblock">index</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CMPP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cm.push*, cm.pop*</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">funct6</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">funct2</p></td>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock">urlist</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">spimm</p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock">op</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>c.mul uses the existing CA format.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="Zcb_instructions"><a class="anchor" href="#Zcb_instructions"></a>Zcb instructions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="insns-c_lbu"><a class="anchor" href="#insns-c_lbu"></a>c.lbu</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Load unsigned byte, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.lbu <em>rd'</em>, <em>uimm</em>(<em>rs1'</em>)</p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwoDHYXEkpIiK4VodWcD9ViFWh1UpcYwpepFKTHq6hjycKPUSzNzc6MNagxj1fEZUmyIzRRjJAfhkzRBuNYt1M85xBji4lid5Py8tMx0q2qwFkOz2loA-1BDeQ==" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The immediate offset is formed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+  uimm[1]    = encoding[5];
+  uimm[0]    = encoding[6];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction loads a byte from the memory address formed by adding <em>rs1'</em> to the zero extended immediate <em>uimm</em>. The resulting byte is zero extended to XLEN bits and is written to <em>rd'</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'</em> and <em>rs1'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_lhu"><a class="anchor" href="#insns-c_lhu"></a>c.lhu</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Load unsigned halfword, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.lhu <em>rd'</em>, <em>uimm</em>(<em>rs1'</em>)</p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwoDHYXEkpIiK4VodWcD9ViFWh1UpcYwpepFKTHq6hjyhnD50szc3GjDWDxKgLbhM7_YEJsFxgjdhvgkTRAecQv1cw4xhngmVic5Py8tM92qGqzF0Ky2FgAU1Eo3" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The immediate offset is formed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+  uimm[1]    = encoding[5];
+  uimm[0]    = 0;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction loads a halfword from the memory address formed by adding <em>rs1'</em> to the zero extended immediate <em>uimm</em>. The resulting halfword is zero extended to XLEN bits and is written to <em>rd'</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'</em> and <em>rs1'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_lh"><a class="anchor" href="#insns-c_lh"></a>c.lh</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Load signed halfword, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.lh <em>rd'</em>, <em>uimm</em>(<em>rs1'</em>)</p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwoDHYXEkpIiK4VodWcD9ViFWh1UpcYwpepFKTHq6hjyhnD50szc3GjDWDxKDCoM8ZlfbIjNAmOidBtUmCA84hbq5xxiDPFMrE5yfl5aZrpVNViLoVltLQAVWUo4" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The immediate offset is formed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+  uimm[1]    = encoding[5];
+  uimm[0]    = 0;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction loads a halfword from the memory address formed by adding <em>rs1'</em> to the zero extended immediate <em>uimm</em>. The resulting halfword is sign extended to XLEN bits and is written to <em>rd'</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'</em> and <em>rs1'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_sb"><a class="anchor" href="#insns-c_sb"></a>c.sb</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Store byte, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.sb <em>rs2'</em>, <em>uimm</em>(<em>rs1'</em>)</p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwoDHYXEkpIiK4VodWcD9ViFWh1UpcYwpepFxUYx6uoYCuBmqZdm5uZGG9QYxqrjNcUQmynGCBcZ4ZM0QTjXLdTPOcQY4uRYneT8vLTMdKtqsBZDs9paADxFQ7w=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The immediate offset is formed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+  uimm[1]    = encoding[5];
+  uimm[0]    = encoding[6];</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction stores the least significant byte of <em>rs2'</em> to the memory address formed by adding <em>rs1'</em> to the zero extended immediate <em>uimm</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rs1'</em> and <em>rs2'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_sh"><a class="anchor" href="#insns-c_sh"></a>c.sh</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Store halfword, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.sh <em>rs2'</em>, <em>uimm</em>(<em>rs1'</em>)</p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwoDHYXEkpIiK4VodWcD9ViFWh1UpcYwpepFxUYx6uoYCgzhCkozc3OjDWPxKTFQx2uBITYLjBGONcYnaYLwiVuon3OIMcQ3sTrJ-XlpmelW1WAthma1tQAteUog" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>The immediate offset is formed as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+  uimm[1]    = encoding[5];
+  uimm[0]    = 0;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction stores the least significant halfword of <em>rs2'</em> to the memory address formed by adding <em>rs1'</em> to the zero extended immediate <em>uimm</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rs1'</em> and <em>rs2'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+mem[X(rs1c)+EXTZ(uimm)][15..0] = X(rs2c)</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_zext_b"><a class="anchor" href="#insns-c_zext_b"></a>c.zext.b</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Zero extend byte, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.zext.b <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYIpQZISvWiXCNC9JywaEAy2xihwS3UzznECJ_56kUpMer6RcWGMerqCH3BQc4uwSH43WWOT9IEzQ3GELNidZLz89Iy062qwVoMzWprAYDkUWE=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes a single source/destination operand.
+It zero-extends the least-significant byte of the operand to XLEN bits by inserting zeros into all of
+the bits more significant than 7.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">andi rd'/rs1', rd'/rs1', 0xff</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[7..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_sext_b"><a class="anchor" href="#insns-c_sext_b"></a>c.sext.b</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Sign extend byte, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.sext.b <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcbYleoFu0aE6Dlh0YBktjFCg1uon3OIET7z1YtSYtT1i4oNY9TVEfqCg5xdgkPwu8scn6QJmhuMIWbF6iTn56VlpltVg7UYmtXWAgB8BVFb" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes a single source/destination operand.
+It sign-extends the least-significant byte in the operand to XLEN bits by copying the most-significant bit
+in the byte (i.e., bit 7) to all of the more-significant bits.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>Zbb is also required.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[7..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_zext_h"><a class="anchor" href="#insns-c_zext_h"></a>c.zext.h</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Zero extend halfword, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.zext.h <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYIpUZISvWiXCNC9DywaEAy2xihwS3UzznECJ_56kUpMer6RcWGMerqCH3BQc4uwSH43WWOT9IEzQ3GELNidZLz89Iy062qwVoMzWprAYdwUWk=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes a single source/destination operand.
+It zero-extends the least-significant halfword of the operand to XLEN bits by inserting zeros into all of
+the bits more significant than 15.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>Zbb is also required.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[15..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_sext_h"><a class="anchor" href="#insns-c_sext_h"></a>c.sext.h</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Sign extend halfword, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.sext.h <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYIpcZISvWCXSNC9DywaDDCqsEt1M85xAif-epFKTHq-kXFhjHq6gh9wUHOLsEh-N1ljk_SBM0NxhCzYnWS8_PSMtOtqsFaDM1qawGCkVFj" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes a single source/destination operand.
+It sign-extends the least-significant halfword in the operand to XLEN bits by copying the most-significant bit
+in the halfword (i.e., bit 15) to all of the more-significant bits.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>Zbb is also required.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[15..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_zext_w"><a class="anchor" href="#insns-c_zext_w"></a>c.zext.w</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Zero extend word, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.zext.w <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYIpSZISvWiXCNC9MKxaEAy2xihwS3UzznECJ_56kUpMer6RcWGMerqCH3BQc4uwSH43WVOpKPBbjCGmBWrk5yfl5aZblUN1mJoVlsLAJUxUXo=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes a single source/destination operand.
+It zero-extends the least-significant word of the operand to XLEN bits by inserting zeros into all of
+the bits more significant than 31.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>Zba is also required.</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">add.uw rd'/rs1', rd'/rs1', zero</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[31..0]);</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_not"><a class="anchor" href="#insns-c_not"></a>c.not</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Bitwise not, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.not <em>rd'/rs1'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYIpaZISvX8_EOwqEYy2Bih2i3UzznECJ_h6kUpMer6RcWGMerqCH3BQc4uwSH4HWWOT9IEzQ3GELNidZLz89Iy062qwVoMzWprAZjvUJw=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction takes the one&#8217;s complement of <em>rd'/rs1'</em> and writes the result to the same register.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>rd'/rs1' is from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">xori rd'/rs1', rd'/rs1', -1</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = X(rsdc) XOR -1;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-c_mul"><a class="anchor" href="#insns-c_mul"></a>c.mul</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Multiply, 16-bit encoding</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>c.mul <em>rsd'</em>, <em>rs2'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwpDHYXEkpIiK4VodWdD9ViFWh1UpcYwpepFxUYx6uoI5cFBzkZADRg6kAw3Qqh2C_VzDjHCb0FKjLp-UbEhui0uwSH49BlUmOOTNEFzgzHErFid5Py8tMx0q2qwFkOz2loAsYpRfg==" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction multiplies XLEN bits of the source operands from <em>rsd'</em> and <em>rs2'</em> and writes the lowest XLEN bits of the result to <em>rsd'</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rd'/rs1'</em> and <em>rs2'</em> are from the standard 8-register set x8-x15.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>M or Zmmul must be configured.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>, and for <em>rs2'</em> is called <em>rs2c</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let result_wide = to_bits(2 * sizeof(xlen), signed(X(rsdc)) * signed(X(rs2c)));
+X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="insns-pushpop"><a class="anchor" href="#insns-pushpop"></a>PUSH/POP register instructions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>These instructions are collectively referred to as PUSH/POP:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="#insns-cm_push">cm.push</a></p>
+</li>
+<li>
+<p><a href="#insns-cm_pop">cm.pop</a></p>
+</li>
+<li>
+<p><a href="#insns-cm_popret">cm.popret</a></p>
+</li>
+<li>
+<p><a href="#insns-cm_popretz">cm.popretz</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The term PUSH refers to <em>cm.push</em>.</p>
+</div>
+<div class="paragraph">
+<p>The term POP refers to <em>cm.pop</em>.</p>
+</div>
+<div class="paragraph">
+<p>The term POPRET refers to <em>cm.popret and cm.popretz</em>.</p>
+</div>
+<div class="paragraph">
+<p>Common details for these instructions are in this section.</p>
+</div>
+<div class="sect2">
+<h3 id="pushpop-functional-overview"><a class="anchor" href="#pushpop-functional-overview"></a>PUSH/POP functional overview</h3>
+<div class="paragraph">
+<p>PUSH, POP, POPRET are used to reduce the size of function prologues and epilogues.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>The PUSH instruction</p>
+<div class="ulist">
+<ul>
+<li>
+<p>adjusts the stack pointer to create the stack frame</p>
+</li>
+<li>
+<p>pushes (stores) the registers specified in the register list to the stack frame</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The POP instruction</p>
+<div class="ulist">
+<ul>
+<li>
+<p>pops (loads) the registers in the register list from the stack frame</p>
+</li>
+<li>
+<p>adjusts the stack pointer to destroy the stack frame</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The POPRET instructions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>pop (load) the registers in the register list from the stack frame</p>
+</li>
+<li>
+<p><em>cm.popretz</em> also moves zero into <em>a0</em> as the return value</p>
+</li>
+<li>
+<p>adjust the stack pointer  to destroy the stack frame</p>
+</li>
+<li>
+<p>execute a <em>ret</em> instruction to return from the function</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="example-usage"><a class="anchor" href="#example-usage"></a>Example usage</h3>
+<div class="paragraph">
+<p>This example gives an illustration of the use of PUSH and POPRET.</p>
+</div>
+<div class="paragraph">
+<p>The function <em>processMarkers</em> in the EMBench benchmark picojpeg in the following file on github: <a href="https://github.com/embench/embench-iot/blob/master/src/picojpeg/libpicojpeg.c">libpicojpeg.c</a></p>
+</div>
+<div class="paragraph">
+<p>The prologue and epilogue compile with GCC10 to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">   0001098a &lt;processMarkers&gt;:
+   1098a:       711d                    addi    sp,sp,-96 ;#cm.push(1)
+   1098c:       c8ca                    sw      s2,80(sp) ;#cm.push(2)
+   1098e:       c6ce                    sw      s3,76(sp) ;#cm.push(3)
+   10990:       c4d2                    sw      s4,72(sp) ;#cm.push(4)
+   10992:       ce86                    sw      ra,92(sp) ;#cm.push(5)
+   10994:       cca2                    sw      s0,88(sp) ;#cm.push(6)
+   10996:       caa6                    sw      s1,84(sp) ;#cm.push(7)
+   10998:       c2d6                    sw      s5,68(sp) ;#cm.push(8)
+   1099a:       c0da                    sw      s6,64(sp) ;#cm.push(9)
+   1099c:       de5e                    sw      s7,60(sp) ;#cm.push(10)
+   1099e:       dc62                    sw      s8,56(sp) ;#cm.push(11)
+   109a0:       da66                    sw      s9,52(sp) ;#cm.push(12)
+   109a2:       d86a                    sw      s10,48(sp);#cm.push(13)
+   109a4:       d66e                    sw      s11,44(sp);#cm.push(14)
+...
+   109f4:       4501                    li      a0,0      ;#cm.popretz(1)
+   109f6:       40f6                    lw      ra,92(sp) ;#cm.popretz(2)
+   109f8:       4466                    lw      s0,88(sp) ;#cm.popretz(3)
+   109fa:       44d6                    lw      s1,84(sp) ;#cm.popretz(4)
+   109fc:       4946                    lw      s2,80(sp) ;#cm.popretz(5)
+   109fe:       49b6                    lw      s3,76(sp) ;#cm.popretz(6)
+   10a00:       4a26                    lw      s4,72(sp) ;#cm.popretz(7)
+   10a02:       4a96                    lw      s5,68(sp) ;#cm.popretz(8)
+   10a04:       4b06                    lw      s6,64(sp) ;#cm.popretz(9)
+   10a06:       5bf2                    lw      s7,60(sp) ;#cm.popretz(10)
+   10a08:       5c62                    lw      s8,56(sp) ;#cm.popretz(11)
+   10a0a:       5cd2                    lw      s9,52(sp) ;#cm.popretz(12)
+   10a0c:       5d42                    lw      s10,48(sp);#cm.popretz(13)
+   10a0e:       5db2                    lw      s11,44(sp);#cm.popretz(14)
+   10a10:       6125                    addi    sp,sp,96  ;#cm.popretz(15)
+   10a12:       8082                    ret               ;#cm.popretz(16)</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>with the GCC option <em>-msave-restore</em> the output is the following:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
+   1080e:       73a012ef                jal     t0,11f48 &lt;__riscv_save_12&gt;
+   10812:       1101                    addi    sp,sp,-32
+...
+   10862:       4501                    li      a0,0
+   10864:       6105                    addi    sp,sp,32
+   10866:       71e0106f                j       11f84 &lt;__riscv_restore_12&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>with PUSH/POPRET this reduces to</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
+   1080e:       b8fa                    cm.push    \{ra,s0-s11},-96
+...
+   10866:       bcfa                    cm.popretz \{ra,s0-s11}, 96</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The prologue / epilogue reduce from 60-bytes in the original code, to 14-bytes with <em>-msave-restore</em>,
+and to 4-bytes with PUSH and POPRET.
+As well as reducing the code-size PUSH and POPRET eliminate the branches from
+calling the millicode <em>save/restore</em> routines and so may also perform better.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The calls to <em>&lt;riscv_save_0&gt;/&lt;riscv_restore_0&gt;</em> become 64-bit when the target functions are out of the ±1MB range, increasing the prologue/epilogue size to 22-bytes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>POP is typically used in tail-calling sequences where <em>ret</em> is not used to return to <em>ra</em> after destroying the stack frame.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="pushpop-areg-list"><a class="anchor" href="#pushpop-areg-list"></a>Stack pointer adjustment handling</h4>
+<div class="paragraph">
+<p>The instructions all automatically adjust the stack pointer by enough to cover the memory required for the registers being saved or restored.
+Additionally the <em>spimm</em> field in the encoding allows the stack pointer to be adjusted in additional increments of 16-bytes. There is only a small restricted
+range available in the encoding; if the range is insufficient then a separate <em>c.addi16sp</em> can be used to increase the range.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="register-list-handling"><a class="anchor" href="#register-list-handling"></a>Register list handling</h4>
+<div class="paragraph">
+<p>There is no support for the <em>\{ra, s0-s10}</em> register list without also adding <em>s11</em>. Therefore the <em>\{ra, s0-s11}</em> register list must be used in this case.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pushpop-idempotent-memory"><a class="anchor" href="#pushpop-idempotent-memory"></a>PUSH/POP Fault handling</h3>
+<div class="paragraph">
+<p>Correct execution requires that <em>sp</em> refers to idempotent memory (also see <a href="#pushpop_non-idem-mem">Non-idempotent memory handling</a>), because the core must be able to
+handle traps detected during the sequence.
+The entire PUSH/POP sequence is re-executed after returning from the trap handler, and multiple traps are possible during the sequence.</p>
+</div>
+<div class="paragraph">
+<p>If a trap occurs during the sequence then <em>xEPC</em> is updated with the PC of the instruction, <em>xTVAL</em> (if not read-only-zero) updated with the bad address if it was an access fault and <em>xCAUSE</em> updated with the type of trap.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is implementation defined whether interrupts can also be taken during the sequence execution.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pushpop-software-view"><a class="anchor" href="#pushpop-software-view"></a>Software view of execution</h3>
+<div class="sect3">
+<h4 id="software-view-of-the-push-sequence"><a class="anchor" href="#software-view-of-the-push-sequence"></a>Software view of the PUSH sequence</h4>
+<div class="paragraph">
+<p>From a software perspective the PUSH sequence appears as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A sequence of stores writing the bytes required by the pseudocode</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The bytes may be written in any order.</p>
+</li>
+<li>
+<p>The bytes may be grouped into larger accesses.</p>
+</li>
+<li>
+<p>Any of the bytes may be written multiple times.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A stack pointer adjustment</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If an implementation allows interrupts during the sequence, and the interrupt handler uses <em>sp</em> to allocate stack memory, then any stores which were executed before the interrupt may be overwritten by the handler. This is safe because the memory is idempotent and the stores will be re-executed when execution resumes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The stack pointer adjustment must only be committed only when it is certain that the entire PUSH instruction will commit.</p>
+</div>
+<div class="paragraph">
+<p>Stores may also return imprecise faults from the bus.
+It is platform defined whether the core implementation waits for the bus responses before continuing to the final stage of the sequence,
+or handles errors responses after completing the PUSH instruction.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.push  \{ra, s0-s5}, -64</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Appears to software as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail"># any bytes from sp-1 to sp-28 may be written multiple times before
+# the instruction completes therefore these updates may be visible in
+# the interrupt/exception handler below the stack pointer
+sw  s5, -4(sp)
+sw  s4, -8(sp)
+sw  s3,-12(sp)
+sw  s2,-16(sp)
+sw  s1,-20(sp)
+sw  s0,-24(sp)
+sw  ra,-28(sp)
+
+# this must only execute once, and will only execute after all stores
+# completed without any precise faults, therefore this update is only
+# visible in the interrupt/exception handler if cm.push has completed
+addi sp, sp, -64</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="software-view-of-the-poppopret-sequence"><a class="anchor" href="#software-view-of-the-poppopret-sequence"></a>Software view of the POP/POPRET sequence</h4>
+<div class="paragraph">
+<p>From a software perspective the POP/POPRET sequence appears as:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>A sequence of loads reading the bytes required by the pseudocode.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The bytes may be loaded in any order.</p>
+</li>
+<li>
+<p>The bytes may be grouped into larger accesses.</p>
+</li>
+<li>
+<p>Any of the bytes may be loaded multiple times.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A stack pointer adjustment</p>
+</li>
+<li>
+<p>An optional <code>li a0, 0</code></p>
+</li>
+<li>
+<p>An optional <code>ret</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a trap occurs during the sequence, then any loads which were executed before the trap may update architectural state.
+The loads will be re-executed once the trap handler completes, so the values will be overwritten.
+Therefore it is permitted for an implementation to update some of the destination registers before taking a fault.</p>
+</div>
+<div class="paragraph">
+<p>The optional <code>li a0, 0</code>, stack pointer adjustment and optional <code>ret</code> must only be committed only when it is certain that the entire POP/POPRET instruction will commit.</p>
+</div>
+<div class="paragraph">
+<p>For POPRET once the stack pointer adjustment has been committed the <code>ret</code> must execute.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popretz \{ra, s0-s3}, 32;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Appears to software as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail"># any or all of these load instructions may execute multiple times
+# therefore these updates may be visible in the interrupt/exception handler
+lw   s3, 28(sp)
+lw   s2, 24(sp)
+lw   s1, 20(sp)
+lw   s0, 16(sp)
+lw   ra, 12(sp)
+
+# these must only execute once, will only execute after all loads
+# complete successfully all instructions must execute atomically
+# therefore these updates are not visible in the interrupt/exception handler
+li a0, 0
+addi sp, sp, 32
+ret</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="pushpop_non-idem-mem"><a class="anchor" href="#pushpop_non-idem-mem"></a>Non-idempotent memory handling</h3>
+<div class="paragraph">
+<p>An implementation may have a requirement to issue a PUSH/POP instruction to non-idempotent memory.</p>
+</div>
+<div class="paragraph">
+<p>If the core implementation does not support PUSH/POP to non-idempotent memories, the core may use an idempotency PMA to detect it and take a
+load (POP/POPRET) or store (PUSH) access-fault exception in order to avoid unpredictable results.</p>
+</div>
+<div class="paragraph">
+<p>Software should only use these instructions on non-idempotent memory regions when software can tolerate the required memory accesses
+being issued repeatedly in the case that they cause exceptions.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="example-rv32i-pushpop-sequences"><a class="anchor" href="#example-rv32i-pushpop-sequences"></a>Example RV32I PUSH/POP sequences</h3>
+<div class="paragraph">
+<p>The examples are included show the load/store series expansion and the stack adjustment.
+Examples of <em>cm.popret</em> and <em>cm.popretz</em> are not included, as the difference in the expanded sequence from <em>cm.pop</em> is trivial in all cases.</p>
+</div>
+<div class="sect3">
+<h4 id="cm-push-ra-s0-s2-64"><a class="anchor" href="#cm-push-ra-s0-s2-64"></a>cm.push  \{ra, s0-s2}, -64</h4>
+<div class="paragraph">
+<p>Encoding: <em>rlist</em>=7, <em>spimm</em>=3</p>
+</div>
+<div class="paragraph">
+<p>expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">sw  s2,  -4(sp);
+sw  s1,  -8(sp);
+sw  s0, -12(sp);
+sw  ra, -16(sp);
+addi sp, sp, -64;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cm-push-ra-s0-s11-112"><a class="anchor" href="#cm-push-ra-s0-s11-112"></a>cm.push \{ra, s0-s11}, -112</h4>
+<div class="paragraph">
+<p>Encoding: <em>rlist</em>=15, <em>spimm</em>=3</p>
+</div>
+<div class="paragraph">
+<p>expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">sw  s11,  -4(sp);
+sw  s10,  -8(sp);
+sw  s9,  -12(sp);
+sw  s8,  -16(sp);
+sw  s7,  -20(sp);
+sw  s6,  -24(sp);
+sw  s5,  -28(sp);
+sw  s4,  -32(sp);
+sw  s3,  -36(sp);
+sw  s2,  -40(sp);
+sw  s1,  -44(sp);
+sw  s0,  -48(sp);
+sw  ra,  -52(sp);
+addi sp, sp, -112;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="cm-pop-ra-16"><a class="anchor" href="#cm-pop-ra-16"></a>cm.pop   {ra}, 16</h4>
+<div class="paragraph">
+<p>Encoding: <em>rlist</em>=4, <em>spimm</em>=0</p>
+</div>
+<div class="paragraph">
+<p>expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   ra, 12(sp);
+addi sp, sp, 16;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cm-pop-ra-s0-s3-48"><a class="anchor" href="#cm-pop-ra-s0-s3-48"></a>cm.pop \{ra, s0-s3}, 48</h4>
+<div class="paragraph">
+<p>Encoding: <em>rlist</em>=8, <em>spimm</em>=1</p>
+</div>
+<div class="paragraph">
+<p>expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   s3, 44(sp);
+lw   s2, 40(sp);
+lw   s1, 36(sp);
+lw   s0, 32(sp);
+lw   ra, 28(sp);
+addi sp, sp, 48;</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="cm-pop-ra-s0-s4-64"><a class="anchor" href="#cm-pop-ra-s0-s4-64"></a>cm.pop \{ra, s0-s4}, 64</h4>
+<div class="paragraph">
+<p>Encoding: <em>rlist</em>=9, <em>spimm</em>=2</p>
+</div>
+<div class="paragraph">
+<p>expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   s4, 60(sp);
+lw   s3, 56(sp);
+lw   s2, 52(sp);
+lw   s1, 48(sp);
+lw   s0, 44(sp);
+lw   ra, 40(sp);
+addi sp, sp, 64;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_push"><a class="anchor" href="#insns-cm_push"></a>cm.push</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Create stack frame: store ra and 0 to 12 saved registers to the stack frame, optionally allocate additional stack space.</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.push <em>{reg_list}, -stack_adj</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVwqFcvLsjMzVXXgavHVGsCV1uUk1lcgletKcIdhhY6yO7AVGuMUGuK5ma3UD_nEGOIu2N1kvPz0jLTrarB-gzNamsB5ItGOA==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rlist</em> values 0 to 3 are reserved for a future EABI variant called <em>cm.push.e</em></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.push \{reg_list},  -stack_adj
+cm.push {xreg_list}, -stack_adj</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variables used in the assembly syntax are defined below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  case  7: \{reg_list="ra, s0-s2";  xreg_list="x1, x8-x9, x18";}
+  case  8: \{reg_list="ra, s0-s3";  xreg_list="x1, x8-x9, x18-x19";}
+  case  9: \{reg_list="ra, s0-s4";  xreg_list="x1, x8-x9, x18-x20";}
+  case 10: \{reg_list="ra, s0-s5";  xreg_list="x1, x8-x9, x18-x21";}
+  case 11: \{reg_list="ra, s0-s6";  xreg_list="x1, x8-x9, x18-x22";}
+  case 12: \{reg_list="ra, s0-s7";  xreg_list="x1, x8-x9, x18-x23";}
+  case 13: \{reg_list="ra, s0-s8";  xreg_list="x1, x8-x9, x18-x24";}
+  case 14: \{reg_list="ra, s0-s9";  xreg_list="x1, x8-x9, x18-x25";}
+  //note - to include s10, s11 must also be included
+  case 15: \{reg_list="ra, s0-s11"; xreg_list="x1, x8-x9, x18-x27";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+stack_adj_base = 16;
+Valid values:
+stack_adj      = [16|32|48|64];</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+
+switch (rlist) {
+  case  4.. 7: stack_adj_base = 16;
+  case  8..11: stack_adj_base = 32;
+  case 12..14: stack_adj_base = 48;
+  case     15: stack_adj_base = 64;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 7: stack_adj = [16|32|48| 64];
+  case  8..11: stack_adj = [32|48|64| 80];
+  case 12..14: stack_adj = [48|64|80| 96];
+  case     15: stack_adj = [64|80|96|112];
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+
+switch (rlist) {
+  case  4.. 5: stack_adj_base =  16;
+  case  6.. 7: stack_adj_base =  32;
+  case  8.. 9: stack_adj_base =  48;
+  case 10..11: stack_adj_base =  64;
+  case 12..13: stack_adj_base =  80;
+  case     14: stack_adj_base =  96;
+  case     15: stack_adj_base = 112;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 5: stack_adj = [ 16| 32| 48| 64];
+  case  6.. 7: stack_adj = [ 32| 48| 64| 80];
+  case  8.. 9: stack_adj = [ 48| 64| 80| 96];
+  case 10..11: stack_adj = [ 64| 80| 96|112];
+  case 12..13: stack_adj = [ 80| 96|112|128];
+  case     14: stack_adj = [ 96|112|128|144];
+  case     15: stack_adj = [112|128|144|160];
+}</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction pushes (stores) the registers in <em>reg_list</em> to the memory below the stack pointer,
+and then creates the stack frame by decrementing the stack pointer by <em>stack_adj</em>,
+including any additional stack space requested by the value of <em>spimm</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All ABI register mappings are for the UABI. An EABI version is planned once the EABI is frozen.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-pushpop">PUSH/POP Register Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Stack Adjustment Calculation:</p>
+</div>
+<div class="paragraph">
+<p><em>stack_adj_base</em> is the minimum number of bytes, in multiples of 16-byte address increments, required to cover the registers in the list.</p>
+</div>
+<div class="paragraph">
+<p><em>spimm</em> is the number of additional 16-byte address increments allocated for the stack frame.</p>
+</div>
+<div class="paragraph">
+<p>The total stack adjustment represents the total size of the stack frame, which is <em>stack_adj_base</em> added to <em>spimm</em> scaled by 16,
+as defined above.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="paragraph">
+<p>The first section of pseudocode may be executed multiple times before the instruction successfully completes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+if (XLEN==32) bytes=4; else bytes=8;
+
+addr=sp-bytes;
+for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
+  //if register i is in xreg_list
+  if (xreg_list[i]) {
+    switch(bytes) {
+      4:  asm("sw x[i], 0(addr)");
+      8:  asm("sd x[i], 0(addr)");
+    }
+    addr-=bytes;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section of pseudocode executes atomically, and only executes if the section above completes without any exceptions or interrupts.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+sp-=stack_adj;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_pop"><a class="anchor" href="#insns-cm_pop"></a>cm.pop</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Destroy stack frame: load ra and 0 to 12 saved registers from the stack frame, deallocate the stack frame.</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.pop  <em>{reg_list}, stack_adj</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVwqFcvLsjMzVXXgavHVGsCV1uUk1lcgletKcIdhok6yO7AVGuMUGuK5ma3UD_nEGOIu2N1kvPz0jLTrarB-gzNamsB8vVGYQ==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rlist</em> values 0 to 3 are reserved for a future EABI variant called <em>cm.pop.e</em></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.pop \{reg_list},  stack_adj
+cm.pop {xreg_list}, stack_adj</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variables used in the assembly syntax are defined below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  case  7: \{reg_list="ra, s0-s2";  xreg_list="x1, x8-x9, x18";}
+  case  8: \{reg_list="ra, s0-s3";  xreg_list="x1, x8-x9, x18-x19";}
+  case  9: \{reg_list="ra, s0-s4";  xreg_list="x1, x8-x9, x18-x20";}
+  case 10: \{reg_list="ra, s0-s5";  xreg_list="x1, x8-x9, x18-x21";}
+  case 11: \{reg_list="ra, s0-s6";  xreg_list="x1, x8-x9, x18-x22";}
+  case 12: \{reg_list="ra, s0-s7";  xreg_list="x1, x8-x9, x18-x23";}
+  case 13: \{reg_list="ra, s0-s8";  xreg_list="x1, x8-x9, x18-x24";}
+  case 14: \{reg_list="ra, s0-s9";  xreg_list="x1, x8-x9, x18-x25";}
+  //note - to include s10, s11 must also be included
+  case 15: \{reg_list="ra, s0-s11"; xreg_list="x1, x8-x9, x18-x27";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+stack_adj_base = 16;
+Valid values:
+stack_adj      = [16|32|48|64];</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+
+switch (rlist) {
+  case  4.. 7: stack_adj_base = 16;
+  case  8..11: stack_adj_base = 32;
+  case 12..14: stack_adj_base = 48;
+  case     15: stack_adj_base = 64;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 7: stack_adj = [16|32|48| 64];
+  case  8..11: stack_adj = [32|48|64| 80];
+  case 12..14: stack_adj = [48|64|80| 96];
+  case     15: stack_adj = [64|80|96|112];
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+
+switch (rlist) {
+  case  4.. 5: stack_adj_base =  16;
+  case  6.. 7: stack_adj_base =  32;
+  case  8.. 9: stack_adj_base =  48;
+  case 10..11: stack_adj_base =  64;
+  case 12..13: stack_adj_base =  80;
+  case     14: stack_adj_base =  96;
+  case     15: stack_adj_base = 112;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 5: stack_adj = [ 16| 32| 48| 64];
+  case  6.. 7: stack_adj = [ 32| 48| 64| 80];
+  case  8.. 9: stack_adj = [ 48| 64| 80| 96];
+  case 10..11: stack_adj = [ 64| 80| 96|112];
+  case 12..13: stack_adj = [ 80| 96|112|128];
+  case     14: stack_adj = [ 96|112|128|144];
+  case     15: stack_adj = [112|128|144|160];
+}</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction pops (loads) the registers in <em>reg_list</em> from stack memory,
+and then adjusts the stack pointer by <em>stack_adj</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All ABI register mappings are for the UABI. An EABI version is planned once the EABI is frozen.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-pushpop">PUSH/POP Register Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Stack Adjustment Calculation:</p>
+</div>
+<div class="paragraph">
+<p><em>stack_adj_base</em> is the minimum number of bytes, in multiples of 16-byte address increments, required to cover the registers in the list.</p>
+</div>
+<div class="paragraph">
+<p><em>spimm</em> is the number of additional 16-byte address increments allocated for the stack frame.</p>
+</div>
+<div class="paragraph">
+<p>The total stack adjustment represents the total size of the stack frame, which is <em>stack_adj_base</em> added to <em>spimm</em> scaled by 16,
+as defined above.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="paragraph">
+<p>The first section of pseudocode may be executed multiple times before the instruction successfully completes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+if (XLEN==32) bytes=4; else bytes=8;
+
+addr=sp+stack_adj-bytes;
+for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
+  //if register i is in xreg_list
+  if (xreg_list[i]) {
+    switch(bytes) {
+      4:  asm("lw x[i], 0(addr)");
+      8:  asm("ld x[i], 0(addr)");
+    }
+    addr-=bytes;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section of pseudocode executes atomically, and only executes if the section above completes without any exceptions or interrupts.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+sp+=stack_adj;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_popretz"><a class="anchor" href="#insns-cm_popretz"></a>cm.popretz</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Destroy stack frame: load ra and 0 to 12 saved registers from the stack frame, deallocate the stack frame, move zero into a0, return to ra.</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.popretz <em>{reg_list}, stack_adj</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogExkklpQUWSlEqzsbqccq1Org0KZeXJCZmxsTbWplEhOrrgPXhqnFBK6lKCezuERdB90mTC2mCMcZJutgcRymFmOEFlPs_nEL9XMOMYb4KVYnOT8vLTPdqhqs3dCsthYAF0JL9g==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rlist</em> values 0 to 3 are reserved for a future EABI variant called <em>cm.popretz.e</em></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popretz \{reg_list},  stack_adj
+cm.popretz {xreg_list}, stack_adj</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  case  7: \{reg_list="ra, s0-s2";  xreg_list="x1, x8-x9, x18";}
+  case  8: \{reg_list="ra, s0-s3";  xreg_list="x1, x8-x9, x18-x19";}
+  case  9: \{reg_list="ra, s0-s4";  xreg_list="x1, x8-x9, x18-x20";}
+  case 10: \{reg_list="ra, s0-s5";  xreg_list="x1, x8-x9, x18-x21";}
+  case 11: \{reg_list="ra, s0-s6";  xreg_list="x1, x8-x9, x18-x22";}
+  case 12: \{reg_list="ra, s0-s7";  xreg_list="x1, x8-x9, x18-x23";}
+  case 13: \{reg_list="ra, s0-s8";  xreg_list="x1, x8-x9, x18-x24";}
+  case 14: \{reg_list="ra, s0-s9";  xreg_list="x1, x8-x9, x18-x25";}
+  //note - to include s10, s11 must also be included
+  case 15: \{reg_list="ra, s0-s11"; xreg_list="x1, x8-x9, x18-x27";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+stack_adj_base = 16;
+Valid values:
+stack_adj      = [16|32|48|64];</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+
+switch (rlist) {
+  case  4.. 7: stack_adj_base = 16;
+  case  8..11: stack_adj_base = 32;
+  case 12..14: stack_adj_base = 48;
+  case     15: stack_adj_base = 64;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 7: stack_adj = [16|32|48| 64];
+  case  8..11: stack_adj = [32|48|64| 80];
+  case 12..14: stack_adj = [48|64|80| 96];
+  case     15: stack_adj = [64|80|96|112];
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+
+switch (rlist) {
+  case  4.. 5: stack_adj_base =  16;
+  case  6.. 7: stack_adj_base =  32;
+  case  8.. 9: stack_adj_base =  48;
+  case 10..11: stack_adj_base =  64;
+  case 12..13: stack_adj_base =  80;
+  case     14: stack_adj_base =  96;
+  case     15: stack_adj_base = 112;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 5: stack_adj = [ 16| 32| 48| 64];
+  case  6.. 7: stack_adj = [ 32| 48| 64| 80];
+  case  8.. 9: stack_adj = [ 48| 64| 80| 96];
+  case 10..11: stack_adj = [ 64| 80| 96|112];
+  case 12..13: stack_adj = [ 80| 96|112|128];
+  case     14: stack_adj = [ 96|112|128|144];
+  case     15: stack_adj = [112|128|144|160];
+}</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction pops (loads) the registers in <em>reg_list</em> from stack memory, adjusts the stack pointer by <em>stack_adj</em>, moves zero into a0 and then returns to <em>ra</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All ABI register mappings are for the UABI. An EABI version is planned once the EABI is frozen.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-pushpop">PUSH/POP Register Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Stack Adjustment Calculation:</p>
+</div>
+<div class="paragraph">
+<p><em>stack_adj_base</em> is the minimum number of bytes, in multiples of 16-byte address increments, required to cover the registers in the list.</p>
+</div>
+<div class="paragraph">
+<p><em>spimm</em> is the number of additional 16-byte address increments allocated for the stack frame.</p>
+</div>
+<div class="paragraph">
+<p>The total stack adjustment represents the total size of the stack frame, which is <em>stack_adj_base</em> added to <em>spimm</em> scaled by 16, as defined above.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="paragraph">
+<p>The first section of pseudocode may be executed multiple times before the instruction successfully completes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+if (XLEN==32) bytes=4; else bytes=8;
+
+addr=sp+stack_adj-bytes;
+for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
+  //if register i is in xreg_list
+  if (xreg_list[i]) {
+    switch(bytes) {
+      4:  asm("lw x[i], 0(addr)");
+      8:  asm("ld x[i], 0(addr)");
+    }
+    addr-=bytes;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section of pseudocode executes atomically, and only executes if the section above completes without any exceptions or interrupts.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <em>li a0, 0</em> <strong>could</strong> be executed more than once, but is included in the atomic section for convenience.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+asm("li a0, 0");
+sp+=stack_adj;
+asm("ret");</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_popret"><a class="anchor" href="#insns-cm_popret"></a>cm.popret</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Destroy stack frame: load ra and 0 to 12 saved registers from the stack frame, deallocate the stack frame, return to ra.</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.popret <em>{reg_list}, stack_adj</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVwqFcvLsjMzVXXgavHVGsCV1uUk1lcgletKcIdhqk6yO7AVGuMUGuK5ma3UD_nEGOIu2N1kvPz0jLTrarB-gzNamsB9F1GZQ==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p><em>rlist</em> values 0 to 3 are reserved for a future EABI variant called <em>cm.popret.e</em></p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popret \{reg_list},  stack_adj
+cm.popret {xreg_list}, stack_adj</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The variables used in the assembly syntax are defined below.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+
+switch (rlist){
+  case  4: \{reg_list="ra";         xreg_list="x1";}
+  case  5: \{reg_list="ra, s0";     xreg_list="x1, x8";}
+  case  6: \{reg_list="ra, s0-s1";  xreg_list="x1, x8-x9";}
+  case  7: \{reg_list="ra, s0-s2";  xreg_list="x1, x8-x9, x18";}
+  case  8: \{reg_list="ra, s0-s3";  xreg_list="x1, x8-x9, x18-x19";}
+  case  9: \{reg_list="ra, s0-s4";  xreg_list="x1, x8-x9, x18-x20";}
+  case 10: \{reg_list="ra, s0-s5";  xreg_list="x1, x8-x9, x18-x21";}
+  case 11: \{reg_list="ra, s0-s6";  xreg_list="x1, x8-x9, x18-x22";}
+  case 12: \{reg_list="ra, s0-s7";  xreg_list="x1, x8-x9, x18-x23";}
+  case 13: \{reg_list="ra, s0-s8";  xreg_list="x1, x8-x9, x18-x24";}
+  case 14: \{reg_list="ra, s0-s9";  xreg_list="x1, x8-x9, x18-x25";}
+  //note - to include s10, s11 must also be included
+  case 15: \{reg_list="ra, s0-s11"; xreg_list="x1, x8-x9, x18-x27";}
+  default: reserved();
+}
+stack_adj      = stack_adj_base + spimm * 16;</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+
+stack_adj_base = 16;
+Valid values:
+stack_adj      = [16|32|48|64];</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+
+switch (rlist) {
+  case  4.. 7: stack_adj_base = 16;
+  case  8..11: stack_adj_base = 32;
+  case 12..14: stack_adj_base = 48;
+  case     15: stack_adj_base = 64;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 7: stack_adj = [16|32|48| 64];
+  case  8..11: stack_adj = [32|48|64| 80];
+  case 12..14: stack_adj = [48|64|80| 96];
+  case     15: stack_adj = [64|80|96|112];
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+
+switch (rlist) {
+  case  4.. 5: stack_adj_base =  16;
+  case  6.. 7: stack_adj_base =  32;
+  case  8.. 9: stack_adj_base =  48;
+  case 10..11: stack_adj_base =  64;
+  case 12..13: stack_adj_base =  80;
+  case     14: stack_adj_base =  96;
+  case     15: stack_adj_base = 112;
+}
+
+Valid values:
+switch (rlist) {
+  case  4.. 5: stack_adj = [ 16| 32| 48| 64];
+  case  6.. 7: stack_adj = [ 32| 48| 64| 80];
+  case  8.. 9: stack_adj = [ 48| 64| 80| 96];
+  case 10..11: stack_adj = [ 64| 80| 96|112];
+  case 12..13: stack_adj = [ 80| 96|112|128];
+  case     14: stack_adj = [ 96|112|128|144];
+  case     15: stack_adj = [112|128|144|160];
+}</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>This instruction pops (loads) the registers in <em>reg_list</em> from stack memory, adjusts the stack pointer by <em>stack_adj</em> and then returns to <em>ra</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>All ABI register mappings are for the UABI. An EABI version is planned once the EABI is frozen.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-pushpop">PUSH/POP Register Instructions</a>.</p>
+</div>
+<div class="paragraph">
+<p>Stack Adjustment Calculation:</p>
+</div>
+<div class="paragraph">
+<p><em>stack_adj_base</em> is the minimum number of bytes, in multiples of 16-byte address increments, required to cover the registers in the list.</p>
+</div>
+<div class="paragraph">
+<p><em>spimm</em> is the number of additional 16-byte address increments allocated for the stack frame.</p>
+</div>
+<div class="paragraph">
+<p>The total stack adjustment represents the total size of the stack frame, which is <em>stack_adj_base</em> added to <em>spimm</em> scaled by 16, as defined above.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="paragraph">
+<p>The first section of pseudocode may be executed multiple times before the instruction successfully completes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+if (XLEN==32) bytes=4; else bytes=8;
+
+addr=sp+stack_adj-bytes;
+for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
+  //if register i is in xreg_list
+  if (xreg_list[i]) {
+    switch(bytes) {
+      4:  asm("lw x[i], 0(addr)");
+      8:  asm("ld x[i], 0(addr)");
+    }
+    addr-=bytes;
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The final section of pseudocode executes atomically, and only executes if the section above completes without any exceptions or interrupts.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+sp+=stack_adj;
+asm("ret");</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_mvsa01"><a class="anchor" href="#insns-cm_mvsa01"></a>cm.mvsa01</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Move a0-a1 into two registers of s0-s7</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.mvsa01 <em>r1s'</em>, <em>r2s'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVQ1RvD1KsXGRXHqKvrwNVjqkUy2xDVbLzmGhIy1xhhrjHR5hpUmKL5zy3UzznEGOLHWJ3k_Ly0zHSrarA-Q7PaWgCJ4VAk" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For the encoding to be legal <em>r1s'</em> != <em>r2s'</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.mvsa01 r1s', r2s'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:
+This instruction moves <em>a0</em> into <em>r1s'</em> and <em>a1</em> into <em>r2s'</em>.  <em>r1s'</em> and <em>r2s'</em> must be different.
+The execution is atomic, so it is not possible to observe state where only one of <em>r1s'</em> or <em>r2s'</em> has been updated.</p>
+</div>
+<div class="paragraph">
+<p>The encoding uses <em>sreg</em> number specifiers instead of <em>xreg</em> number specifiers to save encoding space.
+The mapping between them is specified in the pseudocode below.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <em>s</em> register mapping is taken from the UABI, and may not match the currently unratified EABI. <em>cm.mvsa01.e</em> may be included in the future.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists.</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+if (RV32E &amp;&amp; (r1sc&gt;1 || r2sc&gt;1)) {
+  reserved();
+}
+xreg1 = {r1sc[2:1]&gt;0,r1sc[2:1]==0,r1sc[2:0]};
+xreg2 = {r2sc[2:1]&gt;0,r2sc[2:1]==0,r2sc[2:0]};
+X[xreg1] = X[10];
+X[xreg2] = X[11];</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_mva01s"><a class="anchor" href="#insns-cm_mva01s"></a>cm.mva01s</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Move two s0-s7 registers into a0-a1</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.mva01s <em>r1s'</em>, <em>r2s'</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVQ1RvD1KsXGRXHqKvrwNVjqkUy2xjVbLzmGhIy15gccw0qTNH85xbq5xxiDPFjrE5yfl5aZrpVNVifoVltLQCLR1Am" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.mva01s r1s', r2s'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:
+This instruction moves <em>r1s'</em> into <em>a0</em> and <em>r2s'</em> into <em>a1</em>.
+The execution is atomic, so it is not possible to observe state where only one of <em>a0</em> or <em>a1</em> have been updated.</p>
+</div>
+<div class="paragraph">
+<p>The encoding uses <em>sreg</em> number specifiers instead of <em>xreg</em> number specifiers to save encoding space.
+The mapping between them is specified in the pseudocode below.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <em>s</em> register mapping is taken from the UABI, and may not match the currently unratified EABI. <em>cm.mva01s.e</em> may be included in the future.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists.</p>
+</div>
+<div class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+if (RV32E &amp;&amp; (r1sc&gt;1 || r2sc&gt;1)) {
+  reserved();
+}
+xreg1 = {r1sc[2:1]&gt;0,r1sc[2:1]==0,r1sc[2:0]};
+xreg2 = {r2sc[2:1]&gt;0,r2sc[2:1]==0,r2sc[2:0]};
+X[10] = X[xreg1];
+X[11] = X[xreg2];</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="insns-tablejump"><a class="anchor" href="#insns-tablejump"></a>Table Jump Overview</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em>cm.jt</em> (<a href="#insns-cm_jt">Jump via table</a>) and <em>cm.jalt</em> (<a href="#insns-cm_jalt">Jump and link via table</a>) are referred to as table jump.</p>
+</div>
+<div class="paragraph">
+<p>Table jump uses a 256-entry XLEN wide table in instruction memory to contain function addresses.
+The table must be a minimum of 64-byte aligned.</p>
+</div>
+<div class="paragraph">
+<p>Table entries follow the current data endianness. This is different from normal instruction fetch which is always little-endian.</p>
+</div>
+<div class="paragraph">
+<p><em>cm.jt</em> and <em>cm.jalt</em> encodings index the table, giving access to functions within the full XLEN wide address space.</p>
+</div>
+<div class="paragraph">
+<p>This is used as a form of dictionary compression to reduce the code size of <em>jal</em> / <em>auipc+jalr</em> / <em>jr</em> / <em>auipc+jr</em> instructions.</p>
+</div>
+<div class="paragraph">
+<p>Table jump allows the linker to replace the following instruction sequences with a <em>cm.jt</em> or <em>cm.jalt</em> encoding, and an entry in the table:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>32-bit <em>j</em> calls</p>
+</li>
+<li>
+<p>32-bit <em>jal</em> ra calls</p>
+</li>
+<li>
+<p>64-bit <em>auipc+jr</em> calls to fixed locations</p>
+</li>
+<li>
+<p>64-bit <em>auipc+jalr ra</em> calls to fixed locations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The <em>auipc+jr/jalr</em> sequence is used because the offset from the PC is out of the ±1MB range.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If a return address stack is implemented, then as <em>cm.jalt</em> is equivalent to <em>jal ra</em>, it pushes to the stack.</p>
+</div>
+<div class="sect2">
+<h3 id="jvt"><a class="anchor" href="#jvt"></a>jvt</h3>
+<div class="paragraph">
+<p>The base of the table is in the jvt CSR (see <a href="#csrs-jvt">jvt CSR, table jump base vector and control register</a>), each table entry is XLEN bits.</p>
+</div>
+<div class="paragraph">
+<p>If the same function is called with and without linking then it must have two entries in the table.
+This is typically caused by the same function being called with and without tail calling.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="tablejump-fault-handling"><a class="anchor" href="#tablejump-fault-handling"></a>Table Jump Fault handling</h3>
+<div class="paragraph">
+<p>For a table jump instruction, the table entry that the instruction selects is considered an extension of the instruction itself.
+Hence, the execution of a table jump instruction involves two instruction fetches, the first to read the instruction (<em>cm.jt</em>/<em>cm.jalt</em>)
+and the second to read from the jump vector table (JVT). Both instruction fetches are <em>implicit</em> reads, and both require
+execute permission; read permission is irrelevant. It is recommended that the second fetch be ignored for hardware triggers and breakpoints.</p>
+</div>
+<div class="paragraph">
+<p>Memory writes to the jump vector table require an instruction barrier (<em>fence.i</em>) to guarantee that they are visible to the instruction fetch.</p>
+</div>
+<div class="paragraph">
+<p>Multiple contexts may have different jump vector tables. JVT may be switched between them without an instruction barrier
+if the tables have not been updated in memory since the last <em>fence.i</em>.</p>
+</div>
+<div class="paragraph">
+<p>If an exception occurs on either instruction fetch, xEPC is set to the PC of the table jump instruction,  xCAUSE is set as expected for the type of fault and xTVAL (if not set to zero) contains the fetch address which caused the fault.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="csrs-jvt"><a class="anchor" href="#csrs-jvt"></a>jvt CSR</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>Table jump base vector and control register</p>
+</div>
+<div class="paragraph">
+<p>Address:</p>
+</div>
+<div class="paragraph">
+<p>0x017</p>
+</div>
+<div class="paragraph">
+<p>Permissions:</p>
+</div>
+<div class="paragraph">
+<p>URW</p>
+</div>
+<div class="paragraph">
+<p>Format (RV32):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFMx2FvMTcVCsF9dz8lFR1HQWFxJKSIiuFaHUz9ViFWh0U1UYI1UmJxanRET6ufrqGVmaxChrhjkE-msjawXJQM2J1kvPz0jLTrarB5hgb1dYCAKdmJ7Y=" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Format (RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFMx2FvMTcVCsF9dz8lFR1HQWFxJKSIiuFaHUz9ViFWh0U1aYWcNVJicWp0RE-rn66hlZmsQoa4Y5BPprI2sFyUDNidZLz89Iy062qweaYmdTWAgCo7SfA" alt="svg">
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p>The <em>jvt</em> register is an XLEN-bit <strong>WARL</strong> read/write register that holds the jump table configuration, consisting of the jump table base address (BASE) and the jump table mode (MODE).</p>
+</div>
+<div class="paragraph">
+<p>If <a href="#Zcmt">Zcmt</a> is implemented then <em>jvt</em> must also be implemented, but can contain a read-only value. If <em>jvt</em> is writable, the set of values the register may hold can vary by implementation. The value in the BASE field must always be aligned on a 64-byte boundary.
+Note that the CSR contains only bits XLEN-1 through 6 of the address <em>base</em>. When computing jump-table accesses, the lower six bits of <em>base</em> are filled with zeroes to obtain an XLEN-bit jump-table base address <em>jvt.base</em> that is always aligned on a 64-byte boundary.</p>
+</div>
+<div class="paragraph">
+<p><em>jvt.base</em> is a virtual address, whenever virtual memory is enabled.</p>
+</div>
+<div class="paragraph">
+<p>The memory pointed to by <em>jvt.base</em> is treated as instruction memory for the purpose of executing table jump instructions, implying execute access permission.</p>
+</div>
+<table id="JVT-config-table" class="tableblock frame-all grid-all" style="width: 60%;">
+<caption class="title">Table 2. <em>jvt.mode</em> definition</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">jvt.mode</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Jump table mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">others</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>reserved for future standard use</strong></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><em>jvt.mode</em> is a <strong>WARL</strong> field, so can only be programmed to modes which are implemented. Therefore the discovery mechanism is to
+attempt to program different modes and read back the values to see which are available. Jump table mode <em>must</em> be implemented.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>in future the RISC-V Unified Discovery method will report the available modes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Architectural State:</p>
+</div>
+<div class="paragraph">
+<p><em>jvt</em> CSR adds architectural state to the system software context (such as an OS process), therefore must be saved/restored on context switches.</p>
+</div>
+<div class="paragraph">
+<p>State Enable:</p>
+</div>
+<div class="paragraph">
+<p>If the Smstateen extension is implemented, then bit 2 in <em>mstateen0</em>, <em>sstateen0</em>, and <em>hstateen0</em> is implemented.  If bit 2 of a controlling <em>stateen0</em> CSR is zero, then access to the <em>jvt</em> CSR and execution of a <em>cm.jalt</em> or <em>cm.jt</em> instruction by a lower privilege level results in an illegal-instruction trap (or, if appropriate, a virtual-instruction trap).</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_jt"><a class="anchor" href="#insns-cm_jt"></a>cm.jt</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>jump via table</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.jt <em>index</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVQ1VvA1Ktn5qWkVqjrwNVjqjVGmG2AajZetaZo7nAL9XMOMYa4JVYnOT8vLTPdqhqsz9CsthYAtQo5yw==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For this encoding to decode as <em>cm.jt</em>, <em>index&lt;32</em>, otherwise it decodes as <em>cm.jalt</em>, see <a href="#insns-cm_jalt">Jump and link via table</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If jvt.mode = 0 (Jump Table Mode) then <em>cm.jt</em> behaves as specified here. If jvt.mode is a reserved value, then <em>cm.jt</em> is also reserved. In the future other defined values of jvt.mode may change the behaviour of <em>cm.jt</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.jt index</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p><em>cm.jt</em> reads an entry from the jump vector table in memory and jumps to the address that was read.</p>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-tablejump">Table Jump Overview</a>.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div id="insns-cm_jt-SAIL" class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+# target_address is temporary internal state, it doesn't represent a real register
+# InstMemory is byte indexed
+
+switch(XLEN) {
+  32:  table_address[XLEN-1:0] = jvt.base + (index&lt;&lt;2);
+  64:  table_address[XLEN-1:0] = jvt.base + (index&lt;&lt;3);
+}
+
+//fetch from the jump table
+target_address[XLEN-1:0] = InstMemory[table_address][XLEN-1:0];
+
+j target_address[XLEN-1:0]&amp;~0x1;</code></pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-cm_jalt"><a class="anchor" href="#insns-cm_jalt"></a>cm.jalt</h3>
+<div class="paragraph">
+<p>Synopsis:</p>
+</div>
+<div class="paragraph">
+<p>jump via table with optional link</p>
+</div>
+<div class="paragraph">
+<p>Mnemonic:</p>
+</div>
+<div class="paragraph">
+<p>cm.jalt <em>index</em></p>
+</div>
+<div class="paragraph">
+<p>Encoding (RV32, RV64):</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="https://kroki.io/wavedrom/svg/eNqrLkpNt4rmUgCCaoWkzJJiKwUFIx2FvMTcVCsFgwogEwwSS0qKrBSi1Z2N1GMVanVQ1VvA1Ktn5qWkVqjrwNVjqjVGmG2AajZetaZo7nAL9XMOMYa4JVYnOT8vLTPdqhqsz9CsthYAtQo5yw==" alt="svg">
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For this encoding to decode as <em>cm.jalt</em>, <em>index&gt;=32</em>, otherwise it decodes as <em>cm.jt</em>, see <a href="#insns-cm_jt">Jump via table</a>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>If jvt.mode = 0 (Jump Table Mode) then <em>cm.jalt</em> behaves as specified here. If jvt.mode is a reserved value, then <em>cm.jalt</em> is also reserved. In the future other defined values of jvt.mode may change the behaviour of <em>cm.jalt</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Assembly Syntax:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.jalt index</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Description:</p>
+</div>
+<div class="paragraph">
+<p><em>cm.jalt</em> reads an entry from the jump vector table in memory and jumps to the address that was read, linking to <em>ra</em>.</p>
+</div>
+<div class="paragraph">
+<p>For further information see <a href="#insns-tablejump">Table Jump Overview</a>.</p>
+</div>
+<div class="paragraph">
+<p>Prerequisites:</p>
+</div>
+<div class="paragraph">
+<p>None</p>
+</div>
+<div class="paragraph">
+<p>32-bit equivalent:</p>
+</div>
+<div class="paragraph">
+<p>No direct equivalent encoding exists.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div id="insns-cm_jalt-SAIL" class="paragraph">
+<p>Operation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudocode. The SAIL hasn't been written yet.
+
+# target_address is temporary internal state, it doesn't represent a real register
+# InstMemory is byte indexed
+
+switch(XLEN) {
+  32:  table_address[XLEN-1:0] = jvt.base + (index&lt;&lt;2);
+  64:  table_address[XLEN-1:0] = jvt.base + (index&lt;&lt;3);
+}
+
+//fetch from the jump table
+target_address[XLEN-1:0] = InstMemory[table_address][XLEN-1:0];
+
+jal ra, target_address[XLEN-1:0]&amp;~0x1;</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="c-st-ext.html">"C" Extension for Compressed Instructions, Version 2.0</a></span>
+  <span class="next"><a href="b-st-ext.html">"B" Extension for Bit Manipulation, Version 1.0.0</a></span>
+</nav>
+</article>  </div>
+</main>
+<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
+    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
+        <div class="modal__container" role="dialog" aria-modal="true">
+            <main class="modal__content" id="modal-versions-content">
+              <button data-micromodal-close class="modal-versions-close">
+                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+              </button>
+                  <ul class="nav-versions">
+                      <li class="component">
+                        <div>
+                          <a class="title" href="../index.html">ISA Specifications</a>
+                        </div>                        <div class="version-item is-active">
+                          <div>
+                            <button class="version-toggle" type="button">
+                              <span></span>
+                              Published
+                            </button>
+                          </div>
+                          <ul class="versions">
+  <li class="version">
+    <a href="zc.html">
+      Latest
+    </a>
+  </li>
+  <li class="version">
+    <a href="../v20240411/unpriv/zc.html">
+      Version: 20240411
+    </a>
+  </li>
+</ul>                        </div>
+                        
+                      </li>
+                  </ul>
+            </main>
+        </div>
+    </div>
+</div>
+
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async src="../../_/js/vendor/spring-tabs.js" data-sync-storage-key="docs:preferred-tab"></script>
+  </body>
+</html>
