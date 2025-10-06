@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://docs.riscv.org/isa/priv/smepmp.html">
     <link rel="prev" href="indirect-csr.html">
     <link rel="next" href="smcntrpmf.html">
-    <meta name="generator" content="Antora 3.1.13">
+    <meta name="generator" content="Antora 3.1.14">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="936ae3d13818ba248001a966a1faceca3bd92029"> 
+    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -221,24 +221,7 @@ Library</a>
         <nav class="nav-menu">
 <div class="context">
   <span class="title">ISA Specifications</span>
-  <span class="version">Latest</span>
-  <button class="browse-version" id="browse-version">
-    <svg
-      height="24px"
-      id="Layer_1"
-      style="enable-background:new 0 0 512 512;"
-      version="1.1"
-      viewBox="0 0 512 512"
-      width="24px"
-      xml:space="preserve"
-    ><g><path
-          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
-        ></path><path
-          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
-        ></path><path
-          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
-        ></path></g></svg>
-  </button>
+  <button class="version" id="browse-version">Latest</button>
   </div><ul class="nav-list">
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
@@ -354,6 +337,9 @@ Library</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../unpriv/rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/extending.html">Extending RISC-V</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="../unpriv/naming.html">ISA Extension Naming Conventions</a>
@@ -518,15 +504,15 @@ Library</a>
         </a>
 
         <div class="dropdown-toc">
-          <a id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+          <a id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link" download>
             <span>Download PDFs</span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </a>
           <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-privileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #003262;" download>Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-privileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #003262;" download>Privileged ISA</a></li>
           </ul>
         </div>
        <script>
@@ -540,9 +526,6 @@ Library</a>
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !expanded);
       menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
     });
 
     // Close dropdown when clicking outside
@@ -573,16 +556,16 @@ Library</a>
           .dropdown-menu {
             position: absolute;
             top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background: #ffffff;
+            min-width: 100px;
             z-index: 1000;
             list-style-type: none;
           }
           .dropdown-item {
-            padding-left: 0px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
             display: block;
             color: #000000;
             text-decoration: none;
@@ -590,13 +573,10 @@ Library</a>
             user-select: none;
           }
           .dropdown-item:hover{
-            background-color: #cccccc;
+            background-color: #fdb515;
             outline: none;
           }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
+
           .chevron {
             stroke-width: 2.5;
             transition: transform 0.2s ease;

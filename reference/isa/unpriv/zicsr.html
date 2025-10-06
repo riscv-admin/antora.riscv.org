@@ -7,7 +7,7 @@
     <link rel="canonical" href="https://docs.riscv.org/isa/unpriv/zicsr.html">
     <link rel="prev" href="zifencei.html">
     <link rel="next" href="counters.html">
-    <meta name="generator" content="Antora 3.1.13">
+    <meta name="generator" content="Antora 3.1.14">
     <script>
 !function (theme, navWidth) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="936ae3d13818ba248001a966a1faceca3bd92029"> 
+    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -221,24 +221,7 @@ Library</a>
         <nav class="nav-menu">
 <div class="context">
   <span class="title">ISA Specifications</span>
-  <span class="version">Latest</span>
-  <button class="browse-version" id="browse-version">
-    <svg
-      height="24px"
-      id="Layer_1"
-      style="enable-background:new 0 0 512 512;"
-      version="1.1"
-      viewBox="0 0 512 512"
-      width="24px"
-      xml:space="preserve"
-    ><g><path
-          d="M256,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S273.7,224,256,224L256,224z"
-        ></path><path
-          d="M128.4,224c-17.7,0-32,14.3-32,32s14.3,32,32,32c17.7,0,32-14.3,32-32S146,224,128.4,224L128.4,224z"
-        ></path><path
-          d="M384,224c-17.7,0-32,14.3-32,32s14.3,32,32,32s32-14.3,32-32S401.7,224,384,224L384,224z"
-        ></path></g></svg>
-  </button>
+  <button class="version" id="browse-version">Latest</button>
   </div><ul class="nav-list">
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
@@ -354,6 +337,9 @@ Library</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="rv-32-64g.html">RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="extending.html">Extending RISC-V</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="naming.html">ISA Extension Naming Conventions</a>
@@ -518,15 +504,15 @@ Library</a>
         </a>
 
         <div class="dropdown-toc">
-          <a id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link">
+          <a id="pdfDropdownButton" aria-haspopup="true" aria-expanded="false" class="sidebar-link" download>
             <span>Download PDFs</span>
             <svg class="chevron" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
           </a>
           <ul id="pdfDropdownMenu" class="dropdown-menu" hidden>
-              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Unprivileged ISA</a></li>
-              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-privileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #000000; padding-left: 0;">Privileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-unprivileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #003262;" download>Unprivileged ISA</a></li>
+              <li style="padding-left: 0px;"><a href="https://jjscheel.github.io/antora.riscv.org/reference/isa/_attachments/riscv-privileged.pdf" class="dropdown-item" target="_blank" rel="noopener noreferrer" style="color: #003262;" download>Privileged ISA</a></li>
           </ul>
         </div>
        <script>
@@ -540,9 +526,6 @@ Library</a>
       const expanded = btn.getAttribute('aria-expanded') === 'true';
       btn.setAttribute('aria-expanded', !expanded);
       menu.hidden = expanded;
-      if (!expanded) {
-        menu.querySelector('.dropdown-item')?.focus();
-      }
     });
 
     // Close dropdown when clicking outside
@@ -573,16 +556,16 @@ Library</a>
           .dropdown-menu {
             position: absolute;
             top: 100%;
-            left: 0;
-            background: #f9f9f9;
-            border: 1px solid #000000;
-            border-radius: 4px;
-            min-width: 180px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background: #ffffff;
+            min-width: 100px;
             z-index: 1000;
             list-style-type: none;
           }
           .dropdown-item {
-            padding-left: 0px;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
             display: block;
             color: #000000;
             text-decoration: none;
@@ -590,13 +573,10 @@ Library</a>
             user-select: none;
           }
           .dropdown-item:hover{
-            background-color: #cccccc;
+            background-color: #fdb515;
             outline: none;
           }
-          .dropdown-item:focus {
-            background-color: #cccccc;
-            outline: none;
-          }
+
           .chevron {
             stroke-width: 2.5;
             transition: transform 0.2s ease;
@@ -772,7 +752,7 @@ effects regardless of <em>rd</em> and <em>rs1</em> fields.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instruction</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><em>rd</em> is <code>x0</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em>uimm</em><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="5.28ex" height="1.882ex" role="img" focusable="false" viewBox="0 -750 2333.6 832"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mo" transform="translate(777.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1833.6,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>uimm</em><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.505ex" role="img" focusable="false" viewBox="0 -583 778 665"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g></g></g></svg> </span>0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Reads CSR</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Writes
 CSR</p></td>
@@ -930,7 +910,7 @@ out-of-order by preceding instructions. (Note the distinction made
 earlier between side effects and indirect effects of CSR writes.)</p>
 </div>
 <div class="paragraph">
-<p>For the RVWMO memory consistency model (<a href="#memorymodel">[memorymodel]</a>), CSR accesses are weakly
+<p>For the RVWMO memory consistency model (<a href="rvwmo.html" class="xref page">"RVWMO Memory Consistency Model</a>), CSR accesses are weakly
 ordered by default, so other harts or devices may observe CSR accesses
 in an order different from program order. In addition, CSR accesses are
 not ordered with respect to explicit memory accesses, unless a CSR
@@ -992,7 +972,7 @@ ordered CSRs and accesses to memory-mapped I/O regions.</p>
 <td class="content">
 <div class="paragraph">
 <p>The rules for the reordering of CSR accesses in the global memory order
-should probably be moved to <a href="#memorymodel">[memorymodel]</a> concerning the RVWMO memory consistency model.</p>
+should probably be moved to <a href="rvwmo.html" class="xref page">"RVWMO Memory Consistency Model</a> concerning the RVWMO memory consistency model.</p>
 </div>
 </td>
 </tr>
