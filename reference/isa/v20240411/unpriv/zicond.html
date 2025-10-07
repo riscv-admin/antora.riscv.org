@@ -577,8 +577,26 @@ Library</a>
   </table>
 </div>
 <h1 id="page-title" class="page">"Zicond" Extension for Integer Conditional Operations, Version 1.0.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#intro">1. Introduction</a></li>
+<li><a href="#zicond-specification">2. Zicond specification</a></li>
+<li><a href="#instructions-in-alphabetical-order">3. Instructions (in alphabetical order)</a>
+<ul class="sectlevel2">
+<li><a href="#insns-czero-eqz">3.1. czero.eqz</a></li>
+<li><a href="#insns-czero-nez">3.2. czero.nez</a></li>
+</ul>
+</li>
+<li><a href="#usage-examples">4. Usage examples</a>
+<ul class="sectlevel2">
+<li><a href="#instruction-sequences">4.1. Instruction sequences</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="sect1">
-<h2 id="intro"><a class="anchor" href="#intro"></a>Introduction</h2>
+<h2 id="intro"><a class="anchor" href="#intro"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zicond extension defines a simple solution that provides most of the benefit and all of the flexibility one would desire to support conditional arithmetic and conditional-select/move operations, while remaining true to the RISC-V design philosophy.
@@ -595,7 +613,7 @@ The design principles of RISC-V (e.g. the absence of an instruction-format that 
 </div>
 </div>
 <div class="sect1">
-<h2 id="zicond-specification"><a class="anchor" href="#zicond-specification"></a>Zicond specification</h2>
+<h2 id="zicond-specification"><a class="anchor" href="#zicond-specification"></a>2. Zicond specification</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The "Conditional" operations extension provides a simple solution that provides most of the benefit and all of the flexibility one would desire to support conditional arithmetic and conditional-select/move operations, while remaining true to the RISC-V design philosophy.
@@ -705,10 +723,10 @@ Using these instructions, branchless sequences can be implemented (typically in 
 </div>
 </div>
 <div class="sect1">
-<h2 id="instructions-in-alphabetical-order"><a class="anchor" href="#instructions-in-alphabetical-order"></a>Instructions (in alphabetical order)</h2>
+<h2 id="instructions-in-alphabetical-order"><a class="anchor" href="#instructions-in-alphabetical-order"></a>3. Instructions (in alphabetical order)</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-czero-eqz"><a class="anchor" href="#insns-czero-eqz"></a>czero.eqz</h3>
+<h3 id="insns-czero-eqz"><a class="anchor" href="#insns-czero-eqz"></a>3.1. czero.eqz</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -746,7 +764,7 @@ Furthermore, if the Zkt extension is implemented, this instruction&#8217;s timin
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  let condition = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">  let condition = X(rs2);
   result : xlenbits = if (condition == zeros()) then zeros()
                                                 else X(rs1);
   X(rd) = result;</code></pre>
@@ -755,7 +773,7 @@ Furthermore, if the Zkt extension is implemented, this instruction&#8217;s timin
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-czero-nez"><a class="anchor" href="#insns-czero-nez"></a>czero.nez</h3>
+<h3 id="insns-czero-nez"><a class="anchor" href="#insns-czero-nez"></a>3.2. czero.nez</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -793,7 +811,7 @@ Furthermore, if the Zkt extension is implemented, this instruction&#8217;s timin
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  let condition = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">  let condition = X(rs2);
   result : xlenbits = if (condition != zeros()) then zeros()
                                                 else X(rs1);
   X(rd) = result;</code></pre>
@@ -803,13 +821,13 @@ Furthermore, if the Zkt extension is implemented, this instruction&#8217;s timin
 </div>
 </div>
 <div class="sect1">
-<h2 id="usage-examples"><a class="anchor" href="#usage-examples"></a>Usage examples</h2>
+<h2 id="usage-examples"><a class="anchor" href="#usage-examples"></a>4. Usage examples</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The instructions from this extension can be used to construct sequences that perform conditional-arithmetic, conditional-bitwise-logical, and conditional-select operations.</p>
 </div>
 <div class="sect2">
-<h3 id="instruction-sequences"><a class="anchor" href="#instruction-sequences"></a>Instruction sequences</h3>
+<h3 id="instruction-sequences"><a class="anchor" href="#instruction-sequences"></a>4.1. Instruction sequences</h3>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 44.4444%;">

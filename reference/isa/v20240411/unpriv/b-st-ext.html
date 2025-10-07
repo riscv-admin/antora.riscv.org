@@ -577,6 +577,97 @@ Library</a>
   </table>
 </div>
 <h1 id="page-title" class="page">"B" Extension for Bit Manipulation, Version 1.0.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#preface">1. Bit-manipulation a, b, c and s extensions grouped for public review and ratification</a></li>
+<li><a href="#word-instructions">2. Word Instructions</a></li>
+<li><a href="#pseudocode-for-instruction-semantics">3. Pseudocode for instruction semantics</a></li>
+<li><a href="#extensions">4. Extensions</a>
+<ul class="sectlevel2">
+<li><a href="#zba">4.1. Zba: Address generation</a></li>
+<li><a href="#zbb">4.2. Zbb: Basic bit-manipulation</a>
+<ul class="sectlevel3">
+<li><a href="#logical-with-negate">4.2.1. Logical with negate</a></li>
+<li><a href="#count-leadingtrailing-zero-bits">4.2.2. Count leading/trailing zero bits</a></li>
+<li><a href="#count-population">4.2.3. Count population</a></li>
+<li><a href="#integer-minimummaximum">4.2.4. Integer minimum/maximum</a></li>
+<li><a href="#sign-and-zero-extension">4.2.5. Sign- and zero-extension</a></li>
+<li><a href="#bitwise-rotation">4.2.6. Bitwise rotation</a></li>
+<li><a href="#or-combine">4.2.7. OR Combine</a></li>
+<li><a href="#byte-reverse">4.2.8. Byte-reverse</a></li>
+</ul>
+</li>
+<li><a href="#zbc">4.3. Zbc: Carry-less multiplication</a></li>
+<li><a href="#zbs">4.4. Zbs: Single-bit instructions</a></li>
+<li><a href="#zbkb">4.5. Zbkb: Bit-manipulation for Cryptography</a></li>
+<li><a href="#zbkc">4.6. Zbkc: Carry-less multiplication for Cryptography</a></li>
+<li><a href="#zbkx">4.7. Zbkx: Crossbar permutations</a></li>
+</ul>
+</li>
+<li><a href="#insns">5. Instructions (in alphabetical order)</a>
+<ul class="sectlevel2">
+<li><a href="#insns-add_uw">5.1. add.uw</a></li>
+<li><a href="#insns-andn">5.2. andn</a></li>
+<li><a href="#insns-bclr">5.3. bclr</a></li>
+<li><a href="#insns-bclri">5.4. bclri</a></li>
+<li><a href="#insns-bext">5.5. bext</a></li>
+<li><a href="#insns-bexti">5.6. bexti</a></li>
+<li><a href="#insns-binv">5.7. binv</a></li>
+<li><a href="#insns-binvi">5.8. binvi</a></li>
+<li><a href="#insns-bset">5.9. bset</a></li>
+<li><a href="#insns-bseti">5.10. bseti</a></li>
+<li><a href="#insns-clmul">5.11. clmul</a></li>
+<li><a href="#insns-clmulh">5.12. clmulh</a></li>
+<li><a href="#insns-clmulr">5.13. clmulr</a></li>
+<li><a href="#insns-clz">5.14. clz</a></li>
+<li><a href="#insns-clzw">5.15. clzw</a></li>
+<li><a href="#insns-cpop">5.16. cpop</a></li>
+<li><a href="#insns-cpopw">5.17. cpopw</a></li>
+<li><a href="#insns-ctz">5.18. ctz</a></li>
+<li><a href="#insns-ctzw">5.19. ctzw</a></li>
+<li><a href="#insns-max">5.20. max</a></li>
+<li><a href="#insns-maxu">5.21. maxu</a></li>
+<li><a href="#insns-min">5.22. min</a></li>
+<li><a href="#insns-minu">5.23. minu</a></li>
+<li><a href="#insns-orc_b">5.24. orc.b</a></li>
+<li><a href="#insns-orn">5.25. orn</a></li>
+<li><a href="#insns-pack">5.26. pack</a></li>
+<li><a href="#insns-packh">5.27. packh</a></li>
+<li><a href="#insns-packw">5.28. packw</a></li>
+<li><a href="#insns-rev8">5.29. rev8</a></li>
+<li><a href="#insns-revb">5.30. rev.b</a></li>
+<li><a href="#insns-rol">5.31. rol</a></li>
+<li><a href="#insns-rolw">5.32. rolw</a></li>
+<li><a href="#insns-ror">5.33. ror</a></li>
+<li><a href="#insns-rori">5.34. rori</a></li>
+<li><a href="#insns-roriw">5.35. roriw</a></li>
+<li><a href="#insns-rorw">5.36. rorw</a></li>
+<li><a href="#insns-sext_b">5.37. sext.b</a></li>
+<li><a href="#insns-sext_h">5.38. sext.h</a></li>
+<li><a href="#insns-sh1add">5.39. sh1add</a></li>
+<li><a href="#insns-sh1add_uw">5.40. sh1add.uw</a></li>
+<li><a href="#insns-sh2add">5.41. sh2add</a></li>
+<li><a href="#insns-sh2add_uw">5.42. sh2add.uw</a></li>
+<li><a href="#insns-sh3add">5.43. sh3add</a></li>
+<li><a href="#insns-sh3add_uw">5.44. sh3add.uw</a></li>
+<li><a href="#insns-slli_uw">5.45. slli.uw</a></li>
+<li><a href="#insns-unzip">5.46. unzip</a></li>
+<li><a href="#insns-xnor">5.47. xnor</a></li>
+<li><a href="#insns-xpermb">5.48. xperm.b</a></li>
+<li><a href="#insns-xpermn">5.49. xperm.n</a></li>
+<li><a href="#insns-zext_h">5.50. zext.h</a></li>
+<li><a href="#insns-zip">5.51. zip</a></li>
+</ul>
+</li>
+<li><a href="#software-optimization-guide">6. Software optimization guide</a>
+<ul class="sectlevel2">
+<li><a href="#strlen">6.1. strlen</a></li>
+<li><a href="#strcmp">6.2. strcmp</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -586,7 +677,7 @@ Zbs extensions.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="preface"><a class="anchor" href="#preface"></a>Bit-manipulation a, b, c and s extensions grouped for public review and ratification</h2>
+<h2 id="preface"><a class="anchor" href="#preface"></a>1. Bit-manipulation a, b, c and s extensions grouped for public review and ratification</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The bit-manipulation (bitmanip) extension collection is comprised of several component extensions to the base RISC-V architecture that are intended to provide some combination of code size reduction, performance improvement, and energy reduction.
@@ -607,7 +698,7 @@ While the shift-immediate instructions are defined to have at most a 6-bit immed
 </div>
 </div>
 <div class="sect1">
-<h2 id="word-instructions"><a class="anchor" href="#word-instructions"></a>Word Instructions</h2>
+<h2 id="word-instructions"><a class="anchor" href="#word-instructions"></a>2. Word Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The bitmanip extension follows the convention in RV64 that <em>w</em>-suffixed instructions (without a dot before the <em>w</em>) ignore the upper 32 bits of their inputs, operate on the least-significant 32-bits as signed values and produce a 32-bit signed result that is sign-extended to XLEN.</p>
@@ -621,7 +712,7 @@ While the shift-immediate instructions are defined to have at most a 6-bit immed
 </div>
 </div>
 <div class="sect1">
-<h2 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>Pseudocode for instruction semantics</h2>
+<h2 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>3. Pseudocode for instruction semantics</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The semantics of each instruction in <a href="#insns">Instructions (in alphabetical order)</a> is expressed in a SAIL-like syntax.</p>
@@ -629,7 +720,7 @@ While the shift-immediate instructions are defined to have at most a 6-bit immed
 </div>
 </div>
 <div class="sect1">
-<h2 id="extensions"><a class="anchor" href="#extensions"></a>Extensions</h2>
+<h2 id="extensions"><a class="anchor" href="#extensions"></a>4. Extensions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The first group of bitmanip extensions to be released for Public Review are:</p>
@@ -1111,7 +1202,7 @@ along with their specific mapping:</p>
 </tbody>
 </table>
 <div class="sect2">
-<h3 id="zba"><a class="anchor" href="#zba"></a>Zba: Address generation</h3>
+<h3 id="zba"><a class="anchor" href="#zba"></a>4.1. Zba: Address generation</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1212,7 +1303,7 @@ along with their specific mapping:</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbb"><a class="anchor" href="#zbb"></a>Zbb: Basic bit-manipulation</h3>
+<h3 id="zbb"><a class="anchor" href="#zbb"></a>4.2. Zbb: Basic bit-manipulation</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1228,7 +1319,7 @@ along with their specific mapping:</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>Logical with negate</h4>
+<h4 id="logical-with-negate"><a class="anchor" href="#logical-with-negate"></a>4.2.1. Logical with negate</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1283,7 +1374,7 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </div>
 </div>
 <div class="sect3">
-<h4 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>Count leading/trailing zero bits</h4>
+<h4 id="count-leadingtrailing-zero-bits"><a class="anchor" href="#count-leadingtrailing-zero-bits"></a>4.2.2. Count leading/trailing zero bits</h4>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
 <col style="width: 7.1428%;">
@@ -1328,7 +1419,7 @@ In some implementations, the inverter on rs2 used for subtraction can be reused 
 </table>
 </div>
 <div class="sect3">
-<h4 id="count-population"><a class="anchor" href="#count-population"></a>Count population</h4>
+<h4 id="count-population"><a class="anchor" href="#count-population"></a>4.2.3. Count population</h4>
 <div class="paragraph">
 <p>These instructions count the number of set bits (1-bits). This is also
 commonly referred to as population count.</p>
@@ -1365,7 +1456,7 @@ commonly referred to as population count.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>Integer minimum/maximum</h4>
+<h4 id="integer-minimummaximum"><a class="anchor" href="#integer-minimummaximum"></a>4.2.4. Integer minimum/maximum</h4>
 <div class="paragraph">
 <p>The integer minimum/maximum instructions are arithmetic R-type
 instructions that return the smaller/larger of two operands.</p>
@@ -1414,7 +1505,7 @@ instructions that return the smaller/larger of two operands.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sign-and-zero-extension"><a class="anchor" href="#sign-and-zero-extension"></a>Sign- and zero-extension</h4>
+<h4 id="sign-and-zero-extension"><a class="anchor" href="#sign-and-zero-extension"></a>4.2.5. Sign- and zero-extension</h4>
 <div class="paragraph">
 <p>These instructions perform the sign-extension or zero-extension of the least significant 8 bits or 16 bits of the source register.</p>
 </div>
@@ -1459,7 +1550,7 @@ instructions that return the smaller/larger of two operands.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>Bitwise rotation</h4>
+<h4 id="bitwise-rotation"><a class="anchor" href="#bitwise-rotation"></a>4.2.6. Bitwise rotation</h4>
 <div class="paragraph">
 <p>Bitwise rotation instructions are similar to the shift-logical operations from the base spec. However, where the shift-logical
 instructions shift in zeros, the rotate instructions shift in the bits that were shifted out of the other side of the value.
@@ -1537,7 +1628,7 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </div>
 </div>
 <div class="sect3">
-<h4 id="or-combine"><a class="anchor" href="#or-combine"></a>OR Combine</h4>
+<h4 id="or-combine"><a class="anchor" href="#or-combine"></a>4.2.7. OR Combine</h4>
 <div class="paragraph">
 <p><strong>orc.b</strong> sets the bits of each byte in the result <em>rd</em> to all zeros if no bit within the respective byte of <em>rs</em> is set, or to all ones if any bit within the respective byte of <em>rs</em> is set.</p>
 </div>
@@ -1570,7 +1661,7 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 <div class="sect3">
-<h4 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>Byte-reverse</h4>
+<h4 id="byte-reverse"><a class="anchor" href="#byte-reverse"></a>4.2.8. Byte-reverse</h4>
 <div class="paragraph">
 <p><strong>rev8</strong> reverses the byte-ordering of <em>rs</em>.</p>
 </div>
@@ -1601,7 +1692,7 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </div>
 </div>
 <div class="sect2">
-<h3 id="zbc"><a class="anchor" href="#zbc"></a>Zbc: Carry-less multiplication</h3>
+<h3 id="zbc"><a class="anchor" href="#zbc"></a>4.3. Zbc: Carry-less multiplication</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1663,7 +1754,7 @@ four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or)
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbs"><a class="anchor" href="#zbs"></a>Zbs: Single-bit instructions</h3>
+<h3 id="zbs"><a class="anchor" href="#zbs"></a>4.4. Zbs: Single-bit instructions</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1750,7 +1841,7 @@ a single bit in a register. The bit is specified by its index.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>Zbkb: Bit-manipulation for Cryptography</h3>
+<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>4.5. Zbkb: Bit-manipulation for Cryptography</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1885,7 +1976,7 @@ common operations in cryptographic workloads.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>Zbkc: Carry-less multiplication for Cryptography</h3>
+<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>4.6. Zbkc: Carry-less multiplication for Cryptography</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -1939,7 +2030,7 @@ efficiently implement the GHASH operation, which is part of this workload.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>Zbkx: Crossbar permutations</h3>
+<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>4.7. Zbkx: Crossbar permutations</h3>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -2003,10 +2094,10 @@ latency does not depend on the (secret) data being operated on.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="insns"><a class="anchor" href="#insns"></a>Instructions (in alphabetical order)</h2>
+<h2 id="insns"><a class="anchor" href="#insns"></a>5. Instructions (in alphabetical order)</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>add.uw</h3>
+<h3 id="insns-add_uw"><a class="anchor" href="#insns-add_uw"></a>5.1. add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2040,7 +2131,7 @@ latency does not depend on the (secret) data being operated on.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let base = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let base = X(rs2);
 let index = EXTZ(X(rs1)[31..0]);
 
 X(rd) = base + index;</code></pre>
@@ -2075,7 +2166,7 @@ X(rd) = base + index;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>andn</h3>
+<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>5.2. andn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2105,7 +2196,7 @@ X(rd) = base + index;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = X(rs1) &amp; ~X(rs2);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = X(rs1) &amp; ~X(rs2);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -2142,7 +2233,7 @@ X(rd) = base + index;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>bclr</h3>
+<h3 id="insns-bclr"><a class="anchor" href="#insns-bclr"></a>5.3. bclr</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2173,7 +2264,7 @@ The index is read from the lower log2(XLEN) bits of <em>rs2</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
 X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2206,7 +2297,7 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>bclri</h3>
+<h3 id="insns-bclri"><a class="anchor" href="#insns-bclri"></a>5.4. bclri</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2248,7 +2339,7 @@ For RV32, the encodings corresponding to shamt[5]=1 are reserved.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = shamt &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = shamt &amp; (XLEN - 1);
 X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2281,7 +2372,7 @@ X(rd) = X(rs1) &amp; ~(1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bext"><a class="anchor" href="#insns-bext"></a>bext</h3>
+<h3 id="insns-bext"><a class="anchor" href="#insns-bext"></a>5.5. bext</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2312,7 +2403,7 @@ The index is read from the lower log2(XLEN) bits of <em>rs2</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
 X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </div>
 </div>
@@ -2345,7 +2436,7 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>bexti</h3>
+<h3 id="insns-bexti"><a class="anchor" href="#insns-bexti"></a>5.6. bexti</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2387,7 +2478,7 @@ For RV32, the encodings corresponding to shamt[5]=1 are reserved.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = shamt &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = shamt &amp; (XLEN - 1);
 X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 </div>
 </div>
@@ -2420,7 +2511,7 @@ X(rd) = (X(rs1) &gt;&gt; index) &amp; 1;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-binv"><a class="anchor" href="#insns-binv"></a>binv</h3>
+<h3 id="insns-binv"><a class="anchor" href="#insns-binv"></a>5.7. binv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2451,7 +2542,7 @@ The index is read from the lower log2(XLEN) bits of <em>rs2</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
 X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2484,7 +2575,7 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>binvi</h3>
+<h3 id="insns-binvi"><a class="anchor" href="#insns-binvi"></a>5.8. binvi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2526,7 +2617,7 @@ For RV32, the encodings corresponding to shamt[5]=1 are reserved.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = shamt &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = shamt &amp; (XLEN - 1);
 X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2559,7 +2650,7 @@ X(rd) = X(rs1) ^ (1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bset"><a class="anchor" href="#insns-bset"></a>bset</h3>
+<h3 id="insns-bset"><a class="anchor" href="#insns-bset"></a>5.9. bset</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2590,7 +2681,7 @@ The index is read from the lower log2(XLEN) bits of <em>rs2</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = X(rs2) &amp; (XLEN - 1);
 X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2623,7 +2714,7 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>bseti</h3>
+<h3 id="insns-bseti"><a class="anchor" href="#insns-bseti"></a>5.10. bseti</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2665,7 +2756,7 @@ For RV32, the encodings corresponding to shamt[5]=1 are reserved.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let index = shamt &amp; (XLEN - 1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let index = shamt &amp; (XLEN - 1);
 X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </div>
 </div>
@@ -2698,7 +2789,7 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>clmul</h3>
+<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>5.11. clmul</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2728,7 +2819,7 @@ X(rd) = X(rs1) | (1 &lt;&lt; index)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 let output : xlenbits = 0;
 
@@ -2775,7 +2866,7 @@ X[rd] = output</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>clmulh</h3>
+<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>5.12. clmulh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2805,7 +2896,7 @@ X[rd] = output</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 let output : xlenbits = 0;
 
@@ -2852,7 +2943,7 @@ X[rd] = output</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>clmulr</h3>
+<h3 id="insns-clmulr"><a class="anchor" href="#insns-clmulr"></a>5.13. clmulr</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2883,7 +2974,7 @@ product.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 let output : xlenbits = 0;
 
@@ -2943,7 +3034,7 @@ a <strong>clmul</strong>, then bit-reversing the output.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clz"><a class="anchor" href="#insns-clz"></a>clz</h3>
+<h3 id="insns-clz"><a class="anchor" href="#insns-clz"></a>5.14. clz</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2973,7 +3064,7 @@ a <strong>clmul</strong>, then bit-reversing the output.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val HighestSetBit : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
+<pre class="highlight"><code class="language-sail" data-lang="sail">val HighestSetBit : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
 
 function HighestSetBit x = {
   foreach (i from (xlen - 1) to 0 by 1 in dec)
@@ -3014,7 +3105,7 @@ X[rd] = (xlen - 1) - HighestSetBit(rs);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>clzw</h3>
+<h3 id="insns-clzw"><a class="anchor" href="#insns-clzw"></a>5.15. clzw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3045,7 +3136,7 @@ Accordingly, if the least-significant word is 0, the output is 32, and if the mo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val HighestSetBit32 : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
+<pre class="highlight"><code class="language-sail" data-lang="sail">val HighestSetBit32 : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
 
 function HighestSetBit32 x = {
   foreach (i from 31 to 0 by 1 in dec)
@@ -3086,7 +3177,7 @@ X[rd] = 31 - HighestSetBit(rs);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>cpop</h3>
+<h3 id="insns-cpop"><a class="anchor" href="#insns-cpop"></a>5.16. cpop</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3116,7 +3207,7 @@ X[rd] = 31 - HighestSetBit(rs);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let bitcount = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">let bitcount = 0;
 let rs = X(rs);
 
 foreach (i from 0 to (xlen - 1) in inc)
@@ -3173,7 +3264,7 @@ The GCC builtin function <code>__builtin_popcountl (unsigned long x)</code> for 
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>cpopw</h3>
+<h3 id="insns-cpopw"><a class="anchor" href="#insns-cpopw"></a>5.17. cpopw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3203,7 +3294,7 @@ The GCC builtin function <code>__builtin_popcountl (unsigned long x)</code> for 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let bitcount = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">let bitcount = 0;
 let val = X(rs);
 
 foreach (i from 0 to 31 in inc)
@@ -3241,7 +3332,7 @@ X[rd] = bitcount</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>ctz</h3>
+<h3 id="insns-ctz"><a class="anchor" href="#insns-ctz"></a>5.18. ctz</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3272,7 +3363,7 @@ Accordingly, if the input is 0, the output is XLEN, and if the least-significant
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val LowestSetBit : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
+<pre class="highlight"><code class="language-sail" data-lang="sail">val LowestSetBit : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
 
 function LowestSetBit x = {
   foreach (i from 0 to (xlen - 1) by 1 in dec)
@@ -3313,7 +3404,7 @@ X[rd] = LowestSetBit(rs);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>ctzw</h3>
+<h3 id="insns-ctzw"><a class="anchor" href="#insns-ctzw"></a>5.19. ctzw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3343,7 +3434,7 @@ X[rd] = LowestSetBit(rs);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val LowestSetBit32 : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
+<pre class="highlight"><code class="language-sail" data-lang="sail">val LowestSetBit32 : forall ('N : Int), 'N &gt;= 0. bits('N) -&gt; int
 
 function LowestSetBit32 x = {
   foreach (i from 0 to 31 by 1 in dec)
@@ -3384,7 +3475,7 @@ X[rd] = LowestSetBit32(rs);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-max"><a class="anchor" href="#insns-max"></a>max</h3>
+<h3 id="insns-max"><a class="anchor" href="#insns-max"></a>5.20. max</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3414,7 +3505,7 @@ X[rd] = LowestSetBit32(rs);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 
 let result = if   rs1_val &lt;_s rs2_val
@@ -3472,7 +3563,7 @@ implementations that are so optimized can fuse them together.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>maxu</h3>
+<h3 id="insns-maxu"><a class="anchor" href="#insns-maxu"></a>5.21. maxu</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3502,7 +3593,7 @@ implementations that are so optimized can fuse them together.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 
 let result = if   rs1_val &lt;_u rs2_val
@@ -3541,7 +3632,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-min"><a class="anchor" href="#insns-min"></a>min</h3>
+<h3 id="insns-min"><a class="anchor" href="#insns-min"></a>5.22. min</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3571,7 +3662,7 @@ X(rd) = result;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 
 let result = if   rs1_val &lt;_s rs2_val
@@ -3610,7 +3701,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-minu"><a class="anchor" href="#insns-minu"></a>minu</h3>
+<h3 id="insns-minu"><a class="anchor" href="#insns-minu"></a>5.23. minu</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3640,7 +3731,7 @@ X(rd) = result;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_val = X(rs1);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_val = X(rs1);
 let rs2_val = X(rs2);
 
 let result = if   rs1_val &lt;_u rs2_val
@@ -3679,7 +3770,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>orc.b</h3>
+<h3 id="insns-orc_b"><a class="anchor" href="#insns-orc_b"></a>5.24. orc.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3710,7 +3801,7 @@ This sets the bits of each byte in the result <em>rd</em> to all zeros if no bit
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let input = X(rs);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let input = X(rs);
 let output : xlenbits = 0;
 
 foreach (i from 0 to (xlen - 8) by 8) {
@@ -3751,7 +3842,7 @@ X[rd] = output;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>orn</h3>
+<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>5.25. orn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3781,7 +3872,7 @@ X[rd] = output;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = X(rs1) | ~X(rs2);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = X(rs1) | ~X(rs2);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -3818,7 +3909,7 @@ X[rd] = output;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>pack</h3>
+<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>5.26. pack</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3849,7 +3940,7 @@ X[rd] = output;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let lo_half : bits(xlen/2) = X(rs1)[xlen/2-1..0];
+<pre class="highlight"><code class="language-sail" data-lang="sail">let lo_half : bits(xlen/2) = X(rs1)[xlen/2-1..0];
 let hi_half : bits(xlen/2) = X(rs2)[xlen/2-1..0];
 X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 </div>
@@ -3883,7 +3974,7 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>packh</h3>
+<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>5.27. packh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3915,7 +4006,7 @@ zero extending the rest of <em>rd</em>.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let lo_half : bits(8) = X(rs1)[7..0];
+<pre class="highlight"><code class="language-sail" data-lang="sail">let lo_half : bits(8) = X(rs1)[7..0];
 let hi_half : bits(8) = X(rs2)[7..0];
 X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 </div>
@@ -3949,7 +4040,7 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>packw</h3>
+<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>5.28. packw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3982,7 +4073,7 @@ This instruction only exists on RV64 based systems.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let lo_half : bits(16) = X(rs1)[15..0];
+<pre class="highlight"><code class="language-sail" data-lang="sail">let lo_half : bits(16) = X(rs1)[15..0];
 let hi_half : bits(16) = X(rs2)[15..0];
 X(rd) = EXTS(hi_half @ lo_half);</code></pre>
 </div>
@@ -4016,7 +4107,7 @@ X(rd) = EXTS(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>rev8</h3>
+<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>5.29. rev8</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4056,7 +4147,7 @@ X(rd) = EXTS(hi_half @ lo_half);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let input = X(rs);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let input = X(rs);
 let output : xlenbits = 0;
 let j = xlen - 1;
 
@@ -4135,7 +4226,7 @@ XLEN-32 and XLEN-16, respectively.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-revb"><a class="anchor" href="#insns-revb"></a>rev.b</h3>
+<h3 id="insns-revb"><a class="anchor" href="#insns-revb"></a>5.30. rev.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4165,7 +4256,7 @@ XLEN-32 and XLEN-16, respectively.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">result : xlenbits = EXTZ(0b0);
+<pre class="highlight"><code class="language-sail" data-lang="sail">result : xlenbits = EXTZ(0b0);
 foreach (i from 0 to sizeof(xlen) by 8) {
     result[i+7..i] = reverse_bits_in_byte(X(rs1)[i+7..i]);
 };
@@ -4201,7 +4292,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>rol</h3>
+<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>5.31. rol</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4231,7 +4322,7 @@ X(rd) = result;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let shamt = if   xlen == 32
+<pre class="highlight"><code class="language-sail" data-lang="sail">let shamt = if   xlen == 32
             then X(rs2)[4..0]
             else X(rs2)[5..0];
 let result = (X(rs1) &lt;&lt; shamt) | (X(rs1) &gt;&gt; (xlen - shamt));
@@ -4273,7 +4364,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>rolw</h3>
+<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>5.32. rolw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4304,7 +4395,7 @@ The resulting word value is sign-extended by copying bit 31 to all of the more-s
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1 = EXTZ(X(rs1)[31..0])
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1 = EXTZ(X(rs1)[31..0])
 let shamt = X(rs2)[4..0];
 let result = (rs1 &lt;&lt; shamt) | (rs1 &gt;&gt; (32 - shamt));
 X(rd) = EXTS(result[31..0]);</code></pre>
@@ -4344,7 +4435,7 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>ror</h3>
+<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>5.33. ror</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4374,7 +4465,7 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let shamt = if   xlen == 32
+<pre class="highlight"><code class="language-sail" data-lang="sail">let shamt = if   xlen == 32
             then X(rs2)[4..0]
             else X(rs2)[5..0];
 let result = (X(rs1) &gt;&gt; shamt) | (X(rs1) &lt;&lt; (xlen - shamt));
@@ -4416,7 +4507,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>rori</h3>
+<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>5.34. rori</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4457,7 +4548,7 @@ For RV32, the encodings corresponding to shamt[5]=1 are reserved.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let shamt = if   xlen == 32
+<pre class="highlight"><code class="language-sail" data-lang="sail">let shamt = if   xlen == 32
             then shamt[4..0]
             else shamt[5..0];
 let result = (X(rs1) &gt;&gt; shamt) | (X(rs1) &lt;&lt; (xlen - shamt));
@@ -4499,7 +4590,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>roriw</h3>
+<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>5.35. roriw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4533,7 +4624,7 @@ the more-significant bits.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1_data = EXTZ(X(rs1)[31..0];
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1_data = EXTZ(X(rs1)[31..0];
 let result = (rs1_data &gt;&gt; shamt) | (rs1_data &lt;&lt; (32 - shamt));
 X(rd) = EXTS(result[31..0]);</code></pre>
 </div>
@@ -4572,7 +4663,7 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>rorw</h3>
+<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>5.36. rorw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4603,7 +4694,7 @@ The resultant word is sign-extended by copying bit 31 to all of the more-signifi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let rs1 = EXTZ(X(rs1)[31..0])
+<pre class="highlight"><code class="language-sail" data-lang="sail">let rs1 = EXTZ(X(rs1)[31..0])
 let shamt = X(rs2)[4..0];
 let result = (rs1 &gt;&gt; shamt) | (rs1 &lt;&lt; (32 - shamt));
 X(rd) = EXTS(result);</code></pre>
@@ -4643,7 +4734,7 @@ X(rd) = EXTS(result);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>sext.b</h3>
+<h3 id="insns-sext_b"><a class="anchor" href="#insns-sext_b"></a>5.37. sext.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4673,7 +4764,7 @@ X(rd) = EXTS(result);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = EXTS(X(rs)[7..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = EXTS(X(rs)[7..0]);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -4705,7 +4796,7 @@ X(rd) = EXTS(result);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>sext.h</h3>
+<h3 id="insns-sext_h"><a class="anchor" href="#insns-sext_h"></a>5.38. sext.h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4735,7 +4826,7 @@ X(rd) = EXTS(result);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = EXTS(X(rs)[15..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = EXTS(X(rs)[15..0]);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -4767,7 +4858,7 @@ X(rd) = EXTS(result);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>sh1add</h3>
+<h3 id="insns-sh1add"><a class="anchor" href="#insns-sh1add"></a>5.39. sh1add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4797,7 +4888,7 @@ X(rd) = EXTS(result);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 1);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 1);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -4829,7 +4920,7 @@ X(rd) = EXTS(result);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>sh1add.uw</h3>
+<h3 id="insns-sh1add_uw"><a class="anchor" href="#insns-sh1add_uw"></a>5.40. sh1add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4860,7 +4951,7 @@ The first addend is <em>rs2</em>. The second addend is the unsigned value formed
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let base = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let base = X(rs2);
 let index = EXTZ(X(rs1)[31..0]);
 
 X(rd) = base + (index &lt;&lt; 1);</code></pre>
@@ -4895,7 +4986,7 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>sh2add</h3>
+<h3 id="insns-sh2add"><a class="anchor" href="#insns-sh2add"></a>5.41. sh2add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4925,7 +5016,7 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 2);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 2);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -4957,7 +5048,7 @@ X(rd) = base + (index &lt;&lt; 1);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>sh2add.uw</h3>
+<h3 id="insns-sh2add_uw"><a class="anchor" href="#insns-sh2add_uw"></a>5.42. sh2add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4989,7 +5080,7 @@ The second addend is the unsigned value formed by extracting the least-significa
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let base = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let base = X(rs2);
 let index = EXTZ(X(rs1)[31..0]);
 
 X(rd) = base + (index &lt;&lt; 2);</code></pre>
@@ -5024,7 +5115,7 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>sh3add</h3>
+<h3 id="insns-sh3add"><a class="anchor" href="#insns-sh3add"></a>5.43. sh3add</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5054,7 +5145,7 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 3);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = X(rs2) + (X(rs1) &lt;&lt; 3);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -5086,7 +5177,7 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>sh3add.uw</h3>
+<h3 id="insns-sh3add_uw"><a class="anchor" href="#insns-sh3add_uw"></a>5.44. sh3add.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5116,7 +5207,7 @@ X(rd) = base + (index &lt;&lt; 2);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let base = X(rs2);
+<pre class="highlight"><code class="language-sail" data-lang="sail">let base = X(rs2);
 let index = EXTZ(X(rs1)[31..0]);
 
 X(rd) = base + (index &lt;&lt; 3);</code></pre>
@@ -5151,7 +5242,7 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>slli.uw</h3>
+<h3 id="insns-slli_uw"><a class="anchor" href="#insns-slli_uw"></a>5.45. slli.uw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5181,7 +5272,7 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = (EXTZ(X(rs)[31..0]) &lt;&lt; shamt);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = (EXTZ(X(rs)[31..0]) &lt;&lt; shamt);</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -5228,7 +5319,7 @@ X(rd) = base + (index &lt;&lt; 3);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>unzip</h3>
+<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>5.46. unzip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5261,7 +5352,7 @@ This instruction is available only on RV32.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">foreach (i from 0 to xlen/2-1) {
+<pre class="highlight"><code class="language-sail" data-lang="sail">foreach (i from 0 to xlen/2-1) {
   X(rd)[i] = X(rs1)[2*i]
   X(rd)[i+xlen/2] = X(rs1)[2*i+1]
 }</code></pre>
@@ -5314,7 +5405,7 @@ directly.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>xnor</h3>
+<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>5.47. xnor</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5344,7 +5435,7 @@ directly.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = ~(X(rs1) ^ X(rs2));</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = ~(X(rs1) ^ X(rs2));</code></pre>
 </div>
 </div>
 <div class="dlist">
@@ -5381,7 +5472,7 @@ directly.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xpermb"><a class="anchor" href="#insns-xpermb"></a>xperm.b</h3>
+<h3 id="insns-xpermb"><a class="anchor" href="#insns-xpermb"></a>5.48. xperm.b</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5415,7 +5506,7 @@ or zero if the index into <em>rs2</em> is out of bounds.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val xpermb_lookup : (bits(8), xlenbits) -&gt; bits(8)
+<pre class="highlight"><code class="language-sail" data-lang="sail">val xpermb_lookup : (bits(8), xlenbits) -&gt; bits(8)
 function xpermb_lookup (idx, lut) = {
     (lut &gt;&gt; (idx @ 0b000))[7..0]
 }
@@ -5459,7 +5550,7 @@ function clause execute ( XPERM_B (rs2,rs1,rd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xpermn"><a class="anchor" href="#insns-xpermn"></a>xperm.n</h3>
+<h3 id="insns-xpermn"><a class="anchor" href="#insns-xpermn"></a>5.49. xperm.n</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5493,7 +5584,7 @@ or zero if the index into <em>rs2</em> is out of bounds.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">val xpermn_lookup : (bits(4), xlenbits) -&gt; bits(4)
+<pre class="highlight"><code class="language-sail" data-lang="sail">val xpermn_lookup : (bits(4), xlenbits) -&gt; bits(4)
 function xpermn_lookup (idx, lut) = {
     (lut &gt;&gt; (idx @ 0b00))[3..0]
 }
@@ -5537,7 +5628,7 @@ function clause execute ( XPERM_N (rs2,rs1,rd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>zext.h</h3>
+<h3 id="insns-zext_h"><a class="anchor" href="#insns-zext_h"></a>5.50. zext.h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5577,7 +5668,7 @@ function clause execute ( XPERM_N (rs2,rs1,rd)) = {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rd) = EXTZ(X(rs)[15..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rd) = EXTZ(X(rs)[15..0]);</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -5624,7 +5715,7 @@ function clause execute ( XPERM_N (rs2,rs1,rd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>zip</h3>
+<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>5.51. zip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5658,7 +5749,7 @@ This instruction is available only on RV32.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">foreach (i from 0 to xlen/2-1) {
+<pre class="highlight"><code class="language-sail" data-lang="sail">foreach (i from 0 to xlen/2-1) {
   X(rd)[2*i] = X(rs1)[i]
   X(rd)[2*i+1] = X(rs1)[i+xlen/2]
 }</code></pre>
@@ -5712,10 +5803,10 @@ directly.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>Software optimization guide</h2>
+<h2 id="software-optimization-guide"><a class="anchor" href="#software-optimization-guide"></a>6. Software optimization guide</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="strlen"><a class="anchor" href="#strlen"></a>strlen</h3>
+<h3 id="strlen"><a class="anchor" href="#strlen"></a>6.1. strlen</h3>
 <div class="paragraph">
 <p>The <strong>orc.b</strong> instruction allows for the efficient detection of <strong>NUL</strong> bytes in an XLEN-sized chunk of data:</p>
 </div>
@@ -5734,7 +5825,7 @@ directly.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">#include &lt;sys/asm.h&gt;
+<pre class="highlight"><code class="language-asm" data-lang="asm">#include &lt;sys/asm.h&gt;
 
 	.text
 	.globl strlen
@@ -5804,10 +5895,10 @@ strlen:
 </div>
 </div>
 <div class="sect2">
-<h3 id="strcmp"><a class="anchor" href="#strcmp"></a>strcmp</h3>
+<h3 id="strcmp"><a class="anchor" href="#strcmp"></a>6.2. strcmp</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">#include &lt;sys/asm.h&gt;
+<pre class="highlight"><code class="language-asm" data-lang="asm">#include &lt;sys/asm.h&gt;
 
   .text
   .globl strcmp

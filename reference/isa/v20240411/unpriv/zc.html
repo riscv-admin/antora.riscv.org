@@ -577,8 +577,83 @@ Library</a>
   </table>
 </div>
 <h1 id="page-title" class="page">"Zc*" Extension for Code Size Reduction, Version 1.0.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#zc-overview">1. Zc* Overview</a></li>
+<li><a href="#C">2. C</a></li>
+<li><a href="#zce">3. Zce</a></li>
+<li><a href="#misaC">4. MISA.C</a></li>
+<li><a href="#zca">5. Zca</a></li>
+<li><a href="#zcf-rv32-only">6. Zcf (RV32 only)</a></li>
+<li><a href="#zcd">7. Zcd</a></li>
+<li><a href="#zcb">8. Zcb</a></li>
+<li><a href="#Zcmp">9. Zcmp</a></li>
+<li><a href="#Zcmt">10. Zcmt</a></li>
+<li><a href="#Zc_formats">11. Zc instruction formats</a></li>
+<li><a href="#Zcb_instructions">12. Zcb instructions</a>
+<ul class="sectlevel2">
+<li><a href="#insns-c_lbu">12.1. c.lbu</a></li>
+<li><a href="#insns-c_lhu">12.2. c.lhu</a></li>
+<li><a href="#insns-c_lh">12.3. c.lh</a></li>
+<li><a href="#insns-c_sb">12.4. c.sb</a></li>
+<li><a href="#insns-c_sh">12.5. c.sh</a></li>
+<li><a href="#insns-c_zext_b">12.6. c.zext.b</a></li>
+<li><a href="#insns-c_sext_b">12.7. c.sext.b</a></li>
+<li><a href="#insns-c_zext_h">12.8. c.zext.h</a></li>
+<li><a href="#insns-c_sext_h">12.9. c.sext.h</a></li>
+<li><a href="#insns-c_zext_w">12.10. c.zext.w</a></li>
+<li><a href="#insns-c_not">12.11. c.not</a></li>
+<li><a href="#insns-c_mul">12.12. c.mul</a></li>
+</ul>
+</li>
+<li><a href="#insns-pushpop">13. PUSH/POP register instructions</a>
+<ul class="sectlevel2">
+<li><a href="#pushpop-functional-overview">13.1. PUSH/POP functional overview</a></li>
+<li><a href="#example-usage">13.2. Example usage</a>
+<ul class="sectlevel3">
+<li><a href="#pushpop-areg-list">13.2.1. Stack pointer adjustment handling</a></li>
+<li><a href="#register-list-handling">13.2.2. Register list handling</a></li>
+</ul>
+</li>
+<li><a href="#pushpop-idempotent-memory">13.3. PUSH/POP Fault handling</a></li>
+<li><a href="#pushpop-software-view">13.4. Software view of execution</a>
+<ul class="sectlevel3">
+<li><a href="#software-view-of-the-push-sequence">13.4.1. Software view of the PUSH sequence</a></li>
+<li><a href="#software-view-of-the-poppopret-sequence">13.4.2. Software view of the POP/POPRET sequence</a></li>
+</ul>
+</li>
+<li><a href="#pushpop_non-idem-mem">13.5. Non-idempotent memory handling</a></li>
+<li><a href="#example-rv32i-pushpop-sequences">13.6. Example RV32I PUSH/POP sequences</a>
+<ul class="sectlevel3">
+<li><a href="#cm-push-ra-s0-s2-64">13.6.1. cm.push  \{ra, s0-s2}, -64</a></li>
+<li><a href="#cm-push-ra-s0-s11-112">13.6.2. cm.push \{ra, s0-s11}, -112</a></li>
+<li><a href="#cm-pop-ra-16">13.6.3. cm.pop   {ra}, 16</a></li>
+<li><a href="#cm-pop-ra-s0-s3-48">13.6.4. cm.pop \{ra, s0-s3}, 48</a></li>
+<li><a href="#cm-pop-ra-s0-s4-64">13.6.5. cm.pop \{ra, s0-s4}, 64</a></li>
+</ul>
+</li>
+<li><a href="#insns-cm_push">13.7. cm.push</a></li>
+<li><a href="#insns-cm_pop">13.8. cm.pop</a></li>
+<li><a href="#insns-cm_popretz">13.9. cm.popretz</a></li>
+<li><a href="#insns-cm_popret">13.10. cm.popret</a></li>
+<li><a href="#insns-cm_mvsa01">13.11. cm.mvsa01</a></li>
+<li><a href="#insns-cm_mva01s">13.12. cm.mva01s</a></li>
+</ul>
+</li>
+<li><a href="#insns-tablejump">14. Table Jump Overview</a>
+<ul class="sectlevel2">
+<li><a href="#jvt">14.1. jvt</a></li>
+<li><a href="#tablejump-fault-handling">14.2. Table Jump Fault handling</a></li>
+<li><a href="#csrs-jvt">14.3. jvt CSR</a></li>
+<li><a href="#insns-cm_jt">14.4. cm.jt</a></li>
+<li><a href="#insns-cm_jalt">14.5. cm.jalt</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div class="sect1">
-<h2 id="zc-overview"><a class="anchor" href="#zc-overview"></a>Zc* Overview</h2>
+<h2 id="zc-overview"><a class="anchor" href="#zc-overview"></a>1. Zc* Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Zc* is a group of extensions that define subsets of the existing C extension (Zca, Zcd, Zcf) and new extensions which only contain 16-bit encodings.</p>
@@ -893,7 +968,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="C"><a class="anchor" href="#C"></a>C</h2>
+<h2 id="C"><a class="anchor" href="#C"></a>2. C</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The C extension is the superset of the following extensions:</p>
@@ -930,7 +1005,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="zce"><a class="anchor" href="#zce"></a>Zce</h2>
+<h2 id="zce"><a class="anchor" href="#zce"></a>3. Zce</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zce extension is intended to be used for microcontrollers, and includes all relevant Zc extensions.</p>
@@ -971,7 +1046,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="misaC"><a class="anchor" href="#misaC"></a>MISA.C</h2>
+<h2 id="misaC"><a class="anchor" href="#misaC"></a>4. MISA.C</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>MISA.C is set if the following extensions are selected:</p>
@@ -1009,7 +1084,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="zca"><a class="anchor" href="#zca"></a>Zca</h2>
+<h2 id="zca"><a class="anchor" href="#zca"></a>5. Zca</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zca extension is added as way to refer to instructions in the C extension that do not include the floating-point loads and stores.</p>
@@ -1034,7 +1109,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="zcf-rv32-only"><a class="anchor" href="#zcf-rv32-only"></a>Zcf (RV32 only)</h2>
+<h2 id="zcf-rv32-only"><a class="anchor" href="#zcf-rv32-only"></a>6. Zcf (RV32 only)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Zcf is the existing set of compressed single precision floating point loads and stores: <em>c.flw</em>, <em>c.flwsp</em>, <em>c.fsw</em>, <em>c.fswsp</em>.</p>
@@ -1048,7 +1123,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="zcd"><a class="anchor" href="#zcd"></a>Zcd</h2>
+<h2 id="zcd"><a class="anchor" href="#zcd"></a>7. Zcd</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Zcd is the existing set of compressed double precision floating point loads and stores: <em>c.fld</em>, <em>c.fldsp</em>, <em>c.fsd</em>, <em>c.fsdsp</em>.</p>
@@ -1059,7 +1134,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="zcb"><a class="anchor" href="#zcb"></a>Zcb</h2>
+<h2 id="zcb"><a class="anchor" href="#zcb"></a>8. Zcb</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Zcb has simple code-size saving instructions which are easy to implement on all CPUs.</p>
@@ -1194,7 +1269,7 @@ Zcb can be implemented on <em>any</em> CPU as the instructions are 16-bit versio
 </div>
 </div>
 <div class="sect1">
-<h2 id="Zcmp"><a class="anchor" href="#Zcmp"></a>Zcmp</h2>
+<h2 id="Zcmp"><a class="anchor" href="#Zcmp"></a>9. Zcmp</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zcmp extension is a set of instructions which may be executed as a series of existing 32-bit RISC-V instructions.</p>
@@ -1306,7 +1381,7 @@ Zcmp is primarily targeted at embedded class CPUs due to implementation complexi
 </div>
 </div>
 <div class="sect1">
-<h2 id="Zcmt"><a class="anchor" href="#Zcmt"></a>Zcmt</h2>
+<h2 id="Zcmt"><a class="anchor" href="#Zcmt"></a>10. Zcmt</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Zcmt adds the table jump instructions and also adds the jvt CSR. The jvt CSR requires a
@@ -1364,7 +1439,7 @@ Zcmt is primarily targeted at embedded class CPUs due to implementation complexi
 </div>
 </div>
 <div class="sect1">
-<h2 id="Zc_formats"><a class="anchor" href="#Zc_formats"></a>Zc instruction formats</h2>
+<h2 id="Zc_formats"><a class="anchor" href="#Zc_formats"></a>11. Zc instruction formats</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Several instructions in this specification use the following new instruction formats.</p>
@@ -1494,10 +1569,10 @@ Zcmt is primarily targeted at embedded class CPUs due to implementation complexi
 </div>
 </div>
 <div class="sect1">
-<h2 id="Zcb_instructions"><a class="anchor" href="#Zcb_instructions"></a>Zcb instructions</h2>
+<h2 id="Zcb_instructions"><a class="anchor" href="#Zcb_instructions"></a>12. Zcb instructions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-c_lbu"><a class="anchor" href="#insns-c_lbu"></a>c.lbu</h3>
+<h3 id="insns-c_lbu"><a class="anchor" href="#insns-c_lbu"></a>12.1. c.lbu</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1523,7 +1598,7 @@ Zcmt is primarily targeted at embedded class CPUs due to implementation complexi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">  uimm[31:2] = 0;
   uimm[1]    = encoding[5];
   uimm[0]    = encoding[6];</code></pre>
 </div>
@@ -1559,7 +1634,7 @@ Zcmt is primarily targeted at embedded class CPUs due to implementation complexi
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);</code></pre>
 </div>
@@ -1567,7 +1642,7 @@ X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_lhu"><a class="anchor" href="#insns-c_lhu"></a>c.lhu</h3>
+<h3 id="insns-c_lhu"><a class="anchor" href="#insns-c_lhu"></a>12.2. c.lhu</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1593,7 +1668,7 @@ X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">  uimm[31:2] = 0;
   uimm[1]    = encoding[5];
   uimm[0]    = 0;</code></pre>
 </div>
@@ -1629,7 +1704,7 @@ X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
@@ -1637,7 +1712,7 @@ X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_lh"><a class="anchor" href="#insns-c_lh"></a>c.lh</h3>
+<h3 id="insns-c_lh"><a class="anchor" href="#insns-c_lh"></a>12.3. c.lh</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1663,7 +1738,7 @@ X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">  uimm[31:2] = 0;
   uimm[1]    = encoding[5];
   uimm[0]    = 0;</code></pre>
 </div>
@@ -1699,7 +1774,7 @@ X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
@@ -1707,7 +1782,7 @@ X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_sb"><a class="anchor" href="#insns-c_sb"></a>c.sb</h3>
+<h3 id="insns-c_sb"><a class="anchor" href="#insns-c_sb"></a>12.4. c.sb</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1733,7 +1808,7 @@ X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">  uimm[31:2] = 0;
   uimm[1]    = encoding[5];
   uimm[0]    = encoding[6];</code></pre>
 </div>
@@ -1769,7 +1844,7 @@ X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)</code></pre>
 </div>
@@ -1777,7 +1852,7 @@ mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_sh"><a class="anchor" href="#insns-c_sh"></a>c.sh</h3>
+<h3 id="insns-c_sh"><a class="anchor" href="#insns-c_sh"></a>12.5. c.sh</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1803,7 +1878,7 @@ mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">  uimm[31:2] = 0;
+<pre class="highlight"><code class="language-sail" data-lang="sail">  uimm[31:2] = 0;
   uimm[1]    = encoding[5];
   uimm[0]    = 0;</code></pre>
 </div>
@@ -1839,7 +1914,7 @@ mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 mem[X(rs1c)+EXTZ(uimm)][15..0] = X(rs2c)</code></pre>
 </div>
@@ -1847,7 +1922,7 @@ mem[X(rs1c)+EXTZ(uimm)][15..0] = X(rs2c)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_zext_b"><a class="anchor" href="#insns-c_zext_b"></a>c.zext.b</h3>
+<h3 id="insns-c_zext_b"><a class="anchor" href="#insns-c_zext_b"></a>12.6. c.zext.b</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1901,7 +1976,7 @@ the bits more significant than 7.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">andi rd'/rs1', rd'/rs1', 0xff</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">andi rd'/rs1', rd'/rs1', 0xff</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1923,13 +1998,13 @@ the bits more significant than 7.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[7..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[7..0]);</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_sext_b"><a class="anchor" href="#insns-c_sext_b"></a>c.sext.b</h3>
+<h3 id="insns-c_sext_b"><a class="anchor" href="#insns-c_sext_b"></a>12.7. c.sext.b</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -1995,7 +2070,7 @@ The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[7..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[7..0]);</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2023,13 +2098,13 @@ The SAIL module variable for <em>rd'/rs1'</em> is called <em>rsdc</em>.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[15..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[15..0]);</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_zext_h"><a class="anchor" href="#insns-c_zext_h"></a>c.zext.h</h3>
+<h3 id="insns-c_zext_h"><a class="anchor" href="#insns-c_zext_h"></a>12.8. c.zext.h</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2097,13 +2172,13 @@ the bits more significant than 15.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[15..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[15..0]);</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_sext_h"><a class="anchor" href="#insns-c_sext_h"></a>c.sext.h</h3>
+<h3 id="insns-c_sext_h"><a class="anchor" href="#insns-c_sext_h"></a>12.9. c.sext.h</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2171,13 +2246,13 @@ in the halfword (i.e., bit 15) to all of the more-significant bits.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[15..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTS(X(rsdc)[15..0]);</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_zext_w"><a class="anchor" href="#insns-c_zext_w"></a>c.zext.w</h3>
+<h3 id="insns-c_zext_w"><a class="anchor" href="#insns-c_zext_w"></a>12.10. c.zext.w</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2231,7 +2306,7 @@ the bits more significant than 31.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">add.uw rd'/rs1', rd'/rs1', zero</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">add.uw rd'/rs1', rd'/rs1', zero</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2253,13 +2328,13 @@ the bits more significant than 31.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[31..0]);</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = EXTZ(X(rsdc)[31..0]);</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_not"><a class="anchor" href="#insns-c_not"></a>c.not</h3>
+<h3 id="insns-c_not"><a class="anchor" href="#insns-c_not"></a>12.11. c.not</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2311,7 +2386,7 @@ the bits more significant than 31.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">xori rd'/rs1', rd'/rs1', -1</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">xori rd'/rs1', rd'/rs1', -1</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2333,13 +2408,13 @@ the bits more significant than 31.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">X(rsdc) = X(rsdc) XOR -1;</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">X(rsdc) = X(rsdc) XOR -1;</code></pre>
 </div>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-c_mul"><a class="anchor" href="#insns-c_mul"></a>c.mul</h3>
+<h3 id="insns-c_mul"><a class="anchor" href="#insns-c_mul"></a>12.12. c.mul</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2405,7 +2480,7 @@ the bits more significant than 31.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">let result_wide = to_bits(2 * sizeof(xlen), signed(X(rsdc)) * signed(X(rs2c)));
+<pre class="highlight"><code class="language-sail" data-lang="sail">let result_wide = to_bits(2 * sizeof(xlen), signed(X(rsdc)) * signed(X(rs2c)));
 X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 </div>
 </div>
@@ -2414,7 +2489,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="insns-pushpop"><a class="anchor" href="#insns-pushpop"></a>PUSH/POP register instructions</h2>
+<h2 id="insns-pushpop"><a class="anchor" href="#insns-pushpop"></a>13. PUSH/POP register instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>These instructions are collectively referred to as PUSH/POP:</p>
@@ -2448,7 +2523,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 <p>Common details for these instructions are in this section.</p>
 </div>
 <div class="sect2">
-<h3 id="pushpop-functional-overview"><a class="anchor" href="#pushpop-functional-overview"></a>PUSH/POP functional overview</h3>
+<h3 id="pushpop-functional-overview"><a class="anchor" href="#pushpop-functional-overview"></a>13.1. PUSH/POP functional overview</h3>
 <div class="paragraph">
 <p>PUSH, POP, POPRET are used to reduce the size of function prologues and epilogues.</p>
 </div>
@@ -2504,7 +2579,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="example-usage"><a class="anchor" href="#example-usage"></a>Example usage</h3>
+<h3 id="example-usage"><a class="anchor" href="#example-usage"></a>13.2. Example usage</h3>
 <div class="paragraph">
 <p>This example gives an illustration of the use of PUSH and POPRET.</p>
 </div>
@@ -2516,7 +2591,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">   0001098a &lt;processMarkers&gt;:
+<pre class="highlight"><code class="language-SAIL" data-lang="SAIL">   0001098a &lt;processMarkers&gt;:
    1098a:       711d                    addi    sp,sp,-96 ;#cm.push(1)
    1098c:       c8ca                    sw      s2,80(sp) ;#cm.push(2)
    1098e:       c6ce                    sw      s3,76(sp) ;#cm.push(3)
@@ -2556,7 +2631,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
+<pre class="highlight"><code class="language-SAIL" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
    1080e:       73a012ef                jal     t0,11f48 &lt;__riscv_save_12&gt;
    10812:       1101                    addi    sp,sp,-32
 ...
@@ -2570,7 +2645,7 @@ X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-SAIL hljs" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
+<pre class="highlight"><code class="language-SAIL" data-lang="SAIL">0001080e &lt;processMarkers&gt;:
    1080e:       b8fa                    cm.push    \{ra,s0-s11},-96
 ...
    10866:       bcfa                    cm.popretz \{ra,s0-s11}, 96</code></pre>
@@ -2611,7 +2686,7 @@ calling the millicode <em>save/restore</em> routines and so may also perform bet
 </table>
 </div>
 <div class="sect3">
-<h4 id="pushpop-areg-list"><a class="anchor" href="#pushpop-areg-list"></a>Stack pointer adjustment handling</h4>
+<h4 id="pushpop-areg-list"><a class="anchor" href="#pushpop-areg-list"></a>13.2.1. Stack pointer adjustment handling</h4>
 <div class="paragraph">
 <p>The instructions all automatically adjust the stack pointer by enough to cover the memory required for the registers being saved or restored.
 Additionally the <em>spimm</em> field in the encoding allows the stack pointer to be adjusted in additional increments of 16-bytes. There is only a small restricted
@@ -2619,14 +2694,14 @@ range available in the encoding; if the range is insufficient then a separate <e
 </div>
 </div>
 <div class="sect3">
-<h4 id="register-list-handling"><a class="anchor" href="#register-list-handling"></a>Register list handling</h4>
+<h4 id="register-list-handling"><a class="anchor" href="#register-list-handling"></a>13.2.2. Register list handling</h4>
 <div class="paragraph">
 <p>There is no support for the <em>\{ra, s0-s10}</em> register list without also adding <em>s11</em>. Therefore the <em>\{ra, s0-s11}</em> register list must be used in this case.</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pushpop-idempotent-memory"><a class="anchor" href="#pushpop-idempotent-memory"></a>PUSH/POP Fault handling</h3>
+<h3 id="pushpop-idempotent-memory"><a class="anchor" href="#pushpop-idempotent-memory"></a>13.3. PUSH/POP Fault handling</h3>
 <div class="paragraph">
 <p>Correct execution requires that <em>sp</em> refers to idempotent memory (also see <a href="#pushpop_non-idem-mem">Non-idempotent memory handling</a>), because the core must be able to
 handle traps detected during the sequence.
@@ -2649,9 +2724,9 @@ It is implementation defined whether interrupts can also be taken during the seq
 </div>
 </div>
 <div class="sect2">
-<h3 id="pushpop-software-view"><a class="anchor" href="#pushpop-software-view"></a>Software view of execution</h3>
+<h3 id="pushpop-software-view"><a class="anchor" href="#pushpop-software-view"></a>13.4. Software view of execution</h3>
 <div class="sect3">
-<h4 id="software-view-of-the-push-sequence"><a class="anchor" href="#software-view-of-the-push-sequence"></a>Software view of the PUSH sequence</h4>
+<h4 id="software-view-of-the-push-sequence"><a class="anchor" href="#software-view-of-the-push-sequence"></a>13.4.1. Software view of the PUSH sequence</h4>
 <div class="paragraph">
 <p>From a software perspective the PUSH sequence appears as:</p>
 </div>
@@ -2706,7 +2781,7 @@ or handles errors responses after completing the PUSH instruction.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.push  \{ra, s0-s5}, -64</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.push  \{ra, s0-s5}, -64</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2714,7 +2789,7 @@ or handles errors responses after completing the PUSH instruction.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail"># any bytes from sp-1 to sp-28 may be written multiple times before
+<pre class="highlight"><code class="language-sail" data-lang="sail"># any bytes from sp-1 to sp-28 may be written multiple times before
 # the instruction completes therefore these updates may be visible in
 # the interrupt/exception handler below the stack pointer
 sw  s5, -4(sp)
@@ -2733,7 +2808,7 @@ addi sp, sp, -64</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="software-view-of-the-poppopret-sequence"><a class="anchor" href="#software-view-of-the-poppopret-sequence"></a>Software view of the POP/POPRET sequence</h4>
+<h4 id="software-view-of-the-poppopret-sequence"><a class="anchor" href="#software-view-of-the-poppopret-sequence"></a>13.4.2. Software view of the POP/POPRET sequence</h4>
 <div class="paragraph">
 <p>From a software perspective the POP/POPRET sequence appears as:</p>
 </div>
@@ -2783,7 +2858,7 @@ Therefore it is permitted for an implementation to update some of the destinatio
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popretz \{ra, s0-s3}, 32;</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.popretz \{ra, s0-s3}, 32;</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2791,7 +2866,7 @@ Therefore it is permitted for an implementation to update some of the destinatio
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail"># any or all of these load instructions may execute multiple times
+<pre class="highlight"><code class="language-sail" data-lang="sail"># any or all of these load instructions may execute multiple times
 # therefore these updates may be visible in the interrupt/exception handler
 lw   s3, 28(sp)
 lw   s2, 24(sp)
@@ -2810,7 +2885,7 @@ ret</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="pushpop_non-idem-mem"><a class="anchor" href="#pushpop_non-idem-mem"></a>Non-idempotent memory handling</h3>
+<h3 id="pushpop_non-idem-mem"><a class="anchor" href="#pushpop_non-idem-mem"></a>13.5. Non-idempotent memory handling</h3>
 <div class="paragraph">
 <p>An implementation may have a requirement to issue a PUSH/POP instruction to non-idempotent memory.</p>
 </div>
@@ -2825,13 +2900,13 @@ being issued repeatedly in the case that they cause exceptions.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="example-rv32i-pushpop-sequences"><a class="anchor" href="#example-rv32i-pushpop-sequences"></a>Example RV32I PUSH/POP sequences</h3>
+<h3 id="example-rv32i-pushpop-sequences"><a class="anchor" href="#example-rv32i-pushpop-sequences"></a>13.6. Example RV32I PUSH/POP sequences</h3>
 <div class="paragraph">
 <p>The examples are included show the load/store series expansion and the stack adjustment.
 Examples of <em>cm.popret</em> and <em>cm.popretz</em> are not included, as the difference in the expanded sequence from <em>cm.pop</em> is trivial in all cases.</p>
 </div>
 <div class="sect3">
-<h4 id="cm-push-ra-s0-s2-64"><a class="anchor" href="#cm-push-ra-s0-s2-64"></a>cm.push  \{ra, s0-s2}, -64</h4>
+<h4 id="cm-push-ra-s0-s2-64"><a class="anchor" href="#cm-push-ra-s0-s2-64"></a>13.6.1. cm.push  \{ra, s0-s2}, -64</h4>
 <div class="paragraph">
 <p>Encoding: <em>rlist</em>=7, <em>spimm</em>=3</p>
 </div>
@@ -2840,7 +2915,7 @@ Examples of <em>cm.popret</em> and <em>cm.popretz</em> are not included, as the 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">sw  s2,  -4(sp);
+<pre class="highlight"><code class="language-sail" data-lang="sail">sw  s2,  -4(sp);
 sw  s1,  -8(sp);
 sw  s0, -12(sp);
 sw  ra, -16(sp);
@@ -2849,7 +2924,7 @@ addi sp, sp, -64;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cm-push-ra-s0-s11-112"><a class="anchor" href="#cm-push-ra-s0-s11-112"></a>cm.push \{ra, s0-s11}, -112</h4>
+<h4 id="cm-push-ra-s0-s11-112"><a class="anchor" href="#cm-push-ra-s0-s11-112"></a>13.6.2. cm.push \{ra, s0-s11}, -112</h4>
 <div class="paragraph">
 <p>Encoding: <em>rlist</em>=15, <em>spimm</em>=3</p>
 </div>
@@ -2858,7 +2933,7 @@ addi sp, sp, -64;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">sw  s11,  -4(sp);
+<pre class="highlight"><code class="language-sail" data-lang="sail">sw  s11,  -4(sp);
 sw  s10,  -8(sp);
 sw  s9,  -12(sp);
 sw  s8,  -16(sp);
@@ -2877,7 +2952,7 @@ addi sp, sp, -112;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect3">
-<h4 id="cm-pop-ra-16"><a class="anchor" href="#cm-pop-ra-16"></a>cm.pop   {ra}, 16</h4>
+<h4 id="cm-pop-ra-16"><a class="anchor" href="#cm-pop-ra-16"></a>13.6.3. cm.pop   {ra}, 16</h4>
 <div class="paragraph">
 <p>Encoding: <em>rlist</em>=4, <em>spimm</em>=0</p>
 </div>
@@ -2886,13 +2961,13 @@ addi sp, sp, -112;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   ra, 12(sp);
+<pre class="highlight"><code class="language-sail" data-lang="sail">lw   ra, 12(sp);
 addi sp, sp, 16;</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cm-pop-ra-s0-s3-48"><a class="anchor" href="#cm-pop-ra-s0-s3-48"></a>cm.pop \{ra, s0-s3}, 48</h4>
+<h4 id="cm-pop-ra-s0-s3-48"><a class="anchor" href="#cm-pop-ra-s0-s3-48"></a>13.6.4. cm.pop \{ra, s0-s3}, 48</h4>
 <div class="paragraph">
 <p>Encoding: <em>rlist</em>=8, <em>spimm</em>=1</p>
 </div>
@@ -2901,7 +2976,7 @@ addi sp, sp, 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   s3, 44(sp);
+<pre class="highlight"><code class="language-sail" data-lang="sail">lw   s3, 44(sp);
 lw   s2, 40(sp);
 lw   s1, 36(sp);
 lw   s0, 32(sp);
@@ -2911,7 +2986,7 @@ addi sp, sp, 48;</code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="cm-pop-ra-s0-s4-64"><a class="anchor" href="#cm-pop-ra-s0-s4-64"></a>cm.pop \{ra, s0-s4}, 64</h4>
+<h4 id="cm-pop-ra-s0-s4-64"><a class="anchor" href="#cm-pop-ra-s0-s4-64"></a>13.6.5. cm.pop \{ra, s0-s4}, 64</h4>
 <div class="paragraph">
 <p>Encoding: <em>rlist</em>=9, <em>spimm</em>=2</p>
 </div>
@@ -2920,7 +2995,7 @@ addi sp, sp, 48;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">lw   s4, 60(sp);
+<pre class="highlight"><code class="language-sail" data-lang="sail">lw   s4, 60(sp);
 lw   s3, 56(sp);
 lw   s2, 52(sp);
 lw   s1, 48(sp);
@@ -2933,7 +3008,7 @@ addi sp, sp, 64;</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_push"><a class="anchor" href="#insns-cm_push"></a>cm.push</h3>
+<h3 id="insns-cm_push"><a class="anchor" href="#insns-cm_push"></a>13.7. cm.push</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -2973,7 +3048,7 @@ addi sp, sp, 64;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.push \{reg_list},  -stack_adj
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.push \{reg_list},  -stack_adj
 cm.push {xreg_list}, -stack_adj</code></pre>
 </div>
 </div>
@@ -2982,7 +3057,7 @@ cm.push {xreg_list}, -stack_adj</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -2995,7 +3070,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I, RV64:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3018,7 +3093,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 stack_adj_base = 16;
 Valid values:
@@ -3027,7 +3102,7 @@ stack_adj      = [16|32|48|64];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I:
 
 switch (rlist) {
   case  4.. 7: stack_adj_base = 16;
@@ -3047,7 +3122,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV64:
 
 switch (rlist) {
   case  4.. 5: stack_adj_base =  16;
@@ -3130,7 +3205,7 @@ as defined above.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 if (XLEN==32) bytes=4; else bytes=8;
 
@@ -3152,7 +3227,7 @@ for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 sp-=stack_adj;</code></pre>
 </div>
@@ -3160,7 +3235,7 @@ sp-=stack_adj;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_pop"><a class="anchor" href="#insns-cm_pop"></a>cm.pop</h3>
+<h3 id="insns-cm_pop"><a class="anchor" href="#insns-cm_pop"></a>13.8. cm.pop</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -3200,7 +3275,7 @@ sp-=stack_adj;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.pop \{reg_list},  stack_adj
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.pop \{reg_list},  stack_adj
 cm.pop {xreg_list}, stack_adj</code></pre>
 </div>
 </div>
@@ -3209,7 +3284,7 @@ cm.pop {xreg_list}, stack_adj</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3222,7 +3297,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I, RV64:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3245,7 +3320,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 stack_adj_base = 16;
 Valid values:
@@ -3254,7 +3329,7 @@ stack_adj      = [16|32|48|64];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I:
 
 switch (rlist) {
   case  4.. 7: stack_adj_base = 16;
@@ -3274,7 +3349,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV64:
 
 switch (rlist) {
   case  4.. 5: stack_adj_base =  16;
@@ -3356,7 +3431,7 @@ as defined above.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 if (XLEN==32) bytes=4; else bytes=8;
 
@@ -3378,7 +3453,7 @@ for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 sp+=stack_adj;</code></pre>
 </div>
@@ -3386,7 +3461,7 @@ sp+=stack_adj;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_popretz"><a class="anchor" href="#insns-cm_popretz"></a>cm.popretz</h3>
+<h3 id="insns-cm_popretz"><a class="anchor" href="#insns-cm_popretz"></a>13.9. cm.popretz</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -3426,13 +3501,13 @@ sp+=stack_adj;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popretz \{reg_list},  stack_adj
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.popretz \{reg_list},  stack_adj
 cm.popretz {xreg_list}, stack_adj</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3445,7 +3520,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I, RV64:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3468,7 +3543,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 stack_adj_base = 16;
 Valid values:
@@ -3477,7 +3552,7 @@ stack_adj      = [16|32|48|64];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I:
 
 switch (rlist) {
   case  4.. 7: stack_adj_base = 16;
@@ -3497,7 +3572,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV64:
 
 switch (rlist) {
   case  4.. 5: stack_adj_base =  16;
@@ -3577,7 +3652,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 if (XLEN==32) bytes=4; else bytes=8;
 
@@ -3613,7 +3688,7 @@ for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 asm("li a0, 0");
 sp+=stack_adj;
@@ -3623,7 +3698,7 @@ asm("ret");</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_popret"><a class="anchor" href="#insns-cm_popret"></a>cm.popret</h3>
+<h3 id="insns-cm_popret"><a class="anchor" href="#insns-cm_popret"></a>13.10. cm.popret</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -3663,7 +3738,7 @@ asm("ret");</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.popret \{reg_list},  stack_adj
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.popret \{reg_list},  stack_adj
 cm.popret {xreg_list}, stack_adj</code></pre>
 </div>
 </div>
@@ -3672,7 +3747,7 @@ cm.popret {xreg_list}, stack_adj</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3685,7 +3760,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I, RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I, RV64:
 
 switch (rlist){
   case  4: \{reg_list="ra";         xreg_list="x1";}
@@ -3708,7 +3783,7 @@ stack_adj      = stack_adj_base + spimm[5:4] * 16;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32E:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32E:
 
 stack_adj_base = 16;
 Valid values:
@@ -3717,7 +3792,7 @@ stack_adj      = [16|32|48|64];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV32I:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV32I:
 
 switch (rlist) {
   case  4.. 7: stack_adj_base = 16;
@@ -3737,7 +3812,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">RV64:
+<pre class="highlight"><code class="language-sail" data-lang="sail">RV64:
 
 switch (rlist) {
   case  4.. 5: stack_adj_base =  16;
@@ -3817,7 +3892,7 @@ switch (rlist) {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 if (XLEN==32) bytes=4; else bytes=8;
 
@@ -3839,7 +3914,7 @@ for(i in 27,26,25,24,23,22,21,20,19,18,9,8,1)  {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 sp+=stack_adj;
 asm("ret");</code></pre>
@@ -3848,7 +3923,7 @@ asm("ret");</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_mvsa01"><a class="anchor" href="#insns-cm_mvsa01"></a>cm.mvsa01</h3>
+<h3 id="insns-cm_mvsa01"><a class="anchor" href="#insns-cm_mvsa01"></a>13.11. cm.mvsa01</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -3888,7 +3963,7 @@ asm("ret");</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.mvsa01 r1s', r2s'</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.mvsa01 r1s', r2s'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3931,7 +4006,7 @@ The mapping between them is specified in the pseudo-code below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 if (RV32E &amp;&amp; (r1sc&gt;1 || r2sc&gt;1)) {
   reserved();
 }
@@ -3944,7 +4019,7 @@ X[xreg2] = X[11];</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_mva01s"><a class="anchor" href="#insns-cm_mva01s"></a>cm.mva01s</h3>
+<h3 id="insns-cm_mva01s"><a class="anchor" href="#insns-cm_mva01s"></a>13.12. cm.mva01s</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -3970,7 +4045,7 @@ X[xreg2] = X[11];</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.mva01s r1s', r2s'</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.mva01s r1s', r2s'</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4013,7 +4088,7 @@ The mapping between them is specified in the pseudo-code below.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 if (RV32E &amp;&amp; (r1sc&gt;1 || r2sc&gt;1)) {
   reserved();
 }
@@ -4028,7 +4103,7 @@ X[11] = X[xreg2];</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="insns-tablejump"><a class="anchor" href="#insns-tablejump"></a>Table Jump Overview</h2>
+<h2 id="insns-tablejump"><a class="anchor" href="#insns-tablejump"></a>14. Table Jump Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>cm.jt</em> (<a href="#insns-cm_jt">Jump via table</a>) and <em>cm.jalt</em> (<a href="#insns-cm_jalt">Jump and link via table</a>) are referred to as table jump.</p>
@@ -4076,7 +4151,7 @@ The table must be a minimum of 64-byte aligned.</p>
 <p>If a return address stack is implemented, then as <em>cm.jalt</em> is equivalent to <em>jal ra</em>, it pushes to the stack.</p>
 </div>
 <div class="sect2">
-<h3 id="jvt"><a class="anchor" href="#jvt"></a>jvt</h3>
+<h3 id="jvt"><a class="anchor" href="#jvt"></a>14.1. jvt</h3>
 <div class="paragraph">
 <p>The base of the table is in the jvt CSR (see <a href="#csrs-jvt">jvt CSR, table jump base vector and control register</a>), each table entry is XLEN bits.</p>
 </div>
@@ -4086,7 +4161,7 @@ This is typically caused by the same function being called with and without tail
 </div>
 </div>
 <div class="sect2">
-<h3 id="tablejump-fault-handling"><a class="anchor" href="#tablejump-fault-handling"></a>Table Jump Fault handling</h3>
+<h3 id="tablejump-fault-handling"><a class="anchor" href="#tablejump-fault-handling"></a>14.2. Table Jump Fault handling</h3>
 <div class="paragraph">
 <p>For a table jump instruction, the table entry that the instruction selects is considered an extension of the instruction itself.
 Hence, the execution of a table jump instruction involves two instruction fetches, the first to read the instruction (<em>cm.jt</em>/<em>cm.jalt</em>)
@@ -4106,7 +4181,7 @@ if the tables have not been updated in memory since the last <em>fence.i</em>.</
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="csrs-jvt"><a class="anchor" href="#csrs-jvt"></a>jvt CSR</h3>
+<h3 id="csrs-jvt"><a class="anchor" href="#csrs-jvt"></a>14.3. jvt CSR</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -4212,7 +4287,7 @@ attempt to program different modes and read back the values to see which are ava
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_jt"><a class="anchor" href="#insns-cm_jt"></a>cm.jt</h3>
+<h3 id="insns-cm_jt"><a class="anchor" href="#insns-cm_jt"></a>14.4. cm.jt</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -4266,7 +4341,7 @@ attempt to program different modes and read back the values to see which are ava
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.jt index</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.jt index</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4296,7 +4371,7 @@ attempt to program different modes and read back the values to see which are ava
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 # target_address is temporary internal state, it doesn't represent a real register
 # InstMemory is byte indexed
@@ -4315,7 +4390,7 @@ j target_address[XLEN-1:0]&amp;~0x1;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-cm_jalt"><a class="anchor" href="#insns-cm_jalt"></a>cm.jalt</h3>
+<h3 id="insns-cm_jalt"><a class="anchor" href="#insns-cm_jalt"></a>14.5. cm.jalt</h3>
 <div class="paragraph">
 <p>Synopsis:</p>
 </div>
@@ -4369,7 +4444,7 @@ j target_address[XLEN-1:0]&amp;~0x1;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">cm.jalt index</code></pre>
+<pre class="highlight"><code class="language-sail" data-lang="sail">cm.jalt index</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4399,7 +4474,7 @@ j target_address[XLEN-1:0]&amp;~0x1;</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
+<pre class="highlight"><code class="language-sail" data-lang="sail">//This is not SAIL, it's pseudo-code. The SAIL hasn't been written yet.
 
 # target_address is temporary internal state, it doesn't represent a real register
 # InstMemory is byte indexed

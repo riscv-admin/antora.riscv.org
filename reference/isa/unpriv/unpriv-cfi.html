@@ -560,6 +560,28 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">Control-flow Integrity (CFI)</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#unpriv-forward">1. Landing Pad (Zicfilp)</a>
+<ul class="sectlevel2">
+<li><a href="#landing-pad-enforcement">1.1. Landing Pad Enforcement</a></li>
+<li><a href="#LP_INST">1.2. Landing Pad Instruction</a></li>
+</ul>
+</li>
+<li><a href="#unpriv-backward">2. Shadow Stack (Zicfiss)</a>
+<ul class="sectlevel2">
+<li><a href="#zicfiss-instructions-summary">2.1. Zicfiss Instructions Summary</a></li>
+<li><a href="#shadow-stack-pointer-ssp">2.2. Shadow Stack Pointer (<code>ssp</code>)</a></li>
+<li><a href="#zicfiss-instructions">2.3. Zicfiss Instructions</a></li>
+<li><a href="#SS_PUSH">2.4. Push to the Shadow Stack</a></li>
+<li><a href="#SS_POP">2.5. Pop from the Shadow Stack</a></li>
+<li><a href="#SSP_READ">2.6. Read <code>ssp</code> into a Register</a></li>
+<li><a href="#SSAMOSWAP">2.7. Atomic Swap from a Shadow Stack Location</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -636,7 +658,7 @@ Privileged ISA specification.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="unpriv-forward"><a class="anchor" href="#unpriv-forward"></a>Landing Pad (Zicfilp)</h2>
+<h2 id="unpriv-forward"><a class="anchor" href="#unpriv-forward"></a>1. Landing Pad (Zicfilp)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To enforce forward-edge control-flow integrity, the Zicfilp extension introduces
@@ -731,7 +753,7 @@ for each privilege mode.</p>
 <p>The Zicfilp extension depends on the Zicsr extension.</p>
 </div>
 <div class="sect2">
-<h3 id="landing-pad-enforcement"><a class="anchor" href="#landing-pad-enforcement"></a>Landing Pad Enforcement</h3>
+<h3 id="landing-pad-enforcement"><a class="anchor" href="#landing-pad-enforcement"></a>1.1. Landing Pad Enforcement</h3>
 <div class="paragraph">
 <p>To enforce that the target of an indirect call or indirect jump must be a valid
 landing pad instruction, the hart maintains an expected landing pad (<code>ELP</code>) state
@@ -865,7 +887,7 @@ the accidental landing pad.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="LP_INST"><a class="anchor" href="#LP_INST"></a>Landing Pad Instruction</h3>
+<h3 id="LP_INST"><a class="anchor" href="#LP_INST"></a>1.2. Landing Pad Instruction</h3>
 <div class="paragraph">
 <p>When Zicfilp is enabled, <code>LPAD</code> is the only instruction allowed to execute when
 the <code>ELP</code> state is <code>LP_EXPECTED</code>. If Zicfilp is not enabled then the instruction
@@ -918,7 +940,7 @@ endif</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="unpriv-backward"><a class="anchor" href="#unpriv-backward"></a>Shadow Stack (Zicfiss)</h2>
+<h2 id="unpriv-backward"><a class="anchor" href="#unpriv-backward"></a>2. Shadow Stack (Zicfiss)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zicfiss extension introduces a shadow stack to enforce backward-edge
@@ -1010,7 +1032,7 @@ if the Zcmop extension is implemented, the Zicfiss extension also provides the
 requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.</p>
 </div>
 <div class="sect2">
-<h3 id="zicfiss-instructions-summary"><a class="anchor" href="#zicfiss-instructions-summary"></a>Zicfiss Instructions Summary</h3>
+<h3 id="zicfiss-instructions-summary"><a class="anchor" href="#zicfiss-instructions-summary"></a>2.1. Zicfiss Instructions Summary</h3>
 <div class="paragraph">
 <p>The Zicfiss extension introduces the following instructions:</p>
 </div>
@@ -1072,7 +1094,7 @@ redefined by another extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="shadow-stack-pointer-ssp"><a class="anchor" href="#shadow-stack-pointer-ssp"></a>Shadow Stack Pointer (<code>ssp</code>)</h3>
+<h3 id="shadow-stack-pointer-ssp"><a class="anchor" href="#shadow-stack-pointer-ssp"></a>2.2. Shadow Stack Pointer (<code>ssp</code>)</h3>
 <div class="paragraph">
 <p>The <code>ssp</code> CSR is an unprivileged read-write (URW) CSR that reads and writes
 <code>XLEN</code> low order bits of the shadow stack pointer (<code>ssp</code>). The CSR address is
@@ -1083,11 +1105,11 @@ UXLEN or SXLEN may never be 32, then the bit 2 is also read-only zero.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zicfiss-instructions"><a class="anchor" href="#zicfiss-instructions"></a>Zicfiss Instructions</h3>
+<h3 id="zicfiss-instructions"><a class="anchor" href="#zicfiss-instructions"></a>2.3. Zicfiss Instructions</h3>
 
 </div>
 <div class="sect2">
-<h3 id="SS_PUSH"><a class="anchor" href="#SS_PUSH"></a>Push to the Shadow Stack</h3>
+<h3 id="SS_PUSH"><a class="anchor" href="#SS_PUSH"></a>2.4. Push to the Shadow Stack</h3>
 <div class="paragraph">
 <p>A shadow stack push operation is defined as decrement of the <code>ssp</code> by <code>XLEN/8</code>
 followed by a store of the value in the link register to memory at the new top
@@ -1133,7 +1155,7 @@ shadow stack completes successfully.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SS_POP"><a class="anchor" href="#SS_POP"></a>Pop from the Shadow Stack</h3>
+<h3 id="SS_POP"><a class="anchor" href="#SS_POP"></a>2.5. Pop from the Shadow Stack</h3>
 <div class="paragraph">
 <p>A shadow stack pop operation is defined as an <code>XLEN</code> wide read from the
 current top of the shadow stack followed by an increment of the <code>ssp</code> by
@@ -1338,7 +1360,7 @@ and thus may be used to transiently forward the data from such stores to
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SSP_READ"><a class="anchor" href="#SSP_READ"></a>Read <code>ssp</code> into a Register</h3>
+<h3 id="SSP_READ"><a class="anchor" href="#SSP_READ"></a>2.6. Read <code>ssp</code> into a Register</h3>
 <div class="paragraph">
 <p>The <code>SSRDP</code> instruction is provided to move the contents of <code>ssp</code> to a destination
 register.</p>
@@ -1463,7 +1485,7 @@ back_cfi_not_active:
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SSAMOSWAP"><a class="anchor" href="#SSAMOSWAP"></a>Atomic Swap from a Shadow Stack Location</h3>
+<h3 id="SSAMOSWAP"><a class="anchor" href="#SSAMOSWAP"></a>2.7. Atomic Swap from a Shadow Stack Location</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNp10LEKwyAUBdC9X_E2FymatBTcAl1LCxkyhAxWTRpINFU7hfx7baGmGZzk4eF6n7NVHYN6BzDfe-8YwAmD5qNigMwkjFQIA_feMlRcrmjBf_IYpZVRSeX8luWRtS8tfP6jNSKUhCEcFDWpZEdjNJfSJhu4LDpnxZbRlQ2pG_5MRYeWhK6lyzJ8RFkVt331Kb-O5-8SDQZhdNt3bB64ViEqvPFwExeKUZIdluUNQsVqNA==" alt="svg">

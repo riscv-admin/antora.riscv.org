@@ -560,6 +560,92 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">Cryptography Extensions: Vector Instructions, Version 1.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#crypto_vector_introduction">1. Introduction</a>
+<ul class="sectlevel2">
+<li><a href="#crypto_vector_audience">1.1. Intended Audience</a></li>
+<li><a href="#crypto_vector_sail_specifications">1.2. Sail Specifications</a></li>
+<li><a href="#crypto_vector_policies">1.3. Policies</a></li>
+<li><a href="#crypto-vector-element-groups">1.4. Element Groups</a></li>
+<li><a href="#crypto-vector-instruction-constraints">1.5. Instruction Constraints</a></li>
+<li><a href="#crypto-vector-scalar-instructions">1.6. Vector-Scalar Instructions</a></li>
+<li><a href="#crypto-vector-software-portability">1.7. Software Portability</a></li>
+</ul>
+</li>
+<li><a href="#crypto_vector_extensions">2. Extensions Overview</a>
+<ul class="sectlevel2">
+<li><a href="#zvbb">2.1. <code>Zvbb</code> - Vector Basic Bit-manipulation</a></li>
+<li><a href="#zvbc">2.2. <code>Zvbc</code> - Vector Carryless Multiplication</a></li>
+<li><a href="#zvkb">2.3. <code>Zvkb</code> - Vector Cryptography Bit-manipulation</a></li>
+<li><a href="#zvkg">2.4. <code>Zvkg</code> - Vector GCM/GMAC</a></li>
+<li><a href="#zvkned">2.5. <code>Zvkned</code> - NIST Suite: Vector AES Block Cipher</a></li>
+<li><a href="#zvknh">2.6. <code>Zvknh[ab]</code> - NIST Suite: Vector SHA-2 Secure Hash</a></li>
+<li><a href="#zvksed">2.7. <code>Zvksed</code> - ShangMi Suite: SM4 Block Cipher</a></li>
+<li><a href="#zvksh">2.8. <code>Zvksh</code> - ShangMi Suite: SM3 Secure Hash</a></li>
+<li><a href="#zvkn">2.9. <code>Zvkn</code> - NIST Algorithm Suite</a></li>
+<li><a href="#zvknc">2.10. <code>Zvknc</code> - NIST Algorithm Suite with carryless multiply</a></li>
+<li><a href="#zvkng">2.11. <code>Zvkng</code> - NIST Algorithm Suite with GCM</a></li>
+<li><a href="#zvks">2.12. <code>Zvks</code> - ShangMi Algorithm Suite</a></li>
+<li><a href="#zvksc">2.13. <code>Zvksc</code> - ShangMi Algorithm Suite with carryless multiplication</a></li>
+<li><a href="#zvksg">2.14. <code>Zvksg</code> - ShangMi Algorithm Suite with GCM</a></li>
+<li><a href="#zvkt">2.15. <code>Zvkt</code> - Vector Data-Independent Execution Latency</a>
+<ul class="sectlevel3">
+<li><a href="#all-zvbb-instructions">2.15.1. All Zvbb  instructions</a></li>
+<li><a href="#all-zvbc-instructions">2.15.2. All Zvbc instructions</a></li>
+<li><a href="#addsub">2.15.3. add/sub</a></li>
+<li><a href="#addsub-with-carry">2.15.4. add/sub with carry</a></li>
+<li><a href="#compare-and-set">2.15.5. compare and set</a></li>
+<li><a href="#copy">2.15.6. copy</a></li>
+<li><a href="#extend">2.15.7. extend</a></li>
+<li><a href="#logical">2.15.8. logical</a></li>
+<li><a href="#multiply">2.15.9. multiply</a></li>
+<li><a href="#multiply-add">2.15.10. multiply-add</a></li>
+<li><a href="#integer-merge">2.15.11. Integer Merge</a></li>
+<li><a href="#permute">2.15.12. permute</a></li>
+<li><a href="#shift">2.15.13. shift</a></li>
+<li><a href="#slide">2.15.14. slide</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#crypto_vector_insns">3. Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#insns-vaesdf">3.1. vaesdf.[vv,vs]</a></li>
+<li><a href="#insns-vaesdm">3.2. vaesdm.[vv,vs]</a></li>
+<li><a href="#insns-vaesef">3.3. vaesef.[vv,vs]</a></li>
+<li><a href="#insns-vaesem">3.4. vaesem.[vv,vs]</a></li>
+<li><a href="#insns-vaeskf1">3.5. vaeskf1.vi</a></li>
+<li><a href="#insns-vaeskf2">3.6. vaeskf2.vi</a></li>
+<li><a href="#insns-vaesz">3.7. vaesz.vs</a></li>
+<li><a href="#insns-vandn">3.8. vandn.[vv,vx]</a></li>
+<li><a href="#insns-vbrev">3.9. vbrev.v</a></li>
+<li><a href="#insns-vbrev8">3.10. vbrev8.v</a></li>
+<li><a href="#insns-vclmul">3.11. vclmul.[vv,vx]</a></li>
+<li><a href="#insns-vclmulh">3.12. vclmulh.[vv,vx]</a></li>
+<li><a href="#insns-vclz">3.13. vclz.v</a></li>
+<li><a href="#insns-vcpop">3.14. vcpop.v</a></li>
+<li><a href="#insns-vctz">3.15. vctz.v</a></li>
+<li><a href="#insns-vghsh">3.16. vghsh.vv</a></li>
+<li><a href="#insns-vgmul">3.17. vgmul.vv</a></li>
+<li><a href="#insns-vrev8">3.18. vrev8.v</a></li>
+<li><a href="#insns-vrol">3.19. vrol.[vv,vx]</a></li>
+<li><a href="#insns-vror">3.20. vror.[vv,vx,vi]</a></li>
+<li><a href="#insns-vsha2c">3.21. vsha2c[hl].vv</a></li>
+<li><a href="#insns-vsha2ms">3.22. vsha2ms.vv</a></li>
+<li><a href="#insns-vsm3c">3.23. vsm3c.vi</a></li>
+<li><a href="#insns-vsm3me">3.24. vsm3me.vv</a></li>
+<li><a href="#insns-vsm4k">3.25. vsm4k.vi</a></li>
+<li><a href="#insns-vsm4r">3.26. vsm4r.[vv,vs]</a></li>
+<li><a href="#insns-vwsll">3.27. vwsll.[vv,vx,vi]</a></li>
+</ul>
+</li>
+<li><a href="#crypto_vector_instructions">4. Crypto Vector Cryptographic Instructions</a></li>
+<li><a href="#crypto_vector_instructions_Zvbb_Zvbc">5. Vector Bitmanip and Carryless Multiply Instructions</a></li>
+<li><a href="#crypto_vector_appx_sail">6. Supporting Sail Code</a></li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -569,7 +655,7 @@ RISC-V Instruction Set Architecture.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_introduction"><a class="anchor" href="#crypto_vector_introduction"></a>Introduction</h2>
+<h2 id="crypto_vector_introduction"><a class="anchor" href="#crypto_vector_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This document describes the RISC-V <em>vector</em> cryptography extensions.
@@ -582,7 +668,7 @@ cryptographic instruction proposals for smaller cores which do not
 implement the vector extension.</p>
 </div>
 <div class="sect2">
-<h3 id="crypto_vector_audience"><a class="anchor" href="#crypto_vector_audience"></a>Intended Audience</h3>
+<h3 id="crypto_vector_audience"><a class="anchor" href="#crypto_vector_audience"></a>1.1. Intended Audience</h3>
 <div class="paragraph">
 <p>Cryptography is a specialized subject, requiring people with many different
 backgrounds to cooperate in its secure and efficient implementation.
@@ -645,7 +731,7 @@ but they are the ones we considered most while writing it.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_vector_sail_specifications"><a class="anchor" href="#crypto_vector_sail_specifications"></a>Sail Specifications</h3>
+<h3 id="crypto_vector_sail_specifications"><a class="anchor" href="#crypto_vector_sail_specifications"></a>1.2. Sail Specifications</h3>
 <div class="paragraph">
 <p>RISC-V maintains a
 <a href="https://github.com/riscv/sail-riscv">formal model</a>
@@ -713,7 +799,7 @@ the formal model Github
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_vector_policies"><a class="anchor" href="#crypto_vector_policies"></a>Policies</h3>
+<h3 id="crypto_vector_policies"><a class="anchor" href="#crypto_vector_policies"></a>1.3. Policies</h3>
 <div class="paragraph">
 <p>In creating this proposal, we tried to adhere to the following
 policies:</p>
@@ -763,7 +849,7 @@ the execution of these instructions shall not vary with different input values.<
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto-vector-element-groups"><a class="anchor" href="#crypto-vector-element-groups"></a>Element Groups</h3>
+<h3 id="crypto-vector-element-groups"><a class="anchor" href="#crypto-vector-element-groups"></a>1.4. Element Groups</h3>
 <div class="paragraph">
 <p>Many vector crypto instructions operate on operands that are wider than elements (which are currently limited
 to 64 bits wide).
@@ -932,7 +1018,7 @@ for vector crypto instructions.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto-vector-instruction-constraints"><a class="anchor" href="#crypto-vector-instruction-constraints"></a>Instruction Constraints</h3>
+<h3 id="crypto-vector-instruction-constraints"><a class="anchor" href="#crypto-vector-instruction-constraints"></a>1.5. Instruction Constraints</h3>
 <div class="paragraph">
 <p>All standard vector instruction constraints specified by RVV 1.0 apply to Vector Crypto instructions.
 In addition to those constraints a few additional specific constraints are introduced.</p>
@@ -1175,7 +1261,7 @@ overlap this <code>vs2</code> register group.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="crypto-vector-scalar-instructions"><a class="anchor" href="#crypto-vector-scalar-instructions"></a>Vector-Scalar Instructions</h3>
+<h3 id="crypto-vector-scalar-instructions"><a class="anchor" href="#crypto-vector-scalar-instructions"></a>1.6. Vector-Scalar Instructions</h3>
 <div class="paragraph">
 <p>The RISC-V Vector Extension defines three encodings for Vector-Scalar operations which get their scalar operand from a GPR or FP register:</p>
 </div>
@@ -1260,7 +1346,7 @@ crypto instructions allow the round key to be specified as a scalar element grou
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto-vector-software-portability"><a class="anchor" href="#crypto-vector-software-portability"></a>Software Portability</h3>
+<h3 id="crypto-vector-software-portability"><a class="anchor" href="#crypto-vector-software-portability"></a>1.7. Software Portability</h3>
 <div class="paragraph">
 <p>The following contains some guidelines that enable the portability of vector-crypto-based code
 to implementations with different values for <code>VLEN</code></p>
@@ -1343,7 +1429,7 @@ likely be too burdensome for <code>VLEN</code>=64 implementations.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_extensions"><a class="anchor" href="#crypto_vector_extensions"></a>Extensions Overview</h2>
+<h2 id="crypto_vector_extensions"><a class="anchor" href="#crypto_vector_extensions"></a>2. Extensions Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The section introduces all of the  extensions in the Vector Cryptography
@@ -1392,7 +1478,7 @@ progress.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zvbb"><a class="anchor" href="#zvbb"></a><code>Zvbb</code> - Vector Basic Bit-manipulation</h3>
+<h3 id="zvbb"><a class="anchor" href="#zvbb"></a>2.1. <code>Zvbb</code> - Vector Basic Bit-manipulation</h3>
 <div class="paragraph">
 <p>Vector basic bit-manipulation instructions.</p>
 </div>
@@ -1467,7 +1553,7 @@ progress.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvbc"><a class="anchor" href="#zvbc"></a><code>Zvbc</code> - Vector Carryless Multiplication</h3>
+<h3 id="zvbc"><a class="anchor" href="#zvbc"></a>2.2. <code>Zvbc</code> - Vector Carryless Multiplication</h3>
 <div class="paragraph">
 <p>General purpose carryless multiplication instructions which are commonly used in cryptography
 and hashing (e.g., Elliptic curve cryptography, GHASH, CRC).</p>
@@ -1500,7 +1586,7 @@ and hashing (e.g., Elliptic curve cryptography, GHASH, CRC).</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkb"><a class="anchor" href="#zvkb"></a><code>Zvkb</code> - Vector Cryptography Bit-manipulation</h3>
+<h3 id="zvkb"><a class="anchor" href="#zvkb"></a>2.3. <code>Zvkb</code> - Vector Cryptography Bit-manipulation</h3>
 <div class="paragraph">
 <p>Vector bit-manipulation instructions that are essential
 for implementing common cryptographic workloads securely &amp;
@@ -1560,7 +1646,7 @@ in the Zvbb extension: vbrev.v, vclz.v, vctz.v, vcpop.v, and vwsll.[vv,vx,vi].</
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkg"><a class="anchor" href="#zvkg"></a><code>Zvkg</code> - Vector GCM/GMAC</h3>
+<h3 id="zvkg"><a class="anchor" href="#zvkg"></a>2.4. <code>Zvkg</code> - Vector GCM/GMAC</h3>
 <div class="paragraph">
 <p>Instructions to enable the efficient implementation of GHASH<sub>H</sub> which is used in Galois/Counter Mode (GCM) and
 Galois Message Authentication Code (GMAC).</p>
@@ -1632,7 +1718,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkned"><a class="anchor" href="#zvkned"></a><code>Zvkned</code> - NIST Suite: Vector AES Block Cipher</h3>
+<h3 id="zvkned"><a class="anchor" href="#zvkned"></a>2.5. <code>Zvkned</code> - NIST Suite: Vector AES Block Cipher</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 encryption, decryption and key-schedule
@@ -1720,7 +1806,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvknh"><a class="anchor" href="#zvknh"></a><code>Zvknh[ab]</code> - NIST Suite: Vector SHA-2 Secure Hash</h3>
+<h3 id="zvknh"><a class="anchor" href="#zvknh"></a>2.6. <code>Zvknh[ab]</code> - NIST Suite: Vector SHA-2 Secure Hash</h3>
 <div class="paragraph">
 <p>Instructions for accelerating SHA-2 as defined in FIPS PUB 180-4 Secure Hash Standard (SHS)</p>
 </div>
@@ -1819,7 +1905,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvksed"><a class="anchor" href="#zvksed"></a><code>Zvksed</code> - ShangMi Suite: SM4 Block Cipher</h3>
+<h3 id="zvksed"><a class="anchor" href="#zvksed"></a>2.7. <code>Zvksed</code> - ShangMi Suite: SM4 Block Cipher</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 encryption, decryption and key-schedule
@@ -1880,7 +1966,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=4</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvksh"><a class="anchor" href="#zvksh"></a><code>Zvksh</code> - ShangMi Suite: SM3 Secure Hash</h3>
+<h3 id="zvksh"><a class="anchor" href="#zvksh"></a>2.8. <code>Zvksh</code> - ShangMi Suite: SM3 Secure Hash</h3>
 <div class="paragraph">
 <p>Instructions for accelerating
 functions of the SM3 Hash Function.</p>
@@ -1944,7 +2030,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=8</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkn"><a class="anchor" href="#zvkn"></a><code>Zvkn</code> - NIST Algorithm Suite</h3>
+<h3 id="zvkn"><a class="anchor" href="#zvkn"></a>2.9. <code>Zvkn</code> - NIST Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -1995,7 +2081,7 @@ Likewise, <code>vstart</code> must be a multiple of <code>EGS=8</code>.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvknc"><a class="anchor" href="#zvknc"></a><code>Zvknc</code> - NIST Algorithm Suite with carryless multiply</h3>
+<h3 id="zvknc"><a class="anchor" href="#zvknc"></a>2.10. <code>Zvknc</code> - NIST Algorithm Suite with carryless multiply</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2039,7 +2125,7 @@ vector carryless multiply extension to enable AES-GCM.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkng"><a class="anchor" href="#zvkng"></a><code>Zvkng</code> - NIST Algorithm Suite with GCM</h3>
+<h3 id="zvkng"><a class="anchor" href="#zvkng"></a>2.11. <code>Zvkng</code> - NIST Algorithm Suite with GCM</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2083,7 +2169,7 @@ GCM/GMAC extension to enable high-performance AES-GCM.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvks"><a class="anchor" href="#zvks"></a><code>Zvks</code> - ShangMi Algorithm Suite</h3>
+<h3 id="zvks"><a class="anchor" href="#zvks"></a>2.12. <code>Zvks</code> - ShangMi Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2134,7 +2220,7 @@ GCM/GMAC extension to enable high-performance AES-GCM.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvksc"><a class="anchor" href="#zvksc"></a><code>Zvksc</code> - ShangMi Algorithm Suite with carryless multiplication</h3>
+<h3 id="zvksc"><a class="anchor" href="#zvksc"></a>2.13. <code>Zvksc</code> - ShangMi Algorithm Suite with carryless multiplication</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2178,7 +2264,7 @@ vector carryless multiply extension to enable SM4-GCM.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvksg"><a class="anchor" href="#zvksg"></a><code>Zvksg</code> - ShangMi Algorithm Suite with GCM</h3>
+<h3 id="zvksg"><a class="anchor" href="#zvksg"></a>2.14. <code>Zvksg</code> - ShangMi Algorithm Suite with GCM</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -2222,7 +2308,7 @@ GCM/GMAC extension to enable high-performance SM4-GCM.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zvkt"><a class="anchor" href="#zvkt"></a><code>Zvkt</code> - Vector Data-Independent Execution Latency</h3>
+<h3 id="zvkt"><a class="anchor" href="#zvkt"></a>2.15. <code>Zvkt</code> - Vector Data-Independent Execution Latency</h3>
 <div class="paragraph">
 <p>The Zvkt extension requires all implemented instructions from the following list to be
 executed with data-independent execution latency as defined in the
@@ -2269,7 +2355,7 @@ also needs to be kept secret.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="all-zvbb-instructions"><a class="anchor" href="#all-zvbb-instructions"></a>All <a href="#zvbb">Zvbb</a>  instructions</h4>
+<h4 id="all-zvbb-instructions"><a class="anchor" href="#all-zvbb-instructions"></a>2.15.1. All <a href="#zvbb">Zvbb</a>  instructions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2321,7 +2407,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="all-zvbc-instructions"><a class="anchor" href="#all-zvbc-instructions"></a>All <a href="#zvbc">Zvbc</a> instructions</h4>
+<h4 id="all-zvbc-instructions"><a class="anchor" href="#all-zvbc-instructions"></a>2.15.2. All <a href="#zvbc">Zvbc</a> instructions</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2331,7 +2417,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="addsub"><a class="anchor" href="#addsub"></a>add/sub</h4>
+<h4 id="addsub"><a class="anchor" href="#addsub"></a>2.15.3. add/sub</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2353,7 +2439,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="addsub-with-carry"><a class="anchor" href="#addsub-with-carry"></a>add/sub with carry</h4>
+<h4 id="addsub-with-carry"><a class="anchor" href="#addsub-with-carry"></a>2.15.4. add/sub with carry</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2372,7 +2458,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="compare-and-set"><a class="anchor" href="#compare-and-set"></a>compare and set</h4>
+<h4 id="compare-and-set"><a class="anchor" href="#compare-and-set"></a>2.15.5. compare and set</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2394,7 +2480,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="copy"><a class="anchor" href="#copy"></a>copy</h4>
+<h4 id="copy"><a class="anchor" href="#copy"></a>2.15.6. copy</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2410,7 +2496,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="extend"><a class="anchor" href="#extend"></a>extend</h4>
+<h4 id="extend"><a class="anchor" href="#extend"></a>2.15.7. extend</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2423,7 +2509,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logical"><a class="anchor" href="#logical"></a>logical</h4>
+<h4 id="logical"><a class="anchor" href="#logical"></a>2.15.8. logical</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2454,7 +2540,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="multiply"><a class="anchor" href="#multiply"></a>multiply</h4>
+<h4 id="multiply"><a class="anchor" href="#multiply"></a>2.15.9. multiply</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2473,7 +2559,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="multiply-add"><a class="anchor" href="#multiply-add"></a>multiply-add</h4>
+<h4 id="multiply-add"><a class="anchor" href="#multiply-add"></a>2.15.10. multiply-add</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2501,7 +2587,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="integer-merge"><a class="anchor" href="#integer-merge"></a>Integer Merge</h4>
+<h4 id="integer-merge"><a class="anchor" href="#integer-merge"></a>2.15.11. Integer Merge</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2511,7 +2597,7 @@ proper subset of <a href="#zvbb">Zvbb</a></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="permute"><a class="anchor" href="#permute"></a>permute</h4>
+<h4 id="permute"><a class="anchor" href="#permute"></a>2.15.12. permute</h4>
 <div class="paragraph">
 <p>In the <code>.vv</code> and <code>.xv</code> forms of the <code>vrgather[ei16]</code> instructions,
 the values in <code>vs1</code> and <code>rs1</code> are used for control and therefore are exempt from DIEL.</p>
@@ -2528,7 +2614,7 @@ the values in <code>vs1</code> and <code>rs1</code> are used for control and the
 </div>
 </div>
 <div class="sect3">
-<h4 id="shift"><a class="anchor" href="#shift"></a>shift</h4>
+<h4 id="shift"><a class="anchor" href="#shift"></a>2.15.13. shift</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2544,7 +2630,7 @@ the values in <code>vs1</code> and <code>rs1</code> are used for control and the
 </div>
 </div>
 <div class="sect3">
-<h4 id="slide"><a class="anchor" href="#slide"></a>slide</h4>
+<h4 id="slide"><a class="anchor" href="#slide"></a>2.15.14. slide</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -2745,10 +2831,10 @@ from DIEL.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_insns"><a class="anchor" href="#crypto_vector_insns"></a>Instructions</h2>
+<h2 id="crypto_vector_insns"><a class="anchor" href="#crypto_vector_insns"></a>3. Instructions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-vaesdf"><a class="anchor" href="#insns-vaesdf"></a>vaesdf.[vv,vs]</h3>
+<h3 id="insns-vaesdf"><a class="anchor" href="#insns-vaesdf"></a>3.1. vaesdf.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2866,7 +2952,7 @@ on the data being operated upon.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VAESDF(vs2, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VAESDF(vs2, vd, suffix)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -2900,7 +2986,7 @@ on the data being operated upon.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaesdm"><a class="anchor" href="#insns-vaesdm"></a>vaesdm.[vv,vs]</h3>
+<h3 id="insns-vaesdm"><a class="anchor" href="#insns-vaesdm"></a>3.2. vaesdm.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3019,7 +3105,7 @@ on the data being operated upon.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VAESDM(vs2, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VAESDM(vs2, vd, suffix)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3054,7 +3140,7 @@ on the data being operated upon.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaesef"><a class="anchor" href="#insns-vaesef"></a>vaesef.[vv,vs]</h3>
+<h3 id="insns-vaesef"><a class="anchor" href="#insns-vaesef"></a>3.3. vaesef.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3172,7 +3258,7 @@ on the data being operated upon.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VAESEF(vs2, vd, suffix) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VAESEF(vs2, vd, suffix) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3206,7 +3292,7 @@ on the data being operated upon.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaesem"><a class="anchor" href="#insns-vaesem"></a>vaesem.[vv,vs]</h3>
+<h3 id="insns-vaesem"><a class="anchor" href="#insns-vaesem"></a>3.4. vaesem.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3324,7 +3410,7 @@ on the data being operated upon.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VAESEM(vs2, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VAESEM(vs2, vd, suffix)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3359,7 +3445,7 @@ on the data being operated upon.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaeskf1"><a class="anchor" href="#insns-vaeskf1"></a>vaeskf1.vi</h3>
+<h3 id="insns-vaeskf1"><a class="anchor" href="#insns-vaeskf1"></a>3.5. vaeskf1.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3488,7 +3574,7 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Sail hljs" data-lang="Sail">function clause execute (VAESKF1(rnd, vd, vs2)) = {
+<pre class="highlight"><code class="language-Sail" data-lang="Sail">function clause execute (VAESKF1(rnd, vd, vs2)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3527,7 +3613,7 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaeskf2"><a class="anchor" href="#insns-vaeskf2"></a>vaeskf2.vi</h3>
+<h3 id="insns-vaeskf2"><a class="anchor" href="#insns-vaeskf2"></a>3.6. vaeskf2.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3663,7 +3749,7 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-Sail hljs" data-lang="Sail">function clause execute (VAESKF2(rnd, vd, vs2)) = {
+<pre class="highlight"><code class="language-Sail" data-lang="Sail">function clause execute (VAESKF2(rnd, vd, vs2)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3704,7 +3790,7 @@ behavior to be fully defined for all values of <code>uimm[4:0]</code> with minim
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vaesz"><a class="anchor" href="#insns-vaesz"></a>vaesz.vs</h3>
+<h3 id="insns-vaesz"><a class="anchor" href="#insns-vaesz"></a>3.7. vaesz.vs</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3831,7 +3917,7 @@ This instruction only exists in the <code>.vs</code> form because the <code>.vv<
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VAESZ(vs2, vd) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VAESZ(vs2, vd) = {
   if(((vstart%EGS)&lt;&gt;0) | (LMUL*VLEN &lt; EGW))  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -3862,7 +3948,7 @@ This instruction only exists in the <code>.vs</code> form because the <code>.vv<
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vandn"><a class="anchor" href="#insns-vandn"></a>vandn.[vv,vx]</h3>
+<h3 id="insns-vandn"><a class="anchor" href="#insns-vandn"></a>3.8. vandn.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4017,7 +4103,7 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VANDN(vs2, vs1, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VANDN(vs2, vs1, vd, suffix)) = {
   foreach (i from vstart to vl-1) {
     let op1 = match suffix {
       "vv" =&gt; get_velem(vs1, SEW, i),
@@ -4042,7 +4128,7 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vbrev"><a class="anchor" href="#insns-vbrev"></a>vbrev.v</h3>
+<h3 id="insns-vbrev"><a class="anchor" href="#insns-vbrev"></a>3.9. vbrev.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4103,7 +4189,7 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VBREV(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VBREV(vs2)) = {
 
   foreach (i from vstart to vl-1) {
     let input = get_velem(vs2, SEW, i);
@@ -4127,7 +4213,7 @@ of the immediate value with the <code>vand.vi</code> instruction.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vbrev8"><a class="anchor" href="#insns-vbrev8"></a>vbrev8.v</h3>
+<h3 id="insns-vbrev8"><a class="anchor" href="#insns-vbrev8"></a>3.10. vbrev8.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4207,7 +4293,7 @@ This byte-wise instruction is defined for all SEWs to eliminate the need to chan
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VBREV8(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VBREV8(vs2)) = {
 
   foreach (i from vstart to vl-1) {
     let input = get_velem(vs2, SEW, i);
@@ -4232,7 +4318,7 @@ This byte-wise instruction is defined for all SEWs to eliminate the need to chan
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vclmul"><a class="anchor" href="#insns-vclmul"></a>vclmul.[vv,vx]</h3>
+<h3 id="insns-vclmul"><a class="anchor" href="#insns-vclmul"></a>3.11. vclmul.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4349,7 +4435,7 @@ vector carryless multiplication instructions.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VCLMUL(vs2, vs1, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VCLMUL(vs2, vs1, vd, suffix)) = {
 
   foreach (i from vstart to vl-1) {
     let op1 : bits (64) = if suffix =="vv" then get_velem(vs1,i)
@@ -4381,7 +4467,7 @@ function clmul(x, y, width) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vclmulh"><a class="anchor" href="#insns-vclmulh"></a>vclmulh.[vv,vx]</h3>
+<h3 id="insns-vclmulh"><a class="anchor" href="#insns-vclmulh"></a>3.12. vclmulh.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4478,7 +4564,7 @@ significant 64 bits of the carry-less product.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VCLMULH(vs2, vs1, vd, suffix)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VCLMULH(vs2, vs1, vd, suffix)) = {
 
   foreach (i from vstart to vl-1) {
     let op1 : bits (64) = if suffix =="vv" then get_velem(vs1,i)
@@ -4510,7 +4596,7 @@ function clmulh(x, y, width) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vclz"><a class="anchor" href="#insns-vclz"></a>vclz.v</h3>
+<h3 id="insns-vclz"><a class="anchor" href="#insns-vclz"></a>3.13. vclz.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4578,7 +4664,7 @@ function clmulh(x, y, width) = {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VCLZ(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VCLZ(vs2)) = {
 
   foreach (i from vstart to vl-1) {
     let input = get_velem(vs2, SEW, i);
@@ -4600,7 +4686,7 @@ function clmulh(x, y, width) = {
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-vcpop"><a class="anchor" href="#insns-vcpop"></a>vcpop.v</h3>
+<h3 id="insns-vcpop"><a class="anchor" href="#insns-vcpop"></a>3.14. vcpop.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4661,7 +4747,7 @@ function clmulh(x, y, width) = {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VCPOP(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VCPOP(vs2)) = {
 
   foreach (i from vstart to vl-1) {
     let input = get_velem(vs2, SEW, i);
@@ -4684,7 +4770,7 @@ function clmulh(x, y, width) = {
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-vctz"><a class="anchor" href="#insns-vctz"></a>vctz.v</h3>
+<h3 id="insns-vctz"><a class="anchor" href="#insns-vctz"></a>3.15. vctz.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4749,7 +4835,7 @@ function clmulh(x, y, width) = {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VCTZ(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VCTZ(vs2)) = {
 
   foreach (i from vstart to vl-1) {
     let input = get_velem(vs2, SEW, i);
@@ -4772,7 +4858,7 @@ function clmulh(x, y, width) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vghsh"><a class="anchor" href="#insns-vghsh"></a>vghsh.vv</h3>
+<h3 id="insns-vghsh"><a class="anchor" href="#insns-vghsh"></a>3.16. vghsh.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4934,7 +5020,7 @@ a future extension might define a vector-scalar version of this instruction wher
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-pseudocode hljs" data-lang="pseudocode">function clause execute (VGHSH(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-pseudocode" data-lang="pseudocode">function clause execute (VGHSH(vs2, vs1, vd)) = {
   // operands are input with bits reversed in each byte
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
@@ -4982,7 +5068,7 @@ a future extension might define a vector-scalar version of this instruction wher
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vgmul"><a class="anchor" href="#insns-vgmul"></a>vgmul.vv</h3>
+<h3 id="insns-vgmul"><a class="anchor" href="#insns-vgmul"></a>3.17. vgmul.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5148,7 +5234,7 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-pseudocode hljs" data-lang="pseudocode">function clause execute (VGMUL(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-pseudocode" data-lang="pseudocode">function clause execute (VGMUL(vs2, vs1, vd)) = {
   // operands are input with bits reversed in each byte
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
@@ -5193,7 +5279,7 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vrev8"><a class="anchor" href="#insns-vrev8"></a>vrev8.v</h3>
+<h3 id="insns-vrev8"><a class="anchor" href="#insns-vrev8"></a>3.18. vrev8.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5272,7 +5358,7 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VREV8(vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VREV8(vs2)) = {
   foreach (i from vstart to vl-1) {
     input = get_velem(vs2, SEW, i);
     let output : SEW = 0;
@@ -5298,7 +5384,7 @@ doesn&#8217;t use the add-multiply form of the <code>vghsh.vv</code> instruction
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vrol"><a class="anchor" href="#insns-vrol"></a>vrol.[vv,vx]</h3>
+<h3 id="insns-vrol"><a class="anchor" href="#insns-vrol"></a>3.19. vrol.[vv,vx]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5437,7 +5523,7 @@ the rotate amount and using the immediate form of rotate right instruction (i.e.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VROL_VV(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VROL_VV(vs2, vs1, vd)) = {
   foreach (i from vstart to vl - 1) {
     set_velem(vd, EEW=SEW, i,
       get_velem(vs2, i) &lt;&lt;&lt; (get_velem(vs1, i) &amp; (SEW-1))
@@ -5468,7 +5554,7 @@ function clause execute (VROL_VX(vs2, rs1, vd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vror"><a class="anchor" href="#insns-vror"></a>vror.[vv,vx,vi]</h3>
+<h3 id="insns-vror"><a class="anchor" href="#insns-vror"></a>3.20. vror.[vv,vx,vi]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5603,7 +5689,7 @@ bits are ignored.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VROR_VV(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VROR_VV(vs2, vs1, vd)) = {
   foreach (i from vstart to vl - 1) {
     set_velem(vd, EEW=SEW, i,
       get_velem(vs2, i) &gt;&gt;&gt; (get_velem(vs1, i) &amp; (SEW-1))
@@ -5643,7 +5729,7 @@ function clause execute (VROR_VI(vs2, uimm[5:0], vd)) = {
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsha2c"><a class="anchor" href="#insns-vsha2c"></a>vsha2c[hl].vv</h3>
+<h3 id="insns-vsha2c"><a class="anchor" href="#insns-vsha2c"></a>3.21. vsha2c[hl].vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5831,7 +5917,7 @@ that <code>vd</code>, <code>vs1</code> and <code>vs2</code> each are different r
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VSHA2c(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VSHA2c(vs2, vs1, vd)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -5907,7 +5993,7 @@ function ROTR(x,n) = (x &gt;&gt; n) | (x &lt;&lt; SEW - n)</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsha2ms"><a class="anchor" href="#insns-vsha2ms"></a>vsha2ms.vv</h3>
+<h3 id="insns-vsha2ms"><a class="anchor" href="#insns-vsha2ms"></a>3.22. vsha2ms.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6104,7 +6190,7 @@ that <code>vd</code>, <code>vs1</code> and <code>vs2</code> each contain differe
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VSHA2ms(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VSHA2ms(vs2, vs1, vd)) = {
   // SEW32 = SHA-256
   // SEW64 =  SHA-512
   if(LMUL*VLEN &lt; EGW)  then {
@@ -6160,7 +6246,7 @@ function SHR (x,n) = x &gt;&gt; n</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsm3c"><a class="anchor" href="#insns-vsm3c"></a>vsm3c.vi</h3>
+<h3 id="insns-vsm3c"><a class="anchor" href="#insns-vsm3c"></a>3.23. vsm3c.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6327,7 +6413,7 @@ that <code>vd</code> and <code>vs2</code> each are different registers.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VSM3C(rnds, vs2, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VSM3C(rnds, vs2, vd)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -6425,7 +6511,7 @@ function P_0(X) = ((X) ^ ROL32((X),  9) ^ ROL32((X), 17))</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsm3me"><a class="anchor" href="#insns-vsm3me"></a>vsm3me.vv</h3>
+<h3 id="insns-vsm3me"><a class="anchor" href="#insns-vsm3me"></a>3.24. vsm3me.vv</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6562,7 +6648,7 @@ values to be preserved for generating the next 8 words.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VSM3ME(vs2, vs1)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VSM3ME(vs2, vs1)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -6638,7 +6724,7 @@ values to be preserved for generating the next 8 words.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsm4k"><a class="anchor" href="#insns-vsm4k"></a>vsm4k.vi</h3>
+<h3 id="insns-vsm4k"><a class="anchor" href="#insns-vsm4k"></a>3.25. vsm4k.vi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -6816,7 +6902,7 @@ Since the results are all limited to 8 bits, the modulo operation occurs for fre
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (vsm4k(uimm, vs2)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (vsm4k(uimm, vs2)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -6887,7 +6973,7 @@ let ck : list(bits(32)) = [|
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vsm4r"><a class="anchor" href="#insns-vsm4r"></a>vsm4r.[vv,vs]</h3>
+<h3 id="insns-vsm4r"><a class="anchor" href="#insns-vsm4r"></a>3.26. vsm4r.[vv,vs]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -7038,7 +7124,7 @@ previous four rounds.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-pseudocode hljs" data-lang="pseudocode">function clause execute (VSM4R(vd, vs2)) = {
+<pre class="highlight"><code class="language-pseudocode" data-lang="pseudocode">function clause execute (VSM4R(vd, vs2)) = {
   if(LMUL*VLEN &lt; EGW)  then {
     handle_illegal();  // illegal-instruction exception
     RETIRE_FAIL
@@ -7108,7 +7194,7 @@ function sm4_round(X, S) = \
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vwsll"><a class="anchor" href="#insns-vwsll"></a>vwsll.[vv,vx,vi]</h3>
+<h3 id="insns-vwsll"><a class="anchor" href="#insns-vwsll"></a>3.27. vwsll.[vv,vx,vi]</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -7249,7 +7335,7 @@ bits are ignored.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">function clause execute (VWSLL_VV(vs2, vs1, vd)) = {
+<pre class="highlight"><code class="language-sail" data-lang="sail">function clause execute (VWSLL_VV(vs2, vs1, vd)) = {
   foreach (i from vstart to vl - 1) {
     set_velem(vd, EEW=2*SEW, i,
       get_velem(vs2, i) &lt;&lt; (get_velem(vs1, i) &amp; ((2*SEW)-1))
@@ -7290,7 +7376,7 @@ function clause execute (VWSLL_VI(vs2, uimm[4:0], vd)) = {
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_instructions"><a class="anchor" href="#crypto_vector_instructions"></a>Crypto Vector Cryptographic Instructions</h2>
+<h2 id="crypto_vector_instructions"><a class="anchor" href="#crypto_vector_instructions"></a>4. Crypto Vector Cryptographic Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>OP-VE (0x77)
@@ -7710,7 +7796,7 @@ Crypto Vector instructions except Zvbb and Zvbc</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_instructions_Zvbb_Zvbc"><a class="anchor" href="#crypto_vector_instructions_Zvbb_Zvbc"></a>Vector Bitmanip and Carryless Multiply Instructions</h2>
+<h2 id="crypto_vector_instructions_Zvbb_Zvbc"><a class="anchor" href="#crypto_vector_instructions_Zvbb_Zvbc"></a>5. Vector Bitmanip and Carryless Multiply Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>OP-V (0x57)
@@ -8993,7 +9079,7 @@ Crypto Vector instructions except Zvbb and Zvbc</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_vector_appx_sail"><a class="anchor" href="#crypto_vector_appx_sail"></a>Supporting Sail Code</h2>
+<h2 id="crypto_vector_appx_sail"><a class="anchor" href="#crypto_vector_appx_sail"></a>6. Supporting Sail Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section contains the supporting Sail code referenced by the
@@ -9004,7 +9090,7 @@ is recommended reading in order to best understand the supporting code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sail hljs" data-lang="sail">/* Auxiliary function for performing GF multiplication */
+<pre class="highlight"><code class="language-sail" data-lang="sail">/* Auxiliary function for performing GF multiplication */
 val xt2 : bits(8) -&gt; bits(8)
 function xt2(x) = {
   (x &lt;&lt; 1) ^ (if bit_to_bool(x[7]) then 0x1b else 0x00)

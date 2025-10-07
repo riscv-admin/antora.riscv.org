@@ -560,8 +560,20 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">"Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#csrs">2. CSRs</a>
+<ul class="sectlevel2">
+<li><a href="#machine-counter-configuration-mcyclecfg-minstretcfg-registers">2.1. Machine Counter Configuration (<code>mcyclecfg</code>, <code>minstretcfg</code>) Registers</a></li>
+</ul>
+</li>
+<li><a href="#counter-behavior">3. Counter Behavior</a></li>
+</ul>
+</div>
 <div class="sect1">
-<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The cycle and instret counters serve to support user mode self-profiling usages, wherein a user can read the counter(s) twice and compute the delta(s) to evaluate user software performance and behavior.  By default, these counters are not filtered by privilege mode, and thus they continue to increment while traps (e.g., page faults or interrupts) to more privileged code are handled.  This causes two problems:</p>
@@ -582,10 +594,10 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="csrs"><a class="anchor" href="#csrs"></a>CSRs</h2>
+<h2 id="csrs"><a class="anchor" href="#csrs"></a>2. CSRs</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="machine-counter-configuration-mcyclecfg-minstretcfg-registers"><a class="anchor" href="#machine-counter-configuration-mcyclecfg-minstretcfg-registers"></a>Machine Counter Configuration (<code>mcyclecfg</code>, <code>minstretcfg</code>) Registers</h3>
+<h3 id="machine-counter-configuration-mcyclecfg-minstretcfg-registers"><a class="anchor" href="#machine-counter-configuration-mcyclecfg-minstretcfg-registers"></a>2.1. Machine Counter Configuration (<code>mcyclecfg</code>, <code>minstretcfg</code>) Registers</h3>
 <div class="paragraph">
 <p>mcyclecfg and minstretcfg are 64-bit registers that configure privilege mode filtering for the cycle and instret counters, respectively.</p>
 </div>
@@ -692,7 +704,7 @@ Library</a>
 </div>
 </div>
 <div class="sect1">
-<h2 id="counter-behavior"><a class="anchor" href="#counter-behavior"></a>Counter Behavior</h2>
+<h2 id="counter-behavior"><a class="anchor" href="#counter-behavior"></a>3. Counter Behavior</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The fundamental behavior of cycle and instret is modified in that counting does not occur while executing in an inhibited privilege mode.  Further, the following defines how transitions between a non-inhibited privilege mode and an inhibited privilege mode are counted.</p>

@@ -577,6 +577,46 @@ Library</a>
   </table>
 </div>
 <h1 id="page-title" class="page">Formal Memory Model Specifications, Version 0.1</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#alloy">1. Formal Axiomatic Specification in Alloy</a></li>
+<li><a href="#sec:herd">2. Formal Axiomatic Specification in Herd</a></li>
+<li><a href="#operational">3. An Operational Memory Model</a>
+<ul class="sectlevel2">
+<li><a href="#pseudocode_exec">3.1. Intra-instruction Pseudocode Execution</a></li>
+<li><a href="#inst_state">3.2. Instruction Instance State</a></li>
+<li><a href="#hart-state">3.3. Hart State</a></li>
+<li><a href="#shared-memory-state">3.4. Shared Memory State</a></li>
+<li><a href="#transitions">3.5. Transitions</a>
+<ul class="sectlevel3">
+<li><a href="#fetch">3.5.1. Fetch instruction</a></li>
+<li><a href="#initiate_load">3.5.2. Initiate memory load operations</a></li>
+<li><a href="#sat_by_forwarding">3.5.3. Satisfy memory load operation by forwarding from unpropagated stores</a></li>
+<li><a href="#sat_from_mem">3.5.4. Satisfy memory load operation from memory</a></li>
+<li><a href="#complete_loads">3.5.5. Complete load operations</a></li>
+<li><a href="#early_sc_fail">3.5.6. Early <code>sc</code> fail</a></li>
+<li><a href="#paired_sc">3.5.7. Paired <code>sc</code></a></li>
+<li><a href="#initiate_store_footprint">3.5.8. Initiate memory store operation footprints</a></li>
+<li><a href="#instantiate_store_value">3.5.9. Instantiate memory store operation values</a></li>
+<li><a href="#commit_stores">3.5.10. Commit store instruction</a></li>
+<li><a href="#prop_store">3.5.11. Propagate store operation</a></li>
+<li><a href="#commit_sc">3.5.12. Commit and propagate store operation of an <code>sc</code></a></li>
+<li><a href="#late_sc_fail">3.5.13. Late <code>sc</code> fail</a></li>
+<li><a href="#complete_stores">3.5.14. Complete store operations</a></li>
+<li><a href="#do_amo">3.5.15. Satisfy, commit and propagate operations of an AMO</a></li>
+<li><a href="#commit_fence">3.5.16. Commit fence</a></li>
+<li><a href="#reg_read">3.5.17. Register read</a></li>
+<li><a href="#reg_write">3.5.18. Register write</a></li>
+<li><a href="#sail_interp">3.5.19. Pseudocode internal step</a></li>
+<li><a href="#finish">3.5.20. Finish instruction</a></li>
+</ul>
+</li>
+<li><a href="#limitations">3.6. Limitations</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -596,7 +636,7 @@ discrepancies are unintentional.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="alloy"><a class="anchor" href="#alloy"></a>Formal Axiomatic Specification in Alloy</h2>
+<h2 id="alloy"><a class="anchor" href="#alloy"></a>1. Formal Axiomatic Specification in Alloy</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We present a formal specification of the RVWMO memory model in Alloy
@@ -610,7 +650,7 @@ how Alloy can be used to model check some of the mappings in <a href="mm-eplan.h
 <div class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (1/5: PPO)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">// =RVWMO PPO=
+<pre class="highlight"><code class="language-c" data-lang="c">// =RVWMO PPO=
 
 // Preserved Program Order
 fun ppo : Event-&gt;Event {
@@ -675,7 +715,7 @@ pred RISCV_mm { LoadValue and Atomicity /* and Progress */ }</pre>
 <div class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (3/5: model of memory)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sml hljs" data-lang="sml">//Basic model of memory
+<pre class="highlight"><code class="language-sml" data-lang="sml">//Basic model of memory
 
 sig Hart {  // hardware thread
   start : one Event
@@ -731,7 +771,7 @@ fact { no FenceTSO.(pr + pw + sr + sw) }</code></pre>
 <div class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (4/5: Basic model rules)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">// =Basic model rules=
+<pre class="highlight"><code class="language-scala" data-lang="scala">// =Basic model rules=
 
 // Ordering annotation groups
 fun Acquire : MemoryEvent { MemoryEvent.acquireRCpc + MemoryEvent.acquireRCsc }
@@ -776,7 +816,7 @@ fact { no Init &lt;: po and no po :&gt; Init }</code></pre>
 <div class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (5/5: Auxiliaries)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">// po
+<pre class="highlight"><code class="language-asm" data-lang="asm">// po
 fact { acyclic[po] }
 
 // gmo
@@ -833,7 +873,7 @@ pred total[rel: Event-&gt;Event, bag: Event] {
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:herd"><a class="anchor" href="#sec:herd"></a>Formal Axiomatic Specification in Herd</h2>
+<h2 id="sec:herd"><a class="anchor" href="#sec:herd"></a>2. Formal Axiomatic Specification in Herd</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The tool <span class="sans-serif">herd</span> takes a memory model and a litmus test as
@@ -854,7 +894,7 @@ models and more are available online at <a href="http://diy.inria.fr/cats7/riscv
 <div id="herd1" class="listingblock">
 <div class="title">riscv-defs.cat, a herd definition of preserved program order (1/3)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">(*************)
+<pre class="highlight"><code class="language-asm" data-lang="asm">(*************)
 (* Utilities *)
 (*************)
 
@@ -920,7 +960,7 @@ let ppo = r1 | r2 | r3 | r4 | r5 | r6 | r7 | r8 | r9 | r10 | r11 | r12 | r13</co
 <div id="herd2" class="listingblock">
 <div class="title">riscv.cat, a herd version of the RVWMO memory model (2/3)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">Total
+<pre class="highlight"><code class="language-asm" data-lang="asm">Total
 
 (* Notice that herd has defined its own rf relation *)
 
@@ -963,7 +1003,7 @@ empty winside as Atomic</code></pre>
 <div id="herd3" class="listingblock">
 <div class="title"><code>riscv.cat</code>, an alternative herd presentation of the RVWMO memory model (3/3)</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">Partial
+<pre class="highlight"><code class="language-asm" data-lang="asm">Partial
 
 (***************)
 (* Definitions *)
@@ -992,7 +1032,7 @@ empty rmw &amp; (fre;coe) as Atomic</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="operational"><a class="anchor" href="#operational"></a>An Operational Memory Model</h2>
+<h2 id="operational"><a class="anchor" href="#operational"></a>3. An Operational Memory Model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This is an alternative presentation of the RVWMO memory model in
@@ -1313,7 +1353,7 @@ taken.</p>
 following sections describe the formal operational model.</p>
 </div>
 <div class="sect2">
-<h3 id="pseudocode_exec"><a class="anchor" href="#pseudocode_exec"></a>Intra-instruction Pseudocode Execution</h3>
+<h3 id="pseudocode_exec"><a class="anchor" href="#pseudocode_exec"></a>3.1. Intra-instruction Pseudocode Execution</h3>
 <div class="paragraph">
 <p>The intra-instruction semantics for each instruction instance is
 expressed as a state machine, essentially running the instruction
@@ -1471,7 +1511,7 @@ write to be executed (as described above).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="inst_state"><a class="anchor" href="#inst_state"></a>Instruction Instance State</h3>
+<h3 id="inst_state"><a class="anchor" href="#inst_state"></a>3.2. Instruction Instance State</h3>
 <div class="paragraph">
 <p>Each instruction instance <em>_i</em> has a state comprising:</p>
 </div>
@@ -1620,7 +1660,7 @@ depends on.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="hart-state"><a class="anchor" href="#hart-state"></a>Hart State</h3>
+<h3 id="hart-state"><a class="anchor" href="#hart-state"></a>3.3. Hart State</h3>
 <div class="paragraph">
 <p>The model state of a single hart comprises:</p>
 </div>
@@ -1644,7 +1684,7 @@ fetched (and not discarded), in program order.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="shared-memory-state"><a class="anchor" href="#shared-memory-state"></a>Shared Memory State</h3>
+<h3 id="shared-memory-state"><a class="anchor" href="#shared-memory-state"></a>3.4. Shared Memory State</h3>
 <div class="paragraph">
 <p>The model state of the shared memory comprises a list of memory store
 operations, in the order they propagated to the shared memory.</p>
@@ -1682,7 +1722,7 @@ something better.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="transitions"><a class="anchor" href="#transitions"></a>Transitions</h3>
+<h3 id="transitions"><a class="anchor" href="#transitions"></a>3.5. Transitions</h3>
 <div class="paragraph">
 <p>Each of the paragraphs below describes a single kind of system
 transition. The description starts with a condition over the current
@@ -1692,7 +1732,7 @@ is applied to that state when the transition is taken, in order to
 generate the new system state.</p>
 </div>
 <div class="sect3">
-<h4 id="fetch"><a class="anchor" href="#fetch"></a>Fetch instruction</h4>
+<h4 id="fetch"><a class="anchor" href="#fetch"></a>3.5.1. Fetch instruction</h4>
 <div class="paragraph">
 <p>A possible program-order-successor of instruction instance
 <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> can be fetched from address <em>loc</em> if:</p>
@@ -1759,7 +1799,7 @@ addresses are detected.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="initiate_load"><a class="anchor" href="#initiate_load"></a>Initiate memory load operations</h4>
+<h4 id="initiate_load"><a class="anchor" href="#initiate_load"></a>3.5.2. Initiate memory load operations</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state Plain(Load_mem(<em>kind</em>,
 <em>address</em>, <em>size</em>, <em>load_continuation</em>)) can always initiate the
@@ -1804,7 +1844,7 @@ others.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sat_by_forwarding"><a class="anchor" href="#sat_by_forwarding"></a>Satisfy memory load operation by forwarding from unpropagated stores</h4>
+<h4 id="sat_by_forwarding"><a class="anchor" href="#sat_by_forwarding"></a>3.5.3. Satisfy memory load operation by forwarding from unpropagated stores</h4>
 <div class="paragraph">
 <p>For a non-AMO load instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_loads(<em>load_continuation</em>), and a memory load operation
@@ -1958,7 +1998,7 @@ load is acquire-RCsc.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sat_from_mem"><a class="anchor" href="#sat_from_mem"></a>Satisfy memory load operation from memory</h4>
+<h4 id="sat_from_mem"><a class="anchor" href="#sat_from_mem"></a>3.5.4. Satisfy memory load operation from memory</h4>
 <div class="paragraph">
 <p>For an instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> of a non-AMO load
 instruction or an AMO instruction in the context of the <a href="#do_amo">Saitsfy, commit and propagate operations of an AMO</a> transition,
@@ -1988,7 +2028,7 @@ unsatisfied slices of the memory load operation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="complete_loads"><a class="anchor" href="#complete_loads"></a>Complete load operations</h4>
+<h4 id="complete_loads"><a class="anchor" href="#complete_loads"></a>3.5.5. Complete load operations</h4>
 <div class="paragraph">
 <p>A load instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_loads(<em>load_continuation</em>) can be completed (not to be
@@ -2001,7 +2041,7 @@ from all the memory store operation slices that satisfied
 </div>
 </div>
 <div class="sect3">
-<h4 id="early_sc_fail"><a class="anchor" href="#early_sc_fail"></a>Early <code>sc</code> fail</h4>
+<h4 id="early_sc_fail"><a class="anchor" href="#early_sc_fail"></a>3.5.6. Early <code>sc</code> fail</h4>
 <div class="paragraph">
 <p>An <code>sc</code> instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Early_sc_fail(<em>res_continuation</em>)) can always be made to fail.
@@ -2010,7 +2050,7 @@ Plain(<em>res_continuation(false)</em>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="paired_sc"><a class="anchor" href="#paired_sc"></a>Paired <code>sc</code></h4>
+<h4 id="paired_sc"><a class="anchor" href="#paired_sc"></a>3.5.7. Paired <code>sc</code></h4>
 <div class="paragraph">
 <p>An <code>sc</code> instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Early_sc_fail(<em>res_continuation</em>)) can continue its (potentially
@@ -2019,7 +2059,7 @@ update the state of <span class="steminline"> <svg style="vertical-align: -0.025
 </div>
 </div>
 <div class="sect3">
-<h4 id="initiate_store_footprint"><a class="anchor" href="#initiate_store_footprint"></a>Initiate memory store operation footprints</h4>
+<h4 id="initiate_store_footprint"><a class="anchor" href="#initiate_store_footprint"></a>3.5.8. Initiate memory store operation footprints</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state Plain(Store_ea(<em>kind</em>,
 <em>address</em>, <em>size</em>, <em>next_state</em>)) can always announce its pending memory
@@ -2067,7 +2107,7 @@ becomes available).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="instantiate_store_value"><a class="anchor" href="#instantiate_store_value"></a>Instantiate memory store operation values</h4>
+<h4 id="instantiate_store_value"><a class="anchor" href="#instantiate_store_value"></a>3.5.9. Instantiate memory store operation values</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Store_memv(<em>mem_value</em>, <em>store_continuation</em>)) can always
@@ -2088,7 +2128,7 @@ Pending_mem_stores(<em>store_continuation</em>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="commit_stores"><a class="anchor" href="#commit_stores"></a>Commit store instruction</h4>
+<h4 id="commit_stores"><a class="anchor" href="#commit_stores"></a>3.5.10. Commit store instruction</h4>
 <div class="paragraph">
 <p>An uncommitted instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> of a non-<code>sc</code> store
 instruction or an <code>sc</code> instruction in the context of the <a href="#commit_sc">Commit and propagate store operation of an <code>sc</code></a>
@@ -2165,7 +2205,7 @@ making that condition simpler.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="prop_store"><a class="anchor" href="#prop_store"></a>Propagate store operation</h4>
+<h4 id="prop_store"><a class="anchor" href="#prop_store"></a>3.5.11. Propagate store operation</h4>
 <div class="paragraph">
 <p>For a committed instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_stores(<em>store_continuation</em>), and an unpropagated memory
@@ -2241,7 +2281,7 @@ slice <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: 
 </div>
 </div>
 <div class="sect3">
-<h4 id="commit_sc"><a class="anchor" href="#commit_sc"></a>Commit and propagate store operation of an <code>sc</code></h4>
+<h4 id="commit_sc"><a class="anchor" href="#commit_sc"></a>3.5.12. Commit and propagate store operation of an <code>sc</code></h4>
 <div class="paragraph">
 <p>An uncommitted <code>sc</code> instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span>, from hart
 <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.303ex" height="1.595ex" role="img" focusable="false" viewBox="0 -694 576 705"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="210E" d="M137 683Q138 683 209 688T282 694Q294 694 294 685Q294 674 258 534Q220 386 220 383Q220 381 227 388Q288 442 357 442Q411 442 444 415T478 336Q478 285 440 178T402 50Q403 36 407 31T422 26Q450 26 474 56T513 138Q516 149 519 151T535 153Q555 153 555 145Q555 144 551 130Q535 71 500 33Q466 -10 419 -10H414Q367 -10 346 17T325 74Q325 90 361 192T398 345Q398 404 354 404H349Q266 404 205 306L198 293L164 158Q132 28 127 16Q114 -11 83 -11Q69 -11 59 -2T48 16Q48 30 121 320L195 616Q195 629 188 632T149 637H128Q122 643 122 645T124 664Q129 683 137 683Z"></path></g></g></g></svg> </span>, in state Pending_mem_stores(<em>store_continuation</em>), with
@@ -2288,7 +2328,7 @@ since <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: 
 </div>
 </div>
 <div class="sect3">
-<h4 id="late_sc_fail"><a class="anchor" href="#late_sc_fail"></a>Late <code>sc</code> fail</h4>
+<h4 id="late_sc_fail"><a class="anchor" href="#late_sc_fail"></a>3.5.13. Late <code>sc</code> fail</h4>
 <div class="paragraph">
 <p>An <code>sc</code> instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_stores(<em>store_continuation</em>), that has not propagated its
@@ -2317,7 +2357,7 @@ should fail one should use the <a href="#early_sc_fail">Eaarly sc fail</a> trans
 </div>
 </div>
 <div class="sect3">
-<h4 id="complete_stores"><a class="anchor" href="#complete_stores"></a>Complete store operations</h4>
+<h4 id="complete_stores"><a class="anchor" href="#complete_stores"></a>3.5.14. Complete store operations</h4>
 <div class="paragraph">
 <p>A store instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_stores(<em>store_continuation</em>), for which all the memory store
@@ -2328,7 +2368,7 @@ Plain(<em>store_continuation(true)</em>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="do_amo"><a class="anchor" href="#do_amo"></a>Satisfy, commit and propagate operations of an AMO</h4>
+<h4 id="do_amo"><a class="anchor" href="#do_amo"></a>3.5.15. Satisfy, commit and propagate operations of an AMO</h4>
 <div class="paragraph">
 <p>An AMO instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Pending_mem_loads(<em>load_continuation</em>) can perform its memory access if
@@ -2396,7 +2436,7 @@ propagated and therefore cannot be forwarded.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="commit_fence"><a class="anchor" href="#commit_fence"></a>Commit fence</h4>
+<h4 id="commit_fence"><a class="anchor" href="#commit_fence"></a>3.5.16. Commit fence</h4>
 <div class="paragraph">
 <p>A fence instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Fence(<em>kind</em>, <em>next_state</em>)) can be committed if:</p>
@@ -2432,7 +2472,7 @@ and store instructions are finished.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="reg_read"><a class="anchor" href="#reg_read"></a>Register read</h4>
+<h4 id="reg_read"><a class="anchor" href="#reg_read"></a>3.5.17. Register read</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Read_reg(<em>reg_name</em>, <em>read_cont</em>)) can do a register read of
@@ -2459,7 +2499,7 @@ source is the initial register value from <em>initial_register_state</em>. Let
 </div>
 </div>
 <div class="sect3">
-<h4 id="reg_write"><a class="anchor" href="#reg_write"></a>Register write</h4>
+<h4 id="reg_write"><a class="anchor" href="#reg_write"></a>3.5.18. Register write</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Write_reg(<em>reg_name</em>, <em>reg_value</em>, <em>next_state</em>)) can always do a
@@ -2484,7 +2524,7 @@ entirely satisfied.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sail_interp"><a class="anchor" href="#sail_interp"></a>Pseudocode internal step</h4>
+<h4 id="sail_interp"><a class="anchor" href="#sail_interp"></a>3.5.19. Pseudocode internal step</h4>
 <div class="paragraph">
 <p>An instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state
 Plain(Internal(<em>next_state</em>)) can always do that pseudocode-internal
@@ -2493,7 +2533,7 @@ Plain(<em>next_state</em>).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="finish"><a class="anchor" href="#finish"></a>Finish instruction</h4>
+<h4 id="finish"><a class="anchor" href="#finish"></a>3.5.20. Finish instruction</h4>
 <div class="paragraph">
 <p>A non-finished instruction instance <span class="steminline"> <svg style="vertical-align: -0.025ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="0.781ex" height="1.52ex" role="img" focusable="false" viewBox="0 -661 345 672"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D456" d="M184 600Q184 624 203 642T247 661Q265 661 277 649T290 619Q290 596 270 577T226 557Q211 557 198 567T184 600ZM21 287Q21 295 30 318T54 369T98 420T158 442Q197 442 223 419T250 357Q250 340 236 301T196 196T154 83Q149 61 149 51Q149 26 166 26Q175 26 185 29T208 43T235 78T260 137Q263 149 265 151T282 153Q302 153 302 143Q302 135 293 112T268 61T223 11T161 -11Q129 -11 102 10T74 74Q74 91 79 106T122 220Q160 321 166 341T173 380Q173 404 156 404H154Q124 404 99 371T61 287Q60 286 59 284T58 281T56 279T53 278T49 278T41 278H27Q21 284 21 287Z"></path></g></g></g></svg> </span> in state Plain(Done)
 can be finished if:</p>
@@ -2584,7 +2624,7 @@ instruction instances that are not reachable by the branch/jump taken in
 </div>
 </div>
 <div class="sect2">
-<h3 id="limitations"><a class="anchor" href="#limitations"></a>Limitations</h3>
+<h3 id="limitations"><a class="anchor" href="#limitations"></a>3.6. Limitations</h3>
 <div class="ulist">
 <ul>
 <li>

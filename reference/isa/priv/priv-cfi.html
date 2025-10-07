@@ -560,6 +560,24 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">Control-flow Integrity (CFI)</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#priv-forward">1. Landing Pad (Zicfilp)</a>
+<ul class="sectlevel2">
+<li><a href="#FCFIACT">1.1. Landing-Pad-Enabled (LPE) State</a></li>
+<li><a href="#ZICFILP_FORWARD_TRAPS">1.2. Preserving Expected Landing Pad State on Traps</a></li>
+</ul>
+</li>
+<li><a href="#priv-backward">2. Shadow Stack (Zicfiss)</a>
+<ul class="sectlevel2">
+<li><a href="#shadow-stack-pointer-ssp-csr-access-control">2.1. Shadow Stack Pointer (<code>ssp</code>) CSR access control</a></li>
+<li><a href="#shadow-stack-enabled-sse-state">2.2. Shadow-Stack-Enabled (SSE) State</a></li>
+<li><a href="#SSMP">2.3. Shadow Stack Memory Protection</a></li>
+</ul>
+</li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -573,13 +591,13 @@ details on these CFI capabilities and the associated Unprivileged ISA.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="priv-forward"><a class="anchor" href="#priv-forward"></a>Landing Pad (Zicfilp)</h2>
+<h2 id="priv-forward"><a class="anchor" href="#priv-forward"></a>1. Landing Pad (Zicfilp)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section specifies the Privileged ISA for the Zicfilp extension.</p>
 </div>
 <div class="sect2">
-<h3 id="FCFIACT"><a class="anchor" href="#FCFIACT"></a>Landing-Pad-Enabled (LPE) State</h3>
+<h3 id="FCFIACT"><a class="anchor" href="#FCFIACT"></a>1.1. Landing-Pad-Enabled (LPE) State</h3>
 <div class="paragraph">
 <p>The term <code>xLPE</code> is used to determine if forward-edge CFI using landing pads
 provided by the Zicfilp extension is enabled at a privilege mode.</p>
@@ -666,7 +684,7 @@ implemented or is not enabled.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="ZICFILP_FORWARD_TRAPS"><a class="anchor" href="#ZICFILP_FORWARD_TRAPS"></a>Preserving Expected Landing Pad State on Traps</h3>
+<h3 id="ZICFILP_FORWARD_TRAPS"><a class="anchor" href="#ZICFILP_FORWARD_TRAPS"></a>1.2. Preserving Expected Landing Pad State on Traps</h3>
 <div class="paragraph">
 <p>A trap may need to be delivered to the same or to a higher privilege mode upon
 completion of <code>JALR</code>/<code>C.JALR</code>/<code>C.JR</code>, but before the instruction at the target
@@ -754,13 +772,13 @@ a trap.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="priv-backward"><a class="anchor" href="#priv-backward"></a>Shadow Stack (Zicfiss)</h2>
+<h2 id="priv-backward"><a class="anchor" href="#priv-backward"></a>2. Shadow Stack (Zicfiss)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section specifies the Privileged ISA for the Zicfiss extension.</p>
 </div>
 <div class="sect2">
-<h3 id="shadow-stack-pointer-ssp-csr-access-control"><a class="anchor" href="#shadow-stack-pointer-ssp-csr-access-control"></a>Shadow Stack Pointer (<code>ssp</code>) CSR access control</h3>
+<h3 id="shadow-stack-pointer-ssp-csr-access-control"><a class="anchor" href="#shadow-stack-pointer-ssp-csr-access-control"></a>2.1. Shadow Stack Pointer (<code>ssp</code>) CSR access control</h3>
 <div class="paragraph">
 <p>Attempts to access the <code>ssp</code> CSR may result in either an illegal-instruction
 exception or a virtual-instruction  exception, contingent upon the state of the
@@ -791,7 +809,7 @@ a virtual-instruction  exception is raised.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="shadow-stack-enabled-sse-state"><a class="anchor" href="#shadow-stack-enabled-sse-state"></a>Shadow-Stack-Enabled (SSE) State</h3>
+<h3 id="shadow-stack-enabled-sse-state"><a class="anchor" href="#shadow-stack-enabled-sse-state"></a>2.2. Shadow-Stack-Enabled (SSE) State</h3>
 <div class="paragraph">
 <p>The term <code>xSSE</code> is used to determine if backward-edge CFI using shadow stacks
 provided by the Zicfiss extension is enabled at a privilege mode.</p>
@@ -898,7 +916,7 @@ instructions.
 </div>
 </div>
 <div class="sect2">
-<h3 id="SSMP"><a class="anchor" href="#SSMP"></a>Shadow Stack Memory Protection</h3>
+<h3 id="SSMP"><a class="anchor" href="#SSMP"></a>2.3. Shadow Stack Memory Protection</h3>
 <div class="paragraph">
 <p>To protect shadow stack memory, the memory is associated with a new page type –
 the Shadow Stack (SS) page – in the single-stage and VS-stage page tables. The

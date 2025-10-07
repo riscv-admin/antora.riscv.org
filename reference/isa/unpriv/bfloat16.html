@@ -560,8 +560,51 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">"BF16" Extensions for BFloat16-precision Floating-Point, Version 1.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#BF16_introduction">1. Introduction</a></li>
+<li><a href="#BF16_audience">2. Intended Audience</a></li>
+<li><a href="#BF16_format">3. Number Format</a>
+<ul class="sectlevel2">
+<li><a href="#bf16-operand-format">3.1. BF16 Operand Format</a></li>
+<li><a href="#bf16-behavior">3.2. BF16 Behavior</a>
+<ul class="sectlevel3">
+<li><a href="#subnormal-numbers">3.2.1. Subnormal Numbers:</a></li>
+<li><a href="#infinities">3.2.2. Infinities:</a></li>
+<li><a href="#nans">3.2.3. NaNs</a></li>
+<li><a href="#scalar-nan-boxing">3.2.4. Scalar NaN Boxing</a></li>
+<li><a href="#rounding-modes">3.2.5. Rounding Modes:</a></li>
+<li><a href="#handling-exceptions">3.2.6. Handling exceptions</a>
+<ul class="sectlevel4">
+<li><a href="#underflow">3.2.6.1. Underflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#BF16_extensions">4. Extensions</a>
+<ul class="sectlevel2">
+<li><a href="#zfbfmin">4.1. <code>Zfbfmin</code> - Scalar BF16 Converts</a></li>
+<li><a href="#zvfbfmin">4.2. <code>Zvfbfmin</code> - Vector BF16 Converts</a></li>
+<li><a href="#zvfbfwma">4.3. <code>Zvfbfwma</code> - Vector BF16 widening mul-add</a></li>
+</ul>
+</li>
+<li><a href="#BF16_insns">5. Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#insns-fcvt.bf16.s">5.1. fcvt.bf16.s</a></li>
+<li><a href="#insns-fcvt.s.bf16">5.2. fcvt.s.bf16</a></li>
+<li><a href="#insns-vfncvtbf16.f.f.w">5.3. vfncvtbf16.f.f.w</a></li>
+<li><a href="#insns-vfwcvtbf16.f.f.v">5.4. vfwcvtbf16.f.f.v</a></li>
+<li><a href="#insns-vfwmaccbf16">5.5. vfwmaccbf16</a></li>
+</ul>
+</li>
+<li><a href="#bibliography">6. Bibliography</a></li>
+</ul>
+</div>
 <div class="sect1">
-<h2 id="BF16_introduction"><a class="anchor" href="#BF16_introduction"></a>Introduction</h2>
+<h2 id="BF16_introduction"><a class="anchor" href="#BF16_introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When FP16 (officially called binary16) was first introduced by the IEEE-754 standard,
@@ -616,7 +659,7 @@ proliferate.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="BF16_audience"><a class="anchor" href="#BF16_audience"></a>Intended Audience</h2>
+<h2 id="BF16_audience"><a class="anchor" href="#BF16_audience"></a>2. Intended Audience</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Floating-point arithmetic is a specialized subject, requiring people with many different
@@ -676,10 +719,10 @@ but they are the ones we considered most while writing it.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="BF16_format"><a class="anchor" href="#BF16_format"></a>Number Format</h2>
+<h2 id="BF16_format"><a class="anchor" href="#BF16_format"></a>3. Number Format</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="bf16-operand-format"><a class="anchor" href="#bf16-operand-format"></a>BF16 Operand Format</h3>
+<h3 id="bf16-operand-format"><a class="anchor" href="#bf16-operand-format"></a>3.1. BF16 Operand Format</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">BF16 bits</dt>
@@ -811,13 +854,13 @@ For BF16 these values are:</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="bf16-behavior"><a class="anchor" href="#bf16-behavior"></a>BF16 Behavior</h3>
+<h3 id="bf16-behavior"><a class="anchor" href="#bf16-behavior"></a>3.2. BF16 Behavior</h3>
 <div class="paragraph">
 <p>For these BF16 extensions, instruction behavior on BF16 operands is the same as for other floating-point
 instructions in the RISC-V ISA. For easy reference, some of this behavior is repeated here.</p>
 </div>
 <div class="sect3">
-<h4 id="subnormal-numbers"><a class="anchor" href="#subnormal-numbers"></a>Subnormal Numbers:</h4>
+<h4 id="subnormal-numbers"><a class="anchor" href="#subnormal-numbers"></a>3.2.1. Subnormal Numbers:</h4>
 <div class="paragraph">
 <p>Floating-point values that are too small to be represented as normal numbers, but can still be expressed
 by the format&#8217;s smallest exponent value with a "0" integer bit and at least one "1" bit
@@ -846,7 +889,7 @@ The comments about supporting subnormal BF16 values are limited to those instruc
 </div>
 </div>
 <div class="sect3">
-<h4 id="infinities"><a class="anchor" href="#infinities"></a>Infinities:</h4>
+<h4 id="infinities"><a class="anchor" href="#infinities"></a>3.2.2. Infinities:</h4>
 <div class="paragraph">
 <p>Infinities are used to represent values that are too large to be represented by the target format.
 These are usually produced as a result of overflows (depending on the rounding mode), but can also
@@ -857,7 +900,7 @@ be provided as inputs. Infinities have a sign associated with them: there are po
 </div>
 </div>
 <div class="sect3">
-<h4 id="nans"><a class="anchor" href="#nans"></a>NaNs</h4>
+<h4 id="nans"><a class="anchor" href="#nans"></a>3.2.3. NaNs</h4>
 <div class="paragraph">
 <p>NaN stands for Not a Number.</p>
 </div>
@@ -884,7 +927,7 @@ is the most significant 16 bits of the RISC-V single-precision canonical NaN.</p
 </div>
 </div>
 <div class="sect3">
-<h4 id="scalar-nan-boxing"><a class="anchor" href="#scalar-nan-boxing"></a>Scalar NaN Boxing</h4>
+<h4 id="scalar-nan-boxing"><a class="anchor" href="#scalar-nan-boxing"></a>3.2.4. Scalar NaN Boxing</h4>
 <div class="paragraph">
 <p>RISC-V applies NaN boxing to scalar results and checks for NaN boxing when a floating-point operation
 --- even a vector-scalar operation --- consumes a value from a scalar floating-point register.
@@ -902,7 +945,7 @@ are more significant than the operand&#8217;s most significant bit.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="rounding-modes"><a class="anchor" href="#rounding-modes"></a>Rounding Modes:</h4>
+<h4 id="rounding-modes"><a class="anchor" href="#rounding-modes"></a>3.2.5. Rounding Modes:</h4>
 <div class="paragraph">
 <p>As is the case with other floating-point instructions,
 the BF16 instructions support all 5 RISC-V Floating-point rounding modes.
@@ -980,7 +1023,7 @@ mode specified in the <code>frm</code> CSR.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="handling-exceptions"><a class="anchor" href="#handling-exceptions"></a>Handling exceptions</h4>
+<h4 id="handling-exceptions"><a class="anchor" href="#handling-exceptions"></a>3.2.6. Handling exceptions</h4>
 <div class="paragraph">
 <p>RISC-V supports IEEE-defined default exception handling. BF16 is no exception.</p>
 </div>
@@ -991,7 +1034,7 @@ BF16 instructions set floating-point exception flags the same way as all other f
 in RISC-V.</p>
 </div>
 <div class="sect4">
-<h5 id="underflow"><a class="anchor" href="#underflow"></a>Underflow</h5>
+<h5 id="underflow"><a class="anchor" href="#underflow"></a>3.2.6.1. Underflow</h5>
 <div class="paragraph">
 <p>The IEEE-defined underflow exception requires that a result be inexact and tiny, where tininess can be
 detected before or after rounding. In RISC-V, tininess is detected after rounding.</p>
@@ -1016,7 +1059,7 @@ and inexact. In such a case, both the underflow and inexact flags are raised.</p
 </div>
 </div>
 <div class="sect1">
-<h2 id="BF16_extensions"><a class="anchor" href="#BF16_extensions"></a>Extensions</h2>
+<h2 id="BF16_extensions"><a class="anchor" href="#BF16_extensions"></a>4. Extensions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The group of extensions introduced by the BF16 Instruction Set
@@ -1061,7 +1104,7 @@ single-precision values, and vector widening multiply-accumulate
 instructions.</p>
 </div>
 <div class="sect2">
-<h3 id="zfbfmin"><a class="anchor" href="#zfbfmin"></a><code>Zfbfmin</code> - Scalar BF16 Converts</h3>
+<h3 id="zfbfmin"><a class="anchor" href="#zfbfmin"></a>4.1. <code>Zfbfmin</code> - Scalar BF16 Converts</h3>
 <div class="paragraph">
 <p>This extension provides the minimal set of instructions needed to enable scalar support
 of the BF16 format. It enables BF16 as an interchange format as it provides conversion
@@ -1170,7 +1213,7 @@ on some inputs for the RNE and RMM rounding modes.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zvfbfmin"><a class="anchor" href="#zvfbfmin"></a><code>Zvfbfmin</code> - Vector BF16 Converts</h3>
+<h3 id="zvfbfmin"><a class="anchor" href="#zvfbfmin"></a>4.2. <code>Zvfbfmin</code> - Vector BF16 Converts</h3>
 <div class="paragraph">
 <p>This extension provides the minimal set of instructions needed to enable vector support of the BF16
 format. It enables BF16 as an interchange format as it provides conversion between BF16 values
@@ -1259,7 +1302,7 @@ the desired rounding mode.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zvfbfwma"><a class="anchor" href="#zvfbfwma"></a><code>Zvfbfwma</code> - Vector BF16 widening mul-add</h3>
+<h3 id="zvfbfwma"><a class="anchor" href="#zvfbfwma"></a>4.3. <code>Zvfbfwma</code> - Vector BF16 widening mul-add</h3>
 <div class="paragraph">
 <p>This extension provides
 a vector widening BF16 mul-add instruction that accumulates into FP32.</p>
@@ -1289,10 +1332,10 @@ a vector widening BF16 mul-add instruction that accumulates into FP32.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="BF16_insns"><a class="anchor" href="#BF16_insns"></a>Instructions</h2>
+<h2 id="BF16_insns"><a class="anchor" href="#BF16_insns"></a>5. Instructions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-fcvt.bf16.s"><a class="anchor" href="#insns-fcvt.bf16.s"></a>fcvt.bf16.s</h3>
+<h3 id="insns-fcvt.bf16.s"><a class="anchor" href="#insns-fcvt.bf16.s"></a>5.1. fcvt.bf16.s</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1351,7 +1394,7 @@ floating-point-to-floating-point conversion instructions.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-fcvt.s.bf16"><a class="anchor" href="#insns-fcvt.s.bf16"></a>fcvt.s.bf16</h3>
+<h3 id="insns-fcvt.s.bf16"><a class="anchor" href="#insns-fcvt.s.bf16"></a>5.2. fcvt.s.bf16</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1427,7 +1470,7 @@ least significant 16 bits are written with 0s.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vfncvtbf16.f.f.w"><a class="anchor" href="#insns-vfncvtbf16.f.f.w"></a>vfncvtbf16.f.f.w</h3>
+<h3 id="insns-vfncvtbf16.f.f.w"><a class="anchor" href="#insns-vfncvtbf16.f.f.w"></a>5.3. vfncvtbf16.f.f.w</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1513,7 +1556,7 @@ However, here the SEW-width format is limited to BF16.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-vfwcvtbf16.f.f.v"><a class="anchor" href="#insns-vfwcvtbf16.f.f.v"></a>vfwcvtbf16.f.f.v</h3>
+<h3 id="insns-vfwcvtbf16.f.f.v"><a class="anchor" href="#insns-vfwcvtbf16.f.f.v"></a>5.4. vfwcvtbf16.f.f.v</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1614,7 +1657,7 @@ least significant 16 bits are written with 0s.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-vfwmaccbf16"><a class="anchor" href="#insns-vfwmaccbf16"></a>vfwmaccbf16</h3>
+<h3 id="insns-vfwmaccbf16"><a class="anchor" href="#insns-vfwmaccbf16"></a>5.5. vfwmaccbf16</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1736,7 +1779,7 @@ instruction sequence:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">vfwcvtbf16.f.f.v T1, vs1, vm
+<pre class="highlight"><code class="language-asm" data-lang="asm">vfwcvtbf16.f.f.v T1, vs1, vm
 vfwcvtbf16.f.f.v T2, vs2, vm
 vfmacc.vv        vd, T1, T2, vm</code></pre>
 </div>
@@ -1746,7 +1789,7 @@ vfmacc.vv        vd, T1, T2, vm</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">fcvt.s.bf16      T1, rs1
+<pre class="highlight"><code class="language-asm" data-lang="asm">fcvt.s.bf16      T1, rs1
 vfwcvtbf16.f.f.v T2, vs2, vm
 vfmacc.vf        vd, T1, T2, vm</code></pre>
 </div>
@@ -1758,7 +1801,7 @@ vfmacc.vf        vd, T1, T2, vm</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="bibliography"><a class="anchor" href="#bibliography"></a>Bibliography</h2>
+<h2 id="bibliography"><a class="anchor" href="#bibliography"></a>6. Bibliography</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://ieeexplore.ieee.org/document/8766229">754-2019 - IEEE Standard for Floating-Point Arithmetic</a><br>

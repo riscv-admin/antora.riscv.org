@@ -560,8 +560,34 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">RV32I Base Integer Instruction Set, Version 2.1</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#introduction">1. Introduction</a></li>
+<li><a href="#programmers-model-for-base-integer-isa">2. Programmers' Model for Base Integer ISA</a></li>
+<li><a href="#base-instruction-formats">3. Base Instruction Formats</a></li>
+<li><a href="#immediate-encoding-variants">4. Immediate Encoding Variants</a></li>
+<li><a href="#integer-computational-instructions">5. Integer Computational Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#integer-register-immediate-instructions">5.1. Integer Register-Immediate Instructions</a></li>
+<li><a href="#integer-register-register-operations">5.2. Integer Register-Register Operations</a></li>
+<li><a href="#nop-instruction">5.3. NOP Instruction</a></li>
+</ul>
+</li>
+<li><a href="#control-transfer-instructions">6. Control Transfer Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#unconditional-jumps">6.1. Unconditional Jumps</a></li>
+<li><a href="#conditional-branches">6.2. Conditional Branches</a></li>
+</ul>
+</li>
+<li><a href="#ldst">7. Load and Store Instructions</a></li>
+<li><a href="#fence">8. Memory Ordering Instructions</a></li>
+<li><a href="#ecall-ebreak">9. Environment Call and Breakpoints</a></li>
+<li><a href="#hint-instructions">10. HINT Instructions</a></li>
+</ul>
+</div>
 <div class="sect1">
-<h2 id="introduction"><a class="anchor" href="#introduction"></a>Introduction</h2>
+<h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the RV32I base integer instruction set.</p>
@@ -631,7 +657,7 @@ Assembly Programmer&#8217;s Manual [<a href="../biblio/bibliography.html#bib-ris
 </div>
 </div>
 <div class="sect1">
-<h2 id="programmers-model-for-base-integer-isa"><a class="anchor" href="#programmers-model-for-base-integer-isa"></a>Programmers' Model for Base Integer ISA</h2>
+<h2 id="programmers-model-for-base-integer-isa"><a class="anchor" href="#programmers-model-for-base-integer-isa"></a>2. Programmers' Model for Base Integer ISA</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="#gprs">RISC-V base unprivileged integer register state.</a> shows the unprivileged state for the base
@@ -823,7 +849,7 @@ RV32E subset, which only has 16 registers
 </div>
 </div>
 <div class="sect1">
-<h2 id="base-instruction-formats"><a class="anchor" href="#base-instruction-formats"></a>Base Instruction Formats</h2>
+<h2 id="base-instruction-formats"><a class="anchor" href="#base-instruction-formats"></a>3. Base Instruction Formats</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the base RV32I ISA, there are four core instruction formats
@@ -941,7 +967,7 @@ to keep the ISA as simple as possible.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="immediate-encoding-variants"><a class="anchor" href="#immediate-encoding-variants"></a>Immediate Encoding Variants</h2>
+<h2 id="immediate-encoding-variants"><a class="anchor" href="#immediate-encoding-variants"></a>4. Immediate Encoding Variants</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are a further two variants of the instruction formats (B/J) based
@@ -1060,7 +1086,7 @@ common short forward branches have straightforward immediate encodings.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="integer-computational-instructions"><a class="anchor" href="#integer-computational-instructions"></a>Integer Computational Instructions</h2>
+<h2 id="integer-computational-instructions"><a class="anchor" href="#integer-computational-instructions"></a>5. Integer Computational Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Most integer computational instructions operate on <code>XLEN</code> bits of values
@@ -1100,7 +1126,7 @@ negative.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">         add t0, t1, t2
+<pre class="highlight"><code class="language-text" data-lang="text">         add t0, t1, t2
          slti t3, t2, 0
          slt t4, t0, t1
          bne t3, t4, overflow</code></pre>
@@ -1115,7 +1141,7 @@ comparing the results of ADD and ADDW on the operands.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="integer-register-immediate-instructions"><a class="anchor" href="#integer-register-immediate-instructions"></a>Integer Register-Immediate Instructions</h3>
+<h3 id="integer-register-immediate-instructions"><a class="anchor" href="#integer-register-immediate-instructions"></a>5.1. Integer Register-Immediate Instructions</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4Bup6-vkis2FodhAmmCBOKUiC6kU0wBelLSS0ugdMouo0RutNK85JLjKEmwLSD-OqOLi6e-sE-IZ7RobFgvh-Q7x_kqR8BJHC7ptgQ7hwU1xQXJcMoFL2GRjowvZm5udGGhlYGIOtgeg2NQLo8dYFyqSmZiSWpcBVYBGNruWJrATlKYzc=" alt="svg">
@@ -1205,7 +1231,7 @@ microarchitectures.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>Integer Register-Register Operations</h3>
+<h3 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>5.2. Integer Register-Register Operations</h3>
 <div class="paragraph">
 <p>RV32I defines several arithmetic R-type operations. All operations read
 the <em>rs1</em> and <em>rs2</em> registers as source operands and write the result
@@ -1234,7 +1260,7 @@ the lower 5 bits of register <em>rs2</em>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="nop-instruction"><a class="anchor" href="#nop-instruction"></a>NOP Instruction</h3>
+<h3 id="nop-instruction"><a class="anchor" href="#nop-instruction"></a>5.3. NOP Instruction</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVQcKKCgklpQUAdWpmwO56v4Bup6-vuqxtToIfaYIfUUpED3I-kxB-gxQtRgjtKSV5iWXGEO1wfSA-OqOLi6euG0qNoRbhc8mQyMdmJbM3NxoQ0Mrg1igMpgWQyOYHq7YWgAGTEe2" alt="svg">
@@ -1279,7 +1305,7 @@ hardware.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="control-transfer-instructions"><a class="anchor" href="#control-transfer-instructions"></a>Control Transfer Instructions</h2>
+<h2 id="control-transfer-instructions"><a class="anchor" href="#control-transfer-instructions"></a>6. Control Transfer Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>RV32I provides two types of control transfer instructions: unconditional
@@ -1293,7 +1319,7 @@ reported on the target instruction, not on the jump or branch
 instruction.</p>
 </div>
 <div class="sect2">
-<h3 id="unconditional-jumps"><a class="anchor" href="#unconditional-jumps"></a>Unconditional Jumps</h3>
+<h3 id="unconditional-jumps"><a class="anchor" href="#unconditional-jumps"></a>6.1. Unconditional Jumps</h3>
 <div class="paragraph">
 <p>The jump and link (JAL) instruction uses the J-type format, where the
 J-immediate encodes a signed offset in multiples of 2 bytes. The offset
@@ -1501,7 +1527,7 @@ is only pushed to enable macro-op fusion of the sequences:
 </div>
 </div>
 <div class="sect2">
-<h3 id="conditional-branches"><a class="anchor" href="#conditional-branches"></a>Conditional Branches</h3>
+<h3 id="conditional-branches"><a class="anchor" href="#conditional-branches"></a>6.2. Conditional Branches</h3>
 <div class="paragraph">
 <p>All branch instructions use the B-type instruction format. The 12-bit
 B-immediate encodes signed offsets in multiples of 2 bytes. The offset
@@ -1650,7 +1676,7 @@ compressed instruction-set extension, C.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ldst"><a class="anchor" href="#ldst"></a>Load and Store Instructions</h2>
+<h2 id="ldst"><a class="anchor" href="#ldst"></a>7. Load and Store Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>RV32I is a load-store architecture, where only load and store
@@ -1816,7 +1842,7 @@ are aligned.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="fence"><a class="anchor" href="#fence"></a>Memory Ordering Instructions</h2>
+<h2 id="fence"><a class="anchor" href="#fence"></a>8. Memory Ordering Instructions</h2>
 <div class="sectionbody">
 <div class="imageblock kroki">
 <div class="content">
@@ -1967,7 +1993,7 @@ conservative FENCE on all operations.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ecall-ebreak"><a class="anchor" href="#ecall-ebreak"></a>Environment Call and Breakpoints</h2>
+<h2 id="ecall-ebreak"><a class="anchor" href="#ecall-ebreak"></a>9. Environment Call and Breakpoints</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>SYSTEM</code> instructions are used to access system functionality that might
@@ -2054,7 +2080,7 @@ to distinguish a semihosting EBREAK from a debugger inserted EBREAK.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    slli x0, x0, 0x1f   # Entry NOP
+<pre class="highlight"><code class="language-asm" data-lang="asm">    slli x0, x0, 0x1f   # Entry NOP
     ebreak              # Break to debugger
     srai x0, x0, 7      # Exit NOP</code></pre>
 </div>
@@ -2087,7 +2113,7 @@ for semihosting calls in newer designs.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="hint-instructions"><a class="anchor" href="#hint-instructions"></a>HINT Instructions</h2>
+<h2 id="hint-instructions"><a class="anchor" href="#hint-instructions"></a>10. HINT Instructions</h2>
 <div class="sectionbody">
 <div id="rv32i-hints" class="paragraph">
 <p>RV32I reserves a large encoding space for HINT instructions, which are

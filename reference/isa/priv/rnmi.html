@@ -560,6 +560,16 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">"Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#rnmi-interrupt-signals">1. RNMI Interrupt Signals</a></li>
+<li><a href="#rnmi-handler-addresses">2. RNMI Handler Addresses</a></li>
+<li><a href="#rnmi-csrs">3. RNMI CSRs</a></li>
+<li><a href="#mnret-instruction">4. MNRET Instruction</a></li>
+<li><a href="#rnmi-operation">5. RNMI Operation</a></li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -579,7 +589,7 @@ instruction, MNRET, to resume from the RNMI handler.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="rnmi-interrupt-signals"><a class="anchor" href="#rnmi-interrupt-signals"></a>RNMI Interrupt Signals</h2>
+<h2 id="rnmi-interrupt-signals"><a class="anchor" href="#rnmi-interrupt-signals"></a>1. RNMI Interrupt Signals</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>rnmi</code> interrupt signals are inputs to the hart. These interrupts
@@ -590,7 +600,7 @@ by clearing the <code>mstatus</code>.MIE register.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="rnmi-handler-addresses"><a class="anchor" href="#rnmi-handler-addresses"></a>RNMI Handler Addresses</h2>
+<h2 id="rnmi-handler-addresses"><a class="anchor" href="#rnmi-handler-addresses"></a>2. RNMI Handler Addresses</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The RNMI interrupt trap handler address is implementation-defined.</p>
@@ -615,7 +625,7 @@ in <code>mtvec</code> as the RNMI exception trap handler.
 </div>
 </div>
 <div class="sect1">
-<h2 id="rnmi-csrs"><a class="anchor" href="#rnmi-csrs"></a>RNMI CSRs</h2>
+<h2 id="rnmi-csrs"><a class="anchor" href="#rnmi-csrs"></a>3. RNMI CSRs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This extension adds additional M-mode CSRs to enable a resumable
@@ -766,7 +776,7 @@ and hardware implementations should return zeros.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="mnret-instruction"><a class="anchor" href="#mnret-instruction"></a>MNRET Instruction</h2>
+<h2 id="mnret-instruction"><a class="anchor" href="#mnret-instruction"></a>4. MNRET Instruction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>MNRET is an M-mode-only instruction that uses the values in <code>mnepc</code> and
@@ -779,7 +789,7 @@ is <em>y</em>, MNRET sets <code>ELP</code> to the logical AND of <em>y</em>LPE (
 </div>
 </div>
 <div class="sect1">
-<h2 id="rnmi-operation"><a class="anchor" href="#rnmi-operation"></a>RNMI Operation</h2>
+<h2 id="rnmi-operation"><a class="anchor" href="#rnmi-operation"></a>5. RNMI Operation</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When an RNMI interrupt is detected, the interrupted PC is written to the

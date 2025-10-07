@@ -560,6 +560,67 @@ Library</a>
     </ul>
   </nav>
 </div><h1 id="page-title" class="page">Supervisor-Level ISA, Version 1.13</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#supervisor-csrs">1. Supervisor CSRs</a>
+<ul class="sectlevel2">
+<li><a href="#sstatus">1.1. Supervisor Status (<code>sstatus</code>) Register</a>
+<ul class="sectlevel3">
+<li><a href="#base-isa-control-in-sstatus-register">1.1.1. Base ISA Control in <code>sstatus</code> Register</a></li>
+<li><a href="#sum">1.1.2. Memory Privilege in <code>sstatus</code> Register</a></li>
+<li><a href="#endianness-control-in-sstatus-register">1.1.3. Endianness Control in <code>sstatus</code> Register</a></li>
+<li><a href="#previous-expected-landing-pad-elp-state-in-sstatus-register">1.1.4. Previous Expected Landing Pad (ELP) State in <code>sstatus</code> Register</a></li>
+<li><a href="#supv-double-trap">1.1.5. Double Trap Control in <code>sstatus</code> Register</a></li>
+</ul>
+</li>
+<li><a href="#supervisor-trap-vector-base-address-stvec-register">1.2. Supervisor Trap Vector Base Address (<code>stvec</code>)  Register</a></li>
+<li><a href="#supervisor-interrupt-sip-and-sie-registers">1.3. Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</a></li>
+<li><a href="#supervisor-timers-and-performance-counters">1.4. Supervisor Timers and Performance Counters</a></li>
+<li><a href="#counter-enable-scounteren-register">1.5. Counter-Enable (<code>scounteren</code>) Register</a></li>
+<li><a href="#supervisor-scratch-sscratch-register">1.6. Supervisor Scratch (<code>sscratch</code>) Register</a></li>
+<li><a href="#supervisor-exception-program-counter-sepc-register">1.7. Supervisor Exception Program Counter (<code>sepc</code>) Register</a></li>
+<li><a href="#scause">1.8. Supervisor Cause (<code>scause</code>) Register</a></li>
+<li><a href="#supervisor-trap-value-stval-register">1.9. Supervisor Trap Value (<code>stval</code>) Register</a></li>
+<li><a href="#sec:senvcfg">1.10. Supervisor Environment Configuration (<code>senvcfg</code>) Register</a></li>
+<li><a href="#satp">1.11. Supervisor Address Translation and Protection (<code>satp</code>) Register</a></li>
+</ul>
+</li>
+<li><a href="#supervisor-instructions">2. Supervisor Instructions</a>
+<ul class="sectlevel2">
+<li><a href="#sfence.vma">2.1. Supervisor Memory-Management Fence Instruction</a></li>
+</ul>
+</li>
+<li><a href="#sv32">3. Sv32: Page-Based 32-bit Virtual-Memory Systems</a>
+<ul class="sectlevel2">
+<li><a href="#translation">3.1. Addressing and Memory Protection</a></li>
+<li><a href="#sv32algorithm">3.2. Virtual Address Translation Process</a></li>
+</ul>
+</li>
+<li><a href="#sv39">4. Sv39: Page-Based 39-bit Virtual-Memory System</a>
+<ul class="sectlevel2">
+<li><a href="#addressing-and-memory-protection">4.1. Addressing and Memory Protection</a></li>
+</ul>
+</li>
+<li><a href="#sv48">5. Sv48: Page-Based 48-bit Virtual-Memory System</a>
+<ul class="sectlevel2">
+<li><a href="#addressing-and-memory-protection-1">5.1. Addressing and Memory Protection</a></li>
+</ul>
+</li>
+<li><a href="#sv57">6. Sv57: Page-Based 57-bit Virtual-Memory System</a>
+<ul class="sectlevel2">
+<li><a href="#addressing-and-memory-protection-2">6.1. Addressing and Memory Protection</a></li>
+</ul>
+</li>
+<li><a href="#svnapot">7. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a></li>
+<li><a href="#svpbmt">8. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</a></li>
+<li><a href="#svinval">9. "Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</a></li>
+<li><a href="#sec:svadu">10. "Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</a></li>
+<li><a href="#sec:svvptc">11. "Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</a></li>
+<li><a href="#ssqosid">12. "Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</a></li>
+<li><a href="#supervisor-resource-management-configuration-srmcfg-register">13. Supervisor Resource Management Configuration (<code>srmcfg</code>) register</a></li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -592,7 +653,7 @@ some other implementation-defined mechanism.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="supervisor-csrs"><a class="anchor" href="#supervisor-csrs"></a>Supervisor CSRs</h2>
+<h2 id="supervisor-csrs"><a class="anchor" href="#supervisor-csrs"></a>1. Supervisor CSRs</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>A number of CSRs are provided for the supervisor.</p>
@@ -621,7 +682,7 @@ supervisor-level CSR descriptions.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="sstatus"><a class="anchor" href="#sstatus"></a>Supervisor Status (<code>sstatus</code>) Register</h3>
+<h3 id="sstatus"><a class="anchor" href="#sstatus"></a>1.1. Supervisor Status (<code>sstatus</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>sstatus</code> register is an SXLEN-bit read/write register formatted as
 shown in <a href="#sstatusreg-rv32">Supervisor-mode status (<code>sstatus</code>) register when SXLEN=32.</a> when SXLEN=32
@@ -682,7 +743,7 @@ is executed, SIE is set to SPIE, then SPIE is set to 1.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="base-isa-control-in-sstatus-register"><a class="anchor" href="#base-isa-control-in-sstatus-register"></a>Base ISA Control in <code>sstatus</code> Register</h4>
+<h4 id="base-isa-control-in-sstatus-register"><a class="anchor" href="#base-isa-control-in-sstatus-register"></a>1.1.1. Base ISA Control in <code>sstatus</code> Register</h4>
 <div class="paragraph">
 <p>The UXL field controls the value of XLEN for U-mode, termed <em>UXLEN</em>,
 which may differ from the value of XLEN for S-mode, termed <em>SXLEN</em>. The
@@ -734,7 +795,7 @@ is invisible to U-mode.
 </div>
 </div>
 <div class="sect3">
-<h4 id="sum"><a class="anchor" href="#sum"></a>Memory Privilege in <code>sstatus</code> Register</h4>
+<h4 id="sum"><a class="anchor" href="#sum"></a>1.1.2. Memory Privilege in <code>sstatus</code> Register</h4>
 <div class="paragraph">
 <p>The MXR (Make eXecutable Readable) bit modifies the privilege with which
 loads access virtual memory. When MXR=0, only loads from pages marked
@@ -793,7 +854,7 @@ the alternate mapping.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="endianness-control-in-sstatus-register"><a class="anchor" href="#endianness-control-in-sstatus-register"></a>Endianness Control in <code>sstatus</code> Register</h4>
+<h4 id="endianness-control-in-sstatus-register"><a class="anchor" href="#endianness-control-in-sstatus-register"></a>1.1.3. Endianness Control in <code>sstatus</code> Register</h4>
 <div class="paragraph">
 <p>The UBE bit is a <strong>WARL</strong> field that controls the endianness of explicit memory
 accesses made from U-mode, which may differ from the endianness of
@@ -833,7 +894,7 @@ endianness.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="previous-expected-landing-pad-elp-state-in-sstatus-register"><a class="anchor" href="#previous-expected-landing-pad-elp-state-in-sstatus-register"></a>Previous Expected Landing Pad (ELP) State in <code>sstatus</code> Register</h4>
+<h4 id="previous-expected-landing-pad-elp-state-in-sstatus-register"><a class="anchor" href="#previous-expected-landing-pad-elp-state-in-sstatus-register"></a>1.1.4. Previous Expected Landing Pad (ELP) State in <code>sstatus</code> Register</h4>
 <div class="paragraph">
 <p>Access to the <code>SPELP</code> field, added by Zicfilp, accesses the homonymous
 fields of <code>mstatus</code> when <code>V=0</code>, and the homonymous fields of <code>vsstatus</code>
@@ -841,7 +902,7 @@ when <code>V=1</code>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="supv-double-trap"><a class="anchor" href="#supv-double-trap"></a>Double Trap Control in <code>sstatus</code> Register</h4>
+<h4 id="supv-double-trap"><a class="anchor" href="#supv-double-trap"></a>1.1.5. Double Trap Control in <code>sstatus</code> Register</h4>
 <div class="paragraph">
 <p>The S-mode-disable-trap (<code>SDT</code>) bit is a WARL field introduced by the Ssdbltrp
 extension to address double trap (See <a href="#machine-double-trap">[machine-double-trap]</a>) at privilege
@@ -915,7 +976,7 @@ optional measure to aid in the recovery from such critical errors.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="supervisor-trap-vector-base-address-stvec-register"><a class="anchor" href="#supervisor-trap-vector-base-address-stvec-register"></a>Supervisor Trap Vector Base Address (<code>stvec</code>)  Register</h3>
+<h3 id="supervisor-trap-vector-base-address-stvec-register"><a class="anchor" href="#supervisor-trap-vector-base-address-stvec-register"></a>1.2. Supervisor Trap Vector Base Address (<code>stvec</code>)  Register</h3>
 <div class="paragraph">
 <p>The <code>stvec</code> register is an SXLEN-bit read/write register that holds trap
 vector configuration, consisting of a vector base address (BASE) and a
@@ -978,7 +1039,7 @@ impose a stricter alignment constraint on BASE.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h3>
+<h3 id="supervisor-interrupt-sip-and-sie-registers"><a class="anchor" href="#supervisor-interrupt-sip-and-sie-registers"></a>1.3. Supervisor Interrupt (<code>sip</code> and <code>sie</code>) Registers</h3>
 <div class="paragraph">
 <p>The <code>sip</code> register is an SXLEN-bit read/write register containing
 information on pending interrupts, while <code>sie</code> is the corresponding
@@ -1129,7 +1190,7 @@ handled in the following decreasing priority order: SEI, SSI, STI, LCOFI.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="supervisor-timers-and-performance-counters"><a class="anchor" href="#supervisor-timers-and-performance-counters"></a>Supervisor Timers and Performance Counters</h3>
+<h3 id="supervisor-timers-and-performance-counters"><a class="anchor" href="#supervisor-timers-and-performance-counters"></a>1.4. Supervisor Timers and Performance Counters</h3>
 <div class="paragraph">
 <p>Supervisor software uses the same hardware performance monitoring
 facility as user-mode software, including the <code>time</code>, <code>cycle</code>, and
@@ -1142,7 +1203,7 @@ interrupts in terms of the real-time counter, <code>time</code>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="counter-enable-scounteren-register"><a class="anchor" href="#counter-enable-scounteren-register"></a>Counter-Enable (<code>scounteren</code>) Register</h3>
+<h3 id="counter-enable-scounteren-register"><a class="anchor" href="#counter-enable-scounteren-register"></a>1.5. Counter-Enable (<code>scounteren</code>) Register</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/bytefield/svg/eNq9kkFLwzAUx-_7FI-cViSlTarTXgXRQ0HEi4iHdE3XYpaWJLDp6Hc3xTkbSmoP6inwfr__e-Ely4KXzBilIW0FqyU8H89DWjbS4JJta_EGKDuDuIUbJkTO1q8IPqmu3zmQpHsJFkvbCFSzwxWvN5WBJAKnyAqucClB1uJYF7w0eMvUxk6j0Zfch0fVvNlzjVvbwTYDSoKFrSu2wxYAojGy19UtswlI80bZURoOXRc4VjTHIlezrMuTtYLU8L3BTK6rRgHShimD_NELb5LLYiJ3fsoRv5TMkegcifSSD8ZTMBrBIb29z4bP5UZ7GE3A4eO4MAzDE4qTUXCwvBFLJhj1sbuH73Euecx85PrJIaOF_vTpfk8idLCsOb3I_0rxX0kf0ECNRQ==" alt="Counter-enable (`scounteren`) register">
@@ -1186,7 +1247,7 @@ access a counter if the corresponding bits in <code>scounteren</code> and
 </div>
 </div>
 <div class="sect2">
-<h3 id="supervisor-scratch-sscratch-register"><a class="anchor" href="#supervisor-scratch-sscratch-register"></a>Supervisor Scratch (<code>sscratch</code>) Register</h3>
+<h3 id="supervisor-scratch-sscratch-register"><a class="anchor" href="#supervisor-scratch-sscratch-register"></a>1.6. Supervisor Scratch (<code>sscratch</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>sscratch</code> CSR is an SXLEN-bit read/write register, dedicated
 for use by the supervisor. Typically, <code>sscratch</code> is used to hold a
@@ -1204,7 +1265,7 @@ initial working register.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="supervisor-exception-program-counter-sepc-register"><a class="anchor" href="#supervisor-exception-program-counter-sepc-register"></a>Supervisor Exception Program Counter (<code>sepc</code>) Register</h3>
+<h3 id="supervisor-exception-program-counter-sepc-register"><a class="anchor" href="#supervisor-exception-program-counter-sepc-register"></a>1.7. Supervisor Exception Program Counter (<code>sepc</code>) Register</h3>
 <div class="paragraph">
 <p><code>sepc</code> is an SXLEN-bit read/write CSR formatted as shown in
 <a href="#epcreg">Supervisor exception program counter register.</a>. The low bit of <code>sepc</code> (<code>sepc[0]</code>) is always zero. On implementations that support only IALIGN=32, the two low bits (<code>sepc[1:0]</code>) are always zero.</p>
@@ -1237,7 +1298,7 @@ though it may be explicitly written by software.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="scause"><a class="anchor" href="#scause"></a>Supervisor Cause (<code>scause</code>) Register</h3>
+<h3 id="scause"><a class="anchor" href="#scause"></a>1.8. Supervisor Cause (<code>scause</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>scause</code> CSR is an SXLEN-bit read-write register formatted as
 shown in <a href="#scausereg">Supervisor Cause (<code>scause</code>) register.</a>. When a trap is taken into
@@ -1379,7 +1440,7 @@ Hardware error<br>
 </table>
 </div>
 <div class="sect2">
-<h3 id="supervisor-trap-value-stval-register"><a class="anchor" href="#supervisor-trap-value-stval-register"></a>Supervisor Trap Value (<code>stval</code>) Register</h3>
+<h3 id="supervisor-trap-value-stval-register"><a class="anchor" href="#supervisor-trap-value-stval-register"></a>1.9. Supervisor Trap Value (<code>stval</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>stval</code> CSR is an SXLEN-bit read-write register formatted as
 shown in <a href="#stvalreg">Supervisor Trap Value register.</a>. When a trap is taken into
@@ -1473,7 +1534,7 @@ of SXLEN and ILEN.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:senvcfg"><a class="anchor" href="#sec:senvcfg"></a>Supervisor Environment Configuration (<code>senvcfg</code>) Register</h3>
+<h3 id="sec:senvcfg"><a class="anchor" href="#sec:senvcfg"></a>1.10. Supervisor Environment Configuration (<code>senvcfg</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>senvcfg</code> CSR is an SXLEN-bit read/write register, formatted as
 shown in <a href="#senvcfg">Supervisor environment configuration register (<code>senvcfg</code>) for RV64.</a>, that controls certain
@@ -1630,7 +1691,7 @@ exception in U-mode and a virtual-instruction  exception in VU-mode.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="satp"><a class="anchor" href="#satp"></a>Supervisor Address Translation and Protection (<code>satp</code>) Register</h3>
+<h3 id="satp"><a class="anchor" href="#satp"></a>1.11. Supervisor Address Translation and Protection (<code>satp</code>) Register</h3>
 <div class="paragraph">
 <p>The <code>satp</code> CSR is an SXLEN-bit read/write register, formatted as
 shown in <a href="#rv32satp">Supervisor address translation and protection (<code>satp</code>) register when SXLEN=32.</a> for SXLEN=32 and
@@ -1902,13 +1963,13 @@ sufficiently large ASID space.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="supervisor-instructions"><a class="anchor" href="#supervisor-instructions"></a>Supervisor Instructions</h2>
+<h2 id="supervisor-instructions"><a class="anchor" href="#supervisor-instructions"></a>2. Supervisor Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In addition to the SRET instruction defined in <a href="#otherpriv">[otherpriv]</a>, one new supervisor-level instruction is provided.</p>
 </div>
 <div class="sect2">
-<h3 id="sfence.vma"><a class="anchor" href="#sfence.vma"></a>Supervisor Memory-Management Fence Instruction</h3>
+<h3 id="sfence.vma"><a class="anchor" href="#sfence.vma"></a>2.1. Supervisor Memory-Management Fence Instruction</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVddRSCwpKQIqUjcHstWDI4NDXH3VY2t1EJpMEZqKUpA0mII0GKCqNUaoTSvNSy4xRlIPYqsHBHmG4Ta-2BDd_LLElJQiPBqM0DUkFmemoKo3R3OTOYan3Vz9nF31wnwdwRpjawFgRlbo" alt="svg">
@@ -2210,7 +2271,7 @@ illegal-instruction exception.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv32"><a class="anchor" href="#sv32"></a>Sv32: Page-Based 32-bit Virtual-Memory Systems</h2>
+<h2 id="sv32"><a class="anchor" href="#sv32"></a>3. Sv32: Page-Based 32-bit Virtual-Memory Systems</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When Sv32 is written to the MODE field in the <code>satp</code> register (see
@@ -2251,7 +2312,7 @@ permit such behavior to be architecturally exposed.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="translation"><a class="anchor" href="#translation"></a>Addressing and Memory Protection</h3>
+<h3 id="translation"><a class="anchor" href="#translation"></a>3.1. Addressing and Memory Protection</h3>
 <div class="paragraph">
 <p>Sv32 implementations support a 32-bit virtual address space, divided
 into pages. An Sv32 virtual address is partitioned into a virtual page
@@ -2601,7 +2662,7 @@ in RV32D), even when the store address is naturally aligned.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sv32algorithm"><a class="anchor" href="#sv32algorithm"></a>Virtual Address Translation Process</h3>
+<h3 id="sv32algorithm"><a class="anchor" href="#sv32algorithm"></a>3.2. Virtual Address Translation Process</h3>
 <div class="paragraph">
 <p>A virtual address <em>va</em> is translated into a physical address <em>pa</em> as follows:</p>
 </div>
@@ -2815,7 +2876,7 @@ bits for implementations with narrower physical addresses.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv39"><a class="anchor" href="#sv39"></a>Sv39: Page-Based 39-bit Virtual-Memory System</h2>
+<h2 id="sv39"><a class="anchor" href="#sv39"></a>4. Sv39: Page-Based 39-bit Virtual-Memory System</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes a simple paged virtual-memory system for
@@ -2846,7 +2907,7 @@ even further.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="addressing-and-memory-protection"><a class="anchor" href="#addressing-and-memory-protection"></a>Addressing and Memory Protection</h3>
+<h3 id="addressing-and-memory-protection"><a class="anchor" href="#addressing-and-memory-protection"></a>4.1. Addressing and Memory Protection</h3>
 <div class="paragraph">
 <p>Sv39 implementations support a 39-bit virtual address space, divided
 into pages. An Sv39 address is partitioned as shown in
@@ -2946,7 +3007,7 @@ in <a href="#sv32algorithm">Virtual Address Translation Process</a>, except LEVE
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv48"><a class="anchor" href="#sv48"></a>Sv48: Page-Based 48-bit Virtual-Memory System</h2>
+<h2 id="sv48"><a class="anchor" href="#sv48"></a>5. Sv48: Page-Based 48-bit Virtual-Memory System</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes a simple paged virtual-memory system for
@@ -2976,7 +3037,7 @@ that assumes Sv39.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="addressing-and-memory-protection-1"><a class="anchor" href="#addressing-and-memory-protection-1"></a>Addressing and Memory Protection</h3>
+<h3 id="addressing-and-memory-protection-1"><a class="anchor" href="#addressing-and-memory-protection-1"></a>5.1. Addressing and Memory Protection</h3>
 <div class="paragraph">
 <p>Sv48 implementations support a 48-bit virtual address space, divided
 into pages. An Sv48 address is partitioned as shown in
@@ -3021,7 +3082,7 @@ PTESIZE equals 8.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv57"><a class="anchor" href="#sv57"></a>Sv57: Page-Based 57-bit Virtual-Memory System</h2>
+<h2 id="sv57"><a class="anchor" href="#sv57"></a>6. Sv57: Page-Based 57-bit Virtual-Memory System</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes a simple paged virtual-memory system designed for
@@ -3051,7 +3112,7 @@ that assumes Sv48.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="addressing-and-memory-protection-2"><a class="anchor" href="#addressing-and-memory-protection-2"></a>Addressing and Memory Protection</h3>
+<h3 id="addressing-and-memory-protection-2"><a class="anchor" href="#addressing-and-memory-protection-2"></a>6.1. Addressing and Memory Protection</h3>
 <div class="paragraph">
 <p>Sv57 implementations support a 57-bit virtual address space, divided
 into pages. An Sv57 address is partitioned as shown in
@@ -3097,7 +3158,7 @@ PTESIZE equals 8.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="svnapot"><a class="anchor" href="#svnapot"></a>"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</h2>
+<h2 id="svnapot"><a class="anchor" href="#svnapot"></a>7. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In Sv39, Sv48, and Sv57, when a PTE has N=1, the PTE represents a
@@ -3322,7 +3383,7 @@ first step.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="svpbmt"><a class="anchor" href="#svpbmt"></a>"Svpbmt" Extension for Page-Based Memory Types, Version 1.0</h2>
+<h2 id="svpbmt"><a class="anchor" href="#svpbmt"></a>8. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In Sv39, Sv48, and Sv57, bits 62-61 of a leaf page table entry indicate
@@ -3514,7 +3575,7 @@ e.g. VS-stage page-table accesses, the intermediate attributes apply instead.
 </div>
 </div>
 <div class="sect1">
-<h2 id="svinval"><a class="anchor" href="#svinval"></a>"Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</h2>
+<h2 id="svinval"><a class="anchor" href="#svinval"></a>9. "Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Svinval extension splits SFENCE.VMA, HFENCE.VVMA, and HFENCE.GVMA
@@ -3651,7 +3712,7 @@ instructions as no-ops.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:svadu"><a class="anchor" href="#sec:svadu"></a>"Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</h2>
+<h2 id="sec:svadu"><a class="anchor" href="#sec:svadu"></a>10. "Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Svadu extension adds support and CSR controls for hardware updating of PTE A/D bits.</p>
@@ -3671,7 +3732,7 @@ The Svade extension is also defined in <a href="#translation">Addressing and Mem
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:svvptc"><a class="anchor" href="#sec:svvptc"></a>"Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</h2>
+<h2 id="sec:svvptc"><a class="anchor" href="#sec:svvptc"></a>11. "Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When the Svvptc extension is implemented, explicit stores by a hart that update
@@ -3713,7 +3774,7 @@ coherent with store instructions that modify PTEs.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="ssqosid"><a class="anchor" href="#ssqosid"></a>"Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</h2>
+<h2 id="ssqosid"><a class="anchor" href="#ssqosid"></a>12. "Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Quality of Service (QoS) is defined as the minimal end-to-end performance
@@ -3770,7 +3831,7 @@ The Ssqosid extension does not require that S-mode mode be implemented.
 </div>
 </div>
 <div class="sect1">
-<h2 id="supervisor-resource-management-configuration-srmcfg-register"><a class="anchor" href="#supervisor-resource-management-configuration-srmcfg-register"></a>Supervisor Resource Management Configuration (<code>srmcfg</code>) register</h2>
+<h2 id="supervisor-resource-management-configuration-srmcfg-register"><a class="anchor" href="#supervisor-resource-management-configuration-srmcfg-register"></a>13. Supervisor Resource Management Configuration (<code>srmcfg</code>) register</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>srmcfg</code> register is an SXLEN-bit read/write register used to configure a

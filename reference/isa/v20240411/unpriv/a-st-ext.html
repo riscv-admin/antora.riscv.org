@@ -577,6 +577,15 @@ Library</a>
   </table>
 </div>
 <h1 id="page-title" class="page">"A" Extension for Atomic Instructions, Version 2.1</h1>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#specifying-ordering-of-atomic-instructions">1. Specifying Ordering of Atomic Instructions</a></li>
+<li><a href="#sec:lrsc">2. "Zalrsc" Extension for Load-Reserved/Store-Conditional Instructions</a></li>
+<li><a href="#sec:lrscseq">3. Eventual Success of Store-Conditional Instructions</a></li>
+<li><a href="#sec:amo">4. "Zaamo" Extension for Atomic Memory Operations</a></li>
+</ul>
+</div>
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
@@ -614,7 +623,7 @@ extensions.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="specifying-ordering-of-atomic-instructions"><a class="anchor" href="#specifying-ordering-of-atomic-instructions"></a>Specifying Ordering of Atomic Instructions</h2>
+<h2 id="specifying-ordering-of-atomic-instructions"><a class="anchor" href="#specifying-ordering-of-atomic-instructions"></a>1. Specifying Ordering of Atomic Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The base RISC-V ISA has a relaxed memory model, with the FENCE
@@ -649,7 +658,7 @@ same address domain.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:lrsc"><a class="anchor" href="#sec:lrsc"></a>"Zalrsc" Extension for Load-Reserved/Store-Conditional Instructions</h2>
+<h2 id="sec:lrsc"><a class="anchor" href="#sec:lrsc"></a>2. "Zalrsc" Extension for Load-Reserved/Store-Conditional Instructions</h2>
 <div class="sectionbody">
 <div class="imageblock kroki">
 <div class="content">
@@ -908,7 +917,7 @@ those with both bits clear, but may result in lower performance.</p>
 <div id="cas" class="listingblock">
 <div class="title">Sample code for compare-and-swap function using LR/SC.</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">        # a0 holds address of memory location
+<pre class="highlight"><code class="language-asm" data-lang="asm">        # a0 holds address of memory location
         # a1 holds expected value
         # a2 holds desired value
         # a0 holds return value, 0 if successful, !0 otherwise
@@ -932,7 +941,7 @@ using LR/SC to implement a compare-and-swap function is shown in
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:lrscseq"><a class="anchor" href="#sec:lrscseq"></a>Eventual Success of Store-Conditional Instructions</h2>
+<h2 id="sec:lrscseq"><a class="anchor" href="#sec:lrscseq"></a>3. Eventual Success of Store-Conditional Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zalrsc extension defines <em>constrained LR/SC loops</em>, which have
@@ -1086,7 +1095,7 @@ substantially easier to provide in some microarchitectural styles.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:amo"><a class="anchor" href="#sec:amo"></a>"Zaamo" Extension for Atomic Memory Operations</h2>
+<h2 id="sec:amo"><a class="anchor" href="#sec:amo"></a>4. "Zaamo" Extension for Atomic Memory Operations</h2>
 <div class="sectionbody">
 <div class="imageblock kroki">
 <div class="content">
@@ -1207,7 +1216,7 @@ relinquishment.</p>
 <div id="critical" class="listingblock">
 <div class="title">Sample code for mutual exclusion. <code>a0</code> contains the address of the lock.</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">        li           t0, 1        # Initialize swap value.
+<pre class="highlight"><code class="language-asm" data-lang="asm">        li           t0, 1        # Initialize swap value.
     again:
         lw           t1, (a0)     # Check if lock is held.
         bnez         t1, again    # Retry if held.
