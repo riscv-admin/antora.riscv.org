@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
+    <meta name="antora-ui-version" content="344c1cca7d063e1478e492aee4bd6e6cc827eb73"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -474,7 +474,7 @@ Library</a>
     <div
       class="toc"
       data-title="RVWMO Explanatory Material, Version 0.1"
-      data-levels="2"
+      data-levels="5"
     >
       <div class="toc-menu"></div>
     </div>
@@ -550,44 +550,6 @@ Library</a>
     });
   })();
 </script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            background: #ffffff;
-            min-width: 100px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #fdb515;
-            outline: none;
-          }
-
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
     </div>
   </div>
 </aside>
@@ -994,7 +956,7 @@ described below.</p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p><a href="#ax-load">[ax-load]</a>: Each byte of each load <em>i</em> returns the value written
+<p><a href="rvwmo.html#ax-loadl" class="xref page">Load Value Axiom</a>: Each byte of each load <em>i</em> returns the value written
 to that byte by the store that is the latest in global memory order among
 the following stores:</p>
 </div>
@@ -1409,13 +1371,13 @@ interleaved between the paired operations in program order or in the
 global memory order, nor does it forbid stores from the same hart or
 stores to non-overlapping locations from appearing between the paired
 operations in either program order or in the global memory order. For
-example, the SC instructions in <a href="#litmus_lrsdsc">[litmus_lrsdsc]</a> may (but are not
+example, the SC instructions in <a href="#litmus_lrsdsc">Figure 4</a> may (but are not
 guaranteed to) succeed. None of those successes would violate the
 atomicity axiom, because the intervening non-conditional stores are from
 the same hart as the paired load-reserved and store-conditional
 instructions. This way, a memory system that tracks memory accesses at
 cache line granularity (and which therefore will see the four snippets
-of <a href="#litmus_lrsdsc">[litmus_lrsdsc]</a> as identical) will not
+of <a href="#litmus_lrsdsc">Figure 4</a> as identical) will not
 be forced to fail a store-conditional instruction that happens to
 (falsely) share another portion of the same cache line as the memory
 location being held by the reservation.</p>
@@ -2039,7 +2001,7 @@ such dependencies as a particularly lightweight ordering enforcement
 mechanism.</p>
 </div>
 <div class="paragraph">
-<p>The terms in <a href="#mem-dependencies">[mem-dependencies]</a> work as follows. Instructions
+<p>The terms in <a href="rvwmo.html#mem-dependencies" class="xref page">Syntactic Dependencies</a> work as follows. Instructions
 are said to carry dependencies from their
 source register(s) to their destination register(s) whenever the value
 written into each destination register is a function of the source
@@ -2254,7 +2216,7 @@ instructions.</p>
 any force when they take the form of a syntactic address, control,
 and/or data dependency. For example: a syntactic dependency between two
 <code>F</code> instructions via one of the <code>accumulating CSRs</code> in
-<a href="#source-dest-regs">[source-dest-regs]</a> does <em>not</em> imply
+s<a href="rvwmo.html#sec:source-dest-regs" class="xref page">RISC-V source-destination registers</a> does <em>not</em> imply
 that the two <code>F</code> instructions must be executed in order. Such a
 dependency would only serve to ultimately set up later a dependency from
 both <code>F</code> instructions to a later CSR instruction accessing the CSR
@@ -3937,7 +3899,7 @@ of this rule to RVWMO.</p>
         <div class="modal__container" role="dialog" aria-modal="true">
             <main class="modal__content" id="modal-versions-content">
               <button data-micromodal-close class="modal-versions-close">
-                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                <svg width="10px" height="10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
               </button>
                   <ul class="nav-versions">
                       <li class="component">
@@ -3962,7 +3924,6 @@ of this rule to RVWMO.</p>
     </a>
   </li>
 </ul>                        </div>
-                        
                       </li>
                   </ul>
             </main>

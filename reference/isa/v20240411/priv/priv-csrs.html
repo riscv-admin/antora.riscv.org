@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
+    <meta name="antora-ui-version" content="344c1cca7d063e1478e492aee4bd6e6cc827eb73"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -474,7 +474,7 @@ Library</a>
     <div
       class="toc"
       data-title="Control and Status Registers (CSRs)"
-      data-levels="2"
+      data-levels="5"
     >
       <div class="toc-menu"></div>
     </div>
@@ -550,44 +550,6 @@ Library</a>
     });
   })();
 </script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            background: #ffffff;
-            min-width: 100px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #fdb515;
-            outline: none;
-          }
-
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
     </div>
   </div>
 </aside>
@@ -679,7 +641,7 @@ less-privileged software.</p>
 <p>Instructions that access a non-existent CSR are reserved.
 Attempts to access a CSR without appropriate privilege level
 raise illegal-instruction exceptions or, as described in
-<a href="#sec:hcauses">[sec:hcauses]</a>, virtual-instruction exceptions.
+<a href="hypervisor.html#sec:hcauses" class="xref page">Hypervisor Causes</a>, virtual-instruction exceptions.
 Attempts to write a read-only register raise illegal-instruction exceptions.
 A read/write register might also contain some bits that are
 read-only, in which case writes to the read-only bits are ignored.</p>
@@ -2019,7 +1981,7 @@ mode.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If the width of a CSR is changed (for example, by changing SXLEN or
-UXLEN, as described in <a href="#xlen-control">[xlen-control]</a>), the
+UXLEN, as described in <a href="machine.html#sec:xlen-control" class="xref page">XLEN control</a>), the
 values of the <em>writable</em> fields and bits of the new-width CSR are,
 unless specified otherwise, determined from the previous-width CSR as
 though by this algorithm:</p>
@@ -2093,7 +2055,7 @@ typically raises an illegal-instruction exception.</p>
         <div class="modal__container" role="dialog" aria-modal="true">
             <main class="modal__content" id="modal-versions-content">
               <button data-micromodal-close class="modal-versions-close">
-                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                <svg width="10px" height="10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
               </button>
                   <ul class="nav-versions">
                       <li class="component">
@@ -2118,7 +2080,6 @@ typically raises an illegal-instruction exception.</p>
     </a>
   </li>
 </ul>                        </div>
-                        
                       </li>
                   </ul>
             </main>

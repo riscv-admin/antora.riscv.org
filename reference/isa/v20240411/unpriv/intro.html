@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
+    <meta name="antora-ui-version" content="344c1cca7d063e1478e492aee4bd6e6cc827eb73"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -474,7 +474,7 @@ Library</a>
     <div
       class="toc"
       data-title=""
-      data-levels="2"
+      data-levels="5"
     >
       <div class="toc-menu"></div>
     </div>
@@ -550,44 +550,6 @@ Library</a>
     });
   })();
 </script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            background: #ffffff;
-            min-width: 100px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #fdb515;
-            outline: none;
-          }
-
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
     </div>
   </div>
 </aside>
@@ -1236,7 +1198,7 @@ instruction set, ILEN is 32 bits. Implementations supporting longer
 instructions have larger values of ILEN.</p>
 </div>
 <div class="paragraph">
-<p><a href="#instlengthcode">Table 1</a> illustrates the standard
+<p><a href="#instlengthcode">[instlengthcode]</a> illustrates the standard
 RISC-V instruction-length encoding convention. All the 32-bit
 instructions in the base ISA have their lowest two bits set to "11". The
 optional compressed 16-bit instruction-set extensions have their lowest
@@ -1255,13 +1217,13 @@ instructions longer than 32 bits is not considered frozen.
 <p>Standard instruction-set extensions encoded with more than 32 bits have
 additional low-order bits set to <code>1</code>, with the conventions for 48-bit
 and 64-bit lengths shown in
-<a href="#instlengthcode">Table 1</a>. Instruction lengths
+<a href="#instlengthcode">[instlengthcode]</a>. Instruction lengths
 between 80 bits and 176 bits are encoded using a 3-bit field in bits
 [14:12] giving the number of 16-bit words in addition to the first
 5<span class="steminline"> <svg style="vertical-align: 0.02ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="1.76ex" height="1.09ex" role="img" focusable="false" viewBox="0 -491 778 482"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g></g></g></svg> </span>16-bit words. The encoding with bits [14:12] set to
 "111" is reserved for future longer instruction encodings.</p>
 </div>
-<table id="instlengthcode" class="tableblock frame-all grid-all fit-content">
+<table id="sec:instlengthcode" class="tableblock frame-all grid-all fit-content">
 <caption class="title">Table 1. RISC-V instruction length encoding. Only the 16-bit and 32-bit encodings are considered frozen at this time.</caption>
 <colgroup>
 <col>
@@ -1665,7 +1627,7 @@ extensions, platform standards, or implementations.</p>
         <div class="modal__container" role="dialog" aria-modal="true">
             <main class="modal__content" id="modal-versions-content">
               <button data-micromodal-close class="modal-versions-close">
-                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                <svg width="10px" height="10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
               </button>
                   <ul class="nav-versions">
                       <li class="component">
@@ -1690,7 +1652,6 @@ extensions, platform standards, or implementations.</p>
     </a>
   </li>
 </ul>                        </div>
-                        
                       </li>
                   </ul>
             </main>

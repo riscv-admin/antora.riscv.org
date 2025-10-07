@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="8f151b93013364f76ea3cbfbc8df5791bdc1cd56"> 
+    <meta name="antora-ui-version" content="344c1cca7d063e1478e492aee4bd6e6cc827eb73"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -474,7 +474,7 @@ Library</a>
     <div
       class="toc"
       data-title="RVWMO Memory Consistency Model, Version 2.0"
-      data-levels="2"
+      data-levels="5"
     >
       <div class="toc-menu"></div>
     </div>
@@ -550,44 +550,6 @@ Library</a>
     });
   })();
 </script>
-
-        <style>
-          .dropdown-toc{
-            position: relative;
-            display: inline-block;
-          }
-          .dropdown-menu {
-            position: absolute;
-            top: 100%;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            background: #ffffff;
-            min-width: 100px;
-            z-index: 1000;
-            list-style-type: none;
-          }
-          .dropdown-item {
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-            display: block;
-            color: #000000;
-            text-decoration: none;
-            white-space: nowrap;
-            user-select: none;
-          }
-          .dropdown-item:hover{
-            background-color: #fdb515;
-            outline: none;
-          }
-
-          .chevron {
-            stroke-width: 2.5;
-            transition: transform 0.2s ease;
-          }
-          [aria-expanded="true"] .chevron {
-            transform: rotate(180deg);
-          }
-        </style>
     </div>
   </div>
 </aside>
@@ -635,7 +597,7 @@ instructions from the first hart being executed in a different order.
 Therefore, multithreaded code may require explicit synchronization to
 guarantee ordering between memory instructions from different harts. The
 base RISC-V ISA provides a FENCE instruction for this purpose, described
-in <a href="#fence">[fence]</a>, while the atomics extension "A" additionally defines load-reserved/store-conditional and atomic read-modify-write instructions.
+in <a href="rv32.html#sec:fence" class="xref page">Memory Ordering Instructions</a>, while the atomics extension "A" additionally defines load-reserved/store-conditional and atomic read-modify-write instructions.
 </p>
 </div>
 <div class="paragraph">
@@ -717,7 +679,7 @@ gives rise to exactly one memory operation, with two exceptions. First,
 an unsuccessful SC instruction does not give rise to any memory
 operations. Second, FLD and FSD instructions may each give rise to
 multiple memory operations if XLEN&lt;64, as stated in
-<a href="#fld_fsd">[fld_fsd]</a> and clarified below. An aligned AMO
+<a href="d-st-ext.html#sec:fld_fsd" class="xref page">Floating-Point Load and Store Instructions</a> and clarified below. An aligned AMO
 gives rise to a single memory operation that is both a load operation
 and a store operation simultaneously.</p>
 </div>
@@ -780,7 +742,7 @@ instructions in between; the corresponding memory operations are said to
 be paired as well (except in case of a failed SC, where no store
 operation is generated). The complete list of conditions determining
 whether an SC must succeed, may succeed, or must fail is defined in
-<a href="#sec:lrsc">[sec:lrsc]</a>.</p>
+<a href="#sec:lrsc">Load-Reserved/Store-Conditional Instructions</a>.</p>
 </div>
 <div class="paragraph">
 <p>Load and store operations may also carry one or more ordering
@@ -833,7 +795,7 @@ above into the ISA in a future extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mem-dependencies"><a class="anchor" href="#mem-dependencies"></a>Syntactic Dependencies</h3>
+<h3 id="sec:mem-depencies"><a class="anchor" href="#sec:mem-depencies"></a>Syntactic Dependencies</h3>
 <div class="paragraph">
 <p>The definition of the RVWMO memory model depends in part on the notion
 of a syntactic dependency, defined as follows.</p>
@@ -850,7 +812,7 @@ specific to each CSR and is defined in
 registers</em>, instructions' <em>destination registers</em>, and the way
 instructions <em>carry a dependency</em> from their source registers to their
 destination registers. This section provides a general definition of all
-of these terms; however, <a href="#source-dest-regs">Source and Destination Register Listings</a> provides a
+of these terms; however, <a href="#source-dest-regs">[source-dest-regs]</a> provides a
 complete listing of the specifics for each instruction.</p>
 </div>
 <div class="paragraph">
@@ -871,7 +833,7 @@ is CSRRW or CSRRWI and <em>rd</em> is set to <code>x0</code></p>
 </li>
 <li>
 <p><em>r</em> is a CSR and an implicit source register for
-<em>i</em>, as defined in <a href="#source-dest-regs">Source and Destination Register Listings</a></p>
+<em>i</em>, as defined in <a href="#source-dest-regs">[source-dest-regs]</a></p>
 </li>
 <li>
 <p><em>r</em> is a CSR that aliases with another source register for
@@ -901,7 +863,7 @@ or CSRRCI and uimm[4:0] is set to zero.</p>
 </li>
 <li>
 <p><em>r</em> is a CSR and an implicit destination register for
-<em>i</em>, as defined in <a href="#source-dest-regs">Source and Destination Register Listings</a></p>
+<em>i</em>, as defined in <a href="#source-dest-regs">[source-dest-regs]</a></p>
 </li>
 <li>
 <p><em>r</em> is a CSR that aliases with another destination
@@ -912,7 +874,7 @@ register for <em>i</em></p>
 <div class="paragraph">
 <p>Most non-memory instructions <em>carry a dependency</em> from each of their
 source registers to each of their destination registers. However, there
-are exceptions to this rule; see <a href="#source-dest-regs">Source and Destination Register Listings</a>.</p>
+are exceptions to this rule; see <a href="#source-dest-regs">[source-dest-regs]</a>.</p>
 </div>
 <div class="paragraph">
 <p>Instruction <em>j</em> has a <em>syntactic dependency</em> on instruction
@@ -1216,13 +1178,13 @@ definition of syntactic dependencies.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-dest-regs"><a class="anchor" href="#source-dest-regs"></a>Source and Destination Register Listings</h2>
+<h2 id="sec:source-dest-regs"><a class="anchor" href="#sec:source-dest-regs"></a>Source and Destination Register Listings</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section provides a concrete listing of the source and destination
 registers for each instruction. These listings are used in the
 definition of syntactic dependencies in
-<a href="#mem-dependencies">Syntactic Dependencies</a>.</p>
+<a href="#mem-dependencies">[mem-dependencies]</a>.</p>
 </div>
 <div class="paragraph">
 <p>The term "accumulating CSR" is used to describe a CSR that is both a
@@ -2600,7 +2562,7 @@ register(s) to destination register(s) as specified</p>
         <div class="modal__container" role="dialog" aria-modal="true">
             <main class="modal__content" id="modal-versions-content">
               <button data-micromodal-close class="modal-versions-close">
-                <svg width="28px" height="28px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
+                <svg width="10px" height="10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
               </button>
                   <ul class="nav-versions">
                       <li class="component">
@@ -2625,7 +2587,6 @@ register(s) to destination register(s) as specified</p>
     </a>
   </li>
 </ul>                        </div>
-                        
                       </li>
                   </ul>
             </main>
