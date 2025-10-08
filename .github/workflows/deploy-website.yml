@@ -44,6 +44,12 @@ jobs:
         cd antora 
         npx antora antora-playbook.yml --stacktrace
     
+    - name: Manually Migrate Standalone PDFs
+      continue-on-error: true
+      run: |
+        cd antora
+        cp -a ./pdfs/. ./build/reference/
+      
     #- name: Build Docusaurus
       # continue-on-error: true
     #  run: yarn build
