@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="38afac9b4d3b4479208e228c2d3aebd15a6584c3"> 
+    <meta name="antora-ui-version" content="656d01a28b5511955ff2a6e08e233e5f0265b879"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -223,7 +223,7 @@ Library</a>
   <span class="title">ISA Specifications</span>
   <button class="version" id="browse-version">Latest</button>
   </div><ul class="nav-list">
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
@@ -358,7 +358,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
@@ -433,7 +433,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Bibliography</span>
 <ul class="nav-list">
@@ -591,7 +591,7 @@ Library</a>
 <h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>RISC-V Pointer Masking (PM) is a feature that, when enabled, causes the CPU to ignore the upper bits of the effective address (these terms will be defined more precisely in the Background section). This allows these bits to be used in whichever way the application chooses. The version of the extension being described here specifically targets <strong>tag checks</strong>: When an address is accessed, the tag stored in the masked bits can be compared against a range-based tag. This is used for dynamic safety checkers such as HWASAN [<a href="../biblio/bibliography.html#bib-hwasan" class="xref page">87</a>]. Such tools can be applied in all privilege modes (U, S and M).</p>
+<p>RISC-V Pointer Masking (PM) is a feature that, when enabled, causes the CPU to ignore the upper bits of the effective address (these terms will be defined more precisely in the Background section). This allows these bits to be used in whichever way the application chooses. The version of the extension being described here specifically targets <strong>tag checks</strong>: When an address is accessed, the tag stored in the masked bits can be compared against a range-based tag. This is used for dynamic safety checkers such as HWASAN [<a href="../biblio/bibliography.html#bib-hwasan" class="xref page">88</a>]. Such tools can be applied in all privilege modes (U, S and M).</p>
 </div>
 <div class="paragraph">
 <p>HWASAN leverages tags in the upper bits of the address to identify memory errors such as use-after-free or buffer overflow errors. By storing a <strong>pointer tag</strong> in the upper bits of the address and checking it against a <strong>memory tag</strong> stored in a side table, it can identify whether a pointer is pointing to a valid location. Doing this without hardware support introduces significant overheads since the pointer tag needs to be manually removed for every conventional memory operation. Pointer masking support reduces these overheads.</p>

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="38afac9b4d3b4479208e228c2d3aebd15a6584c3"> 
+    <meta name="antora-ui-version" content="656d01a28b5511955ff2a6e08e233e5f0265b879"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -223,7 +223,7 @@ Library</a>
   <span class="title">ISA Specifications</span>
   <button class="version" id="browse-version">Version: 20240411</button>
   </div><ul class="nav-list">
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
@@ -361,7 +361,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
@@ -436,7 +436,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Bibliography</span>
 <ul class="nav-list">
@@ -603,21 +603,21 @@ Library</a>
 </li>
 <li><a href="#supervisor-instructions">2. Supervisor Instructions</a>
 <ul class="sectlevel2">
-<li><a href="#sfence.vma">2.1. Supervisor Memory-Management Fence Instruction</a></li>
+<li><a href="#sfence">2.1. Supervisor Memory-Management Fence Instruction</a></li>
 </ul>
 </li>
-<li><a href="#sv32">3. Sv32: Page-Based 32-bit Virtual-Memory Systems</a>
+<li><a href="#sec:sv32">3. Sv32: Page-Based 32-bit Virtual-Memory Systems</a>
 <ul class="sectlevel2">
 <li><a href="#translation">3.1. Addressing and Memory Protection</a></li>
 <li><a href="#sv32algorithm">3.2. Virtual Address Translation Process</a></li>
 </ul>
 </li>
-<li><a href="#sv39">4. Sv39: Page-Based 39-bit Virtual-Memory System</a>
+<li><a href="#sec:sv39">4. Sv39: Page-Based 39-bit Virtual-Memory System</a>
 <ul class="sectlevel2">
 <li><a href="#addressing-and-memory-protection">4.1. Addressing and Memory Protection</a></li>
 </ul>
 </li>
-<li><a href="#sv48">5. Sv48: Page-Based 48-bit Virtual-Memory System</a>
+<li><a href="#sec:sv48">5. Sv48: Page-Based 48-bit Virtual-Memory System</a>
 <ul class="sectlevel2">
 <li><a href="#addressing-and-memory-protection-1">5.1. Addressing and Memory Protection</a></li>
 </ul>
@@ -723,7 +723,7 @@ register keeps track of the processor&#8217;s current operating state.</p>
 <p>The SPP bit indicates the privilege level at which a hart was executing
 before entering supervisor mode. When a trap is taken, SPP is set to 0
 if the trap originated from user mode, or 1 otherwise. When an SRET
-instruction (see <a href="#otherpriv">[otherpriv]</a>) is executed to
+instruction (see <a href="machine.html#otherpriv" class="xref page">Other Privileged Instructions</a>) is executed to
 return from the trap handler, the privilege level is set to user mode if
 the SPP bit is 0, or supervisor mode if the SPP bit is 1; SPP is then
 set to 0.</p>
@@ -766,7 +766,7 @@ is executed, SIE is set to SPIE, then SPIE is set to 1.</p>
 <p>The UXL field controls the value of XLEN for U-mode, termed <em>UXLEN</em>,
 which may differ from the value of XLEN for S-mode, termed <em>SXLEN</em>. The
 encoding of UXL is the same as that of the MXL field of <code>misa</code>, shown in
-<a href="#misabase">[misabase]</a>.</p>
+<a href="machine.html#misabase" class="xref page">Encoding of UXL field in <code>misa</code></a>.</p>
 </div>
 <div class="paragraph">
 <p>When SXLEN=32, the UXL field does not exist, and UXLEN=32. When
@@ -792,7 +792,7 @@ user-mode memory accesses reference the lowest 4 GiB of the address space.</p>
 <div class="paragraph">
 <p>The MXR (Make eXecutable Readable) bit modifies the privilege with which
 loads access virtual memory. When MXR=0, only loads from pages marked
-readable (R=1 in <a href="#sv32pte">[sv32pte]</a>) will succeed. When
+readable (R=1 in <a href="#sec:sv32pte">Sv32 page table entry.</a>) will succeed. When
 MXR=1, loads from pages marked either readable or executable (R=1 or
 X=1) will succeed. MXR has no effect when page-based virtual memory is
 not in effect.</p>
@@ -801,7 +801,7 @@ not in effect.</p>
 <p>The SUM (permit Supervisor User Memory access) bit modifies the
 privilege with which S-mode loads and stores access virtual memory. When
 SUM=0, S-mode memory accesses to pages that are accessible by U-mode
-(U=1 in <a href="#sv32pte">[sv32pte]</a>) will fault. When SUM=1, these
+(U=1 in <a href="#sec:sv32pte">Sv32 page table entry.</a>) will fault. When SUM=1, these
 accesses are permitted. SUM has no effect when page-based virtual memory
 is not in effect, nor when executing in U-mode. Note that S-mode can
 never execute instructions from user pages, regardless of the state of
@@ -942,7 +942,7 @@ field. When MODE=Vectored, all synchronous exceptions into supervisor
 mode cause the <code>pc</code> to be set to the address in the BASE field, whereas
 interrupts cause the <code>pc</code> to be set to the address in the BASE field
 plus four times the interrupt cause number. For example, a
-supervisor-mode timer interrupt (see <a href="#scauses">Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by [exception-priority].</a>)
+supervisor-mode timer interrupt (see <a href="#scauses">Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by Exception Priority.</a>)
 causes the <code>pc</code> to be set to BASE+<code>0x14</code>. Setting MODE=Vectored may
 impose a stricter alignment constraint on BASE.</p>
 </div>
@@ -1216,7 +1216,7 @@ implementation, though it may be explicitly written by software.</p>
 <div class="paragraph">
 <p>The Interrupt bit in the <code>scause</code> register is set if the trap was caused
 by an interrupt. The Exception Code field contains a code identifying
-the last exception or interrupt. <a href="#scauses">Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by [exception-priority].</a> lists
+the last exception or interrupt. <a href="#scauses">Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by Exception Priority.</a> lists
 the possible exception codes for the current supervisor ISAs. The
 Exception Code is a <strong>WLRL</strong> field. It is required to hold the values 0–31
 (i.e., bits 4–0 must be implemented), but otherwise it is only
@@ -1229,7 +1229,7 @@ guaranteed to hold supported exception codes.</p>
 <div class="title">Figure 11. Supervisor Cause register <code>scause</code>.</div>
 </div>
 <table id="scauses" class="tableblock frame-all grid-all fit-content center">
-<caption class="title">Table 2. Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by <a href="#exception-priority">[exception-priority]</a>.</caption>
+<caption class="title">Table 2. Supervisor cause register (<code>scause</code>) values after trap. Synchronous exception priorities are given by <a href="machine.html#exception-priority" class="xref page">Exception Priority</a>.</caption>
 <colgroup>
 <col>
 <col>
@@ -1497,7 +1497,7 @@ harts are involved in accessing this emulated device from U-mode.</p>
 </div>
 <div class="paragraph">
 <p>A hypervisor running in S-mode without the benefit of the hypervisor
-extension of <a href="#hypervisor">[hypervisor]</a> may need to emulate
+extension of <a href="hypervisor.html" class="xref page">"H" Extension for Hypervisor Support, Version 1.0</a> may need to emulate
 a device for U-mode if paravirtualization cannot be employed. If the
 same hypervisor provides a virtual machine (VM) with multiple virtual
 harts, mapped one-to-one to real harts, then multiple harts may
@@ -1555,7 +1555,7 @@ supervisor physical address divided by 4 KiB; an address space identifier
 (ASID), which facilitates address-translation fences on a
 per-address-space basis; and the MODE field, which selects the current
 address-translation scheme. Further details on the access to this
-register are described in <a href="#virt-control">[virt-control]</a>.</p>
+register are described in <a href="machine.html#virt-control" class="xref page">Virtualization Support in <code>mstatus</code> Register</a>.</p>
 </div>
 <div id="rv32satp" class="imageblock kroki">
 <div class="content">
@@ -1613,7 +1613,7 @@ cost of a context switch.</p>
 SXLEN=32 and SXLEN=64. When MODE=Bare, supervisor virtual addresses are
 equal to supervisor physical addresses, and there is no additional
 memory protection beyond the physical memory protection scheme described
-in <a href="#pmp">[pmp]</a>. To select MODE=Bare, software must write
+in <a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>. To select MODE=Bare, software must write
 zero to the remaining fields of <code>satp</code> (bits 30–0 when SXLEN=32, or bits
 59–0 when SXLEN=64). Attempting to select MODE=Bare with a nonzero
 pattern in the remaining fields has an UNSPECIFIED effect on the value that the
@@ -1647,11 +1647,11 @@ have already been allocated.</p>
 </div>
 <div class="paragraph">
 <p>When SXLEN=32, the only other valid setting for MODE is Sv32, a paged
-virtual-memory scheme described in <a href="#sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>.</p>
+virtual-memory scheme described in <a href="#sec:sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>.</p>
 </div>
 <div class="paragraph">
 <p>When SXLEN=64, three paged virtual-memory schemes are defined: Sv39,
-Sv48, and Sv57, described in <a href="#sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>, <a href="#sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>,
+Sv48, and Sv57, described in <a href="#sec:sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>, <a href="#sec:sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>,
 and <a href="#sv57">Sv57: Page-Based 57-bit Virtual-Memory System</a>, respectively. One additional scheme, Sv64, will be
 defined in a later version of this specification. The remaining MODE
 settings are reserved for future use and may define different
@@ -1697,7 +1697,7 @@ and Sv57.</p>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Bare<br>
 Sv32</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No translation or protection.<br>
-Page-based 32-bit virtual addressing (see <a href="#sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>).</p></td>
+Page-based 32-bit virtual addressing (see <a href="#sec:sv32">Sv32: Page-Based 32-bit Virtual-Memory Systems</a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top" colspan="3"><p class="tableblock"><strong>SXLEN=64</strong></p></td>
@@ -1726,8 +1726,8 @@ Sv64<br>
 -</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No translation or protection.<br>
 <em>Reserved for standard use</em><br>
-Page-based 39-bit virtual addressing (see <a href="#sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>).<br>
-Page-based 48-bit virtual addressing (see <a href="#sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>).<br>
+Page-based 39-bit virtual addressing (see <a href="#sec:sv39">Sv39: Page-Based 39-bit Virtual-Memory System</a>).<br>
+Page-based 48-bit virtual addressing (see <a href="#sec:sv48">Sv48: Page-Based 48-bit Virtual-Memory System</a>).<br>
 Page-based 57-bit virtual addressing (see <a href="#sv57">Sv57: Page-Based 57-bit Virtual-Memory System</a>).<br>
 <em>Reserved for page-based 64-bit virtual addressing.</em><br>
 <em>Reserved for standard use</em><br>
@@ -1754,7 +1754,7 @@ wasting physical memory and possibly cache capacity.</p>
 4 KiB for both RV32 and RV64. We expect this decision to ease the
 porting of low-level runtime software and device drivers. The TLB reach
 problem is ameliorated by transparent superpage support in modern
-operating systems. [<a href="../biblio/bibliography.html#bib-transparent-superpages" class="xref page">84</a>] Additionally, multi-level TLB hierarchies are quite
+operating systems. [<a href="../biblio/bibliography.html#bib-transparent-superpages" class="xref page">85</a>] Additionally, multi-level TLB hierarchies are quite
 inexpensive relative to the multi-level cache hierarchies whose address
 space they map.</p>
 </div>
@@ -1793,7 +1793,7 @@ page-table updates and subsequent address translations, nor does it
 imply any invalidation of address-translation caches. If the new address
 space’s page tables have been modified, or if an ASID is reused, it may
 be necessary to execute an SFENCE.VMA instruction (see
-<a href="#sfence.vma">Supervisor Memory-Management Fence Instruction</a>) after, or in some cases before, writing
+<a href="#sfence.vma">[sfence.vma]</a>) after, or in some cases before, writing
 <code>satp</code>.</p>
 </div>
 <div class="admonitionblock note">
@@ -1819,10 +1819,10 @@ sufficiently large ASID space.</p>
 <h2 id="supervisor-instructions"><a class="anchor" href="#supervisor-instructions"></a>2. Supervisor Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In addition to the SRET instruction defined in <a href="#otherpriv">[otherpriv]</a>, one new supervisor-level instruction is provided.</p>
+<p>In addition to the SRET instruction defined in <a href="machine.html#otherpriv" class="xref page">Other Privileged Instructions</a>, one new supervisor-level instruction is provided.</p>
 </div>
-<div class="sect2">
-<h3 id="sfence.vma"><a class="anchor" href="#sfence.vma"></a>2.1. Supervisor Memory-Management Fence Instruction</h3>
+<div class="sect2 vma">
+<h3 id="sfence"><a class="anchor" href="#sfence"></a>2.1. Supervisor Memory-Management Fence Instruction</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="https://kroki.io/wavedrom/svg/eNqrLkpNt1KI5lJQqE7KLCm2UjDXUVDIS8xNtVJQzy9Izk9JVddRSCwpKQIqUjcHstWDI4NDXH3VY3UUSioLgMosanUQuk0RuotSkHSagnQaIDQZIWsyRmhKK81LLjFG0ghiqwcEeYYRYWGxIbqNZYkpKUUInSY4dRqh60wszkzBodEczbnmGCHk5urn7KoX5uuI6ujYWgDCkGaa" alt="svg">
@@ -1840,7 +1840,7 @@ implicit references by subsequent instructions in that hart to the
 memory-management data structures. The specific set of operations
 ordered by SFENCE.VMA is determined by <em>rs1</em> and <em>rs2</em>, as described
 below. SFENCE.VMA is also used to invalidate entries in the
-address-translation cache associated with a hart (see <a href="#sv32algorithm">Virtual Address Translation Process</a>). Further details on the behavior of this instruction are described in <a href="#virt-control">[virt-control]</a> and <a href="#pmp-vmem">[pmp-vmem]</a>.</p>
+address-translation cache associated with a hart (see <a href="#sv32algorithm">Virtual Address Translation Process</a>). Further details on the behavior of this instruction are described in <a href="machine.html#virt-control" class="xref page">Virtualization Support in <code>mstatus</code> Register</a> and <a href="machine.html#pmp-vmem" class="xref page">Physical Memory Protection and Paging</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2124,7 +2124,7 @@ illegal-instruction exception.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv32"><a class="anchor" href="#sv32"></a>3. Sv32: Page-Based 32-bit Virtual-Memory Systems</h2>
+<h2 id="sec:sv32"><a class="anchor" href="#sec:sv32"></a>3. Sv32: Page-Based 32-bit Virtual-Memory Systems</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When Sv32 is written to the MODE field in the <code>satp</code> register (see
@@ -2176,7 +2176,7 @@ supervisor physical addresses via a two-level page table. The 20-bit VPN
 is translated into a 22-bit physical page number (PPN), while the 12-bit
 page offset is untranslated. The resulting supervisor-level physical
 addresses are then checked using any physical memory protection
-structures (<a href="#pmp">[pmp]</a>), before being directly
+structures (<a href="machine.html#pmp" class="xref page">Physical Memory Protection</a>), before being directly
 converted to machine-level physical addresses. If necessary,
 supervisor-level physical addresses are zero-extended to the number of
 physical address bits found in the implementation.</p>
@@ -2226,7 +2226,7 @@ of the root page table is stored in the <code>satp</code> register.</p>
 <div class="title">Figure 18. Sv32 page table entry.</div>
 </div>
 <div class="paragraph">
-<p>The PTE format for Sv32 is shown in <a href="#sv32pte">[sv32pte]</a>.
+<p>The PTE format for Sv32 is shown in <a href="#sec:sv32pte">Sv32 page table entry.</a>.
 The V bit indicates whether the PTE is valid; if it is 0, all other bits
 in the PTE are don’t-cares and may be used freely by software. The
 permission bits, R, W, and X, indicate whether the page is readable,
@@ -2723,7 +2723,7 @@ bits for implementations with narrower physical addresses.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv39"><a class="anchor" href="#sv39"></a>4. Sv39: Page-Based 39-bit Virtual-Memory System</h2>
+<h2 id="sec:sv39"><a class="anchor" href="#sec:sv39"></a>4. Sv39: Page-Based 39-bit Virtual-Memory System</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes a simple paged virtual-memory system for
@@ -2811,11 +2811,11 @@ root page table is stored in the <code>satp</code> register&#8217;s PPN field.</
 <div class="paragraph">
 <p>The PTE format for Sv39 is shown in <a href="#sv39pte">Sv39 page table entry.</a>.
 Bits 9-0 have the same meaning as for Sv32. Bit 63 is reserved for use
-by the Svnapot extension in <a href="#svnapot">[svnapot]</a>. If Svnapot is not
+by the <a href="svnapot.html#svnapot" class="xref page">"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a> extension in <a href="svnapot.html#svnapot" class="xref page">"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a>. If <a href="svnapot.html#svnapot" class="xref page">"Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a> is not
 implemented, bit 63 remains reserved and must be zeroed by software for
 forward compatibility, or else a page-fault exception is raised. Bits
 62-61 are reserved for use by the Svpbmt extension in
-<a href="#svpbmt">[svpbmt]</a>. If Svpbmt is not implemented, bits 62-61 remain
+<a href="svpbmt.html#svpbmt" class="xref page">"Svpbmt" Extension for Page-Based Memory Types, Version 1.0</a>. If Svpbmt is not implemented, bits 62-61 remain
 reserved and must be zeroed by software for forward compatibility, or
 else a page-fault exception is raised. Bits 60-54 are reserved for
 future standard use and, until their use is defined by some standard
@@ -2854,7 +2854,7 @@ in <a href="#sv32algorithm">Virtual Address Translation Process</a>, except LEVE
 </div>
 </div>
 <div class="sect1">
-<h2 id="sv48"><a class="anchor" href="#sv48"></a>5. Sv48: Page-Based 48-bit Virtual-Memory System</h2>
+<h2 id="sec:sv48"><a class="anchor" href="#sec:sv48"></a>5. Sv48: Page-Based 48-bit Virtual-Memory System</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes a simple paged virtual-memory system for

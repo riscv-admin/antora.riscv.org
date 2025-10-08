@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="38afac9b4d3b4479208e228c2d3aebd15a6584c3"> 
+    <meta name="antora-ui-version" content="656d01a28b5511955ff2a6e08e233e5f0265b879"> 
     <meta name="version" content="v20240411">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
@@ -223,7 +223,7 @@ Library</a>
   <span class="title">ISA Specifications</span>
   <button class="version" id="browse-version">Version: 20240411</button>
   </div><ul class="nav-list">
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
 <ul class="nav-list">
@@ -361,7 +361,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
 <ul class="nav-list">
@@ -436,7 +436,7 @@ Library</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="0">
+  <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Bibliography</span>
 <ul class="nav-list">
@@ -642,7 +642,7 @@ base page size.</p>
 </table>
 <div class="paragraph">
 <p>NAPOT PTEs behave identically to non-NAPOT PTEs within the
-address-translation algorithm in <a href="#sv32algorithm">[sv32algorithm]</a>,
+address-translation algorithm in <a href="supervisor.html#sv32algorithm," class="xref page">Virtual Address Translation Process</a>
 except that:</p>
 </div>
 <div class="ulist">
@@ -701,14 +701,14 @@ non-NAPOT PTEs that overlap the same address range. If an update needs
 to be made, the OS generally should first mark all of the PTEs invalid,
 then issue SFENCE.VMA instruction(s) covering all 4 KiB regions within
 the range (either via a single SFENCE.VMA with <em>rs1</em>=<code>x0</code>, or with
-multiple SFENCE.VMA instructions with <em>rs1</em>≠<code>x0</code>), then update the PTE(s), as described in <a href="#sfence.vma">[sfence.vma]</a>, unless any inconsistencies are known to be benign. If any inconsistencies do exist, then the effect is the same as when SFENCE.VMA
+multiple SFENCE.VMA instructions with <em>rs1</em>≠<code>x0</code>), then update the PTE(s), as described in <a href="supervisor.html#sfence.vma" class="xref page">Supervisor Memory-Management Fence Instruction</a>, unless any inconsistencies are known to be benign. If any inconsistencies do exist, then the effect is the same as when SFENCE.VMA
 is used incorrectly: one of the translations will be chosen, but the
 choice is unpredictable.</p>
 </div>
 <div class="paragraph">
 <p>If an implementation chooses to use a NAPOT PTE (or cached version
 thereof), it might not consult the PTE directly specified by the
-algorithm in <a href="#sv32algorithm">[sv32algorithm]</a> at all. Therefore, the D
+algorithm in <a href="supervisor.html#sv32algorithm" class="xref page">Virtual Address Translation Process</a> at all. Therefore, the D
 and A bits may not be identical across all mappings of the same address
 range even in typical use cases The operating system must query all
 NAPOT aliases of a page to determine whether that page has been accessed
