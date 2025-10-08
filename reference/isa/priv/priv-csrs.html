@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="45d9d80f8bd6b5a47c7c14364249e2fac4f36bda"> 
+    <meta name="antora-ui-version" content="a18f2293933d0f2e2c3b1f1f34e76bfde441ee62"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -222,11 +222,6 @@ Library</a>
 <div class="context">
   <span class="title">ISA Specifications</span>
   <button class="version" id="browse-version">Latest</button>
-      <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Search the docs">
-        </div>
-      </div>
 </div><ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
@@ -618,7 +613,7 @@ effects on writes.</p>
 <p>The standard RISC-V ISA sets aside a 12-bit encoding space (csr[11:0])
 for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address
 (csr[11:8]) are used to encode the read and write accessibility of the
-CSRs according to privilege level as shown in <a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a>. The top two bits (csr[11:10]) indicate whether the register is read/write (<code>00</code>,<code>01</code>, or <code>10</code>) or read-only (<code>11</code>). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.</p>
+CSRs according to privilege level as shown in <a href="#csrrwpriv">Table 1</a>. The top two bits (csr[11:10]) indicate whether the register is read/write (<code>00</code>,<code>01</code>, or <code>10</code>) or read-only (<code>11</code>). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -647,13 +642,13 @@ less-privileged software.</p>
 <p>Instructions that access a non-existent CSR are reserved.
 Attempts to access a CSR without appropriate privilege level
 raise illegal-instruction exceptions or, as described in
-<a href="#sec:hcauses">[sec:hcauses]</a>, virtual-instruction exceptions.
+<a href="hypervisor.html#sec:hcauses" class="xref page">Trap Cause Codes</a>, virtual-instruction exceptions.
 Attempts to write a read-only register raise illegal-instruction exceptions.
 A read/write register might also contain some bits that are
 read-only, in which case writes to the read-only bits are ignored.</p>
 </div>
 <div class="paragraph">
-<p><a href="#csrrwpriv">Allocation of RISC-V CSR address ranges.</a> also indicates the convention to
+<p><a href="#csrrwpriv">Table 1</a> also indicates the convention to
 allocate CSR addresses between standard and custom uses. The CSR
 addresses designated for custom uses will not be redefined by future
 standard extensions.</p>
@@ -691,7 +686,7 @@ illegal accesses. Currently, the counters are the only shadowed CSRs.</p>
 <h2 id="csr-listing"><a class="anchor" href="#csr-listing"></a>2. CSR Listing</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="#ucsrnames">Currently allocated RISC-V unprivileged CSR addresses.</a>-<a href="#mcsrnames1">Currently allocated RISC-V machine-level CSR addresses.</a> list the CSRs that
+<p><a href="#ucsrnames">Table 2</a>-<a href="#mcsrnames1">Table 6</a> list the CSRs that
 have currently been allocated CSR addresses. The timers, counters, and
 floating-point CSRs are standard unprivileged CSRs. The other registers
 are used by privileged code, as described in the following chapters.
@@ -2047,7 +2042,7 @@ mode.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>If the width of a CSR is changed (for example, by changing SXLEN or
-UXLEN, as described in <a href="#xlen-control">[xlen-control]</a>), the
+UXLEN, as described in <a href="machine.html#xlen-control" class="xref page">Base ISA Control in <code>mstatus</code> Register</a>), the
 values of the <em>writable</em> fields and bits of the new-width CSR are,
 unless specified otherwise, determined from the previous-width CSR as
 though by this algorithm:</p>

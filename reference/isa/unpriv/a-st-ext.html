@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="45d9d80f8bd6b5a47c7c14364249e2fac4f36bda"> 
+    <meta name="antora-ui-version" content="a18f2293933d0f2e2c3b1f1f34e76bfde441ee62"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -222,11 +222,6 @@ Library</a>
 <div class="context">
   <span class="title">ISA Specifications</span>
   <button class="version" id="browse-version">Latest</button>
-      <div class="navbar-item search hide-for-print">
-        <div id="search-field" class="field">
-          <input id="search-input" type="text" placeholder="Search the docs">
-        </div>
-      </div>
 </div><ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
@@ -820,7 +815,7 @@ bytes accessed by the LR, the SC may or may not fail.) An SC must fail
 if there is another SC (to any address) between the LR and the SC in
 program order. The precise statement of the atomicity requirements for
 successful LR/SC sequences is defined by the Atomicity Axiom in
-<a href="#rvwmo">[rvwmo]</a>.</p>
+<a href="rvwmo.html" class="xref page">RVWMO Memory Consistency Model</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -857,7 +852,7 @@ as when migrating pages that might contain an active reservation.</p>
 imply that a hart can only hold one reservation at a time, and that an
 SC can only pair with the most recent LR, and LR with the next following
 SC, in program order. This is a restriction to the Atomicity Axiom in
-<a href="#rvwmo">[rvwmo]</a> that ensures software runs correctly on
+<a href="rvwmo.html" class="xref page">RVWMO Memory Consistency Model</a> that ensures software runs correctly on
 expected common implementations that operate in this manner.</p>
 </div>
 </td>
@@ -936,7 +931,7 @@ those with both bits clear, but may result in lower performance.</p>
 <div class="paragraph">
 <p>LR/SC can be used to construct lock-free data structures. An example
 using LR/SC to implement a compare-and-swap function is shown in
-<a href="#cas">Sample code for compare-and-swap function using LR/SC.</a>. If inlined, compare-and-swap functionality need only take four instructions.</p>
+<a href="#cas">Listing 2</a>. If inlined, compare-and-swap functionality need only take four instructions.</p>
 </div>
 </td>
 </tr>
@@ -1218,7 +1213,7 @@ corresponding <em>aq</em> or <em>rl</em> bit set.</p>
 <div class="paragraph">
 <p>An example code sequence for a critical section guarded by a
 test-and-test-and-set spinlock is shown in
-Example <a href="#critical">Sample code for mutual exclusion. <code>a0</code> contains the address of the lock.</a>. Note the first AMO is marked <em>aq</em> to
+Example <a href="#critical">Listing 2</a>. Note the first AMO is marked <em>aq</em> to
 order the lock acquisition before the critical section, and the second
 AMO is marked <em>rl</em> to order the critical section before the lock
 relinquishment.</p>
@@ -1239,7 +1234,7 @@ relinquishment.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We recommend the use of the AMO Swap idiom shown in <a href="#critical">Sample code for mutual exclusion. <code>a0</code> contains the address of the lock.</a> for both lock
+<p>We recommend the use of the AMO Swap idiom shown in <a href="#critical">Listing 2</a> for both lock
 acquire and release to simplify the implementation of speculative lock
 elision. [<a href="../biblio/bibliography.html#bib-rajwar:2001:sle" class="xref page">19</a>]</p>
 </div>
