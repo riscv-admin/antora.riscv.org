@@ -2384,14 +2384,14 @@ b in program order such that m has an address dependency on a</p>
 <p>PPO rules <a href="#overlapping-ordering">12</a> and <a href="#overlapping-ordering">13</a> reflect behaviors of almost all real processor
 pipeline implementations. Rule <a href="#overlapping-ordering">12</a>
 states that a load cannot forward from a store until the address and
-data for that store are known. Consider <a href="#litmus_datarfi">Because of PPO rule 12 and the data dependency from (d) to (e), (d) must also precede (f) in the global memory order (outcome forbidden)</a> (f) cannot be
+data for that store are known. Consider <a href="#litmus_datarfi">Table 8</a> (f) cannot be
 executed until the data for (e) has been resolved, because (f) must
 return the value written by (e) (or by something even later in the
 global memory order), and the old value must not be clobbered by the
 writeback of (e) before (d) has had a chance to perform. Therefore, (f)
 will never perform before (d) has performed.</p>
 </div>
-<table class="tableblock frame-none grid-none stretch center">
+<table id="litmus_datacorfi_no" class="tableblock frame-none grid-none stretch center">
 <caption class="title">Table 9. Because of the extra store between (e) and (g), (d) no longer necessarily precedes (g) (outcome permitted)</caption>
 <colgroup>
 <col style="width: 50%;">
@@ -2483,7 +2483,7 @@ will never perform before (d) has performed.</p>
 </table>
 <div class="paragraph">
 <p>If there were another store to the same address in between (e) and (f),
-as in <a href="#litmus:addrdatarfi_no">Because of the address dependency from (d) to (e), (d) also precedes (f) (outcome forbidden)</a>,
+as in <a href="#litmus:addrdatarfi_no">Table 10</a>,
 then (f) would no longer be dependent on the data of (e) being resolved,
 and hence the dependency of (f) on (d), which produces the data for (e),
 would be broken.</p>
@@ -2565,7 +2565,7 @@ of rule <a href="#overlapping-ordering">11</a>.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Consider <a href="#litmus:addrdatarfi_no">Because of the address dependency from (d) to (e), (d) also precedes (f) (outcome forbidden)</a> (f) cannot be
+<p>Consider <a href="#litmus:addrdatarfi_no">Table 10</a> (f) cannot be
 executed until the address for (e) is resolved, because it may turn out
 that the addresses match; i.e., that <code>a1=s0</code>. Therefore, (f) cannot be
 sent to memory before (d) has executed and confirmed whether the
@@ -2782,7 +2782,7 @@ those external devices and buses.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p><a href="#tsomappings">Mappings from TSO operations to RISC-V operations</a> provides a mapping from TSO memory
+<p><a href="#tsomappings">Table 11</a> provides a mapping from TSO memory
 operations onto RISC-V memory instructions. Normal x86 loads and stores
 are all inherently acquire-RCpc and release-RCpc operations: TSO
 enforces all load-load, load-store, and store-store ordering by default.
@@ -2797,7 +2797,7 @@ condition. In the latter case, the <em>rl</em> annotation on the LR turns out
 (for non-obvious reasons) to be redundant and can be omitted.</p>
 </div>
 <div class="paragraph">
-<p>Alternatives to <a href="#tsomappings">Mappings from TSO operations to RISC-V operations</a> are also possible. A TSO
+<p>Alternatives to <a href="#tsomappings">Table 11</a> are also possible. A TSO
 store can be mapped onto AMOSWAP with <em>rl</em> set. However, since RVWMO PPO
 Rule <a href="#overlapping-ordering">3</a> forbids forwarding of values from
 AMOs to subsequent loads, the use of AMOSWAP for stores may negatively
@@ -2851,7 +2851,7 @@ reservation mechanism than was originally intended.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p><a href="#powermappings">Mappings from Power operations to RISC-V operations</a> provides a mapping from Power memory
+<p><a href="#powermappings">Table 12</a> provides a mapping from Power memory
 operations onto RISC-V memory instructions. Power ISYNC maps on RISC-V
 to a FENCE.I followed by a FENCE R,R; the latter fence is needed because
 ISYNC is used to define a "control+control fence" dependency that is
@@ -2921,13 +2921,13 @@ not present in RVWMO.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p><a href="#armmappings">Mappings from ARM operations to RISC-V operations</a> provides a mapping from ARM memory
+<p><a href="#armmappings">Table 13</a> provides a mapping from ARM memory
 operations onto RISC-V memory instructions. Since RISC-V does not
 currently have plain load and store opcodes with <em>aq</em> or <em>rl</em>
 annotations, ARM load-acquire and store-release operations should be
 mapped using fences instead. Furthermore, in order to enforce
 store-release-to-load-acquire ordering, there must be a FENCE RW,RW
-between the store-release and load-acquire; <a href="#armmappings">Mappings from ARM operations to RISC-V operations</a>
+between the store-release and load-acquire; <a href="#armmappings">Table 13</a>
 enforces this by always placing the fence in front of each acquire
 operation. ARM load-exclusive and store-exclusive instructions can
 likewise map onto their RISC-V LR and SC equivalents, but instead of
@@ -3035,14 +3035,14 @@ FENCE R,R similarly to how ISYNC maps for Power.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>With regards to <a href="#linuxmappings">Mappings from Linux memory primitives to RISC-V primitives.</a>, other
+<p>With regards to <a href="#linuxmappings">Table 14</a>, other
 constructs (such as spinlocks) should follow accordingly. Platforms or
 devices with non-coherent DMA may need additional synchronization (such
 as cache flush or invalidate mechanisms); currently any such extra
 synchronization will be device-specific.</p>
 </div>
 <div class="paragraph">
-<p><a href="#linuxmappings">Mappings from Linux memory primitives to RISC-V primitives.</a> provides a mapping of Linux memory
+<p><a href="#linuxmappings">Table 14</a> provides a mapping of Linux memory
 ordering macros onto RISC-V memory instructions. The Linux fences
 <code>dma_rmb()</code> and <code>dma_wmb()</code> map onto FENCE R,R and FENCE W,W,
 respectively, since the RISC-V Unix Platform requires coherent DMA, but
@@ -3081,7 +3081,7 @@ and <em>rl</em> modifiers.</p>
 <p>Strengthen the mappings of release operations such that they would
 enforce sufficient orderings in the presence of either type of acquire
 mapping. This is the currently recommended solution, and the one shown
-in <a href="#linuxmappings">Mappings from Linux memory primitives to RISC-V primitives.</a>.</p>
+in <a href="#linuxmappings">Table 14</a>.</p>
 </li>
 </ol>
 </div>
@@ -3093,7 +3093,7 @@ a2,0(s2)</p>
 <div class="paragraph">
 <p>For example, the critical section ordering rule currently being debated
 by the Linux community would require (a) to be ordered before (e) in
-<a href="#lkmm_ll">Orderings between critical sections in Linux</a>. If that will indeed be
+<a href="#lkmm_ll">Listing 7</a>. If that will indeed be
 required, then it would be insufficient for (b) to map as FENCE RW,W.
 That said, these mappings are subject to change as the Linux Kernel
 Memory Model evolves.</p>
@@ -3123,16 +3123,16 @@ bnez a1,loop
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#c11mappings">Mappings from C/C++ primitives to RISC-V primitives.</a> provides a mapping of C11/C++11 atomic
+<p><a href="#c11mappings">Table 15</a> provides a mapping of C11/C++11 atomic
 operations onto RISC-V memory instructions. If load and store opcodes
 with <em>aq</em> and <em>rl</em> modifiers are introduced, then the mappings in
-<a href="#c11mappings_hypothetical">Hypothetical mappings from C/C++ primitives to RISC-V primitives, if native load-acquire and store-release opcodes are introduced.</a> will suffice. Note however that
+<a href="#c11mappings_hypothetical">Table 16</a> will suffice. Note however that
 the two mappings only interoperate correctly if
 <code>atomic_&lt;op&gt;(memory_order_seq_cst)</code> is mapped using an LR that has both
 <em>aq</em> and <em>rl</em> set.
-Even more importantly, a <a href="#c11mappings">Mappings from C/C++ primitives to RISC-V primitives.</a> sequentially consistent store,
-followed by a <a href="#c11mappings_hypothetical">Hypothetical mappings from C/C++ primitives to RISC-V primitives, if native load-acquire and store-release opcodes are introduced.</a> sequentially consistent load
-can be reordered unless the <a href="#c11mappings">Mappings from C/C++ primitives to RISC-V primitives.</a> mapping of stores is
+Even more importantly, a <a href="#c11mappings">Table 15</a> sequentially consistent store,
+followed by a <a href="#c11mappings_hypothetical">Table 16</a> sequentially consistent load
+can be reordered unless the <a href="#c11mappings">Table 15</a> mapping of stores is
 strengthened by either adding a second fence or mapping the store
 to <code>amoswap.rl</code> instead.</p>
 </div>
@@ -3377,7 +3377,7 @@ to <code>amoswap.rl</code> instead.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>lr.{w|d}.aq* &lt;op&gt;; sc.{w|d}.rl</code></p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><code>*</code> must be <code>lr.{w|d}.aqrl</code> in order to interoperate with code mapped per <a href="#c11mappings">Mappings from C/C++ primitives to RISC-V primitives.</a></p></td>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><code>*</code> must be <code>lr.{w|d}.aqrl</code> in order to interoperate with code mapped per <a href="#c11mappings">Table 15</a></p></td>
 </tr>
 </tbody>
 </table>
