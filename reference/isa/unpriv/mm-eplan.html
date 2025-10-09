@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="e8c9ad973305add0a4633c106c119f046786c3bc"> 
+    <meta name="antora-ui-version" content="ee22aea1b019fa8431bab762ae68120e1258115a"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="true">
@@ -33,8 +33,13 @@
       <a class="navbar-item" href="https://riscv.org">
         <img id="riscvlogo" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
       </a>
+    <button class="navbar-burger" data-target="topbar-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     </div>
-    </div>
+    <div id="topbar-nav" class="navbar-menu">
     <div class="navbar-end">
       <div class="navbar-item home">
         <a class="navbar-link"
@@ -230,7 +235,13 @@
           </svg></a>
       </div>
     </div>
+    </div>   <div class="navbar-item">       
+  <div class="navbar-item search hide-for-print search-position">
+    <div id="search-field" class="field">
+      <input id="search-input" type="text" placeholder="Search the docs" >
     </div>
+  </div>
+  </div></div>  
     <label class="theme-toggler">
       <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
       <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
@@ -248,11 +259,6 @@
       <span class="text">light</span>
     </label>
   </nav>
-  <div class="navbar-item search hide-for-print search-position">
-    <div id="search-field" class="field">
-      <input id="search-input" type="text" placeholder="Search the docs" >
-    </div>
-  </div>
 </header>
 <script>
   !function (theme) {
@@ -822,7 +828,7 @@ particular valid or invalid execution on the right.</p>
 <div class="paragraph">
 <p>Litmus tests are used to understand the implications of the memory model
 in specific concrete situations. For example, in the litmus test of
-<a href="#litmus-sample">Litmus sample</a>, the final value of <code>a0</code>
+<a href="#litmus-sample">Table 1</a>, the final value of <code>a0</code>
 in the first hart can be either 2, 4, or 5, depending on the dynamic
 interleaving of the instruction stream from each hart at runtime.
 However, in this example, the final value of <code>a0</code> in Hart 0 will never
@@ -887,14 +893,14 @@ These diagrams use a notation that is common in the memory model
 literature for constraining the set of possible global memory orders
 that could produce the execution in question. It is also the basis for
 the <em>herd</em> models presented in <a href="mm-formal.html#sec:herd" class="xref page">Formal Axiomatic Specification in Herd</a>. This notation is explained in
-<a href="#litmus-key">A key for the litmus test diagrams drawn in this appendix</a>. Of the listed relations, rf edges between
+<a href="#litmus-key">Table 2</a>. Of the listed relations, rf edges between
 harts, co edges, fr edges, and ppo edges directly constrain the global
 memory order (as do fence, addr, data, and some ctrl edges, via ppo).
 Other edges (such as intra-hart rf edges) are informative but do not
 constrain the global memory order.</p>
 </div>
 <div class="paragraph">
-<p>For example, in <a href="#litmus-sample">Litmus sample</a>, <code>a0=1</code>
+<p>For example, in <a href="#litmus-sample">Table 1</a>, <code>a0=1</code>
 could occur only if one of the following were true:</p>
 </div>
 <div class="ulist">
@@ -1034,7 +1040,7 @@ visible memory). Any other hart will therefore observe the load as
 performing before the store.</p>
 </div>
 <div class="paragraph">
-<p>Consider the <a href="#litms_sb_forward">A store buffer forwarding litmus test (outcome permitted)</a>. When running this program on an implementation with
+<p>Consider the <a href="#litms_sb_forward">Table 3</a>. When running this program on an implementation with
 store buffers, it is possible to arrive at the final outcome <code>a0=1, a1=0, a2=1, a3=0</code> as follows:</p>
 </div>
 <table id="litms_sb_forward" class="tableblock frame-none grid-none stretch center">
@@ -1291,7 +1297,7 @@ program order. Likewise for (e) and (f).</p>
 </table>
 <div class="paragraph">
 <p>Another test that highlights the behavior of store buffers is shown in
-<a href="#litmus_ppoca">The "PPOCA" store buffer forwarding litmus test (outcome permitted)</a>. In this example, (d) is
+<a href="#litmus_ppoca">Table 4</a>. In this example, (d) is
 ordered before (e) because of the control dependency, and (f) is ordered
 before (g) because of the address dependency. However, (e) is <em>not</em>
 necessarily ordered before (f), even though (f) returns the value
@@ -1373,7 +1379,7 @@ atomic in the slightly different sense that the memory location in
 question will not be modified by another hart during the time the
 original hart holds the reservation.</p>
 </div>
-<table class="tableblock frame-none grid-all stretch">
+<table id="litmus_lrsdsc" class="tableblock frame-none grid-all stretch">
 <colgroup>
 <col style="width: 25%;">
 <col style="width: 25%;">
@@ -1409,7 +1415,7 @@ original hart holds the reservation.</p>
 </tr>
 </tbody>
 </table>
-<div id="litmus_lrsdsc" class="paragraph">
+<div class="paragraph">
 <p><a href="#litmus_lrsdsc">Figure 4</a>: In all four (independent) instances, the final  store-conditional instruction is permitted but not guaranteed to succeed.</p>
 </div>
 <div class="paragraph">
@@ -1420,13 +1426,13 @@ interleaved between the paired operations in program order or in the
 global memory order, nor does it forbid stores from the same hart or
 stores to non-overlapping locations from appearing between the paired
 operations in either program order or in the global memory order. For
-example, the SC instructions in <a href="#litmus_lrsdsc">[litmus_lrsdsc]</a> may (but are not
+example, the SC instructions in <a href="#litmus_lrsdsc">Figure 4</a> may (but are not
 guaranteed to) succeed. None of those successes would violate the
 atomicity axiom, because the intervening non-conditional stores are from
 the same hart as the paired load-reserved and store-conditional
 instructions. This way, a memory system that tracks memory accesses at
 cache line granularity (and which therefore will see the four snippets
-of <a href="#litmus_lrsdsc">[litmus_lrsdsc]</a> as identical) will not
+of <a href="#litmus_lrsdsc">Figure 4</a> as identical) will not
 be forced to fail a store-conditional instruction that happens to
 (falsely) share another portion of the same cache line as the memory
 location being held by the reservation.</p>
@@ -1621,7 +1627,7 @@ indirection.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Consider the litmus test of <a href="#frirfi">Litmus test MP+fence.w.w+fre-rfi-addr (outcome permitted)</a>, which is one particular
+<p>Consider the litmus test of <a href="#frirfi">Table 5</a>, which is one particular
 instance of the more general "fri-rfi" pattern. The term "fri-rfi"
 refers to the sequence (d), (e), (f): (d) "from-reads" (i.e., reads
 from an earlier write than) (e) which is the same hart, and (f) reads
@@ -1765,7 +1771,7 @@ write the same value.</p>
 </tbody>
 </table>
 <div class="paragraph">
-<p>Consider the litmus test of <a href="#litmus-rsw">Litmus test RSW (outcome permitted)</a>.
+<p>Consider the litmus test of <a href="#litmus-rsw">Table 6</a>.
 The outcome <code>a0=1</code>, <code>a1=v</code>, <code>a2=v</code>, <code>a3=0</code> (where <em>v</em> is
 some value written by another hart) can be observed by allowing (g) and
 (h) to be reordered. This might be done speculatively, and the
@@ -1778,7 +1784,7 @@ memory order corresponding to this execution would be
 (h),(k),(a),(c),(d),(g).</p>
 </div>
 <div class="paragraph">
-<p>Executions of the test in <a href="#litmus-rsw">Litmus test RSW (outcome permitted)</a> in
+<p>Executions of the test in <a href="#litmus-rsw">Table 6</a> in
 which <code>a1</code> does not equal <code>a2</code> do in fact require that (g) appears
 before (h) in the global memory order. Allowing (h) to appear before (g)
 in the global memory order would in that case result in a violation of
@@ -1939,7 +1945,7 @@ enforces ordering with respect to all previous loads.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Consider <a href="#spinlock_atomics">Example 1</a>.
+<p>Consider <a href="#spinlock_atomics">Listing 1</a>.
 Because this example uses <em>aq</em>, the loads and stores in the critical
 section are guaranteed to appear in the global memory order after the
 AMOSWAP used to acquire the lock. However, assuming <code>a0</code>, <code>a1</code>, and <code>a2</code>
@@ -1967,7 +1973,7 @@ load" at the beginning of the example in the global memory order.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now, consider the alternative in <a href="#spinlock_fences">Example 2</a>. In
+<p>Now, consider the alternative in <a href="#spinlock_fences">Listing 2</a>. In
 this case, even though the AMOSWAP does not enforce ordering with an
 <em>aq</em> bit, the fence nevertheless enforces that the acquire AMOSWAP
 appears earlier in the global memory order than all loads and stores in
@@ -1991,8 +1997,8 @@ semantics, release semantics can be enforced using release annotations
 or with a FENCE RW,W operation. Using the same examples, the ordering
 between the loads and stores in the critical section and the "Arbitrary
 unrelated store" at the end of the code snippet is enforced only by the
-FENCE RW,W in <a href="#spinlock_fences">Example 2</a>, not by
-the <em>rl</em> in <a href="#spinlock_atomics">Example 1</a>.</p>
+FENCE RW,W in <a href="#spinlock_fences">Listing 2</a>, not by
+the <em>rl</em> in <a href="#spinlock_atomics">Listing 1</a>.</p>
 </div>
 <div class="paragraph">
 <p>With RCpc annotations alone, store-release-to-load-acquire ordering is
@@ -2050,7 +2056,7 @@ such dependencies as a particularly lightweight ordering enforcement
 mechanism.</p>
 </div>
 <div class="paragraph">
-<p>The terms in <a href="#mem-dependencies">[mem-dependencies]</a> work as follows. Instructions
+<p>The terms in <a href="rvwmo.html#mem-depencies#mem-dependencies" class="xref page">Syntactic Dependencies</a> work as follows. Instructions
 are said to carry dependencies from their
 source register(s) to their destination register(s) whenever the value
 written into each destination register is a function of the source
@@ -2079,7 +2085,7 @@ considered a source register by the memory model), and so likewise, JALR
 writing into it reflects the behavior of CSRs such as <code>fflags</code>. In
 particular, an accumulation into a register does not clobber any
 previous writes or accumulations into the same register. For example, in
-<a href="#fflags">(c) has a syntactic dependency on both (a) and (b) via fflags, a destination register that both (a) and (b) implicitly accumulate into</a>, (c) has a syntactic dependency on both (a) and (b).</p>
+<a href="#fflags">Listing 3</a>, (c) has a syntactic dependency on both (a) and (b).</p>
 </div>
 <div class="paragraph">
 <p>Like other modern memory models, the RVWMO memory model uses syntactic
@@ -2104,7 +2110,7 @@ ld a5,0(s1)</code></pre>
 <p>For example, there is a syntactic address dependency from the memory
 operation generated by the first instruction to the memory operation
 generated by the last instruction in
-<a href="#address">A syntactic address dependency</a>, even though <code>a1</code> XOR
+<a href="#address">Listing 4</a>, even though <code>a1</code> XOR
 <code>a1</code> is zero and hence has no effect on the address accessed by the
 second load.</p>
 </div>
@@ -2132,7 +2138,7 @@ next: sw x5,0(x6)</code></pre>
 <p>Control dependencies behave differently from address and data
 dependencies in the sense that a control dependency always extends to
 all instructions following the original target in program order.
-Consider <a href="#control1">A syntactic control dependency</a> the
+Consider <a href="#control1">Listing 5</a> the
 instruction at <code>next</code> will always execute, but the memory operation
 generated by that last instruction nevertheless still has a control
 dependency from the memory operation generated by the first instruction.</p>
@@ -2146,7 +2152,7 @@ next: sw x3,0(x4)</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Likewise, consider <a href="#control2">Another syntactic control dependency</a>.
+<p>Likewise, consider <a href="#control2">Listing 6</a>.
 Even though both branch outcomes have the same target, there is still a
 control dependency from the memory operation generated by the first
 instruction in this snippet to the memory operation generated by the
@@ -2249,7 +2255,7 @@ no effect on the global memory order.</p>
 <p>In addition, the choice to respect dependencies originating at
 store-conditional instructions ensures that certain out-of-thin-air-like
 behaviors will be prevented. Consider
-<a href="#litmus_lb_lrsc">A variant of the LB litmus test (outcome forbidden)</a>. Suppose a
+<a href="#litmus_lb_lrsc">Table 7</a>. Suppose a
 hypothetical implementation could occasionally make some early guarantee
 that a store-conditional operation will succeed. In this case, (c) could
 return 0 to <code>a2</code> early (before actually executing), allowing the
@@ -2265,7 +2271,7 @@ instructions.</p>
 any force when they take the form of a syntactic address, control,
 and/or data dependency. For example: a syntactic dependency between two
 <code>F</code> instructions via one of the <code>accumulating CSRs</code> in
-<a href="#source-dest-regs">[source-dest-regs]</a> does <em>not</em> imply
+<a href="rvwmo.html#source-dest-regs" class="xref page">Source and Destination Register Listings</a> does <em>not</em> imply
 that the two <code>F</code> instructions must be executed in order. Such a
 dependency would only serve to ultimately set up later a dependency from
 both <code>F</code> instructions to a later CSR instruction accessing the CSR
