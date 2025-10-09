@@ -601,7 +601,7 @@
 <div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#alloy">1. Formal Axiomatic Specification in Alloy</a></li>
+<li><a href="#sec:alloy">1. Formal Axiomatic Specification in Alloy</a></li>
 <li><a href="#sec:herd">2. Formal Axiomatic Specification in Herd</a></li>
 <li><a href="#operational">3. An Operational Memory Model</a>
 <ul class="sectlevel2">
@@ -648,15 +648,15 @@ describe exactly the same sets of legal behaviors.</p>
 </div>
 <div class="paragraph">
 <p>This appendix should be treated as commentary; all normative material is
-provided in <a href="#memorymodel">[memorymodel]</a> and in the rest of
+provided in <a href="rvwmo.html#memorymodel" class="xref page">RVWMO Memory Model</a> and in the rest of
 the main body of the ISA specification.
-All currently known discrepancies are listed in <a href="#discrepancies">[discrepancies]</a>.
+All currently known discrepancies are listed in <a href="mm-eplan.html#discrepancies" class="xref page">Known Issues</a>.
 Any other discrepancies are unintentional.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="alloy"><a class="anchor" href="#alloy"></a>1. Formal Axiomatic Specification in Alloy</h2>
+<h2 id="sec:alloy"><a class="anchor" href="#sec:alloy"></a>1. Formal Axiomatic Specification in Alloy</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We present a formal specification of the RVWMO memory model in Alloy
@@ -665,9 +665,9 @@ Any other discrepancies are unintentional.</p>
 </div>
 <div class="paragraph">
 <p>The online material also contains some litmus tests and some examples of
-how Alloy can be used to model check some of the mappings in <a href="#memory_porting">[memory_porting]</a>.</p>
+how Alloy can be used to model check some of the mappings in <a href="mm-eplan.html#memory_porting" class="xref page">Code Porting and Mapping Guidelines</a>.</p>
 </div>
-<div class="listingblock">
+<div id="ppo" class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (1/5: PPO)</div>
 <div class="content">
 <pre class="highlight"><code class="language-c" data-lang="c">// =RVWMO PPO=
@@ -700,7 +700,7 @@ fun ppo : Event-&gt;Event {
 fact { ppo in ^gmo }</code></pre>
 </div>
 </div>
-<div class="literalblock">
+<div id="axioms" class="literalblock">
 <div class="title">The RVWMO memory model formalized in Alloy (2/5: Axioms)</div>
 <div class="content">
 <pre>// =RVWMO axioms=
@@ -732,7 +732,7 @@ pred Atomicity {
 pred RISCV_mm { LoadValue and Atomicity /* and Progress */ }</pre>
 </div>
 </div>
-<div class="listingblock">
+<div id="modelofmemory" class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (3/5: model of memory)</div>
 <div class="content">
 <pre class="highlight"><code class="language-sml" data-lang="sml">//Basic model of memory
@@ -788,7 +788,7 @@ fact { acquireRCpc + acquireRCsc + releaseRCpc + releaseRCsc in iden }
 fact { no FenceTSO.(pr + pw + sr + sw) }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div id="basicmodelrules" class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (4/5: Basic model rules)</div>
 <div class="content">
 <pre class="highlight"><code class="language-scala" data-lang="scala">// =Basic model rules=
@@ -833,7 +833,7 @@ fact { all a: Address | one Init &amp; a.~address } // one init store per addres
 fact { no Init &lt;: po and no po :&gt; Init }</code></pre>
 </div>
 </div>
-<div class="listingblock">
+<div id="auxiliaries" class="listingblock">
 <div class="title">The RVWMO memory model formalized in Alloy (5/5: Auxiliaries)</div>
 <div class="content">
 <pre class="highlight"><code class="language-asm" data-lang="asm">// po
@@ -900,10 +900,10 @@ pred total[rel: Event-&gt;Event, bag: Event] {
 input and simulates the execution of the test on top of the memory
 model. Memory models are written in the domain specific language Cat.
 This section provides two Cat memory model of RVWMO. The first model,
-<a href="#herd2">riscv.cat, a herd version of the RVWMO memory model (2/3)</a>, follows the <em>global memory order</em>,
+<a href="#herd2">Listing 6</a>, follows the <em>global memory order</em>,
 Chapter <a href="rvwmo.html" class="xref page">RVWMO Memory Consistency Model</a>, definition of RVWMO, as much
 as is possible for a Cat model. The second model,
-<a href="#herd3"><code>riscv.cat</code>, an alternative herd presentation of the RVWMO memory model (3/3)</a>, is an equivalent, more efficient,
+<a href="#herd3">Listing 7</a>, is an equivalent, more efficient,
 partial order based RVWMO model.</p>
 </div>
 <div class="paragraph">
@@ -1083,7 +1083,7 @@ sizes. Misaligned accesses are broken up into single-byte accesses.</p>
 <p>The operational model, together with a fragment of the RISC-V ISA
 semantics (RV64I and A), are integrated into the <code>rmem</code> exploration tool
 (<a href="https://github.com/rems-project/rmem" class="bare">https://github.com/rems-project/rmem</a>). <code>rmem</code> can explore litmus tests
-(see <a href="#litmustests">[litmustests]</a>) and small ELF binaries
+(see <a href="mm-eplan.html#litmustests" class="xref page">Litmus Tests</a>) and small ELF binaries
 exhaustively, pseudorandomly and interactively. In <code>rmem</code>, the ISA
 semantics is expressed explicitly in Sail (see
 <a href="https://github.com/rems-project/sail" class="bare">https://github.com/rems-project/sail</a> for the Sail language, and
