@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocs_riscv_org=self.webpackChunkdocs_riscv_org||[]).push([[1903],{1912:s=>{s.exports=JSON.parse('{"blogBasePath":"/blog","blogTitle":"Blog","authorsListPath":"/blog/authors"}')}}]);
