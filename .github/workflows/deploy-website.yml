@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   deploy:
-    concurrency: ci-${{ github.ref }} 
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -38,19 +38,21 @@ jobs:
 
     #- name: Install Docusaurus dependencies
     #  run: yarn install
-
+    - name: Start Kroki
+      run: docker compose up -d
     - name: Build Antora
       continue-on-error: true
       run: |
-        cd antora 
+        cd antora
         npx antora antora-playbook.yml --stacktrace
-    
+    - name: Stop Kroki
+      run: docker compose down
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
       run: |
         cd antora
         cp -a ./pdfs/. ./build/reference/
-      
+
     #- name: Build Docusaurus
       # continue-on-error: true
     #  run: yarn build
