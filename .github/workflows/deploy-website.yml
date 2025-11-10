@@ -46,7 +46,7 @@ jobs:
         cd antora
         npx antora antora-playbook.yml --stacktrace
     - name: Stop Kroki
-      run: docker compose down
+      run: docker compose -f antora/docker-compose.yml down
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
       run: |
