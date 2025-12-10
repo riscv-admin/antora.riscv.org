@@ -972,24 +972,48 @@ bits in the instruction and have been allocated to reduce hardware
 complexity. In particular, the sign bit for all immediates is always in
 bit 31 of the instruction to speed sign-extension circuitry.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f2da5c77ac5bcb502313d7cbf4684c45eaf619b6.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode', type: 8},
+  {bits: 5,  name: 'rd', type: 2},
+  {bits: 3,  name: 'funct3', type: 8},
+  {bits: 5,  name: 'rs1', type: 4},
+  {bits: 5,  name: 'rs2', type: 4},
+  {bits: 7,  name: 'funct7', type: 8}
+], config: {label: {right: 'R-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-a2f26773b551b4d0a4d0979bf7d8da11b8f73ae9.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode', type: 8},
+  {bits: 5,  name: 'rd', type: 2},
+  {bits: 3,  name: 'funct3', type: 8},
+  {bits: 5,  name: 'rs1', type: 4},
+  {bits: 12, name: 'imm[11:0]', type: 3},
+], config: {label: {right: 'I-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-6c0ce70660024616577819acb001189e5a43a1e0.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode', type: 8},
+  {bits: 5,  name: 'imm[4:0]', type: 3},
+  {bits: 3,  name: 'funct3', type: 8},
+  {bits: 5,  name: 'rs1', type: 4},
+  {bits: 5,  name: 'rs2', type: 4},
+  {bits: 7,  name: 'imm[11:5]', type: 3}
+], config: {label: {right: 'S-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-21a13708d39a1c4ba028dc91e4c3f66cb33446c9.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode', type: 8},
+  {bits: 5,  name: 'rd', type: 2},
+  {bits: 20,  name: 'imm[31:12]', type: 3}
+], config: {label: {right: 'U-Type'}}}</pre>
 </div>
 </div>
 <div id="base_instr" class="paragraph">
@@ -1033,34 +1057,74 @@ to keep the ISA as simple as possible.</p>
 <p>There are a further two variants of the instruction formats (B/J) based
 on the handling of immediates, as shown in <a href="#baseinstformatsimm">Base instruction formats immediate variants.</a>.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-5d875942584dea273a450c7a261a1ad5d1f3259f.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 5,  name: 'rd'},
+  {bits: 3,  name: 'funct3'},
+  {bits: 5,  name: 'rs1'},
+  {bits: 5,  name: 'rs2'},
+  {bits: 7,  name: 'funct7'}
+], config: {label: {right: 'R-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-db892d36213fae09cb50f8cd1450f2909c1a28eb.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 5,  name: 'rd'},
+  {bits: 3,  name: 'funct3'},
+  {bits: 5,  name: 'rs1'},
+  {bits: 12, name: 'imm[11:0]', type: 3},
+], config: {label: {right: 'I-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-7f8a43732eea5b172696cd3f79c5aae93edb8835.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 5,  name: 'imm[4:0]', type: 3},
+  {bits: 3,  name: 'funct3'},
+  {bits: 5,  name: 'rs1'},
+  {bits: 5,  name: 'rs2'},
+  {bits: 7,  name: 'imm[11:5]', type: 3}
+], config: {label: {right: 'S-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-b8f6a63c5496ec248af6dce508a9580f15def7f5.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 1,  name: '[11]',      type: 3},
+  {bits: 4,  name: 'imm[4:1]',  type: 3},
+  {bits: 3,  name: 'funct3'},
+  {bits: 5,  name: 'rs1'},
+  {bits: 5,  name: 'rs2'},
+  {bits: 6,  name: 'imm[10:5]', type: 3},
+  {bits: 1,  name: '[12]',      type: 3}
+], config: {fontsize: 12, label: {right: 'B-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-236971af764b069f793a886e25df56783196c7a0.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 5,  name: 'rd'},
+  {bits: 20, name: 'imm[31:12]', type: 3}
+], config: {label: {right: 'U-Type'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-d4fec5c7f34527423ddcb22921c4cd8107f08a38.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode'},
+  {bits: 5,  name: 'rd'},
+  {bits: 8,  name: 'imm[19:12]', type: 3},
+  {bits: 1,  name: '[11]',       type: 3},
+  {bits: 10, name: 'imm[10:1]',  type: 3},
+  {bits: 1,  name: '[20]',       type: 3}
+], config: {fontsize: 12, label: {right: 'J-Type'}}}</pre>
 </div>
 </div>
 <div id="baseinstformatsimm" class="paragraph">
@@ -1083,30 +1147,58 @@ formats and with each other.</p>
 each of the base instruction formats, and is labeled to show which
 instruction bit (inst[<em>y</em>]) produces each bit of the immediate value.</p>
 </div>
-<div id="immtypes" class="imageblock kroki">
+<div id="immtypes" class="literalblock kroki-error">
+<div class="title">Types of immediate produced by RISC-V instructions.</div>
 <div class="content">
-<img src="_images/svg-d902f9de3d4a8129f96b5cd62838f7b1004457f0.svg" alt="Types of immediate produced by RISC-V instructions.">
+<pre>{reg: [
+  {bits: 1,  name: '[20]'},
+  {bits: 4,  name: 'inst[24:21]'},
+  {bits: 6,  name: 'inst[30:25]'},
+  {bits: 21,  name: '— inst[31] —', type: 7},
+], config:{fontsize: 12, label:{right: 'I-immediate'}}}</pre>
 </div>
-<div class="title">Figure 1. Types of immediate produced by RISC-V instructions.</div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-85c0855eebdb0e8e046bf88eefc46b370fa85f4a.svg" alt="svg">
+<pre>{reg: [
+  {bits: 1,  name: '[7]'},
+  {bits: 4,  name: 'inst[11:8]'},
+  {bits: 6,  name: 'inst[30:25]'},
+  {bits: 21,  name: '— inst[31] —', type: 7},
+], config:{fontsize: 12, label:{right: 'S-immediate'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-d225e07b7de90740605024c25906c0fe7cfea71c.svg" alt="svg">
+<pre>{reg: [
+  {bits: 1,  name: '0', type: 5},
+  {bits: 4,  name: 'inst[11:8]'},
+  {bits: 6,  name: 'inst[30:25]'},
+  {bits: 1,  name: '[7]'},
+  {bits: 20, name: '— inst[31] —', type: 7},
+], config:{fontsize: 12, label:{right: 'B-immediate'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-6d28ac19c9b6f10a237107739e057edc76a3e136.svg" alt="svg">
+<pre>{reg: [
+  {bits: 12, name: '0', type: 5},
+  {bits: 8,  name: 'inst[19:12]'},
+  {bits: 11, name: 'inst[30:20]'},
+  {bits: 1,  name: '[31]', type: 7},
+], config:{fontsize: 12, label:{right: 'U-immediate'}}}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-d5f807f10db892426876b44d2885ebb6c6d04f26.svg" alt="svg">
+<pre>{reg: [
+  {bits: 1,  name: '0', type: 5},
+  {bits: 4,  name: 'inst[24:21]'},
+  {bits: 6,  name: 'inst[30:25]'},
+  {bits: 1,  name: '[20]'},
+  {bits: 8,  name: 'inst[19:12]'},
+  {bits: 12, name: '— inst[31] —', type: 7},
+], config:{fontsize: 12, label:{right: 'J-immediate'}}}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1201,9 +1293,15 @@ comparing the results of ADD and ADDW on the operands.</p>
 </div>
 <div class="sect2">
 <h3 id="sec:int-reg-imm"><a class="anchor" href="#sec:int-reg-imm"></a>4.1. Integer Register-Immediate Instructions</h3>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-517093b9b20c6c79b7777fe6c22fbbd3de4e146d.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM', 'OP-IMM'], type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest'], type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'ADDI/SLTI[U]', 'ANDI/ORI/XORI'], type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'src', 'src'], type: 4},
+  {bits: 12, name: 'imm[11:0]', attr: ['12', 'I-immediate[11:0]', 'I-immediate[11:0]'], type: 3}
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1227,9 +1325,16 @@ XOR on register <em>rs1</em> and the sign-extended 12-bit immediate and place
 the result in <em>rd</em>. Note, XORI <em>rd, rs1, -1</em> performs a bitwise logical
 inversion of register <em>rs1</em> (assembler pseudoinstruction NOT <em>rd, rs</em>).</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-2964569d7f9fc8de09c07b9fc756c707dea94e84.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM', 'OP-IMM', 'OP-IMM'], type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest', 'dest'], type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'SLLI', 'SRLI', 'SRAI'], type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'src', 'src', 'src'], type: 4},
+  {bits: 5,  name: 'imm[4:0]',  attr: ['5', 'shamt[4:0]', 'shamt[4:0]', 'shamt[4:0]'], type: 3},
+  {bits: 7,  name: 'imm[11:5]', attr: ['7', 0, 0, 32], type: 8}
+]}</pre>
 </div>
 </div>
 <div id="int-comp-slli-srli-srai" class="paragraph">
@@ -1241,9 +1346,13 @@ shifted into the lower bits); SRLI is a logical right shift (zeros are
 shifted into the upper bits); and SRAI is an arithmetic right shift (the
 original sign bit is copied into the vacated upper bits).</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-87b68428372b7bc6efb428957c4bb0f6faa2daf2.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',     attr: ['7', 'LUI', 'AUIPC'], type: 8},
+  {bits: 5,  name: 'rd',         attr: ['5', 'dest', 'dest'], type: 2},
+  {bits: 20, name: 'imm[31:12]', attr: ['20', 'U-immediate[31:12]', 'U-immediate[31:12]'], type: 3}
+]}</pre>
 </div>
 </div>
 <div id="int-comp-lui-aiupc" class="paragraph">
@@ -1297,9 +1406,16 @@ the <em>rs1</em> and <em>rs2</em> registers as source operands and write the res
 into register <em>rd</em>. The <em>funct7</em> and <em>funct3</em> fields select the type of
 operation.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-26605adad6c2d78500d5c90339b78dcca72aef2c.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'OP', 'OP', 'OP', 'OP'], type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest', 'dest','dest'], type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'ADD/SLT[U]', 'AND/OR/XOR', 'SLL/SRL', 'SUB/SRA'], type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'src1', 'src1', 'src1', 'src1'], type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', 'src2', 'src2', 'src2', 'src2'], type: 4},
+  {bits: 7,  name: 'funct7', attr: ['7', 0, 0, 0, 32], type: 8}
+]}</pre>
 </div>
 </div>
 <div id="int-reg-reg" class="paragraph">
@@ -1320,9 +1436,15 @@ the lower 5 bits of register <em>rs2</em>.</p>
 </div>
 <div class="sect2">
 <h3 id="sec:nop"><a class="anchor" href="#sec:nop"></a>4.3. NOP Instruction</h3>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-48b541768cf9dad7a29a9c4d58608978def6ac9e.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM'], type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'], type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'ADDI'], type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', '0'], type: 4},
+  {bits: 12, name: 'imm[11:0]', attr: ['12', '0'], type: 3}
+]}</pre>
 </div>
 </div>
 <div id="nop" class="paragraph">
@@ -1412,9 +1534,16 @@ than the regular link register.</p>
 <p>Plain unconditional jumps (assembler pseudoinstruction J) are encoded as
 a JAL with <em>rd</em>=<code>x0</code>.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-cd16c541027b13d74ec91a325a77eed5bbe885a0.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode', attr: ['7', 'JAL'], type: 8},
+  {bits: 5,  name: 'rd', attr: ['5', 'dest'], type: 2},
+  {bits: 8,  name: 'imm[19:12]', attr: ['8'], type: 3},
+  {bits: 1,  name: '[11]', attr: ['1'], type: 3},
+  {bits: 10, name: 'imm[10:1]', attr: ['10', 'offset[20:1]'], type: 3},
+  {bits: 1,  name: '[20]', attr: ['1'], type: 3},
+], config:{fontsize: 12}}</pre>
 </div>
 </div>
 <div id="ct-unconditional" class="paragraph">
@@ -1426,9 +1555,15 @@ instruction following the jump (<code>pc</code>+4) is written to register <em>rd
 Register <code>x0</code> can be used as the destination if the result is not
 required.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f8d798c743c4c3d96faae3cfe627de074a731ccb.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',     attr: ['7', 'JALR'], type: 8},
+  {bits: 5,  name: 'rd',         attr: ['5', 'dest'], type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', '0'], type: 8},
+  {bits: 5,  name: 'rs1',        attr: ['5', 'base'], type: 4},
+  {bits: 12, name: 'imm[11:0]',  attr: ['12', 'offset[11:0]'], type: 3},
+]}</pre>
 </div>
 </div>
 <div id="ct-unconditional-2" class="admonitionblock note">
@@ -1587,9 +1722,16 @@ is sign-extended and added to the address of the branch instruction to
 give the target address. The conditional branch range is
 &#177;4 KiB.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-6af5ef2da475ce7c4f40ca296a040c28576867fb.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'BRANCH', 'BRANCH', 'BRANCH'], type: 8},
+  {bits: 5,  name: 'imm[4:1|11]',  attr: ['5', 'offset[4:1|11]', 'offset[4:1|11]', 'offset[4:1|11]'], type: 3},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'BEQ/BNE', 'BLT[U]', 'BGE[U]'], type: 8},
+  {bits: 5,  name: 'rs1', attr: ['5', 'src1', 'src1', 'src1'], type: 4},
+  {bits: 5,  name: 'rs2', attr: ['5', 'src2','src2', 'src2'], type: 4},
+  {bits: 7,  name: 'imm[12|10:5]', attr: ['7', 'offset[12|10:5]', 'offset[12|10:5]', 'offset[12|10:5]'], type: 3},
+], config:{fontsize: 10}}</pre>
 </div>
 </div>
 <div id="ct-conditional" class="paragraph">
@@ -1775,14 +1917,27 @@ memory byte addresses to the less-significant register bytes.</p>
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-0a5660ed42ee90370a27fafaaf8c9252fda37bf5.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'LOAD'], type: 8},
+  {bits: 5,  name: 'rd', attr: ['5', 'dest'], type: 2},
+  {bits: 3,  name: 'funct3', attr: ['3', 'width'], type: 8},
+  {bits: 5,  name: 'rs1', attr: ['5', 'base'], type: 4},
+  {bits: 12, name: 'imm[11:0]', attr: ['12', 'offset[11:0]'], type: 3},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-20ee8dfe204839a6183661e0b904f73cd1d9e876.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',   attr: ['7', 'STORE'], type: 8},
+  {bits: 5,  name: 'imm[4:0]', attr: ['5', 'offset[4:0]'], type: 3},
+  {bits: 3,  name: 'funct3', attr: ['3', 'width'], type: 8},
+  {bits: 5,  name: 'rs1', attr: ['5', 'base'], type: 4},
+  {bits: 5,  name: 'rs2', attr: ['5', 'src'], type: 4},
+  {bits: 7, name: 'imm[11:5]', attr: ['7', 'offset[11:5]'], type: 3},
+]}</pre>
 </div>
 </div>
 <div id="load-store" class="paragraph">
@@ -1896,9 +2051,23 @@ are aligned.</p>
 <div class="sect1">
 <h2 id="sec:mem-order"><a class="anchor" href="#sec:mem-order"></a>7. Memory Ordering Instructions</h2>
 <div class="sectionbody">
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/mem-order-2bec20e8fb6be44faee19d6a82b46f97dbfe70e1.svg" alt="mem-order">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'MISC-MEM'], type: 8},
+  {bits: 5,  name: 'rd', attr: ['5', '0'], type: 2},
+  {bits: 3,  name: 'funct3', attr: ['3', 'FENCE'], type: 8},
+  {bits: 5,  name: 'rs1', attr: ['5', '0'], type: 4},
+  {bits: 1,  name: 'SW', attr: 1},
+  {bits: 1,  name: 'SR', attr: 1},
+  {bits: 1,  name: 'SO', attr: 1},
+  {bits: 1,  name: 'SI', attr: 1},
+  {bits: 1,  name: 'PW', attr: 1},
+  {bits: 1,  name: 'PR', attr: 1},
+  {bits: 1,  name: 'PO', attr: 1},
+  {bits: 1,  name: 'PI', attr: 1},
+  {bits: 4,  name: 'fm', attr: ['4', 'FM'], type: 8},
+]}</pre>
 </div>
 </div>
 <div id="mem-order" class="paragraph">
@@ -2072,9 +2241,15 @@ hardware.</p>
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f5a212729fe5458f7218320393faf27ce2494b3f.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM', 'SYSTEM'], type: 8},
+  {bits: 5,  name: 'rd',    attr: ['5', '0', '0'], type: 2},
+  {bits: 3,  name: 'funct3', attr: ['3', 'PRIV', 'PRIV'], type: 8},
+  {bits: 5,  name: 'rs1',   attr: ['5', '0', '0'], type: 4},
+  {bits: 12, name: 'func12', attr: ['12', 'ECALL', 'EBREAK'], type: 8},
+]}</pre>
 </div>
 </div>
 <div id="env-call" class="paragraph">

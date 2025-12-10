@@ -1369,9 +1369,15 @@ Zicbom and Zicbop extensions is expected to be defined in future extensions.</em
 following standard transformation is defined for cache-block management
 instructions and cache-block zero instructions:</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-fe809009de78b3655dea351f10f2b26d63c337ee.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 'opcode'},
+	{ bits: 5,  name: 0x0 },
+	{ bits: 3,  name: 'funct3'},
+	{ bits: 5,  name: 0x0},
+	{ bits: 12, name: 'operation'},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1986,9 +1992,15 @@ field is also interpreted as imm[4:0] like a store instruction.</em></p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-80f50c7ceee3baf5cc6950c2698841e06baf17c3.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0xF,   attr: ['MISC-MEM'] },
+	{ bits: 5,  name: 0x0 },
+	{ bits: 3,  name: 0x2,   attr: ['CBO'] },
+	{ bits: 5,  name: 'rs1', attr: ['base'] },
+	{ bits: 12, name: 0x001, attr: ['CBO.CLEAN'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2025,9 +2037,15 @@ agent executing the instruction.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-c6c408c04b6c0f1a8e8613569e11130dfbe40469.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0xF,   attr: ['MISC-MEM'] },
+	{ bits: 5,  name: 0x0 },
+	{ bits: 3,  name: 0x2,   attr: ['CBO'] },
+	{ bits: 5,  name: 'rs1', attr: ['base'] },
+	{ bits: 12, name: 0x002, attr: ['CBO.FLUSH'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2064,9 +2082,15 @@ agent executing the instruction.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f1a503e8b3552e4ed58b9cece8ac54ce5357c111.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0xF,   attr: ['MISC-MEM'] },
+	{ bits: 5,  name: 0x0 },
+	{ bits: 3,  name: 0x2,   attr: ['CBO'] },
+	{ bits: 5,  name: 'rs1', attr: ['base'] },
+	{ bits: 12, name: 0x000, attr: ['CBO.INVAL'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2105,9 +2129,15 @@ operation.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-9376795ab768900b96471a5b4fd509c5753157e7.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0xF,   attr: ['MISC-MEM'] },
+	{ bits: 5,  name: 0x0 },
+	{ bits: 3,  name: 0x2,   attr: ['CBO'] },
+	{ bits: 5,  name: 'rs1', attr: ['base'] },
+	{ bits: 12, name: 0x004, attr: ['CBO.ZERO'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2145,9 +2175,16 @@ instruction fetch in the near future</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-ee1613228f590cbef7a5fca31294fb348b3ea339.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0x13,        attr: ['OP-IMM'] },
+	{ bits: 5,  name: 0x0,         attr: ['offset[4:0]'] },
+	{ bits: 3,  name: 0x6,         attr: ['ORI'] },
+	{ bits: 5,  name: 'rs1',       attr: ['base'] },
+	{ bits: 5,  name: 0x0,         attr: ['PREFETCH.I'] },
+	{ bits: 7, name: 'imm[11:5]',  attr: ['offset[11:5]'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2204,9 +2241,16 @@ read in the near future</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-8248aadb655f0d5378d1e590cec3a012bd916b54.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0x13,        attr: ['OP-IMM'] },
+	{ bits: 5,  name: 0x0,         attr: ['offset[4:0]'] },
+	{ bits: 3,  name: 0x6,         attr: ['ORI'] },
+	{ bits: 5,  name: 'rs1',       attr: ['base'] },
+	{ bits: 5,  name: 0x1,         attr: ['PREFETCH.R'] },
+	{ bits: 7, name: 'imm[11:5]',  attr: ['offset[11:5]'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -2263,9 +2307,16 @@ write in the near future</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-a418a03dda7c9b9d32efc83cb06c9cab24d66e02.svg" alt="svg">
+<pre>{reg:[
+	{ bits: 7,  name: 0x13,        attr: ['OP-IMM'] },
+	{ bits: 5,  name: 0x0,         attr: ['offset[4:0]'] },
+	{ bits: 3,  name: 0x6,         attr: ['ORI'] },
+	{ bits: 5,  name: 'rs1',       attr: ['base'] },
+	{ bits: 5,  name: 0x3,         attr: ['PREFETCH.W'] },
+	{ bits: 7, name: 'imm[11:5]',  attr: ['offset[11:5]'] },
+]}</pre>
 </div>
 </div>
 <div class="dlist">

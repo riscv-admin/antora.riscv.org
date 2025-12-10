@@ -805,11 +805,19 @@ control and status register (CSR). It is a 32-bit read/write register
 that selects the dynamic rounding mode for floating-point arithmetic
 operations and holds the accrued exception flags, as shown in <a href="#fcsr">Floating-Point Control and Status Register</a>.</p>
 </div>
-<div id="fcsr" class="imageblock kroki">
+<div id="fcsr" class="literalblock kroki-error">
+<div class="title">Floating-point control and status register</div>
 <div class="content">
-<img src="_images/svg-d8d44280be96d2c9e63647e23490430b5e9b9689.svg" alt="Floating-point control and status register">
+<pre>{reg: [
+  {bits: 1,  name: 'NX', attr: ['1']},
+  {bits: 1,  name: 'UF', attr: ['1']},
+  {bits: 1,  name: 'OF', attr: ['1']},
+  {bits: 1,  name: 'DZ', attr: ['1']},
+  {bits: 1,  name: 'NV', attr: ['1']},
+  {bits: 3,  name: 'Rounding Mode', attr:['3']},
+  {bits: 24, name: 'Reserved', attr:['24']},
+], config: {fontsize: 10}}</pre>
 </div>
-<div class="title">Figure 1. Floating-point control and status register</div>
 </div>
 <div class="paragraph">
 <p>The <code>fcsr</code> register can be read and written with the FRCSR and FSCSR
@@ -1084,14 +1092,27 @@ signals.</p>
 <div class="paragraph">
 <p>Floating-point loads and stores use the same base+offset addressing mode as the integer base ISAs, with a base address in register <em>rs1</em> and a 12-bit signed byte offset. The FLW instruction loads a single-precision floating-point value from memory into floating-point register <em>rd</em>. FSW stores a single-precision value from floating-point register <em>rs2</em> to memory.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-b1405edeb4ff8b7ab07b482ce34f8b796fe6be30.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'LOAD-FP']},
+  {bits: 5,  name: 'rd',        attr: ['5', 'dest']},
+  {bits: 3,  name: 'width',     attr: ['3', 'W']},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'base']},
+  {bits: 12, name: 'imm[11:0]', attr: ['12', 'offset[11:0]']},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f7d67df7551d0016696f007c8c3cb46f075b853d.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'STORE-FP']},
+  {bits: 5,  name: 'imm[4:0]',  attr: ['5', 'offset[4:0]']},
+  {bits: 3,  name: 'width',     attr: ['3', 'W']},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'base']},
+  {bits: 5,  name: 'rs2',       attr: ['5', 'src']},
+  {bits: 7, name: 'imm[11:5]', attr: ['7', 'offset[11:5]']},
+]}</pre>
 </div>
 </div>
 <div id="sp-ldst" class="paragraph">
@@ -1186,9 +1207,17 @@ handling of signaling NaNs.</p>
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-82f3317405ae2175569142bab65592e5c23ca2f7.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP','OP-FP','OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest','dest','dest']},
+  {bits: 3, name: 'rm',  attr: ['3','RM', 'RM', 'RM','MIN/MAX']},
+  {bits: 5, name: 'rs1',    attr: ['5','src1', 'src1', 'src', 'src1']},
+  {bits: 5, name: 'rs2',    attr: ['5','src2', 'src2', '0', 'src2']},
+  {bits: 2, name: 'fmt',    attr: ['2','S', 'S', 'S', 'S']},
+  {bits: 5, name: 'funct5', attr: ['5', 'FADD/FSUB', 'FMUL/FDIV', 'FSQRT','FMIN-MAX']},
+]}</pre>
 </div>
 </div>
 <div id="spfloat" class="paragraph">
@@ -1236,9 +1265,17 @@ compared to ARM.</p>
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-21dafd4b911a505659437ee1391f723f638bee90.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','F[N]MADD/F[N]MSUB']},
+  {bits: 5, name: 'rd',     attr: ['5','dest']},
+  {bits: 3, name: 'rm',     attr: ['3','RM']},
+  {bits: 5, name: 'rs1',    attr: ['5','src1']},
+  {bits: 5, name: 'rs2',    attr: ['5','src2']},
+  {bits: 2, name: 'fmt',    attr: ['2','S']},
+  {bits: 5, name: 'rs3', attr: ['5','src3']},
+]}</pre>
 </div>
 </div>
 <div id="fnmaddsub" class="admonitionblock note">
@@ -1375,9 +1412,17 @@ FCVT.S.W <em>rd</em>, <code>x0</code>, which will never set any exception flags.
 flag if the rounded result differs from the operand value and the
 Invalid exception flag is not set.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-e4adff38ca86222298ea2566f276a274fd9adc0f.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP', 'OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5','dest', 'dest']},
+  {bits: 3, name: 'rm',  attr: ['3','RM','RM']},
+  {bits: 5, name: 'rs1',    attr: ['5','src', 'src']},
+  {bits: 5, name: 'rs2',    attr: ['5','W[U]/L[U]D', 'W[U]/L[U]']},
+  {bits: 2, name: 'fmt',    attr: ['2','S','S']},
+  {bits: 5, name: 'funct5', attr: ['5','FCVT.int.fmt', 'FCVT.fmt.int']},
+]}</pre>
 </div>
 </div>
 <div id="fcvt" class="paragraph">
@@ -1393,9 +1438,17 @@ FSGNJN.S <em>rx, ry, ry</em> moves the negation of <em>ry</em> to <em>rx</em> (a
 pseudoinstruction FNEG.S <em>rx, ry</em>); and FSGNJX.S <em>rx, ry, ry</em> moves the absolute value of <em>ry</em> to <em>rx</em> (assembler pseudoinstruction FABS.S <em>rx,
 ry</em>).</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-2591776373d7209c5d709f100045f2f7c2465330.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5', 'dest']},
+  {bits: 3, name: 'rm',  attr: ['3','J[N]/JX']},
+  {bits: 5, name: 'rs1',    attr: ['5','src1']},
+  {bits: 5, name: 'rs2',    attr: ['5','src2']},
+  {bits: 2, name: 'fmt',    attr: ['2','S']},
+  {bits: 5, name: 'funct5', attr: ['5','FSGNJ']},
+]}</pre>
 </div>
 </div>
 <div id="inj" class="admonitionblock note">
@@ -1438,9 +1491,17 @@ preserved.</p>
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f43dbe8c77818963355ae63ce6f5989bf5a77511.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest']},
+  {bits: 3, name: 'rm',     attr: ['3','000', '000']},
+  {bits: 5, name: 'rs1',    attr: ['5','src','src']},
+  {bits: 5, name: 'rs2',    attr: ['5','0','0']},
+  {bits: 2, name: 'fmt',    attr: ['2','S','S']},
+  {bits: 5, name: 'funct5', attr: ['5','FMV.X.W','FMV.W.X']},
+]}</pre>
 </div>
 </div>
 <div id="spfloat-mv" class="admonitionblock note">
@@ -1479,9 +1540,17 @@ condition holds, and 0 otherwise.</p>
 exception flag if either input is NaN. FEQ.S performs a <em>quiet</em>
 comparison: it only sets the invalid operation exception flag if either input is a signaling NaN. For all three instructions, the result is 0 if either operand is NaN.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-f47c9efb18a201eaac373e9194bf1b6416895153.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5','dest']},
+  {bits: 3, name: 'rm',  attr: ['3','EQ', 'LT', 'LE']},
+  {bits: 5, name: 'rs1',    attr: ['5','src1']},
+  {bits: 5, name: 'rs2',    attr: ['5','src2']},
+  {bits: 2, name: 'fmt',    attr: ['2','S']},
+  {bits: 5, name: 'funct5', attr: ['5','FCMP']},
+]}</pre>
 </div>
 </div>
 <div id="spfloat-comp" class="admonitionblock note">
@@ -1517,9 +1586,17 @@ be set if the property is true and clear otherwise. All other bits in
 FCLASS.S does not set the floating-point exception flags.
 </p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-d11bade1f026be22713c4cc93baf3dc133764e37.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
+  {bits: 5, name: 'rd',     attr: ['5','dest']},
+  {bits: 3, name: 'rm',     attr: ['3','001']},
+  {bits: 5, name: 'rs1',    attr: ['5','src']},
+  {bits: 5, name: 'rs2',    attr: ['5','0']},
+  {bits: 2, name: 'fmt',    attr: ['2','S']},
+  {bits: 5, name: 'funct5', attr: ['5','FCLASS']},
+]}</pre>
 </div>
 </div>
 <table id="fclass" class="tableblock frame-all grid-all fit-content center">

@@ -744,9 +744,13 @@ but they are the ones we considered most while writing it.</p>
 <dt class="hdlist1">BF16 bits</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-04e4bf4bf16547c3cc427084877aa6d2a36322a7.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: 'frac'},
+{bits: 8, name: 'expo'},
+{bits: 1, name: 'S'},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1365,9 +1369,17 @@ a vector widening BF16 mul-add instruction that accumulates into FP32.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-c3344c3fe208c528d45a3eec99aeeacb903c2e36.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010011', attr: ['OP-FP']},
+{bits: 5, name: 'rd'},
+{bits: 3, name: 'rm'},
+{bits: 5, name: 'rs1'},
+{bits: 5, name: '01000', attr: ['bf16.s']},
+{bits: 2, name: '10', attr: ['h']},
+{bits: 5, name: '01000', attr: 'fcvt'},
+]}</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1424,9 +1436,17 @@ floating-point-to-floating-point conversion instructions.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-691e04e8cad74b80b324a1ef856775bca9ae19b1.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010011', attr: ['OP-FP']},
+{bits: 5, name: 'rd'},
+{bits: 3, name: 'rm'},
+{bits: 5, name: 'rs1'},
+{bits: 5, name: '00110', attr: ['bf16']},
+{bits: 2, name: '00', attr: ['s']},
+{bits: 5, name: '01000', attr: 'fcvt'},
+]}</pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -1500,9 +1520,17 @@ least significant 16 bits are written with 0s.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-41928a051987580541fccbf6b71413083ea860a3.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010111', attr:['OP-V']},
+{bits: 5, name: 'vd'},
+{bits: 3, name: '001', attr:['OPFVV']},
+{bits: 5, name: '11101', attr:['vfncvtbf16']},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '010010', attr:['VFUNARY0']},
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -1586,9 +1614,17 @@ However, here the SEW-width format is limited to BF16.</p>
 <dt class="hdlist1">Encoding</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-876e42a51e5e60b4b3cf9eb0f3a4fe8d544ec5db.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010111', attr:['OP-V']},
+{bits: 5, name: 'vd'},
+{bits: 3, name: '001', attr:['OPFVV']},
+{bits: 5, name: '01101', attr:['vfwcvtbf16']},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '010010', attr:['VFUNARY0']},
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -1688,9 +1724,17 @@ vfwmaccbf16.vf vd, rs1, vs2, vm<br></p>
 <dt class="hdlist1">Encoding (Vector-Vector)</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-24a0efe51fc715d8764f3a9e99436dd6e65b1b06.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010111', attr:['OP-V']},
+{bits: 5, name: 'vd'},
+{bits: 3, name: '001', attr:['OPFVV']},
+{bits: 5, name: 'vs1'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '111011', attr:['vfwmaccbf16']},
+]}</pre>
 </div>
 </div>
 <div class="dlist">
@@ -1698,9 +1742,17 @@ vfwmaccbf16.vf vd, rs1, vs2, vm<br></p>
 <dt class="hdlist1">Encoding (Vector-Scalar)</dt>
 </dl>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-3f9947ea21fbbc7a26407548674e230e2b11ab33.svg" alt="svg">
+<pre>{reg:[
+{bits: 7, name: '1010111', attr:['OP-V']},
+{bits: 5, name: 'vd'},
+{bits: 3, name: '101', attr:['OPFVF']},
+{bits: 5, name: 'rs1'},
+{bits: 5, name: 'vs2'},
+{bits: 1, name: 'vm'},
+{bits: 6, name: '111011', attr:['vfwmaccbf16']},
+]}</pre>
 </div>
 </div>
 <div class="dlist">

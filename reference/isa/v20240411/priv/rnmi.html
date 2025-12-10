@@ -699,22 +699,41 @@ implementation defined.</p>
 <p>This proposal adds additional M-mode CSRs to enable a resumable
 non-maskable interrupt (RNMI).</p>
 </div>
-<div class="imageblock kroki">
+<div class="listingblock kroki-error">
+<div class="title">Resumable NMI scratch register <code>mnscratch</code></div>
 <div class="content">
-<img src="_images/diag-0074ce2c284850b6e449ed273be6fcf4f41e6e44.svg" alt="Resumable NMI scratch register `mnscratch`">
+<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
+(def row-height 40 )
+(def row-header-fn nil)
+(def left-margin 30)
+(def right-margin 30)
+(def boxes-per-row 32)
+(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
+
+(draw-box (text "mnscratch" {:font-size 24}) {:span 32})
+(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
 </div>
-<div class="title">Figure 1. Resumable NMI scratch register <code>mnscratch</code></div>
 </div>
 <div class="paragraph">
 <p>The <code>mnscratch</code> CSR holds an MXLEN-bit read-write register which enables
 the NMI trap handler to save and restore the context that was
 interrupted.</p>
 </div>
-<div class="imageblock kroki">
+<div class="listingblock kroki-error">
+<div class="title">Resumable NMI program counter <code>mnepc</code>.</div>
 <div class="content">
-<img src="_images/diag-43606b08b31719fe318ecd008e39787ca1cbab75.svg" alt="Resumable NMI program counter `mnepc`.">
+<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
+(def row-height 40 )
+(def row-header-fn nil)
+(def left-margin 30)
+(def right-margin 30)
+(def boxes-per-row 32)
+(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
+
+(draw-box (text "mnepc " {:font-size 24}) {:span 16 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
+(draw-box (text "(WARL)"{:font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders {:top :border-unrelated :right :border-unrelated :bottom :border-unrelated}})
+(draw-box "MXLEN" {:span 32 :borders {}})</pre>
 </div>
-<div class="title">Figure 2. Resumable NMI program counter <code>mnepc</code>.</div>
 </div>
 <div class="paragraph">
 <p>The <code>mnepc</code> CSR is an MXLEN-bit read-write register which on entry to
@@ -740,11 +759,23 @@ addresses. Prior to writing <code>mnepc</code>, implementations may convert an
 invalid address into some other invalid address that <code>mnepc</code> is capable
 of holding.</p>
 </div>
-<div class="imageblock kroki">
+<div class="listingblock kroki-error">
+<div class="title">Resumable NMI cause <code>mncause</code>.</div>
 <div class="content">
-<img src="_images/diag-c39c0e7ed4908fd54999df3cbb966f027c967eb6.svg" alt="Resumable NMI cause `mncause`.">
+<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
+(def row-height 40 )
+(def row-header-fn nil)
+(def left-margin 30)
+(def right-margin 30)
+(def boxes-per-row 32)
+(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-2" "" "" "" "MXLEN-1" ""])})
+
+(draw-box "Interrupt" {:span 4})
+(draw-box (text "Exception Code" {:font-size 24}) {:span 14 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
+(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 14 :text-anchor "start" :borders {:top :border-unrelated :right :border-unrelated :bottom :border-unrelated}})
+(draw-box "1" {:span 4 :borders {}})
+(draw-box "MXLEN-1" {:font-size 24 :span 28 :borders {}})</pre>
 </div>
-<div class="title">Figure 3. Resumable NMI cause <code>mncause</code>.</div>
 </div>
 <div class="paragraph">
 <p>The <code>mncause</code> CSR holds the reason for the NMI.
@@ -757,11 +788,39 @@ specified in the Smdbltrp extension, bit MXLEN-1 is set to 0 and the
 least-significant bits are set to the cause code corresponding to the
 exception that precipitated the double trap.</p>
 </div>
-<div class="imageblock kroki">
+<div class="listingblock kroki-error">
+<div class="title">Resumable NMI status register <code>mnstatus</code>.</div>
 <div class="content">
-<img src="_images/diag-e7c59bcf4e5dc16e7646527d049201b7253e39b0.svg" alt="Resumable NMI status register `mnstatus`.">
+<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
+(def row-height 40 )
+(def row-header-fn nil)
+(def left-margin 30)
+(def right-margin 30)
+(def boxes-per-row 35)
+(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "2" "" "3" "4" "" "" "6" "" "" "7" "" "" "8" "" "" "9" "" "" "10" "" "11" "" "" "12" "13" "" "" "" "" "" "MXLEN-1" ""])})
+
+(draw-box (text "Reserved" {:font-style "italic" :font-size 24}) {:span 8})
+(draw-box (text "MNPP" {:font-size 24}) {:span 2 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
+(draw-box (text "(WARL)" {:font-weight "bold" :font-size 20}) {:span 2 :text-anchor "start"  :borders {:top :border-unrelated :right :border-unrelated :bottom :border-unrelated}})
+(draw-box (text "Reserved" {:font-style "italic" :font-size 24}) {:span 3})
+(draw-box (text "MNPELP" {:font-style "italic" :font-size 20}) {:span 3})
+(draw-box (text "Reserved" {:font-style "italic" :font-size 20}) {:span 3})
+(draw-box (text "MNPV" {:font-size 24}) {:span 2 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
+(draw-box (text "(WARL)" {:font-weight "bold" :font-size 20}) {:span 2 :text-anchor "start" :borders {:top :border-unrelated :right :border-unrelated :bottom :border-unrelated}})
+(draw-box (text "Reserved" {:font-style "italic" :font-size 24}) {:span 4})
+(draw-box "NMIE" {:span 2})
+(draw-box (text "Reserved" {:font-style "italic" :font-size 24}) {:span 4})
+
+(draw-box "MXLEN-13" {:span 8 :borders {}})
+(draw-box "2" {:span 4 :borders {}})
+(draw-box "1" {:span 3 :borders {}})
+(draw-box "1" {:span 3 :borders {}})
+(draw-box "1" {:span 3 :borders {}})
+(draw-box "1" {:span 4 :borders {}})
+(draw-box "3" {:span 4 :borders {}})
+(draw-box "1" {:span 2 :borders {}})
+(draw-box "3" {:span 4 :borders {}})</pre>
 </div>
-<div class="title">Figure 4. Resumable NMI status register <code>mnstatus</code>.</div>
 </div>
 <div class="paragraph">
 <p>The <code>mnstatus</code> CSR holds a two-bit field, MNPP, which on entry to the

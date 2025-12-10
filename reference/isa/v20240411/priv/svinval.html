@@ -644,9 +644,16 @@ instructions into finer-grained invalidation and ordering operations
 that can be more efficiently batched or pipelined on certain classes of
 high-performance implementation.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-0044d0f78b2630ded746c3ef466df1e0b4ec3c08.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'],     type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'PRIV'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'vaddr'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', 'asid'],     type: 4},
+  {bits: 7,  name: 'funct7',     attr: ['7', 'SINVAL.VMA'],    type: 8},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -656,14 +663,28 @@ entries that an SFENCE.VMA instruction with the same values of <em>rs1</em> and
 instructions are only ordered with respect to SFENCE.VMA,
 SFENCE.W.INVAL, and SFENCE.INVAL.IR instructions as defined below.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-fd64bd3d0b0541872c7ab3e219ed7ba6621462cf.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'],     type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'PRIV'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', '0'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', '0'],     type: 4},
+  {bits: 7,  name: 'funct7',     attr: ['7', 'SFENCE.W.INVAL'],    type: 8},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-83a49e338700660d70f2f914a5ed55300098be27.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'],     type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'PRIV'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', '0'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', '1'],     type: 4},
+  {bits: 7,  name: 'funct7',     attr: ['7', 'SFENCE.INVAL.IR'],    type: 8},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -695,14 +716,28 @@ those subsequent to the SFENCE.VMA.</p>
 </li>
 </ul>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-33923a9dea9c7058b182a4698547ec66bed5fa26.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'],     type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'PRIV'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'vaddr'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', 'asid'],     type: 4},
+  {bits: 7,  name: 'funct7',     attr: ['7', 'HINVAL.VVMA'],    type: 8},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-4219c1f10d30c6bae7a90e724394986e0dde3dae.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7', 'SYSTEM'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5', '0'],     type: 2},
+  {bits: 3,  name: 'funct3',     attr: ['3', 'PRIV'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5', 'gaddr'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5', 'vmid'],     type: 4},
+  {bits: 7,  name: 'funct7',     attr: ['7', 'HINVAL.GVMA'],    type: 8},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">

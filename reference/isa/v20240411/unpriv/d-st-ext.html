@@ -794,14 +794,27 @@ value from the floating-point registers to memory.
 </tr>
 </table>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-2d6eaaa42aab3c1360c46473567f1319c7cfe197.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7','LOAD-FP'],  type: 8},
+  {bits: 5,  name: 'rd',        attr: ['5','dest'],     type: 2},
+  {bits: 3,  name: 'width',     attr: ['3','D'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5','base'],     type: 4},
+  {bits: 12, name: 'imm[11:0]', attr: ['12','offset[11:0]'],   type: 3},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-55d929af853a004877a7947c4f3f064d24772ec2.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7,  name: 'opcode',    attr: ['7','STORE-FP'], type: 8},
+  {bits: 5,  name: 'imm[4:0]',  attr: ['5','offset[4:0]'],   type: 3},
+  {bits: 3,  name: 'width',     attr: ['3','D'],    type: 8},
+  {bits: 5,  name: 'rs1',       attr: ['5','base'],     type: 4},
+  {bits: 5,  name: 'rs2',       attr: ['5','src'],      type: 4},
+  {bits: 7, name: 'imm[11:5]', attr: ['7','offset[11:5]'],   type: 3},
+]}</pre>
 </div>
 </div>
 <div id="double-ls" class="paragraph">
@@ -822,14 +835,30 @@ payloads of non-canonical NaNs are preserved.</p>
 defined analogously to their single-precision counterparts, but operate
 on double-precision operands and produce double-precision results.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-40bbe01b0397c8c7367747c439f8912c77816757.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP','OP-FP','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest','dest','dest'], type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','RM','RM','MIN/MAX','RM'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src1','src1','src1','src'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','src2','src2','src2','0'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D','D','D','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FADD/FSUB', 'FMUL/FDIV', 'FMIN-MAX', 'FSQRT'], type: 8},
+]}</pre>
 </div>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-7aa5bebd47d00bd893316d82803cb5f19a514239.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','F[N]MADD/F[N]MSUB'],    type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest'],     type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','RM'],       type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src'],      type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','src2'],     type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D'],        type: 8},
+  {bits: 5, name: 'rs3',    attr: ['5','src3'],    type: 8},
+]}</pre>
 </div>
 </div>
 </div>
@@ -857,9 +886,17 @@ inputs are the same as for FCVT.<em>int</em>.S.
 instructions round according to the <em>rm</em> field. Note FCVT.D.W[U] always
 produces an exact result and is unaffected by rounding mode.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-4489d9681a1363f27baa7395490ad7c2c89e206e.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest'], type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','RM','RM'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src','src'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','W[U]/L[U]','W[U]/L[U]'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FCVT.int.D','FCVT.D.int'], type: 8},
+]}</pre>
 </div>
 </div>
 <div id="fl-convert-mv" class="paragraph">
@@ -873,9 +910,17 @@ never round.
 
 </p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-0f579dc46f3629b5085c966b16b4253851aaf4b8.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest'], type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','RM','RM'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src','src'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','D', 'S'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','S','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FCVT.S.D', 'FCVT.D.S'], type: 8},
+]}</pre>
 </div>
 </div>
 <div id="fcvt-sd-ds" class="paragraph">
@@ -883,9 +928,17 @@ never round.
 FSGNJN.D, and FSGNJX.D are defined analogously to the single-precision
 sign-injection instruction.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-26ceb9c9b19b7c46d2f20c97415c83b939eac53b.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest'], type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','J[N]/JX'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src1'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','src2'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D'],      type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FSGNJ'],  type: 8},
+]}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -901,9 +954,17 @@ register <em>rd</em>.</p>
 <p>FMV.X.D and FMV.D.X do not modify the bits being transferred; in
 particular, the payloads of non-canonical NaNs are preserved.</p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-ac8f9bec6f7e4d13ca33b6c27f41c8e129bf28c5.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest','dest'], type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','000','000'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src','src'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','0','0'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FMV.X.D','FMV.D.X'], type: 8},
+]}</pre>
 </div>
 </div>
 <div id="fmvxddx" class="admonitionblock tip">
@@ -950,9 +1011,17 @@ analogously to their single-precision counterparts, but operate on
 double-precision operands.
 </p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-50e0e6069482e9773174d8256c87fc6bf304795f.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest'], type: 2},
+  {bits: 3, name: 'rm',  attr: ['3','EQ/LT/LE'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src1'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','src2'], type: 4},
+  {bits: 2, name: 'fmt',    attr: ['2','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FCMP'], type: 8},
+]}</pre>
 </div>
 </div>
 </div>
@@ -966,9 +1035,17 @@ defined analogously to its single-precision counterpart, but operates on
 double-precision operands.
 </p>
 </div>
-<div class="imageblock kroki">
+<div class="literalblock kroki-error">
 <div class="content">
-<img src="_images/svg-8149a875b2f3d8e091f6015aa3564dda57122ee6.svg" alt="svg">
+<pre>{reg: [
+  {bits: 7, name: 'opcode', attr: ['7','OP-FP'], type: 8},
+  {bits: 5, name: 'rd',     attr: ['5','dest'],   type: 2},
+  {bits: 3, name: 'rm',     attr: ['3','1'], type: 8},
+  {bits: 5, name: 'rs1',    attr: ['5','src'], type: 4},
+  {bits: 5, name: 'rs2',    attr: ['5','0'], type: 8},
+  {bits: 2, name: 'fmt',    attr: ['2','D'], type: 8},
+  {bits: 5, name: 'funct5', attr: ['5','FCLASS'], type: 8},
+]}</pre>
 </div>
 </div>
 </div>
