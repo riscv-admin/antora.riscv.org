@@ -15,9 +15,14 @@ output:
 content:
   sources:
   - url: https://github.com/riscv/riscv-isa-manual.git
-    branches: [v20250508,v20240411]
+    branches: [main,v20250508,v20240411]
+    #branches: [2486-all-characters-need-to-be-escaped-with]
+    #branches: [main]
     start_page: ROOT::index.adoc
     start_path: /
+    # Enable symlink resolution
+    worktrees: true
+    submodules: true
 
 #  - url: https://github.com/riscv-non-isa/e-trace-encap.git
 #    branches: antora-refactor
@@ -70,11 +75,13 @@ asciidoc:
   extensions:
   - asciidoctor-kroki
   - '@djencks/asciidoctor-mathjax'
+  #- require: ./riscv-extensions/include-rewriter.js
   attributes:
-    kroki-server-url: http://localhost:9870
+    kroki-server-url: http://localhost:8000
     kroki-fetch-diagram: true
     doctype: book
     experimental: ''
+    icons: font
     idprefix: ''
     idseparator: '-'
     page-pagination: ''
@@ -83,6 +90,9 @@ asciidoc:
     ne: '&#8800;'
     approx: '&#8776;'
     inf: '&#8734;'
+    circ: ○
+    bullet: ∙
+    times: ×
     csrname: 'envcfg'
     incexample: example$
     incimage: ../images/
@@ -98,6 +108,20 @@ asciidoc:
     pdf_url: ~
     multiple_pdfs: false
     pdf_list: ~
+    fiximages: '../images'
+    # Math and special characters
+    vertical-ellipsis: '⋮'
+    ellipsis: '…'
+    check: '✓'
+    prime: '′'
+    pm: '±'
+    rightarrow: '→'
+    interpunct: '·'
+    # Variables
+    i: '_i_'
+    u: '_u_'
+    ra: '_ra_'
+    reg_list: '_reg_list_'
 
 # Temp disable for local build speedup. Re-enable for deployment.
 runtime:
@@ -113,6 +137,29 @@ antora:
     bibtex-style: "apa"
     bibtex-format: "asciidoc"
     bibtex-throw: false
+  - require: ./riscv-extensions/antora_copy_files_extension.js
+    target_sources:
+    - url: 'https://github.com/riscv/riscv-isa-manual.git'
+      #branches: ['main', '2459-cleaning-up-for-antora']
+      branches: ['main', '20250508', '20240411']
+    source_dirs:
+      # Copy all files from src/images/ to partials/
+      - source: 'src/images'
+        target: 'partials'
+      # Copy only .adoc files from src/ to partials/
+      - source: 'src'
+        target: 'partials'
+        extensions: ['.adoc']
+      - source: 'src/example'
+        target: 'examples'
+        extensions: ['.s']
+      - source: 'docs-resources/images'  # Add this for submodule images
+        target: 'partials'
+  - require: ./riscv-extensions/antora_include_rewriter.js
+    target_sources:
+      - url: 'https://github.com/riscv/riscv-isa-manual.git'
+        branches: ['main', '20250508', '20240411']
+        #branches: ['main', '2459-cleaning-up-for-antora']
 #    numbered_titles: true
 #    section_number_style: "iso"
 #  - '@antora/pdf-extension'
