@@ -40,12 +40,19 @@ jobs:
     #  run: yarn install
     - name: Start Kroki
       run: docker compose -f antora/docker-compose.yml up -d
+
+    - name: Wait for Kroki to be ready
+      run: |
+        echo "Waiting for Kroki to start..."
+        timeout 60 bash -c 'until curl -sf http://localhost:9870/health > /dev/null; do sleep 2; done'
+        echo "Kroki is ready!"
     - name: Build Antora
       continue-on-error: true
       run: |
         cd antora
         npx antora antora-playbook.yml --stacktrace
     - name: Stop Kroki
+      if: always()
       run: docker compose -f antora/docker-compose.yml down
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
