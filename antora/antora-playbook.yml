@@ -166,17 +166,56 @@ antora:
 
   - require: ./riscv-extensions/nav_numbering_extension.js
     numbering_rules:  # Make sure this is at the same level as 'require'
-       - module: priv
-         chapters:
-           start: 3
-           end: 20
-         appendices:
-           start: 21
-           end: 23
-       - module: unpriv
-         chapters:
-           start: 2
-           end: 15
+       # Rule for priv module - main branch only
+        - module: priv
+          branches: ['main']  # Optional: only process these branches
+          chapters:
+            start: 3
+            end: 20
+          appendices:
+            start: 21
+            end: 23
+
+        # Rule for priv module - v20240411 branch with different numbering
+        - module: priv
+          branches: ['v20240411']
+          chapters:
+            start: 5
+            end: 25
+
+        # Rule for priv module - v20250508 branch with different numbering
+        - module: priv
+          branches: ['v20250508']
+          chapters:
+            start: 5
+            end: 24
+
+        # Rule for unpriv module - multiple branches
+        - module: unpriv
+          branches: ['main']
+          chapters:
+            start: 2
+            end: 15
+
+        # Rule for unpriv module - specific tag
+        - module: unpriv
+          tags: ['v20240411']
+          chapters:
+            start: 3
+            end: 12
+
+        # Rule for unpriv module - specific tag
+        - module: unpriv
+          tags: ['v20250508']
+          chapters:
+            start: 5
+            end: 41
+
+        # Rule without branch/tag filter - applies to all branches/tags
+        - module: ROOT
+          chapters:
+            start: 1
+            end: 10
 
 ui:
   bundle:

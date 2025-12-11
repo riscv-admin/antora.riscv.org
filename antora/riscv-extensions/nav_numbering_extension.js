@@ -6,19 +6,12 @@ const path = require('path')
 
 module.exports.register = function ({ config }) {
   console.log('[Nav Numbering] Extension loaded!')
+  console.log('[Nav Numbering] Config received:', JSON.stringify(config, null, 2))
   
-  // Configuration format:
-  // numbering_rules:
-  //   - module: priv
-  //     chapters:
-  //       start: 3
-  //       end: 20
-  //     appendices:
-  //       start: 21
-  //       end: 23
-  const numberingRules = config?.numbering_rules || []
+  // Configuration can come in as either numbering_rules or numberingRules
+  const numberingRules = config?.numberingRules || config?.numbering_rules || []
   
-  console.log('[Nav Numbering] Rules:', JSON.stringify(numberingRules, null, 2))
+  console.log('[Nav Numbering] Parsed rules:', JSON.stringify(numberingRules, null, 2))
   
   this.on('contentClassified', ({ contentCatalog }) => {
     console.log('[Nav Numbering] Processing navigation files')
@@ -32,16 +25,38 @@ module.exports.register = function ({ config }) {
     
     navFiles.forEach(navFile => {
       const moduleName = navFile.src.module
+      const version = navFile.src.version
+      const origin = navFile.src.origin
+      
+      console.log(`[Nav Numbering] Checking nav: module=${moduleName}, version=${version}, branch=${origin?.refname}`)
       
       // Find matching rule for this module
-      const rule = numberingRules.find(r => r.module === moduleName)
+      const rule = numberingRules.find(r => {
+        // Check module match
+        if (r.module !== moduleName) return false
+        
+        // If no branch/tag filters specified, match any
+        if (!r.branches && !r.tags) return true
+        
+        // Check branch match
+        if (r.branches && origin?.reftype === 'branch') {
+          return r.branches.includes(origin.refname)
+        }
+        
+        // Check tag match
+        if (r.tags && origin?.reftype === 'tag') {
+          return r.tags.includes(origin.refname)
+        }
+        
+        return false
+      })
       
       if (!rule) {
-        console.log(`[Nav Numbering] No rules for module: ${moduleName}`)
+        console.log(`[Nav Numbering] No rules for module: ${moduleName} (${origin?.reftype}: ${origin?.refname})`)
         return
       }
       
-      console.log(`[Nav Numbering] Processing nav for module: ${moduleName}`)
+      console.log(`[Nav Numbering] Processing nav for module: ${moduleName} (${origin?.reftype}: ${origin?.refname})`)
       
       const content = navFile.contents.toString()
       const lines = content.split('\n')
