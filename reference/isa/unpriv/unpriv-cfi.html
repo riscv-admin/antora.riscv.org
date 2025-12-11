@@ -947,13 +947,9 @@ match the expected landing pad label in bits 31:12 of the <code>x7</code> regist
 <p>If a software-check exception is not caused then the <code>ELP</code> is updated to
 <code>NO_LP_EXPECTED</code>.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  7, name: 'opcode', attr:'AUIPC'},
-  {bits:  5, name: 'rd', attr:'00000'},
-  {bits: 20, name: 'LPL'},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-ded55101008cc4964e182bfa901211874fffad41.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1156,29 +1152,14 @@ UXLEN or SXLEN may never be 32, then the bit 2 is also read-only zero.</p>
 followed by a store of the value in the link register to memory at the new top
 of the shadow stack.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  7, name: 'opcode', attr:'SYSTEM'},
-  {bits:  5, name: 'rd', attr:['00000']},
-  {bits:  3, name: 'funct3', attr:['100']},
-  {bits:  5, name: 'rs1', attr:['00000']},
-  {bits:  5, name: 'rs2', attr:['00001', '00101']},
-  {bits:  7, name: '1100111', attr:['SSPUSH x1','SSPUSH x5']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-c2ca1bde05833cdb524b1cdf80ba167ca9b4626d.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  2, name: 'op', attr:'C1'},
-  {bits:  5, name: '00000'},
-  {bits:  1, name: '1'},
-  {bits:  3, name: 'n[3:1]', attr:['000']},
-  {bits:  1, name: '0'},
-  {bits:  1, name: '0'},
-  {bits:  3, name: '011', attr:['C.SSPUSH x1']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-4e45669c7dfdc8a4516ca8ca83399595feb7d24e.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1217,28 +1198,14 @@ shadow stack completes successfully.</p>
 current top of the shadow stack followed by an increment of the <code>ssp</code> by
 <code>XLEN/8</code>.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  7, name: 'opcode', attr:'SYSTEM'},
-  {bits:  5, name: 'rd',  attr:['00000','00000']},
-  {bits:  3, name: 'funct3', attr:['100']},
-  {bits:  5, name: 'rs1', attr:['00001','00101']},
-  {bits: 12, name: '110011011100', attr:['SSPOPCHK x1','SSPOPCHK x5']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-3f200ab6da34be7c8a974a335fb2584dd08f427b.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  2, name: 'op', attr:'C1'},
-  {bits:  5, name: '00000'},
-  {bits:  1, name: '1'},
-  {bits:  3, name: 'n[3:1]', attr:['010']},
-  {bits:  1, name: '0'},
-  {bits:  1, name: '0'},
-  {bits:  3, name: '011', attr:['C.SSPOPCHK x5']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-054d91ebf0633808e90ae99e50d4f0775195513b.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1435,15 +1402,9 @@ and thus may be used to transiently forward the data from such stores to
 <p>The <code>SSRDP</code> instruction is provided to move the contents of <code>ssp</code> to a destination
 register.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  7, name: 'opcode', attr:'SYSTEM'},
-  {bits:  5, name: 'rd', attr:['dst']},
-  {bits:  3, name: 'funct3', attr:['100']},
-  {bits:  5, name: '00000'},
-  {bits: 12, name: '110011011100', attr:['SSRDP']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-e8475c77571f1d17df824c173f7a8b4e63d20cbb.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1562,18 +1523,9 @@ back_cfi_not_active:
 </div>
 <div class="sect2">
 <h3 id="SSAMOSWAP"><a class="anchor" href="#SSAMOSWAP"></a>2.7. Atomic Swap from a Shadow Stack Location</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  7, name: 'opcode', attr:'AMO'},
-  {bits:  5, name: 'rd', attr:'dest'},
-  {bits:  3, name: 'funct3', attr:['010', '011']},
-  {bits:  5, name: 'rs1', attr:'addr'},
-  {bits:  5, name: 'rs2', attr:'src'},
-  {bits:  1, name: 'rl'},
-  {bits:  1, name: 'aq'},
-  {bits:  5, name: '01001', attr:['SSAMOSWAP.W', 'SSAMOSWAP.D']},
-], config:{lanes: 1, hspace:1024}}</pre>
+<img src="_images/svg-2ae67d26f273286801a52e320bebad4559dbc469.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">

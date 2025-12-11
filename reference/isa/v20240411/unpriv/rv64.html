@@ -696,15 +696,9 @@ ensure reasonable performance for 32-bit values.</p>
 </div>
 <div class="sect2">
 <h3 id="sec:int-reg-imm"><a class="anchor" href="#sec:int-reg-imm"></a>2.1. Integer Register-Immediate Instructions</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM-32'], type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5', 'dest'], type: 2},
-  {bits: 3,  name: 'funct3',     attr: ['3', 'ADDIW'], type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'src'], type: 4},
-  {bits: 12, name: 'imm[11:0]', attr: ['12', 'I-immediate[11:0]'], type: 3}
-]}</pre>
+<img src="_images/svg-0b957d609cd3d81f45005e23d428cdacb1df5a4d.svg" alt="svg">
 </div>
 </div>
 <div id="rv64i-base-int" class="paragraph">
@@ -715,16 +709,9 @@ immediate to register <em>rs1</em> and produces the proper sign-extension of a
 writes the sign-extension of the lower 32 bits of register <em>rs1</em> into
 register <em>rd</em> (assembler pseudoinstruction SEXT.W).</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM', 'OP-IMM', 'OP-IMM'], type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest', 'dest'], type: 2},
-  {bits: 3,  name: 'funct3',    attr: ['3', 'SLLI', 'SRLI', 'SRAI'], type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'src', 'src', 'src'], type: 4},
-  {bits: 6,  name: 'imm[5:0]',  attr: ['6', 'shamt[5:0]', 'shamt[5:0]', 'shamt[5:0]'], type: 3},
-  {bits: 6,  name: 'imm[11:6]', attr: ['6', '000000', '000000', '010000'], type: 8}
-]}</pre>
+<img src="_images/svg-884b9ec40f8811867290d9556f4f0ba47644b777.svg" alt="svg">
 </div>
 </div>
 <div id="rv64i-slli" class="paragraph">
@@ -741,17 +728,9 @@ copied into the vacated upper bits).
 
 </p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'OP-IMM-32', 'OP-IMM-32', 'OP-IMM-32'], type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest', 'dest'], type: 2},
-  {bits: 3,  name: 'funct3',    attr: ['3', 'SLLIW', 'SRLIW', 'SRAIW'], type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'src', 'src', 'src'], type: 4},
-  {bits: 5,  name: 'imm[4:0]',  attr: ['5', 'shamt[4:0]', 'shamt[4:0]', 'shamt[4:0]'], type: 3},
-  {bits: 1,  name: '[5]',    attr: ['1', '0', '0', '0'], type: 3},
-  {bits: 6,  name: 'imm[11:6]', attr: ['6', '000000', '000000', '010000'], type: 8}
-]}</pre>
+<img src="_images/svg-d2e030aeb0b2dffd32f0fee09cfc4acab3c46753.svg" alt="svg">
 </div>
 </div>
 <div id="rv64i-slliw" class="paragraph">
@@ -776,13 +755,9 @@ are marked as reserved. This is a backwards-compatible change.</p>
 </tr>
 </table>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',     attr: ['7', 'LUI', 'AUIPC'], type: 8},
-  {bits: 5,  name: 'rd',         attr: ['5', 'dest', 'dest'], type: 2},
-  {bits: 20, name: 'imm[31:12]', attr: ['20', 'U-immediate[31:12]', 'U-immediate[31:12]'], type: 3}
-]}</pre>
+<img src="_images/svg-87b68428372b7bc6efb428957c4bb0f6faa2daf2.svg" alt="svg">
 </div>
 </div>
 <div id="rv64_lui-auipc" class="paragraph">
@@ -818,16 +793,9 @@ with LD, AUIPC with JALR, etc. in RV64I is
 </div>
 <div class="sect2">
 <h3 id="sec:int-reg-reg-ops"><a class="anchor" href="#sec:int-reg-reg-ops"></a>2.2. Integer Register-Register Operations</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'OP', 'OP', 'OP-32', 'OP-32', 'OP-32'], type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5', 'dest', 'dest', 'dest', 'dest', 'dest'], type: 2},
-  {bits: 3,  name: 'funct3',    attr: ['3', 'SLL/SRL', 'SRA', 'ADDW', 'SLLW/SRLW', 'SUBW/SRAW'], type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'src1', 'src1', 'src1', 'src1', 'src1'], type: 4},
-  {bits: 5,  name: 'rs2',       attr: ['5', 'src2', 'src2', 'src2', 'src2', 'src2'], type: 4},
-  {bits: 7,  name: 'funct7',    attr: ['7', '000000', '010000', '000000', '000000', '010000'], type: 8}
-]}</pre>
+<img src="_images/svg-58b6a0bce3669edb6bbaeff1991406b9cfe5d48d.svg" alt="svg">
 </div>
 </div>
 <div id="int_reg-reg" class="paragraph">
@@ -862,27 +830,14 @@ results to 64 bits. The shift amount is given by <em>rs2[4:0]</em>.
 <p>RV64I extends the address space to 64 bits. The execution environment
 will define what portions of the address space are legal to access.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'LOAD'], type: 8},
-  {bits: 5,  name: 'rd', attr: ['5', 'dest'], type: 2},
-  {bits: 3,  name: 'funct3', attr: ['3', 'width'], type: 8},
-  {bits: 5,  name: 'rs1', attr: ['5', 'base'], type: 4},
-  {bits: 12, name: 'imm[11:0]', attr: ['12', 'offset[11:0]'], type: 3},
-]}</pre>
+<img src="_images/svg-0a5660ed42ee90370a27fafaaf8c9252fda37bf5.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',   attr: ['7', 'STORE'], type: 8},
-  {bits: 5,  name: 'imm[4:0]', attr: ['5', 'offset[4:0]'], type: 3},
-  {bits: 3,  name: 'funct3', attr: ['3', 'width'], type: 8},
-  {bits: 5,  name: 'rs1', attr: ['5', 'base'], type: 4},
-  {bits: 5,  name: 'rs2', attr: ['5', 'src'], type: 4},
-  {bits: 7, name: 'imm[11:5]', attr: ['7', 'offset[11:5]'], type: 3},
-]}</pre>
+<img src="_images/svg-20ee8dfe204839a6183661e0b904f73cd1d9e876.svg" alt="svg">
 </div>
 </div>
 <div id="load_store" class="paragraph">

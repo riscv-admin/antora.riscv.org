@@ -950,16 +950,9 @@ simplifies maintenance of the <code>vtype</code> register state.
 <code>vsew[2:0]</code>, and <code>vlmul[2:0]</code>.  Bits <code>vtype[XLEN-2:8]</code> should be
 written with zero, and non-zero values in this field are reserved.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 3, name: 'vlmul[2:0]'},
-  {bits: 3, name: 'vsew[2:0]'},
-  {bits: 1, name: 'vta'},
-  {bits: 1, name: 'vma'},
-  {bits: 23, name: 'reserved'},
-  {bits: 1, name: 'vill'},
-]}</pre>
+<img src="_images/svg-e8a84db94ab974b97caf28e1738cb4330d74acf3.svg" alt="svg">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -2438,232 +2431,93 @@ mask bit (see <a href="#sec-vector-mask-encoding">Mask Encoding</a>).</p>
 <div class="paragraph">
 <p>Format for Vector Load Instructions under LOAD-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VL* unit-stride'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'lumop'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-c33ada74287fb606746e0a642dc087939adf30d9.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VLS* strided'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'rs2', attr: 'stride'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-aa3cc9c26838d293d4e8cbe826b918bc85618969.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VLX* indexed'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'vs2', attr: 'address offsets'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-cd3756d4a31d83b159759877e3fd24cb6dc068bb.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
 <p>Format for Vector Store Instructions under STORE-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VS* unit-stride'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'sumop'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-bf9683d62ac15a4dddefe469419a1bd5e429ba79.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VSS* strided'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'rs2', attr: 'stride'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-f168513db6e0a43315553951aeacf2adfa05bc8b.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VSX* indexed'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'vs2', attr: 'address offsets'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-ec19e0ce6d098a6a9dd29792d4080fe0543be251.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
 <p>Formats for Vector Arithmetic Instructions under OP-V major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPIVV'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 0},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-5396f7fd8303a709b8af78a1ffcc077dfb7d493d.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPFVV'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 1},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-04fc029599f10329d0c6a4d4693a4ec4cd207737.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPMVV'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 2},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-94a609226d17644b20ab3d9d5f851b2ed19df521.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: ['OPIVI']},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 3},
-  {bits: 5, name: 'imm[4:0]'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-00be6421ad58b605c5400be73b016ee77bf1d240.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPIVX'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 4},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-14f2eb1960a5198ae2dbca451267c2c4ff2f4ef4.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPFVF'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 5},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-88068752b1e8e34a02b47c4916b891effb2c7cd4.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPMVX'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 6},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-473cfaddc7051d77875939d6948f66d6eb63f560.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
 <p>Formats for Vector Configuration Instructions under OP-V major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetvli'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'rs1'},
-  {bits: 11, name: 'vtypei[10:0]'},
-  {bits: 1,  name: '0'},
-]}</pre>
+<img src="_images/svg-ee84885be4124111ac9561f141d550dd046cd24a.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetivli'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'uimm[4:0]'},
-  {bits: 10, name: 'vtypei[9:0]'},
-  {bits: 1, name: '1'},
-  {bits: 1,  name: '1'},
-]}</pre>
+<img src="_images/svg-89c9546cb74625ef0d399ee14772d704b3aea9b7.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetvl'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'rs1'},
-  {bits: 5,  name: 'rs2'},
-  {bits: 6,  name: 0x00},
-  {bits: 1,  name: 1},
-]}</pre>
+<img src="_images/svg-c0d30e9cda23dcb00661ffa9333a2adf72634b06.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -3106,56 +2960,26 @@ their arguments, and write the new value of <code>vl</code> into <code>rd</code>
 <div class="paragraph">
 <p>Formats for Vector Configuration Instructions under OP-V major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetvli'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'rs1'},
-  {bits: 11, name: 'vtypei[10:0]'},
-  {bits: 1,  name: '0'},
-]}</pre>
+<img src="_images/svg-ee84885be4124111ac9561f141d550dd046cd24a.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetivli'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'uimm[4:0]'},
-  {bits: 10, name: 'vtypei[9:0]'},
-  {bits: 1, name: '1'},
-  {bits: 1,  name: '1'},
-]}</pre>
+<img src="_images/svg-89c9546cb74625ef0d399ee14772d704b3aea9b7.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 0x57, attr: 'vsetvl'},
-  {bits: 5,  name: 'rd'},
-  {bits: 3,  name: 7},
-  {bits: 5,  name: 'rs1'},
-  {bits: 5,  name: 'rs2'},
-  {bits: 6,  name: 0x00},
-  {bits: 1,  name: 1},
-]}</pre>
+<img src="_images/svg-c0d30e9cda23dcb00661ffa9333a2adf72634b06.svg" alt="svg">
 </div>
 </div>
 <div class="sect2">
 <h3 id="vtype-encoding"><a class="anchor" href="#vtype-encoding"></a>6.1. <code>vtype</code> encoding</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 3, name: 'vlmul[2:0]'},
-  {bits: 3, name: 'vsew[2:0]'},
-  {bits: 1, name: 'vta'},
-  {bits: 1, name: 'vma'},
-  {bits: 23, name: 'reserved'},
-  {bits: 1, name: 'vill'},
-]}</pre>
+<img src="_images/svg-e8a84db94ab974b97caf28e1738cb4330d74acf3.svg" alt="svg">
 </div>
 </div>
 <div class="admonitionblock note">
@@ -3553,97 +3377,37 @@ mask bit (see <a href="#sec-vector-mask-encoding">Mask Encoding</a>).</p>
 <div class="paragraph">
 <p>Format for Vector Load Instructions under LOAD-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VL* unit-stride'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'lumop'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-c33ada74287fb606746e0a642dc087939adf30d9.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VLS* strided'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'rs2', attr: 'stride'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-aa3cc9c26838d293d4e8cbe826b918bc85618969.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x7, attr: 'VLX* indexed'},
-  {bits: 5, name: 'vd', attr: 'destination of load'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'vs2', attr: 'address offsets'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-cd3756d4a31d83b159759877e3fd24cb6dc068bb.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
 <p>Format for Vector Store Instructions under STORE-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VS* unit-stride'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'sumop'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-bf9683d62ac15a4dddefe469419a1bd5e429ba79.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VSS* strided'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'rs2', attr: 'stride'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-f168513db6e0a43315553951aeacf2adfa05bc8b.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VSX* indexed'},
-  {bits: 5, name: 'vs3', attr: 'store data'},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address'},
-  {bits: 5, name: 'vs2', attr: 'address offsets'},
-  {bits: 1, name: 'vm'},
-  {bits: 2, name: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-ec19e0ce6d098a6a9dd29792d4080fe0543be251.svg" alt="svg">
 </div>
 </div>
 <table class="tableblock frame-all grid-all stretch">
@@ -4929,37 +4693,17 @@ that raise exceptions partway through loading a structure.
 <div class="paragraph">
 <p>Format for Vector Load Whole Register Instructions under LOAD-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x07, attr: 'VL*R*'},
-  {bits: 5, name: 'vd', attr: 'destination of load', type: 2},
-  {bits: 3, name: 'width'},
-  {bits: 5, name: 'rs1', attr: 'base address', type: 4},
-  {bits: 5, name: 8, attr: 'lumop'},
-  {bits: 1, name: 1, attr: 'vm'},
-  {bits: 2, name: 0x10000, attr: 'mop'},
-  {bits: 1, name: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-25d17e197cd864bb05b12d267495186c715e661d.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
 <p>Format for Vector Store Whole Register Instructions under STORE-FP major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x27, attr: 'VS*R*'},
-  {bits: 5, name: 'vs3', attr: 'store data', type: 2},
-  {bits: 3, name: 0x1000},
-  {bits: 5, name: 'rs1', attr: 'base address', type: 4},
-  {bits: 5, name: 8, attr: 'sumop'},
-  {bits: 1, name: 1, attr: 'vm'},
-  {bits: 2, name: 0x100, attr: 'mop'},
-  {bits: 1, name: 0x100, attr: 'mew'},
-  {bits: 3, name: 'nf'},
-]}</pre>
+<img src="_images/svg-99457d1c1e73f9018dda9697be7d866cb43ce218.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -5257,95 +5001,39 @@ used to define sub-categories of vector instructions.</p>
 <div class="paragraph">
 <p>Formats for Vector Arithmetic Instructions under OP-V major opcode</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPIVV'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 0},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-5396f7fd8303a709b8af78a1ffcc077dfb7d493d.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPFVV'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 1},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-04fc029599f10329d0c6a4d4693a4ec4cd207737.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPMVV'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 2},
-  {bits: 5, name: 'vs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-94a609226d17644b20ab3d9d5f851b2ed19df521.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: ['OPIVI']},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 3},
-  {bits: 5, name: 'imm[4:0]'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-00be6421ad58b605c5400be73b016ee77bf1d240.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPIVX'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 4},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-14f2eb1960a5198ae2dbca451267c2c4ff2f4ef4.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPFVF'},
-  {bits: 5, name: 'vd'},
-  {bits: 3, name: 5},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-88068752b1e8e34a02b47c4916b891effb2c7cd4.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 0x57, attr: 'OPMVX'},
-  {bits: 5, name: 'vd / rd'},
-  {bits: 3, name: 6},
-  {bits: 5, name: 'rs1'},
-  {bits: 5, name: 'vs2'},
-  {bits: 1, name: 'vm'},
-  {bits: 6, name: 'funct6'},
-]}</pre>
+<img src="_images/svg-473cfaddc7051d77875939d6948f66d6eb63f560.svg" alt="svg">
 </div>
 </div>
 <div class="sect2">

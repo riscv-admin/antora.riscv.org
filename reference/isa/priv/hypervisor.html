@@ -848,49 +848,17 @@ and <a href="#hstatusreg">Figure 2</a> when HSXLEN=64. The <code>hstatus</code>
 register provides facilities analogous to the <code>mstatus</code> register for
 tracking and controlling the exception behavior of a VS-mode guest.</p>
 </div>
-<div id="hstatusreg-rv32" class="literalblock kroki-error">
-<div class="title">Hypervisor status register (<code>hstatus</code>) when HSXLEN=32</div>
+<div id="hstatusreg-rv32" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  5, name: 'WPRI'},
-  {bits:  1, name: 'VSBE'},
-  {bits:  1, name: 'GVA'},
-  {bits:  1, name: 'SPV'},
-  {bits:  1, name: 'SPVP'},
-  {bits:  1, name: 'HU'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  6, name: 'VGEIN'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  1, name: 'VTVM'},
-  {bits:  1, name: 'VTW'},
-  {bits:  1, name: 'VTSR'},
-  {bits:  9, name: 'WPRI'},
-], config:{lanes: 2, hspace:1024}}</pre>
+<img src="_images/svg-7dc63b24f7dc0b69402ba43d617673231e6e203b.svg" alt="Hypervisor status register (`hstatus`) when HSXLEN=32">
 </div>
+<div class="title">Figure 1. Hypervisor status register (<code>hstatus</code>) when HSXLEN=32</div>
 </div>
-<div id="hstatusreg" class="literalblock kroki-error">
-<div class="title">Hypervisor status register (<code>hstatus</code>) when HSXLEN=64.</div>
+<div id="hstatusreg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  5, name: 'WPRI'},
-  {bits:  1, name: 'VSBE'},
-  {bits:  1, name: 'GVA'},
-  {bits:  1, name: 'SPV'},
-  {bits:  1, name: 'SPVP'},
-  {bits:  1, name: 'HU'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  6, name: 'VGEIN'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  1, name: 'VTVM'},
-  {bits:  1, name: 'VTW'},
-  {bits:  1, name: 'VTSR'},
-  {bits:  9, name: 'WPRI'},
-  {bits:  2, name: 'VSXL'},
-  {bits: 14, name: 'WPRI'},
-  {bits:  2, name: 'HUPMM'},
-  {bits: 14, name: 'WPRI'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-b97ad0e41da0d1183b32af4abb0c8004872ca9ef.svg" alt="Hypervisor status register (`hstatus`) when HSXLEN=64.">
 </div>
+<div class="title">Figure 2. Hypervisor status register (<code>hstatus</code>) when HSXLEN=64.</div>
 </div>
 <div class="paragraph">
 <p>The VSXL field controls the effective XLEN for VS-mode (known as
@@ -1041,24 +1009,11 @@ to a VS-mode guest; their layout is the same as <code>medeleg</code> and <code>m
 <div class="title">Hypervisor exception delegation register (<code>hedeleg</code>).</div>
 <p>bytefield/hedelegreg.edn[]</p>
 </div>
-<div id="hidelegreg" class="listingblock kroki-error">
-<div class="title">Hypervisor interrupt delegation register (<code>hideleg</code>).</div>
+<div id="hidelegreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 16 :text-anchor "start" :borders{}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders{}})
-
-(draw-box "Interrupts" {:span 16 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" { :font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-98109afb52752a7e03303ca03c793475670b3448.svg" alt="Hypervisor interrupt delegation register (`hideleg`).">
 </div>
+<div class="title">Figure 3. Hypervisor interrupt delegation register (<code>hideleg</code>).</div>
 </div>
 <div class="paragraph">
 <p>A synchronous trap that has been delegated to HS-mode (using <code>medeleg</code>)
@@ -1201,24 +1156,11 @@ Store/AMO guest-page fault</p></td>
 can write to indicate virtual interrupts intended for VS-mode. Bits of
 <code>hvip</code> that are not writable are read-only zeros.</p>
 </div>
-<div id="hvipreg" class="listingblock kroki-error">
-<div class="title">Hypervisor virtual-interrupt-pending register(<code>hvip</code>).</div>
+<div id="hvipreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 16 :text-anchor "start" :borders{}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders{}})
-
-(draw-box "Virtual Interrupts" {:span 18 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" { :font-weight "bold" :font-size 24}) {:span 14 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-a3691683650140652ed21233e737654bdd4af31b.svg" alt="Hypervisor virtual-interrupt-pending register(`hvip`).">
 </div>
+<div class="title">Figure 4. Hypervisor virtual-interrupt-pending register(<code>hvip</code>).</div>
 </div>
 <div class="paragraph">
 <p>The standard portion (bits 15:0) of <code>hvip</code> is formatted as shown in
@@ -1227,44 +1169,11 @@ and VSSIP of <code>hvip</code> are writable. Setting VSEIP=1 in <code>hvip</code
 VS-level external interrupt; setting VSTIP asserts a VS-level timer
 interrupt; and setting VSSIP asserts a VS-level software interrupt.</p>
 </div>
-<div id="hvipreg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>hvip</code>.</div>
+<div id="hvipreg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "15" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "11" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "10" {:span 4 :borders {}})
-(draw-box "9" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "6" {:span 4 :borders {}})
-(draw-box "5" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "3" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "2" {:span 4 :borders {}})
-(draw-box "1" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-
-(draw-box "0" {:span 8})
-(draw-box "VSEIP" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSTIP" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSSIP" {:span 4})
-(draw-box "0" {:span 4})
-
-(draw-box "5" {:span 8 :borders{}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "2" {:span 4 :borders {}})</pre>
+<img src="_images/diag-4ae17791884f10d1782d02edffc5ca41743c6cde.svg" alt="Standard portion (bits 15:0) of `hvip`.">
 </div>
+<div class="title">Figure 5. Standard portion (bits 15:0) of <code>hvip</code>.</div>
 </div>
 <div class="paragraph">
 <p>Registers <code>hip</code> and <code>hie</code> are HSXLEN-bit read/write registers that
@@ -1272,43 +1181,17 @@ supplement HS-level’s <code>sip</code> and <code>sie</code> respectively. The 
 indicates pending VS-level and hypervisor-specific interrupts, while
 <code>hie</code> contains enable bits for the same interrupts.</p>
 </div>
-<div id="hipreg" class="listingblock kroki-error">
-<div class="title">Hypervisor interrupt-pending register (<code>hip</code>).</div>
+<div id="hipreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 16 :text-anchor "start" :borders{}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders{}})
-
-(draw-box "Interrupts" {:span 16 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" { :font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-aa69c49675c41963c5ea659bbe297daced24999e.svg" alt="Hypervisor interrupt-pending register (`hip`).">
 </div>
+<div class="title">Figure 6. Hypervisor interrupt-pending register (<code>hip</code>).</div>
 </div>
-<div id="hiereg" class="listingblock kroki-error">
-<div class="title">Hypervisor interrupt-enable register (<code>hie</code>).</div>
+<div id="hiereg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 16 :text-anchor "start" :borders{}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders{}})
-
-(draw-box "Interrupts" {:span 16 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" { :font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-0065999a63f1408d93c8460292a9ef1fcebeeef7.svg" alt="Hypervisor interrupt-enable register (`hie`).">
 </div>
+<div class="title">Figure 7. Hypervisor interrupt-enable register (<code>hie</code>).</div>
 </div>
 <div class="paragraph">
 <p>For each writable bit in <code>sie</code>, the corresponding bit shall be read-only
@@ -1358,95 +1241,17 @@ read-only zero.</p>
 <p>The standard portions (bits 15:0) of registers <code>hip</code> and <code>hie</code> are
 formatted as shown in <a href="#hipreg-standard">Figure 8</a> and <a href="#hiereg-standard">Figure 9</a> respectively.</p>
 </div>
-<div id="hipreg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>hip</code>.</div>
+<div id="hipreg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "13" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "12" {:span 4 :borders {}})
-(draw-box "11" {:span 4 :borders {}})
-(draw-box "10" {:span 4 :borders {}})
-(draw-box "9" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "6" {:span 4 :borders {}})
-(draw-box "5" {:borders {}})
-(draw-box "3" {:borders {}})
-(draw-box "2" {:span 4 :borders {}})
-(draw-box "1" {:borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "0" {:span 4})
-(draw-box "SGEIP" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSEIP" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSTIP" {:span 4})
-(draw-box "0" {:span 2})
-(draw-box "VSSIP" {:span 4})
-(draw-box "0" {:span 2})
-
-(draw-box "3" {:span 4 :borders{}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "2" {:span 2 :borders {}})</pre>
+<img src="_images/diag-a76c6d2e116c6c17d81d98ae789e5068cf929a8a.svg" alt="Standard portion (bits 15:0) of `hip`.">
 </div>
+<div class="title">Figure 8. Standard portion (bits 15:0) of <code>hip</code>.</div>
 </div>
-<div id="hiereg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>hie</code>.</div>
+<div id="hiereg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "13" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "12" {:span 4 :borders {}})
-(draw-box "11" {:span 4 :borders {}})
-(draw-box "10" {:span 4 :borders {}})
-(draw-box "9" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "6" {:span 4 :borders {}})
-(draw-box "5" {:borders {}})
-(draw-box "3" {:borders {}})
-(draw-box "2" {:span 4 :borders {}})
-(draw-box "1" {:borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "0" {:span 4})
-(draw-box "SGEIE" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSEIE" {:span 4})
-(draw-box "0" {:span 4})
-(draw-box "VSTIE" {:span 4})
-(draw-box "0" {:span 2})
-(draw-box "VSSIE" {:span 4})
-(draw-box "0" {:span 2})
-
-(draw-box "3" {:span 4 :borders{}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 4 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "2" {:span 2 :borders {}})</pre>
+<img src="_images/diag-3455796d1882f91823efdaf9358ddc29821f08a4.svg" alt="Standard portion (bits 15:0) of `hie`.">
 </div>
+<div class="title">Figure 9. Standard portion (bits 15:0) of <code>hie</code>.</div>
 </div>
 <div class="paragraph">
 <p>Bits <code>hip</code>.SGEIP and <code>hie</code>.SGEIE are the interrupt-pending and
@@ -1502,40 +1307,17 @@ read/write register, formatted as shown in
 guest external interrupts at this hart. Guest external interrupt number
 <em>i</em> corresponds with bit <em>i</em> in both <code>hgeip</code> and <code>hgeie</code>.</p>
 </div>
-<div id="hgeipreg" class="listingblock kroki-error">
-<div class="title">Hypervisor guest external interrupt-pending register (<code>hgeip</code>).</div>
+<div id="hgeipreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "1" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "HSXLEN-1" ""])})
-
-(draw-box "Guest External Interrupts" {:span 31})
-(draw-box "0" )
-(draw-box "HSXLEN" {:span 31 :borders {}})
-(draw-box "1" {:borders {}})</pre>
+<img src="_images/diag-637b6d6a881df7d48a3f70eecd37bcc39fa7294f.svg" alt="Hypervisor guest external interrupt-pending register (`hgeip`).">
 </div>
+<div class="title">Figure 10. Hypervisor guest external interrupt-pending register (<code>hgeip</code>).</div>
 </div>
-<div id="hgeiereg" class="listingblock kroki-error">
-<div class="title">Hypervisor guest external interrupt-enable register (<code>hgeie</code>).</div>
+<div id="hgeiereg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "1" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "HSXLEN-1" ""])})
-
-(draw-box "Guest External Interrupts" {:span 18 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 13 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated}})
-(draw-box "0" )
-(draw-box "HSXLEN" {:font-size 24 :span 31 :borders {}})
-(draw-box "1" {:borders {}})</pre>
+<img src="_images/diag-ae5ebabd5533390af23281514ea6a01b12f4459a.svg" alt="Hypervisor guest external interrupt-enable register (`hgeie`).">
 </div>
+<div class="title">Figure 11. Hypervisor guest external interrupt-enable register (<code>hgeie</code>).</div>
 </div>
 <div class="paragraph">
 <p>Guest external interrupts represent interrupts directed to individual
@@ -1618,27 +1400,11 @@ as shown in <a href="#henvcfg">Figure 12</a>, that controls
 certain characteristics of the execution environment when virtualization
 mode V=1.</p>
 </div>
-<div id="henvcfg" class="literalblock kroki-error">
-<div class="title">Hypervisor environment configuration register (<code>henvcfg</code>).</div>
+<div id="henvcfg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'FIOM'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'LPE'},
-  {bits:  1, name: 'SSE'},
-  {bits:  2, name: 'CBIE'},
-  {bits:  1, name: 'CBCFE'},
-  {bits:  1, name: 'CBZE'},
-  {bits: 24, name: 'WPRI'},
-  {bits:  2, name: 'PMM'},
-  {bits: 25, name: 'WPRI'},
-  {bits:  1, name: 'DTE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'ADUE'},
-  {bits:  1, name: 'PBMTE'},
-  {bits:  1, name: 'STCE'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-6c1054cbba95551da58f4ef98ea985c3e7dd592a.svg" alt="Hypervisor environment configuration register (`henvcfg`).">
 </div>
+<div class="title">Figure 12. Hypervisor environment configuration register (<code>henvcfg</code>).</div>
 </div>
 <div class="paragraph">
 <p>If bit FIOM (Fence of I/O implies Memory) is set to one in <code>henvcfg</code>,
@@ -1770,50 +1536,11 @@ XLEN=64.</p>
 controls the availability of the hardware performance monitoring
 counters to the guest virtual machine.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Hypervisor counter-enable register (<code>hcounteren</code>).</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "31" {:span 2 :borders {}})
-(draw-box "30" {:span 2 :borders {}})
-(draw-box "29" {:span 2 :borders {}})
-(draw-box "28" {:span 10 :text-anchor "start" :borders {}})
-(draw-box "6" {:span 7 :text-anchor "end" :borders {}})
-(draw-box "5" {:span 2 :borders {}})
-(draw-box "4" {:span 2 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "2" {:borders {}})
-(draw-box "1" {:borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "HPM31" {:font-size 20 :span 2})
-(draw-box "HPM30" {:font-size 20 :span 2})
-(draw-box "HPM29" {:font-size 20 :span 2})
-(draw-box "..." {:span 17})
-(draw-box "HPM5" {:span 2})
-(draw-box "HPM4" {:span 2})
-(draw-box "HPM3" {:span 2})
-(draw-box "IR" )
-(draw-box "TM" )
-(draw-box "CY" )
-
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "23" {:span 17 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:borders {}})
-(draw-box "1" {:borders {}})
-(draw-box "1" {:borders {}})</pre>
+<img src="_images/diag-a39c492e0a4c6b6d4563223c564a9c49b862c9c3.svg" alt="Hypervisor counter-enable register (`hcounteren`).">
 </div>
+<div class="title">Figure 13. Hypervisor counter-enable register (<code>hcounteren</code>).</div>
 </div>
 <div class="paragraph">
 <p>When the CY, TM, IR, or HPM_n_ bit in the <code>hcounteren</code> register is
@@ -1854,23 +1581,11 @@ values of <code>htimedelta</code> may be used to represent negative time offsets
 </tr>
 </table>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Hypervisor time delta register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "63" {:span 31 :text-anchor "start" :borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "htimedelta" {:font-size 20 :span 32})
-
-(draw-box "64" {:span 32 :borders {}})</pre>
+<img src="_images/diag-dfe31c16b4dd81aa2d34f985f502022839192c0c.svg" alt="Hypervisor time delta register.">
 </div>
+<div class="title">Figure 14. Hypervisor time delta register.</div>
 </div>
 <div class="paragraph">
 <p>When XLEN=32, <code>htimedeltah</code> is a 32-bit read/write register
@@ -1890,23 +1605,11 @@ shown in <a href="#htvalreg">Figure 15</a>. When a trap is taken into
 HS-mode, <code>htval</code> is written with additional exception-specific
 information, alongside <code>stval</code>, to assist software in handling the trap.</p>
 </div>
-<div id="htvalreg" class="listingblock kroki-error">
-<div class="title">Hypervisor trap value register (<code>htval</code>).</div>
+<div id="htvalreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 31 :text-anchor "start" :borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "htval" {:font-size 20 :span 32})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-cd3108085a557f813388c94d049bc7a9e4c16a0c.svg" alt="Hypervisor trap value register (`htval`).">
 </div>
+<div class="title">Figure 15. Hypervisor trap value register (<code>htval</code>).</div>
 </div>
 <div class="paragraph">
 <p>When a guest-page-fault trap is taken into HS-mode, <code>htval</code> is written
@@ -1992,23 +1695,11 @@ information about the instruction that trapped, to assist software in
 handling the trap. The values that may be written to <code>htinst</code> on a trap
 are documented in <a href="#tinst-vals">Transformed Instruction or Pseudoinstruction for <code>mtinst</code> or <code>htinst</code></a>.</p>
 </div>
-<div id="htinstreg" class="listingblock kroki-error">
-<div class="title">Hypervisor trap instruction (<code>htinst</code>) register.</div>
+<div id="htinstreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "HSXLEN-1" {:span 31 :text-anchor "start" :borders {}})
-(draw-box "0" {:borders {}})
-
-(draw-box "htinst" {:font-size 20 :span 32})
-
-(draw-box "HSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-88556cab04dcc9a8872c722d170d6a807e792be0.svg" alt="Hypervisor trap instruction (`htinst`) register.">
 </div>
+<div class="title">Figure 16. Hypervisor trap instruction (<code>htinst</code>) register.</div>
 </div>
 <div class="paragraph">
 <p><code>htinst</code> is a <strong>WARL</strong> register that need only be able to hold the values that
@@ -2031,71 +1722,17 @@ field, which selects the address-translation scheme for guest physical
 addresses. When <code>mstatus</code>.TVM=1, attempts to read or write <code>hgatp</code> while
 executing in HS-mode will raise an illegal-instruction exception.</p>
 </div>
-<div id="rv32hgatp" class="listingblock kroki-error">
-<div class="title">Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=32.</div>
+<div id="rv32hgatp" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "31" {:span 3 :borders {}})
-(draw-box "30" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "29" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "28" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "22" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "21" {:span 7 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 8 :text-anchor "end" :borders {}})
-
-(draw-box "MODE" {:span 3})
-(draw-box "0" {:span 3 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start":borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box "VMID" {:span 4 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 3 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box "PPN" {:span 7 :text-anchor "end":borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 8 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "2" {:span 7 :borders {}})
-(draw-box "7" {:span 7 :borders {}})
-(draw-box "22" {:span 15 :borders {}})</pre>
+<img src="_images/diag-05a282c2790c56f3693eb70780f67ba18be1f408.svg" alt="Hypervisor guest address translation and protection register `hgatp` when HSXLEN=32.">
 </div>
+<div class="title">Figure 17. Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=32.</div>
 </div>
-<div id="rv64hgatp" class="listingblock kroki-error">
-<div class="title">Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=64 for MODE values Bare, Sv39x4, Sv48x4, and Sv57x4.</div>
+<div id="rv64hgatp" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "63" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "60" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "59" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "58" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "57" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "44" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "43" {:span 5 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 5 :text-anchor "end" :borders {}})
-
-(draw-box "MODE" {:span 4 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start":borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box "0" {:span 3 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 3 :text-anchor "start":borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box "VMID" {:span 4 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box "PPN" {:span 5 :text-anchor "end":borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 5 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box "4" {:span 8 :borders {}})
-(draw-box "2" {:span 6 :borders {}})
-(draw-box "14" {:span 8 :borders {}})
-(draw-box "44" {:span 10 :borders {}})</pre>
+<img src="_images/diag-e014dc8af24dd841d90f7703dd4cb854399548e8.svg" alt="Hypervisor guest address translation and protection register `hgatp` when HSXLEN=64 for MODE values Bare, Sv39x4, Sv48x4, and Sv57x4.">
 </div>
+<div class="title">Figure 18. Hypervisor guest address translation and protection register <code>hgatp</code> when HSXLEN=64 for MODE values Bare, Sv39x4, Sv48x4, and Sv57x4.</div>
 </div>
 <div class="paragraph">
 <p><a href="#hgatp-mode">Table 4</a> shows the encodings of the MODE field when
@@ -2248,59 +1885,17 @@ in <a href="#vsstatusreg-rv32">Figure 19</a> when VSXLEN=32 and
 <code>vsstatus</code> substitutes for the usual <code>sstatus</code>, so instructions that
 normally read or modify <code>sstatus</code> actually access <code>vsstatus</code> instead.</p>
 </div>
-<div id="vsstatusreg-rv32" class="literalblock kroki-error">
-<div class="title">Virtual supervisor status (<code>vsstatus</code>) register when VSXLEN=32.</div>
+<div id="vsstatusreg-rv32" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SIE'},
-  {bits:  3, name: 'WPRI'},
-  {bits:  1, name: 'SPIE'},
-  {bits:  1, name: 'UBE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SPP'},
-  {bits:  2, name: 'VS[1:0]'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  2, name: 'FS[1:0]'},
-  {bits:  2, name: 'XS[1:0]'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SUM'},
-  {bits:  1, name: 'MXR'},
-  {bits:  3, name: 'WPRI'},
-  {bits:  1, name: 'SPELP'},
-  {bits:  1, name: 'SDT'},
-  {bits:  6, name: 'WPRI'},
-  {bits:  1, name: 'SD'},
-], config:{lanes: 2, hspace:1024}}</pre>
+<img src="_images/svg-2f9763230ddaad31f92e8cb2ea0e22627ce19655.svg" alt="Virtual supervisor status (`vsstatus`) register when VSXLEN=32.">
 </div>
+<div class="title">Figure 19. Virtual supervisor status (<code>vsstatus</code>) register when VSXLEN=32.</div>
 </div>
-<div id="vsstatusreg" class="literalblock kroki-error">
-<div class="title">Virtual supervisor status (<code>vsstatus</code>) register when VSXLEN=64.</div>
+<div id="vsstatusreg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SIE'},
-  {bits:  3, name: 'WPRI'},
-  {bits:  1, name: 'SPIE'},
-  {bits:  1, name: 'UBE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SPP'},
-  {bits:  2, name: 'VS[1:0]'},
-  {bits:  2, name: 'WPRI'},
-  {bits:  2, name: 'FS[1:0]'},
-  {bits:  2, name: 'XS[1:0]'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SUM'},
-  {bits:  1, name: 'MXR'},
-  {bits:  3, name: 'WPRI'},
-  {bits:  1, name: 'SPELP'},
-  {bits:  1, name: 'SDT'},
-  {bits:  7, name: 'WPRI'},
-  {bits:  2, name: 'UXL[1:0]'},
-  {bits: 29, name: 'WPRI'},
-  {bits:  1, name: 'SD'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-0b37713d9486d387f633475513bb0fb1a2119399.svg" alt="Virtual supervisor status (`vsstatus`) register when VSXLEN=64.">
 </div>
+<div class="title">Figure 20. Virtual supervisor status (<code>vsstatus</code>) register when VSXLEN=64.</div>
 </div>
 <div class="paragraph">
 <p>The UXL field controls the effective XLEN for VU-mode, which may differ
@@ -2395,154 +1990,34 @@ actually access <code>vsip</code>/<code>vsie</code> instead. However, interrupts
 HS-level continue to be indicated in the HS-level <code>sip</code> register, not in
 <code>vsip</code>, when V=1.</p>
 </div>
-<div id="vsipreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor interrupt-pending register (<code>vsip</code>).</div>
+<div id="vsipreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Interrupts" {:span 16 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box "VSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-5b61c51e4ca8c647ea13e7a030ff04d640a5674c.svg" alt="Virtual supervisor interrupt-pending register (`vsip`).">
 </div>
+<div class="title">Figure 21. Virtual supervisor interrupt-pending register (<code>vsip</code>).</div>
 </div>
-<div id="vsiereg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor interrupt-enable register (<code>vsie</code>).</div>
+<div id="vsiereg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Interrupts" {:span 16 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 16 :text-anchor "start" :borders {:right :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box "VSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-4531c6c4895d71b9995adf155cd2313ccf2829bb.svg" alt="Virtual supervisor interrupt-enable register (`vsie`).">
 </div>
+<div class="title">Figure 22. Virtual supervisor interrupt-enable register (<code>vsie</code>).</div>
 </div>
 <div class="paragraph">
 <p>The standard portions (bits 15:0) of registers <code>vsip</code> and <code>vsie</code> are
 formatted as shown in <a href="#vsipreg-standard">Figure 23</a>
 and <a href="#vsiereg-standard">Figure 24</a> respectively.</p>
 </div>
-<div id="vsipreg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>vsip</code>.</div>
+<div id="vsipreg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "15" {:text-anchor "start" :borders {}})
-(draw-box "14" {:text-anchor "end" :borders {}})
-(draw-box "13" {:span 2 :borders {}})
-(draw-box "12" {:text-anchor "start" :borders {}})
-(draw-box "10" {:text-anchor "end" :borders {}})
-(draw-box "9" {:span 2 :borders {}})
-(draw-box "8" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "6" {:borders {}})
-(draw-box "5" {:span 2 :borders {}})
-(draw-box "4" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "2" {:borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "0" {:borders {}})
-(draw-box nil {:span 7 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "0" {:span 2})
-(draw-box (text "LCOFIP" {:font-size 20}) {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "SEIP" {:span 2})
-(draw-box "0" {:span 3})
-(draw-box "STIP" {:span 2})
-(draw-box "0" {:span 3})
-(draw-box "SSIP" {:span 2})
-(draw-box "0")
-(draw-box nil {:span 7 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:borders {}})
-(draw-box nil {:span 7 :borders {}})</pre>
+<img src="_images/diag-48307345e8ac533bf1871bbbc334000a3e1efc5b.svg" alt="Standard portion (bits 15:0) of `vsip`.">
 </div>
+<div class="title">Figure 23. Standard portion (bits 15:0) of <code>vsip</code>.</div>
 </div>
-<div id="vsiereg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>vsie</code>.</div>
+<div id="vsiereg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "15" {:text-anchor "start" :borders {}})
-(draw-box "14" {:text-anchor "end" :borders {}})
-(draw-box "13" {:span 2 :borders {}})
-(draw-box "12" {:text-anchor "start" :borders {}})
-(draw-box "10" {:text-anchor "end" :borders {}})
-(draw-box "9" {:span 2 :borders {}})
-(draw-box "8" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "6" {:borders {}})
-(draw-box "5" {:span 2 :borders {}})
-(draw-box "4" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "2" {:borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "0" {:borders {}})
-(draw-box nil {:span 7 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "0" {:span 2})
-(draw-box (text "LCOFIE" {:font-size 20}) {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "SEIE" {:span 2})
-(draw-box "0" {:span 3})
-(draw-box "STIE" {:span 2})
-(draw-box "0" {:span 3})
-(draw-box "SSIE" {:span 2})
-(draw-box "0")
-(draw-box nil {:span 7 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:borders {}})
-(draw-box nil {:span 7 :borders {}})</pre>
+<img src="_images/diag-cdd5475343af7c489bbb26c81488bbca678c317d.svg" alt="Standard portion (bits 15:0) of `vsie`.">
 </div>
+<div class="title">Figure 24. Standard portion (bits 15:0) of <code>vsie</code>.</div>
 </div>
 <div class="paragraph">
 <p>Extension Shlcofideleg supports delegating LCOFI interrupts to VS-mode.
@@ -2579,29 +2054,11 @@ the usual <code>stvec</code>, so instructions that normally read or modify <code
 actually access <code>vstvec</code> instead. When V=0, <code>vstvec</code> does not directly
 affect the behavior of the machine.</p>
 </div>
-<div id="vstvecreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor trap vector base address register <code>vstvec</code>.</div>
+<div id="vstvecreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 10 :text-anchor "start" :borders {}})
-(draw-box "2" {:span 10 :text-anchor "end" :borders {}})
-(draw-box "1" {:span 6 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 6 :text-anchor "end" :borders {}})
-
-(draw-box "BASE[VSXLEN-1:2]" {:span 10 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 10 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "MODE" {:span 6 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 6 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "VSXLEN-2" {:span 20 :borders {}})
-(draw-box "2" {:span 12 :borders {}})</pre>
+<img src="_images/diag-994bb7d5d228376ece4a919a6aaac59d30314364.svg" alt="Virtual supervisor trap vector base address register `vstvec`.">
 </div>
+<div class="title">Figure 25. Virtual supervisor trap vector base address register <code>vstvec</code>.</div>
 </div>
 </div>
 <div class="sect2">
@@ -2614,21 +2071,11 @@ substitutes for the usual <code>sscratch</code>, so instructions that normally r
 or modify <code>sscratch</code> actually access <code>vsscratch</code> instead. The contents
 of <code>vsscratch</code> never directly affect the behavior of the machine.</p>
 </div>
-<div id="vsscratchreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor scratch register <code>vsscratch</code>.</div>
+<div id="vsscratchreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-(draw-box "vsscratch" {:span 32})
-(draw-box "VSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-fc2aa2eb6a237d948166043f929f70745f2d99f8.svg" alt="Virtual supervisor scratch register `vsscratch`.">
 </div>
+<div class="title">Figure 26. Virtual supervisor scratch register <code>vsscratch</code>.</div>
 </div>
 </div>
 <div class="sect2">
@@ -2645,21 +2092,11 @@ affect the behavior of the machine.</p>
 <p><code>vsepc</code> is a <strong>WARL</strong> register that must be able to hold the same set of values
 that <code>sepc</code> can hold.</p>
 </div>
-<div id="vsepcreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor exception program counter (<code>vsepc</code>).</div>
+<div id="vsepcreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-(draw-box "vsepc" {:span 32})
-(draw-box "VSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-2ad4f8b2843e94416a6c6f2ceab50368e772c2b0.svg" alt="Virtual supervisor exception program counter (`vsepc`).">
 </div>
+<div class="title">Figure 27. Virtual supervisor exception program counter (<code>vsepc</code>).</div>
 </div>
 </div>
 <div class="sect2">
@@ -2676,25 +2113,11 @@ directly affect the behavior of the machine.</p>
 <p><code>vscause</code> is a <strong>WLRL</strong> register that must be able to hold the same set of
 values that <code>scause</code> can hold.</p>
 </div>
-<div id="vscausereg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor cause register (<code>vscause</code>).</div>
+<div id="vscausereg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 4 :borders {}})
-(draw-box "VSXLEN-2" {:span 14 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 14 :text-anchor "end" :borders {}})
-(draw-box "Interrupt" {:span 4})
-(draw-box "Exception Code" {:span 14 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WLRL)" {:font-weight "bold" :font-size 24}) {:span 14 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "VSXLEN-1" {:span 28 :borders {}})</pre>
+<img src="_images/diag-f15ebf1570e4a40adecd89e52c26a826a0ee6105.svg" alt="Virtual supervisor cause register (`vscause`).">
 </div>
+<div class="title">Figure 28. Virtual supervisor cause register (<code>vscause</code>).</div>
 </div>
 </div>
 <div class="sect2">
@@ -2711,21 +2134,11 @@ affect the behavior of the machine.</p>
 <p><code>vstval</code> is a <strong>WARL</strong> register that must be able to hold the same set of values
 that <code>stval</code> can hold.</p>
 </div>
-<div id="vstvalreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor trap value register (<code>vstval</code>).</div>
+<div id="vstvalreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "VSXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-(draw-box "vstval" {:span 32})
-(draw-box "VSXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-be52639561522792111869e9915d4cd58a4b9fc3.svg" alt="Virtual supervisor trap value register (`vstval`).">
 </div>
+<div class="title">Figure 29. Virtual supervisor trap value register (<code>vstval</code>).</div>
 </div>
 </div>
 <div class="sect2">
@@ -2740,62 +2153,17 @@ VS-stage address translation, the first stage of two-stage translation
 for guest virtual addresses (see
 <a href="#two-stage-translation">Two-Stage Address Translation</a>).</p>
 </div>
-<div id="rv32vsatpreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=32.</div>
+<div id="rv32vsatpreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "31" {:span 8 :borders {}})
-(draw-box "30" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "22" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "21" {:span 8 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 8 :text-anchor "end" :borders {}})
-
-(draw-box "Mode" {:span 4 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "ASID" {:span 4 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "PPN" {:span 8 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 8 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "1" {:span 8 :borders {}})
-(draw-box "9" {:span 8 :borders {}})
-(draw-box "22" {:span 16 :borders {}})</pre>
+<img src="_images/diag-3e32007a34cf997898a5e47dd1321277556b7a71.svg" alt="Virtual supervisor address translation and protection `vsatp` register when VSXLEN=32.">
 </div>
+<div class="title">Figure 30. Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=32.</div>
 </div>
-<div id="rv64vsatpreg" class="listingblock kroki-error">
-<div class="title">Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=64.</div>
+<div id="rv64vsatpreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "63" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "60" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "59" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "44" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "43" {:span 8 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 8 :text-anchor "end" :borders {}})
-
-(draw-box "Mode" {:span 4 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "ASID" {:span 4 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 4 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "PPN" {:span 8 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold" :font-size 24}) {:span 8 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "4" {:span 8 :borders {}})
-(draw-box "16" {:span 8 :borders {}})
-(draw-box "44" {:span 16 :borders {}})</pre>
+<img src="_images/diag-bb70793b73e937a69e853ee794441dee0fb4560d.svg" alt="Virtual supervisor address translation and protection `vsatp` register when VSXLEN=64.">
 </div>
+<div class="title">Figure 31. Virtual supervisor address translation and protection <code>vsatp</code> register when VSXLEN=64.</div>
 </div>
 <div class="paragraph">
 <p>The <code>vsatp</code> register is considered <em>active</em> for the purposes of the
@@ -2844,16 +2212,9 @@ instructions and two privileged fence instructions.</p>
 </div>
 <div class="sect2">
 <h3 id="hypervisor-virtual-machine-load-and-store-instructions"><a class="anchor" href="#hypervisor-virtual-machine-load-and-store-instructions"></a>3.1. Hypervisor Virtual-Machine Load and Store Instructions</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','SYSTEM', 'SYSTEM', 'SYSTEM']},
-  {bits: 5, name: 'rd', attr: ['5','dest', 'dest', '0']},
-  {bits: 3, name: 'funct3', attr: ['3','PRIVM', 'PRIVM', 'PRIVM']},
-  {bits: 5, name: 'rs1', attr: ['5','addr', 'addr', 'addr']},
-  {bits: 5, name: 'rs2', attr: ['5','[U]', 'HLVX', 'src']},
-  {bits: 7, name: 'funct7', attr: ['7','HLV.width', 'HLVX.HU/WU', 'HSV.width']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-7ee5c36eedcec558e882f8ea3274cf450cfd841a.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -2923,16 +2284,9 @@ illegal-instruction exception.</p>
 </div>
 <div class="sect2">
 <h3 id="hfence.vma"><a class="anchor" href="#hfence.vma"></a>3.2. Hypervisor Memory-Management Fence Instructions</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7', 'SYSTEM', 'SYSTEM']},
-  {bits: 5, name: 'rd', attr: ['5','0', '0']},
-  {bits: 3, name: 'funct3', attr: ['3','PRIV', 'PRIV']},
-  {bits: 5, name: 'rs1', attr: ['5','vaddr', 'gaddr']},
-  {bits: 5, name: 'rs2', attr: ['5','asid', 'vmid']},
-  {bits: 7, name: 'funct7', attr: ['7','HFENCE.VVMA', 'HFENCE.GVMA']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-18753613efe684d2f90b312d0abb8044757cc6e8.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -3120,169 +2474,17 @@ to <code>mstatus</code> but to <code>mstatush</code>.
 <code>mstatush</code> register when the hypervisor extension is implemented and
 MXLEN=32.</p>
 </div>
-<div id="hypervisor-mstatus" class="listingblock kroki-error">
-<div class="title">Machine status (<code>mstatus</code>) register for RV64 when the hypervisor extension is implemented.</div>
+<div id="hypervisor-mstatus" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "63" {:span 3 :borders {}})
-(draw-box "62" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "40" {:span 4 :text-anchor "end" :borders {}})
-(draw-box "39" {:span 3 :borders {}})
-(draw-box "38" {:span 3 :borders {}})
-(draw-box "37" {:span 3 :borders {}})
-(draw-box "36" {:span 3 :borders {}})
-(draw-box "35" {:span 2 :borders {}})
-(draw-box "34" {:span 2 :borders {}})
-(draw-box "33" {:span 2 :borders {}})
-(draw-box "32" {:span 2 :borders {}})
-(draw-box nil {:borders {}})
-
-(draw-box "SD" {:span 3})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 8})
-(draw-box "MPV" {:span 3})
-(draw-box "GVA" {:span 3})
-(draw-box "MBE" {:span 3})
-(draw-box "SBE" {:span 3})
-(draw-box "SXL[1:0]" {:span 4})
-(draw-box "UXL[1:0]" {:span 4})
-(draw-box nil {:borders {:top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "23" {:span 8 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "2" {:span 4 :borders {}})
-(draw-box "2" {:span 4 :borders {}})
-(draw-box nil {:borders {}})
-
-(draw-box nil {:span 32 :borders {}})
-
-(draw-box nil {:borders {}})
-(draw-box "31" {:span 3 :text-align "start" :borders {}})
-(draw-box "23" {:span 3 :text-align "end" :borders {}})
-(draw-box "22" {:span 3 :borders {}})
-(draw-box "21" {:span 3 :borders {}})
-(draw-box "20" {:span 3 :borders {}})
-(draw-box "19" {:span 3 :borders {}})
-(draw-box "18" {:span 3 :borders {}})
-(draw-box "17" {:span 3 :borders {}})
-(draw-box "16" {:span 2 :borders {}})
-(draw-box "15" {:borders {}})
-(draw-box "14" {:span 2 :borders {}})
-(draw-box "13" {:borders {}})
-(draw-box nil {:borders {}})
-
-(draw-box nil {:borders {:top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 6})
-(draw-box "TSR" {:span 3})
-(draw-box "TW" {:span 3})
-(draw-box "TVM" {:span 3})
-(draw-box "MXR" {:span 3})
-(draw-box "SUM" {:span 3})
-(draw-box "MPRV" {:span 3})
-(draw-box "XS[1:0]" {:span 3})
-(draw-box "FS[1:0]" {:span 3})
-(draw-box nil {:borders {:top :border-unrelated :bottom :border-unrelated}})
-
-(draw-box nil {:borders {}})
-(draw-box "9" {:span 6 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "2" {:span 3 :borders {}})
-(draw-box "2" {:span 3 :borders {}})
-(draw-box nil {:borders {}})
-
-(draw-box nil {:span 32 :borders {}})
-
-(draw-box nil {:borders {}})
-(draw-box "12" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "11" {:borders {}})
-(draw-box "10" {:borders {}})
-(draw-box nil {:borders {}})
-(draw-box "9" {:borders {}})
-(draw-box "8" {:span 2 :borders {}})
-(draw-box "7" {:span 3 :borders {}})
-(draw-box "6" {:span 2 :borders {}})
-(draw-box "5" {:span 3 :borders {}})
-(draw-box "4" {:span 3 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "2" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-
-(draw-box nil {:borders {:top :border-unrelated :bottom :border-unrelated}})
-(draw-box "MPP[1:0]" {:span 3})
-(draw-box "VS[1:0]" {:span 3})
-(draw-box "SPP" {:span 2})
-(draw-box "MPIE" {:span 3})
-(draw-box "UBE" {:span 2})
-(draw-box "SPIE" {:span 3})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 3})
-(draw-box "MIE" {:span 3})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 3})
-(draw-box "SIE" {:span 3})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 3})
-
-(draw-box nil {:borders {}})
-(draw-box "2" {:span 3 :borders {}})
-(draw-box "2" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})</pre>
+<img src="_images/diag-dca39abcf45a1ea53c5d4d6f8f624b8b551d99f4.svg" alt="Machine status (`mstatus`) register for RV64 when the hypervisor extension is implemented.">
 </div>
+<div class="title">Figure 32. Machine status (<code>mstatus</code>) register for RV64 when the hypervisor extension is implemented.</div>
 </div>
-<div id="hypervisor-mstatush" class="listingblock kroki-error">
-<div class="title">Additional machine status (<code>mstatush</code>) register for RV32 when the hypervisor extension is implemented.  The format of <code>mstatus</code> is unchanged for RV32.</div>
+<div id="hypervisor-mstatush" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "31" {:span 8 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 8 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 3 :borders {}})
-(draw-box "6" {:span 3 :borders {}})
-(draw-box "5" {:span 3 :borders {}})
-(draw-box "4" {:span 3 :borders {}})
-(draw-box "3" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 16})
-(draw-box "MPV" {:span 3})
-(draw-box "GVA" {:span 3})
-(draw-box "MBE" {:span 3})
-(draw-box "SBE" {:span 3})
-(draw-box (text "WPRI" {:font-weight "bold" :font-size 24}) {:span 4})
-
-(draw-box "24" {:span 16 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "4" {:span 4 :borders {}})</pre>
+<img src="_images/diag-659e8497152f4217fa29db72bbf70c7848c0c46d.svg" alt="Additional machine status (`mstatush`) register for RV32 when the hypervisor extension is implemented.  The format of `mstatus` is unchanged for RV32.">
 </div>
+<div class="title">Figure 33. Additional machine status (<code>mstatush</code>) register for RV32 when the hypervisor extension is implemented.  The format of <code>mstatus</code> is unchanged for RV32.</div>
 </div>
 <div class="paragraph">
 <p>The MPV bit (Machine Previous Virtualization Mode) is written by the
@@ -3450,125 +2652,17 @@ active bits for the hypervisor-added interrupts. <a href="#hypervisor-mipreg-sta
 standard portions (bits 15:0) of registers <code>mip</code> and <code>mie</code> when the
 hypervisor extension is implemented.</p>
 </div>
-<div id="hypervisor-mipreg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>mip</code>.</div>
+<div id="hypervisor-mipreg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "15" {:borders {}})
-(draw-box "14" {:borders {}})
-(draw-box "13" {:span 3 :borders {}})
-(draw-box "12" {:span 2 :borders {}})
-(draw-box "11" {:span 2 :borders {}})
-(draw-box "10" {:span 3 :borders {}})
-(draw-box "9" {:span 2 :borders {}})
-(draw-box "8" {:span 2 :borders {}})
-(draw-box "7" {:span 2 :borders {}})
-(draw-box "6" {:span 2 :borders {}})
-(draw-box "5" {:span 2 :borders {}})
-(draw-box "4" {:span 2 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "0" {:span 2 :borders {}})
-
-(draw-box "0" {:span 2})
-(draw-box "LCOFIP" {:span 3})
-(draw-box "SGEIP" {:span 2})
-(draw-box "MEIP" {:span 2})
-(draw-box "VSEIP" {:span 3})
-(draw-box "SEIP" {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "MTIP" {:span 2})
-(draw-box "VSTIP" {:span 2})
-(draw-box "STIP" {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "MSIP" {:span 2})
-(draw-box "VSSIP" {:span 2})
-(draw-box "SSIP" {:span 2})
-(draw-box "0" {:span 2})
-
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})</pre>
+<img src="_images/diag-07326d5d93f0744523dadc60c93323573d46d402.svg" alt="Standard portion (bits 15:0) of `mip`.">
 </div>
+<div class="title">Figure 34. Standard portion (bits 15:0) of <code>mip</code>.</div>
 </div>
-<div id="hypervisor-miereg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>mie</code>.</div>
+<div id="hypervisor-miereg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "15" {:borders {}})
-(draw-box "14" {:borders {}})
-(draw-box "13" {:span 3 :borders {}})
-(draw-box "12" {:span 2 :borders {}})
-(draw-box "11" {:span 2 :borders {}})
-(draw-box "10" {:span 3 :borders {}})
-(draw-box "9" {:span 2 :borders {}})
-(draw-box "8" {:span 2 :borders {}})
-(draw-box "7" {:span 2 :borders {}})
-(draw-box "6" {:span 2 :borders {}})
-(draw-box "5" {:span 2 :borders {}})
-(draw-box "4" {:span 2 :borders {}})
-(draw-box "3" {:span 2 :borders {}})
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "0" {:span 2 :borders {}})
-
-(draw-box "0" {:span 2})
-(draw-box "LCOFIE" {:span 3})
-(draw-box "SGEIE" {:span 2})
-(draw-box "MEIE" {:span 2})
-(draw-box "VSEIE" {:span 3})
-(draw-box "SEIE" {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "MTIE" {:span 2})
-(draw-box "VSTIE" {:span 2})
-(draw-box "STIE" {:span 2})
-(draw-box "0" {:span 2})
-(draw-box "MSIE" {:span 2})
-(draw-box "VSSIE" {:span 2})
-(draw-box "SSIE" {:span 2})
-(draw-box "0" {:span 2})
-
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 3 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})</pre>
+<img src="_images/diag-e5d65520c28944a61d575b540066004fcfa39fda.svg" alt="Standard portion (bits 15:0) of `mie`.">
 </div>
+<div class="title">Figure 35. Standard portion (bits 15:0) of <code>mie</code>.</div>
 </div>
 <div class="paragraph">
 <p>Bits SGEIP, VSEIP, VSTIP, and VSSIP in <code>mip</code> are aliases for the same
@@ -3584,21 +2678,11 @@ shown in <a href="#mtval2reg">Figure 36</a>. When a trap is taken into
 M-mode, <code>mtval2</code> is written with additional exception-specific
 information, alongside <code>mtval</code>, to assist software in handling the trap.</p>
 </div>
-<div id="mtval2reg" class="listingblock kroki-error">
-<div class="title">Machine second trap value register (<code>mtval2</code>).</div>
+<div id="mtval2reg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-(draw-box "mtval2" {:span 32})
-(draw-box "MXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-5634e190eb0777099692d3d4eeafb7a1bccec6ef.svg" alt="Machine second trap value register (`mtval2`).">
 </div>
+<div class="title">Figure 36. Machine second trap value register (<code>mtval2</code>).</div>
 </div>
 <div class="paragraph">
 <p>When a guest-page-fault trap is taken into M-mode, <code>mtval2</code> is written
@@ -3641,21 +2725,11 @@ information about the instruction that trapped, to assist software in
 handling the trap. The values that may be written to <code>mtinst</code> on a trap
 are documented in <a href="#tinst-vals">Transformed Instruction or Pseudoinstruction for <code>mtinst</code> or <code>htinst</code></a>.</p>
 </div>
-<div id="mtinstreg" class="listingblock kroki-error">
-<div class="title">Machine trap instruction (<code>mtinst</code>) register.</div>
+<div id="mtinstreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-(draw-box "mtinst" {:span 32})
-(draw-box "MXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-b102d8b6a52595dc6d0dcb538762ae933ee465f5.svg" alt="Machine trap instruction (`mtinst`) register.">
 </div>
+<div class="title">Figure 37. Machine trap instruction (<code>mtinst</code>) register.</div>
 </div>
 <div class="paragraph">
 <p><code>mtinst</code> is a <strong>WARL</strong> register that need only be able to hold the values that
@@ -3734,37 +2808,11 @@ physical address also correspond one-for-one with the structure that
 Sv32 assigns to a physical address, depicted in
 <a href="supervisor.html#sv32va" class="xref page">Sv32 virtual address</a>.)</p>
 </div>
-<div id="sv32x4va" class="listingblock kroki-error">
-<div class="title">Sv32x4 virtual address (guest physical address).</div>
+<div id="sv32x4va" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "33" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "22" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "21" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "12" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "11" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 4 :text-anchor "end" :borders {}})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "VPN[1]" {:span 6})
-(draw-box "VPN[0]" {:span 6})
-(draw-box "page offset" {:span 8})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "12" {:span 6 :borders {}})
-(draw-box "10" {:span 6 :borders {}})
-(draw-box "12" {:span 8 :borders {}})
-(draw-box nil {:span 6 :borders {}})</pre>
+<img src="_images/diag-04304fa0cf5cff107257250c235d34cca62e2d58.svg" alt="Sv32x4 virtual address (guest physical address).">
 </div>
+<div class="title">Figure 38. Sv32x4 virtual address (guest physical address).</div>
 </div>
 <div class="paragraph">
 <p>For Sv39x4, an incoming guest physical address is partitioned as shown
@@ -3772,41 +2820,11 @@ in <a href="#sv39x4va">Figure 39</a>. This partitioning is identical to that for
 high end in VPN[2]. Address bits 63:41 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv39x4va" class="listingblock kroki-error">
-<div class="title">Sv39x4 virtual address (guest physical address).</div>
+<div id="sv39x4va" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "40" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "30" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "29" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "21" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "20" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "12" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "11" {:span 4 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 4 :text-anchor "end" :borders {}})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "VPN[2]" {:span 4})
-(draw-box "VPN[1]" {:span 4})
-(draw-box "VPN[0]" {:span 4})
-(draw-box "page offset" {:span 8})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "11" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "12" {:span 8 :borders {}})
-(draw-box nil {:span 6 :borders {}})</pre>
+<img src="_images/diag-c00743ef7bd9ba1e327bd5f46a2a9e72b17ae9dd.svg" alt="Sv39x4 virtual address (guest physical address).">
 </div>
+<div class="title">Figure 39. Sv39x4 virtual address (guest physical address).</div>
 </div>
 <div class="paragraph">
 <p>For Sv48x4, an incoming guest physical address is partitioned as shown
@@ -3816,45 +2834,11 @@ that for an Sv48 virtual address as depicted in
 high end in VPN[3]. Address bits 63:50 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv48x4va" class="listingblock kroki-error">
-<div class="title">Sv48x4 virtual address (guest physical address).</div>
+<div id="sv48x4va" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "49" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "39" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "38" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "30" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "29" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "21" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "20" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "12" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "11" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "VPN[3]" {:span 4})
-(draw-box "VPN[2]" {:span 4})
-(draw-box "VPN[1]" {:span 4})
-(draw-box "VPN[0]" {:span 4})
-(draw-box "page offset" {:span 4})
-(draw-box nil {:span 6 :borders {}})
-
-(draw-box nil {:span 6 :borders {}})
-(draw-box "11" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "12" {:span 4 :borders {}})
-(draw-box nil {:span 6 :borders {}})</pre>
+<img src="_images/diag-b1c5cfb755c43cf32a006470f5c8d54e9902114a.svg" alt="Sv48x4 virtual address (guest physical address).">
 </div>
+<div class="title">Figure 40. Sv48x4 virtual address (guest physical address).</div>
 </div>
 <div class="paragraph">
 <p>For Sv57x4, an incoming guest physical address is partitioned as shown
@@ -3864,49 +2848,11 @@ that for an Sv57 virtual address as depicted in
 high end in VPN[4]. Address bits 63:59 must all be zeros, or else a
 guest-page-fault exception occurs.</p>
 </div>
-<div id="sv57x4va" class="listingblock kroki-error">
-<div class="title">Sv57x4 virtual address (guest physical address).</div>
+<div id="sv57x4va" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 30)
-(def right-margin 30)
-(def boxes-per-row 32)
-
-(draw-box nil {:span 4 :borders {}})
-(draw-box "58" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "48" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "47" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "39" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "38" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "30" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "29" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "21" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "20" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "12" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "11" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box nil {:span 4 :borders {}})
-(draw-box "VPN[4]" {:span 4})
-(draw-box "VPN[3]" {:span 4})
-(draw-box "VPN[2]" {:span 4})
-(draw-box "VPN[1]" {:span 4})
-(draw-box "VPN[0]" {:span 4})
-(draw-box "page offset" {:span 4})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box nil {:span 4 :borders {}})
-(draw-box "11" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "9" {:span 4 :borders {}})
-(draw-box "12" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})</pre>
+<img src="_images/diag-265cdaed432bfedc182b55792f50784d70ca0591.svg" alt="Sv57x4 virtual address (guest physical address).">
 </div>
+<div class="title">Figure 41. Sv57x4 virtual address (guest physical address).</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4931,18 +3877,11 @@ is one of LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH, the
 transformed instruction has the format shown in
 <a href="#transformedloadinst">Figure 42</a>.</p>
 </div>
-<div id="transformedloadinst" class="literalblock kroki-error">
-<div class="title">Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.</div>
+<div id="transformedloadinst" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7']},
-  {bits: 5, name: 'rd', attr: ['5']},
-  {bits: 3, name: 'funct3', attr: ['3']},
-  {bits: 5, name: 'Addr. Offset', attr: ['5']},
-  {bits: 5, name: '0', attr: ['5']},
-  {bits: 7, name: '0', attr: ['7']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-cf1ef4657bdfb0a4e1db1aa780b0db12900cc5ad.svg" alt="Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.">
 </div>
+<div class="title">Figure 42. Transformed load instruction (LB, LBU, LH, LHU, LW, LWU, LD, FLW, FLD, FLQ, or FLH). Fields funct3, rd, and opcode are the same as the trapping load instruction.</div>
 </div>
 <div class="paragraph">
 <p>For a standard store instruction that is not a compressed instruction
@@ -4950,52 +3889,29 @@ and is one of SB, SH, SW, SD, FSW, FSD, FSQ, or FSH, the transformed
 instruction has the format shown in
 <a href="#transformedstoreinst">Figure 43</a>.</p>
 </div>
-<div id="transformedstoreinst" class="literalblock kroki-error">
-<div class="title">Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.</div>
+<div id="transformedstoreinst" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7']},
-  {bits: 5, name: '0', attr: ['5']},
-  {bits: 3, name: 'funct3', attr: ['3']},
-  {bits: 5, name: 'Addr. Offset', attr: ['5']},
-  {bits: 5, name: 'rs2', attr: ['5']},
-  {bits: 7, name: '0', attr: ['7']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-5260a745bf0aac5aab2066c278df0238deffc9d2.svg" alt="Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.">
 </div>
+<div class="title">Figure 43. Transformed store instruction (SB, SH, SW, SD, FSW, FSD, FSQ, or FSH). Fields rs2, funct3, and opcode are the same as the trapping store instruction.</div>
 </div>
 <div class="paragraph">
 <p>For a standard atomic instruction (load-reserved, store-conditional, or AMO instruction), the transformed instruction has the format shown in <a href="#transformedatomicinst">Figure 44</a>.</p>
 </div>
-<div id="transformedatomicinst" class="literalblock kroki-error">
-<div class="title">Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.</div>
+<div id="transformedatomicinst" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7']},
-  {bits: 5, name: 'rd', attr: ['5']},
-  {bits: 3, name: 'funct3', attr: ['3']},
-  {bits: 5, name: 'Addr. Offset', attr: ['5']},
-  {bits: 5, name: 'rs2', attr: ['5']},
-  {bits: 1, name: 'rl', attr: ['1']},
-  {bits: 1, name: 'aq', attr: ['1']},
-  {bits: 5, name: 'funct5', attr: ['5']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-4ae05637ae8bdd401ab34c16eea4842b69ad5c0d.svg" alt="Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.">
 </div>
+<div class="title">Figure 44. Transformed atomic instruction (load-reserved, store-conditional, or AMO instruction). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset.</div>
 </div>
 <div class="paragraph">
 <p>For a standard virtual-machine load/store instruction (HLV, HLVX, or HSV), the transformed instruction has the format shown in <a href="#transformedvmaccessinst">Figure 45</a>.</p>
 </div>
-<div id="transformedvmaccessinst" class="literalblock kroki-error">
-<div class="title">Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset</div>
+<div id="transformedvmaccessinst" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7']},
-  {bits: 5, name: 'rd', attr: ['5']},
-  {bits: 3, name: 'funct3', attr: ['3']},
-  {bits: 5, name: 'Addr. Offset', attr: ['5']},
-  {bits: 5, name: 'rs2', attr: ['5']},
-  {bits: 7, name: 'funct7', attr: ['7']},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-125b4667eb298016120eabea5e564734d12c3d5c.svg" alt="Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset">
 </div>
+<div class="title">Figure 45. Transformed virtual-machine load/store instruction (HLV, HLVX, HSV). All fields are the same as the trapping instruction except bits 19:15, Addr. Offset</div>
 </div>
 <div class="paragraph">
 <p>In all the transformed instructions above, the Addr. Offset field that

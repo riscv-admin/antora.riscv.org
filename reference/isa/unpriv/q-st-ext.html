@@ -643,27 +643,14 @@ value.</p>
 <p>New 128-bit variants of LOAD-FP and STORE-FP instructions are added,
 encoded with a new value for the funct3 width field.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7','LOAD-FP']},
-  {bits: 5,  name: 'rd',        attr: ['5','dest']},
-  {bits: 3,  name: 'width',     attr: ['3','Q']},
-  {bits: 5,  name: 'rs1',       attr: ['5','base']},
-  {bits: 12, name: 'imm[11:0]', attr: ['12','offset[11:0]']},
-]}</pre>
+<img src="_images/svg-2a16e859bb5c0fca32e52b3b4f44d98f3e6caa3d.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7','STORE-FP']},
-  {bits: 5,  name: 'imm[4:0]',  attr: ['5','offset[4:0]']},
-  {bits: 3,  name: 'width',     attr: ['3','Q']},
-  {bits: 5,  name: 'rs1',       attr: ['5','base']},
-  {bits: 5,  name: 'rs2',       attr: ['5','src']},
-  {bits: 7, name: 'imm[11:5]', attr: ['7','offset[11:5]']},
-]}</pre>
+<img src="_images/svg-2b334c20b68f921d79e5e277822a6e133384456d.svg" alt="svg">
 </div>
 </div>
 <div id="quad-ls" class="paragraph">
@@ -725,30 +712,14 @@ instructions, as shown in <a href="#fpextfmt">Format field encoding.</a></p>
 analogously to their double-precision counterparts, but operate on
 quad-precision operands and produce quad-precision results.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP','OP-FP','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest','dest','dest','dest']},
-  {bits: 3, name: 'rm',     attr: ['3','RM','RM','MIN/MAX','RM']},
-  {bits: 5, name: 'rs1',    attr: ['5','src1','src1','src1','src']},
-  {bits: 5, name: 'rs2',    attr: ['5','src2','src2','src2','0']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q','Q','Q','Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FADD/FSUB', 'FMUL/FDIV', 'FMIN-MAX', 'FSQRT']},
-]}</pre>
+<img src="_images/svg-1a95a7294abe66b7b5523af0b0b2943db84a86bb.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','F[N]MADD/F[N]MSUB']},
-  {bits: 5, name: 'rd',     attr: ['5','dest']},
-  {bits: 3, name: 'rm',     attr: ['3','RM']},
-  {bits: 5, name: 'rs1',    attr: ['5','src1']},
-  {bits: 5, name: 'rs2',    attr: ['5','src2']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q']},
-  {bits: 5, name: 'rs3',    attr: ['5','src3']},
-]}</pre>
+<img src="_images/svg-eaca638bb8b9f77d2f3d6ef3e1b39c19dc76c841.svg" alt="svg">
 </div>
 </div>
 </div>
@@ -768,17 +739,9 @@ FCVT.WU.Q, FCVT.LU.Q, FCVT.Q.WU, and FCVT.Q.LU variants convert to or
 from unsigned integer values. FCVT.L[U].Q and FCVT.Q.L[U] are RV64-only
 instructions. Note FCVT.Q.L[U] always produces an exact result and is unaffected by rounding mode.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest','dest']},
-  {bits: 3, name: 'rm',  attr: ['3','RM','RM']},
-  {bits: 5, name: 'rs1',    attr: ['5','src','src']},
-  {bits: 5, name: 'rs2',    attr: ['5','W[U]/L[U]', 'W[U]/L[U]']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q','Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FCVT.int.Q','FCVT.Q.int']},
-]}</pre>
+<img src="_images/svg-d88b4219a55f29d8ac2ed938270389bc162dd354.svg" alt="svg">
 </div>
 </div>
 <div id="quad-cnvrt-mv" class="paragraph">
@@ -790,17 +753,9 @@ single-precision floating-point number, or vice-versa, respectively.
 FCVT.D.Q or FCVT.Q.D converts a quad-precision floating-point number to
 a double-precision floating-point number, or vice-versa, respectively.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7', 'OP-FP', 'OP-FP','OP-FP','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest','dest','dest','dest']},
-  {bits: 3, name: 'rm',     attr: ['3','RM','RM','RM','RM']},
-  {bits: 5, name: 'rs1',    attr: ['5','src','src','src','src']},
-  {bits: 5, name: 'rs2',    attr: ['5','Q', 'S', 'Q', 'D']},
-  {bits: 2, name: 'fmt',    attr: ['2','S','Q', 'D', 'Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FCVT.S.Q', 'FCVT.Q.S', 'FCVT.D.Q', 'FCVT.Q.D']},
-]}</pre>
+<img src="_images/svg-4653d8c6b12c99eaa852fa93984e16156f5c3f31.svg" alt="svg">
 </div>
 </div>
 <div id="quad-convert-interchange" class="paragraph">
@@ -808,17 +763,9 @@ a double-precision floating-point number, or vice-versa, respectively.</p>
 FSGNJN.Q, and FSGNJX.Q are defined analogously to the double-precision
 sign-injection instruction.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest']},
-  {bits: 3, name: 'rm',  attr: ['3', 'J[N]/JX']},
-  {bits: 5, name: 'rs1',    attr: ['5','src1']},
-  {bits: 5, name: 'rs2',    attr: ['5','src2']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FSGNJ']},
-]}</pre>
+<img src="_images/svg-14b1c2fe50e599c8139fe51f78dc16a9c60fdfca.svg" alt="svg">
 </div>
 </div>
 <div id="quad-cnvrt-intch-xqqx" class="paragraph">
@@ -836,17 +783,9 @@ memory.</p>
 analogously to their double-precision counterparts, but operate on
 quad-precision operands.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest']},
-  {bits: 3, name: 'rm',  attr: ['3','EQ/LT/LE']},
-  {bits: 5, name: 'rs1',    attr: ['5','src1']},
-  {bits: 5, name: 'rs2',    attr: ['5','src2']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FCMP']},
-]}</pre>
+<img src="_images/svg-a4cc3c2f3b5bb151c91158a3df3a779fa63bdbdb.svg" alt="svg">
 </div>
 </div>
 </div>
@@ -859,17 +798,9 @@ quad-precision operands.</p>
 defined analogously to its double-precision counterpart, but operates on
 quad-precision operands.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP']},
-  {bits: 5, name: 'rd',     attr: ['5','dest']},
-  {bits: 3, name: 'rm',     attr: ['3','001']},
-  {bits: 5, name: 'rs1',    attr: ['5','src']},
-  {bits: 5, name: 'rs2',    attr: ['5','0']},
-  {bits: 2, name: 'fmt',    attr: ['2','Q']},
-  {bits: 5, name: 'funct5', attr: ['5','FCLASS']},
-]}</pre>
+<img src="_images/svg-0fbdc9079ae6482318595fb8e617b3c7f19cbd69.svg" alt="svg">
 </div>
 </div>
 </div>

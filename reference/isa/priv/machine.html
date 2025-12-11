@@ -645,34 +645,11 @@ code can access all CSRs at lower privilege levels.</p>
 <div class="paragraph">
 <p>The <code>misa</code> CSR is a <strong>WARL</strong> read-write register reporting the ISA supported by the hart. This register must be readable in any implementation, but a value of zero can be returned to indicate the <code>misa</code> register has not been implemented, requiring that CPU capabilities be determined through a separate non-standard mechanism.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine ISA register (misa)</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 16}])
-(def row-height 30 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 6 :borders {}})
-(draw-box "MXLEN-2" {:span 6 :borders {}})
-(draw-box "MXLEN-3" {:span 5 :text-anchor "start" :borders {}})
-(draw-box "26" {:borders {}})
-(draw-box "25" {:span 7 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 7 :text-anchor "end" :borders {}})
-
-(draw-box "MXL[1:0]" {:span 6 :text-anchor "end" :borders {:left :border-unrelated :top :border-unrelated :bottom :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:span 6 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated}})
-(draw-box "0" {:span 3 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:span 3 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "Extensions[25:0]" {:span 7 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:span 7 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "2" {:span 12 :borders {}})
-(draw-box "MXLEN-28" {:span 6 :borders {}})
-(draw-box "26" {:span 14 :borders {}})</pre>
+<img src="_images/diag-0b562c307dba687234c32898f7c93d14e8e4610a.svg" alt="Machine ISA register (misa)">
 </div>
+<div class="title">Figure 1. Machine ISA register (misa)</div>
 </div>
 <div class="paragraph">
 <p>The MXL (Machine XLEN) field encodes the native base integer ISA width as
@@ -985,22 +962,11 @@ readable in any implementation, but a value of 0 can be returned to
 indicate the field is not implemented or that this is a non-commercial
 implementation.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Vendor ID register (<code>mvendorid</code>)</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "" "" "" "" "" "6" "7" """" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "31"])})
-(draw-box "Bank" {:span 25 :vertical-align "middle"})
-(draw-box "Offset" {:span 7})
-
-(draw-box "25" {:span 25 :borders {}})
-(draw-box "7" {:span 7 :borders{}})</pre>
+<img src="_images/diag-ddfc4bbe6f46125fbb9cbae8cfbe1e26894a17e2.svg" alt="Vendor ID register (`mvendorid`)">
 </div>
+<div class="title">Figure 2. Vendor ID register (<code>mvendorid</code>)</div>
 </div>
 <div class="paragraph">
 <p>JEDEC manufacturer IDs are ordinarily encoded as a sequence of one-byte
@@ -1047,21 +1013,11 @@ is not implemented. The combination of <code>mvendorid</code> and <code>marchid<
 uniquely identify the type of hart microarchitecture that is
 implemented.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Architecture ID (<code>marchid</code>) register</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "" "" "" "" "" "" "" """" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "Architecture ID" {:span 32 :vertical-align "middle"})
-
-(draw-box "MXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-0172e586c48e82ee6d49172653ff84884762f2b3.svg" alt="Machine Architecture ID (`marchid`) register">
 </div>
+<div class="title">Figure 3. Machine Architecture ID (<code>marchid</code>) register</div>
 </div>
 <div class="paragraph">
 <p>Open-source project architecture IDs are allocated globally by RISC-V
@@ -1111,21 +1067,11 @@ implementation, but a value of 0 can be returned to indicate that the
 field is not implemented. The Implementation value should reflect the
 design of the RISC-V processor itself and not any surrounding system.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Implementation ID (<code>mimpid</code>) register</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "" "" "" "" "" "" "" """" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "Implementation" {:span 32})
-
-(draw-box "MXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-e422f9ad698aaf51925b6573abeffd24b6f79b3c.svg" alt="Machine Implementation ID (`mimpid`) register">
 </div>
+<div class="title">Figure 4. Machine Implementation ID (<code>mimpid</code>) register</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1157,21 +1103,11 @@ numbered contiguously in a multiprocessor system, but at least one hart
 must have a hart ID of zero. Hart IDs must be unique within the
 execution environment.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Hart ID (<code>mhartid</code>) register</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "" "" "" "" "" "" "" """" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "Hart ID" {:span 32 :vertical-align "middle"})
-
-(draw-box "MXLEN" {:span 32 :borders {}})</pre>
+<img src="_images/diag-9cfb7f99d6bf6243afe25ba0f8194061441c7584.svg" alt="Hart ID (`mhartid`) register">
 </div>
+<div class="title">Figure 5. Hart ID (<code>mhartid</code>) register</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1203,95 +1139,27 @@ keeps track of and controls the hart’s current operating state. A
 restricted view of <code>mstatus</code> appears as the <code>sstatus</code> register in the
 S-level ISA.</p>
 </div>
-<div id="mstatusreg-rv32" class="literalblock kroki-error">
-<div class="title">Machine-mode status (<code>mstatus</code>) register for RV32</div>
+<div id="mstatusreg-rv32" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SIE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'MIE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SPIE'},
-  {bits:  1, name: 'UBE'},
-  {bits:  1, name: 'MPIE'},
-  {bits:  1, name: 'SPP'},
-  {bits:  2, name: 'VS[1:0]'},
-  {bits:  2, name: 'MPP[1:0]'},
-  {bits:  2, name: 'FS[1:0]'},
-  {bits:  2, name: 'XS[1:0]'},
-  {bits:  1, name: 'MPRV'},
-  {bits:  1, name: 'SUM'},
-  {bits:  1, name: 'MXR'},
-  {bits:  1, name: 'TVM'},
-  {bits:  1, name: 'TW'},
-  {bits:  1, name: 'TSR'},
-  {bits:  1, name: 'SPELP'},
-  {bits:  1, name: 'SDT'},
-  {bits:  6, name: 'WPRI'},
-  {bits:  1, name: 'SD'},
-], config:{lanes: 2, hspace:1024}}</pre>
+<img src="_images/svg-f9f82fa39c51771f2754bd4db2c720b4e72901c5.svg" alt="Machine-mode status (`mstatus`) register for RV32">
 </div>
+<div class="title">Figure 6. Machine-mode status (<code>mstatus</code>) register for RV32</div>
 </div>
-<div id="mstatusreg" class="literalblock kroki-error">
-<div class="title">Machine-mode status (<code>mstatus</code>) register for RV64</div>
+<div id="mstatusreg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SIE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'MIE'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'SPIE'},
-  {bits:  1, name: 'UBE'},
-  {bits:  1, name: 'MPIE'},
-  {bits:  1, name: 'SPP'},
-  {bits:  2, name: 'VS[1:0]'},
-  {bits:  2, name: 'MPP[1:0]'},
-  {bits:  2, name: 'FS[1:0]'},
-  {bits:  2, name: 'XS[1:0]'},
-  {bits:  1, name: 'MPRV'},
-  {bits:  1, name: 'SUM'},
-  {bits:  1, name: 'MXR'},
-  {bits:  1, name: 'TVM'},
-  {bits:  1, name: 'TW'},
-  {bits:  1, name: 'TSR'},
-  {bits:  1, name: 'SPELP'},
-  {bits:  1, name: 'SDT'},
-  {bits:  7, name: 'WPRI'},
-  {bits:  2, name: 'UXL[1:0]'},
-  {bits:  2, name: 'SXL[1:0]'},
-  {bits:  1, name: 'SBE'},
-  {bits:  1, name: 'MBE'},
-  {bits:  1, name: 'GVA'},
-  {bits:  1, name: 'MPV'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'MPELP'},
-  {bits:  1, name: 'MDT'},
-  {bits: 20, name: 'WPRI'},
-  {bits:  1, name: 'SD'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-c4c6c230ca7f061db767de8401b8409554823c5c.svg" alt="Machine-mode status (`mstatus`) register for RV64">
 </div>
+<div class="title">Figure 7. Machine-mode status (<code>mstatus</code>) register for RV64</div>
 </div>
 <div class="paragraph">
 <p>For RV32 only, <code>mstatush</code> is a 32-bit read/write register formatted as
 shown in <a href="#mstatushreg">Figure 8</a>. Bits 30:4 of <code>mstatush</code> generally contain the same fields found in bits 62:36 of <code>mstatus</code> for RV64. Fields SD, SXL, and UXL do not exist in <code>mstatush</code>.</p>
 </div>
-<div id="mstatushreg" class="literalblock kroki-error">
-<div class="title">Additional machine-mode status (<code>mstatush</code>) register  for RV32.</div>
+<div id="mstatushreg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  4, name: 'WPRI'},
-  {bits:  1, name: 'SBE'},
-  {bits:  1, name: 'MBE'},
-  {bits:  1, name: 'GVA'},
-  {bits:  1, name: 'MPV'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'MPELP'},
-  {bits:  1, name: 'MDT'},
-  {bits: 21, name: 'WPRI'},
-], config:{lanes: 2, hspace:1024}}</pre>
+<img src="_images/svg-7c2313b1d75ab45bd84f0e6a0926363eb8fe1668.svg" alt="Additional machine-mode status (`mstatush`) register  for RV32.">
 </div>
+<div class="title">Figure 8. Additional machine-mode status (<code>mstatush</code>) register  for RV32.</div>
 </div>
 <div class="sect3">
 <h4 id="privstack"><a class="anchor" href="#privstack"></a>1.6.1. Privilege and Global Interrupt-Enable Stack in <code>mstatus</code> register</h4>
@@ -2483,25 +2351,11 @@ interrupts, unless the interrupt results in a user-level context swap.</p>
 trap vector configuration, consisting of a vector base address (BASE)
 and a vector mode (MODE).</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Encoding of mtvec MODE field.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "" "" "" "" "" "" "1" "2" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "BASE[MXLEN-1:2]" {:span 12 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:span 12 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "MODE" {:span 4 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:span 4 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "MXLEN-2" {:span 24 :borders {}})
-(draw-box "2" {:span 8 :borders {}})</pre>
+<img src="_images/diag-1c4d5215018b61c8b01a14601ad956ce83d37947.svg" alt="Encoding of mtvec MODE field.">
 </div>
+<div class="title">Figure 9. Encoding of mtvec MODE field.</div>
 </div>
 <div class="paragraph">
 <p>The <code>mtvec</code> register must always be implemented, but can contain a
@@ -2689,24 +2543,11 @@ will not be taken when executing in M-mode. By contrast, if <code>mideleg</code>
 is clear, STIs can be taken in any mode and regardless of current mode
 will transfer control to M-mode.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Exception Delegation (<code>medeleg</code>) register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 35)
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "63" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Synchronous Exceptions" {:font-size 18 :span 18 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:font-size 18 :span 14 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "64" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-748e7955cb228c6fc274dbeb8f14729c558d1e4f.svg" alt="Machine Exception Delegation (`medeleg`) register.">
 </div>
+<div class="title">Figure 10. Machine Exception Delegation (<code>medeleg</code>) register.</div>
 </div>
 <div class="paragraph">
 <p><code>medeleg</code> has a bit position allocated for every synchronous exception
@@ -2720,24 +2561,11 @@ lower-privilege trap handler).</p>
 that aliases bits 63:32 of <code>medeleg</code>.
 The <code>medelegh</code> register does not exist when XLEN=64.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Interrupt Delegation (<code>mideleg</code>) Register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Interrupts" {:font-size 18 :span 17 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:font-size 18 :span 15 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-e62e8b59c6694176a28f9d11061207a154ed8795.svg" alt="Machine Interrupt Delegation (`mideleg`) Register.">
 </div>
+<div class="title">Figure 11. Machine Interrupt Delegation (<code>mideleg</code>) Register.</div>
 </div>
 <div class="paragraph">
 <p><code>mideleg</code> holds trap delegation bits for individual interrupts, with the
@@ -2777,43 +2605,17 @@ at the platform&#8217;s discretion.
 </tr>
 </table>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Interrupt-Pending (<code>mip</code>) register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Interrupts" {:font-size 18 :span 17 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:font-size 18 :span 15 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-e62e8b59c6694176a28f9d11061207a154ed8795.svg" alt="Machine Interrupt-Pending (`mip`) register.">
 </div>
+<div class="title">Figure 12. Machine Interrupt-Pending (<code>mip</code>) register.</div>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine Interrupt-Enable (<code>mie</code>) register</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "Interrupts" {:font-size 18 :span 17 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-weight "bold"}) {:font-size 18 :span 15 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-e62e8b59c6694176a28f9d11061207a154ed8795.svg" alt="Machine Interrupt-Enable (`mie`) register">
 </div>
+<div class="title">Figure 13. Machine Interrupt-Enable (<code>mie</code>) register</div>
 </div>
 <div class="paragraph">
 <p>An interrupt <em>i</em> will trap to M-mode (causing the privilege mode to
@@ -2851,93 +2653,17 @@ zero.</p>
 <p>The standard portions (bits 15:0) of the <code>mip</code> and <code>mie</code> registers are
 formatted as shown in <a href="#mipreg-standard">Figure 14</a> and <a href="#miereg-standard">Figure 15</a> respectively.</p>
 </div>
-<div id="mipreg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>mip</code>.</div>
+<div id="mipreg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 12}])
-(def row-height 30 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 16)
-(draw-column-headers {:labels (reverse ["0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"])})
-
-(draw-box "0" {:span 2})
-(draw-box (text "LCOFIP" {:font-size 10}) {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MEIP" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "SEIP" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MTIP" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "STIP" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MSIP" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "SSIP" {:span 1})
-(draw-box "0" {:span 1})
-
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})</pre>
+<img src="_images/diag-a03f8e279d0d147d26d21fc1cef245a484dc37d7.svg" alt="Standard portion (bits 15:0) of `mip`.">
 </div>
+<div class="title">Figure 14. Standard portion (bits 15:0) of <code>mip</code>.</div>
 </div>
-<div id="miereg-standard" class="listingblock kroki-error">
-<div class="title">Standard portion (bits 15:0) of <code>mie</code>.</div>
+<div id="miereg-standard" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 12}])
-(def row-height 30 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 16)
-(draw-column-headers {:labels (reverse ["0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"])})
-
-(draw-box "0" {:span 2})
-(draw-box (text "LCOFIE" {:font-size 10}) {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MEIE" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "SEIE" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MTIE" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "STIE" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "MSIE" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "SSIE" {:span 1})
-(draw-box "0" {:span 1})
-
-(draw-box "2" {:span 2 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})</pre>
+<img src="_images/diag-613d070c4b9cacabf218a68377e1ea9eac58eaef.svg" alt="Standard portion (bits 15:0) of `mie`.">
 </div>
+<div class="title">Figure 15. Standard portion (bits 15:0) of <code>mie</code>.</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3133,54 +2859,11 @@ these events is defined by the platform, but event 0 is defined to mean
 implementation is to make both the counter and its corresponding event
 selector be read-only 0.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Hardware performance monitor counters.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40)
-(def row-header-fn nil)
-(def left-margin 40)
-(def right-margin 40)
-(def boxes-per-row 32)
-(draw-column-headers {:height 26 :font-size 24 :labels (reverse ["" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "0" "" "" "" "" "" "" "" "" "" "" "" "" "63"])})
-
-(draw-box "mcycle" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box nil {:span 14 :borders {}})
-
-(draw-box "minstret" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box nil {:span 14 :borders {}})
-
-(draw-box nil {:span 14 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "63" {:span 7 :text-anchor "start" :borders{}})
-(draw-box "0" {:span 7 :text-anchor "end" :borders{}})
-
-(draw-box "mhpmcounter3" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "mhpmevent3" {:span 14})
-
-(draw-box "mhpmcounter4" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "mhpmevent4" {:span 14})
-
-(draw-box "⋮" {:span 14 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "⋮" {:span 14 :borders {}})
-
-(draw-box "mhpmcounter30" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "mhpmevent30" {:span 14})
-
-(draw-box "mhpmcounter31" {:span 14})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "mhpmevent31" {:span 14})
-
-(draw-box "64" {:span 14 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-(draw-box "64" {:span 14 :borders {}})</pre>
+<img src="_images/diag-d9fc092ea45f5e72ef2104d5deaba43e644b7f89.svg" alt="Hardware performance monitor counters.">
 </div>
+<div class="title">Figure 16. Hardware performance monitor counters.</div>
 </div>
 <div class="paragraph">
 <p>The <code>mhpmcounters</code> are <strong>WARL</strong> registers that support up to 64 bits of
@@ -3202,37 +2885,11 @@ The <code>mhpmevent<em>n</em>h</code> CSRs are provided only if the Sscofpmf ext
 controls the availability of the hardware performance-monitoring
 counters to the next-lower privileged mode.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Counter-enable (<code>mcounteren</code>) register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 45)
-(def row-header-fn nil)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "1" "2" "" "3" "" "4" "" "5" "6" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "28" "" "29" "" "30" "" "31"])})
-
-(draw-box "HPM31" {:span 2})
-(draw-box "HPM30" {:span 2})
-(draw-box "HPM29" {:span 2})
-(draw-box "..." {:span 17})
-(draw-box "HPM5" {:span 2})
-(draw-box "HPM4" {:span 2})
-(draw-box "HPM3" {:span 2})
-(draw-box "IR" {:span 1})
-(draw-box "TM" {:span 1})
-(draw-box "CY" {:span 1})
-
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "23" {:span 17 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})</pre>
+<img src="_images/diag-f7b627469c69d3608ddcd0d27212a04750468ff1.svg" alt="Counter-enable (`mcounteren`) register.">
 </div>
+<div class="title">Figure 17. Counter-enable (<code>mcounteren</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>The settings in this register only control accessibility. The act of
@@ -3302,37 +2959,11 @@ executing in a less-privileged mode. In harts without U-mode, the
 </div>
 <div class="sect2">
 <h3 id="machine-counter-inhibit-mcountinhibit-register"><a class="anchor" href="#machine-counter-inhibit-mcountinhibit-register"></a>1.12. Machine Counter-Inhibit (<code>mcountinhibit</code>) Register</h3>
-<div class="listingblock kroki-error">
-<div class="title">Counter-inhibit <code>mcountinhibit</code> register</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 45)
-(def row-header-fn nil)
-(def boxes-per-row 32)
-(draw-column-headers {:height 20 :font-size 18 :labels (reverse ["0" "1" "2" "" "3" "" "4" "" "5" "6" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "28" "" "29" "" "30" "" "31"])})
-
-(draw-box "HPM31" {:span 2})
-(draw-box "HPM30" {:span 2})
-(draw-box "HPM29" {:span 2})
-(draw-box "..." {:span 17})
-(draw-box "HPM5" {:span 2})
-(draw-box "HPM4" {:span 2})
-(draw-box "HPM3" {:span 2})
-(draw-box "IR" {:span 1})
-(draw-box "0" {:span 1})
-(draw-box "CY" {:span 1})
-
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "23" {:span 17 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 2 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})
-(draw-box "1" {:span 1 :borders {}})</pre>
+<img src="_images/diag-3db453fb2d47660418694688a14f2e94a73dc2fb.svg" alt="Counter-inhibit `mcountinhibit` register">
 </div>
+<div class="title">Figure 18. Counter-inhibit <code>mcountinhibit</code> register</div>
 </div>
 <div class="paragraph">
 <p>The counter-inhibit register <code>mcountinhibit</code> is a 32-bit <strong>WARL</strong> register that
@@ -3386,23 +3017,11 @@ for use by machine mode. Typically, it is used to hold a pointer to a
 machine-mode hart-local context space and swapped with a user register
 upon entry to an M-mode trap handler.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine-mode scratch register.</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "mscratch" {:font-size 18 :span 32})
-
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-165b97abc9531d9db0f66bb0b69664fd26575d39.svg" alt="Machine-mode scratch register.">
 </div>
+<div class="title">Figure 19. Machine-mode scratch register.</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -3477,22 +3096,11 @@ address of the instruction that was interrupted or that encountered the
 exception. Otherwise, <code>mepc</code> is never written by the implementation,
 though it may be explicitly written by software.</p>
 </div>
-<div id="mepcreg" class="listingblock kroki-error">
-<div class="title">Machine exception program counter register.</div>
+<div id="mepcreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 16 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 16 :text-anchor "end" :borders {}})
-
-(draw-box "mepc" {:span 32})
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-21324859acbdecfe58dcf2d235c2bc6a931bdc39.svg" alt="Machine exception program counter register.">
 </div>
+<div class="title">Figure 20. Machine exception program counter register.</div>
 </div>
 </div>
 <div class="sect2">
@@ -3511,27 +3119,11 @@ the last exception or interrupt. <a href="#mcauses">Table 6</a> lists
 the possible machine-level exception codes. The Exception Code is a
 <strong>WLRL</strong> field, so is only guaranteed to hold supported exception codes.</p>
 </div>
-<div id="mcausereg" class="listingblock kroki-error">
-<div class="title">Machine Cause (<code>mcause</code>) register.</div>
+<div id="mcausereg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-
-(draw-box "MXLEN-1" {:span 4 :borders {}})
-(draw-box "MXLEN-2" {:span 14 :borders {} :text-anchor "start"})
-(draw-box "0" {:span 14 :borders {} :text-anchor "end"})
-
-(draw-box "Interrupt" {:span 4})
-(draw-box "Exception Code " {:span 15 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WLRL)" {:font-weight "bold"}) {:span 13 :text-anchor "start" :borders {:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "1" {:span 4 :borders {}})
-(draw-box "MXLEN-1" {:font-size 24 :span 28 :borders {}})</pre>
+<img src="_images/diag-e87033a78ba0f8b999614e888bf9440de7ac48e3.svg" alt="Machine Cause (`mcause`) register.">
 </div>
+<div class="title">Figure 21. Machine Cause (<code>mcause</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>Note that load and load-reserved instructions generate load exceptions,
@@ -3901,20 +3493,11 @@ faulting virtual address, even for physical-memory access-fault
 exceptions. This design reduces datapath cost for most implementations,
 particularly those with hardware page-table walkers.</p>
 </div>
-<div id="mtvalreg" class="listingblock kroki-error">
-<div class="title">Machine Trap Value (<code>mtval</code>) register.</div>
+<div id="mtvalreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 26 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "mtval" {:span 32})
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-0b751462b0916d0f3cd85852847c56a51229b057.svg" alt="Machine Trap Value (`mtval`) register.">
 </div>
+<div class="title">Figure 22. Machine Trap Value (<code>mtval</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>If <code>mtval</code> is written with a nonzero value when a misaligned load or
@@ -4028,20 +3611,11 @@ address of a configuration data structure. Software can traverse this
 data structure to discover information about the harts, the platform,
 and their configuration.</p>
 </div>
-<div id="mconfigptrreg" class="listingblock kroki-error">
-<div class="title">Machine Configuration Pointer (<code>mconfigptr</code>) register.</div>
+<div id="mconfigptrreg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 26 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "MXLEN-1" ""])})
-
-(draw-box "mconfigptr" {:span 32})
-(draw-box "MXLEN" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-dd5c5621f81af7317c5ee6373df90ba9a8eab2d0.svg" alt="Machine Configuration Pointer (`mconfigptr`) register.">
 </div>
+<div class="title">Figure 23. Machine Configuration Pointer (<code>mconfigptr</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>The pointer alignment in bits must be no smaller than MXLEN:
@@ -4086,27 +3660,11 @@ as shown in <a href="#menvcfgreg">Figure 24</a>, that controls
 certain characteristics of the execution environment for modes less
 privileged than M.</p>
 </div>
-<div id="menvcfgreg" class="literalblock kroki-error">
-<div class="title">Machine environment configuration (<code>menvcfg</code>) register.</div>
+<div id="menvcfgreg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'FIOM'},
-  {bits:  1, name: 'WPRI'},
-  {bits:  1, name: 'LPE'},
-  {bits:  1, name: 'SSE'},
-  {bits:  2, name: 'CBIE'},
-  {bits:  1, name: 'CBCFE'},
-  {bits:  1, name: 'CBZE'},
-  {bits: 24, name: 'WPRI'},
-  {bits:  2, name: 'PMM'},
-  {bits: 25, name: 'WPRI'},
-  {bits:  1, name: 'DTE'},
-  {bits:  1, name: 'CDE'},
-  {bits:  1, name: 'ADUE'},
-  {bits:  1, name: 'PBMTE'},
-  {bits:  1, name: 'STCE'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-aa3b907eab4c05b396e4d4c97629cb609f1d3199.svg" alt="Machine environment configuration (`menvcfg`) register.">
 </div>
+<div class="title">Figure 24. Machine environment configuration (<code>menvcfg</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>If bit FIOM (Fence of I/O implies Memory) is set to one in <code>menvcfg</code>,
@@ -4296,22 +3854,11 @@ not exist.</p>
 <p><code>mseccfg</code> is an optional 64-bit read/write register, formatted as
 shown in <a href="#mseccfg">Figure 25</a>, that controls security features.</p>
 </div>
-<div id="mseccfg" class="literalblock kroki-error">
-<div class="title">Machine security configuration (<code>mseccfg</code>) register.</div>
+<div id="mseccfg" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits:  1, name: 'MML'},
-  {bits:  1, name: 'MMWP'},
-  {bits:  1, name: 'RLB'},
-  {bits:  5, name: 'WPRI'},
-  {bits:  1, name: 'USEED'},
-  {bits:  1, name: 'SSEED'},
-  {bits:  1, name: 'MLPE'},
-  {bits: 21, name: 'WPRI'},
-  {bits:  2, name: 'PMM'},
-  {bits: 30, name: 'WPRI'},
-], config:{lanes: 4, hspace:1024}}</pre>
+<img src="_images/svg-db9eb47611a251c510fac50abede75105db116f5.svg" alt="Machine security configuration (`mseccfg`) register.">
 </div>
+<div class="title">Figure 25. Machine security configuration (<code>mseccfg</code>) register.</div>
 </div>
 <div class="paragraph">
 <p>The definitions of the SSEED and USEED fields are furnished by the
@@ -4370,35 +3917,17 @@ until <code>mtimecmp</code> becomes greater than <code>mtime</code> (typically a
 writing <code>mtimecmp</code>). The interrupt will only be taken if interrupts are
 enabled and the MTIE bit is set in the <code>mie</code> register.</p>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine time register (memory-mapped control register).</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "63"])})
-
-(draw-box "mtime" {:span 32})
-(draw-box "64" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-eda22c0a1ac1ad98633b49981864551098701052.svg" alt="Machine time register (memory-mapped control register).">
 </div>
+<div class="title">Figure 26. Machine time register (memory-mapped control register).</div>
 </div>
-<div class="listingblock kroki-error">
-<div class="title">Machine time compare register (memory-mapped control register).</div>
+<div class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 26 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "63"])})
-
-(draw-box "mtimecmp" {:span 32})
-(draw-box "64" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-1655aeab7e665b69baa96a6ae3b77857abeff774.svg" alt="Machine time compare register (memory-mapped control register).">
 </div>
+<div class="title">Figure 27. Machine time compare register (memory-mapped control register).</div>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -4498,15 +4027,9 @@ eventually, but not necessarily immediately.</p>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="environment-call-and-breakpoint"><a class="anchor" href="#environment-call-and-breakpoint"></a>3.1. Environment Call and Breakpoint</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','SYSTEM','SYSTEM'],},
-  {bits: 5, name: 'rd', attr: ['5','0','0'],},
-  {bits: 3, name: 'funct3', attr: ['3','PRIV','PRIV'],},
-  {bits: 5, name: 'rs1', attr: ['5','0','0'],},
-  {bits: 12, name: 'funct12', attr: ['12','ECALL','EBREAK',]},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-b85f17219e404c3a56e44aa02c3ecc9a8b03847c.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -4569,15 +4092,9 @@ not increment the <code>minstret</code> CSR.</p>
 <p>Instructions to return from trap are encoded under the PRIV minor
 opcode.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','SYSTEM'],},
-  {bits: 5, name: 'rd', attr: ['5','0'],},
-  {bits: 3, name: 'funct3', attr: ['3','PRIV'],},
-  {bits: 5, name: 'rs1', attr: ['5','0'],},
-  {bits: 12, name: 'funct12', attr: ['12','MRET/SRET',]},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-fc0838b9e6f35fa5e2299801bf5cc61dde03080f.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -4629,15 +4146,9 @@ privileged modes, and optionally available to U-mode. This instruction
 may raise an illegal-instruction exception when TW=1 in <code>mstatus</code>, as
 described in <a href="#virt-control">Virtualization Support in <code>mstatus</code> Register</a>.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','SYSTEM'],},
-  {bits: 5, name: 'rd', attr: ['5','0'],},
-  {bits: 3, name: 'funct3', attr: ['3','PRIV'],},
-  {bits: 5, name: 'rs1', attr: ['5','0'],},
-  {bits: 12, name: 'funct12', attr: ['12','WFI',]},
-], config: {bits: 32}}</pre>
+<img src="_images/svg-e6a04b98f1bf35f60cccf838f4ecac2d91b944f1.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -4748,87 +4259,11 @@ extensions that wait on memory locations changing, or message arrival.</p>
 <p>The subspace of the SYSTEM major opcode shown in <a href="#customsys">Figure 28</a> is designated for custom use. It is recommended that these instructions use bits 29:28 to designate the
 minimum required privilege mode, as do other SYSTEM instructions.</p>
 </div>
-<div id="customsys" class="listingblock kroki-error">
-<div class="title">SYSTEM instruction encodings designated for custom use.</div>
+<div id="customsys" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 0)
-(def right-margin 40)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 20  :labels (reverse ["" "" "" "" "" "" "" "0" "" "6" "7" "" "11" "12" "" "14" "15" "" "" "" "" "" "" "" "" "25" "26" "" "" "" "" "31"])})
-
-(draw-box "funct6" {:span 6})
-(draw-box "custom" {:span 10})
-(draw-box "funct3" {:span 3})
-(draw-box "custom" {:span 3})
-(draw-box "opcode" {:span 3})
-(draw-box (text "Recommended Purpose" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "6" {:span 6 :borders {}})
-(draw-box "11" {:span 10 :borders {}})
-(draw-box "3" {:span 3 :borders {}})
-(draw-box "5" {:span 3 :borders {}})
-(draw-box "7" {:span 3 :borders {}})
-(draw-box nil {:span 7 :borders {}})
-
-(draw-box "100011" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Unprivileged or User-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "110011" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Unprivileged or User-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "100111" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text " Supervisor-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "110111" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Supervisor-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "101011" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Hypervisor-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "111011" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Hypervisor-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "101111" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Machine-Level" {}) {:span 7 :text-anchor "middle" :borders {}})
-
-(draw-box "111111" {:span 6 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 10 :borders {}})
-(draw-box "0" {:span 3 :borders {}})
-(draw-box (text "custom" {:font-style "italic"}) {:span 3 :borders {}})
-(draw-box "SYSTEM" {:span 3 :borders {}})
-(draw-box (text "Machine-Level" {}) {:span 7 :text-anchor "middle" :borders {}})</pre>
+<img src="_images/diag-fafa0fd77a5374e88a36eafd69a63aadfd3dc794.svg" alt="SYSTEM instruction encodings designated for custom use.">
 </div>
+<div class="title">Figure 28. SYSTEM instruction encodings designated for custom use.</div>
 </div>
 </div>
 </div>
@@ -5597,219 +5032,17 @@ entries 8-11 appear in <code>pmpcfg2</code>[31:0] for both RV32 and RV64.</p>
 </tr>
 </table>
 </div>
-<div id="pmpcfg-rv32" class="listingblock kroki-error">
-<div class="title">RV32 PMP configuration CSR layout.</div>
+<div id="pmpcfg-rv32" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-header-fn nil)
-(def boxes-per-row 20)
-(def left-margin 200)
-(def right-margin 200)
-
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 4 :text-anchor "start" :borders {}})
-
-(draw-box "pmp3cfg" {:span 4})
-(draw-box "pmp2cfg" {:span 4})
-(draw-box "pmp1cfg" {:span 4})
-(draw-box "pmp0cfg" {:span 4})
-(draw-box "pmpcfg0" {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 4 :text-anchor "start" :borders {}})
-
-(draw-box "pmp7cfg" {:span 4})
-(draw-box "pmp6cfg" {:span 4})
-(draw-box "pmp5cfg" {:span 4})
-(draw-box "pmp4cfg" {:span 4})
-(draw-box "pmpcfg1" {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box nil {:span 20 :borders {}})
-(draw-box nil {:span 8 :borders {}})
-(draw-box "⋮"  {:span 12 :text-anchor "start" :borders {}})
-(draw-box nil {:span 20 :borders {}})
-
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 4 :text-anchor "start" :borders {}})
-
-(draw-box "pmp63cfg" {:span 4})
-(draw-box "pmp62cfg" {:span 4})
-(draw-box "pmp61cfg" {:span 4})
-(draw-box "pmp60cfg" {:span 4})
-(draw-box "pmpcfg15" {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})</pre>
+<img src="_images/diag-efd252c46c30d454fa34f34e22da6366e5c313c2.svg" alt="RV32 PMP configuration CSR layout.">
 </div>
+<div class="title">Figure 29. RV32 PMP configuration CSR layout.</div>
 </div>
-<div id="pmpcfg-rv64" class="listingblock kroki-error">
-<div class="title">RV64 PMP configuration CSR layout.</div>
+<div id="pmpcfg-rv64" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 22}])
-(def row-header-fn nil)
-(def boxes-per-row 40)
-(def left-margin 200)
-(def right-margin 200)
-(def row-height 50)
-
-(draw-box "63" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "56" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "55" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "48" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "47" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "40" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "39" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "32" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 8 :text-anchor "start" :borders {}})
-
-(draw-box "pmp7cfg" {:span 4})
-(draw-box "pmp6cfg" {:span 4})
-(draw-box "pmp5cfg" {:span 4})
-(draw-box "pmp4cfg" {:span 4})
-(draw-box "pmp3cfg" {:span 4})
-(draw-box "pmp2cfg" {:span 4})
-(draw-box "pmp1cfg" {:span 4})
-(draw-box "pmp0cfg" {:span 4})
-(draw-box "pmpcfg0" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 8 :borders {}})
-
-(draw-box "63" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "56" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "55" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "48" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "47" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "40" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "39" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "32" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 8 :text-anchor "start" :borders {}})
-
-(draw-box "pmp15cfg" {:span 4})
-(draw-box "pmp14cfg" {:span 4})
-(draw-box "pmp13cfg" {:span 4})
-(draw-box "pmp12cfg" {:span 4})
-(draw-box "pmp11cfg" {:span 4})
-(draw-box "pmp10cfg" {:span 4})
-(draw-box "pmp9cfg" {:span 4})
-(draw-box "pmp8cfg" {:span 4})
-(draw-box "pmpcfg2" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 8 :borders {}})
-
-(draw-box nil {:span 40 :borders {}})
-(draw-box nil {:span 16 :borders {}})
-(draw-box "⋮"  {:span 24 :text-anchor "start" :borders {}})
-(draw-box nil {:span 40 :borders {}})
-
-(draw-box "63" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "56" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "55" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "48" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "47" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "40" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "39" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "32" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "31" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "24" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "23" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "16" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "15" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "8" {:span 2 :text-anchor "end" :borders {}})
-(draw-box "7" {:span 2 :text-anchor "start" :borders {}})
-(draw-box "0" {:span 2 :text-anchor "end" :borders {}})
-(draw-box nil {:span 8 :text-anchor "start" :borders {}})
-
-(draw-box "pmp63cfg" {:span 4})
-(draw-box "pmp62cfg" {:span 4})
-(draw-box "pmp61cfg" {:span 4})
-(draw-box "pmp60cfg" {:span 4})
-(draw-box "pmp59cfg" {:span 4})
-(draw-box "pmp58cfg" {:span 4})
-(draw-box "pmp57cfg" {:span 4})
-(draw-box "pmp56cfg" {:span 4})
-(draw-box "pmpcfg14" {:span 4 :borders {}})
-(draw-box nil {:span 4 :borders {}})
-
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box "8" {:span 4 :borders {}})
-(draw-box nil {:span 8 :borders {}})</pre>
+<img src="_images/diag-b47bcbc11126ed099881aa16d91f134279156f98.svg" alt="RV64 PMP configuration CSR layout.">
 </div>
+<div class="title">Figure 30. RV64 PMP configuration CSR layout.</div>
 </div>
 <div class="paragraph">
 <p>The PMP address registers are CSRs named <code>pmpaddr0</code>-<code>pmpaddr63</code>. Each
@@ -5840,42 +5073,17 @@ the same limit.</p>
 </tr>
 </table>
 </div>
-<div id="pmpaddr-rv32" class="listingblock kroki-error">
-<div class="title">PMP address register format, RV32.</div>
+<div id="pmpaddr-rv32" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "31"])})
-
-(draw-box "address[33:2]" {:span 16 :text-anchor "end" :borders {:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-size 24 :font-weight "bold"}) {:span 16 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "32" {:font-size 24 :span 32 :borders {}})</pre>
+<img src="_images/diag-ec67b4b34dae76306144656520ff9981f801f1cb.svg" alt="PMP address register format, RV32.">
 </div>
+<div class="title">Figure 31. PMP address register format, RV32.</div>
 </div>
-<div id="pmpaddr-rv64" class="listingblock kroki-error">
-<div class="title">PMP address register format, RV64.</div>
+<div id="pmpaddr-rv64" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 50 )
-(def row-header-fn nil)
-(def left-margin 200)
-(def right-margin 200)
-(def boxes-per-row 32)
-(draw-column-headers {:height 24 :font-size 24 :labels (reverse ["0" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "" "53" "" "" "" "" "54" "" "" "63"])})
-
-(draw-box "0" {:span 4 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-size 24 :font-weight "bold"}) {:span 4 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-(draw-box "address[55:2]" {:span 12 :text-anchor "end" :borders{:top :border-unrelated :bottom :border-unrelated :left :border-unrelated}})
-(draw-box (text "(WARL)" {:font-size 24 :font-weight "bold"}) {:span 12 :text-anchor "start" :borders{:top :border-unrelated :bottom :border-unrelated :right :border-unrelated}})
-
-(draw-box "10" {:font-size 24 :span 8 :borders {}})
-(draw-box "54" {:font-size 24 :span 24 :borders {}})</pre>
+<img src="_images/diag-9855fd151b9d924dfc27737cdee72a35b7d4f7cf.svg" alt="PMP address register format, RV64.">
 </div>
+<div class="title">Figure 32. PMP address register format, RV64.</div>
 </div>
 <div class="paragraph">
 <p><a href="#pmpcfg">Figure 33</a> shows the layout of a PMP configuration
@@ -5884,39 +5092,11 @@ permits read, write, and instruction execution, respectively. When one
 of these bits is clear, the corresponding access type is denied. The R,
 W, and X fields form a collective <strong>WARL</strong> field for which the combinations with R=0 and W=1 are reserved. The remaining two fields, A and L, are described in the following sections.</p>
 </div>
-<div id="pmpcfg" class="listingblock kroki-error">
-<div class="title">PMP configuration register format.</div>
+<div id="pmpcfg" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback" :font-size 24}])
-(def row-height 40 )
-(def row-header-fn nil)
-(def left-margin 100)
-(def right-margin 100)
-(def boxes-per-row 32)
-
-(draw-box "7" {:span 5 :borders {}})
-(draw-box "6" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "5" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "4" {:span 3 :text-anchor "start" :borders {}})
-(draw-box "3" {:span 3 :text-anchor "end" :borders {}})
-(draw-box "2" {:span 5 :borders {}})
-(draw-box "1" {:span 5 :borders {}})
-(draw-box "0" {:span 5 :borders {}})
-
-(draw-box "L" {:span 5})
-(draw-box "0" {:span 6})
-(draw-box "A" {:span 6})
-(draw-box "X" {:span 5})
-(draw-box "W" {:span 5})
-(draw-box "R" {:span 5})
-
-(draw-box "1" {:span 5 :borders {}})
-(draw-box "2" {:span 6 :borders {}})
-(draw-box "2" {:span 6 :borders {}})
-(draw-box "1" {:span 5 :borders {}})
-(draw-box "1" {:span 5 :borders {}})
-(draw-box "1" {:span 5 :borders {}})</pre>
+<img src="_images/diag-87e49044797677d35392804a47489c59fb69ce26.svg" alt="PMP configuration register format.">
 </div>
+<div class="title">Figure 33. PMP configuration register format.</div>
 </div>
 <div class="paragraph">
 <p>Attempting to fetch an instruction from a PMP region that does not have

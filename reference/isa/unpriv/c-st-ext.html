@@ -1201,15 +1201,9 @@ registers.</p>
 </div>
 <div class="sect2">
 <h3 id="stack-pointer-based-loads-and-stores"><a class="anchor" href="#stack-pointer-based-loads-and-stores"></a>3.1. Stack-Pointer-Based Loads and Stores</h3>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2','C2','C2','C2','C2','C2']},
-  {bits: 5, name: 'imm',    attr: ['5','offset[4:2|7:6]', 'offset[4:3|8:6]', 'offset[4|9:6]', 'offset[4:2|7:6]', 'offset[4:3|8:6]']},
-  {bits: 5, name: 'rd',     attr: ['5','dest≠0', 'dest≠0', 'dest≠0', 'dest', 'dest']},
-  {bits: 1, name: 'imm',    attr: ['1','offset[5]','offset[5]','offset[5]','offset[5]','offset[5]']},
-  {bits: 3, name: 'funct3', attr: ['3','C.LWSP', 'C.LDSP', 'C.LQSP', 'C.FLWSP', 'C.FLDSP']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-72411c9b867a2cebd4dc0875d40bc5e493ac557e.svg" alt="svg">
 </div>
 </div>
 <div id="c-sp-load-store" class="paragraph">
@@ -1243,14 +1237,9 @@ register <em>rd</em>. It computes its effective address by adding the
 <em>zero</em>-extended offset, scaled by 8, to the stack pointer, <code>x2</code>. It
 expands to <code>fld rd, offset(x2)</code>.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2','C2','C2','C2','C2','C2']},
-  {bits: 5, name: 'rs2',    attr: ['5','src', 'src', 'src', 'src', 'src']},
-  {bits: 6, name: 'imm',    attr: ['6','offset[5:2|7:6]', 'offset[5:3|8:6]', 'offset[5:4|9:6]', 'offset[5:2|7:6]','offset[5:3|8:6]']},
-  {bits: 3, name: 'funct3', attr: ['3','C.SWSP', 'C.SDSP', 'C.SQSP', 'C.FSWSP', 'C.FSDSP']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-1d891e4502454c964d7a446d11a1defc5a426af8.svg" alt="svg">
 </div>
 </div>
 <div id="c-sp-load-store-css" class="paragraph">
@@ -1352,16 +1341,9 @@ attain the greatest code size reduction.</p>
 </div>
 <div class="sect2">
 <h3 id="register-based-loads-and-stores"><a class="anchor" href="#register-based-loads-and-stores"></a>3.2. Register-Based Loads and Stores</h3>
-<div id="reg-based-ldnstr" class="literalblock kroki-error">
+<div id="reg-based-ldnstr" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2', 'C0', 'C0', 'C0', 'C0', 'C0']},
-  {bits: 3, name: 'rdʹ',  attr: ['3', 'dest', 'dest','dest','dest','dest']},
-  {bits: 2, name: 'imm', attr:['2', 'offset[2|6]', 'offset[7:6]', 'offset[7:6]', 'offset[2|6]', 'offset[7:6]']},
-  {bits: 3, name: 'rs1ʹ', attr: ['3', 'base', 'base', 'base', 'base', 'base']},
-  {bits: 3, name: 'imm',  attr: ['3', 'offset[5:3]', 'offset[5:3]', 'offset[5|4|8]', 'offset[5:3]', 'offset[5:3]']},
-  {bits: 3, name: 'funct3',  attr: ['3', 'C.LW', 'C.LD', 'C.LQ', 'C.FLW', 'C.FLD']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-716891f75e9212a5fe3d5cf6e662771dd666ec1f.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1397,16 +1379,9 @@ floating-point value from memory into floating-point register
 <code><em>rs1′</em></code>. It expands to
 <code>fld rd′, offset(rs1′)</code>.</p>
 </div>
-<div id="c-cs-format-ls" class="literalblock kroki-error">
+<div id="c-cs-format-ls" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2', 'C0','C0','C0','C0','C0']},
-  {bits: 3, name: 'rs2ʹ',   attr: ['3', 'src','src','src','src','src']},
-  {bits: 2, name: 'imm',    attr: ['2', 'offset[2|6]','offset[7:6]','offset[7:6]','offset[2|6]','offset[7:6]']},
-  {bits: 3, name: 'rs1ʹ',   attr: ['3', 'base','base','base','base','base']},
-  {bits: 3, name: 'imm',    attr: ['3', 'offset[5:3]','offset[5:3]','offset[5|4|8]','offset[5:3]','offset[5:3]']},
-  {bits: 3, name: 'funct3', attr: ['3', 'C.SW','C.SD','C.SQ','C.FSW','C.FSD']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-5dbd3a1807b568731d31b2825ba83bfc40264db9.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1455,13 +1430,9 @@ register <code><em>rs1′</em></code>. It expands to
 instructions. As with base RVI instructions, the offsets of all RVC
 control transfer instructions are in multiples of 2 bytes.</p>
 </div>
-<div id="c-cj-format-ls" class="literalblock kroki-error">
+<div id="c-cj-format-ls" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2','C1','C1']},
-  {bits: 11, name: 'imm',   attr: ['11','offset[11|4|9:8|10|6|7|3:1|5]','offset[11|4|9:8|10|6|7|3:1|5]']},
-  {bits: 3, name: 'funct3', attr: ['3','C.J','C.JAL']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-1d6d90ff75a468d006ca9343b224bb7d7de17b44.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1482,14 +1453,9 @@ C.J, but additionally writes the address of the instruction following
 the jump (<code>pc+2</code>) to the link register, <code>x1</code>. C.JAL expands to
 <code>jal x1, offset</code>.</p>
 </div>
-<div id="c-cr-format-ls" class="literalblock kroki-error">
+<div id="c-cr-format-ls" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C2', 'C2']},
-  {bits: 5, name: 'rs2',     attr: ['5','0', '0']},
-  {bits: 5, name: 'rs1',     attr: ['5','src≠0', 'src≠0']},
-  {bits: 4, name: 'funct4',  attr: ['4','C.JR', 'C.JALR']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-ca378d779bca23f7bbbf5ada7e62f7c987cf1546.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1530,15 +1496,9 @@ bytes is only a very minor change to the base microarchitecture.</p>
 </tr>
 </table>
 </div>
-<div id="c-cb-format-ls" class="literalblock kroki-error">
+<div id="c-cb-format-ls" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C1', 'C1']},
-  {bits: 5, name: 'imm', attr: ['5','offset[7:6|2:1|5]', 'offset[7:6|2:1|5]']},
-  {bits: 3, name: 'rs1′',     attr: ['3','src', 'src']},
-  {bits: 3, name: 'imm',    attr: ['3','offset[8|4:3]', 'offset[8|4:3]'],},
-  {bits: 3, name: 'funct3',    attr: ['3','C.BEQZ', 'C.BNEZ'],},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-386882b890f10d93eee7c836feee88331e5c9bb6.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1574,15 +1534,9 @@ generation.</p>
 <p>The two constant-generation instructions both use the CI instruction
 format and can target any integer register.</p>
 </div>
-<div id="c-integer-const-gen" class="literalblock kroki-error">
+<div id="c-integer-const-gen" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C1', 'C1']},
-  {bits: 5, name: 'imm[4:0]',    attr: ['5','imm[4:0]','nzimm[16:12]']},
-  {bits: 5, name: 'rd',     attr: ['5','dest != 0', 'dest != {0, 2}']},
-  {bits: 1, name: 'imm[5]',    attr: ['1','imm[5]', 'nzimm[17]'],},
-  {bits: 3, name: 'funct3',    attr: ['3','C.LI', 'C.LUI'],},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-db6d70581f491dfca4c6c2607b7bef9077753246.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1611,15 +1565,9 @@ C.ADDI16SP instruction.</p>
 <p>These integer register-immediate operations are encoded in the CI format
 and perform operations on an integer register and a 6-bit immediate.</p>
 </div>
-<div id="c-integer-register-immediate" class="literalblock kroki-error">
+<div id="c-integer-register-immediate" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',        attr: ['2','C1', 'C1', 'C1']},
-  {bits: 5, name: 'imm[4:]',  attr: ['5','nzimm[4:0]', 'imm[4:0]', 'nzimm[4|6|8:7|5]']},
-  {bits: 5, name: 'rd/rs1',    attr: ['5','dest != 0', 'dest != 0', '2']},
-  {bits: 1, name: 'imm[5]',    attr: ['1','nzimm[5]', 'imm[5]', 'nzimm[9]']},
-  {bits: 3, name: 'funct3',    attr: ['3','C.ADDI', 'C.ADDIW', 'C.ADDI16SP']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-0c6cf850894f6905c110f272517fbb90bd37edd2.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1666,14 +1614,9 @@ always 16-byte aligned.</p>
 </tr>
 </table>
 </div>
-<div id="c-ciw" class="literalblock kroki-error">
+<div id="c-ciw" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C0'],},
-  {bits: 3, name: 'rd′',     attr: ['3','dest'],},
-  {bits: 8, name: 'imm',    attr: ['8','nzuimm[5:4|9:6|2|3]']},
-  {bits: 3, name: 'funct3',    attr: ['3','C.ADDI4SPN']},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-bf986cd7521109161e78530931e222b3c637ae50.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1687,15 +1630,9 @@ pointers to stack-allocated variables, and expands to
 <em>nzuimm</em>≠0; the code points with <em>nzuimm</em>=0 are
 reserved.</p>
 </div>
-<div id="c-ci" class="literalblock kroki-error">
+<div id="c-ci" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2', 'C2']},
-  {bits: 5, name: 'shamt[4:0]',    attr: ['5', 'shamt[4:0]']},
-  {bits: 5, name: 'rd/rs1',     attr: ['5', 'dest != 0']},
-  {bits: 1, name: 'shamt[5]',    attr: ['1', 'shamt[5]']},
-  {bits: 3, name: 'funct3',    attr: ['3', 'C.SLLI']},
-]}</pre>
+<img src="_images/svg-4ceb865372085f49cea50da520cc223645c46d2d.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1714,16 +1651,9 @@ amount must be non-zero; the code points with <em>shamt</em>=0 are HINTs. For
 all base ISAs, the code points with <em>rd</em>=<code>x0</code> are HINTs, except those
 with <em>shamt[5]</em>=1 in RV32C.</p>
 </div>
-<div id="c-srli-srai" class="literalblock kroki-error">
+<div id="c-srli-srai" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C1', 'C1'],},
-  {bits: 5, name: 'shamt[4:0]',    attr: ['5','shamt[4:0]', 'shamt[4:0]'],},
-  {bits: 3, name: 'rd′/rs1′',     attr: ['3','dest', 'dest'],},
-  {bits: 2, name: 'funct2',    attr: ['2','C.SRLI', 'C.SRAI'],},
-  {bits: 1, name: 'shamt[5]',    attr: ['1','shamt[5]', 'shamt[5]'],},
-  {bits: 3, name: 'funct3',    attr: ['3','C.SRLI', 'C.SRAI'],},
-]}</pre>
+<img src="_images/svg-e63605912406813e686938b80b8f5e76981efe04.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1762,16 +1692,9 @@ where all other immediates are sign-extended.</p>
 </tr>
 </table>
 </div>
-<div id="c-andi" class="literalblock kroki-error">
+<div id="c-andi" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',    attr: ['2','C1'],},
-  {bits: 5, name: 'imm[4:0]',    attr: ['5','imm[4:0]']},
-  {bits: 3, name: 'rd′/rs1′',    attr: ['3','dest'],},
-  {bits: 2, name: 'funct2',     attr: ['2','C.ANDI'],},
-  {bits: 1, name: 'imm[5]',    attr: ['1','imm[5]'],},
-  {bits: 3, name: 'funct3', attr: ['3','C.ANDI'],},
-]}</pre>
+<img src="_images/svg-96adf533629add3edd308ef7105a8aecbfe20bf1.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1786,14 +1709,9 @@ expands to <code>andi rd′, rd′, imm</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="integer-register-register-operations"><a class="anchor" href="#integer-register-register-operations"></a>5.3. Integer Register-Register Operations</h3>
-<div id="c-cr" class="literalblock kroki-error">
+<div id="c-cr" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2', 'C2', 'C2'],},
-  {bits: 5, name: 'rs2',    attr: ['5', 'src≠0', 'src≠0'],},
-  {bits: 5, name: 'rd/rs1', attr: ['5', 'dest≠0', 'dest≠0'],},
-  {bits: 4, name: 'funct4', attr: ['4', 'C.MV', 'C.ADD'],},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-0522b2220c99b36c1e028b418dc079fa0b55d25c.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1829,15 +1747,9 @@ to register <em>rd</em>. C.ADD expands into <code>add rd, rd, rs2</code>. C.ADD 
 valid when <em>rs2</em>≠<code>x0</code>; the code points with <em>rs2</em>=<code>x0</code> correspond to the C.JALR
 and C.EBREAK instructions. The code points with <em>rs2</em>≠<code>x0</code> and <em>rd</em>=<code>x0</code> are HINTs.</p>
 </div>
-<div id="c-ca" class="literalblock kroki-error">
+<div id="c-ca" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op',     attr: ['2', 'C1', 'C1', 'C1', 'C1', 'C1', 'C1'],},
-  {bits: 3, name: 'rs2′',    attr: ['3', 'src', 'src', 'src', 'src', 'src', 'src'],},
-  {bits: 2, name: 'funct2', attr: ['2', 'C.AND', 'C.OR', 'C.XOR', 'C.SUB', 'C.ADDW', 'C.SUBW'],},
-  {bits: 3, name: 'rd′/rs1′', attr: ['3', 'dest', 'dest', 'dest', 'dest', 'dest', 'dest'],},
-  {bits: 6, name: 'funct6', attr: ['6', 'C.AND', 'C.OR', 'C.XOR', 'C.SUB', 'C.ADDW', 'C.SUBW'],},
-]}</pre>
+<img src="_images/svg-0ccc2817794606823407179191eb0fd1147858d9.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1904,15 +1816,9 @@ improvement in static and dynamic compression.</p>
 </div>
 <div class="sect2">
 <h3 id="defined-illegal-instruction"><a class="anchor" href="#defined-illegal-instruction"></a>5.4. Defined Illegal Instruction</h3>
-<div id="c-def-illegal-inst" class="literalblock kroki-error">
+<div id="c-def-illegal-inst" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: '0', attr: ['2','0'],},
-  {bits: 5, name: '0', attr: ['5','0'],},
-  {bits: 5, name: '0', attr: ['5','0'],},
-  {bits: 1, name: '0', attr: ['1','0'],},
-  {bits: 3, name: '0', attr: ['3','0'],},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-9cde54c08660055fa18c338b2e96302b49cb7a98.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1945,15 +1851,9 @@ non-existent memory regions.</p>
 </div>
 <div class="sect2">
 <h3 id="nop-instruction"><a class="anchor" href="#nop-instruction"></a>5.5. NOP Instruction</h3>
-<div id="c-nop-instr" class="literalblock kroki-error">
+<div id="c-nop-instr" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C1'],},
-  {bits: 5, name: 'imm[4:0]', attr: ['5','0'],},
-  {bits: 5, name: 'rd/rs1', attr: ['5','0'],},
-  {bits: 1, name: 'imm[5]', attr: ['1','0'],},
-  {bits: 3, name: 'funct3', attr: ['3','C.NOP'],},
-]}</pre>
+<img src="_images/svg-434d6eda5829ad04680d0622689ab6b207218d23.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -1968,13 +1868,9 @@ performance counters. <code>C.NOP</code> expands to <code>nop</code>. <code>C.NO
 </div>
 <div class="sect2">
 <h3 id="breakpoint-instruction"><a class="anchor" href="#breakpoint-instruction"></a>5.6. Breakpoint Instruction</h3>
-<div id="c-breakpoint-instr" class="literalblock kroki-error">
+<div id="c-breakpoint-instr" class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 2, name: 'op', attr: ['2','C2'],},
-  {bits: 10, name: '0', attr: ['10','0'],},
-  {bits: 4, name: 'funct4', attr: ['4','C.EBREAK'],},
-], config: {bits: 16}}</pre>
+<img src="_images/svg-27922b9dac22e8a5762388dc50030c283177d2db.svg" alt="svg">
 </div>
 </div>
 <div class="paragraph">
@@ -2265,379 +2161,23 @@ RV64</p></td>
 <div class="paragraph">
 <p><a href="#rvc-instr-table0">Figure 1</a>, <a href="#rvc-instr-table1">Figure 2</a>, and <a href="#rvc-instr-table2">Figure 3</a> list the RVC instructions.</p>
 </div>
-<div id="rvc-instr-table0" class="listingblock kroki-error">
-<div class="title">Instruction listing for RVC, Quadrant 0</div>
+<div id="rvc-instr-table0" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 35 )
-(def row-header-fn nil)
-(def left-margin 0)
-(def right-margin 40)
-(def boxes-per-row 23)
-(draw-column-headers {:labels (reverse ["" "" "" "" "" "" "" "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"])})
-(draw-box "000" {:span 3 :vertical-align "middle"})
-(draw-box "0" {:span 8})
-(draw-box "0" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "Illegal instruction" {:font-style "italic"}) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "000" {:span 3})
-(draw-box "uimm[5:4|9:6|2|3]" {:span 8})
-(draw-box (text "rd′" [:plain {:font-family "M+ 1p Fallback"}]) {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "C.ADDI4SPN" :math [:sub "(RES, uimm=0)"]) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "001" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[7:6]" {:font-size 16}) {:span 2})
-(draw-box "rd′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "C.FLD" {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "010" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[2|6]" {:font-size 16}) {:span 2})
-(draw-box "rd′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "C.LW" {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[2|6]" {:font-size 16}) {:span 2})
-(draw-box "rd′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "C.FLW" :math [:sub "(RV32)"]) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[7:6]" {:font-size 16}) {:span 2})
-(draw-box "rd′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "C.LD" :math [:sub "(RV64)"]) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "---" {:span 11})
-(draw-box "00" {:span 2})
-(draw-box (text "Reserved"  {:font-style "italic"}) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "101" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[7:6]" {:font-size 16}) {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "C.FSD" {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "110" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[2|6]" {:font-size 16}) {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "C.SW" {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "111" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[2|6]" {:font-size 16}) {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "C.FSW" :math [:sub "(RV32)"]) {:span 7 :text-anchor "start" :borders {}})
-
-(draw-box "111" {:span 3})
-(draw-box "uimm[5:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box (text "uimm[7:6]" {:font-size 16}) {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box (text "C.SD" :math [:sub "(RV64)"]) {:span 7 :text-anchor "start" :borders {}})</pre>
+<img src="_images/diag-016efc30f29d55077a9d9228e58006b2ad94c53c.svg" alt="Instruction listing for RVC, Quadrant 0">
 </div>
+<div class="title">Figure 1. Instruction listing for RVC, Quadrant 0</div>
 </div>
-<div id="rvc-instr-table1" class="listingblock kroki-error">
-<div class="title">Instruction listing for RVC, Quadrant 1</div>
+<div id="rvc-instr-table1" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-weight "bold" :font-family "M+ 1p Fallback"}])
-(def row-height 50 )
-(def row-header-fn nil)
-(def left-margin 0)
-(def right-margin 0)
-(def boxes-per-row 19)
-(def box-width 70)
-(draw-column-headers {:labels (reverse ["" "" "" "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"])})
-
-(draw-box "000" {:span 3})
-(draw-box "imm[5]" {:span 1})
-(draw-box "0" {:span 5})
-(draw-box "imm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.NOP" :math [:sub "(HINT, imm≠0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "000" {:span 3})
-(draw-box "imm[5]") {:span 1}
-(draw-box "rs1/rd≠0" {:span 5})
-(draw-box "imm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.ADDI" :math [:sub "(HINT, imm=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "001" {:span 3})
-(draw-box "imm[11|4|9:8|10|6|7|3:1|5]" {:span 11})
-(draw-box "01" {:span 2})
-(draw-box (text "C.JAL" :math [:sub "(RV32)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "001" {:span 3})
-(draw-box "imm[5]" {:span 1})
-(draw-box "rs1/rd≠0" {:span 5})
-(draw-box "imm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.ADDIW" :math [:sub "(RV64; RES, rd=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "010" {:span 3})
-(draw-box "imm[5]" {:span 1})
-(draw-box "rd̸=0" {:span 5})
-(draw-box "imm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.LI" :math [:sub "(HINT, rd=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box "imm[9]" {:span 1})
-(draw-box "2" {:span 5})
-(draw-box "imm[4|6|8:7|5]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.ADDI16SP" :math [:sub "(RES, imm=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box (text "imm[17]" {:font-width 11}) {:span 1})
-(draw-box "rd≠{0, 2}" {:span 5})
-(draw-box "imm[16:12]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.LUI" :math [:sub "(RES, imm=0; HINT, rd=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box (text "uimm[5]" {:font-width 11}) {:span 1})
-(draw-box "00" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "uimm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.SRLI" :math [:sub "(HINT, uimm=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box (text "uimm[5]" {:font-width 11}) {:span 1})
-(draw-box "01" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "uimm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box (text "C.SRAI" :math [:sub "(HINT, uimm=0)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "imm[5]" {:span 1})
-(draw-box "10" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "imm[4:0]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box "C.ANDI" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "C.SUB" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "C.XOR" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "10" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "C.OR" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "11" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "C.AND" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "00" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box (text "C.SUBW" :math [:sub "(RV64; RV32 RES)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "rs1ʹ/rdʹ" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box "rs2′" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box (text "C.ADDW" :math [:sub "(RV64; RV32 RES)"]) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "---" {:span 3})
-(draw-box "10" {:span 2})
-(draw-box "---" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box (text "Reserved" {:font-style "italic"}) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "11" {:span 2})
-(draw-box "---" {:span 3})
-(draw-box "11" {:span 2})
-(draw-box "---" {:span 3})
-(draw-box "01" {:span 2})
-(draw-box (text "Reserved" {:font-style "italic"}) {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "101" {:span 3})
-(draw-box "imm[11|4|9:8|10|6|7|3:1|5]" {:span 11})
-(draw-box "01" {:span 2})
-(draw-box "C.J" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "110" {:span 3})
-(draw-box "imm[8|4:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box "imm[7:6|2:1|5]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box "C.BEQZ" {:span 3 :text-anchor "start" :borders {}})
-
-(draw-box "111" {:span 3})
-(draw-box "imm[8|4:3]" {:span 3})
-(draw-box "rs1′" {:span 3})
-(draw-box "imm[7:6|2:1|5]" {:span 5})
-(draw-box "01" {:span 2})
-(draw-box "C.BNEZ" {:span 3 :text-anchor "start" :borders {}})</pre>
+<img src="_images/diag-8bc43af30ec4ff5b218b2d91f0784aac5bf56eda.svg" alt="Instruction listing for RVC, Quadrant 1">
 </div>
+<div class="title">Figure 2. Instruction listing for RVC, Quadrant 1</div>
 </div>
-<div id="rvc-instr-table2" class="listingblock kroki-error">
-<div class="title">Instruction listing for RVC, Quadrant 2</div>
+<div id="rvc-instr-table2" class="imageblock kroki">
 <div class="content">
-<pre>(defattrs :plain [:plain {:font-family "M+ 1p Fallback"}])
-(def row-height 50 )
-(def row-header-fn nil)
-(def left-margin 0)
-(def right-margin 40)
-(def boxes-per-row 22)
-(def box-width 70)
-(draw-column-headers {:labels (reverse ["" "" "" "" "" "" "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" "11" "12" "13" "14" "15"])})
-
-(draw-box "000" {:span 3})
-(draw-box (text "nzuimm[5]" {:font-size 16}) {:span 1})
-(draw-box "rs1/rd≠0" {:span 5})
-(draw-box "nzuimm[4:0]" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.SLLI" :math [:sub "(HINT, rd=0 or imm=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "001" {:span 3})
-(draw-box (text "uimm[5]" {:font-size 16}) {:span 1})
-(draw-box "rd" {:span 5})
-(draw-box "uimm[4:3|8:6]" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box "C.FLDSP" {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "010" {:span 3})
-(draw-box (text "uimm[5]" {:font-size 16}) {:span 1})
-(draw-box "rd≠0" {:span 5})
-(draw-box "uimm[4:2|7:6]" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.LWSP" :math [:sub "(RES, rd=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box (text "uimm[5]" {:font-size 16}) {:span 1})
-(draw-box "rd" {:span 5})
-(draw-box "uimm[4:2|7:6]" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.FLWSP" :math [:sub "(RV32)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "011" {:span 3})
-(draw-box (text "uimm[5]" {:font-size 16}) {:span 1})
-(draw-box "rd≠0" {:span 5})
-(draw-box "uimm[4:3|8:6]" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.LDSP" :math [:sub "(RV64; RES, rd=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "rs1≠0" {:span 5})
-(draw-box "0" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.JR" :math [:sub "(RES, rs1=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "0" {:span 1})
-(draw-box "rd≠0" {:span 5})
-(draw-box "rs2≠0" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.MV" :math [:sub "(HINT, rd=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "0" {:span 5})
-(draw-box "0" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box "C.EBREAK" {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "rs1≠0" {:span 5})
-(draw-box "0" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box "C.JALR" {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "100" {:span 3})
-(draw-box "1" {:span 1})
-(draw-box "rs1/rd≠0" {:span 5})
-(draw-box "rs2≠0" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.ADD" :math [:sub "(HINT, rd=0)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "101" {:span 3})
-(draw-box "uimm[5:3|8:6]" {:span 6})
-(draw-box "rs2" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box "C.FSDSP" {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "110" {:span 3})
-(draw-box "uimm[5:2|7:6]" {:span 6})
-(draw-box "rs2" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box "C.SWSP" {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "111" {:span 3})
-(draw-box "uimm[5:2|7:6]" {:span 6})
-(draw-box "rs2" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.FSWSP" :math [:sub "(RV32)"]) {:span 6 :text-anchor "start" :borders {}})
-
-(draw-box "111" {:span 3})
-(draw-box "uimm[5:3|8:6]" {:span 6})
-(draw-box "rs2" {:span 5})
-(draw-box "10" {:span 2})
-(draw-box (text "C.SDSP" :math [:sub "(RV64)"]) {:span 6 :text-anchor "start" :borders {}})</pre>
+<img src="_images/diag-9d1c50ff33aea0a0739fc133b72a50e49e5f67a2.svg" alt="Instruction listing for RVC, Quadrant 2">
 </div>
+<div class="title">Figure 3. Instruction listing for RVC, Quadrant 2</div>
 </div>
 </div>
 </div>

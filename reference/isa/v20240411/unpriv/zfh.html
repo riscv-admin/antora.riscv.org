@@ -680,27 +680,14 @@ half<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: vi
 <p>New 16-bit variants of LOAD-FP and STORE-FP instructions are added,
 encoded with a new value for the funct3 width field.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'LOAD-FP'],  type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5', 'dest'],     type: 2},
-  {bits: 3,  name: 'width',     attr: ['3', 'H'],    type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'base'],     type: 4},
-  {bits: 12, name: 'imm[11:0]', attr: ['12', 'offset[11:0]'],   type: 3},
-]}</pre>
+<img src="_images/svg-65665b9146952e876673e2ae3f66bb56a14a5f26.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7', 'STORE-FP'], type: 8},
-  {bits: 5,  name: 'imm[4:0]',  attr: ['5', 'offset[4:0]'],   type: 3},
-  {bits: 3,  name: 'width',     attr: ['3', 'H'],    type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5', 'base'],     type: 4},
-  {bits: 5,  name: 'rs2',       attr: ['5', 'src'],      type: 4},
-  {bits: 7, name: 'imm[11:5]', attr: ['7', 'offset[11:5]'],   type: 3},
-]}</pre>
+<img src="_images/svg-a6d7d3bf047c2fd3db64c6b14d96b19fdb1d056a.svg" alt="svg">
 </div>
 </div>
 <div id="sp-load-store" class="paragraph">
@@ -763,30 +750,14 @@ instructions, as shown in <a href="#tab:fpextfmth">Format field encoding.</a>.</
 analogously to their single-precision counterparts, but operate on
 half-precision operands and produce half-precision results.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP','OP-FP','OP-FP'],    type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest','dest','dest','dest'],     type: 2},
-  {bits: 3, name: 'rm',  attr: ['3','RM', 'RM', 'MIN/MAX', 'RM'],       type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5','src1', 'src1', 'src1', 'src'],     type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','src2', 'src2', 'src2', '0'],     type: 4},
-  {bits: 2, name: 'fmt',    attr: ['2','H', 'H', 'H', 'H'],        type: 8},
-  {bits: 5, name: 'funct5', attr: ['5', 'FADD/FSUB', 'FMUL/FDIV', 'FMIN-MAX', 'FSQRT'], type: 8},
-]}</pre>
+<img src="_images/svg-98448abcad753418c8d5706f1c76978407dfe233.svg" alt="svg">
 </div>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','F[N]MADD/F[N]MSUB'],    type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest'],     type: 2},
-  {bits: 3, name: 'rm',     attr: ['3','RM'],       type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5','src1'],     type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','src2'],     type: 4},
-  {bits: 2, name: 'fmt',    attr: ['2','H'],        type: 8},
-  {bits: 5, name: 'rs3', attr: ['5','src3'], type: 4},
-]}</pre>
+<img src="_images/svg-8ec45853359184067f6f8141bfefe502d1681bee.svg" alt="svg">
 </div>
 </div>
 </div>
@@ -806,17 +777,9 @@ FCVT.WU.H, FCVT.LU.H, FCVT.H.WU, and FCVT.H.LU variants convert to or
 from unsigned integer values. FCVT.L[U].H and FCVT.H.L[U] are RV64-only
 instructions.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7','OP-FP','OP-FP'],  type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5','dest','dest'],     type: 2},
-  {bits: 3,  name: 'rm',        attr: ['3','RM','RM'],        type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5','src','src'],     type: 4},
-  {bits: 5,  name: 'rs2',       attr: ['5','W[U]/L[U]','W[U]/L[U]'],   type: 3},
-  {bits: 2,  name: 'fmt',       attr: ['2','H', 'H'],   type: 2},
-  {bits: 5,  name: 'funct5',    attr: ['5','FCVT.int.H','FCVT.H.int'],    type: 8},
-]}</pre>
+<img src="_images/svg-66b2b35a316a4c97955064baf111ec97cb20d46e.svg" alt="svg">
 </div>
 </div>
 <div id="half-prec-conv-and-mv" class="paragraph">
@@ -832,17 +795,9 @@ is present, FCVT.Q.H or FCVT.H.Q converts a half-precision
 floating-point number to a quad-precision floating-point number, or
 vice-versa, respectively.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7,  name: 'opcode',    attr: ['7','OP-FP','OP-FP','OP-FP','OP-FP','OP-FP','OP-FP'],  type: 8},
-  {bits: 5,  name: 'rd',        attr: ['5','dest','dest','dest','dest','dest','dest'],     type: 2},
-  {bits: 3,  name: 'rm',        attr: ['3','RM','RM','RM','RM','RM','RM'],        type: 8},
-  {bits: 5,  name: 'rs1',       attr: ['5','src','src','src','src','src','SRC'],     type: 4},
-  {bits: 5,  name: 'rs2',       attr: ['5','H','S','H','D','H','Q'],   type: 3},
-  {bits: 2,  name: 'fmt',       attr: ['2','S','H','D','H','Q','H'],   type: 2},
-  {bits: 5,  name: 'funct5',    attr: ['5','FCVT.S.H','FCVT.H.S','FCVT.D.H','FCVT.H.D','FCVT.Q.H','FCVT.H.Q'],    type: 8},
-]}</pre>
+<img src="_images/svg-a29299108f6327276b08c90cf09231e38536c788.svg" alt="svg">
 </div>
 </div>
 <div id="half-prec-flpt-to-flpt-conv" class="paragraph">
@@ -850,17 +805,9 @@ vice-versa, respectively.</p>
 FSGNJN.H, and FSGNJX.H are defined analogously to the single-precision
 sign-injection instruction.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP'],  type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest'],   type: 2},
-  {bits: 3, name: 'funct3',  attr: ['3','J[N]/JX'], type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5','src1'],   type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','src2'],   type: 4},
-  {bits: 2, name: 'fmt',    attr: ['2','H'],      type: 8},
-  {bits: 5, name: 'funct5', attr: ['5','FSGNJ'],  type: 8},
-]}</pre>
+<img src="_images/svg-fa0548b02214223da1720779f91555dff6f2031a.svg" alt="svg">
 </div>
 </div>
 <div id="flt-to-flt-sgn-inj-instr" class="paragraph">
@@ -879,17 +826,9 @@ floating-point register <em>rd</em>, NaN-boxing the result.</p>
 <p>FMV.X.H and FMV.H.X do not modify the bits being transferred; in
 particular, the payloads of non-canonical NaNs are preserved.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP','OP-FP'],  type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest','dest'],   type: 2},
-  {bits: 3, name: 'rm',  attr: ['3','000','000'], type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5','src','src'],   type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','0','0'],   type: 4},
-  {bits: 2, name: 'fmt',    attr: ['2','H','H'],      type: 8},
-  {bits: 5, name: 'funct5', attr: ['5','FMV.X.H','FMV.H.X'],  type: 8},
-]}</pre>
+<img src="_images/svg-38a319f07bc00f4fb73f3853df814a2bf5e93b5b.svg" alt="svg">
 </div>
 </div>
 </div>
@@ -902,17 +841,9 @@ particular, the payloads of non-canonical NaNs are preserved.</p>
 analogously to their single-precision counterparts, but operate on
 half-precision operands.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7','OP-FP'],  type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest'],   type: 2},
-  {bits: 3, name: 'rm',  attr: ['3','EQ/LT/LE'], type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5','src1'],   type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','src2'],   type: 4},
-  {bits: 2, name: 'fmt',    attr: ['2','H'],      type: 8},
-  {bits: 5, name: 'funct5', attr: ['5','FCMP'],  type: 8},
-]}</pre>
+<img src="_images/svg-3265417115c97ab4f3b6c7019f083691834557fe.svg" alt="svg">
 </div>
 </div>
 </div>
@@ -925,17 +856,9 @@ half-precision operands.</p>
 defined analogously to its single-precision counterpart, but operates on
 half-precision operands.</p>
 </div>
-<div class="literalblock kroki-error">
+<div class="imageblock kroki">
 <div class="content">
-<pre>{reg: [
-  {bits: 7, name: 'opcode', attr: ['7', 'OP-FP'],  type: 8},
-  {bits: 5, name: 'rd',     attr: ['5','dest'],   type: 2},
-  {bits: 3, name: 'rm',     attr: ['3','001'],        type: 8},
-  {bits: 5, name: 'rs1',    attr: ['5', 'src'],    type: 4},
-  {bits: 5, name: 'rs2',    attr: ['5','0'],        type: 8},
-  {bits: 2, name: 'fmt',    attr: ['2','H'],      type: 8},
-  {bits: 5, name: 'funct5', attr: ['5','FCLASS'], type: 8},
-]}</pre>
+<img src="_images/svg-1b8fcb81ed6b7350d615e6de6b6c23d8573b95f5.svg" alt="svg">
 </div>
 </div>
 </div>
