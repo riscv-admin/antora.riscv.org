@@ -637,7 +637,7 @@
 </div>
 <h1 id="page-title" class="page">Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</h1>
 <div class="sect1">
-<h2 id="changelog"><a class="anchor" href="#changelog"></a>1. Changelog</h2>
+<h2 id="32-1-changelog"><a class="anchor" href="#32-1-changelog"></a>32.1. Changelog</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -665,7 +665,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_introduction"><a class="anchor" href="#crypto_scalar_introduction"></a>2. Introduction</h2>
+<h2 id="crypto_scalar_introduction"><a class="anchor" href="#crypto_scalar_introduction"></a>32.2. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This document describes the <em>scalar</em> cryptography
@@ -680,11 +680,11 @@ vector unit.</p>
 <div class="paragraph">
 <p>This document also describes the architectural interface to an
 Entropy Source, which can be used to generate cryptographic secrets.
-This is found in <a href="#crypto_scalar_es">Entropy Source</a>.</p>
+This is found in <a href="#crypto_scalar_es">32.5. Entropy Source</a>.</p>
 </div>
 <div class="paragraph">
 <p>It also contains a mechanism allowing core implementers to provide
-<em>"Constant Time Execution"</em> guarantees in <a href="#crypto_scalar_zkt">Data Independent Execution Latency Subset: Zkt</a>.</p>
+<em>"Constant Time Execution"</em> guarantees in <a href="#crypto_scalar_zkt">32.6. Data Independent Execution Latency Subset: Zkt</a>.</p>
 </div>
 <div class="paragraph">
 <p>A companion document <em>Volume II: Vector Instructions</em>, describes
@@ -694,7 +694,7 @@ waiting for the base Vector extension to stabilise.
 We expect to pick up this work in earnest in Q4-2021 or Q1-2022.</p>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_audience"><a class="anchor" href="#crypto_scalar_audience"></a>2.1. Intended Audience</h3>
+<h3 id="crypto_scalar_audience"><a class="anchor" href="#crypto_scalar_audience"></a>32.2.1. Intended Audience</h3>
 <div class="paragraph">
 <p>Cryptography is a specialised subject, requiring people with many different
 backgrounds to cooperate in its secure and efficient implementation.
@@ -723,9 +723,9 @@ They should understand fairly obviously the motivations for the
 instructions we include, and be familiar with most of the algorithms
 and outside standards to which we refer.
 We expect the sections on constant time execution
-(<a href="#crypto_scalar_zkt">Data Independent Execution Latency Subset: Zkt</a>)
+(<a href="#crypto_scalar_zkt">32.6. Data Independent Execution Latency Subset: Zkt</a>)
 and the entropy source
-(<a href="#crypto_scalar_es">Entropy Source</a>)
+(<a href="#crypto_scalar_es">32.5. Entropy Source</a>)
 to be chiefly understood with their help.</p>
 </dd>
 <dt class="hdlist1">Computer architects</dt>
@@ -767,7 +767,7 @@ but they are the ones we considered most while writing it.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_sail_specifications"><a class="anchor" href="#crypto_scalar_sail_specifications"></a>2.2. Sail Specifications</h3>
+<h3 id="crypto_scalar_sail_specifications"><a class="anchor" href="#crypto_scalar_sail_specifications"></a>32.2.2. Sail Specifications</h3>
 <div class="paragraph">
 <p>RISC-V maintains a
 <a href="https://github.com/riscv/sail-riscv">formal model</a>
@@ -789,7 +789,7 @@ Each instruction is accompanied by its expression in Sail, and includes
 calls to supporting functions which are too verbose to include directly
 in the specification.
 This supporting code is listed in
-<a href="#crypto_scalar_appx_sail">Supporting Sail Code</a>.
+<a href="#crypto_scalar_appx_sail">32.10. Supporting Sail Code</a>.
 The
 <a href="https://github.com/rems-project/sail/blob/sail2/manual.pdf">Sail Manual</a>
 is recommended reading in order to best understand the code snippets.</p>
@@ -802,7 +802,7 @@ for the complete model.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_policies"><a class="anchor" href="#crypto_scalar_policies"></a>2.3. Policies</h3>
+<h3 id="crypto_scalar_policies"><a class="anchor" href="#crypto_scalar_policies"></a>32.2.3. Policies</h3>
 <div class="paragraph">
 <p>In creating this proposal, we tried to adhere to the following
 policies:</p>
@@ -867,7 +867,7 @@ can implement instructions in a power/EM side-channel resistant way.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_extensions"><a class="anchor" href="#crypto_scalar_extensions"></a>3. Extensions Overview</h2>
+<h2 id="crypto_scalar_extensions"><a class="anchor" href="#crypto_scalar_extensions"></a>32.3. Extensions Overview</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The group of extensions introduced by the Scalar Cryptography Instruction Set
@@ -916,7 +916,7 @@ protocols, while ShangMi ciphers are required for use in China.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>3.1. <code>Zbkb</code> - Bitmanip instructions for Cryptography</h3>
+<h3 id="zbkb"><a class="anchor" href="#zbkb"></a>32.3.1. <code>Zbkb</code> - Bitmanip instructions for Cryptography</h3>
 <div class="paragraph">
 <p>These are a subset of the Bitmanipulation Extension <code>Zbb</code> which are
 particularly useful for Cryptography.</p>
@@ -1067,7 +1067,7 @@ and Bitmanip are being rapidly iterated on prior to public review.
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>3.2. <code>Zbkc</code> - Carry-less multiply instructions</h3>
+<h3 id="zbkc"><a class="anchor" href="#zbkc"></a>32.3.2. <code>Zbkc</code> - Carry-less multiply instructions</h3>
 <div class="paragraph">
 <p>Constant time carry-less multiply for Galois/Counter Mode.
 These are separated from the <a href="#zbkb">Zbkb</a> because they
@@ -1130,7 +1130,7 @@ and Bitmanip are being rapidly iterated on prior to public review.
 </table>
 </div>
 <div class="sect2">
-<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>3.3. <code>Zbkx</code> - Crossbar permutation instructions</h3>
+<h3 id="zbkx"><a class="anchor" href="#zbkx"></a>32.3.3. <code>Zbkx</code> - Crossbar permutation instructions</h3>
 <div class="paragraph">
 <p>These instructions are useful for implementing SBoxes in constant time, and
 potentially with DPA protections.
@@ -1193,7 +1193,7 @@ and Bitmanip are being rapidly iterated on prior to public review.
 </table>
 </div>
 <div class="sect2">
-<h3 id="zknd"><a class="anchor" href="#zknd"></a>3.4. <code>Zknd</code> - NIST Suite: AES Decryption</h3>
+<h3 id="zknd"><a class="anchor" href="#zknd"></a>32.3.4. <code>Zknd</code> - NIST Suite: AES Decryption</h3>
 <div class="paragraph">
 <p>Instructions for accelerating the decryption and key-schedule functions of
 the AES block cipher.</p>
@@ -1273,7 +1273,7 @@ present in both the <a href="#zknd">Zknd</a> and <a href="#zkne">Zkne</a> extens
 </div>
 </div>
 <div class="sect2">
-<h3 id="zkne"><a class="anchor" href="#zkne"></a>3.5. <code>Zkne</code> - NIST Suite: AES Encryption</h3>
+<h3 id="zkne"><a class="anchor" href="#zkne"></a>32.3.5. <code>Zkne</code> - NIST Suite: AES Encryption</h3>
 <div class="paragraph">
 <p>Instructions for accelerating the encryption and key-schedule functions of
 the AES block cipher.</p>
@@ -1350,7 +1350,7 @@ instructions are present in both the <a href="#zknd">Zknd</a> and <a href="#zkne
 </div>
 </div>
 <div class="sect2">
-<h3 id="zknh"><a class="anchor" href="#zknh"></a>3.6. <code>Zknh</code> - NIST Suite: Hash Function Instructions</h3>
+<h3 id="zknh"><a class="anchor" href="#zknh"></a>32.3.6. <code>Zknh</code> - NIST Suite: Hash Function Instructions</h3>
 <div class="paragraph">
 <p>Instructions for accelerating the SHA2 family of cryptographic hash functions,
 as specified in [<a href="../biblio/bibliography.html#bib-nist:fips:180:4" class="xref page">30</a>].</p>
@@ -1459,7 +1459,7 @@ as specified in [<a href="../biblio/bibliography.html#bib-nist:fips:180:4" class
 </table>
 </div>
 <div class="sect2">
-<h3 id="zksed"><a class="anchor" href="#zksed"></a>3.7. <code>Zksed</code> - ShangMi Suite: SM4 Block Cipher Instructions</h3>
+<h3 id="zksed"><a class="anchor" href="#zksed"></a>32.3.7. <code>Zksed</code> - ShangMi Suite: SM4 Block Cipher Instructions</h3>
 <div class="paragraph">
 <p>Instructions for accelerating the SM4 Block Cipher.
 Note that unlike AES, this cipher uses the same core operation for
@@ -1498,7 +1498,7 @@ extension for it.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zksh"><a class="anchor" href="#zksh"></a>3.8. <code>Zksh</code> - ShangMi Suite: SM3 Hash Function Instructions</h3>
+<h3 id="zksh"><a class="anchor" href="#zksh"></a>32.3.8. <code>Zksh</code> - ShangMi Suite: SM3 Hash Function Instructions</h3>
 <div class="paragraph">
 <p>Instructions for accelerating the SM3 hash function.</p>
 </div>
@@ -1534,20 +1534,20 @@ extension for it.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="zkr"><a class="anchor" href="#zkr"></a>3.9. <code>Zkr</code> - Entropy Source Extension</h3>
+<h3 id="zkr"><a class="anchor" href="#zkr"></a>32.3.9. <code>Zkr</code> - Entropy Source Extension</h3>
 <div class="paragraph">
 <p>The entropy source extension defines the <code>seed</code> CSR at address <code>0x015</code>.
 This CSR provides up to 16 physical <code>entropy</code> bits that can be used to
 seed cryptographic random bit generators.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="#crypto_scalar_es">Entropy Source</a> for the normative specification and access control
-notes. <a href="#crypto_scalar_appx_es">Entropy Source Rationale and Recommendations</a> contains design rationale and further
+<p>See <a href="#crypto_scalar_es">32.5. Entropy Source</a> for the normative specification and access control
+notes. <a href="#crypto_scalar_appx_es">32.8. Entropy Source Rationale and Recommendations</a> contains design rationale and further
 recommendations to implementers.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="zkn"><a class="anchor" href="#zkn"></a>3.10. <code>Zkn</code> - NIST Algorithm Suite</h3>
+<h3 id="zkn"><a class="anchor" href="#zkn"></a>32.3.10. <code>Zkn</code> - NIST Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -1594,7 +1594,7 @@ recommendations to implementers.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="zks"><a class="anchor" href="#zks"></a>3.11. <code>Zks</code> - ShangMi Algorithm Suite</h3>
+<h3 id="zks"><a class="anchor" href="#zks"></a>32.3.11. <code>Zks</code> - ShangMi Algorithm Suite</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -1637,7 +1637,7 @@ recommendations to implementers.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="zk"><a class="anchor" href="#zk"></a>3.12. <code>Zk</code> - Standard scalar cryptography extension</h3>
+<h3 id="zk"><a class="anchor" href="#zk"></a>32.3.12. <code>Zk</code> - Standard scalar cryptography extension</h3>
 <div class="paragraph">
 <p>This extension is shorthand for the following set of other extensions:</p>
 </div>
@@ -1672,23 +1672,23 @@ recommendations to implementers.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="zkt-data-independent-execution-latency"><a class="anchor" href="#zkt-data-independent-execution-latency"></a>3.13. <code>Zkt</code> - Data Independent Execution Latency</h3>
+<h3 id="32-3-13-zkt-data-independent-execution-latency"><a class="anchor" href="#32-3-13-zkt-data-independent-execution-latency"></a>32.3.13. <code>Zkt</code> - Data Independent Execution Latency</h3>
 <div class="paragraph">
 <p>This extension allows CPU implementers to indicate to
 cryptographic software developers that a subset of RISC-V instructions
 are guaranteed to be implemented such that their execution latency
 is independent of the data values they operate on.
 A complete description of this extension is found in
-<a href="#crypto_scalar_zkt">Data Independent Execution Latency Subset: Zkt</a>.</p>
+<a href="#crypto_scalar_zkt">32.6. Data Independent Execution Latency Subset: Zkt</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_insns"><a class="anchor" href="#crypto_scalar_insns"></a>4. Instructions</h2>
+<h2 id="crypto_scalar_insns"><a class="anchor" href="#crypto_scalar_insns"></a>32.4. Instructions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-aes32dsi"><a class="anchor" href="#insns-aes32dsi"></a>4.1. aes32dsi</h3>
+<h3 id="insns-aes32dsi"><a class="anchor" href="#insns-aes32dsi"></a>32.4.1. aes32dsi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1770,7 +1770,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes32dsmi"><a class="anchor" href="#insns-aes32dsmi"></a>4.2. aes32dsmi</h3>
+<h3 id="insns-aes32dsmi"><a class="anchor" href="#insns-aes32dsmi"></a>32.4.2. aes32dsmi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1853,7 +1853,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes32esi"><a class="anchor" href="#insns-aes32esi"></a>4.3. aes32esi</h3>
+<h3 id="insns-aes32esi"><a class="anchor" href="#insns-aes32esi"></a>32.4.3. aes32esi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -1935,7 +1935,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes32esmi"><a class="anchor" href="#insns-aes32esmi"></a>4.4. aes32esmi</h3>
+<h3 id="insns-aes32esmi"><a class="anchor" href="#insns-aes32esmi"></a>32.4.4. aes32esmi</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2018,7 +2018,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64ds"><a class="anchor" href="#insns-aes64ds"></a>4.5. aes64ds</h3>
+<h3 id="insns-aes64ds"><a class="anchor" href="#insns-aes64ds"></a>32.4.5. aes64ds</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2129,7 +2129,7 @@ aes64ds t3, t1, t0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64dsm"><a class="anchor" href="#insns-aes64dsm"></a>4.6. aes64dsm</h3>
+<h3 id="insns-aes64dsm"><a class="anchor" href="#insns-aes64dsm"></a>32.4.6. aes64dsm</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2241,7 +2241,7 @@ aes64dsm t3, t1, t0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64es"><a class="anchor" href="#insns-aes64es"></a>4.7. aes64es</h3>
+<h3 id="insns-aes64es"><a class="anchor" href="#insns-aes64es"></a>32.4.7. aes64es</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2352,7 +2352,7 @@ aes64es t3, t1, t0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64esm"><a class="anchor" href="#insns-aes64esm"></a>4.8. aes64esm</h3>
+<h3 id="insns-aes64esm"><a class="anchor" href="#insns-aes64esm"></a>32.4.8. aes64esm</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2464,7 +2464,7 @@ aes64esm t3, t1, t0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64im"><a class="anchor" href="#insns-aes64im"></a>4.9. aes64im</h3>
+<h3 id="insns-aes64im"><a class="anchor" href="#insns-aes64im"></a>32.4.9. aes64im</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2549,7 +2549,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64ks1i"><a class="anchor" href="#insns-aes64ks1i"></a>4.10. aes64ks1i</h3>
+<h3 id="insns-aes64ks1i"><a class="anchor" href="#insns-aes64ks1i"></a>32.4.10. aes64ks1i</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2644,7 +2644,7 @@ The values <code>0xB..0xF</code> are reserved.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-aes64ks2"><a class="anchor" href="#insns-aes64ks2"></a>4.11. aes64ks2</h3>
+<h3 id="insns-aes64ks2"><a class="anchor" href="#insns-aes64ks2"></a>32.4.11. aes64ks2</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2730,7 +2730,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>4.12. andn</h3>
+<h3 id="insns-andn"><a class="anchor" href="#insns-andn"></a>32.4.12. andn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2797,7 +2797,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 <div class="paragraph">
 <p>(<a href="b-st-ext.html#insns-brev8" class="xref page">b-st-ext.adoc#insns-brev8</a>,reftext="Reverse bits in bytes")
-=== brev8</p>
+=== 32.4.13. brev8</p>
 </div>
 <div class="dlist">
 <dl>
@@ -2885,7 +2885,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>4.13. clmul</h3>
+<h3 id="insns-clmul"><a class="anchor" href="#insns-clmul"></a>32.4.14. clmul</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2962,7 +2962,7 @@ X[rd] = output</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>4.14. clmulh</h3>
+<h3 id="insns-clmulh"><a class="anchor" href="#insns-clmulh"></a>32.4.15. clmulh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3039,7 +3039,7 @@ X[rd] = output</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>4.15. orn</h3>
+<h3 id="insns-orn"><a class="anchor" href="#insns-orn"></a>32.4.16. orn</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3106,7 +3106,7 @@ X[rd] = output</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>4.16. pack</h3>
+<h3 id="insns-pack"><a class="anchor" href="#insns-pack"></a>32.4.17. pack</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3171,7 +3171,7 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>4.17. packh</h3>
+<h3 id="insns-packh"><a class="anchor" href="#insns-packh"></a>32.4.18. packh</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3237,7 +3237,7 @@ X(rd) = EXTZ(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>4.18. packw</h3>
+<h3 id="insns-packw"><a class="anchor" href="#insns-packw"></a>32.4.19. packw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3304,7 +3304,7 @@ X(rd) = EXTS(hi_half @ lo_half);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>4.19. rev8</h3>
+<h3 id="insns-rev8"><a class="anchor" href="#insns-rev8"></a>32.4.20. rev8</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3423,7 +3423,7 @@ XLEN-32 and XLEN-16, respectively.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>4.20. rol</h3>
+<h3 id="insns-rol"><a class="anchor" href="#insns-rol"></a>32.4.21. rol</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3495,7 +3495,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>4.21. rolw</h3>
+<h3 id="insns-rolw"><a class="anchor" href="#insns-rolw"></a>32.4.22. rolw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3566,7 +3566,7 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>4.22. ror</h3>
+<h3 id="insns-ror"><a class="anchor" href="#insns-ror"></a>32.4.23. ror</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3638,7 +3638,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>4.23. rori</h3>
+<h3 id="insns-rori"><a class="anchor" href="#insns-rori"></a>32.4.24. rori</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3721,7 +3721,7 @@ X(rd) = result;</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>4.24. roriw</h3>
+<h3 id="insns-roriw"><a class="anchor" href="#insns-roriw"></a>32.4.25. roriw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3794,7 +3794,7 @@ X(rd) = EXTS(result[31..0]);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>4.25. rorw</h3>
+<h3 id="insns-rorw"><a class="anchor" href="#insns-rorw"></a>32.4.26. rorw</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3865,7 +3865,7 @@ X(rd) = EXTS(result);</code></pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha256sig0"><a class="anchor" href="#insns-sha256sig0"></a>4.26. sha256sig0</h3>
+<h3 id="insns-sha256sig0"><a class="anchor" href="#insns-sha256sig0"></a>32.4.27. sha256sig0</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -3951,7 +3951,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha256sig1"><a class="anchor" href="#insns-sha256sig1"></a>4.27. sha256sig1</h3>
+<h3 id="insns-sha256sig1"><a class="anchor" href="#insns-sha256sig1"></a>32.4.28. sha256sig1</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4037,7 +4037,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha256sum0"><a class="anchor" href="#insns-sha256sum0"></a>4.28. sha256sum0</h3>
+<h3 id="insns-sha256sum0"><a class="anchor" href="#insns-sha256sum0"></a>32.4.29. sha256sum0</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4123,7 +4123,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha256sum1"><a class="anchor" href="#insns-sha256sum1"></a>4.29. sha256sum1</h3>
+<h3 id="insns-sha256sum1"><a class="anchor" href="#insns-sha256sum1"></a>32.4.30. sha256sum1</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4209,7 +4209,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig0h"><a class="anchor" href="#insns-sha512sig0h"></a>4.30. sha512sig0h</h3>
+<h3 id="insns-sha512sig0h"><a class="anchor" href="#insns-sha512sig0h"></a>32.4.31. sha512sig0h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4318,7 +4318,7 @@ sha512sig0h    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig0l"><a class="anchor" href="#insns-sha512sig0l"></a>4.31. sha512sig0l</h3>
+<h3 id="insns-sha512sig0l"><a class="anchor" href="#insns-sha512sig0l"></a>32.4.32. sha512sig0l</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4427,7 +4427,7 @@ sha512sig0h    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig1h"><a class="anchor" href="#insns-sha512sig1h"></a>4.32. sha512sig1h</h3>
+<h3 id="insns-sha512sig1h"><a class="anchor" href="#insns-sha512sig1h"></a>32.4.33. sha512sig1h</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4536,7 +4536,7 @@ sha512sig1h    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig1l"><a class="anchor" href="#insns-sha512sig1l"></a>4.33. sha512sig1l</h3>
+<h3 id="insns-sha512sig1l"><a class="anchor" href="#insns-sha512sig1l"></a>32.4.34. sha512sig1l</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4645,7 +4645,7 @@ sha512sig1h    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sum0r"><a class="anchor" href="#insns-sha512sum0r"></a>4.34. sha512sum0r</h3>
+<h3 id="insns-sha512sum0r"><a class="anchor" href="#insns-sha512sum0r"></a>32.4.35. sha512sum0r</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4756,7 +4756,7 @@ sha512sum0r    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sum1r"><a class="anchor" href="#insns-sha512sum1r"></a>4.35. sha512sum1r</h3>
+<h3 id="insns-sha512sum1r"><a class="anchor" href="#insns-sha512sum1r"></a>32.4.36. sha512sum1r</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4867,7 +4867,7 @@ sha512sum1r    t1, a1, a0</pre>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig0"><a class="anchor" href="#insns-sha512sig0"></a>4.36. sha512sig0</h3>
+<h3 id="insns-sha512sig0"><a class="anchor" href="#insns-sha512sig0"></a>32.4.37. sha512sig0</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -4947,7 +4947,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sig1"><a class="anchor" href="#insns-sha512sig1"></a>4.37. sha512sig1</h3>
+<h3 id="insns-sha512sig1"><a class="anchor" href="#insns-sha512sig1"></a>32.4.38. sha512sig1</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5027,7 +5027,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sum0"><a class="anchor" href="#insns-sha512sum0"></a>4.38. sha512sum0</h3>
+<h3 id="insns-sha512sum0"><a class="anchor" href="#insns-sha512sum0"></a>32.4.39. sha512sum0</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5107,7 +5107,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sha512sum1"><a class="anchor" href="#insns-sha512sum1"></a>4.39. sha512sum1</h3>
+<h3 id="insns-sha512sum1"><a class="anchor" href="#insns-sha512sum1"></a>32.4.40. sha512sum1</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5187,7 +5187,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sm3p0"><a class="anchor" href="#insns-sm3p0"></a>4.40. sm3p0</h3>
+<h3 id="insns-sm3p0"><a class="anchor" href="#insns-sm3p0"></a>32.4.41. sm3p0</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5282,7 +5282,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sm3p1"><a class="anchor" href="#insns-sm3p1"></a>4.41. sm3p1</h3>
+<h3 id="insns-sm3p1"><a class="anchor" href="#insns-sm3p1"></a>32.4.42. sm3p1</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5377,7 +5377,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sm4ed"><a class="anchor" href="#insns-sm4ed"></a>4.42. sm4ed</h3>
+<h3 id="insns-sm4ed"><a class="anchor" href="#insns-sm4ed"></a>32.4.43. sm4ed</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5464,7 +5464,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-sm4ks"><a class="anchor" href="#insns-sm4ks"></a>4.43. sm4ks</h3>
+<h3 id="insns-sm4ks"><a class="anchor" href="#insns-sm4ks"></a>32.4.44. sm4ks</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5550,7 +5550,7 @@ latency does not depend on the data being operated on.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>4.44. unzip</h3>
+<h3 id="insns-unzip"><a class="anchor" href="#insns-unzip"></a>32.4.45. unzip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5636,7 +5636,7 @@ directly.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>4.45. xnor</h3>
+<h3 id="insns-xnor"><a class="anchor" href="#insns-xnor"></a>32.4.46. xnor</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5703,7 +5703,7 @@ directly.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xperm8"><a class="anchor" href="#insns-xperm8"></a>4.46. xperm8</h3>
+<h3 id="insns-xperm8"><a class="anchor" href="#insns-xperm8"></a>32.4.47. xperm8</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5778,7 +5778,7 @@ RETIRE_SUCCESS
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-xperm4"><a class="anchor" href="#insns-xperm4"></a>4.47. xperm4</h3>
+<h3 id="insns-xperm4"><a class="anchor" href="#insns-xperm4"></a>32.4.48. xperm4</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5853,7 +5853,7 @@ RETIRE_SUCCESS
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>4.48. zip</h3>
+<h3 id="insns-zip"><a class="anchor" href="#insns-zip"></a>32.4.49. zip</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -5942,7 +5942,7 @@ directly.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_es"><a class="anchor" href="#crypto_scalar_es"></a>5. Entropy Source</h2>
+<h2 id="crypto_scalar_es"><a class="anchor" href="#crypto_scalar_es"></a>32.5. Entropy Source</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The <code>seed</code> CSR provides an interface to a NIST SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>]
@@ -5957,12 +5957,12 @@ use it to seed a cryptographically secure Deterministic Random Bit Generator
 (DRBG) such as AES-based <code>CTR_DRBG</code> [<a href="../biblio/bibliography.html#bib-bake15" class="xref page">39</a>].
 The combination of an Entropy Source, Conditioning, and a DRBG can be used
 to create random bits securely [<a href="../biblio/bibliography.html#bib-bakero:21" class="xref page">40</a>].
-See <a href="#crypto_scalar_appx_es">Entropy Source Rationale and Recommendations</a> for a non-normative description of a
+See <a href="#crypto_scalar_appx_es">32.8. Entropy Source Rationale and Recommendations</a> for a non-normative description of a
 certification and self-certification procedures, design rationale, and more
 detailed suggestions on how the entropy source output can be used.</p>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_seed_csr"><a class="anchor" href="#crypto_scalar_seed_csr"></a>5.1. The <code>seed</code> CSR</h3>
+<h3 id="crypto_scalar_seed_csr"><a class="anchor" href="#crypto_scalar_seed_csr"></a>32.5.1. The <code>seed</code> CSR</h3>
 <div class="paragraph">
 <p><code>seed</code> is an unprivileged CSR located at address <code>0x015</code>.
 The 32-bit contents of <code>seed</code> are as follows:</p>
@@ -6029,7 +6029,7 @@ and will zero-extend the 32-bit word to XLEN bits.</p>
 <div class="paragraph">
 <p>The <code>seed</code> CSR is also access controlled by execution mode, and attempted
 read or write access will raise an illegal instruction exception outside M mode
-unless access is explicitly granted. See <a href="#crypto_scalar_es_access">Access Control to <code>seed</code></a> for
+unless access is explicitly granted. See <a href="#crypto_scalar_es_access">32.5.3. Access Control to <code>seed</code></a> for
 more details.</p>
 </div>
 <div class="paragraph">
@@ -6041,7 +6041,7 @@ statuses <code>BIST</code> (00), <code>WAIT</code> (01), or <code>DEAD</code> (1
 <p>Each returned <code>seed[15:0]</code> = <code>entropy</code> value represents unique randomness
 when <code>OPST</code>=<code>ES16</code> (<code>seed[31:30]</code> = <code>10</code>), even if its numerical value is
 the same as that of a previously polled <code>entropy</code> value. The implementation
-requirements of <code>entropy</code> bits are defined in <a href="#crypto_scalar_es_req">Entropy Source Requirements</a>.
+requirements of <code>entropy</code> bits are defined in <a href="#crypto_scalar_es_req">32.5.2. Entropy Source Requirements</a>.
 When <code>OPST</code> is not <code>ES16</code>, <code>entropy</code> must be set to 0.
 An implementation may safely set reserved and custom bits to zeros.</p>
 </div>
@@ -6113,7 +6113,7 @@ ES16). DEAD is an unrecoverable error state.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_es_req"><a class="anchor" href="#crypto_scalar_es_req"></a>5.2. Entropy Source Requirements</h3>
+<h3 id="crypto_scalar_es_req"><a class="anchor" href="#crypto_scalar_es_req"></a>32.5.2. Entropy Source Requirements</h3>
 <div class="paragraph">
 <p>The output <code>entropy</code> (<code>seed[15:0]</code> in ES16 state) is not necessarily
 fully conditioned randomness due to hardware and energy limitations
@@ -6132,18 +6132,18 @@ safe design:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="#crypto_scalar_es_req_90b">NIST SP 800-90B / FIPS 140-3 Requirements</a>: A physical entropy source meeting
+<p><a href="#crypto_scalar_es_req_90b">32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</a>: A physical entropy source meeting
 NIST SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>] criteria with evaluated min-entropy
 of 192 bits for each 256 output bits (min-entropy rate 0.75).</p>
 </li>
 <li>
-<p><a href="#crypto_scalar_es_req_ptg2">BSI AIS-31 PTG.2 / Common Criteria Requirements</a>: A physical entropy source meeting the
+<p><a href="#crypto_scalar_es_req_ptg2">32.5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</a>: A physical entropy source meeting the
 AIS-31 PTG.2 [<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] criteria, implying average Shannon entropy
 rate 0.997. The source must also meet the NIST 800-90B
 min-entropy rate 192/256 = 0.75.</p>
 </li>
 <li>
-<p><a href="#crypto_scalar_es_req_virt">Virtual Sources: Security Requirement</a>: A virtual entropy source is a DRBG
+<p><a href="#crypto_scalar_es_req_virt">32.5.2.3. Virtual Sources: Security Requirement</a>: A virtual entropy source is a DRBG
 seeded from a physical entropy source. It must have at least a
 256-bit (Post-Quantum Category 5) internal security level.</p>
 </li>
@@ -6153,10 +6153,10 @@ seeded from a physical entropy source. It must have at least a
 <p>All implementations must signal initialization, test mode, and health
 alarms as required by respective standards. This may require the implementer
 to add non-standard (custom) test interfaces in a secure and safe manner,
-an example of which is described in <a href="#crypto_scalar_es_getnoise">Suggested GetNoise Test Interface</a></p>
+an example of which is described in <a href="#crypto_scalar_es_getnoise">32.8.6. Suggested GetNoise Test Interface</a></p>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_es_req_90b"><a class="anchor" href="#crypto_scalar_es_req_90b"></a>5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</h4>
+<h4 id="crypto_scalar_es_req_90b"><a class="anchor" href="#crypto_scalar_es_req_90b"></a>32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</h4>
 <div class="paragraph">
 <p>All NIST SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>] required components and health test
 mechanisms must be implemented.</p>
@@ -6192,20 +6192,20 @@ at least 512 <code>entropy</code> bits to initialize a DRBG that has 256-bit sec
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_es_req_ptg2"><a class="anchor" href="#crypto_scalar_es_req_ptg2"></a>5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</h4>
+<h4 id="crypto_scalar_es_req_ptg2"><a class="anchor" href="#crypto_scalar_es_req_ptg2"></a>32.5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</h4>
 <div class="paragraph">
 <p>For alternative Common Criteria certification (or self-certification),
 AIS 31 PTG.2 class [<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] (Sect. 4.3.) required hardware components
 and mechanisms must be implemented.
 In addition to AIS-31 PTG.2 randomness requirements (Shannon entropy rate of
 0.997 as evaluated in that standard), the overall min-entropy requirement of
-remains, as discussed in <a href="#crypto_scalar_es_req_90b">NIST SP 800-90B / FIPS 140-3 Requirements</a>. Note that 800-90B
+remains, as discussed in <a href="#crypto_scalar_es_req_90b">32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</a>. Note that 800-90B
 min-entropy can be significantly lower than AIS-31 Shannon entropy. These
 two metrics should not be equated or confused with each other.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_es_req_virt"><a class="anchor" href="#crypto_scalar_es_req_virt"></a>5.2.3. Virtual Sources: Security Requirement</h4>
+<h4 id="crypto_scalar_es_req_virt"><a class="anchor" href="#crypto_scalar_es_req_virt"></a>32.5.2.3. Virtual Sources: Security Requirement</h4>
 <div class="admonitionblock note">
 <table>
 <tr>
@@ -6258,7 +6258,7 @@ there is insufficient seeding material for the host DRBG.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_es_access"><a class="anchor" href="#crypto_scalar_es_access"></a>5.3. Access Control to <code>seed</code></h3>
+<h3 id="crypto_scalar_es_access"><a class="anchor" href="#crypto_scalar_es_access"></a>32.5.3. Access Control to <code>seed</code></h3>
 <div class="paragraph">
 <p>The <code>seed</code> CSR is by default only available in M mode, but can be made
 available to other modes via the <code>mseccfg.sseed</code> and <code>mseccfg.useed</code>
@@ -6346,11 +6346,11 @@ while other access conditions raise an illegal instruction exception.</p></td>
 <p>Systems should implement carefully considered access control policies from
 lower privilege modes to physical entropy sources. The system can trap
 attempted access to <code>seed</code> and feed a less privileged client
-<em>virtual entropy source</em> data (<a href="#crypto_scalar_es_req_virt">Virtual Sources: Security Requirement</a>) instead of
-invoking an SP 800-90B  (<a href="#crypto_scalar_es_req_90b">NIST SP 800-90B / FIPS 140-3 Requirements</a>) or PTG.2
-(<a href="#crypto_scalar_es_req_ptg2">BSI AIS-31 PTG.2 / Common Criteria Requirements</a>) <em>physical entropy source</em>. Emulated <code>seed</code>
+<em>virtual entropy source</em> data (<a href="#crypto_scalar_es_req_virt">32.5.2.3. Virtual Sources: Security Requirement</a>) instead of
+invoking an SP 800-90B  (<a href="#crypto_scalar_es_req_90b">32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</a>) or PTG.2
+(<a href="#crypto_scalar_es_req_ptg2">32.5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</a>) <em>physical entropy source</em>. Emulated <code>seed</code>
 data generation is made with an appropriately seeded, secure software DRBG.
-See  <a href="#crypto_scalar_appx_es_access">([crypto_scalar_es_access]) Security Considerations for Direct Hardware Access</a> for security considerations related
+See  <a href="#crypto_scalar_appx_es_access">32.8.3.5. ([crypto_scalar_es_access]) Security Considerations for Direct Hardware Access</a> for security considerations related
 to direct access to entropy sources.</p>
 </div>
 <div class="paragraph">
@@ -6372,7 +6372,7 @@ be hardwired to zero.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_zkt"><a class="anchor" href="#crypto_scalar_zkt"></a>6. Data Independent Execution Latency Subset: Zkt</h2>
+<h2 id="crypto_scalar_zkt"><a class="anchor" href="#crypto_scalar_zkt"></a>32.6. Data Independent Execution Latency Subset: Zkt</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zkt extension attests that the machine has data-independent execution
@@ -6402,7 +6402,7 @@ typically result in a CERT CVE security advisory.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="scope-and-goal"><a class="anchor" href="#scope-and-goal"></a>6.1. Scope and Goal</h3>
+<h3 id="32-6-1-scope-and-goal"><a class="anchor" href="#32-6-1-scope-and-goal"></a>32.6.1. Scope and Goal</h3>
 <div class="paragraph">
 <p>An "ISA contract" is made between a programmer and the RISC-V implementation
 that Zkt instructions do not leak information about processed secret data
@@ -6491,7 +6491,7 @@ and L1TF/Foreshadow, etc. See e.g.
 </div>
 </div>
 <div class="sect2">
-<h3 id="background"><a class="anchor" href="#background"></a>6.2. Background</h3>
+<h3 id="32-6-2-background"><a class="anchor" href="#32-6-2-background"></a>32.6.2. Background</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -6538,7 +6538,7 @@ specific zeroization/sanitisation or by being declared ciphertext
 </div>
 </div>
 <div class="sect2">
-<h3 id="specific-instruction-rationale"><a class="anchor" href="#specific-instruction-rationale"></a>6.3. Specific Instruction Rationale</h3>
+<h3 id="32-6-3-specific-instruction-rationale"><a class="anchor" href="#32-6-3-specific-instruction-rationale"></a>32.6.3. Specific Instruction Rationale</h3>
 <div class="ulist">
 <ul>
 <li>
@@ -6568,7 +6568,7 @@ including them in testing scope.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="programming-information"><a class="anchor" href="#programming-information"></a>6.4. Programming Information</h3>
+<h3 id="32-6-4-programming-information"><a class="anchor" href="#32-6-4-programming-information"></a>32.6.4. Programming Information</h3>
 <div class="paragraph">
 <p>For background information on secure programming "models", see:</p>
 </div>
@@ -6602,7 +6602,7 @@ including them in testing scope.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="zkt-listings"><a class="anchor" href="#zkt-listings"></a>6.5. Zkt listings</h3>
+<h3 id="32-6-5-zkt-listings"><a class="anchor" href="#32-6-5-zkt-listings"></a>32.6.5. Zkt listings</h3>
 <div class="paragraph">
 <p>The following instructions are included in the <code>Zkt</code> subset
 They are listed here grouped by their original parent extension.</p>
@@ -6625,7 +6625,7 @@ adhere to the requirements of <code>Zkt</code>.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="rvi-base-instruction-set"><a class="anchor" href="#rvi-base-instruction-set"></a>6.5.1. RVI (Base Instruction Set)</h4>
+<h4 id="32-6-5-1-rvi-base-instruction-set"><a class="anchor" href="#32-6-5-1-rvi-base-instruction-set"></a>32.6.5.1. RVI (Base Instruction Set)</h4>
 <div class="paragraph">
 <p>Only basic arithmetic and <code>slt*</code> (for carry computations) are included.
 The data-independent timing requirement does not apply to HINT instruction
@@ -6831,7 +6831,7 @@ encoding forms of these instructions.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="rvm-multiply"><a class="anchor" href="#rvm-multiply"></a>6.5.2. RVM (Multiply)</h4>
+<h4 id="32-6-5-2-rvm-multiply"><a class="anchor" href="#32-6-5-2-rvm-multiply"></a>32.6.5.2. RVM (Multiply)</h4>
 <div class="paragraph">
 <p>Multiplication is included; division and remaindering excluded.</p>
 </div>
@@ -6885,7 +6885,7 @@ encoding forms of these instructions.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="rvc-compressed"><a class="anchor" href="#rvc-compressed"></a>6.5.3. RVC (Compressed)</h4>
+<h4 id="32-6-5-3-rvc-compressed"><a class="anchor" href="#32-6-5-3-rvc-compressed"></a>32.6.5.3. RVC (Compressed)</h4>
 <div class="paragraph">
 <p>Same criteria as in RVI. Organised by quadrants.</p>
 </div>
@@ -7005,12 +7005,12 @@ encoding forms of these instructions.</p>
 </table>
 </div>
 <div class="sect3">
-<h4 id="rvk-scalar-cryptography"><a class="anchor" href="#rvk-scalar-cryptography"></a>6.5.4. RVK (Scalar Cryptography)</h4>
+<h4 id="32-6-5-4-rvk-scalar-cryptography"><a class="anchor" href="#32-6-5-4-rvk-scalar-cryptography"></a>32.6.5.4. RVK (Scalar Cryptography)</h4>
 <div class="paragraph">
 <p>All K-specific instructions are included.
 Additionally, <code>seed</code> CSR latency should be independent of <code>ES16</code> state output
 <code>entropy</code> bits, as that is a sensitive security parameter.
-See <a href="#crypto_scalar_appx_es_access">([crypto_scalar_es_access]) Security Considerations for Direct Hardware Access</a>.</p>
+See <a href="#crypto_scalar_appx_es_access">32.8.3.5. ([crypto_scalar_es_access]) Security Considerations for Direct Hardware Access</a>.</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -7206,7 +7206,7 @@ See <a href="#crypto_scalar_appx_es_access">([crypto_scalar_es_access]) Security
 </table>
 </div>
 <div class="sect3">
-<h4 id="rvb-bitmanip"><a class="anchor" href="#rvb-bitmanip"></a>6.5.5. RVB (Bitmanip)</h4>
+<h4 id="32-6-5-5-rvb-bitmanip"><a class="anchor" href="#32-6-5-5-rvb-bitmanip"></a>32.6.5.5. RVB (Bitmanip)</h4>
 <div class="paragraph">
 <p>The <a href="#zbkb">Zbkb</a>, <a href="#zbkc">Zbkc</a> and <a href="#zbkx">Zbkx</a> extensions are included in their entirety.</p>
 </div>
@@ -7369,7 +7369,7 @@ specific instances of <code>grevi</code>, <code>shfli</code> and <code>unshfli</
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_appx_rationale"><a class="anchor" href="#crypto_scalar_appx_rationale"></a>7. Instruction Rationale</h2>
+<h2 id="crypto_scalar_appx_rationale"><a class="anchor" href="#crypto_scalar_appx_rationale"></a>32.7. Instruction Rationale</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section contains various rationale, design notes and usage
@@ -7378,7 +7378,7 @@ extension. It also tries to record how the designs of instructions were
 derived, or where they were contributed from.</p>
 </div>
 <div class="sect2">
-<h3 id="aes-instructions"><a class="anchor" href="#aes-instructions"></a>7.1. AES Instructions</h3>
+<h3 id="32-7-1-aes-instructions"><a class="anchor" href="#32-7-1-aes-instructions"></a>32.7.1. AES Instructions</h3>
 <div class="paragraph">
 <p>The 32-bit instructions were derived from work in [<a href="../biblio/bibliography.html#bib-mjs:lwaes:20" class="xref page">43</a>] and
 contributed to the RISC-V cryptography extension.
@@ -7392,7 +7392,7 @@ for all of the AES instructions in the specification can be found in the paper
 </div>
 </div>
 <div class="sect2">
-<h3 id="sha2-instructions"><a class="anchor" href="#sha2-instructions"></a>7.2. SHA2 Instructions</h3>
+<h3 id="32-7-2-sha2-instructions"><a class="anchor" href="#32-7-2-sha2-instructions"></a>32.7.2. SHA2 Instructions</h3>
 <div class="paragraph">
 <p>These instructions were developed based on academic
 work at the University of Bristol as part of the XCrypto project
@@ -7404,7 +7404,7 @@ in [<a href="../biblio/bibliography.html#bib-mjs:lwsha:20" class="xref page">34<
 </div>
 </div>
 <div class="sect2">
-<h3 id="sm3-and-sm4-instructions"><a class="anchor" href="#sm3-and-sm4-instructions"></a>7.3. SM3 and SM4 Instructions</h3>
+<h3 id="32-7-3-sm3-and-sm4-instructions"><a class="anchor" href="#32-7-3-sm3-and-sm4-instructions"></a>32.7.3. SM3 and SM4 Instructions</h3>
 <div class="paragraph">
 <p>The SM4 instructions were derived from work in [<a href="../biblio/bibliography.html#bib-mjs:lwaes:20" class="xref page">43</a>], and
 are hence very similar to the RV32 AES instructions.</p>
@@ -7416,7 +7416,7 @@ contributed to the RISC-V cryptography extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_zkb"><a class="anchor" href="#crypto_scalar_zkb"></a>7.4. Bitmanip Instructions for Cryptography</h3>
+<h3 id="crypto_scalar_zkb"><a class="anchor" href="#crypto_scalar_zkb"></a>32.7.4. Bitmanip Instructions for Cryptography</h3>
 <div class="paragraph">
 <p>Many of the primitive operations used in symmetric key cryptography
 and cryptographic hash functions are well supported by the
@@ -7453,7 +7453,7 @@ both,
 would be required to implement these instructions.</p>
 </div>
 <div class="sect3">
-<h4 id="rotations"><a class="anchor" href="#rotations"></a>7.4.1. Rotations</h4>
+<h4 id="32-7-4-1-rotations"><a class="anchor" href="#32-7-4-1-rotations"></a>32.7.4.1. Rotations</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32, RV64:                         RV64 only:
@@ -7497,7 +7497,7 @@ SHA512, SHA3.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="bit-byte-permutations"><a class="anchor" href="#bit-byte-permutations"></a>7.4.2. Bit &amp; Byte Permutations</h4>
+<h4 id="32-7-4-2-bit-byte-permutations"><a class="anchor" href="#32-7-4-2-bit-byte-permutations"></a>32.7.4.2. Bit &amp; Byte Permutations</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32:
@@ -7580,7 +7580,7 @@ rotation instructions, so <code>zip</code> and <code>unzip</code> are not requir
 </div>
 </div>
 <div class="sect3">
-<h4 id="carry-less-multiply"><a class="anchor" href="#carry-less-multiply"></a>7.4.3. Carry-less Multiply</h4>
+<h4 id="32-7-4-3-carry-less-multiply"><a class="anchor" href="#32-7-4-3-carry-less-multiply"></a>32.7.4.3. Carry-less Multiply</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32, RV64:
@@ -7591,7 +7591,7 @@ rotation instructions, so <code>zip</code> and <code>unzip</code> are not requir
 <div class="paragraph">
 <p>See [<a href="../biblio/bibliography.html#bib-riscv:bitmanip:draft" class="xref page">47</a>] (Section 2.6) for details of
 this instruction.
-See <a href="#crypto_scalar_zkt">Data Independent Execution Latency Subset: Zkt</a> for additional implementation
+See <a href="#crypto_scalar_zkt">32.6. Data Independent Execution Latency Subset: Zkt</a> for additional implementation
 requirements for these instructions, related to data independent
 execution latency.</p>
 </div>
@@ -7616,7 +7616,7 @@ protocol.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="logic-with-negate"><a class="anchor" href="#logic-with-negate"></a>7.4.4. Logic With Negate</h4>
+<h4 id="32-7-4-4-logic-with-negate"><a class="anchor" href="#32-7-4-4-logic-with-negate"></a>32.7.4.4. Logic With Negate</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32, RV64:
@@ -7653,7 +7653,7 @@ Software based power/EM side-channel countermeasures based on masking.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="packing"><a class="anchor" href="#packing"></a>7.4.5. Packing</h4>
+<h4 id="32-7-4-5-packing"><a class="anchor" href="#32-7-4-5-packing"></a>32.7.4.5. Packing</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32, RV64:                         RV64:
@@ -7689,7 +7689,7 @@ be word aligned) into registers to perform the round functions.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crossbar-permutation-instructions"><a class="anchor" href="#crossbar-permutation-instructions"></a>7.4.6. Crossbar Permutation Instructions</h4>
+<h4 id="32-7-4-6-crossbar-permutation-instructions"><a class="anchor" href="#32-7-4-6-crossbar-permutation-instructions"></a>32.7.4.6. Crossbar Permutation Instructions</h4>
 <div class="listingblock">
 <div class="content">
 <pre>RV32, RV64:
@@ -7763,7 +7763,7 @@ side-channel countermeasures.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_appx_es"><a class="anchor" href="#crypto_scalar_appx_es"></a>8. Entropy Source Rationale and Recommendations</h2>
+<h2 id="crypto_scalar_appx_es"><a class="anchor" href="#crypto_scalar_appx_es"></a>32.8. Entropy Source Rationale and Recommendations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This <strong>non-normative</strong> appendix focuses on the rationale, security,
@@ -7772,7 +7772,7 @@ also discuss non-ISA system features that may be needed for cryptographic
 standards compliance and security testing.</p>
 </div>
 <div class="sect2">
-<h3 id="checklists-for-design-and-self-certification"><a class="anchor" href="#checklists-for-design-and-self-certification"></a>8.1. Checklists for Design and Self-Certification</h3>
+<h3 id="32-8-1-checklists-for-design-and-self-certification"><a class="anchor" href="#32-8-1-checklists-for-design-and-self-certification"></a>32.8.1. Checklists for Design and Self-Certification</h3>
 <div class="paragraph">
 <p>The security of cryptographic systems is based on secret bits and keys.
 These bits need to be random and originate from cryptographically secure
@@ -7790,9 +7790,9 @@ following appropriate security standards is usually needed to achieve this.</p>
 <li>
 <p><strong>ISA Architectural Tests.</strong> Verify, to the extent possible, that RISC-V ISA
 requirements in this specification are correctly implemented. This includes
-the state transitions (<a href="#crypto_scalar_es">Entropy Source</a> and
-<a href="#crypto_scalar_es_getnoise">Suggested GetNoise Test Interface</a>), access control
-(<a href="#crypto_scalar_es_access">Access Control to <code>seed</code></a>), and that <code>seed</code> ES16 <code>entropy</code> words
+the state transitions (<a href="#crypto_scalar_es">32.5. Entropy Source</a> and
+<a href="#crypto_scalar_es_getnoise">32.8.6. Suggested GetNoise Test Interface</a>), access control
+(<a href="#crypto_scalar_es_access">32.5.3. Access Control to <code>seed</code></a>), and that <code>seed</code> ES16 <code>entropy</code> words
 can only be read destructively.
 The scope of RISC-V ISA architectural tests are those behaviors that
 are independent of the physical entropy source details. A smoke test ES
@@ -7812,8 +7812,8 @@ Johnson-Nyquist thermal noise [<a href="../biblio/bibliography.html#bib-sa21" cl
 <li>
 <p><strong>Entropy Source Design Review.</strong> An entropy source is more than a noise
 source, and must have features such as health tests
-(<a href="#crypto_scalar_es_security_controls">Security Controls and Health Tests</a>),
-a conditioner (<a href="#crypto_scalar_appx_es_intro-cond">Conditioning: Cryptographic and Non-Cryptographic</a>), and a security
+(<a href="#crypto_scalar_es_security_controls">32.8.4. Security Controls and Health Tests</a>),
+a conditioner (<a href="#crypto_scalar_appx_es_intro-cond">32.8.2.2. Conditioning: Cryptographic and Non-Cryptographic</a>), and a security
 boundary with clearly defined interfaces. One may tabulate the SHALL
 statements of SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>], FIPS 140-3 Implementation
 Guidance [<a href="../biblio/bibliography.html#bib-nicc21" class="xref page">59</a>], AIS-31 [<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] or other standards being
@@ -7823,10 +7823,10 @@ used. Official and non-official checklist tables are available:
 <li>
 <p><strong>Experimental Tests.</strong> The raw noise source is subjected to entropy
 estimation as defined in NIST 800-90B, Section 3 [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>].
-   The interface described in <a href="#crypto_scalar_es_getnoise">Suggested GetNoise Test Interface</a> can used be to
+   The interface described in <a href="#crypto_scalar_es_getnoise">32.8.6. Suggested GetNoise Test Interface</a> can used be to
    record datasets for this purpose. One also needs to show experimentally
    that the conditioner and health test components work appropriately to
-   meet the ES16 output entropy requirements of <a href="#crypto_scalar_es_req">Entropy Source Requirements</a>.
+   meet the ES16 output entropy requirements of <a href="#crypto_scalar_es_req">32.5.2. Entropy Source Requirements</a>.
 For SP 800-90B, NIST has made a min-entropy estimation
 package freely available:
 <a href="https://github.com/usnistgov/SP800-90B_EntropyAssessment" class="bare">https://github.com/usnistgov/SP800-90B_EntropyAssessment</a></p>
@@ -7839,7 +7839,7 @@ hostile (actively attempting to exploit vulnerabilities in the design).</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>See <a href="#crypto_scalar_appx_es_implementation">Implementation Strategies</a> for a discussion of various
+<p>See <a href="#crypto_scalar_appx_es_implementation">32.8.5. Implementation Strategies</a> for a discussion of various
 implementation options.</p>
 </div>
 <div class="admonitionblock note">
@@ -7862,7 +7862,7 @@ allows 90B validations to be re-used for different (FIPS 140-3) modules.
 </div>
 </div>
 <div class="sect2">
-<h3 id="standards-and-terminology"><a class="anchor" href="#standards-and-terminology"></a>8.2. Standards and Terminology</h3>
+<h3 id="32-8-2-standards-and-terminology"><a class="anchor" href="#32-8-2-standards-and-terminology"></a>32.8.2. Standards and Terminology</h3>
 <div class="paragraph">
 <p>As a fundamental security function, the generation of random numbers is
 governed by numerous standards and technical evaluation methods, the main
@@ -7895,10 +7895,10 @@ entropy source.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_intro-es"><a class="anchor" href="#crypto_scalar_appx_es_intro-es"></a>8.2.1. Entropy Source (ES)</h4>
+<h4 id="crypto_scalar_appx_es_intro-es"><a class="anchor" href="#crypto_scalar_appx_es_intro-es"></a>32.8.2.1. Entropy Source (ES)</h4>
 <div class="paragraph">
 <p>Entropy sources are built by sampling and processing data from a noise
-source (<a href="#crypto_scalar_appx_es_noise_sources">Ring Oscillators</a>).
+source (<a href="#crypto_scalar_appx_es_noise_sources">32.8.5.1. Ring Oscillators</a>).
 We will only consider physical sources of true randomness in this work.
 Since these are directly based on natural phenomena and are subject to
 environmental conditions (which may be adversarial), they require features
@@ -7906,16 +7906,16 @@ that monitor the "health" and quality of those sources.</p>
 </div>
 <div class="paragraph">
 <p>The requirements for physical entropy sources are specified in
-NIST SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>] (<a href="#crypto_scalar_es_req_90b">NIST SP 800-90B / FIPS 140-3 Requirements</a>)
+NIST SP 800-90B [<a href="../biblio/bibliography.html#bib-tubake:18" class="xref page">37</a>] (<a href="#crypto_scalar_es_req_90b">32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</a>)
 for U.S. Federal FIPS 140-3 [<a href="../biblio/bibliography.html#bib-ni19" class="xref page">60</a>] evaluations and
-in BSI AIS-31 [<a href="../biblio/bibliography.html#bib-kisc01" class="xref page">62</a>],[<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] (<a href="#crypto_scalar_es_req_ptg2">BSI AIS-31 PTG.2 / Common Criteria Requirements</a>)
+in BSI AIS-31 [<a href="../biblio/bibliography.html#bib-kisc01" class="xref page">62</a>],[<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] (<a href="#crypto_scalar_es_req_ptg2">32.5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</a>)
 for high-security Common Criteria evaluations.
 There is some divergence in the types of health tests and entropy metrics
 mandated in these standards, and RISC-V enables support for both alternatives.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_intro-cond"><a class="anchor" href="#crypto_scalar_appx_es_intro-cond"></a>8.2.2. Conditioning: Cryptographic and Non-Cryptographic</h4>
+<h4 id="crypto_scalar_appx_es_intro-cond"><a class="anchor" href="#crypto_scalar_appx_es_intro-cond"></a>32.8.2.2. Conditioning: Cryptographic and Non-Cryptographic</h4>
 <div class="paragraph">
 <p>Raw physical randomness (noise) sources are rarely statistically
 perfect, and some generate very large amounts of bits, which need to be
@@ -7932,12 +7932,12 @@ efficiently but may reduce entropy content (in individual bits removed)
 more than cryptographic hashes, which mix the input entropy very
 efficiently. However, they do not require cryptanalytic or computational
 hardness assumptions and are therefore inherently more future-proof.
-See <a href="#crypto_scalar_appx_es_noncrypto">Non-cryptographic Conditioners</a> for a more detailed
+See <a href="#crypto_scalar_appx_es_noncrypto">32.8.5.5. Non-cryptographic Conditioners</a> for a more detailed
 discussion.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_intro-prng"><a class="anchor" href="#crypto_scalar_appx_es_intro-prng"></a>8.2.3. Pseudorandom Number Generator (PRNG)</h4>
+<h4 id="crypto_scalar_appx_es_intro-prng"><a class="anchor" href="#crypto_scalar_appx_es_intro-prng"></a>32.8.2.3. Pseudorandom Number Generator (PRNG)</h4>
 <div class="paragraph">
 <p>Pseudorandom Number Generators (PRNGs) use deterministic mathematical
 formulas to create abundant random numbers from a smaller amount of
@@ -7956,7 +7956,7 @@ allows the attacker to compute future or past outputs.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_intro-drbg"><a class="anchor" href="#crypto_scalar_appx_es_intro-drbg"></a>8.2.4. Deterministic Random Bit Generator (DRBG)</h4>
+<h4 id="crypto_scalar_appx_es_intro-drbg"><a class="anchor" href="#crypto_scalar_appx_es_intro-drbg"></a>32.8.2.4. Deterministic Random Bit Generator (DRBG)</h4>
 <div class="paragraph">
 <p>Cryptographic PRNGs are also known as Deterministic Random Bit
 Generators (DRBGs), a term used by SP 800-90A [<a href="../biblio/bibliography.html#bib-bake15" class="xref page">39</a>]. A strong
@@ -7973,9 +7973,9 @@ refreshed (reseeded) for forward and backward security.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="specific-rationale-and-considerations"><a class="anchor" href="#specific-rationale-and-considerations"></a>8.3. Specific Rationale and Considerations</h3>
+<h3 id="32-8-3-specific-rationale-and-considerations"><a class="anchor" href="#32-8-3-specific-rationale-and-considerations"></a>32.8.3. Specific Rationale and Considerations</h3>
 <div class="sect3">
-<h4 id="the-seed-csr-the-seed-csr"><a class="anchor" href="#the-seed-csr-the-seed-csr"></a>8.3.1. (<a href="#crypto_scalar_seed_csr">The <code>seed</code> CSR</a>) The <code>seed</code> CSR</h4>
+<h4 id="32-8-3-1-32-5-1-the-seed-csr-the-seed-csr"><a class="anchor" href="#32-8-3-1-32-5-1-the-seed-csr-the-seed-csr"></a>32.8.3.1. (<a href="#crypto_scalar_seed_csr">32.5.1. The <code>seed</code> CSR</a>) The <code>seed</code> CSR</h4>
 <div class="paragraph">
 <p>The interface was designed to be simple so that a vendor- and
 device-independent driver component (e.g., in Linux kernel,
@@ -8012,13 +8012,13 @@ and the entropy source is actually not available.</p>
 <p>The 16-bit bandwidth was a compromise motivated by the desire to
 provide redundancy in the return value, some protection against
 potential Power/EM leakage (further alleviated by the 2:1 cryptographic
-conditioning discussed in <a href="#crypto_scalar_appx_es_crypto-cond">Cryptographic Conditioners</a>),
+conditioning discussed in <a href="#crypto_scalar_appx_es_crypto-cond">32.8.5.6. Cryptographic Conditioners</a>),
 and the desire to have all of the bits "in the same place" on
 both RV32 and RV64 architectures for programming convenience.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="nist-sp-800-90b-fips-140-3-requirements-nist-sp-800-90b"><a class="anchor" href="#nist-sp-800-90b-fips-140-3-requirements-nist-sp-800-90b"></a>8.3.2. (<a href="#crypto_scalar_es_req_90b">NIST SP 800-90B / FIPS 140-3 Requirements</a>) NIST SP 800-90B</h4>
+<h4 id="32-8-3-2-32-5-2-1-nist-sp-800-90b-fips-140-3-requirements-nist-sp-800-90b"><a class="anchor" href="#32-8-3-2-32-5-2-1-nist-sp-800-90b-fips-140-3-requirements-nist-sp-800-90b"></a>32.8.3.2. (<a href="#crypto_scalar_es_req_90b">32.5.2.1. NIST SP 800-90B / FIPS 140-3 Requirements</a>) NIST SP 800-90B</h4>
 <div class="paragraph">
 <p>SP 800-90C [<a href="../biblio/bibliography.html#bib-bakero:21" class="xref page">40</a>] states that each conditioned block of n bits
 is required to have n+64 bits of input entropy to attain full entropy.
@@ -8054,7 +8054,7 @@ by vendor-defined tests.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="bsi-ais-31-ptg-2-common-criteria-requirements-bsi-ais-31"><a class="anchor" href="#bsi-ais-31-ptg-2-common-criteria-requirements-bsi-ais-31"></a>8.3.3. (<a href="#crypto_scalar_es_req_ptg2">BSI AIS-31 PTG.2 / Common Criteria Requirements</a>) BSI AIS-31</h4>
+<h4 id="32-8-3-3-32-5-2-2-bsi-ais-31-ptg-2-common-criteria-requirements-bsi-ais-31"><a class="anchor" href="#32-8-3-3-32-5-2-2-bsi-ais-31-ptg-2-common-criteria-requirements-bsi-ais-31"></a>32.8.3.3. (<a href="#crypto_scalar_es_req_ptg2">32.5.2.2. BSI AIS-31 PTG.2 / Common Criteria Requirements</a>) BSI AIS-31</h4>
 <div class="paragraph">
 <p>PTG.2 is one of the security and functionality classes defined in
 BSI AIS 20/31 [<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>]. The PTG.2 source requirements work as a
@@ -8063,7 +8063,7 @@ PTG.3 TRNG with appropriate software post-processing).</p>
 </div>
 <div class="paragraph">
 <p>For validation purposes, the PTG.2 requirements may be mapped to
-security controls T1-3 (<a href="#crypto_scalar_es_security_controls">Security Controls and Health Tests</a>) and the
+security controls T1-3 (<a href="#crypto_scalar_es_security_controls">32.8.4. Security Controls and Health Tests</a>) and the
 interface as follows:</p>
 </div>
 <div class="ulist">
@@ -8086,7 +8086,7 @@ health tests, which we encourage.</p>
 </li>
 <li>
 <p>P5 <strong>[PTG.2.5]</strong> Raw random sequence may be checked via the GetNoise
-interface (<a href="#crypto_scalar_es_getnoise">Suggested GetNoise Test Interface</a>).</p>
+interface (<a href="#crypto_scalar_es_getnoise">32.8.6. Suggested GetNoise Test Interface</a>).</p>
 </li>
 <li>
 <p>P6 <strong>[PTG.2.6]</strong> Test Procedure A [<a href="../biblio/bibliography.html#bib-kisc11" class="xref page">38</a>] (Sect 2.4.4.1) is a
@@ -8108,7 +8108,7 @@ necessarily so. The technical validation process is somewhat different.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="virtual-sources-security-requirement-virtual-sources"><a class="anchor" href="#virtual-sources-security-requirement-virtual-sources"></a>8.3.4. (<a href="#crypto_scalar_es_req_virt">Virtual Sources: Security Requirement</a>) Virtual Sources</h4>
+<h4 id="32-8-3-4-32-5-2-3-virtual-sources-security-requirement-virtual-sources"><a class="anchor" href="#32-8-3-4-32-5-2-3-virtual-sources-security-requirement-virtual-sources"></a>32.8.3.4. (<a href="#crypto_scalar_es_req_virt">32.5.2.3. Virtual Sources: Security Requirement</a>) Virtual Sources</h4>
 <div class="paragraph">
 <p>All sources that are not direct physical sources (meeting the SP 800-90B
 or the AIS-31 PTG.2 requirements) need to meet the security requirements
@@ -8126,7 +8126,7 @@ in Suite B and the newer U.S. Government CNSA Suite [<a href="../biblio/bibliogr
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_access"><a class="anchor" href="#crypto_scalar_appx_es_access"></a>8.3.5. (<a href="#crypto_scalar_es_access">[crypto_scalar_es_access]</a>) Security Considerations for Direct Hardware Access</h4>
+<h4 id="crypto_scalar_appx_es_access"><a class="anchor" href="#crypto_scalar_appx_es_access"></a>32.8.3.5. (<a href="#crypto_scalar_es_access">[crypto_scalar_es_access]</a>) Security Considerations for Direct Hardware Access</h4>
 <div class="paragraph">
 <p>The ISA implementation and system design must try to ensure that the
 hardware-software interface minimizes avenues for adversarial
@@ -8198,7 +8198,7 @@ necessary.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_es_security_controls"><a class="anchor" href="#crypto_scalar_es_security_controls"></a>8.4. Security Controls and Health Tests</h3>
+<h3 id="crypto_scalar_es_security_controls"><a class="anchor" href="#crypto_scalar_es_security_controls"></a>32.8.4. Security Controls and Health Tests</h3>
 <div class="paragraph">
 <p>The primary purpose of a cryptographic entropy source is to produce
 secret keying material. In almost all cases, a hardware entropy source
@@ -8229,7 +8229,7 @@ follows from the definition of an Entropy Source; without it, the module is
 simply a noise source and can&#8217;t be trusted to safely generate keying material.</p>
 </div>
 <div class="sect3">
-<h4 id="t1-on-demand-testing"><a class="anchor" href="#t1-on-demand-testing"></a>8.4.1. T1: On-demand testing</h4>
+<h4 id="32-8-4-1-t1-on-demand-testing"><a class="anchor" href="#32-8-4-1-t1-on-demand-testing"></a>32.8.4.1. T1: On-demand testing</h4>
 <div class="paragraph">
 <p>A sequence of simple tests is invoked via resetting, rebooting, or
 powering up the hardware (not an ISA signal). The implementation will
@@ -8248,7 +8248,7 @@ non-autonomous crypto devices with human operators).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="t2-continuous-checks"><a class="anchor" href="#t2-continuous-checks"></a>8.4.2. T2: Continuous checks</h4>
+<h4 id="32-8-4-2-t2-continuous-checks"><a class="anchor" href="#32-8-4-2-t2-continuous-checks"></a>32.8.4.2. T2: Continuous checks</h4>
 <div class="paragraph">
 <p>If an error is detected in continuous tests or
 environmental sensors, the entropy source will enter a no-output state.
@@ -8283,7 +8283,7 @@ the zeroization requirement.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="t3-fatal-error-states"><a class="anchor" href="#t3-fatal-error-states"></a>8.4.3. T3: Fatal error states</h4>
+<h4 id="32-8-4-3-t3-fatal-error-states"><a class="anchor" href="#32-8-4-3-t3-fatal-error-states"></a>32.8.4.3. T3: Fatal error states</h4>
 <div class="paragraph">
 <p>Since the security of most cryptographic operations depends on the
 entropy source, a system-wide "default deny" security policy approach
@@ -8313,7 +8313,7 @@ negligible over the entire device lifetime.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="information-flows"><a class="anchor" href="#information-flows"></a>8.4.4. Information Flows</h4>
+<h4 id="32-8-4-4-information-flows"><a class="anchor" href="#32-8-4-4-information-flows"></a>32.8.4.4. Information Flows</h4>
 <div class="paragraph">
 <p>Some of the most devastating practical attacks
 against real-life cryptosystems have used inconsequential-looking
@@ -8359,7 +8359,7 @@ noise bits from observation and also influence.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_appx_es_implementation"><a class="anchor" href="#crypto_scalar_appx_es_implementation"></a>8.5. Implementation Strategies</h3>
+<h3 id="crypto_scalar_appx_es_implementation"><a class="anchor" href="#crypto_scalar_appx_es_implementation"></a>32.8.5. Implementation Strategies</h3>
 <div class="paragraph">
 <p>As a general rule, RISC-V specifies the ISA only. We provide some
 additional suggestions so that portable, vendor-independent middleware
@@ -8407,7 +8407,7 @@ Adding the software-side cryptographic steps 5-6 and control logic
 complements it into a True Random Number Generator (TRNG).</p>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_noise_sources"><a class="anchor" href="#crypto_scalar_appx_es_noise_sources"></a>8.5.1. Ring Oscillators</h4>
+<h4 id="crypto_scalar_appx_es_noise_sources"><a class="anchor" href="#crypto_scalar_appx_es_noise_sources"></a>32.8.5.1. Ring Oscillators</h4>
 <div class="paragraph">
 <p>We will give some examples of common noise sources that can be
 implemented in the processor itself (using standard cells).</p>
@@ -8455,7 +8455,7 @@ electrical filters, and usage of a differential oscillator may help.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="shot-noise"><a class="anchor" href="#shot-noise"></a>8.5.2. Shot Noise</h4>
+<h4 id="32-8-5-2-shot-noise"><a class="anchor" href="#32-8-5-2-shot-noise"></a>32.8.5.2. Shot Noise</h4>
 <div class="paragraph">
 <p>A category of random sources consisting of discrete events
 and modeled as a Poisson process is called "shot noise."
@@ -8469,17 +8469,17 @@ described as a Shot Noise generator).</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="other-types-of-noise"><a class="anchor" href="#other-types-of-noise"></a>8.5.3. Other types of noise</h4>
+<h4 id="32-8-5-3-other-types-of-noise"><a class="anchor" href="#32-8-5-3-other-types-of-noise"></a>32.8.5.3. Other types of noise</h4>
 <div class="paragraph">
 <p>It may be possible to certify more exotic noise sources and designs,
 although their stochastic model needs to be equally well understood,
 and their CPU interfaces must be secure.
-See <a href="#crypto_scalar_appx_es_quantum">Quantum vs. Classical Random</a> for a discussion of Quantum
+See <a href="#crypto_scalar_appx_es_quantum">32.8.5.8. Quantum vs. Classical Random</a> for a discussion of Quantum
 entropy sources.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_cont-tests"><a class="anchor" href="#crypto_scalar_appx_es_cont-tests"></a>8.5.4. Continuous Health Tests</h4>
+<h4 id="crypto_scalar_appx_es_cont-tests"><a class="anchor" href="#crypto_scalar_appx_es_cont-tests"></a>32.8.5.4. Continuous Health Tests</h4>
 <div class="paragraph">
 <p>Health monitoring requires some state information related
 to the noise source to be maintained. The tests should be designed
@@ -8523,7 +8523,7 @@ critical systems.</p>
 alarm condition in an operator-free, autonomous system. However,
 AIS 31 allows the DRBG component to keep running despite a failure in
 its Entropy Source, so we suggest re-entering a temporary <code>BIST</code>
-state (<a href="#crypto_scalar_es_security_controls">Security Controls and Health Tests</a>) to signal a non-fatal
+state (<a href="#crypto_scalar_es_security_controls">32.8.4. Security Controls and Health Tests</a>) to signal a non-fatal
 statistical error if such (non-actionable) signaling is necessary.
 Drivers and applications can react to this appropriately (or simply
 log it), but it will not directly affect the availability of the TRNG.
@@ -8531,12 +8531,12 @@ A permanent error condition should result in <code>DEAD</code> state.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_noncrypto"><a class="anchor" href="#crypto_scalar_appx_es_noncrypto"></a>8.5.5. Non-cryptographic Conditioners</h4>
+<h4 id="crypto_scalar_appx_es_noncrypto"><a class="anchor" href="#crypto_scalar_appx_es_noncrypto"></a>32.8.5.5. Non-cryptographic Conditioners</h4>
 <div class="paragraph">
-<p>As noted in <a href="#crypto_scalar_appx_es_intro-cond">Conditioning: Cryptographic and Non-Cryptographic</a>, physical randomness
+<p>As noted in <a href="#crypto_scalar_appx_es_intro-cond">32.8.2.2. Conditioning: Cryptographic and Non-Cryptographic</a>, physical randomness
 sources generally require a post-processing step called <em>conditioning</em> to
 meet the desired quality requirements, which  are outlined in
-<a href="#crypto_scalar_es_req">Entropy Source Requirements</a>.</p>
+<a href="#crypto_scalar_es_req">32.5.2. Entropy Source Requirements</a>.</p>
 </div>
 <div class="paragraph">
 <p>The approach taken in this interface is to allow a combination of
@@ -8574,7 +8574,7 @@ discussed by Dichtl and Lacharme [<a href="../biblio/bibliography.html#bib-la08"
 <div class="paragraph">
 <p>Note that the hardware may also implement a full cryptographic conditioner
 in the entropy source, even though the software driver still needs
-a cryptographic conditioner, too (<a href="#crypto_scalar_es_req">Entropy Source Requirements</a>).</p>
+a cryptographic conditioner, too (<a href="#crypto_scalar_es_req">32.5.2. Entropy Source Requirements</a>).</p>
 </div>
 <div class="paragraph">
 <p><strong>Rationale:</strong>
@@ -8586,7 +8586,7 @@ They do not require computational hardness assumptions.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_crypto-cond"><a class="anchor" href="#crypto_scalar_appx_es_crypto-cond"></a>8.5.6. Cryptographic Conditioners</h4>
+<h4 id="crypto_scalar_appx_es_crypto-cond"><a class="anchor" href="#crypto_scalar_appx_es_crypto-cond"></a>32.8.5.6. Cryptographic Conditioners</h4>
 <div class="paragraph">
 <p>For secure use, cryptographic conditioners are always required on the
 software side of the ISA boundary. They may also be implemented on the
@@ -8617,7 +8617,7 @@ generation.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_drbgs"><a class="anchor" href="#crypto_scalar_appx_es_drbgs"></a>8.5.7. The Final Random: DRBGs</h4>
+<h4 id="crypto_scalar_appx_es_drbgs"><a class="anchor" href="#crypto_scalar_appx_es_drbgs"></a>32.8.5.7. The Final Random: DRBGs</h4>
 <div class="paragraph">
 <p>All random bits reaching end users and applications must come from a
 cryptographic DRBG. These are generally implemented by the driver
@@ -8641,7 +8641,7 @@ CPU Entropy Source to meet future requirements.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="crypto_scalar_appx_es_quantum"><a class="anchor" href="#crypto_scalar_appx_es_quantum"></a>8.5.8. Quantum vs. Classical Random</h4>
+<h4 id="crypto_scalar_appx_es_quantum"><a class="anchor" href="#crypto_scalar_appx_es_quantum"></a>32.8.5.8. Quantum vs. Classical Random</h4>
 <div class="quoteblock">
 <blockquote>
 The NCSC believes that classical RNGs will continue to
@@ -8691,7 +8691,7 @@ which classical noise-based sources are designed to resist.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="post-quantum-cryptography"><a class="anchor" href="#post-quantum-cryptography"></a>8.5.9. Post-Quantum Cryptography</h4>
+<h4 id="32-8-5-9-post-quantum-cryptography"><a class="anchor" href="#32-8-5-9-post-quantum-cryptography"></a>32.8.5.9. Post-Quantum Cryptography</h4>
 <div class="paragraph">
 <p>PQC public-key cryptography standards [<a href="../biblio/bibliography.html#bib-ni16" class="xref page">41</a>] do not require
 quantum-origin randomness, just sufficiently secure keying material.
@@ -8728,7 +8728,7 @@ information-theoretic assumptions only.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="crypto_scalar_es_getnoise"><a class="anchor" href="#crypto_scalar_es_getnoise"></a>8.6. Suggested GetNoise Test Interface</h3>
+<h3 id="crypto_scalar_es_getnoise"><a class="anchor" href="#crypto_scalar_es_getnoise"></a>32.8.6. Suggested GetNoise Test Interface</h3>
 <div class="paragraph">
 <p>Compliance testing, characterization, and configuration of entropy sources
 require access to raw, unconditioned noise samples. This conceptual test
@@ -8799,7 +8799,7 @@ security implications.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_appx_materials"><a class="anchor" href="#crypto_scalar_appx_materials"></a>9. Supplementary Materials</h2>
+<h2 id="crypto_scalar_appx_materials"><a class="anchor" href="#crypto_scalar_appx_materials"></a>32.9. Supplementary Materials</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>While this document contains the specifications for the RISC-V cryptography
@@ -8837,7 +8837,7 @@ Formal model implementations in Sail.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="crypto_scalar_appx_sail"><a class="anchor" href="#crypto_scalar_appx_sail"></a>10. Supporting Sail Code</h2>
+<h2 id="crypto_scalar_appx_sail"><a class="anchor" href="#crypto_scalar_appx_sail"></a>32.10. Supporting Sail Code</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section contains the supporting Sail code referenced by the

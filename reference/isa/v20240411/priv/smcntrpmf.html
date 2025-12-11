@@ -637,7 +637,7 @@
 </div>
 <h1 id="page-title" class="page">"Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0.0</h1>
 <div class="sect1">
-<h2 id="intro"><a class="anchor" href="#intro"></a>1. Introduction</h2>
+<h2 id="intro"><a class="anchor" href="#intro"></a>7.1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The cycle and instret counters serve to support user mode self-profiling usages, wherein a user can read the counter(s) twice and compute the delta(s) to evaluate user software performance and behavior.  Currently, these counters are not filtered by privilege mode, and thus they continue to increment while traps (e.g., page faults or interrupts) to more privileged code are handled.  This causes two problems:</p>
@@ -658,10 +658,10 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="csrs"><a class="anchor" href="#csrs"></a>2. CSRs</h2>
+<h2 id="csrs"><a class="anchor" href="#csrs"></a>7.2. CSRs</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="machine-counter-configuration-registers-mcyclecfg-minstretcfg"><a class="anchor" href="#machine-counter-configuration-registers-mcyclecfg-minstretcfg"></a>2.1. Machine Counter Configuration Registers (mcyclecfg, minstretcfg)</h3>
+<h3 id="7-2-1-machine-counter-configuration-registers-mcyclecfg-minstretcfg"><a class="anchor" href="#7-2-1-machine-counter-configuration-registers-mcyclecfg-minstretcfg"></a>7.2.1. Machine Counter Configuration Registers (mcyclecfg, minstretcfg)</h3>
 <div class="paragraph">
 <p>mcyclecfg and minstretcfg are 64-bit registers that configure privilege mode filtering for the cycle and instret counters, respectively.</p>
 </div>
@@ -768,7 +768,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="behavior"><a class="anchor" href="#behavior"></a>3. Counter Behavior</h2>
+<h2 id="behavior"><a class="anchor" href="#behavior"></a>7.3. Counter Behavior</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The fundamental behavior of cycle and instret is modified in that counting does not occur while executing in an inhibited privilege mode.  Further, the following defines how transitions between a non-inhibited privilege mode and an inhibited privilege mode are counted.</p>

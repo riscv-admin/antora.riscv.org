@@ -637,7 +637,7 @@
 </div>
 <h1 id="page-title" class="page">"CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</h1>
 <div class="sect1">
-<h2 id="pseudocode-for-instruction-semantics"><a class="anchor" href="#pseudocode-for-instruction-semantics"></a>1. Pseudocode for instruction semantics</h2>
+<h2 id="19-1-pseudocode-for-instruction-semantics"><a class="anchor" href="#19-1-pseudocode-for-instruction-semantics"></a>19.1. Pseudocode for instruction semantics</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The semantics of each instruction in the <a href="#insns">Instructions</a> chapter is expressed in a
@@ -646,7 +646,7 @@ SAIL-like syntax.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="intro"><a class="anchor" href="#intro"></a>2. Introduction</h2>
+<h2 id="intro"><a class="anchor" href="#intro"></a>19.2. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em>Cache-management operation</em> (or <em>CMO</em>) instructions perform operations on
@@ -721,13 +721,13 @@ blocks. The first CMO extensions only define CBOs.</em></p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="background"><a class="anchor" href="#background"></a>3. Background</h2>
+<h2 id="background"><a class="anchor" href="#background"></a>19.3. Background</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter provides information common to all CMO extensions.</p>
 </div>
 <div class="sect2">
-<h3 id="memory-caches"><a class="anchor" href="#memory-caches"></a>3.1. Memory and Caches</h3>
+<h3 id="memory-caches"><a class="anchor" href="#memory-caches"></a>19.3.1. Memory and Caches</h3>
 <div class="paragraph">
 <p>A <em>memory location</em> is a physical resource in a system uniquely identified by a
 <em>physical address</em>. An <em>agent</em> is a logic block, such as a RISC-V hart,
@@ -818,7 +818,7 @@ the copy were modified by a store operation. Additional details are discussed in
 </div>
 </div>
 <div class="sect2">
-<h3 id="cache-block-operations"><a class="anchor" href="#cache-block-operations"></a>3.2. Cache-Block Operations</h3>
+<h3 id="19-3-2-cache-block-operations"><a class="anchor" href="#19-3-2-cache-block-operations"></a>19.3.2. Cache-Block Operations</h3>
 <div class="paragraph">
 <p>A CBO instruction causes one or more operations to be performed on the cache
 blocks identified by the instruction. In general, a CBO instruction may identify
@@ -867,7 +867,7 @@ Additional details are described in <a href="#Zicbop">Cache-Block Prefetch Instr
 </div>
 </div>
 <div class="sect1">
-<h2 id="coherent-agents-caches"><a class="anchor" href="#coherent-agents-caches"></a>4. Coherent Agents and Caches</h2>
+<h2 id="coherent-agents-caches"><a class="anchor" href="#coherent-agents-caches"></a>19.4. Coherent Agents and Caches</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>For a given memory location, a <em>set of coherent agents</em> consists of the agents
@@ -984,9 +984,9 @@ set of coherent caches accessed by a set of coherent agents. The mechanism to
 perform such an operation is <em>implementation-specific</em>.</p>
 </div>
 <div class="sect2">
-<h3 id="memory-ordering"><a class="anchor" href="#memory-ordering"></a>4.1. Memory Ordering</h3>
+<h3 id="19-4-1-memory-ordering"><a class="anchor" href="#19-4-1-memory-ordering"></a>19.4.1. Memory Ordering</h3>
 <div class="sect3">
-<h4 id="preserved-program-order"><a class="anchor" href="#preserved-program-order"></a>4.1.1. Preserved Program Order</h4>
+<h4 id="19-4-1-1-preserved-program-order"><a class="anchor" href="#19-4-1-1-preserved-program-order"></a>19.4.1.1. Preserved Program Order</h4>
 <div class="paragraph">
 <p>The preserved program order (abbreviated <em>PPO</em>) rules are defined by the RVWMO
 memory ordering model. How the operations resulting from CMO instructions fit
@@ -1040,7 +1040,7 @@ instructions.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="load-values"><a class="anchor" href="#load-values"></a>4.1.2. Load Values</h4>
+<h4 id="19-4-1-2-load-values"><a class="anchor" href="#19-4-1-2-load-values"></a>19.4.1.2. Load Values</h4>
 <div class="paragraph">
 <p>An invalidate operation may change the set of values that can be returned by a
 load. In particular, an additional condition is added to the Load Value Axiom:</p>
@@ -1102,7 +1102,7 @@ any time.</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="traps"><a class="anchor" href="#traps"></a>4.2. Traps</h3>
+<h3 id="19-4-2-traps"><a class="anchor" href="#19-4-2-traps"></a>19.4.2. Traps</h3>
 <div class="paragraph">
 <p>Execution of certain CMO instructions may result in traps due to CSR state,
 described in the <a href="#csr_state">Control and Status Register State</a> section, or due to the address translation and
@@ -1110,7 +1110,7 @@ protection mechanisms. The trapping behavior of CMO instructions is described in
 the following sections.</p>
 </div>
 <div class="sect3">
-<h4 id="illegal-instruction-and-virtual-instruction-exceptions"><a class="anchor" href="#illegal-instruction-and-virtual-instruction-exceptions"></a>4.2.1. Illegal Instruction and Virtual Instruction Exceptions</h4>
+<h4 id="19-4-2-1-illegal-instruction-and-virtual-instruction-exceptions"><a class="anchor" href="#19-4-2-1-illegal-instruction-and-virtual-instruction-exceptions"></a>19.4.2.1. Illegal Instruction and Virtual Instruction Exceptions</h4>
 <div class="paragraph">
 <p>Cache-block management instructions and cache-block zero instructions may raise
 illegal instruction exceptions or virtual instruction exceptions depending on
@@ -1123,7 +1123,7 @@ nor virtual instruction exceptions.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="page-fault-guest-page-fault-and-access-fault-exceptions"><a class="anchor" href="#page-fault-guest-page-fault-and-access-fault-exceptions"></a>4.2.2. Page Fault, Guest-Page Fault, and Access Fault Exceptions</h4>
+<h4 id="19-4-2-2-page-fault-guest-page-fault-and-access-fault-exceptions"><a class="anchor" href="#19-4-2-2-page-fault-guest-page-fault-and-access-fault-exceptions"></a>19.4.2.2. Page Fault, Guest-Page Fault, and Access Fault Exceptions</h4>
 <div class="paragraph">
 <p>Similar to load and store instructions, CMO instructions are explicit memory
 access instructions that compute an effective address. The effective address is
@@ -1249,13 +1249,13 @@ appropriate for these instructions, regardless of the permissions required.</em>
 </div>
 </div>
 <div class="sect3">
-<h4 id="address-misaligned-exceptions"><a class="anchor" href="#address-misaligned-exceptions"></a>4.2.3. Address Misaligned Exceptions</h4>
+<h4 id="19-4-2-3-address-misaligned-exceptions"><a class="anchor" href="#19-4-2-3-address-misaligned-exceptions"></a>19.4.2.3. Address Misaligned Exceptions</h4>
 <div class="paragraph">
 <p>CMO instructions do <em>not</em> generate address misaligned exceptions.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="breakpoint-exceptions-and-debug-mode-entry"><a class="anchor" href="#breakpoint-exceptions-and-debug-mode-entry"></a>4.2.4. Breakpoint Exceptions and Debug Mode Entry</h4>
+<h4 id="19-4-2-4-breakpoint-exceptions-and-debug-mode-entry"><a class="anchor" href="#19-4-2-4-breakpoint-exceptions-and-debug-mode-entry"></a>19.4.2.4. Breakpoint Exceptions and Debug Mode Entry</h4>
 <div class="paragraph">
 <p>Unless otherwise defined by the debug architecture specification, the behavior
 of trigger modules with respect to CMO instructions is UNSPECIFIED.</p>
@@ -1363,7 +1363,7 @@ Zicbom and Zicbop extensions is expected to be defined in future extensions.</em
 </div>
 </div>
 <div class="sect3">
-<h4 id="hypervisor-extension"><a class="anchor" href="#hypervisor-extension"></a>4.2.5. Hypervisor Extension</h4>
+<h4 id="19-4-2-5-hypervisor-extension"><a class="anchor" href="#19-4-2-5-hypervisor-extension"></a>19.4.2.5. Hypervisor Extension</h4>
 <div class="paragraph">
 <p>For the purposes of writing the <code>mtinst</code> or <code>htinst</code> register on a trap, the
 following standard transformation is defined for cache-block management
@@ -1396,7 +1396,7 @@ or <code>htinst</code> instead of the standard transformation defined above.</em
 </div>
 </div>
 <div class="sect2">
-<h3 id="effects-on-constrained-lrsc-loops"><a class="anchor" href="#effects-on-constrained-lrsc-loops"></a>4.3. Effects on Constrained LR/SC Loops</h3>
+<h3 id="19-4-3-effects-on-constrained-lrsc-loops"><a class="anchor" href="#19-4-3-effects-on-constrained-lrsc-loops"></a>19.4.3. Effects on Constrained LR/SC Loops</h3>
 <div class="paragraph">
 <p>The following event is added to the list of events that satisfy the eventuality
 guarantee provided by constrained LR/SC loops, as defined in the A extension:</p>
@@ -1437,7 +1437,7 @@ LR/SC loops executed on any hart.</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="software-discovery"><a class="anchor" href="#software-discovery"></a>4.4. Software Discovery</h3>
+<h3 id="19-4-4-software-discovery"><a class="anchor" href="#19-4-4-software-discovery"></a>19.4.4. Software Discovery</h3>
 <div class="paragraph">
 <p>The initial set of CMO extensions requires the following information to be
 discovered by software:</p>
@@ -1463,7 +1463,7 @@ mechanism.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="csr_state"><a class="anchor" href="#csr_state"></a>5. Control and Status Register State</h2>
+<h2 id="csr_state"><a class="anchor" href="#csr_state"></a>19.5. Control and Status Register State</h2>
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
@@ -1719,7 +1719,7 @@ values from the execution environment discovery mechanism.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="extensions"><a class="anchor" href="#extensions"></a>6. Extensions</h2>
+<h2 id="extensions"><a class="anchor" href="#extensions"></a>19.6. Extensions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>CMO instructions are defined in the following extensions:</p>
@@ -1738,7 +1738,7 @@ values from the execution environment discovery mechanism.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="Zicbom"><a class="anchor" href="#Zicbom"></a>6.1. Cache-Block Management Instructions</h3>
+<h3 id="Zicbom"><a class="anchor" href="#Zicbom"></a>19.6.1. Cache-Block Management Instructions</h3>
 <div class="paragraph">
 <p>Cache-block management instructions enable software running on a set of coherent
 agents to communicate with a set of non-coherent agents by performing one of the
@@ -1839,7 +1839,7 @@ physical address by the appropriate translation mechanisms.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="Zicboz"><a class="anchor" href="#Zicboz"></a>6.2. Cache-Block Zero Instructions</h3>
+<h3 id="Zicboz"><a class="anchor" href="#Zicboz"></a>19.6.2. Cache-Block Zero Instructions</h3>
 <div class="paragraph">
 <p>Cache-block zero instructions store zeros to the set of bytes corresponding to a
 cache block. An implementation may update the bytes in any order and with any
@@ -1896,7 +1896,7 @@ appropriate translation mechanisms.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="Zicbop"><a class="anchor" href="#Zicbop"></a>6.3. Cache-Block Prefetch Instructions</h3>
+<h3 id="Zicbop"><a class="anchor" href="#Zicbop"></a>19.6.3. Cache-Block Prefetch Instructions</h3>
 <div class="paragraph">
 <p>Cache-block prefetch instructions are HINTs to the hardware to indicate that
 software intends to perform a particular type of memory access in the near
@@ -1969,10 +1969,10 @@ field is also interpreted as imm[4:0] like a store instruction.</em></p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="insns"><a class="anchor" href="#insns"></a>7. Instructions</h2>
+<h2 id="insns"><a class="anchor" href="#insns"></a>19.7. Instructions</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="insns-cbo_clean"><a class="anchor" href="#insns-cbo_clean"></a>7.1. cbo.clean</h3>
+<h3 id="insns-cbo_clean"><a class="anchor" href="#insns-cbo_clean"></a>19.7.1. cbo.clean</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2011,7 +2011,7 @@ agent executing the instruction.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-cbo_flush"><a class="anchor" href="#insns-cbo_flush"></a>7.2. cbo.flush</h3>
+<h3 id="insns-cbo_flush"><a class="anchor" href="#insns-cbo_flush"></a>19.7.2. cbo.flush</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2050,7 +2050,7 @@ agent executing the instruction.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-cbo_inval"><a class="anchor" href="#insns-cbo_inval"></a>7.3. cbo.inval</h3>
+<h3 id="insns-cbo_inval"><a class="anchor" href="#insns-cbo_inval"></a>19.7.3. cbo.inval</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2091,7 +2091,7 @@ operation.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-cbo_zero"><a class="anchor" href="#insns-cbo_zero"></a>7.4. cbo.zero</h3>
+<h3 id="insns-cbo_zero"><a class="anchor" href="#insns-cbo_zero"></a>19.7.4. cbo.zero</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2130,7 +2130,7 @@ not update the entire set of bytes atomically.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-prefetch_i"><a class="anchor" href="#insns-prefetch_i"></a>7.5. prefetch.i</h3>
+<h3 id="insns-prefetch_i"><a class="anchor" href="#insns-prefetch_i"></a>19.7.5. prefetch.i</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2189,7 +2189,7 @@ this behavior is not required.</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-prefetch_r"><a class="anchor" href="#insns-prefetch_r"></a>7.6. prefetch.r</h3>
+<h3 id="insns-prefetch_r"><a class="anchor" href="#insns-prefetch_r"></a>19.7.6. prefetch.r</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>
@@ -2248,7 +2248,7 @@ behavior is not required.</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="insns-prefetch_w"><a class="anchor" href="#insns-prefetch_w"></a>7.7. prefetch.w</h3>
+<h3 id="insns-prefetch_w"><a class="anchor" href="#insns-prefetch_w"></a>19.7.7. prefetch.w</h3>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Synopsis</dt>

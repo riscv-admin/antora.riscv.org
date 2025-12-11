@@ -683,7 +683,7 @@ new issues be uncovered.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="rvwmo"><a class="anchor" href="#rvwmo"></a>1. Definition of the RVWMO Memory Model</h2>
+<h2 id="rvwmo"><a class="anchor" href="#rvwmo"></a>17.1. Definition of the RVWMO Memory Model</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The RVWMO memory model is defined in terms of the <em>global memory order</em>,
@@ -700,7 +700,7 @@ satisfying all of the memory model constraints is a legal execution (as
 far as the memory model is concerned).</p>
 </div>
 <div class="sect2">
-<h3 id="rvwmo-primitives"><a class="anchor" href="#rvwmo-primitives"></a>1.1. Memory Model Primitives</h3>
+<h3 id="rvwmo-primitives"><a class="anchor" href="#rvwmo-primitives"></a>17.1.1. Memory Model Primitives</h3>
 <div class="paragraph">
 <p>The <em>program order</em> over memory operations reflects the order in which
 the instructions that generate each load and store are logically laid
@@ -836,7 +836,7 @@ above into the ISA in a future extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="mem-dependencies"><a class="anchor" href="#mem-dependencies"></a>1.2. Syntactic Dependencies</h3>
+<h3 id="mem-dependencies"><a class="anchor" href="#mem-dependencies"></a>17.1.2. Syntactic Dependencies</h3>
 <div class="paragraph">
 <p>The definition of the RVWMO memory model depends in part on the notion
 of a syntactic dependency, defined as follows.</p>
@@ -846,14 +846,14 @@ of a syntactic dependency, defined as follows.</p>
 an entire general-purpose register, some portion of a CSR, or an entire
 CSR. The granularity at which dependencies are tracked through CSRs is
 specific to each CSR and is defined in
-<a href="#csr-granularity">CSR Dependency Tracking Granularity</a>.</p>
+<a href="#csr-granularity">17.2. CSR Dependency Tracking Granularity</a>.</p>
 </div>
 <div class="paragraph">
 <p>Syntactic dependencies are defined in terms of instructions' <em>source
 registers</em>, instructions' <em>destination registers</em>, and the way
 instructions <em>carry a dependency</em> from their source registers to their
 destination registers. This section provides a general definition of all
-of these terms; however, <a href="#source-dest-regs">Source and Destination Register Listings</a> provides a
+of these terms; however, <a href="#source-dest-regs">17.3. Source and Destination Register Listings</a> provides a
 complete listing of the specifics for each instruction.</p>
 </div>
 <div class="paragraph">
@@ -874,7 +874,7 @@ is CSRRW or CSRRWI and <em>rd</em> is set to <code>x0</code></p>
 </li>
 <li>
 <p><em>r</em> is a CSR and an implicit source register for
-<em>i</em>, as defined in <a href="#source-dest-regs">Source and Destination Register Listings</a></p>
+<em>i</em>, as defined in <a href="#source-dest-regs">17.3. Source and Destination Register Listings</a></p>
 </li>
 <li>
 <p><em>r</em> is a CSR that aliases with another source register for
@@ -904,7 +904,7 @@ or CSRRCI and uimm[4:0] is set to zero.</p>
 </li>
 <li>
 <p><em>r</em> is a CSR and an implicit destination register for
-<em>i</em>, as defined in <a href="#source-dest-regs">Source and Destination Register Listings</a></p>
+<em>i</em>, as defined in <a href="#source-dest-regs">17.3. Source and Destination Register Listings</a></p>
 </li>
 <li>
 <p><em>r</em> is a CSR that aliases with another destination
@@ -915,7 +915,7 @@ register for <em>i</em></p>
 <div class="paragraph">
 <p>Most non-memory instructions <em>carry a dependency</em> from each of their
 source registers to each of their destination registers. However, there
-are exceptions to this rule; see <a href="#source-dest-regs">Source and Destination Register Listings</a>.</p>
+are exceptions to this rule; see <a href="#source-dest-regs">17.3. Source and Destination Register Listings</a>.</p>
 </div>
 <div class="paragraph">
 <p>Instruction <em>j</em> has a <em>syntactic dependency</em> on instruction
@@ -999,7 +999,7 @@ program order.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="preserved-program-order"><a class="anchor" href="#preserved-program-order"></a>1.3. Preserved Program Order</h3>
+<h3 id="17-1-3-preserved-program-order"><a class="anchor" href="#17-1-3-preserved-program-order"></a>17.1.3. Preserved Program Order</h3>
 <div id="ppo" class="paragraph">
 <p>The global memory order for any given execution of a program respects
 some but not all of each hart’s program order. The subset of program
@@ -1110,7 +1110,7 @@ address dependency on <em>a</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="memory-model-axioms"><a class="anchor" href="#memory-model-axioms"></a>1.4. Memory Model Axioms</h3>
+<h3 id="17-1-4-memory-model-axioms"><a class="anchor" href="#17-1-4-memory-model-axioms"></a>17.1.4. Memory Model Axioms</h3>
 <div class="paragraph">
 <p>An execution of a RISC-V program obeys the RVWMO memory consistency
 model only if there exists a global memory order conforming to preserved
@@ -1118,7 +1118,7 @@ program order and satisfying the <em>load value axiom</em>, the <em>atomicity
 axiom</em>, and the <em>progress axiom</em>.</p>
 </div>
 <div class="sect3">
-<h4 id="ax-load"><a class="anchor" href="#ax-load"></a>1.4.1. Load Value Axiom</h4>
+<h4 id="ax-load"><a class="anchor" href="#ax-load"></a>17.1.4.1. Load Value Axiom</h4>
 <div class="paragraph">
 <p>Each byte of each load <em>i</em> returns the value written to that
 byte by the store that is the latest in global memory order among the
@@ -1138,7 +1138,7 @@ program order</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ax-atom"><a class="anchor" href="#ax-atom"></a>1.4.2. Atomicity Axiom</h4>
+<h4 id="ax-atom"><a class="anchor" href="#ax-atom"></a>17.1.4.2. Atomicity Axiom</h4>
 <div class="paragraph">
 <p>If <em>r</em> and <em>w</em> are paired load and store
 operations generated by aligned LR and SC instructions in a hart
@@ -1168,7 +1168,7 @@ such patterns to be rare, and their use is discouraged.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="ax-prog"><a class="anchor" href="#ax-prog"></a>1.4.3. Progress Axiom</h4>
+<h4 id="ax-prog"><a class="anchor" href="#ax-prog"></a>17.1.4.3. Progress Axiom</h4>
 <div class="paragraph">
 <p>No memory operation may be preceded in the global memory order by an
 infinite sequence of other memory operations.</p>
@@ -1178,7 +1178,7 @@ infinite sequence of other memory operations.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="csr-granularity"><a class="anchor" href="#csr-granularity"></a>2. CSR Dependency Tracking Granularity</h2>
+<h2 id="csr-granularity"><a class="anchor" href="#csr-granularity"></a>17.2. CSR Dependency Tracking Granularity</h2>
 <div class="sectionbody">
 <table class="tableblock frame-all grid-all stretch center">
 <caption class="title">Table 1. Granularities at which syntactic dependencies are tracked through CSRs</caption>
@@ -1219,13 +1219,13 @@ definition of syntactic dependencies.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="source-dest-regs"><a class="anchor" href="#source-dest-regs"></a>3. Source and Destination Register Listings</h2>
+<h2 id="source-dest-regs"><a class="anchor" href="#source-dest-regs"></a>17.3. Source and Destination Register Listings</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section provides a concrete listing of the source and destination
 registers for each instruction. These listings are used in the
 definition of syntactic dependencies in
-<a href="#mem-dependencies">Syntactic Dependencies</a>.</p>
+<a href="#mem-dependencies">17.1.2. Syntactic Dependencies</a>.</p>
 </div>
 <div class="paragraph">
 <p>The term "accumulating CSR" is used to describe a CSR that is both a

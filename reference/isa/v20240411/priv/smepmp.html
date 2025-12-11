@@ -637,7 +637,7 @@
 </div>
 <h1 id="page-title" class="page">"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0.0</h1>
 <div class="sect1">
-<h2 id="introduction"><a class="anchor" href="#introduction"></a>1. Introduction</h2>
+<h2 id="6-1-introduction"><a class="anchor" href="#6-1-introduction"></a>6.1. Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Being able to access the memory of a process running at a high privileged execution mode, such as the Supervisor or Machine mode, from a lower privileged mode such as the User mode, introduces an obvious attack vector since it allows for an attacker to perform privilege escalation, and tamper with the code and/or data of that process. A less obvious attack vector exists when the reverse happens, in which case an attacker instead of tampering with code and/or data that belong to a high-privileged process, can tamper with the memory of an unprivileged / less-privileged process and trick the high-privileged process to use or execute it.</p>
@@ -685,7 +685,7 @@
 </table>
 </div>
 <div class="sect2">
-<h3 id="threat-model"><a class="anchor" href="#threat-model"></a>1.1. Threat model</h3>
+<h3 id="6-1-1-threat-model"><a class="anchor" href="#6-1-1-threat-model"></a>6.1.1. Threat model</h3>
 <div class="paragraph">
 <p>However, there are no such mechanisms available on Machine mode in the current (v1.11) Privileged Spec. It is not possible for a PMP rule to be <strong>enforced</strong> only on non-Machine modes and <strong>denied</strong> on Machine mode, to only allow access to a memory region by less-privileged modes. it is only possible to have a <strong>locked</strong> rule that will be <strong>enforced</strong> on all modes, or a rule that will be <strong>enforced</strong> on non-Machine modes and be <strong>ignored</strong> by Machine mode. So for any physical memory region which is not protected with a Locked rule, Machine mode has unlimited access, including the ability to execute it.</p>
 </div>
@@ -696,7 +696,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="proposal"><a class="anchor" href="#proposal"></a>2. Proposal</h2>
+<h2 id="proposal"><a class="anchor" href="#proposal"></a>6.2. Proposal</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">
@@ -777,7 +777,7 @@
 </ol>
 </div>
 <div class="sect2">
-<h3 id="truth-table-when-mseccfg-mml-is-set"><a class="anchor" href="#truth-table-when-mseccfg-mml-is-set"></a>2.1. Truth table when mseccfg.MML is set</h3>
+<h3 id="6-2-1-truth-table-when-mseccfg-mml-is-set"><a class="anchor" href="#6-2-1-truth-table-when-mseccfg-mml-is-set"></a>6.2.1. Truth table when mseccfg.MML is set</h3>
 <table class="tableblock frame-all grid-all stripes-even stretch">
 <colgroup>
 <col style="width: 10%;">
@@ -930,7 +930,7 @@
 </div>
 </div>
 <div class="sect2">
-<h3 id="visual-representation-of-the-proposal"><a class="anchor" href="#visual-representation-of-the-proposal"></a>2.2. Visual representation of the proposal</h3>
+<h3 id="6-2-2-visual-representation-of-the-proposal"><a class="anchor" href="#6-2-2-visual-representation-of-the-proposal"></a>6.2.2. Visual representation of the proposal</h3>
 <div class="imageblock">
 <div class="content">
 <img src="_images/smepmp-visual-representation.png" alt="smepmp visual representation">
@@ -940,7 +940,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="smepmp-software-discovery"><a class="anchor" href="#smepmp-software-discovery"></a>3. Smepmp software discovery</h2>
+<h2 id="6-3-smepmp-software-discovery"><a class="anchor" href="#6-3-smepmp-software-discovery"></a>6.3. Smepmp software discovery</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Since all fields defined on <code>mseccfg</code> as part of this proposal are locked when set (<code>MMWP</code>/<code>MML</code>) or locked when cleared (<code>RLB</code>), software can&#8217;t poll them for determining the presence of Smepmp. It is expected that BootROM will set <code>mseccfg.MMWP</code> and/or <code>mseccfg.MML</code> during early boot, before jumping to the firmware, so that the firmware will be able to determine the presence of Smepmp by reading <code>mseccfg</code> and checking the state of <code>mseccfg.MMWP</code> and <code>mseccfg.MML</code>.</p>
@@ -948,7 +948,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="rationale"><a class="anchor" href="#rationale"></a>4. Rationale</h2>
+<h2 id="rationale"><a class="anchor" href="#rationale"></a>6.4. Rationale</h2>
 <div class="sectionbody">
 <div class="olist arabic">
 <ol class="arabic">

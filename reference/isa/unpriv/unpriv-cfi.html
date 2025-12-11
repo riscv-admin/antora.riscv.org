@@ -687,21 +687,21 @@ instruction where <em>rs1</em> is not <code>x1</code> or <code>x5</code> (i.e., 
 provide backward-edge and forward-edge control flow integrity respectively.</p>
 </div>
 <div class="paragraph">
-<p>The Unprivileged ISA for Zicfilp extension is specified in <a href="#unpriv-forward">Landing Pad (Zicfilp)</a>
+<p>The Unprivileged ISA for Zicfilp extension is specified in <a href="#unpriv-forward">33.1. Landing Pad (Zicfilp)</a>
 and for the Unprivileged ISA for Zicfiss extension is specified in
-<a href="#unpriv-backward">Shadow Stack (Zicfiss)</a>. The Privileged ISA for these extensions is specified in the
+<a href="#unpriv-backward">33.2. Shadow Stack (Zicfiss)</a>. The Privileged ISA for these extensions is specified in the
 Privileged ISA specification.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="unpriv-forward"><a class="anchor" href="#unpriv-forward"></a>1. Landing Pad (Zicfilp)</h2>
+<h2 id="unpriv-forward"><a class="anchor" href="#unpriv-forward"></a>33.1. Landing Pad (Zicfilp)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>To enforce forward-edge control-flow integrity, the Zicfilp extension introduces
 a landing pad (<code>LPAD</code>) instruction. The <code>LPAD</code> instruction must be placed at the
 program locations that are valid targets of indirect jumps or calls. The <code>LPAD</code>
-instruction (See <a href="#LP_INST">Landing Pad Instruction</a>) is encoded using the <code>AUIPC</code> major opcode with
+instruction (See <a href="#LP_INST">33.1.2. Landing Pad Instruction</a>) is encoded using the <code>AUIPC</code> major opcode with
 <em>rd</em>=<code>x0</code>.</p>
 </div>
 <div class="paragraph">
@@ -790,7 +790,7 @@ for each privilege mode.</p>
 <p>The Zicfilp extension depends on the Zicsr extension.</p>
 </div>
 <div class="sect2">
-<h3 id="landing-pad-enforcement"><a class="anchor" href="#landing-pad-enforcement"></a>1.1. Landing Pad Enforcement</h3>
+<h3 id="33-1-1-landing-pad-enforcement"><a class="anchor" href="#33-1-1-landing-pad-enforcement"></a>33.1.1. Landing Pad Enforcement</h3>
 <div class="paragraph">
 <p>To enforce that the target of an indirect call or indirect jump must be a valid
 landing pad instruction, the hart maintains an expected landing pad (<code>ELP</code>) state
@@ -924,7 +924,7 @@ the accidental landing pad.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="LP_INST"><a class="anchor" href="#LP_INST"></a>1.2. Landing Pad Instruction</h3>
+<h3 id="LP_INST"><a class="anchor" href="#LP_INST"></a>33.1.2. Landing Pad Instruction</h3>
 <div class="paragraph">
 <p>When Zicfilp is enabled, <code>LPAD</code> is the only instruction allowed to execute when
 the <code>ELP</code> state is <code>LP_EXPECTED</code>. If Zicfilp is not enabled then the instruction
@@ -977,7 +977,7 @@ endif</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="unpriv-backward"><a class="anchor" href="#unpriv-backward"></a>2. Shadow Stack (Zicfiss)</h2>
+<h2 id="unpriv-backward"><a class="anchor" href="#unpriv-backward"></a>33.2. Shadow Stack (Zicfiss)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The Zicfiss extension introduces a shadow stack to enforce backward-edge
@@ -1069,14 +1069,14 @@ if the Zcmop extension is implemented, the Zicfiss extension also provides the
 requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.</p>
 </div>
 <div class="sect2">
-<h3 id="zicfiss-instructions-summary"><a class="anchor" href="#zicfiss-instructions-summary"></a>2.1. Zicfiss Instructions Summary</h3>
+<h3 id="33-2-1-zicfiss-instructions-summary"><a class="anchor" href="#33-2-1-zicfiss-instructions-summary"></a>33.2.1. Zicfiss Instructions Summary</h3>
 <div class="paragraph">
 <p>The Zicfiss extension introduces the following instructions:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Push to the shadow stack (See <a href="#SS_PUSH">Push to the Shadow Stack</a>)</p>
+<p>Push to the shadow stack (See <a href="#SS_PUSH">33.2.4. Push to the Shadow Stack</a>)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1089,7 +1089,7 @@ requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.</p
 </div>
 </li>
 <li>
-<p>Pop from the shadow stack (See <a href="#SS_POP">Pop from the Shadow Stack</a>)</p>
+<p>Pop from the shadow stack (See <a href="#SS_POP">33.2.5. Pop from the Shadow Stack</a>)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1102,7 +1102,7 @@ requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.</p
 </div>
 </li>
 <li>
-<p>Read the value of <code>ssp</code> into a register (See <a href="#SSP_READ">Read <code>ssp</code> into a Register</a>)</p>
+<p>Read the value of <code>ssp</code> into a register (See <a href="#SSP_READ">33.2.6. Read <code>ssp</code> into a Register</a>)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1112,7 +1112,7 @@ requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.</p
 </div>
 </li>
 <li>
-<p>Perform an atomic swap from a shadow stack location (See <a href="#SSAMOSWAP">Atomic Swap from a Shadow Stack Location</a>)</p>
+<p>Perform an atomic swap from a shadow stack location (See <a href="#SSAMOSWAP">33.2.7. Atomic Swap from a Shadow Stack Location</a>)</p>
 <div class="ulist">
 <ul>
 <li>
@@ -1131,7 +1131,7 @@ redefined by another extension.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="shadow-stack-pointer-ssp"><a class="anchor" href="#shadow-stack-pointer-ssp"></a>2.2. Shadow Stack Pointer (<code>ssp</code>)</h3>
+<h3 id="33-2-2-shadow-stack-pointer-ssp"><a class="anchor" href="#33-2-2-shadow-stack-pointer-ssp"></a>33.2.2. Shadow Stack Pointer (<code>ssp</code>)</h3>
 <div class="paragraph">
 <p>The <code>ssp</code> CSR is an unprivileged read-write (URW) CSR that reads and writes
 <code>XLEN</code> low order bits of the shadow stack pointer (<code>ssp</code>). The CSR address is
@@ -1142,11 +1142,11 @@ UXLEN or SXLEN may never be 32, then the bit 2 is also read-only zero.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="zicfiss-instructions"><a class="anchor" href="#zicfiss-instructions"></a>2.3. Zicfiss Instructions</h3>
+<h3 id="33-2-3-zicfiss-instructions"><a class="anchor" href="#33-2-3-zicfiss-instructions"></a>33.2.3. Zicfiss Instructions</h3>
 
 </div>
 <div class="sect2">
-<h3 id="SS_PUSH"><a class="anchor" href="#SS_PUSH"></a>2.4. Push to the Shadow Stack</h3>
+<h3 id="SS_PUSH"><a class="anchor" href="#SS_PUSH"></a>33.2.4. Push to the Shadow Stack</h3>
 <div class="paragraph">
 <p>A shadow stack push operation is defined as decrement of the <code>ssp</code> by <code>XLEN/8</code>
 followed by a store of the value in the link register to memory at the new top
@@ -1192,7 +1192,7 @@ shadow stack completes successfully.</p>
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SS_POP"><a class="anchor" href="#SS_POP"></a>2.5. Pop from the Shadow Stack</h3>
+<h3 id="SS_POP"><a class="anchor" href="#SS_POP"></a>33.2.5. Pop from the Shadow Stack</h3>
 <div class="paragraph">
 <p>A shadow stack pop operation is defined as an <code>XLEN</code> wide read from the
 current top of the shadow stack followed by an increment of the <code>ssp</code> by
@@ -1397,7 +1397,7 @@ and thus may be used to transiently forward the data from such stores to
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SSP_READ"><a class="anchor" href="#SSP_READ"></a>2.6. Read <code>ssp</code> into a Register</h3>
+<h3 id="SSP_READ"><a class="anchor" href="#SSP_READ"></a>33.2.6. Read <code>ssp</code> into a Register</h3>
 <div class="paragraph">
 <p>The <code>SSRDP</code> instruction is provided to move the contents of <code>ssp</code> to a destination
 register.</p>
@@ -1522,7 +1522,7 @@ back_cfi_not_active:
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="SSAMOSWAP"><a class="anchor" href="#SSAMOSWAP"></a>2.7. Atomic Swap from a Shadow Stack Location</h3>
+<h3 id="SSAMOSWAP"><a class="anchor" href="#SSAMOSWAP"></a>33.2.7. Atomic Swap from a Shadow Stack Location</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="_images/svg-2ae67d26f273286801a52e320bebad4559dbc469.svg" alt="svg">
