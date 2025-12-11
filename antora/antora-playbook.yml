@@ -99,10 +99,10 @@ asciidoc:
     incexample: example$
     incimage: ../images/
     part-signifier: Chapter
-    sectnums: all
-    sectnumlevels: 5
+    #sectnums: all
+    #sectnumlevels: 5
     setanchors:
-    partnums: all
+    #partnums: all
     #toc: ''
     toclevels: 5
     outlinelevels: 5
@@ -168,6 +168,75 @@ antora:
 #     - '@antora/asciidoctor-bibtex'
 
   - require: ./riscv-extensions/nav_numbering_extension.js
+    numbering_rules:  # Make sure this is at the same level as 'require'
+        # priv module - v20240411 branch
+        - module: priv
+          branches: ['v20240411']
+          chapters:
+            start: 5
+            end: 25
+          appendices:
+            start: 26
+            end: 28
+
+        # priv module - v20250508 branch
+        - module: priv
+          branches: ['v20250508']
+          chapters:
+            start: 5
+            end: 24
+          appendices:
+            start: 25
+            end: 27
+
+        # priv module - main branch
+        - module: priv
+          branches: ['main']
+          chapters:
+            start: 5
+            end: 24
+          appendices:
+            start: 25
+            end: 27
+
+        # unpriv module - v20240411 branch
+        - module: unpriv
+          branches: ['v20240411']
+          chapters:
+            start: 5
+            end: 41
+          appendices:
+            start: 43
+            end: 46
+
+        # unpriv module - v20250508 branch
+        - module: unpriv
+          branches: ['v20250508']
+          chapters:
+            start: 5
+            end: 41
+          appendices:
+            start: 42
+            end: 46
+
+        # unpriv module - main branch
+        - module: unpriv
+          branches: ['main']
+          chapters:
+            start: 3
+            end: 18
+          appendices:
+            start: 19
+            end: 20
+
+        # Rule without branch/tag filter - applies to all branches/tags
+        - module: ROOT
+          chapters:
+            start: 1
+            end: 10
+
+  # Add section numbering (uses same config as nav-numbering)
+  - require: ./riscv-extensions/section_numbering_extension.js
     numbering_rules:  # Make sure this is at the same level as 'require'
         # priv module - v20240411 branch
         - module: priv
