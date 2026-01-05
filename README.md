@@ -1,6 +1,8 @@
 # Website
 
-This website is built using Antora. This site is deployed via GitHub pages at https://riscv-admin.github.io/antora.riscv.org/.
+This website is built using Antora. This site is deployed via GitHub pages at https://riscv-admin.github.io/antora-dev.riscv.org/
+
+For the latest prod information, see https://riscv-admin.github.io/antora.riscv.org/.
 
 ### Installation
 
@@ -25,8 +27,8 @@ cd antora
 npx antora --fetch antora-playbook.yml --stacktrace
 ```
 
-This command generates static content into the `antora/build/` directory and can be served using any static contents hosting service.
+This command generates static content into the `antora/build/` directory and can be served by using any static contents hosting service.
 
 ### Deployment
 
-This project deploys using GitHub pages for hosting.
+This project deploys by using GitHub pages for hosting.
