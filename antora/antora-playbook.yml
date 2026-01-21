@@ -14,18 +14,52 @@ output:
 
 content:
   sources:
-  - url: https://github.com/riscv/riscv-isa-manual.git
-    #branches: [main,v20250508,v20240411]
-    branches: [v20250508,v20240411]
-    start_page: ROOT::index.adoc
-    start_path: /
-    # Enable symlink resolution
-    worktrees: true
-    submodules: true
+   - url: ./hardware-home
+     start_page: ROOT::index.adoc
+
+   - url: https://github.com/riscv/riscv-aia.git
+     branches: antora-refactor
+     start_page: ROOT::index.adoc
+     start_path: /
+     worktrees: true
+     submodules: true
+
+   - url: https://github.com/riscv-non-isa/riscv-iommu.git
+     branches: antora-refactor
+     start_page: ROOT::index.adoc
+     start_path: /
+     worktrees: true
+     submodules: true
+
+   - url: https://github.com/riscv/riscv-plic-spec.git
+     branches: antora-refactor
+     start_page: ROOT::index.adoc
+     start_path: /
+
+   - url: https://github.com/riscv-non-isa/server-soc.git
+     branches: antora-refactor
+     start_page: ROOT::index.adoc
+     start_path: /
+
+   - url: https://github.com/riscv/docs-dev-guide.git
+     branches: [version25,antora-redo]
+     start_page: ROOT::index.adoc
+     start_path: /
+     worktrees: true
+     submodules: true
+
+   - url: https://github.com/riscv/riscv-isa-manual.git
+     #branches: [main,v20250508,v20240411]
+     branches: [v20250508,v20240411]
+     start_page: ROOT::index.adoc
+     start_path: /
+     # Enable symlink resolution
+     worktrees: true
+     submodules: true
 
 #  - url: https://github.com/riscv-non-isa/e-trace-encap.git
 #    branches: antora-refactor
-    #tags: [v1.0]
+#     tags: [v1.0]
 #    start_page: ROOT::header.adoc
 #    start_path: /
 
@@ -39,24 +73,9 @@ content:
 #    start_page: ROOT::intro.adoc
 #    start_path: /
 
-#  - url: https://github.com/riscv/riscv-aia.git
-#    branches: antora-refactor
-#    start_page: ROOT::intro.adoc
-#    start_path: /
-
 #  - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
 #    branches: antora-refactor
 #    start_page: ROOT::contributors.adoc
-#    start_path: /
-
-#  - url: https://github.com/riscv-non-isa/riscv-iommu.git
-#    branches: antora-refactor
-#    start_page: ROOT::index.adoc
-#    start_path: /
-
-#  - url: https://github.com/riscv/riscv-plic-spec.git
-#    branches: antora-refactor
-#    start_page: ROOT::index.adoc
 #    start_path: /
 
 #  - url: https://github.com/riscv-non-isa/riscv-ras-eri.git
@@ -307,12 +326,10 @@ antora:
 ui:
   bundle:
     #url: https://github.com/boozallen/sdp-docs-skin/releases/download/1.2/ui-bundle.zip
-    #url: https://github.com/mulesoft/docs-site-ui/releases/download/prod-627/ui-bundle.zip
     #url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
-    #url: https://github.com/spring-io/antora-ui-spring/releases/download/v0.4.16/ui-bundle.zip
-    #url: https://github.com/riscv-admin/riscv-antora-ui/releases/download/latest/ui-bundle.zip
-    url: https://github.com/riscv-admin/riscv-antora-only-ui/releases/download/latest/ui-bundle.zip
-    #url: https://github.com/jjscheel/riscv-antora-only-ui/releases/download/tests/ui-bundle.zip
+    #url: https://github.com/riscv-admin/riscv-antora-only-ui/releases/download/latest/ui-bundle.zip
+    #url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
+    url: ../../riscv-antora-only-ui-dev/build/ui-bundle.zip
 
     snapshot: true
   #supplemental_files: ./supplimental-ui
