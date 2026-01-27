@@ -1,0 +1,2100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/techtrace/ingressPort.html">
+    <link rel="prev" href="branchTrace.html">
+    <link rel="next" href="filtering.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="20cdb323be837873146215146a9e538b06605e9d"> 
+    <meta name="version" content="v2.0">
+    <meta name="component" content="techtrace">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item home">
+          <a class="navbar-link"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications"
+            aria-label="Library">
+            Library</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">ISA</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Profiles</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Non-ISA Hardware</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+            Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+            Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+            Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+            SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient
+            Trace
+            < <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+              </svg>
+          </a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS
+            Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI
+            Architecture
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace
+            Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted
+            Trace and Diagnostic Data Packet
+            Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Platform Software</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot
+            and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional
+            Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform
+            Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor
+            Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">App Enablement</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C
+            Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="techtrace" data-version="v2.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Debug, Trace, RAS</span>
+</div>        <div class="nav-trees" data-component="techtrace">
+          <div class="version-box">
+            <select data-component="techtrace" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="techtrace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Chapter 1. Efficient Trace for RISC-V</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="preface.html">Chapter 2. Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="control.html">Chapter 4. Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="branchTrace.html">Chapter 5. Branch Trace</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="filtering.html">Chapter 7. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="timestamping.html">Chapter 8. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="payload.html">Chapter 9. Trace Payload Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dataTracePayload.html">Data Trace Payload Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="exampleAlgorithm.html">Example Reference Encoding Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="discovery.html">Trace Discovery and Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="decoder.html">Example Trace Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="exampleCodeSnippets.html">Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="future.html">Future Work</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="reri">
+          <div class="version-box">
+            <select data-component="reri" class="select-version">
+                <option
+                  value="../reri/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="reri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/index.html">Chapter 1. RERI Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_intro.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_err_reporting.html">Chapter 4. Error Reporting</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="qos">
+          <div class="version-box">
+            <select data-component="qos" class="select-version">
+                <option
+                  value="../qos/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="qos" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V Capacity and Bandwidth Controller QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_identifiers.html">Chapter 3. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_capacity.html">Chapter 4. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_bandwidth.html">Chapter 5. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_iommu.html">Chapter 6. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_hw_guidelines.html">Chapter 7. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_sw_guidelines.html">Chapter 8. Software Guidelines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="etrace">
+          <div class="version-box">
+            <select data-component="etrace" class="select-version">
+                <option
+                  value="../etrace/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="etrace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Diagnostic Data Packet Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/index.html">Chapter 1. Unformatted Trace &amp; Diagnostic Data Packet Encapsulation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/contributors.html">Chapter 3. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/encapsulation.html">Chapter 4. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/e-trace-specifics.html">Chapter 5. E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="tag-toggle-container">
+      <button
+        class="tag-toggle-btn"
+        type="button"
+        onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+      >
+        <div class="tag-toggle-switch"></div>
+        <span id="tag-toggle-label">Highlight Tags</span>
+      </button>
+    </div>
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-trace-spec/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-trace-spec" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+          <a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/riscv-plic-1.0.0.pdf" target="_blank" rel="noopener noreferrer" title="PDF" class="sidebar-link" download>
+            <span>Download PDF</span>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 14a5 5 0 0 1 7.07 0l3.54 3.54a5 5 0 0 1-7.07 7.07l-3.54-3.54a5 5 0 0 1 0-7.07z"/>
+              <line x1="8" y1="8" x2="16" y2="16"/>
+            </svg>
+          </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li>Efficient Trace for RISC-V</li>
+      <li><a href="ingressPort.html">Chapter 6. Ingress Port Requirements</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="Interface"><a class="anchor" href="#Interface"></a>6.1. Hart to encoder interface</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="sec:InstructionInterfaceRequirements"><a class="anchor" href="#sec:InstructionInterfaceRequirements"></a>6.1.1. Instruction Trace Interface requirements</h3>
+<div class="paragraph">
+<p>This section describes in general terms the information which must be
+passed from the RISC-V hart to the trace encoder for the purposes of
+Instruction Trace, and distinguishes between what is mandatory, and what
+is optional.</p>
+</div>
+<div class="paragraph">
+<p>The following information is mandatory:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The number of instructions that are being retired;</p>
+</li>
+<li>
+<p>Whether there has been an exception or interrupt, and if so the cause
+(from the <strong><em>scause/vscause/mcause</em></strong> etc. CSR) and trap value (from the
+<strong><em>stval/vstval/mtval</em></strong> etc. CSR).</p>
+<div class="paragraph">
+<p>The register set to output should be the set that is updated as a result
+of the exception (i.e. the set associated with the privilege level
+immediately following the exception);</p>
+</div>
+</li>
+<li>
+<p>The current privilege level of the RISC-V hart;</p>
+</li>
+<li>
+<p>The <em>instruction_type</em> of retired instructions for:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jumps with a target that cannot be inferred from the source code;</p>
+</li>
+<li>
+<p>Taken and nontaken branches;</p>
+</li>
+<li>
+<p>Return from exception or interrupt (<strong><em>*ret</em></strong> instructions).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The <em>instruction_address</em> for:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Jumps with a target that <em>cannot</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>The instruction retired immediately after a jump with a target that
+<em>cannot</em> be inferred from the source code (also referred to as the
+target or destination of the jump);</p>
+</li>
+<li>
+<p>Taken and nontaken branches;</p>
+</li>
+<li>
+<p>The last instruction retired before an exception or interrupt;</p>
+</li>
+<li>
+<p>The first instruction retired following an exception or interrupt;</p>
+</li>
+<li>
+<p>The last instruction retired before a privilege change;</p>
+</li>
+<li>
+<p>The first instruction retired following a privilege change.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following information is optional:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Context or Time information:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The context and/or hart ID and/or time;</p>
+</li>
+<li>
+<p>The type of action to take when context or time data changes.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The <em>instruction_type</em> of instructions for:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Calls with a target that <em>cannot</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Calls with a target that <em>can</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Other jumps without linkage with a target that <em>cannot</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Other jumps without linkage with a target that <em>can</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Returns with a target that <em>cannot</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Returns with a target that <em>can</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Co-routine swap;</p>
+</li>
+<li>
+<p>Other jumps with linkage which don&#8217;t fit any of the above classifications with a
+target that <em>cannot</em> be inferred from the source code;</p>
+</li>
+<li>
+<p>Other jumps with linkage which don&#8217;t fit any of the above classifications with a
+target that <em>can</em> be inferred from the source code.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>If context or time is supported then the <em>instruction_address</em> for:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>The last instruction retired before a context or a time change;</p>
+</li>
+<li>
+<p>The first instruction retired following a context or time change.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Whether jump targets are sequentially inferable or not.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The mandatory information is the bare-minimum required to implement the
+branch trace algorithm outlined in <a href="#Algorithm">[Algorithm]</a>.
+The optional information facilitates alternative or improved trace
+algorithms:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Implicit return mode (see
+<a href="#sec:implicit-return">[sec:implicit-return]</a>) requires the
+encoder to keep track of the number of nested function calls, and to do
+this it must be aware of all calls and returns regardless of whether the
+target can be inferred or not;</p>
+</li>
+<li>
+<p>A simpler algorithm useful for basic code profiling would only report
+function calls and returns, again regardless of whether the target can
+be inferred or not;</p>
+</li>
+<li>
+<p>Branch prediction techniques can be used to further improve the
+encoder efficiency, particularly for loops (see
+<a href="#sec:branch-prediction">[sec:branch-prediction]</a>). This requires
+the encoder to be aware of the address of all branches, whether they are
+taken or not.</p>
+</li>
+<li>
+<p>Uninferable jumps can be treated as inferable (which don&#8217;t need to be
+reported in the trace output) if both the jump and the preceding
+instruction which loads the target into a register have been traced.</p>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="JumpClasses"><a class="anchor" href="#JumpClasses"></a>6.1.1.1. Jump classification and target inference</h4>
+<div class="paragraph">
+<p>Jumps are classified as <em>inferable</em>, or <em>uninferable</em>. An <em>inferable</em>
+jump has a target which can be deduced from the binary executable or
+representation thereof (e.g. ELF). For the purposes of this
+specification, the following strict definition applies:</p>
+</div>
+<div class="paragraph">
+<p>If the target of a jump is supplied via a constant embedded within the
+jump opcode, it is classified as <em>inferable</em>. Jumps which are not
+<em>inferable</em> are by definition <em>uninferable</em>.</p>
+</div>
+<div class="paragraph">
+<p>However, there are some jump targets which can still be deduced from the
+binary executable by considering pairs of instructions even though by
+the above definition they are classified as uninferable. Specifically,
+when the source register for the jump instruction is supplied via</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an <strong><em>lui</em></strong> or <strong><em>c.lui</em></strong> (a register which contains a constant), or</p>
+</li>
+<li>
+<p>an <strong><em>auipc</em></strong> (a register which contains a constant offset from the
+PC).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Such jump targets are classified as <em>sequentially inferable</em> if the pair
+of instructions are retired consecutively (i.e. the <strong><em>auipc</em></strong>, <strong><em>lui</em></strong>
+or <strong><em>c.lui</em></strong> immediately precedes the jump). Note: the restriction that
+the instructions are retired consecutively is necessary in order to
+minimize the additional signalling needed between the hart and the
+encoder, and should have a minimal impact on trace efficiency as it is
+anticipated that consecutive execution will be the norm. Support for
+sequentially inferable jumps is optional.</p>
+</div>
+<div class="paragraph">
+<p>Jumps may optionally be further classified according to the recommended
+calling convention:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>Calls</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><em>jal</em></strong> x1;</p>
+</li>
+<li>
+<p><strong><em>jal</em></strong> x5;</p>
+</li>
+<li>
+<p><strong><em>jalr</em></strong> x1, rs where rs != x5;</p>
+</li>
+<li>
+<p><strong><em>jalr</em></strong> x5, rs where rs != x1;</p>
+</li>
+<li>
+<p><strong><em>c.jalr</em></strong> rs1 where rs1 != x5;</p>
+</li>
+<li>
+<p><strong><em>c.jal</em></strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Other jumps without linkage</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><em>jal</em></strong> x0;</p>
+</li>
+<li>
+<p><strong><em>c.j</em></strong>;</p>
+</li>
+<li>
+<p><strong><em>jalr</em></strong> x0, rs where rs != x1 and rs != x5;</p>
+</li>
+<li>
+<p><strong><em>c.jr</em></strong> rs1 where rs1 != x1 and rs1 != x5.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Returns</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><em>jalr</em></strong> rd, rs where (rs == x1 or rs == x5) and rd != x1 and rd !=
+x5;</p>
+</li>
+<li>
+<p><strong><em>c.jr</em></strong> rs1 where rs1 == x1 or rs1 == x5.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Co-routine swap</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><em>jalr</em></strong> x1, x5;</p>
+</li>
+<li>
+<p><strong><em>jalr</em></strong> x5, x1;</p>
+</li>
+<li>
+<p><strong><em>c.jalr</em></strong> x5.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Other jumps with linkage</em>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong><em>jal</em></strong> rd where rd != x0 and rd != x1 and rd != x5;</p>
+</li>
+<li>
+<p><strong><em>jalr</em></strong> rd, rs where rs != x1 and rs != x5 and rd != x0 and rd != x1
+and rd != x5.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sec:relationship"><a class="anchor" href="#sec:relationship"></a>6.1.1.2. Relationship between RISC-V core and the encoder</h4>
+<div class="paragraph">
+<p>The encoder is intended to encode the instructions executed on a single
+hart.</p>
+</div>
+<div class="paragraph">
+<p>It is however commonplace for a RISC-V core to contain multiple harts.
+This can be supported by the core in several different ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Implement a separate instance of the interface per hart. Each instance
+can be connected to a separate encoder instance, allowing all harts to
+be traced concurrently. Alternatively, external muxing may be used in
+conjunction with a single encoder in order to trace one particular hart
+at a time;</p>
+</li>
+<li>
+<p>Implement a single interface for the core, with muxing inside the core
+to select which hart to connect to the interface.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>(Whilst it is technically feasible to use a single encoder with multiple
+harts operating in a fine-grained multi-threaded configuration, the
+frequent context changes that would occur as a result of
+thread-switching would result in extremely poor encoding efficiency, and
+so this configuration is not recommended.)</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:InstructionTraceInterface"><a class="anchor" href="#sec:InstructionTraceInterface"></a>6.1.2. Instruction Trace Interface</h3>
+<div class="paragraph">
+<p>This section describes the interface between a RISC-V hart and the trace
+encoder that conveys the information described in the section
+<a href="#sec:InstructionInterfaceRequirements">6.1.1. Instruction Trace Interface requirements</a>. Signals are assigned to one
+of the following groups:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>M: Mandatory. The interface must include an instance of this signal.</p>
+</li>
+<li>
+<p>O: Optional. The interface may include an instance of this signal.</p>
+</li>
+<li>
+<p>MR: Mandatory, may be replicated. For harts that can retire a maximum
+of N "special" instructions per clock cycle, the interface must include
+N instances of this signal.</p>
+</li>
+<li>
+<p>OR: Optional, may be replicated. For harts that can retire a maximum
+of N "special" instructions per clock cycle, the interface must include zero or N
+instances of this signal.</p>
+</li>
+<li>
+<p>BR: Block, may be replicated. Mandatory for harts that can retire
+multiple instructions in a block. Replication as per OR. If omitted, the
+interface must include SR group signals instead.</p>
+</li>
+<li>
+<p>SR: Single, may be replicated. Mandatory for harts that can only
+retire one instruction in a block. Replication as per OR (see
+<a href="#sec:alt-multi">6.1.2.2. Alternative multiple-retirement interface configurations</a>). If omitted, the interface must include
+BR group signals instead.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>"Special" instructions are those that require <strong>itype</strong> to be non-zero.</p>
+</div>
+<table id="tab:common-ingress" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 1. Instruction interface signals</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>itype</strong>[<em>itype_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Termination type of the instruction
+block. Encoding given in <a href="#tab:itype">Instruction Type (<strong>itype</strong>) encoding</a> (see <a href="#JumpClasses">6.1.1.1. Jump classification and target inference</a> for definitions of codes 6 - 15).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>cause</strong>[<em>ecause_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception or interrupt cause
+(<strong><em>scause/ vscause/mcause</em></strong>). Ignored unless <strong>itype</strong>=1 or 2.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>tval</strong>[<em>iaddress_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The associated trap value, e.g. the
+faulting virtual address for address exceptions, as would be written to
+the <strong>stval/vstval/mtval</strong> CSR. Future optional extensions may
+define <strong>tval</strong> to provide ancillary information in cases where it
+currently supplies zero. Ignored unless <strong>itype</strong>=1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>priv</strong>[<em>privilege_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privilege level for all
+instructions retired on this cycle. Encoding given in
+<a href="#tab:priv">Privilege level (<strong>priv</strong>) encoding</a>. Codes 4-7 optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iaddr</strong>[<em>iaddress_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The address of the 1st
+instruction retired in this block. Invalid if <strong>iretire</strong>=0 unless <strong>itype</strong>=1, in which case it indicates the address of the instruction
+which incurred the exception.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>context</strong>[<em>context_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Context for all instructions
+retired on this cycle.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>time</strong>[<em>time_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Time generated by the core.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ctype</strong>[<em>ctype_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reporting behavior for <strong>context</strong>.
+Encoding given in Table <a href="#tab:context-type">Context type <strong>ctype</strong> values and corresponding actions</a>. Codes 2-3
+optional.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sijump</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If <strong>itype</strong> indicates that this block ends with an
+uninferable discontinuity, setting this signal to 1 indicates that it is
+sequentially inferable and may be treated as inferable by the encoder if
+the preceding <strong><em>auipc</em></strong>, <strong><em>lui</em></strong> or <strong><em>c.lui</em></strong> has been traced. Ignored
+for <strong>itype</strong> codes other than 6, 8, 10, 12 or 14.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><a href="#tab:common-ingress">Instruction interface signals</a> and <a href="#tab:multi-ingress">Instruction interface signals - multiple retirement per block</a> list the signals in the
+interface designed to efficiently support retirement of multiple
+instructions per cycle. The following discussion describes the
+multiple-retirement behavior. However, for harts that can only retire
+one instruction at a time, the signalling can be simplified, and this is
+discussed subsequently in <a href="#sec:single-retire">6.1.2.1. Simplifications for single-retirement</a>.</p>
+</div>
+<table id="tab:multi-ingress" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Instruction interface signals - multiple retirement per block</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>[<em>iretire_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of halfwords represented
+by instructions retired in this block.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ilastsize</strong>[<em>ilastsize_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The size of the last retired
+instruction is 2<sup><strong>ilastsize</strong></sup> half-words.</p></td>
+</tr>
+</tbody>
+</table>
+<table id="tab:single-ingress" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 3. Instruction interface signals - single retirement per block</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>[0:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of instructions retired in this block (0 or
+1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ilastsize</strong>[<em>ilastsize_width_p-1</em>:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The size of the last retired
+instruction in this block is 2<sup><strong>ilastsize</strong></sup> half-words.</p></td>
+</tr>
+</tbody>
+</table>
+<table id="tab:itype" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 4. Instruction Type (<strong>itype</strong>) encoding</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Value</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last instruction in the block is none of the other named <strong>itype</strong>
+codes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception. An exception that traps occurred following the last
+retired instruction in the block</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupt. An interrupt that traps occurred following the last
+retired instruction in the block</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Exception or interrupt return</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nontaken branch</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Taken branch</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uninferable jump if <em>itype_width_p</em> is 3, reserved otherwise</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uninferable call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inferrable call</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uninferable jump</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Inferrable jump</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Co-routine swap</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Return</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other uninferable jump</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Other inferable jump</p></td>
+</tr>
+</tbody>
+</table>
+<table id="tab:priv" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 5. Privilege level (<strong>priv</strong>) encoding</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Value</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S/HS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">D (debug mode)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VU</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The information presented in a block represents a contiguous sequence of
+instructions starting at <strong>iaddr</strong>, all of which retired in the same
+cycle. Note if <strong>itype</strong> is 1 or 2 (indicating an exception or an
+interrupt), the number of instructions retired may be zero. <strong>cause</strong> and
+<strong>tval</strong> are only defined if <strong>itype</strong> is 1 or 2. If <strong>iretire</strong>=0 and
+<strong>itype</strong>=0, the values of all other signals are undefined.</p>
+</div>
+<div class="paragraph">
+<p><strong>iretire</strong> contains the number of (16-bit) half-words represented by
+instructions retired in this block, and <strong>ilastsize</strong> the size of the last
+instruction. Half-words rather than instruction count enables the
+encoder to easily compute the address of the last instruction in the
+block without having access to the size of every instruction in the
+block.</p>
+</div>
+<div class="paragraph">
+<p><strong>itype</strong> can be 3 or 4 bits wide. If <em>itype_width_p</em> is 3, a single code
+(6) is used to indicate all uninferable jumps. This is simpler to
+implement, but precludes use of the implicit return mode (see
+<a href="#sec:implicit-return">[sec:implicit-return]</a>), which requires jump types to be fully classified.
+Note that when <em>itype_width_p</em> is 3, <strong>itype</strong> = 0 is used for inferrable calls.
+However, inferrable calls must still be the final instruction retired in a
+block, otherwise the block would not be comprised of contiguous instructions.</p>
+</div>
+<div class="paragraph">
+<p>Whilst <strong>iaddr</strong> is typically a virtual address, it does not affect the
+encoder&#8217;s behavior if it is a physical address.</p>
+</div>
+<div class="paragraph">
+<p>For harts that can retire a maximum of N non-zero <strong>itype</strong> values per
+clock cycle, the signal groups MR, OR and either BR or SR must be
+replicated N times. Typically N is determined by the maximum number of
+branches that can be retired per clock cycle. Signal group 0 represents
+information about the oldest instruction block, and group N-1 represents
+the newest instruction block. The interface supports no more than one
+privilege change, context change, exception or interrupt per cycle and
+so signals in groups M and O are not replicated. Furthermore, <strong>itype</strong>
+can only take the value 1 or 2 in one of the signal groups, and this
+must be the newest valid group (i.e. <strong>iretire</strong> and <strong>itype</strong> must be zero
+for higher numbered groups). If fewer than N groups are required in a
+cycle, then lower numbered groups must be used first. For example, if
+there is one branch, use only group 0, if there are two branches,
+instructions up to the 1st branch must be reported in group 0 and
+instructions up to the 2nd branch must be reported in group 1 and so on.</p>
+</div>
+<div class="paragraph">
+<p><strong>sijump</strong> is optional and may be omitted if the hart does not implement
+the logic to detect sequentially inferable jumps. If the encoder offers
+an <strong>sijump</strong> input it must also provide a parameter to indicate whether
+the input is connected to a hart that implements this capability, or
+tied off. This is to ensure the decoder can be made aware of the hart’s
+capability. Enabling sequentially inferable jump mode in the encoder and
+decoder when the hart does not support it will prevent correct
+reconstruction by the decoder.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>context</strong> and/or the <strong>time</strong> field can be used to convey any
+additional information to the decoder. For example:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The address space and virtual machine IDs (<strong>ASID</strong> and <strong>VMID</strong>
+respectively). Where present it is recommended these values be wired to
+bits [15:0] and [29:16];</p>
+</li>
+<li>
+<p>The software thread ID;</p>
+</li>
+<li>
+<p>The process ID from an operating system;</p>
+</li>
+<li>
+<p>It could be used to convey the values of CSRs to the decoder by
+setting <strong>context</strong> to the CSR number and value when a CSR is written;</p>
+</li>
+<li>
+<p>In cases where a single encoder is being shared amongst multiple harts
+(see <a href="#sec:relationship">6.1.1.2. Relationship between RISC-V core and the encoder</a>), it could also be used to
+indicate the hart ID, in cases where the hart ID can be changed
+dynamically.</p>
+</li>
+<li>
+<p>Time from within the hart</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="#tab:context-type">Context type <strong>ctype</strong> values and corresponding actions</a> specifies the actions for
+the various <strong>ctype</strong> values. A typical behavior would be for this signal
+to remain zero except on the 1st retirement after a context change or
+when a time value should be reported. <em>ctype_width_p</em> may be 1 or 2. The
+reduced width option only provides support for reporting context changes
+imprecisely.</p>
+</div>
+<table id="tab:context-type" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 6. Context type <strong>ctype</strong> values and corresponding actions</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Type</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Value</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Actions</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unreported</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No action (don&#8217;t report context).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Report context imprecisely</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An example would be a SW thread or
+operating system process change. Report the new context value at the
+earliest convenient opportunity. It is reported without any address
+information, and the assumption is that the precise point of context
+change can be deduced from the source code (e.g. a CSR write).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Report context precisely</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Report the address of the 1st instruction
+retired in this block, and the new context. If there were unreported
+branches beforehand, these need to be reported first. Treated the same
+as a privilege change.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Report context as an asynchronous discontinuity</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An example would be a change of hart. Need to report the last instruction
+retired on the previous context, as well as the 1st on the new context.
+Treated the same as an exception.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="sec:single-retire"><a class="anchor" href="#sec:single-retire"></a>6.1.2.1. Simplifications for single-retirement</h4>
+<div class="paragraph">
+<p>For harts that can only retire one instruction at a time, the interface
+can be simplified to the signals listed in
+<a href="#tab:common-ingress">Instruction interface signals</a> and <a href="#tab:single-ingress">Instruction interface signals - single retirement per block</a>. The simplifications can be
+summarized as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>iretire</strong> simply indicates whether an instruction retired or not;</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> <strong>ilastsize</strong> is still needed in order to determine the address of
+the next instruction, as this is the predicted return address for
+implicit return mode (see <a href="#sec:implicit-return">[sec:implicit-return]</a>).</p>
+</div>
+<div class="paragraph">
+<p>The parameter <em>retires_p</em> which indicates to the encoder the maximum
+number of instructions that can be retired per cycle can be used by an
+encoder capable of supporting single or multiple retirement to select
+the appropriate interpretation of <strong>iretire</strong>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="sec:alt-multi"><a class="anchor" href="#sec:alt-multi"></a>6.1.2.2. Alternative multiple-retirement interface configurations</h4>
+<div class="paragraph">
+<p>For a hart that can retire multiple instructions per cycle, but no more
+than one branch, the preferred solution is to use one instance of
+signals from groups BR, MR and OR. However, if the hart can retire N
+branches in a cycle, N instances of signals from groups MR, OR and
+either SR or BR must be used (each instance can be either a single
+instruction or a block).</p>
+</div>
+<div class="paragraph">
+<p>If the hart can retire N instructions per cycle, but only one branch, it
+is allowed (though not recommended) to provide explicit details of every
+instruction retired by using N instances of signals from groups SR, MR
+and OR.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="6-1-2-3-optional-sideband-signals"><a class="anchor" href="#6-1-2-3-optional-sideband-signals"></a>6.1.2.3. Optional sideband signals</h4>
+<div class="paragraph">
+<p>Optional sideband signals may be included to provide additional
+functionality, as described in
+<a href="#tab:ingress-side-band">Optional sideband encoder input signals</a> and
+<a href="#tab:egress-side-band">Optional sideband encoder output signals</a>.</p>
+</div>
+<div class="paragraph">
+<p>Note, any user defined information that needs to be output by the
+encoder will need to be applied via the <strong>context</strong> input.</p>
+</div>
+<table id="tab:ingress-side-band" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 7. Optional sideband encoder input signals</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>impdef</strong>[<em>impdef_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Implementation defined sideband
+signals. A typical use for these would be for filtering (see
+<a href="#ch:filtering">[ch:filtering]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>trigger</strong>[2+:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[1:0]: O<br>
+[2+]: OR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A pulse on bit 0 will cause the
+encoder to start tracing, and continue until further notice, subject to
+other filtering criteria also being met. A pulse on bit 1 will cause the
+encoder to stop tracing until further notice. See <a href="#sec:trigger">6.1.2.4. Using trigger outputs from the Debug Module</a>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>halted</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hart is halted. Upon assertion, the encoder will output a
+packet to report the address of the last instruction retired before
+halting, followed by a support packet to indicate that tracing has
+stopped. Upon deassertion, the encoder will start tracing again,
+commencing with a synchronization packet. <strong>Note:</strong> If this signal is not
+provided, it is strongly recommended that Debug mode can be signalled
+via a 3-bit <strong>privilege</strong> signal. This will allow tracing in Debug mode to
+be controlled via the optional filtering capabilities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>reset</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hart is in reset. Provided the encoder is in a different
+reset domain to the hart, this allows the encoder to indicate that
+tracing has ended on entry to reset, and restarted on exit. Behavior is
+as described above for halt.</p></td>
+</tr>
+</tbody>
+</table>
+<table id="tab:egress-side-band" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 8. Optional sideband encoder output signals</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>stall</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stall request to hart. Some applications may require
+lossless trace, which can be achieved by using this signal to stall the
+hart if the trace encoder is unable to output a trace packet (for
+example due to back-pressure from the packet transport
+infrastructure).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="sec:trigger"><a class="anchor" href="#sec:trigger"></a>6.1.2.4. Using trigger outputs from the Debug Module</h4>
+<div class="paragraph">
+<p>The debug module of the RISC-V hart may have a trigger unit. This
+defines a match control register (<strong><em>mcontrol</em></strong>) containing a 4-bit
+<strong>action</strong> field, and reserves codes 2 - 5 of this field for trace use.
+These action codes are hereby defined as shown in table
+<a href="#tab:debugModuleTriggerSupport">Debug Module trigger support (<strong><em>mcontrol</em> action</strong>)</a>. If implemented, each action must generate a pulse on an output from the hart, on the same cycle as the instruction which caused the trigger is
+retired.</p>
+</div>
+<table id="tab:debugModuleTriggerSupport" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 9. Debug Module trigger support (<strong><em>mcontrol</em> action</strong>)</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Value</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Trace-on</em>. This should be connected to <strong>trigger[0]</strong> if the encoder
+provides it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Trace-off</em>. This should be connected to <strong>trigger[1]</strong> if the encoder
+provides it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Trace-notify</em>. This should be connected to <strong>trigger[1 + <em>blocks</em>:</strong>2] if the encoder provides it. This will cause the encoder to
+output a packet containing the address of the last instruction in the
+block if it is enabled. One bit per block.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Trace-on and Trace-off actions provide a means for the hart to control
+when tracing starts and stops. It is recommended that tracing starts
+from the oldest instruction retired in the cycle that Trace-on is
+asserted, and stops following the newest instruction retired in the
+cycle that Trace-off is asserted (subject to any optional filtering).</p>
+</div>
+<div class="paragraph">
+<p>It follows from this that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>if tracing is enabled and trace-off occurs on the cycle before trace-on, then tracing will continue unimpeded (i.e. it stays on);</p>
+</li>
+<li>
+<p>if tracing is disabled and trace-on and trace-off triggers occur simultaneously then only the instructions retired in that cycle will be traced.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Trace-notify provides means to ensure that a specified instruction is
+explicitly reported (subject to any optional filtering). This capability
+is sometimes known as a watchpoint.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="6-1-2-5-example-retirement-sequences"><a class="anchor" href="#6-1-2-5-example-retirement-sequences"></a>6.1.2.5. Example retirement sequences</h4>
+<table class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 10. Example 1 : 9 Instructions retired over four cycles, 2 branches</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Retired</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Instruction Trace Block</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1000: <strong><em>divuw</em></strong><br>
+1004: <strong><em>add</em></strong><br>
+1008: <strong><em>or</em></strong><br>
+100C: <strong><em>c.jalr</em></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>=7, <strong>iaddr</strong>=0x1000, <strong>itype</strong>=8</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0940: <strong><em>addi</em></strong><br>
+0944: <strong><em>c.beq</em></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>=3, <strong>iaddr</strong>=0x0940, <strong>itype</strong>=4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0946: <strong><em>c.bnez</em></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>=1, <strong>iaddr</strong>=0x0946, <strong>itype</strong>=5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0988: <strong><em>lbu</em></strong><br>
+098C: <strong><em>csrrw</em></strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iretire</strong>=4, <strong>iaddr</strong>=0x0988, <strong>itype</strong>=0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:DataInterfaceRequirements"><a class="anchor" href="#sec:DataInterfaceRequirements"></a>6.1.3. Data Trace Interface requirements</h3>
+<div class="paragraph">
+<p>This section describes in general terms the information which must be
+passed from the RISC-V hart to the trace encoder for the purposes of
+Data Trace, and distinguishes between what is mandatory, and what is
+optional.</p>
+</div>
+<div class="paragraph">
+<p>If Data Trace is not needed in a system then there is no requirement for
+the RISC-V hart to supply any of the signals in <a href="#sec:DataTraceInterface">6.1.4. Data Trace Interface</a>.</p>
+</div>
+<div class="paragraph">
+<p>Data trace supports up to four data access types: load, store, atomic
+and CSR. Support for both atomic and CSR accesses are independently
+optional.</p>
+</div>
+<div class="paragraph">
+<p>The signalling protocol can take one of two forms, depending on the
+needs of the RISC-V hart: <em>unified</em> or <em>split</em>.</p>
+</div>
+<div class="paragraph">
+<p>Unified is the simplest form, suitable for simpler, in-order harts. In
+this form, all information about a data access is signalled by the
+RISC-V hart in the same cycle that the associated data access
+instruction is reported on the instruction trace interface.</p>
+</div>
+<div class="paragraph">
+<p>For harts with out of order or speculative execution capabilities, many
+loads may be in progress simultaneously, and this approach is not
+practical as it would require the hart to maintain a large amount of
+state relating to all the in-progress loads. For this reason, the
+interface also supports splitting loads into two parts:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <em>request</em> phase provides all the information about the load that
+originates from the hart (address, size, etc.) when the instruction
+retires;</p>
+</li>
+<li>
+<p>The <em>response</em> phase provides the data and response status when it has
+been returned to the hart from the memory system.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The two parts of a split load are associated by use of a transaction ID.</p>
+</div>
+<div class="paragraph">
+<p>The Zc (code-size reduction) extension introduced push and pop
+instructions (<em>cm.push</em>, <em>cm.pop</em>, <em>cm.popret</em> and <em>cm.popretz</em>) that
+each result in multiple loads or stores. To allow the resulting loads or
+stores to be associated with the correct instruction, these
+multi-memory-access instructions (and any other future instructions with
+similar characteristics) must be reported on the instruction trace
+interface multiple times (once for each individual load or store) using
+<strong>itype</strong> 0 except for the final load or store, which must retire using
+the natural <strong>itype</strong> for the instruction (for example, a <em>cm.popret</em>
+instruction must use <strong>itype</strong> 13 for the final load to signal the
+return). The instruction address reported will be the same for each
+occurrence.</p>
+</div>
+<div class="paragraph">
+<p>The following illustrations show the retirement sequences when a single
+<em>cm.push</em> or <em>cm.popret</em> is used to push or pop 4 registers from the
+stack. They assume a RISC-V to encoder interface that can report a block
+of 1 or more retired instructions and one load or store per cycle. Each
+comprises 4 elements, and shows the instruction information reported for
+each load and store. As detailed in section
+<a href="#sec:InstructionTraceInterface">6.1.2. Instruction Trace Interface</a>, this takes the form of the address
+of an instruction, the length of the block (1 for a single instruction)
+and the type of the last instruction in the block. In each element,
+’Block’ indicates a block of 1 or more instructions (i.e. could also be
+a single instruction), whereas ’Single’ indicates a single instruction
+(i.e. a block with a length of 1).</p>
+</div>
+<div class="paragraph">
+<p>A <em>cm.push</em> is equivalent to 4 store instructions:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Block - last instruction is <em>cm.push</em>, <strong>itype</strong> 0 (data trace interface
+reports 1st store);</p>
+</li>
+<li>
+<p>Single - <em>cm.push</em>, <strong>itype</strong> 0 (data trace interface reports 2nd
+store);</p>
+</li>
+<li>
+<p>Single - <em>cm.push</em>, <strong>itype</strong> 0 (data trace interface reports 3rd
+store);</p>
+</li>
+<li>
+<p>Block - 1st instruction is <em>cm.push</em>, <strong>itype</strong> dependent on last
+instruction in block (data trace interface reports 4th store);</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A <em>cm.popret</em> is equivalent to 4 loads and a return:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Block - last instruction is <em>cm.popret</em>, <strong>itype</strong> 0 (data trace
+interface reports 1st load);</p>
+</li>
+<li>
+<p>Single - <em>cm.popret</em>, <strong>itype</strong> 0 (data trace interface reports 2nd
+load);</p>
+</li>
+<li>
+<p>Single - <em>cm.popret</em>, <strong>itype</strong> 0 (data trace interface reports 3rd
+load);</p>
+</li>
+<li>
+<p>Single - <em>cm.popret</em>, <strong>itype</strong> 13 (data trace interface reports 4th
+load);</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If an exception occurs part way through the sequence of loads or stores
+initiated by such an instruction, and the instruction is re-executed
+after the exception handler has been serviced, the load or store
+sequence must recommence from the beginning.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This is required for data trace only. If data trace is not
+implemented, the push or pop may instead be reported just once in the
+normal way when all associated loads or stores complete successfully.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:DataTraceInterface"><a class="anchor" href="#sec:DataTraceInterface"></a>6.1.4. Data Trace Interface</h3>
+<div class="paragraph">
+<p>This section describes the interface between a RISC-V hart and the trace
+encoder that conveys the information described in the
+<a href="#sec:DataInterfaceRequirements">6.1.3. Data Trace Interface requirements</a>. Signals are assigned to one
+of the following groups:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>M: Mandatory. The interface must include an instance of this signal;</p>
+</li>
+<li>
+<p>U: Unified. Mandatory for unified signalling;</p>
+</li>
+<li>
+<p>S: Split. Mandatory for split load signalling;</p>
+</li>
+<li>
+<p>O: Optional. The interface may include an instance of this signal.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>All signals in M, U and O groups are only valid when <strong>dretire</strong> is high.
+Signals in the S group are valid as indicated in table
+<a href="#tab:data-ingress">Data interface signals</a>.</p>
+</div>
+<div class="paragraph">
+<p>For harts that can retire a maximum of M data accesses per cycle, the
+implemented signal groups must be replicated M times. If fewer than M
+groups are required in a cycle, then lower numbered groups must be used
+first. For example, if there is one data access, use only group 0.</p>
+</div>
+<table id="tab:data-ingress" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 11. Data interface signals</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Signal</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Group</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dretire</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data access retired (when high)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dtype</strong>[<em>dtype_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data access type. Encoding given in
+<a href="#tab:dtype">Data access type (<strong>dtype</strong>) encoding</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>daddr</strong>[<em>daddress_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The data access address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dsize</strong>[<em>dsize_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The data access size is 2<sup><strong>dsize</strong></sup>
+bytes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>data</strong>[<em>data_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The data</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>iaddr_lsbs</strong>[<em>iaddr_lsbs_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LSBs of the data access
+instruction address. Required if <em>retires_p</em> &gt; 1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>dblock</strong>[<em>dblock_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">O</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction block in which the data
+access instruction is retired. Required if there are replicated
+instruction block signals</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lrid</strong>[<em>lrid_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load request ID. Valid when <strong>dretire</strong>
+is high</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lresp</strong>[<em>lresp_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load response:<br>
+0: None<br>
+1: reserved<br>
+2: Okay. Load successful; <strong>ldata</strong> valid<br>
+3: Error. Load failed; <strong>ldata</strong> not valid</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>lid</strong>[<em>lrid_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Split Load ID. Valid when <strong>lresp</strong> is
+non-zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>sdata</strong>[<em>sdata_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Store data. Valid when <strong>dretire</strong> is
+high and access is a store (<strong>dtype</strong> is 1) or atomic (<strong>dtype</strong> is 8 - 14).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>ldata</strong>[<em>ldata_width_p</em>-1:0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load data. Valid when <strong>lresp</strong> is
+non-zero</p></td>
+</tr>
+</tbody>
+</table>
+<table id="tab:dtype" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 12. Data access type (<strong>dtype</strong>) encoding</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Value</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Store</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSR read-write</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSR read-set</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSR read-clear</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic swap</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic add</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic AND</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic OR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic XOR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic max</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Atomic min</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Conditional store failure</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The maximum value of <em>dtype_width_p</em> is 4. However, if only loads and
+stores are supported, <em>dtype_width_p</em> can be 1. If CSRs are supported
+but atomics are not, <em>dtype_width_p</em> can be 3.</p>
+</div>
+<div class="paragraph">
+<p>Atomic and CSR accesses have either both load and store data, or store
+data and an operand. For CSRs and unified atomics, both values are
+reported via <strong>data</strong>, with the store data in the LSBs and the load data
+or operand in the MSBs.</p>
+</div>
+<div class="paragraph">
+<p><em>lrid_width_p</em> is determined by the maximum number of loads that can be
+in progress simultaneously, such that at any one time there can be no
+more than one load in progress with a given ID.</p>
+</div>
+<div class="paragraph">
+<p><strong>iaddr_lsbs</strong> and <strong>dblock</strong> are provided to support filtering of which
+data accesses to trace based on their instruction address. This is best
+illustrated by considering the following instruction sequence:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>load</p>
+</li>
+<li>
+<p>&lt;some non data access instruction&gt;</p>
+</li>
+<li>
+<p>load</p>
+</li>
+<li>
+<p>&lt;some non data access instruction&gt;</p>
+</li>
+<li>
+<p>&lt;some non data access instruction&gt;</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Suppose the hart is capable of retiring up to 4 instructions in a cycle,
+via a single block. Instruction trace is enabled throughout, but the
+requirement is to collect data trace for the 1st load (instruction 1),
+and filtering is configured to match the address of this instruction
+only. However, information about instruction addresses is passed to the
+encoder at the block level, and the block boundaries are invisible to
+the decoder. For instruction trace, all instructions in a block are
+traced if any of the instructions in that block match the filtering
+criteria. That is fine for instruction trace - the address of the 1st
+and final traced instruction are output explicitly. There will be some
+fuzziness about precisely what those addresses will be depending on
+where the block boundaries fall, but this is not a concern as everything
+is always self-consistent.</p>
+</div>
+<div class="paragraph">
+<p>However, that is not the case for data trace. Consider two scenarios:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Case 1: 1st block contains instructions 1, 2, 3; second block contains
+4, 5</p>
+</li>
+<li>
+<p>Case 2: 1st block contains instructions 1, 2; second block contains 3,
+4, 5</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Given that <strong>iretire</strong> is non-zero in the same cycle that the data access
+retires, the encoder knows the address of the 1st and last instructions
+in a block, but does not know precisely where in the block the data
+access is. In both cases, the first block matches the filtering criteria
+(it contains the address of instruction 1), and the second block does
+not. But if the encoder traced all the data accesses in the matching
+block, then in case 1 it would trace both instructions 1 and 3, whereas
+in the second case it would trace only instruction 1. The decoder has no
+visibility of the block boundaries so cannot account for this. It is
+expecting only instruction 1 to be traced, and so may misinterpret
+instruction 3. If this code is in a loop for example, it will assume
+that the 2nd traced load is in fact instruction 1 from the next loop
+iteration, rather than instruction 3 from this iteration.</p>
+</div>
+<div class="paragraph">
+<p>Providing the LSBs of the data access instruction address allows the
+decoder to determine precisely whether the data access should be traced
+or not, and removes the dependency on the block sizes and boundaries.
+The number of bits required is one more bit than the number required to
+index within the block because blocks can start on any half-word
+boundary.</p>
+</div>
+<div class="paragraph">
+<p>For harts that replicate the block signals to allow multiple blocks to
+retire per cycle it is also necessary to indicate which block each data
+access is associated with, so the encoder knows which block address to
+combine with the LSBs in order to construct the actual data access
+instruction address. 1 bit for 2 blocks per cycle, 2 bits for 4, and so
+on.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="branchTrace.html">Chapter 5. Branch Trace</a></span>
+  <span class="next"><a href="filtering.html">Chapter 7. Filtering</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,2817 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/soc/server_soc_requirements.html">
+    <link rel="prev" href="server_soc_intro.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="20cdb323be837873146215146a9e538b06605e9d"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="soc">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item home">
+          <a class="navbar-link"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications"
+            aria-label="Library">
+            Library</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">ISA</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Profiles</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Non-ISA Hardware</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+            Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+            Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+            Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+            SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient
+            Trace
+            < <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+              </svg>
+          </a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS
+            Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI
+            Architecture
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace
+            Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted
+            Trace and Diagnostic Data Packet
+            Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Platform Software</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot
+            and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional
+            Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform
+            Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor
+            Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">App Enablement</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C
+            Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="soc" data-version="v1.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Non-ISA Hardware</span>
+</div>        <div class="nav-trees" data-component="aia">
+          <div class="version-box">
+            <select data-component="aia" class="select-version">
+                <option
+                  value="../aia/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="aia" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Interrupt Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/index.html">Chapter 1. Advanced Interrupt Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/colophon.html">Chapter 3. Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/CSRs.html">Chapter 5. Control and Status Registers (CSRs) Added to Harts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/IMSIC.html">Chapter 6. Incoming MSI Controller (IMSIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/AdvPLIC.html">Chapter 7. Advanced Platform-Level Interrupt Controller (APLIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/MSLevel.html">Chapter 8. Interrupts for Machine and Supervisor Levels</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/VSLevel.html">Chapter 9. Interrupts for Virtual Machines (VS Level)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/IPIs.html">Interprocessor Interrupts (IPIs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../aia/IOMMU.html">IOMMU Support for MSIs to Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="iommu">
+          <div class="version-box">
+            <select data-component="iommu" class="select-version">
+                <option
+                  value="../iommu/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="iommu" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IOMMU Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/index.html">Chapter 1. IOMMU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_preface.html">Chapter 3. Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_data_structures.html">Chapter 5. Data Structures</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_in_memory_queues.html">Chapter 6. In-memory queue interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_debug.html">Chapter 7. Debug support</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_registers.html">Chapter 8. Memory-mapped register interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_sw_guidelines.html">Chapter 9. Software guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_hw_guidelines.html">Hardware guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_extensions.html">IOMMU Extensions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="plic">
+          <div class="version-box">
+            <select data-component="plic" class="select-version">
+                <option
+                  value="../plic/index.html"
+                  data-version="v1.0.0"
+                  
+                  >
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="plic" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform-Level Interrupt Controller</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/index.html">Chapter 1. Platform-Level Interrupt Controller</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/contributor.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/changelog.html">Chapter 3. Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/licensing.html">Chapter 4. Licensing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/introduction.html">Chapter 5. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/riscv-plic.html">Chapter 6. RISC-V Platform-Level Interrupt Controller </a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="soc">
+          <div class="version-box">
+            <select data-component="soc" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="soc" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Server SoC Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Chapter 1. Server SoC Specification</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_preamble.html">Chapter 2. Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_contributors.html">Chapter 3. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="server_soc_requirements.html">Chapter 5. Server SoC Requirements</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="tag-toggle-container">
+      <button
+        class="tag-toggle-btn"
+        type="button"
+        onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+      >
+        <div class="tag-toggle-switch"></div>
+        <span id="tag-toggle-label">Highlight Tags</span>
+      </button>
+    </div>
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/server-soc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/server-soc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+          <a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/riscv-plic-1.0.0.pdf" target="_blank" rel="noopener noreferrer" title="PDF" class="sidebar-link" download>
+            <span>Download PDF</span>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 14a5 5 0 0 1 7.07 0l3.54 3.54a5 5 0 0 1-7.07 7.07l-3.54-3.54a5 5 0 0 1 0-7.07z"/>
+              <line x1="8" y1="8" x2="16" y2="16"/>
+            </svg>
+          </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li><a href="index.html">RISC-V Server SoC Specification</a></li>
+      <li>Server SoC Specification</li>
+      <li><a href="server_soc_requirements.html">Chapter 5. Server SoC Requirements</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="5-1-server-soc-requirements"><a class="anchor" href="#5-1-server-soc-requirements"></a>5.1. Server SoC Requirements</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="5-1-1-clocks-and-timers"><a class="anchor" href="#5-1-1-clocks-and-timers"></a>5.1.1. Clocks and Timers</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTI_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>time</code> CSR MUST increment at a constant frequency and the count
+             MUST be in units of 1 ns. The frequency at which the CSR provides
+             an updated time value MUST be at least 100 MHz.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><div class="content"><div class="paragraph">
+<p><em>The Zicntr extension cite:[UNPRIV] requires the real-time clocks of all
+     harts to be synchronized to within one tick of the real-time clock.</em></p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CTI_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>time</code> counter MUST appear to be always on and MUST appear to
+             not lose its count across hart low power idle states, including
+             when the hart is powered off.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><div class="content"><div class="paragraph">
+<p><em>This rule does not apply to system power states such as G3 (power
+      off), S3 (Suspend to RAM), or S4 (Hibernate).</em>                          <br>
+                                                                              <br>
+     <em>Losing <code>time</code> count across hart low power idle states may lead to the
+      hart losing time synchronization with other application processor harts,
+      potentially causing unexpected behaviors and/or system instability.</em>    <br>
+                                                                              <br>
+     <em>Information about whether a hart low power idle state retains timer
+      context may be determined by the OS/hypervisors using information
+      provided by the ACPI <code>_LPI</code> object or equivalent mechanisms.</em></p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-2-interrupt-controllers"><a class="anchor" href="#5-1-2-interrupt-controllers"></a>5.1.2. Interrupt Controllers</h3>
+<div class="paragraph">
+<p>This section specifies the requirements on the interrupt controllers used to
+deliver external interrupts to the RISC-V application processor harts.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The RISC-V Advanced Interrupt Architecture cite:[AIA] MUST be
+             supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">External interrupts MUST be signaled to a hart as message-signaled
+             interrupts (MSI).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Since Message Signaled Interrupts (MSI) are implemented as memory writes,
+     they facilitate a simplified enforcement of producer-consumer ordering
+     rules. Specifically, interrupts issued by a device following a write
+     operation must be processed only after the previous write operations have
+     been completed and observed. Similarly, interrupts issued by a device must
+     be observed before any subsequent read completions generated by the
+     device.</em>                                                                 <br>
+                                                                              <br>
+    <em>MSI is the preferred mechanism for interrupt signaling in PCIe due to its
+     efficiency and support for low-latency communication between devices and
+     harts. By adopting MSI, systems can achieve faster and more reliable
+     interrupt handling, essential for high-performance computing environments.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Incoming Message-signaled Interrupt Controller (IMSIC) MUST
+             implement an interrupt file for S-mode.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IMSIC MUST support at least 5 VS-mode interrupt files.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Supporting 5 VS-mode interrupt files for a hart allows context switching
+     between up to 5 virtual CPUs (vCPU) on a hart without needing to swap the
+     contents of the interrupt file out to memory. This is particularly
+     beneficial when devices are directly assigned to virtual machines
+     (VMs), as swapping out the context of an IMSIC interrupt file may result in
+     longer latencies due to the need to redirect device interrupts to a
+     memory-resident interrupt file.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The S-mode interrupt file MUST support at least 255 interrupt
+             identities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The VS-mode interrupt files MUST support at least 63 interrupt
+             identities.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_070</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The memory regions designated for IMSIC interrupt files MUST have
+             the following PMAs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Not cacheable, non-idempotent, coherent, strongly-ordered
+(I/O ordering) channel 0 I/O region</p>
+</li>
+<li>
+<p>Support for 4-byte aligned reads and writes.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IIC_080</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If the SoC implements devices that use wire-signaled interrupts
+             then the SoC MUST implement an APLIC as specified by the RISC-V
+             AIA specification and MUST use the APLIC to convert the
+             wire-signaled interrupts into MSIs.                              <br>
+                                                                              <br>
+             If implemented, the APLIC MUST support:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Supervisor interrupt domain.</p>
+</li>
+<li>
+<p><code>GEILEN</code> values matching those implemented by the harts.</p>
+</li>
+<li>
+<p>MSI delivery mode.</p>
+</li>
+<li>
+<p>Extempore MSI generation using the <code>genmsi</code> register.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>SoC devices using wire-signaled interrupts must implement the rules related
+     to ordering of interrupts vs. older read/writes from devices as specified
+     by the device and/or bus interface specifications that such devices conform
+     to. See also SID_010.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="IOMMU"><a class="anchor" href="#IOMMU"></a>5.1.3. Input-Output Memory Management Unit (IOMMU)</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All IOMMUs in the SoC MUST support the RISC-V IOMMU specification
+             cite:[IOMMU].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_020</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>All DMA capable peripherals (RCiEP and non-PCIe devices) and all
+             PCIe root ports accessible by software on the RISC-V application
+             processor harts MUST be governed by an IOMMU.                    <br>
+                                                                              <br>
+             Initiators, such as the following, are exempt from this rule:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Interrupt controllers, such as the APLIC.</p>
+</li>
+<li>
+<p>IOMMUs.</p>
+</li>
+<li>
+<p>System Bus Access blocks of Debug Modules.</p>
+</li>
+<li>
+<p>Controllers, including the root of trust (RoT) controllers, power
+management controllers, or other SoC management controllers, when
+they access resources reserved for their use.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>DMA capable peripherals being governed by an IOMMU allows OS/hypervisors to
+     restrict DMA originating from such devices to a subset of memory to enhance
+     security and software fault tolerance. The address translation capability
+     provided by the IOMMU enables usages such as passthrough of such devices to
+     virtual machines, shared virtual addressing, etc.</em>                       <br>
+                                                                              <br>
+    <em>The number of IOMMUs implemented in the SoC to satisfy rule IOM_020
+     is <code>UNSPECIFIED</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IOMMU governing a PCIe root port MUST support at least 16-bit
+             wide device IDs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU that does not govern a PCIe root port MUST support a
+             device ID width required to support all requester IDs originated by
+             the devices governed by that IOMMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IOMMU MUST implement all the page based virtual memory system
+             modes and extensions that are implemented by the RISC-V application
+             processor harts in the SoC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The page based virtual memory system modes supported by the IOMMU are
+     enumerated in the IOMMU capabilities register.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IOMMU SHOULD support pass-through mode and MRIF mode MSI
+             address translation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When MRIF mode MSI address translation is supported, the IOMMU MUST
+             support atomic updates to the MRIF (enumerated by 1 setting of
+             <code>capabilities.AMO_MRIF</code>).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_090</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU governing PCIe root ports SHOULD support PCIe address
+             translation services (ATS).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>High performance devices such as DPU/SmartNICs, GPUs, and FPGAs, utilized
+     in server platforms rely on ATS and Page Request services to achieve high
+     throughput and low-latency I/O. Supporting ATS is also required for
+     efficiently accommodating usage models such as Shared Virtual Addressing
+     and direct work submission from user mode.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU governing PCIe root ports SHOULD support the T2GPA mode of
+             operation with ATS if ATS is supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The T2GPA control enables a hypervisor to prevent DMA from a device, even
+     if the device misuses the ATS capability and attempts to access memory that
+     is not explicitly authorized by the page tables governing that device&#8217;s
+     memory accesses. The threat model could also include a man-in-the-middle on
+     the PCIe link inserting ATS-translated requests to access memory that was
+     not previously authorized. As an alternative to setting T2GPA to 1, the
+     hypervisor might establish a trust relationship with the device if
+     authentication protocols such as SPDM are supported by the device. For
+     PCIe, for example, the PCIe Component Measurement and Authentication (CMA)
+     capability provides a mechanism to verify the device’s configuration and
+     firmware/executable (Measurement) and hardware identities (Authentication).
+     This mechanism establishes such a trust relationship, and the PCIe link may
+     be integrity-protected using PCIe integrity and data encryption (IDE) to
+     defend against a man-in-the-middle adversary.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_110</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU governing RCiEP MUST support PCIe address translation
+             services (ATS) if any of the RCiEPs governed by the IOMMU support
+             the ATS capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_120</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU governing RCiEP MAY support the T2GPA mode of operation with
+             ATS if ATS is supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The threats associated with misuse of ATS or malicious insertion of ATS
+     translated requests by a man-in-the-middle may not be present with RCiEP
+     being integrated in the SoC.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_130</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU MUST support MSI and MAY support wire-signaled interrupts
+             for external interrupts originated by the IOMMU itself.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_140</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU MUST support little-endian memory access to its in-memory
+             data structures.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_150</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU MAY support big-endian mode memory access to its in-memory
+             data structures.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The IOMMU memory-mapped registers always have a little-endian byte order.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_160</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU MAY support the PCIe PASID capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_170</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU that supports PASID capability MUST support 20-bit PASID
+             width and MAY support 8-bit and 17-bit PASID widths.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>PCIe specification strongly recommends that hardware implement the maximum
+     width of 20 bits to ensure interoperability with system software. See also
+     the implementation note on PASID width homogeneity in the PCIe
+     specification 6.0 section 6.20.2.2.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_180</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU SHOULD support a hardware performance monitor (HPM).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The HPM is a valuable tool for system integrators for performance
+     monitoring and optimizations. An IOMMU is highly recommended to provide an
+     HPM.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_190</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU that supports an HPM MUST support the cycles counter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_200</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU that supports an HPM MUST incorporate at least 4 event
+             counters.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A typical performance analysis operation may involve simultaneously
+     counting the number of translation requests, IOATC misses, and page table
+     walks. An HPM with sufficient number of event counters ensures accurate and
+     comprehensive data collection, enabling detailed performance analysis and
+     optimization.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_210</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cycles counter and the event counters MUST be at least 40 bits
+             wide.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_220</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The IOMMU SHOULD support the software debug capabilities enumerated
+             by <code>DBG</code> field in the <code>capabilities</code> register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_230</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The physical address width supported by the IOMMU MUST be greater
+             than or equal to the physical address width supported by the RISC-V
+             application processor harts in the SoC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Having the physical address width greater than or equal to the width
+     supported the harts in the SoC enables use of all addressable memory for
+     I/O and facilitates the sharing of page tables between the hart MMU and the
+     IOMMU.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_240</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The reset default of the <code>iommu_mode</code> MUST be <code>Off</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The IOMMU disallowing DMA unconditionally following reset due to the mode
+     being Off allows the SoC firmware and software to enable DMA when
+     suitable security protections as required have been established. The IOMMU
+     mode being Off at reset does not pose a significant issue to SoC firmware
+     that needs to employ DMA (e.g., for firmware loading) as that firmware may
+     program the mode in the appropriate IOMMU prior to programming the
+     peripheral governed by that IOMMU to perform a DMA.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_250</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU that is implemented as an RCiEP MUST use base class 08H
+             and subclass 06H cite:[PCI-CLS].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The base class 08H and sub-class 06H are designated by PCIe for use by an
+     IOMMU. Implementing the IOMMU as a PCIe device allows an operating system
+     to determine a driver for the IOMMU and to assign resources such as
+     interrupt vectors to the IOMMU in a PCIe compatible manner.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_260</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST enforce the physical memory attribute checks
+             and physical memory protection checks on memory accesses originated
+             by the IOMMU and signal detected access violations to the IOMMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>These checks are analogous to the PMA and PMP checks performed by the
+     RISC-V hart. The host bridge (also known as IO bridge) invokes the IOMMU
+     for address translations. To perform the operations requested by the host
+     bridge the IOMMU may need to access in-memory data structures such as the
+     device directory table and page tables.                                  <br>
+                                                                              <br>
+     The physical memory protection limit access from IOMMUs to phusical
+     addresses to support secure processing and contain faults. These checks
+     allow restricting the IOMMU to only have access to the same memory that
+     the hart software that programs the IOMMU has access to.                 <br>
+                                                                              <br>
+     The IOMMU specification requires an IOMMU to support locating IOMMUs
+     in-memory data structures, in-memory queues, and page tables in memory
+     address ranges that hold main memory. Support for locating these in I/O
+     memory is not required.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_270</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU MUST support 24-bit device IDs if the IOMMU governs
+             multiple PCIe root ports that may be part of different PCIe
+             hierarchies.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>An IOMMU governing PCIe root ports uses requester ID (RID) - the tuple of
+     bus/device/function numbers (or just bus/function numbers, if the PCIe ARI
+     option is used) - to locate a device context to use for address
+     translation and protection. The 16-bit RID uniquely identifies a requester
+     within a hierarchy. This RID needs to be augmented with the Hierarchy ID
+     (also known as segment ID) - an 8-bit number - to uniquely identify a
+     requester across PCIe hierarchies.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_280</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST provide the PCIe RID as the bits 15:0 of the
+             <code>device_id</code> input to the IOMMU for requests from PCIe EPs and
+             RCiEP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_290</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When the IOMMU supports 24-bit device IDs, the host bridge MUST
+             specify the segment number associated with the PCIe hierarchy from
+             which requests were received as the bits 23:16 of the <code>device_id</code>
+             to the IOMMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_300</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The determination of <code>device_id</code> input to an IOMMU for requests
+             originating from non-PCIe devices is <code>UNSPECIFIED</code>. If PCIe and
+             non-PCIe endpoints/RCiEP are governed by the same IOMMU, the SoC
+             MUST ensure that there is no overlap between any <code>device_id</code>
+             associated with non-PCIe devices with any <code>device_id</code> formed using
+             the PCIe RID (and if applicable the segment ID).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_310</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST provide the 20-bit PASID from the PCIe PASID
+             TLP Prefix as the <code>process_id</code> input to the IOMMU along with an
+             indication about the validity of the <code>process_id</code> input. When the
+             <code>process_id</code> is indicated as valid, the host bridge MUST
+             additionally provide the "Execute Requested" and the "Privilege
+             Mode Requested" bits from the PASID TLP prefix as input to the
+             IOMMU. When <code>process_id</code> input is indicated as not valid, the host
+             bridge MUST set the "Execute Requested" and "Privilege Mode
+             Requested" inputs to 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The host bridge providing the full 20-bit value without truncation from
+     the PASID TLP prefix to the IOMMU enables the IOMMU to determine if the
+     PASID value is wider than supported by the current configuration of the
+     process directory table for that device and generate a fault notification
+     if so.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOM_320</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The determination of <code>process_id</code>, "Execute Requested", and
+             "Privilege Mode Requested" inputs to an IOMMU for requests
+             originating from non-PCIe devices is <code>UNSPECIFIED</code>.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-4-pcie-subsystem"><a class="anchor" href="#5-1-4-pcie-subsystem"></a>5.1.4. PCIe Subsystem</h3>
+<div class="paragraph">
+<p>A PCIe subsystem consists of a root complex with a collection of root ports,
+root complex event collectors (RCECs), root complex register blocks (RCRBs),
+and root complex integrated end points (RCiEPs). The root complex implements
+a host bridge to connect the PCIe root ports, RCECs, RCRBs, and RCiEP, to the
+CPU and system memory in the SoC through an interconnect.</p>
+</div>
+<div id="fig:RISC-V-Server-RC" class="imageblock">
+<div class="content">
+<img src="_images/riscv-server-rc.svg" alt="riscv server rc" width="800">
+</div>
+<div class="title">Figure 1. PCIe root complex</div>
+</div>
+<div class="paragraph">
+<p>One or more root ports in a root complex may be part of a hierarchy where a
+hierarchy is a PCI Express I/O interconnect topology, wherein the Configuration
+Space addresses, referred to as the tuple of Bus/Device/Function Numbers (or
+just Bus/Function Numbers, for PCIe ARI cases), are unique. These addresses are
+used for Configuration Request routing, Completion routing, some Message
+routing, and for other purposes. In some contexts a Hierarchy is also called a
+Segment, and in Flit Mode, the Segment number is sometimes also included in the
+ID of a Function. Each root port in a hierarchy originates a hierarchy domain
+i.e. a part of a Hierarchy originating from a single Root Port. The root ports
+are PCI-PCI bridges that bridge a primary PCIe bus to a range of secondary and
+subordinate buses.</p>
+</div>
+<div class="paragraph">
+<p>In some SoCs, PCIe devices may be integrated in the same package/die as the root
+complex. Examples of such devices are network controllers, USB host controllers,
+NVMe controllers, AHCI controllers, etc. Such SoC integrated devices may be
+presented to software using one of the following options:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Presented to software as a PCIe endpoint (EP; See section 1.3.2.2 of the PCIe
+6.0 specification) connected to a PCIe root port (See example of such an
+endpoint connected to root port 3 in <a href="#fig:RISC-V-Server-RC">PCIe root complex</a>). Such PCIe
+endpoints must comply with the PCIe specified rules for endpoints.</p>
+</li>
+<li>
+<p>Presented to software as a root complex integrated endpoint (RCiEP; See
+section 1.3.2.3 of the PCIe 6.0 specification). Such PCIe endpoints must
+comply with the PCIe specified rules for RCiEP.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Implementing integrated devices that perform as RCiEP or EP allows the use of
+standardized PCIe frameworks for memory and interrupt resource allocation,
+virtualization (SR-IOV), ATS/PRI for shared virtual addressing, trusted IO using
+SPDM/TDISP, RAS frameworks like data poisoning and AER, power management, etc.</p>
+</div>
+<div class="paragraph">
+<p>The host bridge is placed between the device(s) and the system interconnect to
+process DMA transactions. Devices perform DMA transactions using IO Virtual
+Addresses (VA, GVA or GPA). The host bridge invokes the associated IOMMU to
+translate the IOVA to Supervisor Physical Addresses (SPA).</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">RCI_010</th>
+<th class="tableblock halign-left valign-top">The PCIe root ports, host bridges, RCRBs, and RCECs in the root
+             compplex MUST implement all software visible rules defined by the
+             PCIe specification 6.0 for the root complex as applicable.</th>
+</tr>
+</thead>
+</table>
+<div class="sect3">
+<h4 id="5-1-4-1-enhanced-configuration-access-method-ecam"><a class="anchor" href="#5-1-4-1-enhanced-configuration-access-method-ecam"></a>5.1.4.1. Enhanced Configuration Access Method (ECAM)</h4>
+<div class="paragraph">
+<p>Each PCIe endpoint and the PCIe root port itself implement a set of memory
+mapped configuration registers that are accessed using the PCIe enhanced
+configuration access method (ECAM). The memory mapped ECAM address range for a
+hierarchy is up to 256 MiB in size and the base address of the range is
+naturally aligned to the size. Each PCIe function is associated with a 4 KiB
+page in this range such that the address bits (20+b):20 where b=0 to 7
+identify the bus number of that function (see also recommendations in the PCIe
+specification 6.0 section 7.2.2), the address bits 19:15 identify the device
+number, and the address bits 14:12 identify the function number. The host bridge
+in conjunction with the SoC boot firmware maps the ECAM address range to the
+hierarchy domain originating at each PCIe root port.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_010</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The ECAM address ranges MUST have the following physical memory
+             attributes (PMAs):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Not cacheable, non-idempotent, coherent, strongly-ordered
+(I/O ordering) channel 0 I/O region</p>
+</li>
+<li>
+<p>One, two, and four byte naturally aligned read and write MUST
+be supported and MUST result in a single PCIe Configuration
+Request.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>See also the implementation note on root complex requirements for
+     generating configuration requests in section 7.2.2 of
+     PCIe specification 6.0.</em>                                                 <br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes to the ECAM address range from a RISC-V hart MUST be
+             non-posted and the write MUST complete at the hart only after a
+             completion is received from the function hosting the accessed
+             configuration register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Besides performing a write, software executing on a hart must not
+     require any additional actions to achieve this property.</em>                <br>
+                                                                              <br>
+    <em>This rule satisfies the processor and host bridge implementation
+     requirement mentioned in the “Ordering Considerations for the Enhanced
+     Configuration Access Mechanism” implementation note of the PCIe 6.0
+     specification.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The ECAM address range for a hierarchy MUST be contiguous and the
+            base address of the range MUST be naturally aligned to the size of
+            the ECAM address range associated with the hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A SoC MAY support multiple hierarchies. When multiple hierarchies
+            are supported, the ECAM address range of the hierarchies MUST NOT
+            overlap, but they are not required to be contiguous.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration space of the PCIe root ports MUST be associated
+            with the primary bus number of the hierarchy associated with the
+            root port.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>PCIe root ports are PCI-PCI bridges that bridge the primary bus to the
+     secondary/subordinate buses. The root port itself enumerates as a PCI-PCI
+     bridge device on the primary bus. The collection of primary, secondary, and
+     subordinate buses are part of a single hierarchy domain that originates at
+     that PCIe root port.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The configuration space of functions on the primary bus MUST be
+            accessible irrespective of the state of the corresponding PCIe link.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Discovery and activation of the PCIe link requires accessing the
+     configuration space registers of the PCIe root port itself and the PCIe
+     root port is a PCI-PCI bridge device on the primary bus.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The PCIe root port MUST support the PCIe Configuration RRS software
+            (CRS) visibility enable control.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The number of times a configuration request is retried on an RRS response
+     is <code>UNSPECIFIED</code>.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read and/or write to the ECAM range of the hierarchy domain
+            originating at a root port MUST generate PCIe configuration
+            transactions as type 0 or type 1 configuration transactions
+            following the rules specified for ECAM in PCIe specification 6.0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Determination of the type of configuration transaction based on whether
+     the access is to the primary, secondary or subordinate buses may involve
+     logic in the host bridge to work in conjunction with the root port PCIe
+     controller. See also Alternative Routing-ID Interpretation in PCIe
+     specification 6.0 section 6.13 for rules related to converting type 1
+     configuration requests into type 0 configuration request based on the
+     traditional Device Number field being 0. Specifically, when ARI forwarding
+     is disabled, write accesses to configuration space of Device Number greater
+     than 0 must be silently dropped, and read accesses must be responded to
+     with all 1s data.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_090</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Read access to ECAM address range from a RISC-V hart MUST be
+             responded with all 1s data if any of the following conditions are
+             TRUE:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Access is to a non-existent function on the primary bus of a
+hierarchy domain.</p>
+</li>
+<li>
+<p>Accessed bus is not part of any of the hierarchy domains.</p>
+</li>
+<li>
+<p>An Unsupported Request or Completer Abort response was received.</p>
+</li>
+<li>
+<p>A completion timeout occurs.</p>
+</li>
+<li>
+<p>Access targets a function downstream of a root port whose link
+is not in DL_Active state.</p>
+</li>
+<li>
+<p>A PCIe RRS response was received on each retry of the
+configuration read and CRS software visibility is not enabled.</p>
+</li>
+<li>
+<p>PCIe CRS software visibility is enabled, but the access does not
+target the vendor ID register, and a RRS response was received on
+each retry of the configuration read.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The data response to the Vendor ID register on receipt of an RRS response
+     MUST follow the PCIe defined rules. See also the recommendations in PCIe
+     specification 6.0 section 2.3.2.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write access from a RISC-V hart to configuration registers of a
+            non-existent function on the primary bus MUST be dropped (silently
+            ignored or discarded) and the write completed. Such accesses MUST
+            NOT lead to any other behavior (e.g., hangs, deadlocks, etc.).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECM_110</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Poisoned data received from completers (EP=1) MUST be forwarded to
+            the requesting RISC-V hart as poisoned data unless such forwarding
+            is disallowed (e.g., SoC does not support data poisoning or
+            forwarding of poisoned data is disabled though implementation
+            defined means). If forwarding of poisoned data is disallowed then
+            the poisoned data MUST be replaced with all 1s data.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-2-pcie-memory-space"><a class="anchor" href="#5-1-4-2-pcie-memory-space"></a>5.1.4.2. PCIe Memory Space</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC MUST support designating, for each hierarchy domain, one or
+             more ranges of system physical addresses that may be used for
+             mapping memory space of endpoints in that hierarchy domain using
+             the 64-bit wide base address registers (BARs) of the endpoints.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC MUST support designating, for each hierarchy domain, at
+             least one system physical address range for mapping
+             memory space of endpoints in that hierarchy domain using 32-bit
+             wide BARs of the endpoint.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The ranges suitable for mapping using 32-bit BARs are also sometimes termed
+     as the low MMIO ranges and those suitable for use with 64-bit BARs termed
+     as high MMIO ranges.                                                     <br>
+                                                                              <br>
+    _The bit 3 of the Base Address Register used to called the “Prefetchable”
+     bit and required PCIe functions to support 64-bit addressing for any BAR
+     that requested "Prefetchable" memory space. The "Removing Prefetchable
+     Terminology" ECN <a href="#PCI_PREF">[PCI_PREF]</a> reworks the PCIe Base Specification to
+     remove Prefetchable terminology to more accurately reflect modern device
+     and system requirements.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_030</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The system physical address ranges designated for mapping endpoint
+             memory spaces have the following physical memory attribute (PMAs):</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>MUST be not cacheable, non-idempotent, coherent, strongly-ordered
+(I/O ordering) channel 0 I/O region.</p>
+</li>
+<li>
+<p>MUST support all aligned and unaligned access sizes that can be
+generated by data requests from any of the RISC-V application
+processor harts in the SoC or by peer endpoints, including those
+of type RCiEP.</p>
+</li>
+<li>
+<p>MAY support atomics, instruction fetch, and page walks.</p>
+</li>
+<li>
+<p>Naturally aligned data requests of size up to 8 bytes from the
+RISC-V application processor harts in the SoC or by peer
+endpoints, including those of type RCiEP, MUST result in a single
+PCIe Memory Request to the target device.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Software may use the Svpbmt extension to override the PMA to NC if such an
+     override is compatible with the restricted programming model of the
+     device.</em>                                                                 <br>
+                                                                              <br>
+    <em>See also the implementation note on optimizations based on restricted
+     programming mode in section 2.3.1 of PCIe specification 6.0.</em>            <br>
+                                                                              <br>
+    <em>See also first/last DW byte enable rules in section 2.2.5 of PCIe
+     specification 6.0.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_040</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A load from a RISC-V application processor hart to memory ranges
+             designated for mapping memory spaces of endpoints or RCiEP MUST
+             complete with an all 1s response and MUST NOT lead to any abnormal
+             behavior (e.g., hangs, deadlocks, etc.) if any of the following are
+             TRUE:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Address is not within any of the following address ranges:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Address range defined by memory base/limit or 64-bit memory
+base/limit registers of any root port.</p>
+</li>
+<li>
+<p>BAR (including when EA capability is used) mapped range of
+any RCiEP.</p>
+</li>
+<li>
+<p>BAR (including when EA capability is used) mapped range of
+any root port.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The PCIe link of the root port to which the access is routed
+is not active.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Including due to the root port entering downstream port
+containment state.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>A UR or a CA response is received from the completer.</p>
+</li>
+<li>
+<p>A completion timeout occurs.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The 64-bit memory base/limit register was previously called Prefetchable
+     Memory Base/Limit. The concept of “Prefetchable” MMIO was originally needed
+     to control PCI-PCI Bridges, which were allowed/encouraged to prefetch
+     Memory Read data in prefetchable regions. The original intent of the
+     Prefetchable/Non-Prefetchable distinction was focused on PCI behaviors,
+     and was not intended for software use in determining memory attributes
+     and/or coding techniques. The "Removing Prefetchable Terminology" ECN
+     <a href="#PCI_PREF">[PCI_PREF]</a> reworks the PCIe Base Specification to remove Prefetchable
+     terminology.</em>                                                            <br>
+                                                                              <br>
+    <em>See also the implementation note on optimizations based on restricted
+     programming mode in section 2.3.1 of PCIe specification 6.0.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_050</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>A store from a RISC-V application processor hart to memory ranges
+             designated for mapping memory space of endpoints or RCiEP MUST
+             be dropped (silently ignored or discarded) and MUST NOT lead to any
+             abnormal behavior (e.g., hangs, deadlocks, etc.) if any of the
+             following are TRUE:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Address is not within any of the following address ranges:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Address range defined by memory base/limit or 64-bit memory
+base/limit registers of any root port.</p>
+</li>
+<li>
+<p>BAR (including when EA capability is used) mapped range of
+any RCiEP.</p>
+</li>
+<li>
+<p>BAR (including when EA capability is used) mapped range of
+any root port.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>The PCIe link of the root port to which the access is routed
+is not active.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Including due to the root port entering downstream port
+containment state.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Poisoned data received from completers (EP=1) MUST be forwarded to
+             the requester PCIe device (a RCiEP or an endpoint) as poisoned data
+             unless such forwarding is disallowed (e.g., poisoned TLP egress
+             blocking).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Poisoned data received from completers (EP=1) MUST be forwarded to
+             a requester RISC-V hart as poisoned data unless such forwarding is
+             disallowed through implementation defined means. When such
+             forwarding is disallowed, then the poisoned data MUST be replaced
+             with all 1s data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MMS_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC MUST NOT use EA capability to indicate memory resources for
+             allocation to endpoints downstream of a PCIe root port.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-3-access-control-services-acs"><a class="anchor" href="#5-1-4-3-access-control-services-acs"></a>5.1.4.3. Access Control Services (ACS)</h4>
+<div class="paragraph">
+<p>The PCIe ACS provides controls on routing of PCIe TLPs. ACS controls may be used
+to determine whether the TLP should be routed normally, blocked, or redirected.
+These controls may be applicable to the root complex, switches, multi-function
+devices, and SR-IOV capable devices.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACS_010</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>PCIe root ports and SoC integrated downstream switch ports MUST
+             support the following PCIe access control services (ACS) controls:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ACS source validation.</p>
+</li>
+<li>
+<p>ACS translation blocking.</p>
+</li>
+<li>
+<p>ACS I/O request blocking.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACS_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If a PCIe root port or a SoC-integrated downstream switch port
+             implements a memory BAR, then it SHOULD support the PCIe ACS DSP
+             memory target access control.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The ACS DSP memory target access control can be used to prevent
+     unauthorized accesses to protected memory spaces such as the PCIe root
+     port&#8217;s BAR mapped registers.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACS_030</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Root ports and SoC-integrated downstream switch ports that
+             support direct routing between root ports or direct routing from
+             ingress to egress port of a root port MUST support the following
+             PCIe ACS controls:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ACS P2P request redirect.</p>
+</li>
+<li>
+<p>ACS P2P completion redirect.</p>
+</li>
+<li>
+<p>ACS upstream forwarding.</p>
+</li>
+<li>
+<p>ACS direct translated P2P.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACS_040</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Root ports and SoC-integrated downstream switch ports that
+             support direct routing between root ports or direct routing from
+             ingress to egress port of a root port SHOULD also support ACS P2P
+             egress control.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>More commonly, P2P routing is accomplished by forwarding the TLP to the host
+     bridge for routing. For further information, refer to the application note
+     accompanying Fig 2-14 and Section 1.3.1 of the PCIe specification 6.0.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-4-address-routed-transactions"><a class="anchor" href="#5-1-4-4-address-routed-transactions"></a>5.1.4.4. Address Routed Transactions</h4>
+<div class="paragraph">
+<p>The rules in this section apply to treatment in the root complex of TLPs that
+are routed by address. An address carried in such transactions may be the
+address of a host memory location or the address of a location in the memory
+space of an endpoint or RCiEP.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST request IOMMU translations for addresses
+             (Translated, Untranslated, or a PCIe ATS address translation
+             request) used in the request by endpoints and RCiEPs.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The IOMMU must be invoked even for Translated requests to allow
+     determination of whether the requester is configured by software to use
+     Translated requests.</em>                                                    <br>
+                                                                              <br>
+    <em>When the IOMMU operates in the T2GPA mode, it provides a GPA as the
+     translated address in response to a PCIe ATS address translation requests.
+     In this mode of operation, the IOMMU must be invoked by the host bridge for
+     Translated requests to translate the GPA to an SPA.</em>                     <br>
+                                                                              <br>
+    <em>When ACS direct translated P2P controls are enabled, the Translated
+     requests may not be routed through the host bridge. In such cases,
+     if direct P2P routing of these requests is not desired, due to security
+     and/or functional reasons (e.g., when operating in T2GPA mode), software
+     should utilize the ACS controls to direct these requests to the root
+     complex.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST enforce physical memory attribute checks and
+             physical memory protection checks on the translated address
+             provided by the IOMMU and MUST treat violating requests as
+             Unsupported Requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>These checks are analogous to the PMA and PMP checks performed by the
+     RISC-V hart.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">For Translated and Untranslated requests, the host bridge MUST use
+             the translated addresses provided by the IOMMU to determine
+             whether the transaction is targeting host memory or peer device
+             memory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MAY support devices accessing peer devices' memory.
+             If peer device memory access is not enabled (either by design or
+             configuration), then such accesses MUST be responded to with a
+             UR/CA response. The host bridge MUST NOT cause any other errors
+             (e.g., hang, deadlock, etc.) when rejecting access by a device to
+             a peer device&#8217;s memory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A virtual machine may violate the peer-to-peer access policies and/or
+     configurations enforced by the hypervisor and/or SoC firmware, which
+     prohibit peer device memory accesses. In instances where a VM configures
+     devices passed through to it to perform peer memory accesses, such attempts
+     must not result in system instabilities (e.g., hangs, deadlocks, etc.) or
+     errors. Compliance with this directive ensures system resilience against
+     unauthorized access attempts, maintaining operational integrity.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When a posted or non-posted-with-data request from a device is
+             allowed to access peer device memory, then any poisoned data (EP=1)
+             MUST be forwarded as poisoned data, unless such forwarding is
+             disallowed (e.g., due to poisoned TLP egress blocking or lack of
+             support for data poisoning in the SoC).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host memory writes resulting from posted or non-posted-with-data
+             requests with poisoned data (EP=1) MUST mark such data as poisoned
+             in the host memory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ADR_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host memory reads that encounter uncorrectable data errors detected
+             within the SoC MUST result in a response with poisoned data (EP=1)
+             if transmission of poisoned TLPs is not blocked (see also section
+             2.7.2.1 of PCIe specification 6.0).</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-5-id-routed-transactions"><a class="anchor" href="#5-1-4-5-id-routed-transactions"></a>5.1.4.5. ID Routed Transactions</h4>
+<div class="paragraph">
+<p>The rules in this section apply to treatment in the root complex of TLPs that
+are routed by ID. Such requests may be Configuration requests, ID routed
+messages or completions.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDR_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configuration requests from endpoints and RCiEP MUST be treated as
+             Unsupported Requests.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDR_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P2P routing of PCIe VDM between root ports within or across
+             hierarchies SHOULD be supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>MCTP transport protocols using PCIe VDM are used by the BMC to manage
+     PCIe/CXL devices. These messages are used to support manageability
+     protocols such as PLDM, NVMe-MI, Redfish, etc. Supporting P2P routing of
+     VDMs such as those carrying MCTP protocol messages enables greater system
+     design flexibility in supporting these management protocols.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IDR_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P2P routing of PCIe VDM to/from RCIeP MAY be supported.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-6-cacheability-and-coherence"><a class="anchor" href="#5-1-4-6-cacheability-and-coherence"></a>5.1.4.6. Cacheability and Coherence</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST enforce PCIe memory ordering rules and SHOULD
+             support the relaxed ordering (RO) and ID-based ordering (IDO).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>An implementation may occasionally or never permit the relaxations allowed
+     by RO and/or IDO attributes. Such implementations will result in a more
+     conservative interpretation of the ordering rules, but they will not result
+     in a violation of the ordering rules.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes to host or device memory using the RO attribute set to 0
+             MUST be observed by other harts and bus mastering devices in the
+             order in which the write was received by the PCIe root port or the
+             host bridge, ensuring that all previous writes are globally observed
+             before the RO=0 write is globally observed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST enforce the idempotency, coherence,
+             cacheability, and access type physical memory attributes of the
+             accessed memory and perform any reordering or combining of PCIe
+             transactions only if the combination of physical memory attributes
+             and TLP-specified memory ordering attributes allow it.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge SHOULD implement hardware enforced cache coherency,
+             irrespective of the “No Snoop” attribute in the TLP, unless it has
+             been configured through <code>UNSPECIFIED</code> means to not enforce coherency
+             for TLPs with “No Snoop” attribute set to 1.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A PCIe requester is permitted to set the “No Snoop” in transactions it
+     initiates that do not require hardware enforced cache coherency. Host
+     bridges that do not support isochronous VCs or can meet deadlines with
+     hardware enforced coherency may always enforce coherency. Enforcing cache
+     coherency is always conservative and will not lead to data corruption.</em>  <br>
+                                                                              <br>
+    <em>Modern systems with integrated memory controllers and snoop directories may
+     not require the use of “No Snoop” to meet the latency targets as memory
+     regions accessed for isochronous operations would usually be device
+     exclusive. PCIe requires a function to guarantee that addresses accessed
+     using “No Snoop” set to 1 are not cached in any of the caches and software
+     that instructs a device to perform “No Snoop” transactions must only do so
+     when it can provide this guarantee.</em>                                     <br>
+                                                                              <br>
+    <em>Some caches in a SoC may perform clean evictions to memory. In such SoCs,
+     if the addresses used by the non-snooped transactions may be cached (e.g.,
+     due to speculative accesses from a hart), then such clean evictions may
+     cause data corruption, even if the caches were explicitly cleaned by
+     software using the cache management operations. To ensure data integrity,
+     software should use memory that has such non-cacheable PMA or use the
+     Svpbmt extension to override the PMA to NC/IO, thereby implementing the
+     guarantee required by the PCIe specification when using the “No Snoop”
+     attribute set to 1. If the Svpbmt extension was used to override the PMA,
+     then use of cache management operations defined by Zicbom extension may be
+     necessary to flush data that might already be cached.</em>                   <br>
+                                                                              <br>
+    <em>See also section 7.5.3.4 of PCIe specification 6.0.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The host bridge MUST NOT violate the coherence physical memory
+             attribute if the “No Snoop” attribute in the TLP is 0.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CCS_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The interpretation of the TLP processing hints (TPH) by the SoC is
+             <code>UNSPECIFIED</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A future extension of the RISC-V IOMMU specification may define a standard
+     interpretation of the TPH including the use of ATS memory attributes (AMA)
+     for performing cache management.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-7-message-signaled-interrupts"><a class="anchor" href="#5-1-4-7-message-signaled-interrupts"></a>5.1.4.7. Message signaled interrupts</h4>
+<div class="paragraph">
+<p>A message signaled interrupt (MSI or MSI-X) is the preferred interrupt signaling
+mechanism in PCIe.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSI_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message Signaled Interrupts MUST be supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSI_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC MUST NOT support INTx virtual wire based interrupt signaling.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>PCIe supports INTx emulation to support legacy PCI interrupt mechanisms.
+     Modern SoC and devices are not expected be limited by the lack of this
+     emulation mode.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-8-precision-time-measurement-ptm"><a class="anchor" href="#5-1-4-8-precision-time-measurement-ptm"></a>5.1.4.8. Precision Time Measurement (PTM)</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PTM_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe root ports MAY support PCIe PTM capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Several applications such as instrumentation, media servers, telecom
+     servers, etc. require high precision monitoring and tracking of time. The
+     PCIe PTM protocol supports synchronization of multiple devices/functions to
+     a common shared PTM master time provided by the PTM root.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PTM_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When PCIe PTM capability is supported, the SoC MUST make the PTM
+             master time available to the operating system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The mechanism to make the master time available to the operating system
+     is implementation specific.</em>                                             <br>
+                                                                              <br>
+    <em>Making PTM master time available to software enables software to translate
+     timing information between local time and PTM master time and thereby
+     enable coordination of events across multiple PCIe devices.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PTM_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When PCIe PTM capability is supported, the PTM master time MUST be
+             64-bit wide.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PTM_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When PCIe PTM capability is supported, the PTM master time MUST use
+             the same or higher resolution clock than the clock used to increment
+             <code>time</code> CSR of the RISC-V application processor harts.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-9-errorevent-reporting"><a class="anchor" href="#5-1-4-9-errorevent-reporting"></a>5.1.4.9. Error/Event Reporting</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe root ports MUST support advanced error reporting (AER)
+             capability for reporting errors from connected devices or the
+             errors detected by the root port itself.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>AER capability defines more robust error reporting as compared to the
+     baseline error reporting capability.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe root ports MUST support the downstream port containment
+             (DPC) capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe root ports MUST support the RP PIO controls.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The root port programmed I/O (PIO) controls enable fine-grained control
+     over handling of non-posted requests that encounter errors and allows
+     handling of such errors as either uncorrectable or advisory based on
+     policies established by the operating system.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A RCiEP in the SoC SHOULD support the AER capability if it
+             detects any of the errors defined by PCIe specification 6.0
+             (See section 6.2.7).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A RCiEP in the SoC MUST support the AER capability if it supports
+             the ACS capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC MUST implement one or more PCIe RCEC in the root complex if
+             any of the RCiEP implement the AER capability or implement PME
+             signaling.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The PCIe RCEC implemented in a SoC MUST implement the RCEC
+             endpoint association extended capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe root port configuration registers MUST NOT be affected, except
+             as required to update status associated with the transition to
+             DL_Down (see also section 2.9.1 of PCIe specification 6.0).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Retaining port configurations on transition to DL_Down state is important
+     to support hot-plug.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-10-vendor-specific-registers"><a class="anchor" href="#5-1-4-10-vendor-specific-registers"></a>5.1.4.10. Vendor Specific Registers</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VSR_010</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Vendor specific registers in the root ports, host bridge, RCiEP,
+             and RCRB MUST be implemented using one or more of the following
+             capabilities:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Vendor specific capability.</p>
+</li>
+<li>
+<p>Vendor specific extended capability.</p>
+</li>
+<li>
+<p>Designated Vendor Specific extended capability.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VSR_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC MUST NOT require hypervisor and/or operating system interaction
+             with PCIe configuration space registers that are not defined by an
+             industry standard. Non-standard vendor specific registers, if
+             implemented in the PCIe configuration space, must only be used by
+             the SoC firmware.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Some industry standards such a CXL may define standard DVSEC structures in
+     the PCIe configuration space.</em>                                           <br>
+                                                                              <br>
+    <em>The preferred way to implement device/SoC vendor specific registers that
+     need to be used by drivers in the run-time environment is to implement
+     them in the memory space of the device. Certain operating systems and
+     hypervisors may disallow and/or require mediating access to the PCIe
+     configuration space of devices. See also the implementation note in the
+     PCIe specification 6.0 section 7.2.2.2.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="5-1-4-11-soc-integrated-pcie-devices"><a class="anchor" href="#5-1-4-11-soc-integrated-pcie-devices"></a>5.1.4.11. SoC-Integrated PCIe Devices</h4>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC-integrated PCIe devices MUST implement all software visible
+             rules defined by the PCIe specification 6.0 for an EP or RCiEP as
+             applicable.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Implementing integrated devices as RCiEP or EP allows the use of standardized
+     frameworks for memory and interrupt resource allocation, virtualization
+     (SR-IOV), ATS/PRI, shared virtual addressing, trusted IO using SPDM/TDISP,
+     participate in RAS frameworks like data poisoning and AER, power management,
+     etc.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC-integrated PCIe devices MUST NOT require the use of I/O space
+             or I/O transactions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC integrated PCIe devices that cache address translations MUST
+             implement the PCIe ATS capability if the address translation cache
+             needs management by the operating system or hypervisors.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC-integrated PCIe devices that support PCIe SR-IOV capability
+             SHOULD support the MSI-X capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>MSI-X capability enables virtual machines to assign interrupt resources to
+     virtual functions without needing access to the configuration space of the
+     function. Access to the configuration space of the virtual function is
+     usually mediated by the hypervisor.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC-integrated PCIe devices MAY support the PASID capability. When
+             PASID capability is supported, the devices SHOULD support a
+             20-bit wide PASID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Endpoints are recommended to support a 20-bit wide PASID to ensure
+     interoperability with system software. See also the implementation note on
+     PASID width homogeneity in the PCIe specification 6.0 section 6.20.2.2.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_060</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>SoC-integrated PCIe devices (a multi-function device or an SR-IOV
+             capable device) that support P2P traffic among functions (including
+             among SR-IOV virtual functions) of the device MUST support the
+             following PCIe ACS controls:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>ACS P2P request redirect.</p>
+</li>
+<li>
+<p>ACS P2P completion redirect.</p>
+</li>
+<li>
+<p>ACS direct translated P2P.</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If the BAR registers are implemented by SoC-integrated PCIe devices
+             then they MUST be programmable. The Memory Space Indicator (bit 0)
+             of such BAR registers MUST be 1, and they SHOULD support being
+             mapped anywhere in the 64-bit memory space.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RCiEP MAY support the PCIe enhanced allocation (EA) capability for
+             fixed allocation of memory resources. If EA capability is used then
+             the BEI of the entries MUST be one of 0 through 5 or 9 through 14
+             and their primary/secondary properties must be one of 0 through 4
+             or 0xFF.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_090</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC-integrated PCIe devices MUST support the PCIe defined baseline
+             error reporting capability and MAY support PCIe Advanced Error
+             Reporting capability. If PCIe ACS controls are supported then the
+             PCIe Advanced Error Reporting capability MUST be supported.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>See PCIe specification 6.0 section 7.5.1.1.14.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SID_100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A RCiEP that supports PCIe Advanced Error Reporting MUST be
+             associated with a Root Complex Event Collector.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="5-1-5-reliability-availability-and-serviceability-ras"><a class="anchor" href="#5-1-5-reliability-availability-and-serviceability-ras"></a>5.1.5. Reliability, Availability, and Serviceability (RAS)</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The level of RAS implemented by the SoC is <code>UNSPECIFIED</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The level of RAS implemented by an SoC depends on the reliability goals
+     established for the SoC, which are commonly measured using metrics such as
+     failure-in-time (FIT) and defects-per-million (DPM). Achieving these goals
+     requires a combination of fault prevention, error detection, and error
+     correction techniques.</em>                                                  <br>
+                                                                              <br>
+    <em>This specification strongly recommends the implementation of error
+     detection and correction codes for storage elements like significant
+     caches and memories. Furthermore, it suggests utilizing mechanisms such as
+     single-symbol (SSC) ECC in DRAM controllers to address failure scenarios,
+     such as when all bits in a single DRAM device experience a failure.</em>     <br>
+                                                                              <br>
+    <em>Additionally, this specification encourages the adoption of mechanisms like
+     periodic scrubbing, also known as patrol scrubbing. These mechanisms
+     proactively identify and rectify errors before they accumulate to a
+     critical point, surpassing the capability of the implemented error
+     correction codes. For instance, this could involve addressing situations
+     where single bit errors escalate into double bit errors, surpassing the
+     correction code&#8217;s capacity.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC SHOULD support the generation, storage, and forwarding of
+             poisoned data. The granularity at which data is poisoned is
+             <code>UNSPECIFIED</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>When an uncorrected data error is detected by a component, it might allow
+    potentially corrupted data to reach the data requester, but with an
+    associated poison indicator. These errors are referred to as uncorrected
+    deferred errors (UDE), as they enable the detecting component to continue
+    functioning and postpone addressing the error until a later time, assuming
+    the poisoned data gets consumed. If a component (such as a hart, an IOMMU, a
+    device, etc.) consumes the poisoned data, it triggers an uncorrected urgent
+    error (UUE), leading to the invocation of a recovery handler for immediate
+    remedial actions, as further deferral of the error is not feasible.</em>      <br>
+                                                                              <br>
+   <em>The technique of data poisoning facilitates delaying the handling of
+    uncorrected errors until the moment the corrupted data is actually consumed.
+    Data poisoning offers a more precise identification of the software and/or
+    hardware component affected by the data corruption. This specificity allows
+    for targeted recovery actions that impact only the affected components.</em>  <br>
+                                                                              <br>
+   <em>To ensure the integrity of the poisoned data indicator when stored, error
+    detection and correction codes should be applied. This practice prevents
+    subsequent errors from leading to the silent consumption of the corrupted
+    data.</em>                                                                    <br>
+                                                                              <br>
+   <em>Data poisoning also empowers the implementation of error containment
+    features supported by industry standards like PCIe and CXL.</em>              <br>
+                                                                              <br>
+   <em>For more detailed discussions on the treatment of faults and errors, refer
+    to the RISC-V RERI specification.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If poisoned data needs to be transmitted from a first component to
+             a second component that lacks the ability to manage poison, the
+             first component MUST trigger an critical uncorrected error report
+             instead of silently transmitting the corrupted data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Some components serve as intermediaries through which data passes. For
+     instance, a PCIe/CXL port acts as an intermediary that receives data from
+     memory but doesn&#8217;t consume it; rather, it forwards the data to an endpoint.
+     In such cases, the intermediary component might encounter poisoned data.
+     While this component can propagate the error and avoid logging an error, a
+     different scenario arises when the destination component (such as a PCIe
+     endpoint) cannot handle poison. In such situations, the originating
+     component must trigger an urgent error signal instead of transmitting the
+     poisoned data without the associated poison indicator. Failing to do so
+     would breach the containment of the corrupted data during propagation.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD support the RISC-V RAS error record register
+             interface (RERI) cite:[RERI] for error logging and signaling.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When RERI is supported, the RAS error records MUST include the
+             capability to individually enable error signaling for each severity -
+             Uncorrected Error Critical (UEC), Uncorrected Error Deferred (UED),
+             and Corrected Error (CE) - of error that could be logged in that
+             specific error record.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Configurable enables provide software with the flexibility of using an
+     event-based or polling-based error logging for both corrected errors and
+     deferred errors. Typically, software operates in an event-based mode for
+     critical errors, as these errors necessiate immediate remedial action when
+     they arise.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If RERI is supported, RAS error records MUST preserve the
+             state of logged error information (including status, address,
+             information, supplemental information, and timestamp) across a
+             RAS-initiated reset. The state of RAS error records MAY persist
+             across other types of implementation-defined resets. After a reset,
+             including a RAS-initiated reset, the state of the control register
+             in the RAS error record is considered <code>UNSPECIFIED</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Some errors may lead a hardware component to enter a failure mode in which
+     it becomes incapable of servicing additional requests- colloquially termed
+     'jammed' or 'wedged'. In these situations, the SoC may require a reset to
+     restore it to an operational state (a RAS-initiated reset). Preserving the
+     RAS error records through such resets enables the SoC firmware and system
+     software to retrieve these error records during boot following such a reset,
+     facilitating logging and analysis.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If RERI is supported, the RAS error records MAY support error
+             record injection, which is intended to facilitate RAS handler
+             verification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Verifying the correct implementation of RAS handlers presents a formidable
+    challenge, given the impracticality of deterministically inducing all
+    potential errors within the SoC to validate the RAS handler&#8217;s adherence to
+    desired recovery protocols. An unverified RAS handler can lead to undesired
+    behavior during error occurrences, potentially reducing SoC availability or
+    affecting its serviceability.</em>                                            <br>
+                                                                              <br>
+   <em>To address this, error record injection offers a convenient method for
+    conducting such verification. It allows the introduction of a range of error
+    signatures, which can then be signaled and observed. While hardware error
+    injection techniques also offer a means of verification (e.g., methods to
+    intentionally corrupt a data location protected by an error detection code),
+    providing open access to these capabilities for software use might not align
+    with security and stability concerns.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If RERI is supported, then the hardware components in the SoC that
+             support error correction MUST incorporate a corrected error counter
+             within their respective error records. Additionally, these
+             components MUST support the signaling of counter overflows.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Counting corrected errors offers a more precise assessment of system
+     reliability. Enabling signaling upon counter overflow empowers software to
+     define a suitable threshold for logging and analysis of these corrected
+     errors.</em>                                                                 <br>
+                                                                              <br>
+    <em>Certain hardware units might maintain a history of corrected errors and
+     increment the corrected error counter only if the error differs from a
+     previously reported one. Additionally, some hardware units could
+     incorporate low-pass filters like leaky buckets, which regulate the rate at
+     which corrected errors are reported and counted. This rule pertains
+     to corrected errors tracked by the error record once the hardware component
+     determines reporting and counting based on its specific filtering rules.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-6-quality-of-service"><a class="anchor" href="#5-1-6-quality-of-service"></a>5.1.6. Quality of Service</h3>
+<div class="paragraph">
+<p>Quality of Service (QoS) refers to the minimum end-to-end performance that a
+service level agreement (SLA) guarantees to an application in advance. QoS
+capabilities within the SoC offer mechanisms that system software can leverage
+to manage interference to an application, effectively diminishing performance
+variability caused by other applications' utilization of shared resources such
+as cache capacity, memory bandwidth, interconnect bandwidth, power consumption,
+and more.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD incorporate QoS mechanisms to mitigate unwarranted
+             performance interference that arises when multiple workloads access
+             shared resources like caches and system memory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD integrate support for the RISC-V capacity and
+             bandwidth controller register interface (CBQRI) cite:[CBQRI] in
+             significant shared caches and the memory controllers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, RISC-V harts within the application
+             processors of the SoC MUST include support for the <code>srmcfg</code> CSR.
+             Furthermore, this CSR MUST support a minimum of 16 RCIDs and at
+             least 32 MCIDs. The count of RCID and MCID that can be used in the
+             SoC SHOULD scale with the number of RISC-V harts in the SoC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The <code>srmcfg</code> CSR is provided by the Ssqosid extension cite:[PRIV].</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, the IOMMUs in the SoC SHOULD incorporate
+             support for the CBQRI-defined extension, enabling the association
+             of RCID and MCID with requests initiated by devices and the IOMMU.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, significant caches such as the last-level
+             cache in the SoC SHOULD support cache capacity allocation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, significant caches such as the last-level
+             cache in the SoC SHOULD incorporate support for monitoring cache
+             capacity usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_070</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, the memory controllers within the SoC SHOULD
+             include support for bandwidth allocation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_080</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, the memory controllers in the SoC SHOULD
+             include support for monitoring bandwidth usage.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The method employed by the SoC for bandwidth throttling and control is
+     specific to its implementation. It is advisable for the implementation to
+     utilize a scheme that results in a deviation of no more than +/- 10 % from
+     the target set by system software through the CBQRI interface.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_090</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, the count of RCID and MCID supported by
+             capacity controllers, bandwidth controllers, and all RISC-V
+             application processor harts in the SoC MUST be consistent.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Portable system software could opt to limit itself to accommodating the
+     minimum count of RCID and MCID across the controllers. This approach avoids
+     the complexity of dealing with unequal numbers of RCID and MCID across
+     controllers, which would otherwise necessitate intricate allocations and
+     constraints on workload placement.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QOS_100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If CBQRI is supported, the monitoring counters in the capacity and
+             bandwidth controllers MUST be sufficiently wide to not overflow when
+             sampled at a rate of 1 Hz.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>As an illustration, consider an HBM3 memory interface that can facilitate
+     data transfers at a rate of up to 1 TB/s. This scenario would necessitate a
+     34-bit counter to prevent overflow when sampled at a frequency of 1 Hz.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-7-manageability"><a class="anchor" href="#5-1-7-manageability"></a>5.1.7. Manageability</h3>
+<div class="paragraph">
+<p>This section outlines the guidelines for RISC-V server SoCs to incorporate a
+standardized set of protocols and standards for server management. The SoC
+interfaces with a baseboard management controller (BMC) through in-band and
+out-of-band (OOB) management agents. The in-band management agents execute on
+the RISC-V application processor harts and the out-of-band management agents
+execute on a management controller in the SoC.</p>
+</div>
+<div class="paragraph">
+<p>The out-of-band management interface facilitates the monitoring of sensors
+(e.g., temperature, power, etc.), parameter control (e.g., power limits,
+etc.), and logging (e.g., RAS error records, etc.) by the BMC without
+participation of software on the application processor harts. The in-band
+management interface facilitates system configuration (e.g., boot order, memory
+domains, secure boot, network, etc.), and event log collection through
+management agents in the OS and/or firmware that executes on the application
+processor harts.</p>
+</div>
+<div class="paragraph">
+<p>This specification strongly recommends the use of the DMTF Redfish
+cite:[DSP0266], DMTF Platform Level Data Model (PLDM) cite:[DSP0240], and DMTF
+Management Component Transport Protocol (MCTP) cite:[DSP0236]) protocols for
+in-band and out-of-band server management.</p>
+</div>
+<div class="paragraph">
+<p>This specification strongly recommends the use of DMTF specified Security
+Protocol and Data Model (SPDM) cite:[DSP0274] for device attestation and
+using SPDM encrypted messages cite:[DSP0277] for secure in-band and out-of-band
+communication with the BMC. SPDM authentication protocols support establishing a
+trust relationship between the manageability agents in the SoC and the BMC. Use
+of SPDM secured messages enables preserving the confidentiality and integrity of
+data exchanged between the BMC and the manageability agents in the SoC.</p>
+</div>
+<div class="paragraph">
+<p>The specification recommends supporting Intelligent Platform Management
+Interface (IPMI) cite:[IPMI20] due to the widespread use of this protocol
+for server management functions such as credentials provisioning and remote
+power control.</p>
+</div>
+<div class="paragraph">
+<p>This specification recommends the RISC-V server SoC to support open standards
+for server management through supporting integration with technologies such as
+the datacenter-ready secure control module (DC-SCM) cite:[DC-SCM] specified by
+the Open Compute Project for server management, security, and control features.</p>
+</div>
+<div class="paragraph">
+<p>Adhering to the industry standard management protocols such as those specified
+by DMTF and OCP allows server platforms built with RISC-V server SoCs to
+seamlessly integrate into the server management frameworks and tools employed by
+data centers and enterprises.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MNG_010</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD incorporate support for an x1 PCIe lane, preferably
+             Gen 5, but at least Gen 3, to establish a connection with the BMC.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>This interface is commonly linked to a BMC as a PCIe endpoint, serving
+     various purposes. These include facilitating host-to-BMC communication for
+     tasks like video output (e.g., remote KVM support), MCTP transport over
+     PCIe VDM, and hosting a USB controller. The BMC might also support remote
+     presence capabilities, like remote media redirection and support for
+     keyboard and mouse functions through virtual USB.</em>                       <br>
+                                                                              <br>
+    <em>The in-band network interfaces serve as communication channels for system
+     software to interact with the BMC. This interaction employs protocols like
+     the Redfish host interface.</em>                                             <br>
+                                                                              <br>
+    <em>Furthermore, the PCIe interface to the BMC empowers the BMC, using
+     SoC-routed PCIe VDMs, to utilize these VDMs for transmitting MCTP messages.
+     These messages manage platform devices, including network controllers, NVMe
+     controllers, FPGAs, GPUs, and more.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MNG_020</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The SoC SHOULD support the use of I2C based IPMI SSIF for in-band
+             management agents in the SoC to communicate with the BMC.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MNG_030</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The SoC SHOULD incorporate support for utilizing a UART connection
+             to the BMC, enabling the provision of a host debug console.</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-8-performance-monitoring"><a class="anchor" href="#5-1-8-performance-monitoring"></a>5.1.8. Performance Monitoring</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_010</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Significant caches within the SoC SHOULD incorporate an HPM capable
+             of counting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Cache lookups for reads</p>
+</li>
+<li>
+<p>Cache misses on reads</p>
+</li>
+<li>
+<p>Cache lookups for writes</p>
+</li>
+<li>
+<p>Cache misses on writes</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>It is recommended that a cache with a capacity that is approximately 16 KiB
+     or larger be considered a significant cache.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_020</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The memory controllers within the SoC SHOULD incorporate an HPM
+             capable of counting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read bandwidth</p>
+</li>
+<li>
+<p>Write bandwidth</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_030</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The PCIe ports within the SoC SHOULD incorporate an HPM capable of
+             counting:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Read bandwidth (from system memory)</p>
+</li>
+<li>
+<p>Write bandwidth (to system memory)</p>
+</li>
+</ul>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_040</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The SoC SHOULD incorporate an HPM capable of counting the average
+             latency of a read request from a memory requester (e.g., a hart,
+             a PCIe host bridge, etc.) in the SoC.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Bandwidth and latency are the most commonly used performance metrics to
+     guide workload placement and tuning.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_050</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>If the SoC supports NUMA configurations, then the HPM for
+             SPM_010, SPM_020, SPM_030, and SPM_040 SHOULD support filtering the
+             counting based on whether the request is to local memory or to
+             remote memory.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPM_060</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All PCIe Gen6 ports within the SoC SHOULD incorporate support for
+             the Flit performance measurement extended capability defined by
+             PCIe specification 6.0.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Please refer to <a href="#IOMMU">5.1.3. Input-Output Memory Management Unit (IOMMU)</a> for details on the IOMMU performance monitoring rules.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="5-1-9-security-requirements"><a class="anchor" href="#5-1-9-security-requirements"></a>5.1.9. Security Requirements</h3>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 83.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEC_010</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>The Server SoC MUST implement a hardware RoT as the <em>primary</em> root
+             of trust.</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A root of trust (RoT) is the foundation on which all secure operations of a
+     system depend. A hardware RoT is a dedicated and possibly isolated trusted
+     subsystem that can provide stronger protections against physical and
+     logical attacks.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEC_020</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The PCIe root ports within the SoC SHOULD support PCIe Integrity and
+             Data Encryption (IDE) capability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>The IDE extension adds optional capabilities to perform hardware encryption
+     and integrity checks on packets transferred across PCIe links. This addition
+     provides confidentiality, integrity, and replay protection against
+     hardware-level attacks.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEC_030</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD support encryption of off-chip DRAM using a
+             transient memory encryption key that has at least 256-bit key
+             lengths.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>Off-chip memory encryption provides protection to critical assets in memory
+     such as credentials, data encryption keys, and other secrets.</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEC_040</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The cryptographic modules used to implement PCIe and off-chip DRAM
+             encryption SHOULD comply with security requirements specified by
+             relevant security standards from national standards laboratories.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>FIPS 140-3 is an example of such a standard</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SEC_050</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The SoC SHOULD have the capability of interfacing with a Trusted
+             Platform Module (TPM) that adheres to the TPM 2.0 Library
+             specification cite:[TPM20].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A TPM enhances security by providing secure storage for sensitive
+     information such as credentials and passwords, cryptographic operations and
+     protection against tampering or unauthorized access.</em></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="server_soc_intro.html">Chapter 4. Introduction</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

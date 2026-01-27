@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/techtrace/exampleAlgorithm.html">
+    <link rel="prev" href="dataTracePayload.html">
+    <link rel="next" href="discovery.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="20cdb323be837873146215146a9e538b06605e9d"> 
+    <meta name="version" content="v2.0">
+    <meta name="component" content="techtrace">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item home">
+          <a class="navbar-link"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications"
+            aria-label="Library">
+            Library</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">ISA</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Profiles</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Non-ISA Hardware</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+            Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+            Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+            Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+            SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient
+            Trace
+            < <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+              </svg>
+          </a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS
+            Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI
+            Architecture
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace
+            Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted
+            Trace and Diagnostic Data Packet
+            Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Platform Software</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot
+            and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional
+            Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform
+            Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor
+            Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">App Enablement</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C
+            Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="techtrace" data-version="v2.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Debug, Trace, RAS</span>
+</div>        <div class="nav-trees" data-component="techtrace">
+          <div class="version-box">
+            <select data-component="techtrace" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="techtrace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Chapter 1. Efficient Trace for RISC-V</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="preface.html">Chapter 2. Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="control.html">Chapter 4. Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="branchTrace.html">Chapter 5. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="filtering.html">Chapter 7. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="timestamping.html">Chapter 8. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="payload.html">Chapter 9. Trace Payload Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dataTracePayload.html">Data Trace Payload Format</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="exampleAlgorithm.html">Example Reference Encoding Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="discovery.html">Trace Discovery and Configuration</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="decoder.html">Example Trace Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="exampleCodeSnippets.html">Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="future.html">Future Work</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="reri">
+          <div class="version-box">
+            <select data-component="reri" class="select-version">
+                <option
+                  value="../reri/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="reri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/index.html">Chapter 1. RERI Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_intro.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../reri/reri_err_reporting.html">Chapter 4. Error Reporting</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="qos">
+          <div class="version-box">
+            <select data-component="qos" class="select-version">
+                <option
+                  value="../qos/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="qos" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V Capacity and Bandwidth Controller QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_identifiers.html">Chapter 3. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_capacity.html">Chapter 4. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_bandwidth.html">Chapter 5. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_iommu.html">Chapter 6. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_hw_guidelines.html">Chapter 7. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../qos/qos_sw_guidelines.html">Chapter 8. Software Guidelines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="etrace">
+          <div class="version-box">
+            <select data-component="etrace" class="select-version">
+                <option
+                  value="../etrace/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="etrace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Diagnostic Data Packet Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/index.html">Chapter 1. Unformatted Trace &amp; Diagnostic Data Packet Encapsulation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/contributors.html">Chapter 3. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/encapsulation.html">Chapter 4. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../etrace/e-trace-specifics.html">Chapter 5. E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="tag-toggle-container">
+      <button
+        class="tag-toggle-btn"
+        type="button"
+        onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+      >
+        <div class="tag-toggle-switch"></div>
+        <span id="tag-toggle-label">Highlight Tags</span>
+      </button>
+    </div>
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-trace-spec/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-trace-spec" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+          <a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/riscv-plic-1.0.0.pdf" target="_blank" rel="noopener noreferrer" title="PDF" class="sidebar-link" download>
+            <span>Download PDF</span>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 14a5 5 0 0 1 7.07 0l3.54 3.54a5 5 0 0 1-7.07 7.07l-3.54-3.54a5 5 0 0 1 0-7.07z"/>
+              <line x1="8" y1="8" x2="16" y2="16"/>
+            </svg>
+          </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li>Efficient Trace for RISC-V</li>
+      <li><a href="exampleAlgorithm.html">Example Reference Encoding Algorithm</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="Algorithm"><a class="anchor" href="#Algorithm"></a>Reference Compressed Branch Trace Algorithm</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The contents of this chapter are informative only.</p>
+</div>
+<div class="paragraph">
+<p>A reference algorithm for compressed branch trace is given in
+<a href="#fig:algo">Instruction delta trace algorithm</a>. In the diagram, the following terms are used:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><em>te_inst.</em> The name of the packet type emitted by the encoder (see
+<a href="#packets">[packets]</a>);</p>
+</li>
+<li>
+<p><em>inst.</em> Abbreviation for 'instruction';</p>
+</li>
+<li>
+<p><em>trap. Exception or interrupt signalled;</em></p>
+</li>
+<li>
+<p><em>updiscon.</em> Uninferable PC discontinuity. This identifies an
+instruction that causes the program counter to be changed by an amount
+that cannot be predicted from the source code alone (<strong>itype</strong> values 8,
+10, 12 or 14);</p>
+</li>
+<li>
+<p><em>Qualified?</em> An instruction that meets the filtering criteria is
+qualified, and will be traced;</p>
+</li>
+<li>
+<p><em>Branch?</em> Is the instruction a branch or not (<strong>itype</strong> values 4 or 5);</p>
+</li>
+<li>
+<p><em>branch map.</em> A vector where each bit represents the outcome of a
+branch. A 0 indicates the branch was taken, a 1 indicates that it was
+not;</p>
+</li>
+<li>
+<p><em>ppccd.</em> Privilege has changed, or context has changed and needs to be
+reported precisely or treated as an uninferable PC discontinuity (see
+<a href="#tab:context-type">[tab:context-type]</a>);</p>
+</li>
+<li>
+<p><em>ppccd_br.</em> As above, but branch map not empty;</p>
+</li>
+<li>
+<p><em>ntf.</em> Trace notify trigger (see <a href="#tab:debugModuleTriggerSupport">[tab:debugModuleTriggerSupport]</a>);</p>
+</li>
+<li>
+<p><em>cci.</em> context change that can be reported imprecisely (see
+<a href="#tab:context-type">[tab:context-type]</a>);</p>
+</li>
+<li>
+<p><em>rpt_br.</em> Report branches due to full branch map or misprediction;</p>
+</li>
+<li>
+<p><em>branches.</em> The number of branches encountered but not yet reported to
+the decoder;</p>
+</li>
+<li>
+<p><em>pbc.</em> Correctly predicted branches count (always zero if branch
+predictor disabled or not present);</p>
+</li>
+<li>
+<p><em>trep</em> Previous trap already reported with <strong>thaddr</strong> = 0 because it was preceded by an updiscon or immediately followed by another exception;</p>
+</li>
+<li>
+<p><em>resync count.</em> A counter used to keep track of when it is necessary
+to send a synchronization packet (see <a href="#sec:resync">Resynchronisation</a>);</p>
+</li>
+<li>
+<p><em>resync2_br.</em> The resync FSM is in state 2 and
+there are entries in the branch map that have not yet been output (see
+<a href="#sec:resync">Resynchronisation</a>).</p>
+</li>
+<li>
+<p><em>resync3.</em> The resync FSM is in state 3  (see <a href="#sec:resync">Resynchronisation</a>);</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><a href="#fig:algo">Instruction delta trace algorithm</a> shows instruction by instruction behavior, as
+would be seen in a single-retirement system only. Whilst the core to
+encoder interface allows the RISC-V hart to provide information on
+multiple retiring instructions simultaneously, the resultant packet
+sequence generated by the encoder must be the same as if retiring one
+instruction at a time.  Note that even with a single-retirement system it is possible to retire an instruction and report a trap simultaneously (<strong>itype</strong> = 1 or 2 and <strong>iretire</strong> = 1).  In this case the flow diagram must be traversed twice, first for the retired instruction, and then for the trap.</p>
+</div>
+<div class="paragraph">
+<p>A 3-stage pipeline within the encoder is assumed, such that the encoder
+has visibility of the current, previous and next instructions. All
+packets are generated using information relating to the current
+instruction. The orange diamonds indicate decisions based on the
+previous instruction, the green diamond indicates a decision based on
+the next instruction, and all other diamonds are based on the current
+instruction.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, the encoder can generate one further packet type, not
+shown on the diagram for clarity. The <em>support</em> packet (format 3,
+subformat 3 - see <a href="#sec:format33">[sec:format33]</a>) is sent when:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encoder is enabled or disabled, or its configuration is changed,
+to inform the decoder of the operating mode of the encoder;</p>
+</li>
+<li>
+<p>After the final qualified instruction has been traced, to inform the
+decoder that tracing has stopped;</p>
+</li>
+<li>
+<p>If trace packets are lost (for example if the buffer into which
+packets are being written fills up), in this situation, the 1st packet
+loaded into the buffer when space next becomes available must be a
+<em>support</em> packet. Following this, tracing will resume with a sync
+packet.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Note: if the <strong>halted</strong> or <strong>reset</strong> sideband signals are asserted (see
+<a href="#tab:ingress-side-band">[tab:ingress-side-band]</a>) the encoder will behave as if it has received an unqualified instruction (output <em>te_inst</em> reporting the address of the previous instruction, followed by
+<em>te_support</em>);</p>
+</div>
+<div id="fig:algo" class="imageblock text-center">
+<div class="content">
+<img src="_images/algo.png" alt="algo" width="566" height="869">
+</div>
+<div class="title">Figure 1. Instruction delta trace algorithm</div>
+</div>
+<div class="sect2">
+<h3 id="format-selection"><a class="anchor" href="#format-selection"></a>Format selection</h3>
+<div class="paragraph">
+<p>In all cases but two, the packet format is determined only by a 'yes'
+outcome from the associated decision.</p>
+</div>
+<div class="paragraph">
+<p>When reporting branch information on its own (without an address), the
+choice between format 1 and format 0, subformat 0 depends on the number
+of correctly predicted branches (this will be 0 if the predictor is not
+supported, or is disabled). No packets are generated until there are at
+least 31 branches to report. Format 1 is used if the outcome of at least
+one of those 31 branches was not predicted correctly. If all were
+predicted correctly, nothing is output at this time, and the encoder
+continues to count correctly predicted branch outcomes. As soon as one
+of the branch outcomes is not correctly predicted, the encoder will
+output a format 0, subformat 0 packet. See also
+<a href="#sec:format0">[sec:format0]</a>.</p>
+</div>
+<div class="paragraph">
+<p>The choice between formats for the "format 0/1/2" case in the middle of
+the diagram also needs further explanation.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If the number of correctly predicted branches is 31 or more, then
+format 0, subformat 0 is always used;</p>
+</li>
+<li>
+<p>Else, if the jump target cache is supported and enabled, and the
+address being reported is in the cache, then normally format 0,
+subformat 1 will be used, reporting the cache index associated with the
+address. This will include branch information if there are any branches
+to report. However, the encoder may chose to output the equivalent
+format 1 or 2 packet (containing the differential address, with or
+without branch information) if that will result in a shorter packet (see
+<a href="#sec:format0">[sec:format0]</a>);</p>
+</li>
+<li>
+<p>Else, if there are branches to report, format 1 is used, otherwise
+format 2.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Packet formats 0, 1 and 2 are organized so that the address is usually
+the final field. Minimizing the number of bits required to represent the
+address reduces the total packet size and significantly improves
+efficiency. See <a href="#packets">[packets]</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sec:resync"><a class="anchor" href="#sec:resync"></a>Resynchronisation</h3>
+<div class="paragraph">
+<p>Per <a href="#sec:synchronization">[sec:synchronization]</a>, a format 3
+synchronisation packet must be output after "a prolonged period of
+time". The exact mechanism for determining this is not specified, but
+options might be to count the number of <em>te_inst</em> packets emitted, or
+the number of clock cycles elapsed, since the previous synchronization
+message was sent.</p>
+</div>
+<div class="paragraph">
+<p>When the resync is required, the primary objective is to output a format
+3 packet, so that the decoder can start tracing from that point without
+needing any of the history. However, if the decoder is already synced,
+then it is also required that it can continue to follow the execution
+path up to and through the format 3 packet seamlessly. As such, before
+outputting a format 3 packet, it is necessary to output a format 0/1
+packet for the preceding instruction if there are any unreported
+branches (because format 3 does not contain a branch map). There are several supported options for incrementing the resync timer (packets, cycle or instruction half-words), and as such updates to the timer do not necessarily coincide with instruction retirements.  A small, independent FSM can be used to ensure the required packets are output in the required order, as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>State 1</strong>: resync_count &lt; max_resync.  Transition to <strong>State 2</strong> when resync_count &gt;= max_resync</p>
+</li>
+<li>
+<p><strong>State 2</strong>: output packet of unreported branches if required, transition to <strong>state 3</strong></p>
+</li>
+<li>
+<p><strong>State 3</strong>: output sync packet, reset resync_count and transition to <strong>State 1</strong>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The format 3
+will be sent if the resync timer has been exceeded. On the cycle before
+this (when the resync timer value has been exactly reached), a format 1
+will be generated if the branch map is not empty.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rec:multiretcon"><a class="anchor" href="#rec:multiretcon"></a>Multiple retirement considerations</h3>
+<div class="paragraph">
+<p>As noted earlier in this section, for a single-retirement system the
+reference algorithm is applied to each retired instruction. When
+instructions are retired in blocks, only the first and last instruction
+in a block need be considered, as all those in between are
+"uninteresting", and will have no effect on the encoder&#8217;s state (their
+route through <a href="#fig:algo">Instruction delta trace algorithm</a> does not pass through any of the
+rectangular boxes).</p>
+</div>
+<div class="paragraph">
+<p>In most cases, either the first or last instruction of a block (but not
+both) is interesting, meaning that the encoder does not need to generate
+more than one packet from a block. However, there are a few cases where
+this is not true, and it is possible that the encoder will need to
+generate two packets from the same block.</p>
+</div>
+<div class="paragraph">
+<p>For example, the first instruction in a block must generate a packet if
+it is the first traced instruction. However, if the block also indicates
+an exception or interrupt (<strong>itype</strong>= 1 or 2), then the last instruction
+in the block must also generate a packet.</p>
+</div>
+<div class="paragraph">
+<p>As generating multiple packets per cycle would significatly complicate
+the encoder, and as situations such as this will only occur
+infrequently, some elastic buffering in the encoder is the preferred
+approach. This will allow subsequent blocks to be queued whilst the
+encoder generates two successive packets from a block. The encoder can
+drain the elastic buffer any time there is a cycle when the hart doesn&#8217;t
+report anything, or if there is a block with <strong>itype</strong> = 0 (which is
+uninteresting to the encoder).</p>
+</div>
+<div class="paragraph">
+<p>There are pathological cases where consecutive blocks could require
+packets to be generated from both first and last instructions, but
+elastic buffering is only required if the blocks are also input on
+consecutive cycles. In practice there are very few cases where this can
+occur. The worst so far identified case is a variation on the example
+above, where the exception is an ecall, and that in turn encounters some
+other form of exception or interrupt in the first few instructions of
+the trap handler:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Block 1: <strong>itype</strong> = 1 (ecall), <strong>iretires</strong> &gt; 1. Generate packet from
+first instruction (first traced), and last instruction (last before
+ecall);</p>
+</li>
+<li>
+<p>Block 2: <strong>itype</strong> = 1 or 2 (some other exception or interrupt),
+<strong>iretires</strong> &gt; 0. Generate packet from first instruction (ecall trap
+handler), and last instruction (last before other exception or
+interrupt);</p>
+</li>
+<li>
+<p>Block 3: Generate packet from first instruction (other exception or
+interrupt trap handler)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Because the ecall is known to the hart&#8217;s fetch unit and can be
+predicted, it may be possible for block 2 to occur the cycle after block
+1. However, it is reasonable to assume that the other exception or
+interrupt will not be predictable, and as a result there will be several
+cycles between blocks 2 and 3, which will allow the encoder to 'catch
+up'. It is recommended that encoders implement sufficient elastic
+buffering to handle this case, and if for some reason the elastic buffer
+overflows, it should issue a support packet indicating trace lost.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="dataTracePayload.html">Data Trace Payload Format</a></span>
+  <span class="next"><a href="discovery.html">Trace Discovery and Configuration</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

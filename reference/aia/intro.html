@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/aia/intro.html">
+    <link rel="prev" href="colophon.html">
+    <link rel="next" href="CSRs.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="20cdb323be837873146215146a9e538b06605e9d"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="aia">
+    <meta name="latest-version" content="false">
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <div class="navbar-item home">
+          <a class="navbar-link"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/16154769/RISC-V+Technical+Specifications"
+            aria-label="Library">
+            Library</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">ISA</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA">Unprivileged
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568665">Privileged <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Profiles</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805240860/RVA23+Profile">RVA23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805568757/RVB23+Profile">RVB23 Profile <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289411/RISC-V+Profiles">RISC-V Profiles <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Non-ISA Hardware</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806289428/RISC-V+Advanced+Interrupt+Architecture">Advanced
+            Interrupt Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617089/RISC-V+IOMMU+Architecture">IOMMU
+            Architecture <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617106/RISC-V+Platform-Level+Interrupt+Controller">Platform-Level
+            Interrupt Controller <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/806617123/RISC-V+Server+SOC">Server
+            SOC <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Debug, Trace, RAS</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926657/Efficient+Trace+for+RISC-V">Efficient
+            Trace
+            < <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+              </svg>
+          </a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697292/RISC-V+Capacity+and+Bandwidth+QoS+Register+Interface">QoS
+            Register Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926674/The+RISC-V+Debug">Debug <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926691/RISC-V+N-Trace+Nexus-based+Trace">N-Trace
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809697310/RISC-V+RERI+Architecture">RERI
+            Architecture
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057729/RISC-V+Trace+Connectors">Trace Connectors
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057747/RISC-V+Trace+Control+Interface">Trace
+            Control Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057766/Unformatted+Trace+Diagnostic+Data+Packet+Encapsulation+for+RISC-V">Unformatted
+            Trace and Diagnostic Data Packet
+            Encapsulation <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">Platform Software</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926709/RISC-V+Boot+and+Runtime+Services+BRS">Boot
+            and Runtime Services <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057786/RISC-V+Functional+Fixed+Hardware">Functional
+            Fixed Hardware <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926726/RISC-V+IO+Mapping+Table">IO Mapping Table
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057803/RISC-V+Platform+Management+Interface+RPMI">Platform
+            Management Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057820/RISC-V+Semihosting">Semihosting <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057837/RISC-V+Supervisor+Binary+Interface">Supervisor
+            Binary Interface <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057854/RISC-V+UEFI+Protocol">UEFI Protocol <svg
+              class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">App Enablement</a>
+        <div class="navbar-dropdown" style="min-width: 280px">
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/810057873/RISC-V+ABIs">Application Binary Interface
+            <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+          <a class="navbar-item" target="_blank" rel="noopener noreferrer"
+            href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/809926743/RISC-V+Vector+C+Intrinsic">Vector C
+            Intrinsic <svg class="nav-external-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+              <path d="M10 1h5v5h-2V3.41l-6.29 6.3-1.42-1.42L11.59 2H10V1zM14 14H2V2h5V0H2a2 2 0 0 0-2 2v12
+             a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5h-2v5z" />
+            </svg></a>
+        </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script><div class="body">
+<div class="nav-container" data-component="aia" data-version="v1.0">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+<div class="context">
+  <span class="title">Non-ISA Hardware</span>
+</div>        <div class="nav-trees" data-component="aia">
+          <div class="version-box">
+            <select data-component="aia" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="aia" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Interrupt Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Chapter 1. Advanced Interrupt Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Chapter 3. Preface</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="CSRs.html">Chapter 5. Control and Status Registers (CSRs) Added to Harts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IMSIC.html">Chapter 6. Incoming MSI Controller (IMSIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="AdvPLIC.html">Chapter 7. Advanced Platform-Level Interrupt Controller (APLIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="MSLevel.html">Chapter 8. Interrupts for Machine and Supervisor Levels</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="VSLevel.html">Chapter 9. Interrupts for Virtual Machines (VS Level)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IPIs.html">Interprocessor Interrupts (IPIs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IOMMU.html">IOMMU Support for MSIs to Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="iommu">
+          <div class="version-box">
+            <select data-component="iommu" class="select-version">
+                <option
+                  value="../iommu/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="iommu" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IOMMU Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/index.html">Chapter 1. IOMMU Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_preface.html">Chapter 3. Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_data_structures.html">Chapter 5. Data Structures</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_in_memory_queues.html">Chapter 6. In-memory queue interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_debug.html">Chapter 7. Debug support</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_registers.html">Chapter 8. Memory-mapped register interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_sw_guidelines.html">Chapter 9. Software guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_hw_guidelines.html">Hardware guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_extensions.html">IOMMU Extensions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="plic">
+          <div class="version-box">
+            <select data-component="plic" class="select-version">
+                <option
+                  value="../plic/index.html"
+                  data-version="v1.0.0"
+                  
+                  >
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="plic" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform-Level Interrupt Controller</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/index.html">Chapter 1. Platform-Level Interrupt Controller</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/contributor.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/changelog.html">Chapter 3. Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/licensing.html">Chapter 4. Licensing</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/introduction.html">Chapter 5. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/riscv-plic.html">Chapter 6. RISC-V Platform-Level Interrupt Controller </a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="soc">
+          <div class="version-box">
+            <select data-component="soc" class="select-version">
+                <option
+                  value="../soc/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="soc" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Server SoC Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../soc/index.html">Chapter 1. Server SoC Specification</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../soc/server_soc_preamble.html">Chapter 2. Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../soc/server_soc_contributors.html">Chapter 3. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../soc/server_soc_intro.html">Chapter 4. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../soc/server_soc_requirements.html">Chapter 5. Server SoC Requirements</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>        
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  if (sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script><main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div class="tag-toggle-container">
+      <button
+        class="tag-toggle-btn"
+        type="button"
+        onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+      >
+        <div class="tag-toggle-switch"></div>
+        <span id="tag-toggle-label">Highlight Tags</span>
+      </button>
+    </div>
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-aia/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-aia" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+          <a href="https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/riscv-interrupts.pdf" target="_blank" rel="noopener noreferrer" title="PDF" class="sidebar-link" download>
+            <span>Download PDF</span>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M10 14a5 5 0 0 1 7.07 0l3.54 3.54a5 5 0 0 1-7.07 7.07l-3.54-3.54a5 5 0 0 1 0-7.07z"/>
+              <line x1="8" y1="8" x2="16" y2="16"/>
+            </svg>
+          </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+      <li>Advanced Interrupt Architecture</li>
+      <li><a href="intro.html">Chapter 4. Introduction</a></li>
+    </ul>
+  </nav>
+</div><div class="sect1">
+<h2 id="ch:intro"><a class="anchor" href="#ch:intro"></a>5.1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This document specifies the Advanced Interrupt Architecture for RISC-V,
+consisting of: (a) an extension to the standard RISC-V Privileged Architecture;
+(b) two
+standard interrupt controllers for RISC-V systems, an Advanced Platform-Level
+Interrupt Controller (APLIC) and an Incoming Message-Signaled Interrupt
+Controller (IMSIC); and (c) requirements on other system components
+concerning interrupts.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Commentary on our design decisions, implementation options, and
+application is formatted as in this paragraph, and can be skipped if the
+reader is only interested in the specification itself.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="5-1-1-goals"><a class="anchor" href="#5-1-1-goals"></a>5.1.1. Goals</h3>
+<div class="paragraph">
+<p>The RISC-V Advanced Interrupt Architecture has these goals:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Build upon the interrupt-handling functionality of the RISC-V Privileged
+Architecture, minimizing the replacement of existing functionality.</p>
+</li>
+<li>
+<p>Provide facilities for RISC-V systems to work directly with message-signaled
+interrupts (MSIs) as employed by PCI Express and other device standards,
+in addition to basic wired interrupts.</p>
+</li>
+<li>
+<p>For wired interrupts, define a new Platform-Level Interrupt Controller
+(the Advanced PLIC, or APLIC) that has an independent control interface
+for each level of privilege (such as RISC-V machine and supervisor levels), and
+that can convert wired interrupts into MSIs for systems supporting MSIs.</p>
+</li>
+<li>
+<p>Expand the framework for local interrupts at a RISC-V hart.</p>
+</li>
+<li>
+<p>Optionally allow software to configure the relative priorities of all
+sources of interrupts to a RISC-V hart (including the standard timer and
+software interrupts, among others), instead of being limited just to the
+ability of a separate interrupt controller to prioritize external
+interrupts only.</p>
+</li>
+<li>
+<p>When harts implement the Privileged Architecture’s H
+extension, provide sufficient assistance for virtualizing these same
+interrupt facilities for virtual machines.</p>
+</li>
+<li>
+<p>With the help of an IOMMU (I/O memory management unit) for redirecting
+MSIs, maximize the opportunities and ability for a guest operating
+system running in a virtual machine to have direct control of devices
+with minimal involvement of a hypervisor.</p>
+</li>
+<li>
+<p>Avoid having the interrupt hardware be a limiter on the number of
+virtual machines.</p>
+</li>
+<li>
+<p>Achieve all of the above with the best possible compromises between
+speed, efficiency, and flexibility of implementation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This initial version of the Advanced Interrupt Architecture is focused
+primarily on the needs of larger, high-performance RISC-V systems. Support is
+not currently defined for the following interrupt-handling features that
+are useful for minimizing interrupt response times in so-called
+"real-time" systems but are less appropriate for high-speed processor
+cores:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>the option to give each interrupt source at a hart a separate trap entry
+address;</p>
+</li>
+<li>
+<p>automatic stacking of register values on interrupt trap entry, and
+restoration on exit; and</p>
+</li>
+<li>
+<p>automatic preemption (nesting) of interrupts at a hart, based on
+priority.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It is intended that such features optimizing for smaller and/or
+real-time systems can be developed as a follow-on extension, either
+separately or as part of a future version of the interrupt architecture
+of this document.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="5-1-2-limits"><a class="anchor" href="#5-1-2-limits"></a>5.1.2. Limits</h3>
+<div class="paragraph">
+<p>In its current version, the RISC-V Advanced Interrupt Architecture can support RISC-V
+symmetric multiprocessing (SMP) systems with up to 16,384 harts. If the
+harts are 64-bit (RV64) and implement the H extension, and if
+all features of the Advanced Interrupt Architecture are fully
+implemented as well, then for each physical hart there may be up to 63
+active virtual harts and potentially thousands of additional idle
+(swapped-out) virtual harts, where each virtual hart has direct control
+of one or more physical devices.</p>
+</div>
+<div class="paragraph">
+<p><a href="#overalllimits">Absolute limits on the numbers of harts and interrupt identities in a system.  Individual implementations are likely to have smaller limits.</a> summarizes the main limits
+on the numbers of harts, both physical and virtual, and the numbers of
+distinct interrupt identities that may be supported with the Advanced
+Interrupt Architecture.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We assume that any single RISC-V computer (or any single node in a cluster or
+distributed system) with many thousands of physical harts will probably
+need an interrupt infrastructure adapted to the machine’s specific
+organization, which we do not attempt to predict.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table id="overalllimits" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 1. Absolute limits on the numbers of harts and interrupt identities in a system.  Individual implementations are likely to have smaller limits.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-center valign-top">Maximum</th>
+<th class="tableblock halign-left valign-top">Requirements</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Physical harts</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16,384</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Active virtual harts having direct control of a device, per physical hart</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">31 for RV32, 63 for RV64</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RISC-V H extension; IMSICs with guest interrupt files; and an IOMMU</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Idle (swapped-out) virtual harts having direct control of a device, per physical hart</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">potentially thousands</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An IOMMU with support for memory-resident interrupt files</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Wired interrupts at a single APLIC</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1023</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distinct identities usable for MSIs at each hart (physical or virtual)</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2047</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMSICs</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="5-1-3-overview-of-main-components"><a class="anchor" href="#5-1-3-overview-of-main-components"></a>5.1.3. Overview of main components</h3>
+<div class="paragraph">
+<p>A RISC-V system&#8217;s overall architecture for signaling interrupts depends on
+whether it is built mainly for message-signaled interrupts (MSIs) or for
+more traditional wired interrupts. In systems with full support for
+MSIs, every hart has an <em>Incoming MSI Controller</em> (IMSIC) that serves as
+the hart&#8217;s own private interrupt controller for external interrupts.
+Conversely, in systems based primarily on traditional wired interrupts,
+harts do not have IMSICs. Larger systems, and especially those with PCI
+devices, are expected to fully support MSIs by giving harts IMSICs,
+whereas many smaller systems may continue to be best served with wired
+interrupts and simpler harts without IMSICs.</p>
+</div>
+<div class="sect3">
+<h4 id="5-1-3-1-external-interrupts-without-imsics"><a class="anchor" href="#5-1-3-1-external-interrupts-without-imsics"></a>5.1.3.1. External interrupts without IMSICs</h4>
+<div class="paragraph">
+<p>When RISC-V harts do not have Incoming MSI Controllers, external interrupts are
+signaled to harts through dedicated wires. In that case, an <em>Advanced
+Platform-Level Interrupt Controller</em> (APLIC) acts as a traditional
+central hub for interrupts, routing and prioritizing external interrupts
+for each hart as illustrated in <a href="#intrsWithoutIMSICs">Traditional delivery of wired interrupts to harts without support for MSIs.</a>.
+Interrupts may be selectively routed either to machine level or to
+supervisor level at each hart. The APLIC is specified in
+<a href="#AdvPLIC">[AdvPLIC]</a>.</p>
+</div>
+<div class="paragraph">
+<p>Without IMSICs, the current Advanced Interrupt Architecture does not
+support the direct signaling of external interrupts to virtual machines,
+even when RISC-V harts implement the H
+extension. Instead, an interrupt must be sent to the relevant
+hypervisor, which can then choose to inject a virtual interrupt into the
+virtual machine.</p>
+</div>
+<div id="intrsWithoutIMSICs" class="imageblock">
+<div class="content">
+<img src="_images/intrsWithoutIMSICs.png" alt="intrsWithoutIMSICs">
+</div>
+<div class="title">Figure 1. Traditional delivery of wired interrupts to harts without support for MSIs.</div>
+</div>
+<div id="intrsWithIMSICs" class="imageblock">
+<div class="content">
+<img src="_images/intrsWithIMSICs.png" alt="intrsWithIMSICs">
+</div>
+<div class="title">Figure 2. Interrupt delivery by MSIs when harts have IMSICs for receiving them.</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="5-1-3-2-external-interrupts-with-imsics"><a class="anchor" href="#5-1-3-2-external-interrupts-with-imsics"></a>5.1.3.2. External interrupts with IMSICs</h4>
+<div class="paragraph">
+<p>To be able to receive message-signaled interrupts (MSIs), each RISC-V hart must
+have an Incoming MSI Controller (IMSIC) as shown in <a href="#intrsWithIMSICs">Interrupt delivery by MSIs when harts have IMSICs for receiving them.</a>. Fundamentally, a message-signaled interrupt is simply a memory write to a specific address that hardware accepts as indicating an interrupt. To that end, every IMSIC is assigned one or more distinct addresses in the machine&#8217;s address space, and when a write is made to one of those addresses in the expected format, the receiving IMSIC interprets the write as an external interrupt for the respective hart.</p>
+</div>
+<div class="paragraph">
+<p>Because all IMSICs have unique addresses in the machine&#8217;s physical
+address space, every IMSIC can receive MSI writes from any agent (hart
+or device) with permission to write to it. IMSICs have separate
+addresses for MSIs directed to machine and supervisor levels, in part so
+the ability to signal interrupts at each privilege level can be
+separately granted or denied by controlling write permissions at the
+different addresses, and in part to better support virtualizability
+(pretending that one privilege level is a higher level). MSIs intended
+for a hart at a specific privilege level are recorded within the IMSIC
+in an <em>interrupt file</em>, which consists mainly of an array of
+interrupt-pending bits and a matching array of interrupt-enable bits,
+the latter indicating which individual interrupts the hart is currently
+prepared to receive.</p>
+</div>
+<div class="paragraph">
+<p>IMSIC units are fully defined in <a href="#IMSIC">[IMSIC]</a>. The
+format of MSIs used by the RISC-V Advanced Interrupt Architecture is described
+in that chapter, <a href="#MSIEncoding">[MSIEncoding]</a>.</p>
+</div>
+<div class="paragraph">
+<p>When the harts in a RISC-V system have IMSICs, the system will normally still
+contain an APLIC, but its role is changed. Instead of signaling
+interrupts to harts directly by wires as in <a href="#intrsWithoutIMSICs">Traditional delivery of wired interrupts to harts without support for MSIs.</a>, an APLIC converts incoming wired interrupts into MSI writes that are sent to harts via their IMSIC units. Each MSI is sent to a single target hart according to the APLIC&#8217;s configuration set by software.</p>
+</div>
+<div class="paragraph">
+<p>If RISC-V harts implement the H extension,
+IMSICs may have additional <em>guest interrupt files</em> for delivering
+interrupts to virtual machines. Besides <a href="#IMSIC">[IMSIC]</a> on
+the IMSIC, see <a href="#VSLevel">[VSLevel]</a> which specifically
+covers interrupts to virtual machines. If the system also contains an
+IOMMU to perform address translation of memory accesses made by I/O
+devices, then MSIs from those same devices may require special handling.
+This topic is addressed in <a href="#IOMMU">[IOMMU]</a>, "IOMMU Support for MSIs to Virtual Machines."</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="5-1-3-3-other-interrupts"><a class="anchor" href="#5-1-3-3-other-interrupts"></a>5.1.3.3. Other interrupts</h4>
+<div class="paragraph">
+<p>In addition to external interrupts from I/O devices, the RISC-V Privileged
+Architecture specifies a few other major classes of interrupts for
+harts. The Privileged Architecture&#8217;s timer interrupts remain supported
+in full, and software interrupts remain at least partly supported,
+although neither appears in <a href="#intrsWithoutIMSICs">Traditional delivery of wired interrupts to harts without support for MSIs.</a>
+and <a href="#intrsWithIMSICs">Interrupt delivery by MSIs when harts have IMSICs for receiving them.</a>. For the specifics on software interrupts,
+refer to <a href="#IPIs">[IPIs]</a>, "Interprocessor Interrupts (IPIs).""</p>
+</div>
+<div class="paragraph">
+<p>The Advanced Interrupt Architecture adds considerable support for <em>local
+interrupts</em> at a hart, whereby a hart essentially interrupts itself in
+response to asynchronous events, usually errors. Local interrupts remain
+contained within a hart (or close to it), so like standard RISC-V timer and
+software interrupts, they do not pass through an APLIC or IMSIC.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="5-1-4-interrupt-identities-at-a-hart"><a class="anchor" href="#5-1-4-interrupt-identities-at-a-hart"></a>5.1.4. Interrupt identities at a hart</h3>
+<div class="paragraph">
+<p>The RISC-V Privileged Architecture gives every interrupt cause at a hart a
+distinct <em>major identity number</em>, which is the Exception Code
+automatically written to CSR <code>mcause</code> or <code>scause</code> on an interrupt trap. Interrupt causes
+that are standardized by the base Privileged Architecture have major
+identities in the range 0-15, while numbers 16 and higher are officially
+available for platform standards or for custom use. The Advanced
+Interrupt Architecture claims further authority over identity numbers in
+the ranges 16-23 and 32-47, leaving numbers in the range 24-31 and all
+major identities 48 and higher still free for custom use.
+<a href="#interruptIdents">Major and minor identities for all interrupt causes at a hart. Major identities 0-15 are the purview of the base Privileged Architecture.</a> characterizes all
+major interrupt identities with this extension.</p>
+</div>
+<table id="interruptIdents" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Major and minor identities for all interrupt causes at a hart. Major identities 0-15 are the purview of the base Privileged Architecture.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Major identity</th>
+<th class="tableblock halign-center valign-top">Minor identity</th>
+<th class="tableblock halign-left valign-top"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved by base Privileged Architecture</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1<br>
+2<br>
+3</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-<br>
+-<br>
+-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor software interrupt<br>
+Virtual supervisor software interrupt<br>
+Machine software interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved by base Privileged Architecture</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">5<br>
+6<br>
+7</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-<br>
+-<br>
+-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor timer interrupt<br>
+Virtual supervisor timer interrupt<br>
+Machine timer interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved by base Privileged Architecture</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">9<br>
+10<br>
+11</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Determined by<br>
+external interrupt<br>
+controller</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor external interrupt<br>
+Virtual supervisor external interrupt<br>
+Machine external interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">12<br>
+13<br>
+14-15</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-<br>
+-<br>
+-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor guest external interrupt<br>
+Counter overflow interrupt<br>
+<em>Reserved by base Privileged Architecture</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16-23</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved for standard local interrupts</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">24-31</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Designated for custom use</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">32-34<br>
+35<br>
+36-42<br>
+43<br>
+44-47</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-<br>
+-<br>
+-<br>
+-<br>
+-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Reserved for standard local interrupts</em><br>
+Low-priority RAS event interrupt<br>
+<em>Reserved for standard local interrupts</em><br>
+High-priority RAS event interrupt<br>
+<em>Reserved for standard local interrupts</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8805;48</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Designated for custom use</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Interrupts from most I/O devices are conveyed to a hart by the <em>external
+interrupt controller</em> for the hart, which is either the hart&#8217;s IMSIC
+(<a href="#intrsWithIMSICs">Interrupt delivery by MSIs when harts have IMSICs for receiving them.</a>) or an APLIC
+(<a href="#intrsWithoutIMSICs">Traditional delivery of wired interrupts to harts without support for MSIs.</a>). As
+<a href="#interruptIdents">Major and minor identities for all interrupt causes at a hart. Major identities 0-15 are the purview of the base Privileged Architecture.</a> shows, external
+interrupts at a given privilege level all share a single major identity
+number: 11 for machine level, 9 for supervisor level, and 10 for
+VS-level. External interrupts from different causes are distinguished
+from one another at a hart by their <em>minor identity numbers</em> supplied by
+the external interrupt controller.</p>
+</div>
+<div class="paragraph">
+<p>Other interrupt causes besides external interrupts might also have their
+own minor identities. However, this document has need to discuss minor
+identities only with regard to external interrupts.</p>
+</div>
+<div class="paragraph">
+<p>The local interrupts defined by the Advanced Interrupt Architecture and
+their handling are covered mainly in <a href="#MSLevel">[MSLevel]</a>,
+"Interrupts for Machine and Supervisor Levels."</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="5-1-5-selection-of-harts-to-receive-an-interrupt"><a class="anchor" href="#5-1-5-selection-of-harts-to-receive-an-interrupt"></a>5.1.5. Selection of harts to receive an interrupt</h3>
+<div class="paragraph">
+<p>Each signaled interrupt is delivered to only one hart at one privilege
+level, usually determined by software in one way or another. Unlike some
+other architectures, the RISC-V Advanced Interrupt Architecture provides no
+standard hardware mechanism for the broadcast or multicast of interrupts
+to multiple harts.</p>
+</div>
+<div class="paragraph">
+<p>For local interrupts, and for any "virtual" interrupts that software
+injects into less-privileged levels at a hart, the interrupts are
+entirely a local affair at the hart and are never visible to other
+harts. The RISC-V Privileged Architecture&#8217;s timer interrupts are also uniquely
+tied to individual harts. For other interrupts, received by a hart from
+sources outside the hart, each interrupt signal (whether delivered by
+wire or by an MSI) is configured by software to go to only a single
+hart.</p>
+</div>
+<div class="paragraph">
+<p>To send an interprocessor interrupt (IPI) to multiple harts, the
+originating hart need only execute a loop, sending an individual IPI to
+each destination hart. For IPIs to a single destination hart, see
+<a href="#IPIs">[IPIs]</a>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The effort that a source hart expends in sending individual IPIs to
+multiple destinations will invariably be dwarfed by the combined effort
+at the receiving harts to handle those interrupts. Hence, providing an
+automated mechanism for IPI multicast could be expected to reduce a
+system&#8217;s total overall work only modestly at best. With a very large
+number of harts, a hardware mechanism for IPI multicast must contend
+with the question of how exactly software specifies the intended
+destination set with each use, and furthermore, the actual physical
+delivery of IPIs may not differ that much from the software version.</p>
+</div>
+<div class="paragraph">
+<p>We do not exclude the future possibility of an optional hardware
+mechanism for multicast IPI, but only if a significant advantage can be
+demonstrated in real use. As of 2020, Linux has been observed not to
+make use of multicast IPI hardware even on systems that have it.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In the rare event that a single interrupt from an I/O device needs to be
+communicated to multiple harts, the interrupt must be sent to a single
+hart which can then signal the other harts by IPIs.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>We contend that the need to communicate an I/O interrupt to multiple
+harts is sufficiently rare that standardizing hardware support for
+multicast cannot be justified in this case.</p>
+</div>
+<div class="paragraph">
+<p>Along with multicast delivery, other architectures support an option for
+"1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>" delivery of interrupts, whereby the hardware
+chooses a single destination hart from among a configured set of
+<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> harts, with the goal of automatic load balancing of
+interrupt handling among the harts. Experiments in the 2010s called into
+question the utility of 1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> modes in practice, showing
+that software could often do a better job of load balancing than the
+hardware algorithms implemented in actual chips. Linux was consequently
+modified to discontinue using 1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> interrupt delivery
+even on systems that have it.</p>
+</div>
+<div class="paragraph">
+<p>We remain open to the argument that hardware load balancing of interrupt
+handling may be beneficial for certain specialized markets, such as
+networking. However, the claims made so far in this regard do not
+justify requiring support for 1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span> delivery in all RISC-V servers. With more evidence, some mechanism for 1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>
+delivery might become a future option.</p>
+</div>
+<div class="paragraph">
+<p>The original Platform-Level Interrupt Controller (PLIC) for RISC-V is
+configurable so each interrupt source signals external interrupts to any
+subset of the harts, potentially all harts. When multiple harts receive
+an external interrupt from a single cause at the PLIC, the first hart to
+<em>claim</em> the interrupt at the PLIC is the one responsible for servicing
+it. Usually this sets up a race, where the subset of harts configured to
+receive the multicast interrupt all take an external interrupt trap
+simultaneously and compete to be the first to claim the interrupt at the
+PLIC. The intention is to provide a form of 1-of-<span class="steminline"> <svg style="vertical-align: -0.127ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="4.271ex" height="1.824ex" role="img" focusable="false" viewBox="0 -750 1888 806"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="TeXAtom" data-mjx-texclass="ORD"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g><g data-mml-node="mi" transform="translate(500,0)"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(1388,0)"><g data-mml-node="mo"><path data-c="24" d="M162 187Q162 164 146 149T109 133H103V130Q108 115 115 105Q122 92 131 82T150 64T170 52T190 44T206 40T220 37L227 36V313Q190 320 162 335Q116 358 86 404T55 508Q55 567 85 614T165 685Q186 696 225 704H227V750H273V704L286 703Q369 690 413 631Q441 588 444 531Q444 514 443 509Q439 490 425 479T391 468Q368 468 353 483T337 522Q337 546 353 560T390 575L394 576V578Q386 599 372 614T342 637T314 649T288 656L273 658V408L288 405Q329 394 355 376Q396 348 420 300T444 199Q444 130 408 76T313 1Q286 -9 276 -9H273V-56H227V-10H221Q202 -6 193 -4T155 11T108 41T74 94T55 176V182Q55 227 95 238Q103 240 108 240Q129 240 145 226T162 187ZM225 657Q219 657 204 651T169 632T135 594T121 538Q121 512 131 491T156 457T187 435T213 423T227 420V539Q227 657 225 657ZM378 169Q378 230 339 265T274 301Q273 301 273 169V37Q324 50 351 87T378 169Z"></path></g></g></g></g></svg> </span>
+interrupt delivery. However, for all the harts that fail to win the
+claim, the interrupt trap becomes wasted effort.</p>
+</div>
+<div class="paragraph">
+<p>For the reasons already given, the Advanced PLIC supports sending each
+signaled interrupt to only a single hart chosen by software, not to
+multiple harts.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="5-1-6-isa-extensions-smaia-and-ssaia"><a class="anchor" href="#5-1-6-isa-extensions-smaia-and-ssaia"></a>5.1.6. ISA extensions Smaia and Ssaia</h3>
+<div class="paragraph">
+<p>The Advanced Interrupt Architecture (AIA) defines two names for
+extensions to the RISC-V instruction set architecture (ISA), one for
+machine-level execution environments, and another for supervisor-level
+environments. For a machine-level environment, extension <strong>Smaia</strong>
+encompasses all added CSRs and all modifications to interrupt response
+behavior that the AIA specifies for a hart, over all privilege levels.
+For a supervisor-level environment, extension <strong>Ssaia</strong> is essentially the
+same as Smaia except excluding the machine-level CSRs and behavior not
+directly visible to supervisor level.</p>
+</div>
+<div class="paragraph">
+<p>Extensions Smaia and Ssaia cover only those AIA features that impact the
+ISA at a hart. Although the following are described or discussed in this
+document as part of the AIA, they are not implied by Smaia or Ssaia
+because the components are categorized as non-ISA: APLICs, IOMMUs, and
+any mechanisms for initiating interprocessor interrupts apart from
+writing to IMSICs.</p>
+</div>
+<div class="paragraph">
+<p>As revealed in subsequent chapters, the exact set of CSRs and behavior
+added by the AIA, and hence implied by Smaia or Ssaia, depends on the
+base ISA&#8217;s XLEN (RV32 or RV64), on whether S-mode and the H
+extension are implemented, and on whether the hart has an IMSIC. But
+individual AIA extension names are not provided for each possible valid
+subset. Rather, the different combinations are inferable from the
+intersection of features indicated (such as RV64I + S-mode + Smaia, but
+without the H extension).</p>
+</div>
+<div class="paragraph">
+<p>Software development tools like compilers and assemblers need not be
+concerned about whether an IMSIC exists but should just allow attempts
+to access the IMSIC CSRs (described in <a href="#CSRs">[CSRs]</a>
+and <a href="#IMSIC">[IMSIC]</a>) if Smaia or Ssaia is indicated. Without an
+actual IMSIC, such attempts may trap, but that is not a problem for the
+development tools.</p>
+</div>
+<div class="paragraph">
+<p>If extension Smaia/Ssaia is implemented, then anywhere that
+the AIA specification has an irreconcilable conflict with the requirements
+of another implemented RISC-V extension, the AIA is intended to have priority,
+unless the other extension explicitly extends or overrides the AIA.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Extension Smcsrind/Sscsrind explicitly extends
+the AIA&#8217;s facility for indirect CSR access provided by
+the <code>*iselect</code> and <code>*ireg</code> CSRs described in the next chapter.
+Hence, if Smcsrind/Sscsrind is also implemented, any perceived conflicts
+between it and the AIA should be resolved in favor of Smcsrind/Sscsrind.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="colophon.html">Chapter 3. Preface</a></span>
+  <span class="next"><a href="CSRs.html">Chapter 5. Control and Status Registers (CSRs) Added to Harts</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="RISC-V footer">
+        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
+        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
+    
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>
