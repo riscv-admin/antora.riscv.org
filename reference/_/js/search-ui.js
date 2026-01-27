@@ -133,9 +133,14 @@
     document.head.appendChild(link);
   }
 
+  function highlightPageTitle (title, terms) {
+    const positions = getTermPosition(title, terms);
+    return buildHighlightedText(title, positions, snippetLength)
+  }
+
   function highlightSectionTitle (sectionTitle, terms) {
     if (sectionTitle) {
-      const text = sectionTitle.title ?? sectionTitle.text;
+      const text = sectionTitle.text;
       const positions = getTermPosition(text, terms);
       return buildHighlightedText(text, positions, snippetLength)
     }
@@ -151,7 +156,8 @@
     return []
   }
 
-  function highlightText (text, terms) {
+  function highlightText (doc, terms) {
+    const text = doc.text;
     const positions = getTermPosition(text, terms);
     return buildHighlightedText(text, positions, snippetLength)
   }
@@ -177,12 +183,9 @@
       }
     }
     return {
-      pageTitleNodes: highlightText(doc.title, terms.title || []),
+      pageTitleNodes: highlightPageTitle(doc.title, terms.title || []),
       sectionTitleNodes: highlightSectionTitle(sectionTitle, terms.title || []),
-      pageContentNodes: highlightText(
-        sectionTitle?.title && sectionTitle.text ? sectionTitle.text : doc.text,
-        terms.text || []
-      ),
+      pageContentNodes: highlightText(doc, terms.text || []),
       pageKeywordNodes: highlightKeyword(doc, terms.keyword || []),
     }
   }
@@ -196,12 +199,12 @@
       let sectionTitle;
       if (ids.length > 1) {
         const titleId = ids[1];
-        sectionTitle = doc.titles.find(function (item) {
+        sectionTitle = doc.titles.filter(function (item) {
           return String(item.id) === titleId
-        });
+        })[0];
       }
       const metadata = item.matchData.metadata;
-      const highlightingResult = highlightHit(metadata, sectionTitle || doc, doc);
+      const highlightingResult = highlightHit(metadata, sectionTitle, doc);
       const componentVersion = store.componentVersions[`${doc.component}/${doc.version}`];
       if (componentVersion !== undefined && currentComponent !== componentVersion) {
         const searchResultComponentHeader = document.createElement('div');
