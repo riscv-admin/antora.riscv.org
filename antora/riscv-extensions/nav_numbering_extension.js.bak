@@ -1,78 +1,62 @@
 // Antora extension to add chapter/appendix numbering to navigation files
-// Enhanced version - supports component name filtering
+// Save this as: riscv-extensions/nav-numbering-extension.js
 
 const fs = require('fs')
 const path = require('path')
 
 module.exports.register = function ({ config }) {
-  const logger = this.getLogger('nav-numbering-extension')
-  
-  logger.info('Nav Numbering Extension loaded!')
+  console.log('[Nav Numbering] Extension loaded!')
+  console.log('[Nav Numbering] Config received:', JSON.stringify(config, null, 2))
   
   // Configuration can come in as either numbering_rules or numberingRules
   const numberingRules = config?.numberingRules || config?.numbering_rules || []
   
-  if (numberingRules.length === 0) {
-    logger.warn('No numbering rules configured!')
-    return
-  }
+  console.log('[Nav Numbering] Parsed rules:', JSON.stringify(numberingRules, null, 2))
   
-  logger.debug('Parsed rules:', JSON.stringify(numberingRules, null, 2))
-  
-  // Use contentClassified to modify raw nav files (like original)
   this.on('contentClassified', ({ contentCatalog }) => {
-    logger.info('Processing navigation files')
+    console.log('[Nav Numbering] Processing navigation files')
     
     // Get all navigation files
     const navFiles = contentCatalog.getFiles().filter(file => 
       file.src && file.src.family === 'nav'
     )
     
-    logger.info(`Found ${navFiles.length} navigation file(s)`)
-    
-    let processedCount = 0
-    let modulesWithoutRules = new Set()
+    console.log(`[Nav Numbering] Found ${navFiles.length} navigation file(s)`)
     
     navFiles.forEach(navFile => {
-      const componentName = navFile.src.component  // NEW: Get component name
       const moduleName = navFile.src.module
       const version = navFile.src.version
       const origin = navFile.src.origin
-      const refname = origin?.refname
-      const reftype = origin?.reftype || 'branch'
       
-      logger.debug(`Checking nav: component=${componentName}, module=${moduleName}, version=${version}, ${reftype}=${refname}`)
+      console.log(`[Nav Numbering] Checking nav: module=${moduleName}, version=${version}, branch=${origin?.refname}`)
       
       // Find matching rule for this module
       const rule = numberingRules.find(r => {
         // Check module match
         if (r.module !== moduleName) return false
         
-        // NEW: Check component match (if specified in rule)
-        if (r.component && r.component !== componentName) return false
-        
         // If no branch/tag filters specified, match any
         if (!r.branches && !r.tags) return true
         
         // Check branch match
-        if (r.branches && reftype === 'branch') {
-          return r.branches.includes(refname)
+        if (r.branches && origin?.reftype === 'branch') {
+          return r.branches.includes(origin.refname)
         }
         
         // Check tag match
-        if (r.tags && reftype === 'tag') {
-          return r.tags.includes(refname)
+        if (r.tags && origin?.reftype === 'tag') {
+          return r.tags.includes(origin.refname)
         }
         
         return false
       })
       
       if (!rule) {
-        modulesWithoutRules.add(`${componentName}:${moduleName}`)
+        console.log(`[Nav Numbering] No rules for module: ${moduleName} (${origin?.reftype}: ${origin?.refname})`)
         return
       }
       
-      logger.info(`Processing nav for component: ${componentName}, module: ${moduleName} (${reftype}: ${refname})`)
+      console.log(`[Nav Numbering] Processing nav for module: ${moduleName} (${origin?.reftype}: ${origin?.refname})`)
       
       const content = navFile.contents.toString()
       const lines = content.split('\n')
@@ -94,30 +78,27 @@ module.exports.register = function ({ config }) {
         const title = xrefMatch[2]
         const suffix = xrefMatch[3]
         
-        // Skip if already numbered
-        if (title.startsWith('Chapter ') || title.startsWith('Appendix ')) {
-          continue
-        }
-        
         // Check if we should add chapter numbering
         if (rule.chapters && 
             lineNum >= rule.chapters.start && 
-            lineNum <= rule.chapters.end) {
+            lineNum <= rule.chapters.end &&
+            !title.startsWith('Chapter ')) {
           
           lines[i] = `${prefix}Chapter ${chapterNum}. ${title}${suffix}`
-          logger.debug(`  Line ${lineNum}: Added Chapter ${chapterNum} - ${title}`)
+          console.log(`[Nav Numbering]   Line ${lineNum}: Added Chapter ${chapterNum}`)
           chapterNum++
           modified = true
         }
         // Check if we should add appendix numbering
         else if (rule.appendices && 
                  lineNum >= rule.appendices.start && 
-                 lineNum <= rule.appendices.end) {
+                 lineNum <= rule.appendices.end &&
+                 !title.startsWith('Appendix ')) {
           
           // Convert number to letter (1=A, 2=B, etc.)
           const appendixLetter = String.fromCharCode(64 + appendixNum)
           lines[i] = `${prefix}Appendix ${appendixLetter}. ${title}${suffix}`
-          logger.debug(`  Line ${lineNum}: Added Appendix ${appendixLetter} - ${title}`)
+          console.log(`[Nav Numbering]   Line ${lineNum}: Added Appendix ${appendixLetter}`)
           appendixNum++
           modified = true
         }
@@ -125,18 +106,10 @@ module.exports.register = function ({ config }) {
       
       if (modified) {
         navFile.contents = Buffer.from(lines.join('\n'))
-        logger.info(`Modified ${navFile.src.relative}`)
-        processedCount++
+        console.log(`[Nav Numbering] Modified ${navFile.src.relative}`)
       }
     })
     
-    // Log summary
-    if (modulesWithoutRules.size > 0) {
-      modulesWithoutRules.forEach(componentModule => {
-        logger.info(`No rules for: ${componentModule}`)
-      })
-    }
-    
-    logger.info(`Processing complete (${processedCount} navigation file(s) processed)`)
+    console.log('[Nav Numbering] Processing complete')
   })
 }
