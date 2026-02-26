@@ -47,7 +47,17 @@ jobs:
       continue-on-error: true
       run: |
         cd antora
-        npx antora antora-playbook.yml --stacktrace
+        npx antora --fetch --cache-dir .cache/antora antora-playbook.yml --stacktrace
+
+    - name: Check build output exists
+      run: |
+        if [ ! -d "antora/build" ]; then
+          echo "Build directory does not exist - build failed"
+          exit 1
+        fi
+        echo "Build directory exists, proceeding with deploy"
+        ls antora/build/ | head -20
+        
     - name: Stop Kroki
       if: always()
       run: docker compose -f antora/docker-compose.yml down
