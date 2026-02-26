@@ -4,6 +4,7 @@ site:
   start_page: home::index.adoc
   keys:
     # google_analytics: 'GTM-NXLCGZF4'
+
 urls:
   latest_version_segment_strategy: redirect:to
   latest_version_segment: ''
@@ -11,12 +12,37 @@ urls:
 output:
   dir: ./build/reference
 
+# =============================================================================
+# CONTENT SOURCES
+# Each entry is annotated with its component ID and numbering rules for
+# cross-reference with the nav_numbering and section_numbering extensions.
+# =============================================================================
 content:
   sources:
+
+  # Home (no numbering rules)
   - url: https://github.com/riscv-admin/antora-dev.riscv.org.git
     branches: main
     start_path: antora/site-home
 
+  # ISA Manual — modules: priv, unpriv
+  #   priv   v20240411:  chapters 5–25,  appendices 26–28
+  #   priv   v20250508:  chapters 5–24,  appendices 25–27
+  #   priv   v20260120:  chapters 5–24
+  #   priv   main:       chapters 5–24,  appendices 25–27
+  #   unpriv v20240411:  chapters 5–41,  appendices 43–46
+  #   unpriv v20250508:  chapters 5–41,  appendices 42–46
+  #   unpriv v20260120:  chapters 5–39,  appendices 40–44
+  #   unpriv main:       chapters 3–18,  appendices 19–20
+  - url: https://github.com/riscv/riscv-isa-manual.git
+    #branches: [main, v20250508, v20240411]
+    branches: [v20260120, v20250508, v20240411]
+    start_page: ROOT::index.adoc
+    start_path: /
+    worktrees: true   # Enable symlink resolution
+    submodules: true
+
+  # AIA — component: aia | chapters 6–13
   - url: https://github.com/riscv/riscv-aia.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
@@ -24,6 +50,7 @@ content:
     worktrees: true
     submodules: true
 
+  # IOMMU — component: iommu | chapters 6–14
   - url: https://github.com/riscv-non-isa/riscv-iommu.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
@@ -31,145 +58,149 @@ content:
     worktrees: true
     submodules: true
 
+  # PLIC — component: plic | chapters 6–13
   - url: https://github.com/riscv/riscv-plic-spec.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # Server SOC — component: soc | chapters 5–6
   - url: https://github.com/riscv-non-isa/server-soc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
-#   - url: https://github.com/riscv/docs-dev-guide.git
-#     branches: [version25,antora-redo]
-#     start_page: ROOT::index.adoc
-#     start_path: /
-#     worktrees: true
-#     submodules: true
-
-  - url: https://github.com/riscv/riscv-isa-manual.git
-     #branches: [main,v20250508,v20240411]
-    branches: [v20260120,v20250508,v20240411]
-    start_page: ROOT::index.adoc
-    start_path: /
-     # Enable symlink resolution
-    worktrees: true
-    submodules: true
-
+  # Efficient Trace — component: techtrace | chapters 5–18
   - url: https://github.com/riscv-non-isa/riscv-trace-spec.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # Capacity & Bandwidth QoS — component: qos | chapters 5–11
   - url: https://github.com/riscv-non-isa/riscv-cbqri.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # RERI — component: reri | chapters 5–7
   - url: https://github.com/riscv-non-isa/riscv-ras-eri.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # E-Trace Encap — component: etrace | chapters 4–7
   - url: https://github.com/riscv-non-isa/e-trace-encap.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # N-Trace — component: ntrace | chapters 6–18
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/ntrace
 
+  # Connectors — component: connectors | chapters 6–10
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/connectors
 
+  # TCI — component: tci | chapters 6–16
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/tci
 
-# Leaving this one commented out as it needs to be broken into chapters and appendices.
-#  - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
-#    branches: antora-refactor
-#    start_page: ROOT::index.adoc
-#    start_path: /
-
+  # Semihosting — component: semihost | chapters 5–6
   - url: https://github.com/riscv-non-isa/riscv-semihosting.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # BRS — component: brs | chapters 5–11
   - url: https://github.com/riscv-non-isa/riscv-brs.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # RIMT — component: rimt | chapters 7–10
   - url: https://github.com/riscv-non-isa/riscv-acpi-rimt.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # RPMI — component: rpmi | chapters 7–24
   - url: https://github.com/riscv-non-isa/riscv-rpmi.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # SBI — component: sbi | chapters 5–27
   - url: https://github.com/riscv-non-isa/riscv-sbi-doc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
+  # UEFI — component: uefi | chapters 3–5
   - url: https://github.com/riscv-non-isa/riscv-uefi.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
-  # NOTE: the HTML does not match the PDF, but in this case, the PDF should be amended
-  # as it does not follow the conventions that the other specs use.
+  # psABI — component: abi | chapters 3–8
+  # NOTE: the HTML does not match the PDF, but in this case the PDF should be
+  # amended as it does not follow the conventions that the other specs use.
   - url: https://github.com/riscv-non-isa/riscv-elf-psabi-doc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
-#NOTE: Intrinsics needs to be broken into chapters as well.
+  # Intrinsics — component: intrinsic | chapters 5–7, appendices 8–47
+  # NOTE: needs to be broken into chapters as well.
   - url: https://github.com/riscv-non-isa/rvv-intrinsic-doc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
 
-    #  - url: ../../riscv-profiles
-    #    branches: antora-refactor
-    #    start_path: modules/profiles
-    #    worktrees: true
+# Commented-out sources (pending work):
+#
+#  # ACPI FFH — needs to be broken into chapters and appendices
+#  - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
+#    branches: antora-refactor
+#    start_page: ROOT::index.adoc
+#    start_path: /
+#
+#  # Dev Guide
+#  - url: https://github.com/riscv/docs-dev-guide.git
+#    branches: [version25, antora-redo]
+#    start_page: ROOT::index.adoc
+#    start_path: /
+#    worktrees: true
+#    submodules: true
+#
+#  # Profiles
+#  - url: ../../riscv-profiles
+#    branches: antora-refactor
+#    start_path: modules/profiles
+#    worktrees: true
+#  - url: ../../riscv-profiles
+#    branches: antora-refactor
+#    start_path: modules/rva23
+#    worktrees: true
+#  - url: ../../riscv-profiles
+#    branches: antora-refactor
+#    start_path: modules/rvb23
+#    worktrees: true
+#
+#  # Local homes
+#  - url: ./hardware-home
+#    start_page: ROOT::index.adoc
+#  - url: ./debug-trace-ras-home
+#    start_page: ROOT::index.adoc
+#  - url: ./platform-software-home
+#    start_page: ROOT::index.adoc
 
-    #  - url: ../../riscv-profiles
-    #    branches: antora-refactor
-    #    start_path: modules/rva23
-    #    worktrees: true
-
-    #  - url: ../../riscv-profiles
-    #    branches: antora-refactor
-    #    start_path: modules/rvb23
-    #    worktrees: true
-
-  #  - url: https://github.com/riscv/docs-dev-guide.git
-  #    branches: [version25,antora-redo]
-  #    start_page: ROOT::index.adoc
-  #    start_path: /
-  #    worktrees: true
-  #    submodules: true
-
-  #  - url: ./hardware-home
-  #    start_page: ROOT::index.adoc
-
-  #  - url: ./debug-trace-ras-home
-  #    start_page: ROOT::index.adoc
-
-  #  - url: ./platform-software-home
-  #    start_page: ROOT::index.adoc
-
-
+# =============================================================================
+# ASCIIDOC
+# =============================================================================
 asciidoc:
   extensions:
   - asciidoctor-kroki
@@ -178,7 +209,7 @@ asciidoc:
   attributes:
     #Use this for local generation
     #kroki-server-url: http://localhost:8000
-    #Thefollowing is required for GitHuib actions to work.
+    # The following is required for GitHub Actions to work.
     kroki-server-url: http://localhost:9870
     kroki-fetch-diagram: false
     kroki-cache-path: ./.cache/kroki
@@ -188,6 +219,7 @@ asciidoc:
     idprefix: ''
     idseparator: '-'
     page-pagination: ''
+    # Math and comparison operators
     le: '&#8804;'
     ge: '&#8805;'
     ne: '&#8800;'
@@ -196,6 +228,7 @@ asciidoc:
     circ: ○
     bullet: ∙
     times: ×
+    # Document settings
     csrname: 'envcfg'
     incexample: example$
     incimage: ../images/
@@ -220,443 +253,244 @@ asciidoc:
     pm: '±'
     rightarrow: '→'
     interpunct: '·'
-    # Variables
+    # Inline variable shortcuts
     i: '_i_'
     u: '_u_'
     ra: '_ra_'
     reg_list: '_reg_list_'
 
+# =============================================================================
+# RUNTIME
+# =============================================================================
 # Temp disable for local build speedup. Re-enable for deployment.
 runtime:
   fetch: true
 
+# =============================================================================
+# ANTORA EXTENSIONS
+# =============================================================================
 antora:
   extensions:
   - require: '@antora/lunr-extension'
     index_latest_only: true
+
   - require: './asam-extensions/asam-antora_extension.js'
     bibliography: true
     bibtex-order: "alphabetical"
     bibtex-style: "apa"
     bibtex-format: "asciidoc"
     bibtex-throw: false
+
   - require: ./riscv-extensions/antora_copy_files_extension.js
     target_sources:
     - url: 'https://github.com/riscv/riscv-isa-manual.git'
-      branches: [v20250508,v20240411]
+      branches: [v20250508, v20240411]
       #branches: ['main', '20250508', '20240411']
     source_dirs:
-      # Copy all files from src/images/ to partials/
-      - source: 'src/images'
+      - source: 'src/images'         # Copy all files from src/images/ to partials/
         target: 'partials'
-      # Copy only .adoc files from src/ to partials/
-      - source: 'src'
+      - source: 'src'                # Copy only .adoc files from src/ to partials/
         target: 'partials'
         extensions: ['.adoc']
       - source: 'src/example'
         target: 'examples'
         extensions: ['.s']
-      - source: 'docs-resources/images'  # Add this for submodule images
+      - source: 'docs-resources/images'   # Submodule images
         target: 'partials'
+
   - require: ./riscv-extensions/antora_include_rewriter.js
     target_sources:
       - url: 'https://github.com/riscv/riscv-isa-manual.git'
         #branches: ['main', '20250508', '20240411']
-        branches: [v20250508,v20240411]
+        branches: [v20250508, v20240411]
 #    numbered_titles: true
 #    section_number_style: "iso"
 #  - '@antora/pdf-extension'
-#     - '@antora/asciidoctor-bibtex'
+#  - '@antora/asciidoctor-bibtex'
+
+  # ---------------------------------------------------------------------------
+  # NUMBERING RULES
+  # Shared by nav_numbering_extension and section_numbering_extension via the
+  # YAML anchor &numbering_rules / *numbering_rules.
+  #
+  # ⚠ NOTE: the intrinsic entry in the original nav_numbering block used
+  #   `changes:` instead of `branches:` — this has been corrected to `branches:`
+  #   to match the section_numbering block and all other entries.
+  # ---------------------------------------------------------------------------
 
   - require: ./riscv-extensions/nav_numbering_extension.js
-    numbering_rules:  # Make sure this is at the same level as 'require'
-      # priv module - v20240411 branch
+    numbering_rules: &numbering_rules
+
+      # --- ISA Manual: priv module -------------------------------------------
       - module: priv
         branches: ['v20240411']
         chapters: {start: 5, end: 25}
         appendices: {start: 26, end: 28}
 
-      # priv module - v20250508 branch
       - module: priv
         branches: ['v20250508']
         chapters: {start: 5, end: 24}
         appendices: {start: 25, end: 27}
 
-      # priv module - v20260120 branch
       - module: priv
         branches: ['v20260120']
         chapters: {start: 5, end: 24}
 
-      # priv module - main branch
       - module: priv
         branches: ['main']
         chapters: {start: 5, end: 24}
         appendices: {start: 25, end: 27}
 
-      # unpriv module - v20240411 branch
+      # --- ISA Manual: unpriv module -----------------------------------------
       - module: unpriv
         branches: ['v20240411']
         chapters: {start: 5, end: 41}
         appendices: {start: 43, end: 46}
 
-      # unpriv module - v20250508 branch
       - module: unpriv
         branches: ['v20250508']
         chapters: {start: 5, end: 41}
         appendices: {start: 42, end: 46}
 
-      # unpriv module - v20260120 branch
       - module: unpriv
         branches: ['v20260120']
         chapters: {start: 5, end: 39}
         appendices: {start: 40, end: 44}
 
-      # unpriv module - main branch
       - module: unpriv
         branches: ['main']
         chapters: {start: 3, end: 18}
         appendices: {start: 19, end: 20}
 
-      # AIA module - antora-refactor branch
+      # --- AIA ---------------------------------------------------------------
       - component: aia
         module: ROOT
         branches: ['antora-refactor']
-        chapters: { start: 6, end: 13}
+        chapters: {start: 6, end: 13}
 
-      # IOMMU module - antora-refactor branch
+      # --- IOMMU -------------------------------------------------------------
       - component: iommu
         module: ROOT
         branches: ['antora-refactor']
-        chapters: { start: 6, end: 14}
+        chapters: {start: 6, end: 14}
 
-      # Server SOC - antora-refactor branch
+      # --- Server SOC --------------------------------------------------------
       - component: soc
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 6}
 
-      # Efficient Trace - antora-refactor-branch
+      # --- Efficient Trace ---------------------------------------------------
       - component: techtrace
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 18}
 
-      # Capacity & Bandwidth QoS
+      # --- Capacity & Bandwidth QoS ------------------------------------------
       - component: qos
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 11}
 
-      # RERI
+      # --- RERI --------------------------------------------------------------
       - component: reri
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 7}
 
-      # E-Trace encap
+      # --- E-Trace Encap -----------------------------------------------------
       - component: etrace
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 4, end: 7}
 
-      # Semi-hosting
+      # --- Semihosting -------------------------------------------------------
       - component: semihost
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 6}
 
-      # BRS
+      # --- BRS ---------------------------------------------------------------
       - component: brs
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 11}
 
-      # RIMT
+      # --- RIMT --------------------------------------------------------------
       - component: rimt
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 7, end: 10}
 
-      # RPMI
+      # --- RPMI --------------------------------------------------------------
       - component: rpmi
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 7, end: 24}
 
-      # SBI
+      # --- SBI ---------------------------------------------------------------
       - component: sbi
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 5, end: 27}
 
-      # UEFI
+      # --- UEFI --------------------------------------------------------------
       - component: uefi
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 3, end: 5}
 
-      # psABI
+      # --- psABI -------------------------------------------------------------
       - component: abi
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 3, end: 8}
 
-      # Intrinsics
+      # --- Intrinsics  ⚠ original nav used `changes:` — corrected to `branches:` ---
       - component: intrinsic
         module: ROOT
-        changes: ['antora-refactor']
+        branches: ['antora-refactor']
         chapters: {start: 5, end: 7}
         appendices: {start: 8, end: 47}
 
-      # Plic
+      # --- PLIC --------------------------------------------------------------
       - component: plic
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 6, end: 13}
 
-      # N-Trace
+      # --- N-Trace -----------------------------------------------------------
       - component: ntrace
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 6, end: 18}
 
-      # Connectors
+      # --- Connectors --------------------------------------------------------
       - component: connectors
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 6, end: 10}
 
-      # TCI
+      # --- TCI ---------------------------------------------------------------
       - component: tci
         module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 6, end: 16}
 
-      # Rule without branch/tag filter - applies to all branches/tags
+      # --- Fallback: all other ROOT modules on antora-refactor ---------------
       - module: ROOT
         branches: ['antora-refactor']
         chapters: {start: 1, end: 100}
 
-  # Add section numbering (uses same config as nav-numbering)
+  # Add section numbering — reuses the anchor defined above
   - require: ./riscv-extensions/section_numbering_extension.js
-    numbering_rules:  # Make sure this is at the same level as 'require'
-      # priv module - v20240411 branch
-      - module: priv
-        branches: ['v20240411']
-        chapters: {start: 5, end: 25}
-        appendices: {start: 26, end: 28}
+    numbering_rules: *numbering_rules
 
-      # priv module - v20250508 branch
-      - module: priv
-        branches: ['v20250508']
-        chapters: {start: 5, end: 24}
-        appendices: {start: 25, end: 27}
-
-      # priv module - v20260120 branch
-      - module: priv
-        branches: ['v20260120']
-        chapters: {start: 5, end: 24}
-
-       # priv module - main branch
-      - module: priv
-        branches: ['main']
-        chapters: {start: 5, end: 24}
-        appendices: {start: 25, end: 27}
-
-      # unpriv module - v20240411 branch
-      - module: unpriv
-        branches: ['v20240411']
-        chapters: {start: 5, end: 41}
-        appendices: {start: 43, end: 46}
-
-      # unpriv module - v20250508 branch
-      - module: unpriv
-        branches: ['v20250508']
-        chapters: {start: 5, end: 41}
-        appendices: {start: 42, end: 46}
-
-      # unpriv module - v20260120 branch
-      - module: unpriv
-        branches: ['v20260120']
-        chapters: {start: 5, end: 39}
-        appendices: {start: 40, end: 44}
-
-      # unpriv module - main branch
-      - module: unpriv
-        branches: ['main']
-        chapters: {start: 3, end: 18}
-        appendices: {start: 19, end: 20}
-
-      # AIA module - antora-refactor branch
-      - component: aia
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 6, end: 13}
-
-      # IOMMU module - antora-refactor branch
-      - component: iommu
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: { start: 6, end: 14}
-
-      # Server SOC - antora-refactor branch
-      - component: soc
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 6}
-
-      # Efficient Trace - antora-refactor-branch
-      - component: techtrace
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 18}
-
-      # Capacity & Bandwidth QoS
-      - component: qos
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 11}
-
-      # RERI
-      - component: reri
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 7}
-
-      # E-Trace encap
-      - component: etrace
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 4, end: 7}
-
-      # Semi-hosting
-      - component: semihost
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 6}
-
-      # BRS
-      - component: brs
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 11}
-
-      # RIMT
-      - component: rimt
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 7, end: 10}
-
-      # RPMI
-      - component: rpmi
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 7, end: 24}
-
-      # SBI
-      - component: sbi
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 27}
-
-      # UEFI
-      - component: uefi
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 3, end: 5}
-
-      # psABI
-      - component: abi
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 3, end: 8}
-
-      # Intrinsics
-      - component: intrinsic
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 5, end: 7}
-        appendices: {start: 8, end: 47}
-
-      # Plic
-      - component: plic
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 6, end: 13}
-
-      # N-Trace
-      - component: ntrace
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 6, end: 18}
-
-      # Connectors
-      - component: connectors
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 6, end: 10}
-
-      # TCI
-      - component: tci
-        module: ROOT
-        branches: ['antora-refactor']
-        chapters: {start: 6, end: 16}
-
-      # Rule without branch/tag filter - applies to all branches/tags
-      - module: ROOT
-        branches: ['antora-refactor']
-        chapters:
-          start: 1
-          end: 100
-
-
+# =============================================================================
+# UI
+# =============================================================================
 ui:
   bundle:
     url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
     snapshot: true
   supplemental_files: ./supplemental-ui
-
-#ui:
-#  bundle:
-    #url: https://github.com/boozallen/sdp-docs-skin/releases/download/1.2/ui-bundle.zip
-    #url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/HEAD/raw/build/ui-bundle.zip?job=bundle-stable
-    #url: https://github.com/riscv-admin/riscv-antora-only-ui/releases/download/latest/ui-bundle.zip
-#    url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
-    #url: ../../riscv-antora-only-ui-dev/build/ui-bundle.zip
- #   snapshot: true
-  #supplemental_files: ./supplemental-ui
-#  supplemental_files:
-#  - path: ./supplemental-ui
-#  - path: ui.yml
-#    contents: |
-#      static_files:
-#      - .nojekyll
-#      - index.html
-#      - ../index.html
-#  - path: .nojekyll
-#  - path: index.html
-#    contents: |
-#      <!DOCTYPE HTML>
-#      <html lang="en-US">
-#          <head>
-#              <meta charset="UTF-8">
-#              <meta http-equiv="refresh" content="0; url=home/">
-#              <title>Page Redirection</title>
-#          </head>
-#          <body>
-#              If you are not redirected automatically, follow this <a href='home/'>link to the RISC-V Specifications Library</a>.
-#          </body>
-#      </html>
-#  - path: ../index.html
-#    contents: |
-#      <!DOCTYPE HTML>
-#      <html lang="en-US">
-#          <head>
-#              <meta charset="UTF-8">
-#              <meta http-equiv="refresh" content="0; url=reference/home/">
-#              <title>Page Redirection</title>
-#          </head>
-#          <body>
-#              If you are not redirected automatically, follow this <a href='reference/home/'>link to the RISC-V Specifications Library</a>.
-#          </body>
-#      </html>
