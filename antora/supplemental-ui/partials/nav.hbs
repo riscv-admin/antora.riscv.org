@@ -1,4 +1,19 @@
-{{#unless (eq page.component.name 'home')}}
+{{#if (eq page.component.name 'home')}}
+<div class="nav-container" data-component="{{page.component.name}}" data-version="{{page.version}}">
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+{{else}}
 <div class="nav-container"{{#if page.component}} data-component="{{page.component.name}}" data-version="{{page.version}}"{{/if}}>
   <aside class="nav">
     <div class="panels">
@@ -23,7 +38,7 @@
     <div class="nav-resize"></div>
   </aside>
 </div>
-{{/unless}}
+{{/if}}
 <script>
 !function (sidebar) {
   if (sidebar) {
