@@ -3,6 +3,10 @@ site:
   url: https://docs.riscv.org
   start_page: home::index.adoc
   keys:
+    # Top link shown above the left TOC navigation tree
+    # (configured in riscv-antora-only-ui-dev/src/partials/nav.hbs)
+    toc_home_link_label: 'RISC-V Specifications'
+    toc_home_link_path: 'home/index.html'
     # google_analytics: 'GTM-NXLCGZF4'
 
 urls:
@@ -121,6 +125,12 @@ content:
     start_page: ROOT::index.adoc
     start_path: /
 
+ # ACPI FFH — component: ffh | chapters
+  - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
+    branches: antora-refactor
+    start_page: ROOT::index.adoc
+    start_path: /
+
   # RIMT — component: rimt | chapters 7–10
   - url: https://github.com/riscv-non-isa/riscv-acpi-rimt.git
     branches: antora-refactor
@@ -162,11 +172,6 @@ content:
 
 # Commented-out sources (pending work):
 #
-#  # ACPI FFH — needs to be broken into chapters and appendices
-#  - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
-#    branches: antora-refactor
-#    start_page: ROOT::index.adoc
-#    start_path: /
 #
 #  # Dev Guide
 #  - url: https://github.com/riscv/docs-dev-guide.git
@@ -416,6 +421,14 @@ antora:
         branches: ['antora-refactor']
         chapters: {start: 5, end: 11}
 
+      # --- FFH ---------------------------------------------------------------
+      - component: ffh
+        module: ROOT
+        branches: ['antora-refactor']
+        chapters: {start: 6, end: 8}
+        appendices: {start: 9, end: 10}
+
+
       # --- RIMT --------------------------------------------------------------
       - component: rimt
         module: ROOT
@@ -491,6 +504,7 @@ antora:
 # =============================================================================
 ui:
   bundle:
-    url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
+    #url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
+    url: ../../riscv-antora-only-ui-dev/build/ui-bundle.zip
     snapshot: true
   supplemental_files: ./supplemental-ui
