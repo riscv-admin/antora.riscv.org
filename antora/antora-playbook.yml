@@ -15,13 +15,18 @@ output:
 content:
   sources:
   - url: https://github.com/riscv/riscv-isa-manual.git
-    #branches: [main,v20250508,v20240411]
-    branches: [v20250508,v20240411]
+  #  branches: [main,v20250508,v20240411]
+    branches: [v20260120,v20250508,v20240411]
     start_page: ROOT::index.adoc
     start_path: /
+
+  #- url: ../../docs-dev-guide
+  #  branches: [main]
+  #  start_page: ROOT::index.adoc
+  #  start_path: /
     # Enable symlink resolution
-    worktrees: true
-    submodules: true
+  #  worktrees: true
+  #  submodules: true
 
 #  - url: https://github.com/riscv-non-isa/e-trace-encap.git
 #    branches: antora-refactor
@@ -142,7 +147,7 @@ antora:
   - require: ./riscv-extensions/antora_copy_files_extension.js
     target_sources:
     - url: 'https://github.com/riscv/riscv-isa-manual.git'
-      branches: [v20250508,v20240411]
+      branches: [v20260120,v20250508,v20240411]
       #branches: ['main', '20250508', '20240411']
     source_dirs:
       # Copy all files from src/images/ to partials/
@@ -161,7 +166,7 @@ antora:
     target_sources:
       - url: 'https://github.com/riscv/riscv-isa-manual.git'
         #branches: ['main', '20250508', '20240411']
-        branches: [v20250508,v20240411]
+        branches: [v20260120,v20250508,v20240411]
 #    numbered_titles: true
 #    section_number_style: "iso"
 #  - '@antora/pdf-extension'
@@ -188,6 +193,11 @@ antora:
           appendices:
             start: 25
             end: 27
+
+        - module: priv
+          branches: ['v20260120']
+          chapters: {start: 5, end: 24}
+          appendices: {start: 25, end: 25}
 
         # priv module - main branch
         - module: priv
@@ -218,6 +228,11 @@ antora:
           appendices:
             start: 42
             end: 46
+
+        - module: unpriv
+          branches: ['v20260120']
+          chapters: {start: 5, end: 40}
+          appendices: {start: 41, end: 44}
 
         # unpriv module - main branch
         - module: unpriv
@@ -258,6 +273,11 @@ antora:
             start: 25
             end: 27
 
+        - module: priv
+          branches: ['v20260120']
+          chapters: {start: 5, end: 24}
+          appendices: {start: 25, end: 26}
+
         # priv module - main branch
         - module: priv
           branches: ['main']
@@ -287,6 +307,11 @@ antora:
           appendices:
             start: 42
             end: 46
+
+        - module: unpriv
+          branches: ['v20260120']
+          chapters: {start: 5, end: 40}
+          appendices: {start: 41, end: 44}
 
         # unpriv module - main branch
         - module: unpriv
