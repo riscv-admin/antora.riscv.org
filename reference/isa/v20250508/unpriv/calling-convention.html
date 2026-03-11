@@ -20,20 +20,30 @@
     <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
     <link rel="stylesheet" href="../../../_/css/vendor/spring-tabs.css">
 
-    <meta name="antora-ui-version" content="a2eeb1345ebc4cccc4c4b3fcfc8698a4aa931f47"> 
+    <meta name="antora-ui-version" content="a795a3fa5eb0b66b30efc636a56f467d36df2b8a"> 
     <meta name="version" content="v20250508">
     <meta name="component" content="isa">
     <meta name="latest-version" content="false">
     <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../../_/img/favicon.ico">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://riscv.org">
-        <img id="riscvlogo" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--light" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../../_/img/risc-v_logo_white.svg" alt="RISCV" />
       </a>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -272,16 +282,46 @@
       document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
     }
   }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
-</script><div class="body">
+</script>
+<div class="body">
 <div class="nav-container" data-component="isa" data-version="v20250508">
   <aside class="nav">
     <div class="panels">
       <div class="nav-panel-menu is-active" data-panel="menu">
         <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <span class="nav-link" role="heading" aria-level="2" style="font-weight: bold; font-size: 1.1em; margin-left: 0; padding-left: 1rem; cursor: default;">RISC-V Specifications</span>
+            </li>
+          </ul>
 <div class="context">
   <span class="title">ISA Specifications</span>
-  <button class="version" id="browse-version">Version: 20250508</button>
-</div><ul class="nav-list">
+</div>    <div class="version-box">
+      <select data-component="isa" class="select-version">
+          <option
+            value="../../index.html"
+            data-version="v20260120"
+            
+            >
+            20260120
+          </option>
+          <option
+            value="../index.html"
+            data-version="v20250508"
+            
+            selected>
+            20250508
+          </option>
+          <option
+            value="../../v20240411/index.html"
+            data-version="v20240411"
+            
+            >
+            20240411
+          </option>
+      </select>
+    </div>
+    <ul class="nav-list">
   <li class="nav-item" data-depth="5">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
@@ -502,13 +542,13 @@
 </ul>
   </li>
 </ul>
-          <div class="toggle-sm">
+            <div class="toggle-sm">
             <button id="nav-toggle-2" class="nav-toggle"></button>
           </div>
         </nav>
       </div>
       <div class="nav-collapse">
-        <button id="nav-collapse-toggle"><span></span></button>        
+        <button id="nav-collapse-toggle"><span></span></button>
       </div>
     </div>
     <div class="nav-resize"></div>
@@ -516,17 +556,29 @@
 </div>
 <script>
 !function (sidebar) {
-  if (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
     document.body.classList.add('nav-sm')
   }
 }(localStorage && localStorage.getItem('sidebar') === 'close')
-</script><main class="article">
+</script>
+<main class="article">
 <div class="toolbar" role="navigation">
   <button id="nav-toggle-1" class="nav-toggle"></button>
 </div>
   <div class="content">
 <aside class="sidebar">
   <div class="content">
+    <div class="tag-toggle-container">
+      <button
+        class="tag-toggle-btn"
+        type="button"
+        onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+      >
+        <div class="tag-toggle-switch"></div>
+        <span id="tag-toggle-label">Normative Rules</span>
+      </button>
+    </div>
     <div
       class="toc"
       data-title="Calling Convention for Vector State (Not authoritative - Placeholder Only)"
@@ -562,6 +614,15 @@
           GitHub Project
         </a>
 
+        <a href="https://riscv.atlassian.net/wiki/spaces/HOME/pages/805601287/The+RISC-V+Instruction+Set+Manual+Volume+I+Unprivileged+ISA" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+
+          <a href="../_attachments/riscv-unprivileged.pdf" target="_blank" rel="noopener noreferrer" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
     </div>
   </div>
 </aside>
@@ -582,7 +643,7 @@
       </td>
       <td class="content">
         <div class="paragraph">
-          <p> For the latest stable version, please use <a href="../../unpriv/calling-convention.html">ISA Specifications Version: 20260120</a>!</p>
+          <p> For the latest stable version, please use <a href="../../unpriv/calling-convention.html">ISA Specifications 20260120</a>!</p>
         </div>
       </td>
     </tr></tbody>
@@ -670,56 +731,27 @@ boundaries.
 </nav>
 </article>  </div>
 </main>
-<div class="modal micromodal-slide" id="modal-versions" aria-hidden="true">
-    <div class="modal__overlay" tabindex="-1" data-micromodal-close>
-        <div class="modal__container" role="dialog" aria-modal="true">
-            <main class="modal__content" id="modal-versions-content">
-              <button data-micromodal-close class="modal-versions-close">
-                <svg width="10px" height="10px" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1h{fill:none;stroke:#000;stroke-linecap:round;stroke-linejoin:round;stroke-width:2px;}</style></defs><title/><g id="cross"><line class="cls-1h" x1="7" x2="25" y1="7" y2="25"/><line class="cls-1h" x1="7" x2="25" y1="25" y2="7"/></g></svg>
-              </button>
-                  <ul class="nav-versions">
-                      <li class="component">
-                        <div>
-                          <a class="title" href="../../index.html">ISA Specifications</a>
-                        </div>                        <div class="version-item is-active">
-                          <div>
-                            <button class="version-toggle" type="button">
-                              <span></span>
-                              Published
-                            </button>
-                          </div>
-                          <ul class="versions">
-  <li class="version">
-    <a href="../../unpriv/calling-convention.html">
-      Version: 20260120
-    </a>
-  </li>
-  <li class="version">
-    <a href="calling-convention.html">
-      Version: 20250508
-    </a>
-  </li>
-  <li class="version">
-    <a href="../../v20240411/unpriv/calling-convention.html">
-      20240411
-    </a>
-  </li>
-</ul>                        </div>
-                      </li>
-                  </ul>
-            </main>
-        </div>
-    </div>
-</div>
-
 </div>
 <footer class="footer flex">
-    <div id="RISC-V footer">
-        <p class="smallest antialiased">Copyright © 2025 - <script>var d = new Date();
-        document.write(d.getFullYear());</script> This document is released under a Creative Commons Attribution 4.0 International License.<span id="teconsent"></span></p>
-    
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://lf-riscv.atlassian.net/wiki/spaces/HOME/overview?mode=global" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Wiki</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
     </div>
 
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+    <div id="social-icons" class="flex jc-between">
+        <a href="https://www.youtube.com/channel/UC5gLmcFuvdGbajs4VL-WU3g" title="Youtube" target="_blank" rel="noopener noreferrer"><svg id="youtube-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle class="cls-1" cx="20" cy="20" r="20"/><path class="cls-2" d="M30.91,14.53a2.89,2.89,0,0,0-2-2C27.12,12,20,12,20,12s-7.12,0-8.9.47a2.9,2.9,0,0,0-2,2A30.56,30.56,0,0,0,8.63,20a30.44,30.44,0,0,0,.46,5.47,2.89,2.89,0,0,0,2,2C12.9,28,20,28,20,28s7.12,0,8.9-.47a2.87,2.87,0,0,0,2-2A30.56,30.56,0,0,0,31.37,20,28.88,28.88,0,0,0,30.91,14.53ZM17.73,23.41V16.59L23.65,20Z"/></svg></a>
+        <a href="https://github.com/riscv" title="GitHub" target="_blank" rel="noopener noreferrer"><svg id="github-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><path class="cls-1" d="M38,0a38,38,0,1,0,38,38A38,38,0,0,0,38,0Z"/><path class="cls-2" d="M38,15.59A22.95,22.95,0,0,0,30.71,60.3c1.15.21,1.57-.5,1.57-1.11s0-2,0-3.9c-6.38,1.39-7.73-3.07-7.73-3.07A6.09,6.09,0,0,0,22,48.86c-2.09-1.42.15-1.39.15-1.39a4.81,4.81,0,0,1,3.52,2.36c2,3.5,5.37,2.49,6.67,1.91a4.87,4.87,0,0,1,1.46-3.07c-5.09-.58-10.45-2.55-10.45-11.34a8.84,8.84,0,0,1,2.36-6.15,8.29,8.29,0,0,1,.23-6.07s1.92-.62,6.3,2.35a21.82,21.82,0,0,1,11.49,0c4.38-3,6.3-2.35,6.3-2.35a8.29,8.29,0,0,1,.23,6.07,8.84,8.84,0,0,1,2.36,6.15c0,8.81-5.37,10.75-10.48,11.32a5.46,5.46,0,0,1,1.56,4.25c0,3.07,0,5.54,0,6.29s.42,1.33,1.58,1.1A22.94,22.94,0,0,0,38,15.59Z"/></svg></a>
+        <a href="https://x.com/risc_v" title="X" target="_blank" rel="noopener noreferrer"><svg id="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 75.93 75.93"><circle class="cls-1" cx="37.97" cy="37.97" r="37.97"/><path class="cls-2" d="M42.28,35.52l11.88-13.82h-2.82l-10.31,12-8.23-12h-9.51l12.46,18.13L23.02,54.27h2.82l10.89-12.67,8.69,12.67h9.51L42.28,35.52h0Zm-3.85,4.48l-1.26-1.8L27.59,22.94h4.32l8.09,11.57,1.26,1.8,10.53,15.06h-4.32l-8.58-12.27h0Z"/></svg></a>
+        <a href="https://www.linkedin.com/company/risc-v-international" title="LinkedIn" target="_blank" rel="noopener noreferrer"><svg id="linkedin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle class="cls-1" cx="12" cy="12" r="12"/><path class="cls-2" d="M6.5,8.5 a1.5,1.5 0 1 1 3,0 a1.5,1.5 0 0 1 -3,0 Z M6.5,10 L6.5,17 L9.5,17 L9.5,10 Z M11,10 L11,17 L14,17 L14,13.5 C14,12 14.5,11 16,11 C17.5,11 17.5,12 17.5,13.5 L17.5,17 L20.5,17 L20.5,13 C20.5,10 19,9 17,9 C15.5,9 14.5,9.8 14,10.5 L14,10 Z"/></svg></a>
+        <a href="https://risc-v-international.slack.com/join/shared_invite/zt-2y1w69wde-PdoN3fXovLlzoni~UaPrBA" title="Slack" target="_blank" rel="noopener noreferrer" class="slack-icon-link"><i class="fa fa-slack" aria-hidden="true"></i></a>
+    </div>
 </footer>
 <script src="../../../_/js/vendor/import.js"></script>
 <script src="../../../_/js/site.js"></script>
