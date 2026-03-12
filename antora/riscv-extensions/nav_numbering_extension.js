@@ -86,7 +86,7 @@ module.exports.register = function ({ config }) {
         const line = lines[i]
         
         // Check if this line matches xref pattern
-        const xrefMatch = line.match(/^(\* xref:[^\[]+\[)([^\]]+)(\].*)$/)
+        const xrefMatch = line.match(/^(\*+ xref:[^\[]+\[)([^\]]+)(\].*)$/)
         
         if (!xrefMatch) continue
         
