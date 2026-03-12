@@ -69,7 +69,7 @@ module.exports.register = function ({ config }) {
         const line = lines[i]
 
         // Match xref pattern
-        const xrefMatch = line.match(/^\* xref:([^\[]+)\[/)
+        const xrefMatch = line.match(/^\*+ xref:([^\[]+)\[/)
         if (!xrefMatch) continue
 
         // Check if this line is in the chapters range
