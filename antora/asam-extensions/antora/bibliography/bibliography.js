@@ -64,7 +64,7 @@ function applyBibliography(mapInput, bibliographyFiles) {
 function getBibliographyFiles(contentAggregate) {
     let bibliographyFiles = []
     contentAggregate.forEach(v => {
-        if(v.asciidoc && v.asciidoc.attributes.asamBibliography) {
+        if(v.asciidoc && v.asciidoc.attributes && v.asciidoc.attributes.asamBibliography) {
             const pathToBibFile = ContentAnalyzer.getSrcPathFromFileId(v.asciidoc.attributes.asamBibliography)
             bibliographyFiles.push({component:v.name, version:v.version, file: v.files.find(x => x.src.path && x.src.path.includes(pathToBibFile.relative))})
         }
