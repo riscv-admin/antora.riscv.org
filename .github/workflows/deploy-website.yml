@@ -61,6 +61,9 @@ jobs:
     - name: Stop Kroki
       if: always()
       run: docker compose -f antora/docker-compose.yml down
+    - name: Copy root redirect index
+      run: cp antora/site-root/index.html antora/build/index.html
+
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
       run: |
