@@ -71,12 +71,16 @@ module.exports.register = function () {
                 if (originUrl) sourceAttrs = sourceAttrsByUrl.get(originUrl) || {}
             }
 
+            // NOTE: antora.yml attributes keep their original hyphenated names (the
+            // aggregator stops camelCasing at the 'asciidoc' key).  Playbook
+            // source-level attributes are fully camelCased by the playbook builder
+            // (page-card-description → pageCardDescription, etc.).
             const entry = {
                 name:        component.name,
                 title:       latestVersion.title || component.title || component.name,
-                description: attrs['page-card-description'] || sourceAttrs['page-card-description'] || '',
-                pdfUrl:      attrs['page-pdf_url'] || sourceAttrs['page-pdf_url'] || null,
-                detailsUrl:  attrs['more_details_url'] || sourceAttrs['more_details_url'] || null,
+                description: attrs['page-card-description'] || sourceAttrs['pageCardDescription'] || '',
+                pdfUrl:      attrs['page-pdf_url'] || sourceAttrs['pagePdfUrl'] || null,
+                detailsUrl:  attrs['more_details_url'] || sourceAttrs['moreDetailsUrl'] || null,
             }
 
             if (!specsByGroup.has(group)) specsByGroup.set(group, [])
