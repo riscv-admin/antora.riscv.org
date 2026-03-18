@@ -5,7 +5,8 @@
 // Antora extension that auto-generates the spec card grid on the site homepage.
 //
 // Each content source signals its presence on the homepage by setting these
-// attributes in its antora.yml:
+// attributes either in its antora.yml OR in the playbook's per-source
+// asciidoc.attributes block (the extension checks both, with antora.yml winning):
 //
 //   asciidoc:
 //     attributes:
@@ -13,6 +14,10 @@
 //       page-card-description: 'Short card body text'
 //       page-pdf_url:          '_attachments/spec.pdf'   # relative or full URL
 //       more_details_url:      'https://confluence.example.com/...'
+//
+// NOTE: Antora does NOT automatically merge playbook source-level
+// asciidoc.attributes into componentVersion.asciidoc.attributes, so this
+// extension reads the playbook directly for any attributes not found in antora.yml.
 //
 // In site-home/modules/ROOT/pages/index.adoc, place a marker comment wherever
 // you want a card grid injected for that group:
@@ -25,7 +30,22 @@
 //
 
 module.exports.register = function () {
-    this.on('contentClassified', ({ contentCatalog }) => {
+    this.on('contentClassified', ({ contentCatalog, playbook }) => {
+        // ----------------------------------------------------------------
+        // 0. Build a lookup map: source URL → source-level asciidoc attrs.
+        //    Antora does NOT merge playbook source-level asciidoc.attributes
+        //    into componentVersion.asciidoc.attributes — only antora.yml attrs
+        //    end up there.  Card metadata (page-card-description, page-pdf_url,
+        //    more_details_url) lives in the playbook, so we read it here and
+        //    fall back to it when the component descriptor lacks the attribute.
+        // ----------------------------------------------------------------
+        const sourceAttrsByUrl = new Map()
+        for (const source of (playbook?.content?.sources || [])) {
+            if (source.asciidoc?.attributes) {
+                sourceAttrsByUrl.set(source.url, source.asciidoc.attributes)
+            }
+        }
+
         // ----------------------------------------------------------------
         // 1. Collect one entry per component (latest version only).
         //    A component is included only if it declares page-group.
@@ -41,12 +61,22 @@ module.exports.register = function () {
             const group = attrs['page-group']
             if (!group) return
 
+            // Resolve source-level playbook attributes as a fallback.
+            // Find any page from this component version to get its origin URL,
+            // then look up the corresponding playbook source entry.
+            let sourceAttrs = {}
+            const pages = contentCatalog.findBy({ component: component.name, version: latestVersion.version, family: 'page' })
+            if (pages.length) {
+                const originUrl = pages[0].src?.origin?.url
+                if (originUrl) sourceAttrs = sourceAttrsByUrl.get(originUrl) || {}
+            }
+
             const entry = {
                 name:        component.name,
                 title:       latestVersion.title || component.title || component.name,
-                description: attrs['page-card-description'] || '',
-                pdfUrl:      attrs['page-pdf_url'] || null,
-                detailsUrl:  attrs['more_details_url'] || null,
+                description: attrs['page-card-description'] || sourceAttrs['page-card-description'] || '',
+                pdfUrl:      attrs['page-pdf_url'] || sourceAttrs['page-pdf_url'] || null,
+                detailsUrl:  attrs['more_details_url'] || sourceAttrs['more_details_url'] || null,
             }
 
             if (!specsByGroup.has(group)) specsByGroup.set(group, [])
