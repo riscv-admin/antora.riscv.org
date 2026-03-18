@@ -25,8 +25,8 @@ content:
   sources:
 
   # Home (no numbering rules)
-  - url: https://github.com/riscv-admin/antora-dev.riscv.org.git
-    branches: main
+  - url: ..
+    branches: HEAD
     start_path: antora/site-home
 
   # Shared assets - component: common
@@ -50,24 +50,48 @@ content:
     start_path: /
     worktrees: true   # Enable symlink resolution
     submodules: true
+    asciidoc:
+      attributes:
+        page-group:            isa
+        page-card-description: 'The foundational specification defining the RISC-V instruction set.'
+        page-pdf_url:          '_attachments/riscv-unprivileged.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/spaces/ISA/pages'
 
  # Profiles - component: rvprofile |
   - url: https://github.com/riscv/riscv-profiles.git
     branches: antora-refactor
     start_path: modules/profiles
     worktrees: true
+    asciidoc:
+      attributes:
+        page-group:            isa
+        page-card-description: 'Base profile definitions and guidance.'
+        page-pdf_url:          '_attachments/RISC-V_Profiles.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/ODAwNTY1YzNmZDQ3NDg5N2FkMGQ5MTRjZWY1ZGY4Yjc'
 
  # Profiles - component: rva23
   - url: https://github.com/riscv/riscv-profiles.git
     branches: antora-refactor
     start_path: modules/rva23
     worktrees: true
+    asciidoc:
+      attributes:
+        page-group:            isa
+        page-card-description: 'Application-class profile requirements.'
+        page-pdf_url:          '_attachments/rva23-profile.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/MWRiOWY4ZjBhZjkzNDI2MTk4ZGMxZDhjNjZjOTMyNDk'
 
  # Profiles - component: rvb23
   - url: https://github.com/riscv/riscv-profiles.git
     branches: antora-refactor
     start_path: modules/rvb23
     worktrees: true
+    asciidoc:
+      attributes:
+        page-group:            isa
+        page-card-description: 'Embedded and edge profile requirements.'
+        page-pdf_url:          '_attachments/rvb23-profile.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/OTQ3N2Q3MmQwNDFmNDUxMDlkMzY0NTgyMjk5YTI3MzE'
 
   # AIA — component: aia | chapters 6–13
   - url: https://github.com/riscv/riscv-aia.git
@@ -76,6 +100,12 @@ content:
     start_path: /
     worktrees: true
     submodules: true
+    asciidoc:
+      attributes:
+        page-group:            hardware
+        page-card-description: 'Interrupt architecture and related interfaces.'
+        page-pdf_url:          '_attachments/riscv-interrupts.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/MTc1MTUwOTg5NTRkNDk0YjlkOGY1MDk5MTljZGU2MjA'
 
   # IOMMU — component: iommu | chapters 6–14
   - url: https://github.com/riscv-non-isa/riscv-iommu.git
@@ -84,69 +114,140 @@ content:
     start_path: /
     worktrees: true
     submodules: true
+    asciidoc:
+      attributes:
+        page-group:            hardware
+        page-card-description: 'I/O memory management architecture and requirements.'
+        page-pdf_url:          '_attachments/riscv-iommu.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/ZGY0YjgxZTZhOTY3NDhiZGJhMGZiNzAwMzk3ZmNkNDg'
 
   # PLIC — component: plic | chapters 6–13
   - url: https://github.com/riscv/riscv-plic-spec.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            hardware
+        page-card-description: 'Interrupt controller behavior and programming model.'
+        page-pdf_url:          '_attachments/riscv-plic-1.0.0.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/Mzg2YjQ2ZTBiODYyNDBkNDg2N2JmZmQ1ZTUwOWNmZWI'
 
   # Server SOC — component: soc | chapters 5–6
   - url: https://github.com/riscv-non-isa/server-soc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            hardware
+        page-card-description: 'Server-class SoC requirements and conventions.'
+        page-pdf_url:          '_attachments/riscv-server-soc.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NTg4MWJjYjJmZDkxNDdmNWFmMTdkZjYxYTk2MzFjOGI'
 
   # Efficient Trace — component: techtrace | chapters 5–18
   - url: https://github.com/riscv-non-isa/riscv-trace-spec.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Trace architecture for efficient execution visibility.'
+        page-pdf_url:          '_attachments/riscv-trace-spec-asciidoc.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NjI1Y2M5ODdiYmUxNGE5MzkzYzdkNzNjNGE3NWFjNDA'
 
   # Capacity & Bandwidth QoS — component: qos | chapters 5–11
   - url: https://github.com/riscv-non-isa/riscv-cbqri.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'QoS register interface for capacity and bandwidth control.'
+        page-pdf_url:          '_attachments/riscv-cbqri.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/YmYxMjUzMmYyOTIxNGIzMmJiZjNiYWY0MGVhNjBkYTc'
 
   # RERI — component: reri | chapters 5–7
   - url: https://github.com/riscv-non-isa/riscv-ras-eri.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Reliability, availability, and serviceability error records.'
+        page-pdf_url:          'https://github.com/riscv/docs.riscv.org/blob/main/static/pdf/riscv-reri.pdf'
 
   # E-Trace Encap — component: etrace | chapters 4–7
   - url: https://github.com/riscv-non-isa/e-trace-encap.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Encapsulation format for emitted trace data.'
+        page-pdf_url:          '_attachments/e-trace-encap.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NDZjYTFmZjQ1YTRhNDIxMjljODViYWU1YzQwMjRlNjk'
 
   # N-Trace — component: ntrace | chapters 6–18
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/ntrace
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Nexus-based trace data formatting and transport.'
+        page-pdf_url:          '_attachments/RISC-V-N-Trace.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/ZTUxYTJmNWRkYzhmNDM4ZDg5OWNlMmQxODMyYjY3YjI'
 
   # Connectors — component: connectors | chapters 6–10
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/connectors
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Connector definitions for trace interoperability.'
+        page-pdf_url:          '_attachments/RISC-V-Trace-Connectors.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/N2E0Mjk1ZDkzZTM0NDQ2YmJmM2IzZDIxNjBlZTkxNTI'
 
   # TCI — component: tci | chapters 6–16
   - url: https://github.com/riscv-non-isa/tg-nexus-trace.git
     branches: antora-refactor
     start_path: modules/tci
+    asciidoc:
+      attributes:
+        page-group:            debug-trace-ras
+        page-card-description: 'Control and configuration interface for trace features.'
+        page-pdf_url:          '_attachments/RISC-V-Trace-Control-Interface.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/ZmZkYWMzYmU5NzZjNDk0M2FkNmJmOWFhOWVjODk4MzE'
 
   # Semihosting — component: semihost | chapters 5–6
   - url: https://github.com/riscv-non-isa/riscv-semihosting.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'Semihosting interface for development and debugging.'
+        page-pdf_url:          '_attachments/riscv-semihosting.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/YjY0ZDBkZjg2M2E4NDYxM2FmMmMwMWM0YTgxZjRmYTc'
 
   # BRS — component: brs | chapters 5–11
   - url: https://github.com/riscv-non-isa/riscv-brs.git
     branches: main
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'Boot-time and runtime software interface requirements.'
+        page-pdf_url:          '_attachments/riscv-brs-spec.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/YTc0N2FlZDJmNTdiNDJlYzhiMGIyODFlOGQ0YWQyZDg'
 
  # ACPI FFH — component: ffh | chapters
   - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
@@ -154,30 +255,60 @@ content:
     #tags: [v1.0.0,v1.0.1]
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'FFH interface definitions for platform integration.'
+        page-pdf_url:          '_attachments/riscv-ffh.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NGVhZDQ2MzY3MzZkNGE1MWIxYTYyMWM5N2Y2NTFjZjA'
 
   # RIMT — component: rimt | chapters 7–10
   - url: https://github.com/riscv-non-isa/riscv-acpi-rimt.git
     branches: main
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'Standardized interrupt mapping table format.'
+        page-pdf_url:          '_attachments/rimt-spec.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/ODdiOTYxZjIwOTJlNGM1NWJlM2Y4MDllMzZiODIyNTU'
 
   # RPMI — component: rpmi | chapters 7–24
   - url: https://github.com/riscv-non-isa/riscv-rpmi.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'Platform management services and messaging definitions.'
+        page-pdf_url:          '_attachments/riscv-rpmi.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/OWIyYzBlNTUyNWM5NDI4ZmIzMDliZjcxOGY1ZDYwZWY'
 
   # SBI — component: sbi | chapters 5–27
   - url: https://github.com/riscv-non-isa/riscv-sbi-doc.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'Standard interface between supervisor software and firmware.'
+        page-pdf_url:          '_attachments/riscv-sbi.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NDZmZTk3MDI0ZTA0NDVhOTg5Y2ZlZWI3NGNjZTlmYTQ'
 
   # UEFI — component: uefi | chapters 3–5
   - url: https://github.com/riscv-non-isa/riscv-uefi.git
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            platform-software
+        page-card-description: 'UEFI requirements and conventions for RISC-V systems.'
+        page-pdf_url:          '_attachments/RISCV_UEFI_PROTOCOL-spec.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NDEzOThmNmRjZmZhNDdhNzgxYmYwOWRmMTRkOTBlMTE'
 
   # psABI — component: abi | chapters 3–8
   # NOTE: the HTML does not match the PDF, but in this case the PDF should be
@@ -186,6 +317,12 @@ content:
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            application-software
+        page-card-description: 'Application binary interface definitions for ELF tooling.'
+        page-pdf_url:          '_attachments/riscv-abi.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/NWMwYmRhMDBkZGI5NDdiNjllZDRkODI2YTRhZDE4ZDc'
 
   # Intrinsics — component: intrinsic | chapters 5–7, appendices 8–47
   # NOTE: needs to be broken into chapters as well.
@@ -193,6 +330,12 @@ content:
     branches: antora-refactor
     start_page: ROOT::index.adoc
     start_path: /
+    asciidoc:
+      attributes:
+        page-group:            application-software
+        page-card-description: 'Compiler intrinsics for vector extension programming.'
+        page-pdf_url:          '_attachments/v-intrinsic-spec.pdf'
+        more_details_url:      'https://riscv.atlassian.net/wiki/external/YTMyZTE5NDkyNTM5NDZjMjliYTVmMjBjOTBhZWM4ODY'
 
 # Commented-out sources (pending work):
 #
@@ -298,6 +441,8 @@ antora:
     bibtex-style: "apa"
     bibtex-format: "asciidoc"
     bibtex-throw: false
+
+  - require: ./riscv-extensions/homepage_cards_generator.js
 
   - require: ./riscv-extensions/antora_copy_files_extension.js
     target_sources:
