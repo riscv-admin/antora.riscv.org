@@ -102,12 +102,28 @@ module.exports.register = function () {
         }
 
         // ----------------------------------------------------------------
-        // 3. For each group marker found in the page, replace it with
-        //    the generated card grid HTML.
+        // 3. Replace section header + marker pairs with a collapsible section
+        //    whose summary is the section header text.
+        //    Fallback: if only marker lines are present, replace those with
+        //    the card grid only.
         // ----------------------------------------------------------------
         let content = homePage.contents.toString()
+        const sectionRe = /(?:^\[#([^\]]+)\]\n)?^==\s+(.+)\n(?:\n)*^\/\/ GENERATED-CARDS:(.+)$/gm
         const markerRe = /^\/\/ GENERATED-CARDS:(.+)$/gm
         let replaced = 0
+        let sectionIndex = 0
+
+        content = content.replace(sectionRe, (_, anchorId, headingText, group) => {
+            const specs = specsByGroup.get(group.trim())
+            if (!specs || specs.length === 0) {
+                console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`)
+                return ''
+            }
+            replaced++
+            const isOpen = sectionIndex === 0
+            sectionIndex++
+            return buildCollapsibleSection(specs, headingText.trim(), anchorId, isOpen)
+        })
 
         content = content.replace(markerRe, (_, group) => {
             const specs = specsByGroup.get(group.trim())
@@ -141,6 +157,24 @@ function buildCardGrid(specs) {
     return `++++
 <details class="section-cards-toggle">
 \t<summary>Show section cards</summary>
+<div class="card-grid card-grid-3">
+${cards}
+</div>
+</details>
+++++`
+}
+
+/**
+ * Builds a full collapsible section where the summary text is the section
+ * heading itself.
+ */
+function buildCollapsibleSection(specs, headingText, anchorId, isOpen) {
+    const cards = specs.map(buildCard).join('\n')
+    const idAttr = anchorId ? ` id="${escapeHtml(anchorId)}"` : ''
+    const openAttr = isOpen ? ' open' : ''
+    return `++++
+<details class="section-cards-toggle"${idAttr}${openAttr}>
+	<summary>${escapeHtml(headingText)}</summary>
 <div class="card-grid card-grid-3">
 ${cards}
 </div>
@@ -183,7 +217,7 @@ function buildPdfButton(spec) {
     }
     // Relative path — prepend '../{component}' to navigate up from home/ to site root.
     const href = `../${spec.name}/${spec.pdfUrl.replace(/^\//, '')}`
-    return `<a href="${href}" class="button button--secondary" target="_blank" rel="noopener noreferrer" download>PDF</a>`
+    return `<a href="${href}" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a>`
 }
 
 function escapeHtml(str) {
