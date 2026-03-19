@@ -84,6 +84,33 @@ module.exports.register = function () {
             }
 
             if (!specsByGroup.has(group)) specsByGroup.set(group, [])
+
+            // Emit two cards for ISA: one per book (unprivileged + privileged).
+            if (component.name === 'isa') {
+                const unprivDescription = attrs['page-unpriv-description'] || sourceAttrs['pageUnprivDescription'] || 'User-level instruction set and standard extensions.'
+                const privDescription = attrs['page-priv-description'] || sourceAttrs['pagePrivDescription'] || 'Privileged architecture, execution modes, and system control.'
+                const unprivPdfUrl = attrs['page-unpriv-pdf_url'] || sourceAttrs['pageUnprivPdfUrl'] || '_attachments/riscv-unprivileged.pdf'
+                const privPdfUrl = attrs['page-priv-pdf_url'] || sourceAttrs['pagePrivPdfUrl'] || '_attachments/riscv-privileged.pdf'
+                const unprivDetailsUrl = attrs['more_details_unpriv_url'] || sourceAttrs['moreDetailsUnprivUrl'] || entry.detailsUrl
+                const privDetailsUrl = attrs['more_details_priv_url'] || sourceAttrs['moreDetailsPrivUrl'] || entry.detailsUrl
+
+                specsByGroup.get(group).push({
+                    ...entry,
+                    title: 'RISC-V Unprivileged ISA Specification',
+                    description: unprivDescription,
+                    pdfUrl: unprivPdfUrl,
+                    detailsUrl: unprivDetailsUrl,
+                })
+                specsByGroup.get(group).push({
+                    ...entry,
+                    title: 'RISC-V Privileged ISA Specification',
+                    description: privDescription,
+                    pdfUrl: privPdfUrl,
+                    detailsUrl: privDetailsUrl,
+                })
+                return
+            }
+
             specsByGroup.get(group).push(entry)
         })
 
