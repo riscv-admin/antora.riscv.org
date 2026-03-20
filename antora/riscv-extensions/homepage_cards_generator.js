@@ -249,9 +249,14 @@ function buildCard(spec) {
 function buildCardMeta(spec) {
     if (!spec.version && !spec.releaseDate) return ''
 
-    const versionText = spec.version ? escapeHtml(spec.version) : ''
-    const dateText = spec.releaseDate ? ` ${escapeHtml(spec.releaseDate)}` : ''
-    return `<div class="card-meta" style="display:block;width:100%;margin-top:0.75rem;line-height:1.25;text-align:left;"><strong>Version:</strong> ${versionText}${dateText}</div>`
+    const versionLine = spec.version
+        ? `<div><strong>Version:</strong> ${escapeHtml(spec.version)}</div>`
+        : ''
+    const dateLine = spec.releaseDate
+        ? `<div><strong>Date:</strong> ${escapeHtml(spec.releaseDate)}</div>`
+        : ''
+
+    return `<div class="card-meta" style="display:block;width:100%;margin-top:0;margin-bottom:0.55rem;font-size:calc(13 / var(--rem-base) * 1rem);line-height:1.35;text-align:left;">${versionLine}${dateLine}</div>`
 }
 
 /**
