@@ -241,8 +241,8 @@ function buildCard(spec) {
 
     return `\t<div class="card shadow-tl card--xxs">
 		<div class="card-header"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.title)}</h5></div>
-		<div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.description)}</div>${meta}</div></div>
-\t\t<div class="card-footer"><div class="card-actions">${pdfButton}<a href="${htmlHref}" class="button button--primary">HTML</a></div>${moreLink}</div>
+		<div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.description)}</div></div></div>
+\t\t<div class="card-footer">${meta}<div class="card-actions">${pdfButton}<a href="${htmlHref}" class="button button--primary">HTML</a></div>${moreLink}</div>
 \t</div>`
 }
 
