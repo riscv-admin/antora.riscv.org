@@ -236,14 +236,14 @@ function buildCard(spec) {
     const pdfButton  = buildPdfButton(spec)
     const meta = buildCardMeta(spec)
     const moreLink   = spec.detailsUrl
-        ? `<a href="${spec.detailsUrl}" class="card-more-link" target="_blank" rel="noopener noreferrer">More details</a>`
+        ? `<a href="${spec.detailsUrl}" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a>`
         : ''
 
     return `\t<div class="card shadow-tl card--xxs">
-		<div class="card-header"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.title)}</h5></div>
-		<div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.description)}</div></div></div>
-\t\t<div class="card-footer">${meta}<div class="card-actions">${pdfButton}<a href="${htmlHref}" class="button button--primary">HTML</a></div>${moreLink}</div>
-\t</div>`
+        <div class="card-header"><div style="display:block;width:100%;text-align:center;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.title)}</h5>${meta}</div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.description)}</div></div></div>
+        <div class="card-footer"><div class="card-actions">${pdfButton}<a href="${htmlHref}" class="button button--primary">HTML</a></div>${moreLink}</div>
+    </div>`
 }
 
 function buildCardMeta(spec) {
@@ -253,10 +253,10 @@ function buildCardMeta(spec) {
         ? `<div><strong>Version:</strong> ${escapeHtml(spec.version)}</div>`
         : ''
     const dateLine = spec.releaseDate
-        ? `<div><strong>Date:</strong> ${escapeHtml(spec.releaseDate)}</div>`
+        ? `<div>${escapeHtml(spec.releaseDate)}</div>`
         : ''
 
-    return `<div class="card-meta" style="display:block;width:100%;margin-top:0;margin-bottom:0.55rem;font-size:calc(13 / var(--rem-base) * 1rem);line-height:1.35;text-align:left;">${versionLine}${dateLine}</div>`
+    return `<div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;">${versionLine}${dateLine}</div>`
 }
 
 /**
