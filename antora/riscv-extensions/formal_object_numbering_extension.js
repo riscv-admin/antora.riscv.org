@@ -2,7 +2,6 @@
 
 const fs = require('fs')
 const path = require('path')
-const { JSDOM } = require('jsdom')
 
 module.exports.register = function () {
   const logger = this.getLogger('formal-object-numbering-extension')
@@ -35,41 +34,25 @@ module.exports.register = function () {
         const absolutePath = path.join(outputDir, publishedPath)
         if (!fs.existsSync(absolutePath)) continue
 
-        const html = fs.readFileSync(absolutePath, 'utf8')
+        let html = fs.readFileSync(absolutePath, 'utf8')
         if (!mayContainFormalObjects(html)) continue
 
-        let dom
-        try {
-          dom = new JSDOM(html)
-          const document = dom.window.document
-          const pagePath = publishedPath
-          let pageChanged = false
+        const captionResult = renumberCaptionsInHtml({
+          html,
+          groupKey,
+          pagePath: publishedPath,
+          startTable: tableCounter,
+          startFigure: figureCounter,
+          objectNumbers,
+        })
 
-          for (const table of document.querySelectorAll('table.tableblock[id]')) {
-            const caption = table.querySelector('caption.title')
-            if (!caption) continue
-            tableCounter += 1
-            const objectKey = makeObjectKey(groupKey, pagePath, table.id)
-            objectNumbers.set(objectKey, { kind: 'Table', number: tableCounter })
-            const updated = replaceLeadingLabel(caption, 'Table', tableCounter)
-            captionsUpdated += updated
-            pageChanged = pageChanged || updated > 0
-          }
+        tableCounter = captionResult.tableCounter
+        figureCounter = captionResult.figureCounter
+        captionsUpdated += captionResult.updated
 
-          for (const figure of document.querySelectorAll('div.imageblock[id]')) {
-            const caption = findDirectChildByClass(figure, 'title')
-            if (!caption) continue
-            figureCounter += 1
-            const objectKey = makeObjectKey(groupKey, pagePath, figure.id)
-            objectNumbers.set(objectKey, { kind: 'Figure', number: figureCounter })
-            const updated = replaceLeadingLabel(caption, 'Figure', figureCounter)
-            captionsUpdated += updated
-            pageChanged = pageChanged || updated > 0
-          }
-
-          if (pageChanged) fs.writeFileSync(absolutePath, dom.serialize())
-        } finally {
-          if (dom) dom.window.close()
+        if (captionResult.changed) {
+          html = captionResult.html
+          fs.writeFileSync(absolutePath, html)
         }
       }
 
@@ -81,36 +64,16 @@ module.exports.register = function () {
         const html = fs.readFileSync(absolutePath, 'utf8')
         if (!mayContainFormalObjectRefs(html)) continue
 
-        let dom
-        try {
-          dom = new JSDOM(html)
-          const document = dom.window.document
-          const pagePath = publishedPath
-          let pageChanged = false
+        const refResult = renumberRefsInHtml({
+          html,
+          groupKey,
+          pagePath: publishedPath,
+          objectNumbers,
+        })
 
-          for (const anchor of document.querySelectorAll('a[href*="#"]')) {
-            const label = anchor.textContent.trim()
-            const labelMatch = /^(Figure|Table)\s+\d+$/.exec(label)
-            if (!labelMatch) continue
-
-            const target = resolveTarget(pagePath, anchor.getAttribute('href'))
-            if (!target) continue
-
-            const objectKey = makeObjectKey(groupKey, target.pagePath, target.id)
-            const objectRef = objectNumbers.get(objectKey)
-            if (!objectRef || objectRef.kind !== labelMatch[1]) continue
-
-            const nextLabel = `${objectRef.kind} ${objectRef.number}`
-            if (anchor.textContent !== nextLabel) {
-              anchor.textContent = nextLabel
-              refsUpdated += 1
-              pageChanged = true
-            }
-          }
-
-          if (pageChanged) fs.writeFileSync(absolutePath, dom.serialize())
-        } finally {
-          if (dom) dom.window.close()
+        refsUpdated += refResult.updated
+        if (refResult.changed) {
+          fs.writeFileSync(absolutePath, refResult.html)
         }
       }
 
@@ -203,10 +166,77 @@ function makeObjectKey(groupKey, pagePath, id) {
   return `${groupKey}::${pagePath}#${id}`
 }
 
-function findDirectChildByClass(element, className) {
-  for (const child of element.children) {
-    if (child.classList.contains(className)) return child
-  }
+function renumberCaptionsInHtml({ html, groupKey, pagePath, startTable, startFigure, objectNumbers }) {
+  let tableCounter = startTable
+  let figureCounter = startFigure
+  let updated = 0
+  let changed = false
+
+  const tableRegex = /<table\b([^>]*)>[\s\S]*?<caption class="title">Table\s+\d+\./g
+  html = html.replace(tableRegex, (full, attrs) => {
+    const id = getAttr(attrs, 'id')
+    const className = getAttr(attrs, 'class') || ''
+    if (!id || !className.includes('tableblock')) return full
+
+    tableCounter += 1
+    objectNumbers.set(makeObjectKey(groupKey, pagePath, id), { kind: 'Table', number: tableCounter })
+
+    const replaced = full.replace(/<caption class="title">Table\s+\d+\./, `<caption class="title">Table ${tableCounter}.`)
+    if (replaced !== full) {
+      updated += 1
+      changed = true
+    }
+    return replaced
+  })
+
+  const figureRegex = /<div\b(?=[^>]*\bclass=("|')[^"']*\bimageblock\b[^"']*\1)([^>]*)>[\s\S]*?<div class="title">Figure\s+\d+\./g
+  html = html.replace(figureRegex, (full, _quote, attrs) => {
+    const id = getAttr(attrs, 'id')
+    const className = getAttr(attrs, 'class') || ''
+    if (!id || !className.includes('imageblock')) return full
+
+    figureCounter += 1
+    objectNumbers.set(makeObjectKey(groupKey, pagePath, id), { kind: 'Figure', number: figureCounter })
+
+    const replaced = full.replace(/<div class="title">Figure\s+\d+\./, `<div class="title">Figure ${figureCounter}.`)
+    if (replaced !== full) {
+      updated += 1
+      changed = true
+    }
+    return replaced
+  })
+
+  return { html, tableCounter, figureCounter, updated, changed }
+}
+
+function renumberRefsInHtml({ html, groupKey, pagePath, objectNumbers }) {
+  let updated = 0
+  let changed = false
+
+  const anchorRegex = /<a\b[^>]*href=("|')([^"']*#[^"']+)\1[^>]*>(Figure|Table)\s+\d+<\/a>/g
+  html = html.replace(anchorRegex, (full, quote, href, kind) => {
+    const target = resolveTarget(pagePath, href)
+    if (!target) return full
+
+    const objectRef = objectNumbers.get(makeObjectKey(groupKey, target.pagePath, target.id))
+    if (!objectRef || objectRef.kind !== kind) return full
+
+    const nextLabel = `${objectRef.kind} ${objectRef.number}`
+    const replaced = full.replace(/>(Figure|Table)\s+\d+</, `>${nextLabel}<`)
+    if (replaced !== full) {
+      updated += 1
+      changed = true
+    }
+    return replaced
+  })
+
+  return { html, updated, changed }
+}
+
+function getAttr(attrs, name) {
+  const pattern = new RegExp(`${name}=("|')([^"']+)\\1`)
+  const match = pattern.exec(attrs)
+  if (match) return match[2]
   return null
 }
 
@@ -215,15 +245,7 @@ function mayContainFormalObjects(html) {
 }
 
 function mayContainFormalObjectRefs(html) {
-  return html.includes('href="#') && (html.includes('Figure ') || html.includes('Table '))
-}
-
-function replaceLeadingLabel(element, kind, number) {
-  const nextPrefix = `${kind} ${number}.`
-  const nextHtml = element.innerHTML.replace(new RegExp(`^${kind}\\s+\\d+\\.`), nextPrefix)
-  if (nextHtml === element.innerHTML) return 0
-  element.innerHTML = nextHtml
-  return 1
+  return html.includes('#') && (html.includes('Figure ') || html.includes('Table '))
 }
 
 function resolveTarget(currentPagePath, href) {
