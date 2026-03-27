@@ -82,7 +82,15 @@ function getBibliographyFiles(contentAggregate) {
  * @param {String} pathToId - The path to the identified bibliography page.
  * @returns {Integer} - The current index after processing the file.
  */
-function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes = {}) {
+function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes = {}, visitedFiles = new Set()) {
+    const fileId = f?.src?.path || f?.path || f?.src?.relative
+    if (fileId && visitedFiles.has(fileId)) {
+        return currentIndex
+    }
+    if (fileId) {
+        visitedFiles.add(fileId)
+    }
+
     const reReference = /(?<!\/{2} .*)cite:\[([^\]]+)\]/g
     let fileContentReplaced = f.contents.toString().replaceAll(reException,``).split("\n")
     let fileContent = f.contents.toString()
@@ -92,7 +100,16 @@ function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, current
         const lineWithoutAttributes = ContentAnalyzer.replaceAllAttributesInLine(mapInput.componentAttributes, pageAttributes, line)
         const includedFile = ContentAnalyzer.checkForIncludedFileFromLine(mapInput.catalog,f,lineWithoutAttributes)
         if (includedFile) {
-            currentIndex = replaceCitationsWithLinks(includedFile, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes)
+            currentIndex = replaceCitationsWithLinks(
+                includedFile,
+                reException,
+                mapInput,
+                bibEntries,
+                currentIndex,
+                pathToId,
+                { ...pageAttributes },
+                visitedFiles
+            )
         }
         let result = line;
         const matches = [...line.matchAll(reReference)]
