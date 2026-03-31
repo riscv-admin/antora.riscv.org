@@ -19,7 +19,7 @@ const {parseBibFile, normalizeFieldValue} = require("bibtex")
  * @param {Array <Object>} bibliographyFiles - An array of all bibliography (.bib) files, one per component & version.
  */
 function applyBibliography(mapInput, bibliographyFiles) {
-    if (!mapInput.componentAttributes['asamBibliography']) {return}    
+    if (!mapInput.componentAttributes['asamBibliography']) {return}
     // Set up regular expressions
     const reException = /ifndef::use-antora-rules\[\](.*\r\n*)*?endif::\[\]/gm
     const reBibliography = /^\s*bibliography::\[\]/gm
@@ -130,23 +130,29 @@ function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, current
         let result = line;
         const matches = [...line.matchAll(reReference)]
         for (let m of matches){
-            if (m[1] && bibEntries.getEntry(m[1].toLowerCase())) {
-                if (!bibEntries.entries$[m[1].toLowerCase()].index) {
-                    bibEntries.entries$[m[1].toLowerCase()].index = currentIndex
-                    currentIndex++
+            const keys = m[1] ? m[1].split(',').map(k => k.trim()) : []
+            const xrefs = []
+            for (const key of keys) {
+                if (key && bibEntries.getEntry(key.toLowerCase())) {
+                    if (!bibEntries.entries$[key.toLowerCase()].index) {
+                        bibEntries.entries$[key.toLowerCase()].index = currentIndex
+                        currentIndex++
+                    }
+                    xrefs.push(`xref:${pathToId}#bib-${key.toLowerCase()}[${bibEntries.entries$[key.toLowerCase()].index}]`)
                 }
-                const subst = `[xref:${pathToId}#bib-${m[1].toLowerCase()}[${bibEntries.entries$[m[1].toLowerCase()].index}]]`;
-                result = result.replace(m[0], subst);
+                else if (key) {
+                    console.log("Could not find bibliography entry for", key)
+                }
             }
-            else if (m[1]) {
-                console.log("Could not find bibliography entry for",m[1])
+            if (xrefs.length > 0) {
+                result = result.replace(m[0], `[${xrefs.join('][')}]`)
             }
         }
         fileContent = fileContent.replace(line,result)
         fileContentReplaced[fileContentReplaced.indexOf(line)] = result
     }
 
-    // f.contents = Buffer.from(fileContentReplaced.join("\n"))    
+    // f.contents = Buffer.from(fileContentReplaced.join("\n"))
     f.contents = Buffer.from(fileContent)
     return currentIndex
 }
@@ -154,7 +160,7 @@ function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, current
 /**
  * Creates the bibliography page from the indexed bibEntries.
  * @param {Object} antoraBibliography - The (first) file with the bibliography::[] macro in this component-version.
- * @param {Object} bibEntries - An object containing all entries of the bibliography (using the bibtex library), annotated with indices. 
+ * @param {Object} bibEntries - An object containing all entries of the bibliography (using the bibtex library), annotated with indices.
  */
 function createBibliography(antoraBibliography, bibEntries) {
     // Sort entries by index
@@ -181,7 +187,7 @@ function convertBibliographyEntry(key, e) {
     let entryIndex = `[[bib-${key}]][${e.index}]`;
     let body = []
     let suffix = []
-    // Create an entry based on its type. Each entry consists of an index ([[anchor]] [index]), a body (where all parts are joined by commas), and a suffix (separated by a dot from the body, then joined by commas). 
+    // Create an entry based on its type. Each entry consists of an index ([[anchor]] [index]), a body (where all parts are joined by commas), and a suffix (separated by a dot from the body, then joined by commas).
     // Typically, the entry is terminated with a dot, unless the last entry is the URL field.
     switch (e.type) {
         case 'book':
