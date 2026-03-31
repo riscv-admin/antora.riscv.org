@@ -109,8 +109,8 @@ function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, current
 
     const reReference = /(?<!\/{2} .*)cite:\[([^\]]+)\]/g
     let fileContentReplaced = f.contents.toString().replaceAll(reException,``).split("\n")
-    let fileContent = f.contents.toString()
-    for (let line of fileContentReplaced) {
+    for (let i = 0; i < fileContentReplaced.length; i++) {
+        const line = fileContentReplaced[i]
         // Check for included file and apply function to that if found. Update the currentIndex accordingly
         ContentAnalyzer.updatePageAttributes(pageAttributes,line)
         const lineWithoutAttributes = ContentAnalyzer.replaceAllAttributesInLine(mapInput.componentAttributes, pageAttributes, line)
@@ -148,12 +148,10 @@ function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, current
                 result = result.replace(m[0], `[${xrefs.join('][')}]`)
             }
         }
-        fileContent = fileContent.replace(line,result)
-        fileContentReplaced[fileContentReplaced.indexOf(line)] = result
+        fileContentReplaced[i] = result
     }
 
-    // f.contents = Buffer.from(fileContentReplaced.join("\n"))
-    f.contents = Buffer.from(fileContent)
+    f.contents = Buffer.from(fileContentReplaced.join("\n"))
     return currentIndex
 }
 
