@@ -66,7 +66,23 @@ function getBibliographyFiles(contentAggregate) {
     contentAggregate.forEach(v => {
         if(v.asciidoc && v.asciidoc.attributes && v.asciidoc.attributes.asamBibliography) {
             const pathToBibFile = ContentAnalyzer.getSrcPathFromFileId(v.asciidoc.attributes.asamBibliography)
-            bibliographyFiles.push({component:v.name, version:v.version, file: v.files.find(x => x.src.path && x.src.path.includes(pathToBibFile.relative))})
+            let bibFile = v.files.find(x => x.src.path && x.src.path.includes(pathToBibFile.relative))
+            // Resolve git symlinks: if the file content is a relative path rather than BibTeX content,
+            // the file is a git symlink. Resolve the target path and find the real file in v.files.
+            if (bibFile) {
+                const content = bibFile.contents.toString().trim()
+                if (!content.includes('@') && content.endsWith('.bib')) {
+                    const symlinkDir = bibFile.src.path.split('/').slice(0, -1)
+                    const resolved = [...symlinkDir]
+                    for (const part of content.split('/')) {
+                        if (part === '..') resolved.pop()
+                        else if (part !== '.') resolved.push(part)
+                    }
+                    const resolvedFile = v.files.find(x => x.src.path && x.src.path === resolved.join('/'))
+                    if (resolvedFile) bibFile = resolvedFile
+                }
+            }
+            bibliographyFiles.push({component:v.name, version:v.version, file: bibFile})
         }
     })
     return bibliographyFiles
