@@ -64,6 +64,8 @@ module.exports.register = function ({ config }) {
       const lines = content.split('\n')
       let chapterNum = 1
 
+      const chapterRanges = Array.isArray(rule.chapters) ? rule.chapters : [rule.chapters]
+
       for (let i = 0; i < lines.length; i++) {
         const lineNum = i + 1
         const line = lines[i]
@@ -72,8 +74,9 @@ module.exports.register = function ({ config }) {
         const xrefMatch = line.match(/^\*+ xref:([^\[]+)\[/)
         if (!xrefMatch) continue
 
-        // Check if this line is in the chapters range
-        if (lineNum >= rule.chapters.start && lineNum <= rule.chapters.end) {
+        // Check if this line is in any chapters range
+        const inChapters = chapterRanges.some(r => lineNum >= r.start && lineNum <= r.end)
+        if (inChapters) {
           const pageName = xrefMatch[1]
           // NEW: Include component in page key
           const pageKey = `${componentName}:${moduleName}:${refname}:${pageName}`
