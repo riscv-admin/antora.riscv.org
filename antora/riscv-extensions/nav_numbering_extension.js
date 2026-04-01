@@ -1,8 +1,6 @@
 // Antora extension to add chapter/appendix numbering to navigation files
 // Enhanced version - supports component name filtering
 
-const fs = require('fs')
-const path = require('path')
 
 module.exports.register = function ({ config }) {
   const logger = this.getLogger('nav-numbering-extension')
@@ -80,46 +78,65 @@ module.exports.register = function ({ config }) {
       let modified = false
       let chapterNum = 1
       let appendixNum = 1
-      
+
+      // Normalize chapters/appendices to arrays so both single-object and
+      // array forms work (e.g. chapters: {start,end} or chapters: [{start,end},…])
+      const chapterRanges = rule.chapters
+        ? (Array.isArray(rule.chapters) ? rule.chapters : [rule.chapters])
+        : []
+      const appendixRanges = rule.appendices
+        ? (Array.isArray(rule.appendices) ? rule.appendices : [rule.appendices])
+        : []
+
       for (let i = 0; i < lines.length; i++) {
         const lineNum = i + 1  // Convert to 1-indexed
         const line = lines[i]
-        
+
         // Check if this line matches xref pattern
         const xrefMatch = line.match(/^(\*+ xref:[^\[]+\[)([^\]]+)(\].*)$/)
-        
+
         if (!xrefMatch) continue
-        
+
         const prefix = xrefMatch[1]
         const title = xrefMatch[2]
         const suffix = xrefMatch[3]
-        
+
         // Skip if already numbered
         if (title.startsWith('Chapter ') || title.startsWith('Appendix ')) {
           continue
         }
-        
-        // Check if we should add chapter numbering
-        if (rule.chapters && 
-            lineNum >= rule.chapters.start && 
-            lineNum <= rule.chapters.end) {
-          
-          lines[i] = `${prefix}Chapter ${chapterNum}. ${title}${suffix}`
-          logger.debug(`  Line ${lineNum}: Added Chapter ${chapterNum} - ${title}`)
-          chapterNum++
-          modified = true
-        }
-        // Check if we should add appendix numbering
-        else if (rule.appendices && 
-                 lineNum >= rule.appendices.start && 
-                 lineNum <= rule.appendices.end) {
-          
-          // Convert number to letter (1=A, 2=B, etc.)
-          const appendixLetter = String.fromCharCode(64 + appendixNum)
-          lines[i] = `${prefix}Appendix ${appendixLetter}. ${title}${suffix}`
-          logger.debug(`  Line ${lineNum}: Added Appendix ${appendixLetter} - ${title}`)
-          appendixNum++
-          modified = true
+
+        // Find which chapter range (if any) this line falls in
+        const chapterRange = chapterRanges.find(r =>
+          lineNum >= r.start && lineNum <= r.end
+        )
+
+        // Find which appendix range (if any) this line falls in
+        const appendixRange = appendixRanges.find(r =>
+          lineNum >= r.start && lineNum <= r.end
+        )
+
+        if (chapterRange) {
+          const skipLines = chapterRange.skip || []
+          if (skipLines.includes(lineNum)) {
+            logger.debug(`  Line ${lineNum}: Skipped (chapter counter stays at ${chapterNum})`)
+          } else {
+            lines[i] = `${prefix}Chapter ${chapterNum}. ${title}${suffix}`
+            logger.debug(`  Line ${lineNum}: Added Chapter ${chapterNum} - ${title}`)
+            chapterNum++
+            modified = true
+          }
+        } else if (appendixRange) {
+          const skipLines = appendixRange.skip || []
+          if (skipLines.includes(lineNum)) {
+            logger.debug(`  Line ${lineNum}: Skipped (appendix counter stays at ${appendixNum})`)
+          } else {
+            const appendixLetter = String.fromCharCode(64 + appendixNum)
+            lines[i] = `${prefix}Appendix ${appendixLetter}. ${title}${suffix}`
+            logger.debug(`  Line ${lineNum}: Added Appendix ${appendixLetter} - ${title}`)
+            appendixNum++
+            modified = true
+          }
         }
       }
       
