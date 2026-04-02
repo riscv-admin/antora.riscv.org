@@ -87,8 +87,9 @@ module.exports.register = function ({ config }) {
       const appendixRanges = rule.appendices
         ? (Array.isArray(rule.appendices) ? rule.appendices : [rule.appendices])
         : []
-      const appendixSubsectionRanges = rule.appendix_subsections
-        ? (Array.isArray(rule.appendix_subsections) ? rule.appendix_subsections : [rule.appendix_subsections])
+      const appendixSubsectionConfig = rule.appendix_subsections || rule.appendixSubsections
+      const appendixSubsectionRanges = appendixSubsectionConfig
+        ? (Array.isArray(appendixSubsectionConfig) ? appendixSubsectionConfig : [appendixSubsectionConfig])
         : []
 
       // State for appendix subsection numbering
