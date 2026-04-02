@@ -79,18 +79,37 @@ module.exports.register = function ({ config }) {
       let chapterNum = 1
       let appendixNum = 1
 
-      // Normalize chapters/appendices to arrays so both single-object and
-      // array forms work (e.g. chapters: {start,end} or chapters: [{start,end},…])
+      // Normalize chapters/appendices/appendix_subsections to arrays so both
+      // single-object and array forms work (e.g. chapters: {start,end} or [{start,end},…])
       const chapterRanges = rule.chapters
         ? (Array.isArray(rule.chapters) ? rule.chapters : [rule.chapters])
         : []
       const appendixRanges = rule.appendices
         ? (Array.isArray(rule.appendices) ? rule.appendices : [rule.appendices])
         : []
+      const appendixSubsectionRanges = rule.appendix_subsections
+        ? (Array.isArray(rule.appendix_subsections) ? rule.appendix_subsections : [rule.appendix_subsections])
+        : []
+
+      // State for appendix subsection numbering
+      let currentAppendixLetter = null
+      let appendixSubsectionNum = 1
 
       for (let i = 0; i < lines.length; i++) {
         const lineNum = i + 1  // Convert to 1-indexed
         const line = lines[i]
+
+        // Detect plain-text appendix headers (e.g. "* Appendix A: ...") to track
+        // the current appendix letter for subsection numbering.
+        if (appendixSubsectionRanges.length > 0) {
+          const appendixHeaderMatch = line.match(/^\*+ Appendix ([A-Z]):/i)
+          if (appendixHeaderMatch) {
+            currentAppendixLetter = appendixHeaderMatch[1].toUpperCase()
+            appendixSubsectionNum = 1
+            logger.debug(`  Line ${lineNum}: Detected appendix header for ${currentAppendixLetter}`)
+            continue
+          }
+        }
 
         // Check if this line matches xref pattern
         const xrefMatch = line.match(/^(\*+ xref:[^\[]+\[)([^\]]+)(\].*)$/)
@@ -100,6 +119,7 @@ module.exports.register = function ({ config }) {
         const prefix = xrefMatch[1]
         const title = xrefMatch[2]
         const suffix = xrefMatch[3]
+        const starCount = line.match(/^\*+/)[0].length
 
         // Skip if already numbered
         if (title.startsWith('Chapter ') || title.startsWith('Appendix ')) {
@@ -113,6 +133,11 @@ module.exports.register = function ({ config }) {
 
         // Find which appendix range (if any) this line falls in
         const appendixRange = appendixRanges.find(r =>
+          lineNum >= r.start && lineNum <= r.end
+        )
+
+        // Find which appendix_subsections range (if any) this line falls in
+        const appendixSubsectionRange = appendixSubsectionRanges.find(r =>
           lineNum >= r.start && lineNum <= r.end
         )
 
@@ -135,6 +160,16 @@ module.exports.register = function ({ config }) {
             lines[i] = `${prefix}Appendix ${appendixLetter}. ${title}${suffix}`
             logger.debug(`  Line ${lineNum}: Added Appendix ${appendixLetter} - ${title}`)
             appendixNum++
+            modified = true
+          }
+        } else if (appendixSubsectionRange && starCount >= 2 && currentAppendixLetter) {
+          const skipLines = appendixSubsectionRange.skip || []
+          if (skipLines.includes(lineNum)) {
+            logger.debug(`  Line ${lineNum}: Skipped (appendix subsection counter stays at ${appendixSubsectionNum})`)
+          } else {
+            lines[i] = `${prefix}${currentAppendixLetter}.${appendixSubsectionNum}. ${title}${suffix}`
+            logger.debug(`  Line ${lineNum}: Added ${currentAppendixLetter}.${appendixSubsectionNum} - ${title}`)
+            appendixSubsectionNum++
             modified = true
           }
         }

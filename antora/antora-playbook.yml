@@ -503,13 +503,15 @@ antora:
         appendices: {start: 12, end: 12}
 
       # --- Intrinsics
-      # Nav source already has "* Appendix A/B/C/D:" as plain text labels (no xref),
-      # so appendices config is not needed — extension only numbers xref lines.
-      # Line 8 (Examples) is Chapter 2; lines 6-7 are comments, no xref match.
+      # Nav source has "* Appendix A/B/C/D:" as plain text (no xref) — the extension
+      # detects these headers to track the current letter, then numbers the ** sub-entries
+      # as A.1, A.2, etc. via appendix_subsections.
+      # Line 8 (Examples) is Chapter 2; lines 6-7 are comments (no xref match).
       - component: intrinsic
         module: ROOT
         branches: ['v1.0-antora']
         chapters: {start: 5, end: 8}
+        appendix_subsections: {start: 11, end: 52}
 
       # --- PLIC --------------------------------------------------------------
       - component: plic
