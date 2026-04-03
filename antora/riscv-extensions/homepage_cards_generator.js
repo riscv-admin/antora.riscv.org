@@ -64,7 +64,10 @@ module.exports.register = function () {
                 return
             }
 
+
             const attrs = (latestVersion.asciidoc && latestVersion.asciidoc.attributes) || {}
+            // Exclude components with no-cards: true
+            if (attrs['no-cards'] === true || attrs['no-cards'] === 'true') return
             const group = attrs['page-group']
             if (!group) return
 
