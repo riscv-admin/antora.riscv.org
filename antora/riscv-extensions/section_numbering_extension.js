@@ -1,5 +1,5 @@
 // Antora extension to add chapter-based section numbering to page content
-// Enhanced version - supports component name filtering
+// Enhanced version - supports component name filtering and include::partial$ resolution
 
 module.exports.register = function ({ config }) {
   const logger = this.getLogger('section-numbering-extension')
@@ -89,6 +89,61 @@ module.exports.register = function ({ config }) {
 
     logger.info(`Mapped ${pageToChapter.size} page(s) to chapter numbers`)
 
+    // Build a map of partial files for include resolution
+    // Key: "component:module:relative-path" (e.g. "debug:ROOT:abstract_commands.adoc")
+    const partialFileMap = new Map()
+    contentCatalog.getFiles()
+      .filter(f => f.src && f.src.family === 'partial')
+      .forEach(f => {
+        const key = `${f.src.component}:${f.src.module}:${f.src.relative}`
+        partialFileMap.set(key, f)
+        logger.debug(`  Indexed partial: ${key}`)
+      })
+
+    logger.info(`Indexed ${partialFileMap.size} partial file(s)`)
+
+    // Process a section header line and update counters/lines in place.
+    // Returns true if the line was modified.
+    function processSection(lines, i, sectionCounters, chapterNum) {
+      const line = lines[i]
+      const sectionMatch = line.match(/^(={2,6})\s+(.+?)(\s*\{#[^}]+\})?$/)
+      if (!sectionMatch) return false
+
+      const equals = sectionMatch[1]
+      const level = equals.length - 1 // == is level 1, === is level 2, etc.
+      let title = sectionMatch[2].trim()
+      const anchor = sectionMatch[3] || ''
+
+      // Skip if already numbered
+      if (/^\d+\./.test(title)) {
+        logger.debug(`  Skipping already numbered: ${title}`)
+        return false
+      }
+
+      // Increment counter for this level
+      sectionCounters[level - 1]++
+
+      // Reset deeper level counters
+      for (let j = level; j < sectionCounters.length; j++) {
+        sectionCounters[j] = 0
+      }
+
+      // Build section number (e.g., "2.1.3")
+      let sectionNumber = chapterNum.toString()
+      for (let j = 0; j < level; j++) {
+        if (sectionCounters[j] > 0) {
+          sectionNumber += '.' + sectionCounters[j]
+        }
+      }
+
+      // Add section number to title
+      const numberedTitle = `${sectionNumber}. ${title}`
+      lines[i] = `${equals} ${numberedTitle}${anchor}`
+
+      logger.debug(`  ${equals} "${title}" -> "${numberedTitle}"`)
+      return true
+    }
+
     // Now process page files and add section numbering
     const pageFiles = contentCatalog.getFiles().filter(file =>
       file.src && file.src.family === 'page'
@@ -118,59 +173,69 @@ module.exports.register = function ({ config }) {
       logger.info(`Processing ${componentName}:${pageName} as Chapter ${chapterNum}`)
 
       const content = pageFile.contents.toString()
-      const lines = content.split('\n')
-      let modified = false
+      const pageLines = content.split('\n')
+      let pageModified = false
 
-      // Track section numbering
+      // Track section numbering across page and included partials
       const sectionCounters = [0, 0, 0, 0, 0] // Level 1-5
 
-      for (let i = 0; i < lines.length; i++) {
-        const line = lines[i]
+      // Track modifications to partials: partialKey -> { file, lines, modified }
+      const partialEdits = new Map()
 
-        // Match section headers (=, ==, ===, etc.)
-        const sectionMatch = line.match(/^(={2,6})\s+(.+?)(\s*\{#[^}]+\})?$/)
+      for (let i = 0; i < pageLines.length; i++) {
+        const line = pageLines[i]
 
-        if (!sectionMatch) continue
+        // Check for include::partial$ directive
+        const includeMatch = line.match(/^include::partial\$([^\[]+)\[/)
+        if (includeMatch) {
+          const partialRelPath = includeMatch[1]
+          const partialKey = `${componentName}:${moduleName}:${partialRelPath}`
+          const partialFile = partialFileMap.get(partialKey)
 
-        const equals = sectionMatch[1]
-        const level = equals.length - 1 // == is level 1, === is level 2, etc.
-        let title = sectionMatch[2].trim()
-        const anchor = sectionMatch[3] || ''
+          if (partialFile) {
+            logger.debug(`  Resolving include: ${partialRelPath}`)
 
-        // Skip if already numbered
-        if (/^\d+\./.test(title)) {
-          logger.debug(`  Skipping already numbered: ${title}`)
+            // Reuse cached partial lines if we already edited this partial
+            if (!partialEdits.has(partialKey)) {
+              partialEdits.set(partialKey, {
+                file: partialFile,
+                lines: partialFile.contents.toString().split('\n'),
+                modified: false,
+              })
+            }
+
+            const edit = partialEdits.get(partialKey)
+
+            for (let j = 0; j < edit.lines.length; j++) {
+              if (processSection(edit.lines, j, sectionCounters, chapterNum)) {
+                edit.modified = true
+              }
+            }
+          } else {
+            logger.debug(`  Partial not found in catalog: ${partialKey}`)
+          }
           continue
         }
 
-        // Increment counter for this level
-        sectionCounters[level - 1]++
-
-        // Reset deeper level counters
-        for (let j = level; j < sectionCounters.length; j++) {
-          sectionCounters[j] = 0
+        // Process section header directly in page
+        if (processSection(pageLines, i, sectionCounters, chapterNum)) {
+          pageModified = true
         }
-
-        // Build section number (e.g., "2.1.3")
-        let sectionNumber = chapterNum.toString()
-        for (let j = 0; j < level; j++) {
-          if (sectionCounters[j] > 0) {
-            sectionNumber += '.' + sectionCounters[j]
-          }
-        }
-
-        // Add section number to title
-        const numberedTitle = `${sectionNumber}. ${title}`
-        lines[i] = `${equals} ${numberedTitle}${anchor}`
-
-        logger.debug(`  ${equals} "${title}" -> "${numberedTitle}"`)
-        modified = true
       }
 
-      if (modified) {
-        pageFile.contents = Buffer.from(lines.join('\n'))
-        logger.info(`Modified ${pageFile.src.relative}`)
+      // Write back modified page
+      if (pageModified) {
+        pageFile.contents = Buffer.from(pageLines.join('\n'))
+        logger.info(`Modified page ${pageFile.src.relative}`)
         processedCount++
+      }
+
+      // Write back modified partials
+      for (const [key, edit] of partialEdits) {
+        if (edit.modified) {
+          edit.file.contents = Buffer.from(edit.lines.join('\n'))
+          logger.info(`Modified partial ${key}`)
+        }
       }
     })
 
