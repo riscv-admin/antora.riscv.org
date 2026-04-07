@@ -145,54 +145,67 @@ module.exports.register = function () {
         }
 
         // ----------------------------------------------------------------
-        // 2. Find the homepage index.adoc (component: home, ROOT module).
+        // 2. Find all target pages (site-home and overview components).
         // ----------------------------------------------------------------
-        const homePage = contentCatalog.findBy({ component: 'home', module: 'ROOT', family: 'page', relative: 'index.adoc' })[0]
-        if (!homePage) {
-            console.log('[homepage-cards] home::ROOT:index.adoc not found — skipping.')
+
+        const overviewComponentNames = [
+            'hardware-overview',
+            'profiles-overview',
+            'platform-software-overview',
+            'trace-debug-ras-overview',
+            'app-enablement-overview',
+            'home',
+        ]
+
+        // Find all index.adoc pages in ROOT module of target components
+        const targetPages = overviewComponentNames.flatMap((componentName) =>
+            contentCatalog.findBy({ component: componentName, module: 'ROOT', family: 'page', relative: 'index.adoc' })
+        )
+
+        if (!targetPages.length) {
+            console.log('[homepage-cards] No target index.adoc pages found — skipping.')
             return
         }
 
         // ----------------------------------------------------------------
-        // 3. Replace section header + marker pairs with a collapsible section
-        //    whose summary is the section header text.
-        //    Fallback: if only marker lines are present, replace those with
-        //    the card grid only.
+        // 3. For each target page, inject cards as before.
         // ----------------------------------------------------------------
-        let content = homePage.contents.toString()
-        const sectionRe = /(?:^\[#([^\]]+)\]\n)?^==\s+(.+)\n(?:\n)*^\/\/ GENERATED-CARDS:(.+)$/gm
-        const markerRe = /^\/\/ GENERATED-CARDS:(.+)$/gm
-        let replaced = 0
-        let sectionIndex = 0
+        targetPages.forEach((page) => {
+            let content = page.contents.toString()
+            const sectionRe = /(?:^\[#([^\]]+)\]\n)?^==\s+(.+)\n(?:\n)*^\/\/ GENERATED-CARDS:(.+)$/gm
+            const markerRe = /^\/\/ GENERATED-CARDS:(.+)$/gm
+            let replaced = 0
+            let sectionIndex = 0
 
-        content = content.replace(sectionRe, (_, anchorId, headingText, group) => {
-            const specs = specsByGroup.get(group.trim())
-            if (!specs || specs.length === 0) {
-                console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`)
-                return ''
+            content = content.replace(sectionRe, (_, anchorId, headingText, group) => {
+                const specs = specsByGroup.get(group.trim())
+                if (!specs || specs.length === 0) {
+                    console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`)
+                    return ''
+                }
+                replaced++
+                const isOpen = sectionIndex === 0
+                sectionIndex++
+                return buildCollapsibleSection(specs, headingText.trim(), anchorId, isOpen)
+            })
+
+            content = content.replace(markerRe, (_, group) => {
+                const specs = specsByGroup.get(group.trim())
+                if (!specs || specs.length === 0) {
+                    console.log(`[homepage-cards] No specs found for group '${group}' — marker left empty.`)
+                    return ''
+                }
+                replaced++
+                return buildCardGrid(specs)
+            })
+
+            if (replaced > 0) {
+                page.contents = Buffer.from(content)
+                console.log(`[homepage-cards] Injected card grids for ${replaced} group(s) in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`)
+            } else {
+                console.log(`[homepage-cards] No GENERATED-CARDS markers found in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`)
             }
-            replaced++
-            const isOpen = sectionIndex === 0
-            sectionIndex++
-            return buildCollapsibleSection(specs, headingText.trim(), anchorId, isOpen)
         })
-
-        content = content.replace(markerRe, (_, group) => {
-            const specs = specsByGroup.get(group.trim())
-            if (!specs || specs.length === 0) {
-                console.log(`[homepage-cards] No specs found for group '${group}' — marker left empty.`)
-                return ''
-            }
-            replaced++
-            return buildCardGrid(specs)
-        })
-
-        if (replaced > 0) {
-            homePage.contents = Buffer.from(content)
-            console.log(`[homepage-cards] Injected card grids for ${replaced} group(s).`)
-        } else {
-            console.log('[homepage-cards] No GENERATED-CARDS markers found in home::ROOT:index.adoc.')
-        }
     })
 }
 
