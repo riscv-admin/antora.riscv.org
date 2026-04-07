@@ -112,8 +112,8 @@ module.exports.register = function () {
                 const unprivDetailsUrl = attrs['more_details_unpriv_url'] || sourceAttrs['moreDetailsUnprivUrl'] || entry.detailsUrl
                 const privDetailsUrl = attrs['more_details_priv_url'] || sourceAttrs['moreDetailsPrivUrl'] || entry.detailsUrl
 
-                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || `../${component.name}/unpriv/index.html`
-                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || `../${component.name}/priv/index.html`
+                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || `../${component.name}/unpriv/unpriv-index.html`
+                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || `../${component.name}/priv/priv-index.html`
 
                 specsByGroup.get(group).push({
                     ...entry,
