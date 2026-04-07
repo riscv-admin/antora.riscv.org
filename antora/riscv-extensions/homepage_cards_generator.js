@@ -112,6 +112,9 @@ module.exports.register = function () {
                 const unprivDetailsUrl = attrs['more_details_unpriv_url'] || sourceAttrs['moreDetailsUnprivUrl'] || entry.detailsUrl
                 const privDetailsUrl = attrs['more_details_priv_url'] || sourceAttrs['moreDetailsPrivUrl'] || entry.detailsUrl
 
+                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || `../${component.name}/unpriv/index.html`
+                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || `../${component.name}/priv/index.html`
+
                 specsByGroup.get(group).push({
                     ...entry,
                     title: 'Unprivileged ISA',
@@ -119,6 +122,7 @@ module.exports.register = function () {
                     releaseDate: unprivReleaseDate,
                     pdfUrl: unprivPdfUrl,
                     detailsUrl: unprivDetailsUrl,
+                    htmlPath: unprivHtmlPath,
                 })
                 specsByGroup.get(group).push({
                     ...entry,
@@ -127,6 +131,7 @@ module.exports.register = function () {
                     releaseDate: privReleaseDate,
                     pdfUrl: privPdfUrl,
                     detailsUrl: privDetailsUrl,
+                    htmlPath: privHtmlPath,
                 })
                 return
             }
@@ -235,7 +240,7 @@ ${cards}
  * one level below the site root where all component directories reside.
  */
 function buildCard(spec) {
-    const htmlHref = `../${spec.name}/index.html`
+    const htmlHref = spec.htmlPath || `../${spec.name}/index.html`
     const pdfButton  = buildPdfButton(spec)
     const meta = buildCardMeta(spec)
     const moreLink   = spec.detailsUrl
