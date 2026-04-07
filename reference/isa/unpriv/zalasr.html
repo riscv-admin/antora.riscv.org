@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Untitled :: RISC-V Ratified Specifications Library</title>
-    <link rel="canonical" href="https://docs.riscv.org/reference/isa/unpriv/zawrs.html">
-    <link rel="prev" href="a-st-ext.html">
-    <link rel="next" href="zacas.html">
+    <link rel="canonical" href="https://docs.riscv.org/reference/isa/unpriv/zalasr.html">
+    <link rel="prev" href="zabha.html">
+    <link rel="next" href="rvwmo.html">
     <meta name="generator" content="Antora 3.1.14">
     <script>
 !function (theme, navWidth) {
@@ -374,7 +374,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="a-st-ext.html">Chapter 13. "A" Extension for Atomic Instructions, Version 2.1</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="zawrs.html">Chapter 14. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -383,7 +383,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link"  href="zabha.html">Chapter 16. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link"  href="zalasr.html">Chapter 17. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0</a>
   </li>
   <li class="nav-item" data-depth="1">
@@ -644,121 +644,96 @@
     <ul>
       <li><a href="../index.html">ISA Specifications</a></li>
       <li>Volume I: RISC-V Unprivileged ISA Specification</li>
-      <li><a href="zawrs.html">Chapter 14. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a></li>
+      <li><a href="zalasr.html">Chapter 17. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0</a></li>
     </ul>
   </nav>
 </div><div class="sect1">
-<h2 id="14-1-zawrs-extension-for-wait-on-reservation-set-instructions-version-1-01"><a class="anchor" href="#14-1-zawrs-extension-for-wait-on-reservation-set-instructions-version-1-01"></a>14.1. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</h2>
+<h2 id="17-1-zalasr-atomic-load-acquire-and-store-release-instructions-version-1-0"><a class="anchor" href="#17-1-zalasr-atomic-load-acquire-and-store-release-instructions-version-1-0"></a>17.1. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The Zawrs extension defines a pair of instructions to be used in polling loops
-that allows a core to enter a low-power state and wait on a store to a memory
-location. Waiting for a memory location to be updated is a common pattern in
-many use cases such as:</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Contenders for a lock waiting for the lock variable to be updated.</p>
-</li>
-<li>
-<p>Consumers waiting on the tail of an empty queue for the producer to queue
-work/data. The producer may be code executing on a RISC-V hart, an accelerator
-device, an external I/O agent.</p>
-</li>
-<li>
-<p>Code waiting on a flag to be set in memory indicative of an event occurring.
-For example, software on a RISC-V hart may wait on a "done" flag to be set in
-memory by an accelerator device indicating completion of a job previously
-submitted to the device.</p>
-</li>
-</ol>
+<p>The Zalasr (Load-Acquire and Store-Release) extension provides load-acquire and store-release instructions in RISC-V.
+These can be important for high performance designs by enabling finer-grained synchronisation than is possible with fences alone, by providing a unidirectional fence.
+Load-acquire and store-release are widely used in language-level memory models:
+both the Java and C&#43;&#43; memory models make use of acquire-release semantics, and C&#43;&#43;'s <code>atomic</code> provides primitives that are meant to map directly to load-acquire and store-release instructions.</p>
 </div>
 <div class="paragraph">
-<p>Such use cases involve polling on memory locations, and such busy loops can be a
-wasteful expenditure of energy. To mitigate the wasteful looping in such usages,
-a <code>WRS.NTO</code> (WRS-with-no-timeout) instruction is provided. Instead of polling
-for a store to a specific memory location, software registers a reservation set
-that includes all the bytes of the memory location using the <code>LR</code> instruction.
-<span id="norm:Zawrs_wrs-nto_stall_exec">Then a subsequent <code>WRS.NTO</code> instruction would cause the hart to temporarily
-stall execution in a low-power state until a store occurs to the reservation set
-or an interrupt is observed.</span></p>
+<p>The Zalasr extension builds on the atomic support provided by the Zaamo (Atomic Memory Operations), Zalrsc (Load-Reserved and Store-Conditional), and Zabha (Byte and Halfword Atomic Memory Operations) extensions by providing additional atomic operations (although it can be implemented independently of them).
+All of the AMO operations in Zaamo (and Zabha) are read-modify-write operations that both load and store.
+The Zalrsc extension provides operations that are only loads or stores.
+However, since it is designed to perform an atomic operation on a single memory word or doubleword, the loads and stores are designed to be paired.
+The load-reserved implies that a future store-conditional will follow while store-conditional requires that there was a previous load-reserved without other intervening loads or stores.
+Therefore, the Zalrsc extension does not provide a general atomic and ordered load or store.</p>
 </div>
 <div class="paragraph">
-<p>Sometimes the program waiting on a memory update may also need to carry out a
-task at a future time or otherwise place an upper bound on the wait. To support
-such use cases a second instruction <span id="norm:Zawrs_wrs-sto_stall_duration"><code>WRS.STO</code> (WRS-with-short-timeout) is
-provided that works like <code>WRS.NTO</code> but bounds the stall duration to an
-implementation-define short timeout such that the stall is terminated on the
-timeout if no other conditions have occurred to terminate the stall.</span> The
-program using this instruction may then determine if its deadline has been
-reached.</p>
-</div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-<div class="paragraph">
-<p>The instructions in the Zawrs extension are only useful in conjunction with the
-LR instruction, which is provided by the Zalrsc component of the A extension.</p>
-</div>
-</td>
-</tr>
-</table>
+<p>Zalasr fills this gap by offering truly standalone atomic and ordered loads and stores.
+The Zalasr instructions are atomic loads and stores that support ordering annotations.
+With the combination of Zaamo, Zabha, and Zalasr all C&#43;&#43; atomic operations can be supported with single instructions.</p>
 </div>
 <div class="sect2">
-<h3 id="Zawrs"><a class="anchor" href="#Zawrs"></a>14.1.1. Wait-on-Reservation-Set Instructions</h3>
+<h3 id="17-1-1-load-acquire-and-store-release-instructions"><a class="anchor" href="#17-1-1-load-acquire-and-store-release-instructions"></a>17.1.1. Load-Acquire and Store-Release Instructions</h3>
 <div class="paragraph">
-<p>The <code>WRS.NTO</code> and <code>WRS.STO</code> instructions cause the hart to temporarily stall
-execution in a low-power state as long as the reservation set is valid and no
-pending interrupts, even if disabled, are observed. For <code>WRS.STO</code> the stall
-duration is bounded by an implementation defined short timeout. These
-instructions are available in all privilege modes.</p>
+<p>The Zalasr instructions always sign-extend the value placed in <em>rd</em> and ignore the upper bits of the value of <em>rs2</em>.
+The instructions in the Zalasr extension require that the address held in <em>rs1</em> be naturally aligned to the size in bytes (2<sup>width</sup>) of the operand.
+If the address is not naturally aligned, an address-misaligned exception or an access-fault exception will be generated.
+The access-fault exception can be generated for a memory access that would otherwise be able to complete except for the misalignment, if the misaligned access should not be emulated.</p>
+</div>
+<div class="paragraph">
+<p>The misaligned atomicity granule PMA, defined in Volume II of this manual, optionally relaxes this alignment requirement.
+If all accessed bytes lie within the same misaligned atomicity granule, the instruction will not raise an exception for reasons of address alignment, and the instruction will give rise to only one memory operation for the purposes of RVWMO—i.e., it will execute atomically.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-ldatomic"><a class="anchor" href="#insns-ldatomic"></a>17.1.2. Load Acquire</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Synopsis</dt>
+<dd>
+<p>The load-acquire instruction atomically loads a 2<sup>width</sup>-byte value from the address in <em>rs1</em> and places the sign-extended value into the register <em>rd</em>, subject to the ordering annotations specified in the instruction.</p>
+</dd>
+<dt class="hdlist1">Mnemonic</dt>
+</dl>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>lb.{aq,aqrl} <em>rd</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>lh.{aq,aqrl} <em>rd</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>lw.{aq,aqrl} <em>rd</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>ld.{aq,aqrl} <em>rd</em>, (<em>rs1</em>)</p>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Encoding</dt>
+</dl>
 </div>
 <div class="imageblock kroki">
 <div class="content">
-<img src="_images/svg-92bd2960c14bdb39610458fd6f079cbada57aeee.svg" alt="svg">
+<img src="_images/svg-5b9a9fe017ba4b0995a69ff0644b5639fadde3da.svg" alt="svg">
 </div>
 </div>
-<div style="page-break-after: always;"></div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>This instruction loads 2<sup>width</sup> bytes of memory from rs1 atomically and writes the result into rd.
+If the size (2<sup>width+3</sup>) is less than XLEN, it is sign-extended to fill the destination register.
+This load must have the ordering annotation <em>aq</em> and may have ordering annotation <em>rl</em> encoded in the instruction.
+The instruction always has an "acquire-RCsc" annotation, and if the bit <em>rl</em> is set the instruction has a "release-RCsc" annotation.</p>
 <div class="paragraph">
-<p>Hart execution may be stalled while the following conditions are all satisfied:</p>
+<p>The versions without the <em>aq</em> bit set are RESERVED.
+LD.{AQ, AQRL} is RV64-only.</p>
 </div>
-<div class="olist loweralpha">
-<ol class="loweralpha" type="a">
-<li>
-<p>The reservation set is valid</p>
-</li>
-<li>
-<p>If <code>WRS.STO</code>, a "short" duration since start of stall has not elapsed</p>
-</li>
-<li>
-<p>No pending interrupt is observed (see the rules below)</p>
-</li>
-</ol>
-</div>
-<div class="paragraph">
-<p><span id="norm:Zawrs_stall_terminate">While stalled, an implementation is permitted to occasionally terminate the
-stall and complete execution for any reason.</span></p>
-</div>
-<div class="paragraph">
-<p><span id="norm:Zawrs_exec_resume_rules"><code>WRS.NTO</code> and <code>WRS.STO</code> instructions follow the rules of the <code>WFI</code> instruction
-for resuming execution on a pending  interrupt.</span></p>
-</div>
-<div class="paragraph">
-<p><span id="norm:Zawrs_priv_illegal_instr_excp">When the <code>TW</code> (Timeout Wait) bit in <code>mstatus</code> is set and <code>WRS.NTO</code> is executed
-in any privilege mode other than M mode, and it does not complete within an
-implementation-specific bounded time limit, the <code>WRS.NTO</code> instruction will cause
-an illegal-instruction exception.</span></p>
-</div>
-<div class="paragraph">
-<p><span id="norm:Zawrs_virtual_instr_excp">When executing in VS or VU mode, if the <code>VTW</code> bit is set in <code>hstatus</code>, the
-<code>TW</code> bit in <code>mstatus</code> is clear, and the <code>WRS.NTO</code> does not complete within an
-implementation-specific bounded time limit, the <code>WRS.NTO</code> instruction will cause
-a virtual-instruction  exception.</span></p>
+</dd>
+</dl>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -768,34 +743,94 @@ a virtual-instruction  exception.</span></p>
 </td>
 <td class="content">
 <div class="paragraph">
-<p>Since the <code>WRS.STO</code> and <code>WRS.NTO</code> instructions can complete execution for
-reasons other than stores to the reservation set, software will likely need
-a means of looping until the required stores have occurred.</p>
-</div>
-<div class="paragraph">
-<p>The duration of a <code>WRS.STO</code> instruction&#8217;s timeout may vary significantly within
-and among implementations. In typical implementations this duration should be
-roughly in the range of 10 to 100 times an on-chip cache miss latency or a
-cacheless access to main memory.</p>
-</div>
-<div class="paragraph">
-<p><code>WRS.NTO</code>, unlike <code>WFI</code>, is not specified to cause an illegal-instruction
-exception if executed in U-mode when the governing <code>TW</code> bit is 0. <code>WFI</code> is
-typically not expected to be used in U-mode and on many systems may promptly
-cause an illegal-instruction exception if used at U-mode. Unlike <code>WFI</code>,
-<code>WRS.NTO</code> is expected to be used by software in U-mode when waiting on
-memory but without a deadline for that wait.</p>
+<p>The <em>aq</em> bit is mandatory because the two encodings that would be produced are not seen as useful at this time.
+The version with neither the <em>aq</em> nor the <em>rl</em> bit set would correspond to a load with no ordering annotations that was guaranteed to be performed atomically.
+This can be achieved with ordinary load instructions by suitably aligning pointers.
+The version with only the <em>rl</em> bit would correspond to load-release.
+Load-release has theoretical applications in seqlocks, but is not supported in language-level memory models and so is not included.</p>
 </div>
 </td>
 </tr>
 </table>
 </div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="insns-sdatomic"><a class="anchor" href="#insns-sdatomic"></a>17.1.3. Store Release</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Synopsis</dt>
+<dd>
+<p>The store-release instruction atomically stores the 2<sup>width</sup>-byte value from the low bits of register <em>rs2</em> to the address in <em>rs1</em>, subject to the ordering annotations specified in the instruction.</p>
+</dd>
+<dt class="hdlist1">Mnemonic</dt>
+</dl>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="paragraph">
+<p>sb.{rl,aqrl} <em>rs2</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>sh.{rl,aqrl} <em>rs2</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>sw.{rl,aqrl} <em>rs2</em>, (<em>rs1</em>)</p>
+</div>
+<div class="paragraph">
+<p>sd.{rl,aqrl} <em>rs2</em>, (<em>rs1</em>)</p>
+</div>
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Encoding</dt>
+</dl>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/svg-c906b6a9d84bf2fa00d265b08050050ebd597eca.svg" alt="svg">
+</div>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>This instruction stores 2<sup>width</sup> bytes of memory from rs1 atomically.
+This store must have ordering annotation <em>rl</em> and may have ordering annotation <em>aq</em> encoded in the instruction.
+The instruction always has an "release-RCsc" annotation, and if the bit <em>aq</em> is set the instruction has a "acquire-RCsc" annotation.</p>
+<div class="paragraph">
+<p>The versions without the <em>rl</em> bit set are RESERVED.
+SD.{RL, AQRL} is RV64-only.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>The <em>rl</em> bit is mandatory because the two encodings that would be produced are not seen as useful at this time.
+The version with neither the <em>aq</em> nor the <em>rl</em> bit set would correspond to a store with no ordering annotations that was guaranteed to be performed atomically.
+This can be achieved with ordinary store instructions by suitably aligned pointers.
+The version with only the <em>aq</em> bit would correspond to store-acquire.
+Store-acquire has theoretical applications in seqlocks, but is not supported in language-level memory models and so is not included.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
 </div>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="a-st-ext.html">Chapter 13. "A" Extension for Atomic Instructions, Version 2.1</a></span>
-  <span class="next"><a href="zacas.html">Chapter 15. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a></span>
+  <span class="prev"><a href="zabha.html">Chapter 16. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a></span>
+  <span class="next"><a href="rvwmo.html">Chapter 18. RVWMO Memory Consistency Model, Version 2.0</a></span>
 </nav>
 </article>  </div>
 </main>
