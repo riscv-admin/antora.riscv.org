@@ -171,41 +171,54 @@ module.exports.register = function () {
         // 3. For each target page, inject cards as before.
         // ----------------------------------------------------------------
         targetPages.forEach((page) => {
-            let content = page.contents.toString()
-            const sectionRe = /(?:^\[#([^\]]+)\]\n)?^==\s+(.+)\n(?:\n)*^\/\/ GENERATED-CARDS:(.+)$/gm
-            const markerRe = /^\/\/ GENERATED-CARDS:(.+)$/gm
-            let replaced = 0
-            let sectionIndex = 0
+            let content = page.contents.toString();
+            const sectionRe = /(?:^\[#([^\]]+)\]\n)?^==\s+(.+)\n(?:\n)*^\/\/ GENERATED-CARDS:(.+)$/gm;
+            const markerRe = /^\/\/ GENERATED-CARDS:(.+)$/gm;
+            let replaced = 0;
+            let sectionIndex = 0;
+
+            // Determine if this is the home page (twisties ON) or overview (twisties OFF)
+            const isHomePage = page.src && page.src.component === 'home';
 
             content = content.replace(sectionRe, (_, anchorId, headingText, group) => {
-                const specs = specsByGroup.get(group.trim())
+                const specs = specsByGroup.get(group.trim());
                 if (!specs || specs.length === 0) {
-                    console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`)
-                    return ''
+                    console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`);
+                    return '';
                 }
-                replaced++
-                const isOpen = sectionIndex === 0
-                sectionIndex++
-                return buildCollapsibleSection(specs, headingText.trim(), anchorId, isOpen)
-            })
+                replaced++;
+                if (isHomePage) {
+                    const isOpen = sectionIndex === 0;
+                    sectionIndex++;
+                    return buildCollapsibleSection(specs, headingText.trim(), anchorId, isOpen);
+                } else {
+                    // Overview: flat grid, no twistie
+                    return buildCardGrid(specs);
+                }
+            });
 
             content = content.replace(markerRe, (_, group) => {
-                const specs = specsByGroup.get(group.trim())
+                const specs = specsByGroup.get(group.trim());
                 if (!specs || specs.length === 0) {
-                    console.log(`[homepage-cards] No specs found for group '${group}' — marker left empty.`)
-                    return ''
+                    console.log(`[homepage-cards] No specs found for group '${group}' — marker left empty.`);
+                    return '';
                 }
-                replaced++
-                return buildCardGrid(specs)
-            })
+                replaced++;
+                // Home: twistie, Overview: flat grid
+                if (isHomePage) {
+                    return buildCardGrid(specs); // Home page marker: keep as grid (no twistie)
+                } else {
+                    return buildCardGrid(specs); // Overview: flat grid
+                }
+            });
 
             if (replaced > 0) {
-                page.contents = Buffer.from(content)
-                console.log(`[homepage-cards] Injected card grids for ${replaced} group(s) in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`)
+                page.contents = Buffer.from(content);
+                console.log(`[homepage-cards] Injected card grids for ${replaced} group(s) in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`);
             } else {
-                console.log(`[homepage-cards] No GENERATED-CARDS markers found in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`)
+                console.log(`[homepage-cards] No GENERATED-CARDS markers found in ${page.src?.component}:${page.src?.module}:${page.src?.relative}.`);
             }
-        })
+        });
     })
 }
 
@@ -218,15 +231,8 @@ module.exports.register = function () {
  * for a list of spec entries within one group.
  */
 function buildCardGrid(specs) {
-    const cards = specs.map(buildCard).join('\n')
-    return `++++
-<details class="section-cards-toggle">
-\t<summary>Show section cards</summary>
-<div class="card-grid card-grid-3">
-${cards}
-</div>
-</details>
-++++`
+    const cards = specs.map(buildCard).join('\n');
+    return `++++\n<div class="card-grid card-grid-3">\n${cards}\n</div>\n++++`;
 }
 
 /**
