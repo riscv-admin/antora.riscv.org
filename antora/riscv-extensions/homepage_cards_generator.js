@@ -269,7 +269,7 @@ function buildCard(spec) {
     return `\t<div class="card shadow-tl card--xxs">
         <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">${escapeHtml(spec.title)}</h5>${meta}</div></div>
         <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">${escapeHtml(spec.description)}</div></div></div>
-        <div class="card-footer"><div class="card-actions">${pdfButton}<a href="${htmlHref}" class="button button--primary">HTML</a></div>${moreLink}</div>
+        <div class="card-footer"><div class="card-actions"><a href="${htmlHref}" class="button button--primary">HTML</a>${pdfButton}</div>${moreLink}</div>
     </div>`
 }
 
