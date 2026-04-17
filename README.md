@@ -1,6 +1,6 @@
 # Website
 
-This website is built using Antora. This site is deployed via GitHub pages at https://riscv-admin.github.io/antoradev.riscv.org/.
+This website is built using Antora. This site is deployed via GitHub pages at https://riscv-admin.github.io/antora-dev.riscv.org/.
 
 ### Installation
 
