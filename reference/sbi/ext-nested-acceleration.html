@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/sbi/ext-nested-acceleration.html">
+    <link rel="prev" href="ext-cppc.html">
+    <link rel="next" href="ext-steal-time.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v3.0">
+    <meta name="component" content="sbi">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="sbi" data-version="v3.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../platform-software-overview/index.html">Platform Software</a>
+</div>        <div class="nav-trees" data-component="brs">
+          <div class="version-box">
+            <select data-component="brs" class="select-version">
+                <option
+                  value="../brs/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="brs" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot and Runtime Services</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/recipes.html">Chapter 2. Recipes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/hart.html">Chapter 3. Hart Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/sbi.html">Chapter 4. SBI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/uefi.html">Chapter 5. BRS-I UEFI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/acpi.html">Chapter 6. BRS-I ACPI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/smbios.html">Chapter 7. BRS-I SMBIOS Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-ffh">
+          <div class="version-box">
+            <select data-component="acpi-ffh" class="select-version">
+                <option
+                  value="../acpi-ffh/index.html"
+                  data-version="v1.0.1"
+                  
+                  selected>
+                  v1.0.1
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-ffh" data-version="v1.0.1" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Functional Fixed Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_resource_descriptor.html">Chapter 2. RISC-V FFH Resource Descriptor Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_use_cases.html">Chapter 3. Use Cases</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_lpi_examples.html">Appendix A. _LPI Object Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_cpc_examples.html">Appendix B. _CPC Object Examples</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-rimt">
+          <div class="version-box">
+            <select data-component="acpi-rimt" class="select-version">
+                <option
+                  value="../acpi-rimt/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-rimt" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IO Mapping Table</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/rimt-main.html">Chapter 2. RISC-V IO Mapping Table (RIMT)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/mapping-example.html">Chapter 3. ID Mapping Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="rpmi">
+          <div class="version-box">
+            <select data-component="rpmi" class="select-version">
+                <option
+                  value="../rpmi/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rpmi" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform Management Interface (RPMI)</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/transport.html">Chapter 2. Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/message-protocol.html">Chapter 3. Messaging Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/service-groups.html">Chapter 4. Service Groups</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/rpmi-mpxy.html">Chapter 5. Integration with SBI MPXY Extension</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="semihosting">
+          <div class="version-box">
+            <select data-component="semihosting" class="select-version">
+                <option
+                  value="../semihosting/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="semihosting" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Semihosting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/binary-interface.html">Chapter 2. Semihosting Binary Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="sbi">
+          <div class="version-box">
+            <select data-component="sbi" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v3.0"
+                  
+                  selected>
+                  v3.0
+                </option>
+            </select>
+          </div>
+              <div data-component="sbi" data-version="v3.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Supervisor Binary Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="changelog.html">Chapter 1. Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="terms.html">Chapter 3. Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="binary-encoding.html">Chapter 4. Binary Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-base.html">Chapter 5. Base Extension (EID #0x10)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-legacy.html">Chapter 6. Legacy Extensions (EIDs #0x00 - #0x0F)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-time.html">Chapter 7. Timer Extension (EID #0x54494D45 "TIME")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-ipi.html">Chapter 8. IPI Extension (EID #0x735049 "sPI: s-mode IPI")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-rfence.html">Chapter 9. RFENCE Extension (EID #0x52464E43 "RFNC")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-hsm.html">Chapter 10. Hart State Management Extension (EID #0x48534D "HSM")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sys-reset.html">Chapter 11. System Reset Extension (EID #0x53525354 "SRST")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-pmu.html">Chapter 12. Performance Monitoring Unit Extension (EID #0x504D55 "PMU")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-debug-console.html">Chapter 13. Debug Console Extension (EID #0x4442434E "DBCN")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sys-suspend.html">Chapter 14. System Suspend Extension (EID #0x53555350 "SUSP")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-cppc.html">Chapter 15. CPPC Extension (EID #0x43505043 "CPPC")</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ext-nested-acceleration.html">Chapter 16. Nested Acceleration Extension (EID #0x4E41434C "NACL")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-steal-time.html">Chapter 17. Steal-time Accounting Extension (EID #0x535441 "STA")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sse.html">Chapter 18. Supervisor Software Events Extension (EID #0x535345 "SSE")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-firmware-features.html">Chapter 19. SBI Firmware Features Extension (EID #0x46574654 "FWFT")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-debug-triggers.html">Chapter 20. Debug Triggers Extension (EID #0x44425452 "DBTR")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-mpxy.html">Chapter 21. Message Proxy Extension (EID #0x4D505859 “MPXY”)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-experimental.html">Chapter 22. Experimental SBI Extension Space (EIDs #0x08000000 - #0x08FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-vendor.html">Chapter 23. Vendor Specific Extension Space (EIDs #0x09000000 - #0x09FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-firmware.html">Firmware Specific Extension Space (EIDs #0x0A000000 - #0x0AFFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="references.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="uefi">
+          <div class="version-box">
+            <select data-component="uefi" class="select-version">
+                <option
+                  value="../uefi/index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="uefi" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">UEFI PROTOCOL</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/copyright.html">Chapter 1. Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/intro.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/boot_protocol.html">RISCV_EFI_BOOT_PROTOCOL</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-sbi.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../platform-software-overview/index.html">Platform Software Overview</a></li>
+              <li><a href="index.html">Supervisor Binary Interface</a></li>
+                      <li>
+            <a href="ext-nested-acceleration.html">Chapter 16. Nested Acceleration Extension (EID #0x4E41434C "NACL")</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="16-1-nested-acceleration-extension-eid-0x4e41434c-nacl"><a class="anchor" href="#16-1-nested-acceleration-extension-eid-0x4e41434c-nacl"></a>16.1. Nested Acceleration Extension (EID #0x4E41434C "NACL")</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Nested virtualization is the ability of a hypervisor to run another hypervisor
+as a guest. RISC-V nested virtualization requires an L0 hypervisor (running
+in hypervisor-mode) to trap-and-emulate the RISC-V H-extension cite:[priv_v1_12]
+functionality (such as CSR accesses, HFENCE instructions, HLV/HSV instructions,
+etc.) for the L1 hypervisor (running in virtualized supervisor-mode).</p>
+</div>
+<div class="paragraph">
+<p>The SBI nested acceleration extension defines a shared memory based interface
+between the SBI implementation (or L0 hypervisor) and the supervisor software
+(or L1 hypervisor) which allows both to collaboratively reduce traps taken
+by the L0 hypervisor for emulating RISC-V H-extension functionality. The
+nested acceleration shared memory allows the L1 hypervisor to batch multiple
+RISC-V H-extension CSR accesses and HFENCE requests which are then emulated
+by the L0 hypervisor upon an explicit synchronization SBI call.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The M-mode firmware should not implement the SBI nested acceleration
+extension if the underlying platform has the RISC-V H-extension implemented
+in hardware.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This SBI extension defines optional features which MUST be discovered by
+the supervisor software (or L1 hypervisor) before using the corresponding
+SBI functions. Each nested acceleration feature is assigned a unique ID
+which is an unsigned 32-bit integer. The <a href="#table_nacl_features">Table 1</a> below
+provides a list of all nested acceleration features.</p>
+</div>
+<table id="table_nacl_features" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 1. Nested acceleration features</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 46.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Feature ID</th>
+<th class="tableblock halign-left valign-top">Feature Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_CSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchronize CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_HFENCE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchronize HFENCE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_SRET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Synchronize SRET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_AUTOSWAP_CSR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Autoswap CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt; 0x00000003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RESERVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To use the SBI nested acceleration extension, the supervisor software
+(or L1 hypervisor) MUST set up a nested acceleration shared memory
+physical address for each virtual hart at boot-time. The physical base
+address of the nested acceleration shared memory MUST be 4096 bytes
+(i.e. page) aligned and the size of the nested acceleration shared
+memory must be <code>4096 + (1024 * (XLEN / 8))</code> bytes. The
+<a href="#table_nacl_shmem_layout">Table 55</a> below shows the layout of nested
+acceleration shared memory.</p>
+</div>
+<table id="table_nacl_shmem_layout" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 55. Nested acceleration shared memory layout</caption>
+<colgroup>
+<col style="width: 16.6666%;">
+<col style="width: 25%;">
+<col style="width: 16.6666%;">
+<col style="width: 41.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Offset</th>
+<th class="tableblock halign-left valign-top">Size (bytes)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Scratch space</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4096</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested acceleration feature
+                                              specific data.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSR space</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00001000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>XLEN * 128</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An array of 1024 XLEN-bit words
+                                              where each word corresponds to
+                                              a possible RISC-V H-extension
+                                              CSR defined in the Table 2.1
+                                              of the RISC-V privileged
+                                              specification cite:[priv_v1_12].</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Any nested acceleration feature may define the contents of the scratch space
+shown in the <a href="#table_nacl_shmem_layout">Table 55</a> above if required.</p>
+</div>
+<div class="paragraph">
+<p>The contents of the CSR space shown in the <a href="#table_nacl_shmem_layout">Table 55</a>
+above is an array of RISC-V H-extension CSR values where CSR <code>&lt;x&gt;</code> is at
+index <code>&lt;i&gt; = ((&lt;x&gt; &amp; 0xc00) &gt;&gt; 2) | (&lt;x&gt; &amp; 0xff)</code>. The SBI implementation
+(or L0 hypervisor) MUST update the CSR space whenever the state of any
+RISC-V H-extension CSR changes unless some nested acceleration feature
+defines a different behaviour. The <a href="#table_nacl_hext_csr_index_ranges">Table 56</a>
+below shows CSR space index ranges for all possible 1024 RISC-V
+H-extension CSRs.</p>
+</div>
+<table id="table_nacl_hext_csr_index_ranges" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 56. Nested acceleration H-extension CSR index ranges</caption>
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top" colspan="4">H-extension CSR address</th>
+<th class="tableblock halign-left valign-top">SBI NACL CSR space index</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[11:10]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[9:8]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">[7:4]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hex Range</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hex Range</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>00</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>xxxx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x200 - 0x2ff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x000 - 0x0ff</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xxx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x600 - 0x67f</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x100 - 0x17f</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x680 - 0x6bf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x180 - 0x1bf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>01</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x6c0 - 0x6ff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x1c0 - 0x1ff</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xxx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xa00 - 0xa7f</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x200 - 0x27f</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xa80 - 0xabf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x280 - 0x2bf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xac0 - 0xaff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x2c0 - 0x2ff</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xxx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xe00 - 0xe7f</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x300 - 0x37f</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xe80 - 0xebf</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x380 - 0x3bf</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11xx</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0xec0 - 0xeff</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0x3c0 - 0x3ff</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="16-1-1-feature-synchronize-csr-id-0"><a class="anchor" href="#16-1-1-feature-synchronize-csr-id-0"></a>16.1.1. Feature: Synchronize CSR (ID #0)</h3>
+<div class="paragraph">
+<p>The synchronize CSR feature describes the ability of the SBI implementation
+(or L0 hypervisor) to allow supervisor software (or L1 hypervisor) to write
+RISC-V H-extension CSRs using the CSR space.</p>
+</div>
+<div class="paragraph">
+<p>This nested acceleration feature defines the scratch space offset range
+<code>0x0F80 - 0x0FFF</code> (128 bytes) as nested CSR dirty bitmap. The nested CSR
+dirty bitmap contains 1-bit for each possible RISC-V H-extension CSR.</p>
+</div>
+<div class="paragraph">
+<p>To write a CSR <code>&lt;x&gt;</code> in nested acceleration shared memory, the supervisor
+software (or L1 hypervisor) MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Compute <code>&lt;i&gt; = ((&lt;x&gt; &amp; 0xc00) &gt;&gt; 2) | (&lt;x&gt; &amp; 0xff)</code></p>
+</li>
+<li>
+<p>Write a new CSR value at word with index <code>&lt;i&gt;</code> in the CSR space</p>
+</li>
+<li>
+<p>Set the <code>&lt;i&gt;</code> bit in the nested CSR dirty bitmap</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To synchronize a CSR <code>&lt;x&gt;</code>, the SBI implementation (or L0 hypervisor)
+MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Compute <code>&lt;i&gt; = ((&lt;x&gt; &amp; 0xc00) &gt;&gt; 2) | (&lt;x&gt; &amp; 0xff)</code></p>
+</li>
+<li>
+<p>If bit <code>&lt;i&gt;</code> is not set in the nested CSR dirty bitmap then goto step 5</p>
+</li>
+<li>
+<p>Emulate write to CSR <code>&lt;x&gt;</code> with the new CSR value taken from the word with
+index <code>&lt;i&gt;</code> in the CSR space</p>
+</li>
+<li>
+<p>Clear the <code>&lt;i&gt;</code> bit in the nested CSR dirty bitmap</p>
+</li>
+<li>
+<p>Write back the latest CSR value of CSR <code>&lt;x&gt;</code> to the word with index
+<code>&lt;i&gt;</code> in the CSR space</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>When synchronizing multiple CSRs, if the value of a CSR <code>&lt;y&gt;</code> depends on the
+value of some other CSR <code>&lt;x&gt;</code> then the SBI implementation (or L0 hypervisor)
+MUST synchronize CSR <code>&lt;x&gt;</code> before CSR <code>&lt;y&gt;</code>. For example, the value of CSR
+<code>hip</code> depends on the value of the CSR <code>hvip</code>, which means <code>hvip</code> is emulated
+and written first, followed by <code>hip</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="16-1-2-feature-synchronize-hfence-id-1"><a class="anchor" href="#16-1-2-feature-synchronize-hfence-id-1"></a>16.1.2. Feature: Synchronize HFENCE (ID #1)</h3>
+<div class="paragraph">
+<p>The synchronize HFENCE feature describes the ability of the SBI implementation
+(or L0 hypervisor) to allow supervisor software (or L1 hypervisor) to issue
+HFENCE using the scratch space.</p>
+</div>
+<div class="paragraph">
+<p>This nested acceleration feature defines the scratch space offset range
+<code>0x0800 - 0x0F7F</code> (1920 bytes) as an array of nested HFENCE entries. The
+total number of nested HFENCE entries are <code>3840 / XLEN</code> where each nested
+HFENCE entry consists of four XLEN-bit words.</p>
+</div>
+<div class="paragraph">
+<p>A nested HFENCE entry is equivalent to an HFENCE over a range of guest
+addresses. The <a href="#table_nacl_hfence_entry_format">Table 57</a> below shows the nested
+HFENCE entry format whereas <a href="#table_nacl_hfence_entry_types">Table 58</a> below provides
+a list of nested HFENCE entry types. Upon an explicit synchronize HFENCE
+request from supervisor software (or L1 hypervisor), the SBI implementation
+(or L0 hypervisor) will process nested HFENCE entries with the <code>Config.Pending</code>
+bit set. After processing pending nested HFENCE entries, the SBI implementation
+(or L0 hypervisor) will clear the <code>Config.Pending</code> bit of these entries.</p>
+</div>
+<table id="table_nacl_hfence_entry_format" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 57. Nested HFENCE entry format</caption>
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 20%;">
+<col style="width: 70%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Word</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Config information about the nested HFENCE entry<br>
+                      <br>
+                       BIT[XLEN-1:XLEN-1] - Pending<br>
+                       BIT[XLEN-2:XLEN-4] - Reserved and must be zero<br>
+                       BIT[XLEN-5:XLEN-8] - Type<br>
+                       BIT[XLEN-9:XLEN-9] - Reserved and must be zero<br>
+                       BIT[XLEN-10:XLEN-16] - Order<br>
+                       if XLEN == 32 then<br>
+                       &nbsp;&nbsp;&nbsp;&nbsp;BIT[15:9] - VMID<br>
+                       &nbsp;&nbsp;&nbsp;&nbsp;BIT[8:0] - ASID<br>
+                       else<br>
+                       &nbsp;&nbsp;&nbsp;&nbsp;BIT[29:16] - VMID<br>
+                       &nbsp;&nbsp;&nbsp;&nbsp;BIT[15:0] - ASID<br>
+                      <br>
+                       The page size for invalidation must be<br>
+                       <code>1 &lt;&lt; (Config.Order + 12)</code> bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page_Number</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page address right shifted by <code>Config.Order + 12</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use and must be zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page_Count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Number of pages to invalidate</p></td>
+</tr>
+</tbody>
+</table>
+<table id="table_nacl_hfence_entry_types" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 58. Nested HFENCE entry types</caption>
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 27.2727%;">
+<col style="width: 63.6364%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GVMA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate a guest physical address range across
+                         all VMIDs. The <code>VMID</code> and <code>ASID</code> fields of the
+                         <code>Config</code> word are ignored and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GVMA_ALL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate all guest physical addresses across
+                         all VMIDs. The <code>Order</code>, <code>VMID</code> and <code>ASID</code> fields
+                         of the <code>Config</code> word are ignored and MUST be zero.
+                         The <code>Page_Number</code> and <code>Page_Count</code> words are ignored
+                         and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GVMA_VMID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate a guest physical address range for a
+                         particular VMID. The <code>ASID</code> field of the <code>Config</code>
+                         word is ignored and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GVMA_VMID_ALL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate all guest physical addresses for a
+                         particular VMID. The <code>Order</code> and <code>ASID</code> fields
+                         of the <code>Config</code> word are ignored and MUST be zero.
+                         The <code>Page_Number</code> and <code>Page_Count</code> words are ignored
+                         and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VVMA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate a guest virtual address range for a
+                         particular VMID. The <code>ASID</code> field of the <code>Config</code>
+                         word is ignored and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VVMA_ALL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate all guest virtual addresses for a
+                         particular VMID. The <code>Order</code> and <code>ASID</code> fields
+                         of the <code>Config</code> word are ignored and MUST be zero.
+                         The <code>Page_Number</code> and <code>Page_Count</code> words are ignored
+                         and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VVMA_ASID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate a guest virtual address range for a
+                         particular VMID and ASID.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VVMA_ASID_ALL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Invalidate all guest virtual addresses for a
+                         particular VMID and ASID. The <code>Order</code> field of
+                         the <code>Config</code> word is ignored and MUST be zero.
+                         The <code>Page_Number</code> and <code>Page_Count</code> words are ignored
+                         and MUST be zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt; 7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To add a nested HFENCE entry, the supervisor software (or L1 hypervisor)
+MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Find an unused nested HFENCE entry with <code>Config.Pending == 0</code></p>
+</li>
+<li>
+<p>Update the <code>Page_Number</code> and <code>Page_Count</code> words in the nested
+HFENCE entry</p>
+</li>
+<li>
+<p>Update the <code>Config</code> word in the nested HFENCE entry such that
+<code>Config.Pending</code> bit is set</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To synchronize a nested HFENCE entry, the SBI implementation (or L0
+hypervisor) MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If <code>Config.Pending == 0</code> then do nothing and skip below steps</p>
+</li>
+<li>
+<p>Process HFENCE based on details in the nested HFENCE entry</p>
+</li>
+<li>
+<p>Clear the <code>Config.Pending</code> bit in the nested HFENCE entry</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="16-1-3-feature-synchronize-sret-id-2"><a class="anchor" href="#16-1-3-feature-synchronize-sret-id-2"></a>16.1.3. Feature: Synchronize SRET (ID #2)</h3>
+<div class="paragraph">
+<p>The synchronize SRET feature describes the ability of the SBI implementation
+(or L0 hypervisor) to do synchronization of CSRs and HFENCEs in the nested
+acceleration shared memory for the supervisor software (or L1 hypervisor)
+along with SRET emulation.</p>
+</div>
+<div class="paragraph">
+<p>This nested acceleration feature defines the scratch space offset range
+<code>0x0000 - 0x01FF</code> (512 bytes) as nested SRET context. The
+<a href="#table_nacl_sret_context">Table 59</a> below shows contents of the nested SRET context.</p>
+</div>
+<table id="table_nacl_sret_context" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 59. Nested SRET context</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 16.6666%;">
+<col style="width: 50.0001%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Offset</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use and must be zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X2</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>3 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X3</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>4 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X4</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>5 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X5</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>6 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X6</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>7 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X7</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>8 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X8</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>9 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X9</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>10 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X10</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>11 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X11</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>12 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X12</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>13 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X13</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>14 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X14</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>15 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X15</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>16 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X16</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>17 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X17</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>18 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X18</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>19 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X19</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>20 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X20</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>21 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X21</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>22 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X22</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>23 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X23</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>24 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X24</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>25 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X25</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>26 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X26</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>27 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X27</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X27</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>28 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X28</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>29 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X29</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X29</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>30 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X30</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>31 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">X31</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be restored in GPR X31</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>32 * (XLEN / 8)</code> - 0x1FF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Before sending a synchronize SRET request to the SBI implementation (or
+L0 hypervisor), the supervisor software (or L1 hypervisor) MUST write
+the GPR <code>X&lt;i&gt;</code> values to be restored at offset <code>&lt;i&gt; * (XLEN / 8)</code> of the
+nested SRET context.</p>
+</div>
+<div class="paragraph">
+<p>Upon a synchronize SRET request from the supervisor software (or L1
+hypervisor), the SBI implementation (or L0 hypervisor) MUST do the
+following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If SBI_NACL_FEAT_SYNC_CSR feature is available then</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>All RISC-V H-extension CSRs implemented by the SBI implementation
+(or L0 hypervisor) are synchronized as described in the
+<a href="#_feature_synchronize_csr_id_0">[_feature_synchronize_csr_id_0]</a>. This is equivalent to
+the SBI call <code>sbi_nacl_sync_csr(-1UL)</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>If SBI_NACL_FEAT_SYNC_HFENCE feature is available then</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>All nested HFENCE entries are synchronized as described in the
+<a href="#_feature_synchronize_hfence_id_1">[_feature_synchronize_hfence_id_1]</a>. This is equivalent to
+the SBI call <code>sbi_nacl_sync_hfence(-1UL)</code>.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Restore GPR <code>X&lt;i&gt;</code> registers from the nested SRET context.</p>
+</li>
+<li>
+<p>Emulate the SRET instruction as defined by the RISC-V Privilege
+specification cite:[priv_v1_12].</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="16-1-4-feature-autoswap-csr-id-3"><a class="anchor" href="#16-1-4-feature-autoswap-csr-id-3"></a>16.1.4. Feature: Autoswap CSR (ID #3)</h3>
+<div class="paragraph">
+<p>The autoswap CSR feature describes the ability of the SBI implementation
+(or L0 hypervisor) to automatically swap certain RISC-V H-extension CSR
+values from the nested acceleration shared memory in the following
+situations:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Before emulating the SRET instruction for a synchronized SRET request
+from the supervisor software (or L1 hypervisor).</p>
+</li>
+<li>
+<p>After supervisor (or L1) virtualization state changes from ON to OFF.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The supervisor software (or L1 hypervisor) should use the autoswap
+CSR feature in conjunction with the synchronize SRET feature.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This nested acceleration feature defines the scratch space offset
+range <code>0x0200 - 0x027F</code> (128 bytes) as nested autoswap context. The
+<a href="#table_nacl_autoswap_context">Table 7</a> below shows contents of the nested
+autoswap context.</p>
+</div>
+<table id="table_nacl_autoswap_context" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 7. Nested autoswap context</caption>
+<colgroup>
+<col style="width: 30.7692%;">
+<col style="width: 23.0769%;">
+<col style="width: 46.1539%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Offset</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Encoding</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Autoswap_Flags</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Autoswap flags<br>
+                                     <br>
+                                      BIT[XLEN-1:1] - Reserved for future use<br>
+                                                      and must be zero<br>
+                                      BIT[0:0] - HSTATUS</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1 * (XLEN / 8)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HSTATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value to be swapped with <code>HSTATUS</code> CSR</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>2 * (XLEN / 8)</code> - 0x7F</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>To enable automatic swapping of CSRs from the nested autoswap context,
+the supervisor software (or L1 hypervisor) MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Write the <code>HSTATUS</code> swap value in the nested autoswap context.</p>
+</li>
+<li>
+<p>Set <code>Autoswap_Flags.HSTATUS</code> bit in the nested autoswap context.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To swap CSRs from the nested autoswap context, the SBI implementation
+(or L0 hypervisor) MUST do the following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>If <code>Autoswap_Flags.HSTATUS</code> bit is set in the nested autoswap context
+then swap the supervisor <code>HSTATUS</code> CSR value with the <code>HSTATUS</code> value
+in the nested autoswap context.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="16-1-5-function-probe-nested-acceleration-feature-fid-0"><a class="anchor" href="#16-1-5-function-probe-nested-acceleration-feature-fid-0"></a>16.1.5. Function: Probe nested acceleration feature (FID #0)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_nacl_probe_feature(uint32_t feature_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Probe a nested acceleration feature. This is a mandatory function of the
+SBI nested acceleration extension. The <code>feature_id</code> parameter specifies the
+nested acceleration feature to probe. <a href="#table_nacl_features">Table 1</a> provides
+a list of possible feature IDs.</p>
+</div>
+<div class="paragraph">
+<p>This function always returns SBI_SUCCESS in <code>sbiret.error</code>. It returns <code>0</code>
+in <code>sbiret.value</code> if the given <code>feature_id</code> is not available, or <code>1</code> in
+<code>sbiret.value</code> if it is available.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="16-1-6-function-set-nested-acceleration-shared-memory-fid-1"><a class="anchor" href="#16-1-6-function-set-nested-acceleration-shared-memory-fid-1"></a>16.1.6. Function: Set nested acceleration shared memory (FID #1)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_nacl_set_shmem(unsigned long shmem_phys_lo,
+                                 unsigned long shmem_phys_hi,
+                                 unsigned long flags)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Set and enable the shared memory for nested acceleration on the calling
+hart. This is a mandatory function of the SBI nested acceleration extension.</p>
+</div>
+<div class="paragraph">
+<p>If both <code>shmem_phys_lo</code> and <code>shmem_phys_hi</code> parameters are not all-ones
+bitwise then <code>shmem_phys_lo</code> specifies the lower XLEN bits and <code>shmem_phys_hi</code>
+specifies the upper XLEN bits of the shared memory physical base address.
+<code>shmem_phys_lo</code> MUST be 4096 bytes (i.e. page) aligned and the size of the
+shared memory must be <code>4096 + (XLEN * 128)</code> bytes.</p>
+</div>
+<div class="paragraph">
+<p>If both <code>shmem_phys_lo</code> and <code>shmem_phys_hi</code> parameters are all-ones bitwise
+then the nested acceleration features are disabled.</p>
+</div>
+<div class="paragraph">
+<p>The <code>flags</code> parameter is reserved for future use and must be zero.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in
+<a href="#table_nacl_set_shmem_errors">Table 60</a>.</p>
+</div>
+<table id="table_nacl_set_shmem_errors" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 60. NACL Set Shared Memory Errors</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Shared memory was set or cleared successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>flags</code> parameter is not zero or or the
+                            <code>shmem_phys_lo</code> parameter is not 4096 bytes
+                            aligned.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The shared memory pointed to by the <code>shmem_phys_lo</code>
+                            and <code>shmem_phys_hi</code> parameters does not satisfy
+                            the requirements described in
+                            <a href="#_shared_memory_physical_address_range_parameter">[_shared_memory_physical_address_range_parameter]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request failed for unspecified or unknown other
+                            reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="16-1-7-function-synchronize-shared-memory-csrs-fid-2"><a class="anchor" href="#16-1-7-function-synchronize-shared-memory-csrs-fid-2"></a>16.1.7. Function: Synchronize shared memory CSRs (FID #2)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_nacl_sync_csr(unsigned long csr_num)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Synchronize CSRs in the nested acceleration shared memory. This is an
+optional function which is only available if the SBI_NACL_FEAT_SYNC_CSR
+feature is available. The parameter <code>csr_num</code> specifies the set of
+RISC-V H-extension CSRs to be synchronized.</p>
+</div>
+<div class="paragraph">
+<p>If <code>csr_num</code> is all-ones bitwise then all RISC-V H-extension CSRs
+implemented by the SBI implementation (or L0 hypervisor) are
+synchronized as described in the <a href="#_feature_synchronize_csr_id_0">[_feature_synchronize_csr_id_0]</a>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>(csr_num &amp; 0x300) == 0x200</code> and <code>csr_num &lt; 0x1000</code> then only a
+single RISC-V H-extension CSR specified by the <code>csr_num</code> parameter
+is synchronized as described in the <a href="#_feature_synchronize_csr_id_0">[_feature_synchronize_csr_id_0]</a>.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in
+<a href="#table_nacl_sync_csr_errors">Table 61</a>.</p>
+</div>
+<table id="table_nacl_sync_csr_errors" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 61. NACL Synchronize CSR Errors</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CSRs synchronized successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_CSR feature is not available.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>csr_num</code> is not all-ones bitwise and either:<br>
+                            * <code>(csr_num &amp; 0x300) != 0x200</code> or<br>
+                            * <code>csr_num &gt;= 0x1000</code> or<br>
+                            * <code>csr_num</code> is not implemented by the
+                               SBI implementation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NO_SHMEM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested acceleration shared memory not available.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="16-1-8-function-synchronize-shared-memory-hfences-fid-3"><a class="anchor" href="#16-1-8-function-synchronize-shared-memory-hfences-fid-3"></a>16.1.8. Function: Synchronize shared memory HFENCEs (FID #3)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_nacl_sync_hfence(unsigned long entry_index)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Synchronize HFENCEs in the nested acceleration shared memory. This is an
+optional function which is only available if the SBI_NACL_FEAT_SYNC_HFENCE
+feature is available. The parameter <code>entry_index</code> specifies the set of
+nested HFENCE entries to be synchronized.</p>
+</div>
+<div class="paragraph">
+<p>If <code>entry_index</code> is all-ones bitwise then all nested HFENCE entries are
+synchronized as described in the <a href="#_feature_synchronize_hfence_id_1">[_feature_synchronize_hfence_id_1]</a>.</p>
+</div>
+<div class="paragraph">
+<p>If <code>entry_index &lt; (3840 / XLEN)</code> then only a single nested HFENCE entry
+specified by the <code>entry_index</code> parameter is synchronized as described
+in the <a href="#_feature_synchronize_hfence_id_1">[_feature_synchronize_hfence_id_1]</a>.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in
+<a href="#table_nacl_sync_hfence_errors">Table 62</a>.</p>
+</div>
+<table id="table_nacl_sync_hfence_errors" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 62. NACL Synchronize HFENCE Errors</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HFENCEs synchronized successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_HFENCE feature is not available.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>entry_index</code> is not all-ones bitwise and<br>
+                            <code>entry_index &gt;= (3840 / XLEN)</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NO_SHMEM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested acceleration shared memory not available.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="16-1-9-function-synchronize-shared-memory-and-emulate-sret-fid-4"><a class="anchor" href="#16-1-9-function-synchronize-shared-memory-and-emulate-sret-fid-4"></a>16.1.9. Function: Synchronize shared memory and emulate SRET (FID #4)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_nacl_sync_sret(void)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Synchronize CSRs and HFENCEs in the nested acceleration shared memory and
+emulate the SRET instruction. This is an optional function which is only
+available if the SBI_NACL_FEAT_SYNC_SRET feature is available.</p>
+</div>
+<div class="paragraph">
+<p>This function is used by supervisor software (or L1 hypervisor) to do
+a synchronize SRET request and the SBI implementation (or L0 hypervisor)
+MUST handle it as described in the <a href="#_feature_synchronize_sret_id_2">[_feature_synchronize_sret_id_2]</a>.</p>
+</div>
+<div class="paragraph">
+<p>This function does not return upon success and the possible error codes
+returned in <code>sbiret.error</code> upon failure are shown in
+<a href="#table_nacl_sync_sret_errors">Table 63</a>.</p>
+</div>
+<table id="table_nacl_sync_sret_errors" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 63. NACL Synchronize SRET Errors</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_NACL_FEAT_SYNC_SRET feature is not available.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NO_SHMEM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Nested acceleration shared memory not available.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="16-1-10-function-listing"><a class="anchor" href="#16-1-10-function-listing"></a>16.1.10. Function Listing</h3>
+<table id="table_nacl_function_list" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 64. NACL Function List</caption>
+<colgroup>
+<col style="width: 37.5%;">
+<col style="width: 25%;">
+<col style="width: 12.5%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function Name</th>
+<th class="tableblock halign-left valign-top">SBI Version</th>
+<th class="tableblock halign-left valign-top">FID</th>
+<th class="tableblock halign-left valign-top">EID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_nacl_probe_feature</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4E41434C</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_nacl_set_shmem</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4E41434C</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_nacl_sync_csr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4E41434C</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_nacl_sync_hfence</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4E41434C</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_nacl_sync_sret</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x4E41434C</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ext-cppc.html">Chapter 15. CPPC Extension (EID #0x43505043 "CPPC")</a></span>
+  <span class="next"><a href="ext-steal-time.html">Chapter 17. Steal-time Accounting Extension (EID #0x535441 "STA")</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

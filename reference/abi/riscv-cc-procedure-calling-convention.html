@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/abi/riscv-cc-procedure-calling-convention.html">
+    <link rel="prev" href="riscv-cc-register-convention.html">
+    <link rel="next" href="riscv-cc-system-calls.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="abi">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="abi" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../app-enablement-overview/index.html">Application Enablement</a>
+</div>        <div class="nav-trees" data-component="abi">
+          <div class="version-box">
+            <select data-component="abi" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="abi" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ABIs Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="preamble.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="status.html">Status of ABI</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-register-convention.html">Chapter 1. Register Convention</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-procedure-calling-convention.html">Chapter 2. Procedure Calling Convention</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-system-calls.html">Chapter 3. Calling Conventions for System Calls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-c-cpp-type-details.html">Chapter 4. C/C++ type details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-linux-specific-abi.html">Appendix A. Linux-specific ABI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V ELF Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-code-models.html">Chapter 5. Code Models</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-dynamic-linking.html">Chapter 6. Dynamic Linking</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-cpp-name-mangling.html">Chapter 7. C++ Name Mangling</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-object-files.html">Chapter 8. ELF Object Files</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-linker-relaxation.html">Chapter 9. Linker Relaxation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="elf-bib.html">References</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V DWARF Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-dwarf-debugging-format.html">Chapter 10. DWARF Debugging Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-dwarf-register-numbers.html">Chapter 11. DWARF Register Numbers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dwarf-bib.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="vector-c-intrinsics">
+          <div class="version-box">
+            <select data-component="vector-c-intrinsics" class="select-version">
+                <option
+                  value="../vector-c-intrinsics/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="vector-c-intrinsics" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Vector C Intrinsic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/copyright.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/rvv-intrinsic-spec.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/rvv-intrinsic-examples.html">Chapter 2. Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix A: Explicit (Non-overloaded) intrinsics</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">A.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">A.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">A.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">A.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/04_vector_floating-point_intrinsics.html">A.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/05_vector_reduction_operations.html">A.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/06_vector_mask_intrinsics.html">A.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/07_vector_permutation_intrinsics.html">A.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">A.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix B: Explicit (Non-overloaded) intrinsics, policy variants</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">B.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">B.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">B.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">B.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/04_vector_floating-point_intrinsics.html">B.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/05_vector_reduction_operations.html">B.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/06_vector_mask_intrinsics.html">B.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/07_vector_permutation_intrinsics.html">B.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">B.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix C: Implicit (Overloaded) intrinsics</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">C.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">C.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">C.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">C.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/04_vector_floating-point_intrinsics.html">C.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/05_vector_reduction_operations.html">C.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/06_vector_mask_intrinsics.html">C.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/07_vector_permutation_intrinsics.html">C.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/overloaded_intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">C.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix D: Implicit (Overloaded) intrinsics, policy variants</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">D.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">D.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">D.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">D.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/04_vector_floating-point_intrinsics.html">D.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/05_vector_reduction_operations.html">D.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/06_vector_mask_intrinsics.html">D.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/07_vector_permutation_intrinsics.html">D.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../vector-c-intrinsics/policy_funcs/overloaded_intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">D.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../vector-c-intrinsics/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-elf-psabi-doc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-elf-psabi-doc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-abi.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../app-enablement-overview/index.html">Application Enablement Overview</a></li>
+                    <li><a href="index.html">Application Binary Interface</a></li>
+                      <li>
+            <a href="riscv-cc-procedure-calling-convention.html">Chapter 2. Procedure Calling Convention</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="2-1-procedure-calling-convention"><a class="anchor" href="#2-1-procedure-calling-convention"></a>2.1. Procedure Calling Convention</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter defines standard calling conventions, and describes how to pass
+parameters and return values.</p>
+</div>
+<div class="paragraph">
+<p>Functions must follow the register convention defined in calling convention: the
+contents of any register without specifying it as an argument register
+in the calling convention are unspecified upon entry, and the content of any
+register without specifying it as a return value register or callee-saved in
+the calling convention are unspecified upon exit, the contents of all
+callee-saved registers must be restored to what was set on entry, and the
+contents of any fixed registers like <code>gp</code> and <code>tp</code> never change,</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Calling convention for big-endian is <strong>NOT</strong> included in this specification
+yet, we intend to define that in future version of this specification.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="2-1-1-integer-calling-convention"><a class="anchor" href="#2-1-1-integer-calling-convention"></a>2.1.1. Integer Calling Convention</h3>
+<div class="paragraph">
+<p>The base integer calling convention provides eight argument registers,
+a0-a7, the first two of which are also used to return values.</p>
+</div>
+<div class="paragraph">
+<p>Scalars that are at most XLEN bits wide are passed in a single argument
+register, or on the stack by value if none is available.
+When passed in registers or on the stack, integer scalars narrower than XLEN
+bits are widened according to the sign of their type up to 32 bits, then
+sign-extended to XLEN bits.
+When passed in registers or on the stack, floating-point types narrower than
+XLEN bits are widened to XLEN bits, with the upper bits undefined.</p>
+</div>
+<div class="paragraph">
+<p>Scalars that are 2×XLEN bits wide are passed in a pair of argument registers,
+with the low-order XLEN bits in the lower-numbered register and the high-order
+XLEN bits in the higher-numbered register.  If no argument registers are
+available, the scalar is passed on the stack by value.  If exactly one
+register is available, the low-order XLEN bits are passed in the register and
+the high-order XLEN bits are passed on the stack.</p>
+</div>
+<div class="paragraph">
+<p>Scalars wider than 2×XLEN bits are passed by reference and are replaced in the
+argument list with the address.</p>
+</div>
+<div class="paragraph">
+<p>Aggregates whose total size is no more than XLEN bits are passed in
+a register, with the fields laid out as though they were passed in memory. If
+no register is available, the aggregate is passed on the stack.
+Aggregates whose total size is no more than 2×XLEN bits are passed in a pair
+of registers; if only one register is available, the first XLEN bits are passed
+in a register and the remaining bits are passed on the stack. If no registers are
+available, the aggregate is passed on the stack. Bits unused due to
+padding, and bits past the end of an aggregate whose size in bits is not
+divisible by XLEN, are undefined.</p>
+</div>
+<div class="paragraph">
+<p>Aggregates or scalars passed on the stack are aligned to the greater of the
+type alignment and XLEN bits, but never more than the stack alignment.</p>
+</div>
+<div class="paragraph">
+<p>Aggregates larger than 2×XLEN bits are passed by reference and are replaced in
+the argument list with the address, as are C&#43;&#43; aggregates with nontrivial copy
+constructors, destructors, or vtables.</p>
+</div>
+<div class="paragraph">
+<p>Empty structs or union arguments or return values are ignored by C compilers
+which support them as a non-standard extension.  This is not the case for C&#43;&#43;,
+which requires them to be sized types.</p>
+</div>
+<div class="paragraph">
+<p>Bitfields are packed in little-endian fashion. A bitfield that would span the
+alignment boundary of its integer type is padded to begin at the next
+alignment boundary. For example, <code>struct { int x : 10; int y : 12; }</code> is
+a 32-bit type with <code>x</code> in bits 9-0, <code>y</code> in bits 21-10, and bits 31-22
+undefined.  By contrast, <code>struct { short x : 10; short y : 12; }</code> is a 32-bit
+type with <code>x</code> in bits 9-0, <code>y</code> in bits 27-16, and bits 31-28 and bits 15-10
+undefined.</p>
+</div>
+<div class="paragraph">
+<p>Bitfields may larger than its integer type, bits excess than its integer
+type will treat as padding bits, then padding to begin at the next alignment
+boundary. For example <code>struct { char x : 9; char y; }</code> is a 24 byte type with
+<code>x</code> in bits 7-0, <code>y</code> in bit 23-16, and bits 15-8 undefined,
+<code>struct { char x : 9; char y : 2 }</code> is a 16-bit type with <code>x</code> in bits 7-0, <code>y</code>
+in bit 10-9, and bit 8, bits 15-11 is undefined.</p>
+</div>
+<div class="paragraph">
+<p>Arguments passed by reference may be modified by the callee.</p>
+</div>
+<div class="paragraph">
+<p>Floating-point reals are passed the same way as aggregates of the same size;
+complex floating-point numbers are passed the same way as a struct containing
+two floating-point reals. (This constraint changes when the integer calling
+convention is augmented by the hardware floating-point calling convention.)</p>
+</div>
+<div class="paragraph">
+<p>In the base integer calling convention, variadic arguments are passed in the
+same manner as named arguments, with one exception.  Variadic arguments with
+2×XLEN-bit alignment and size at most 2×XLEN bits are passed in an
+<strong>aligned</strong> register pair (i.e., the first register in the pair is
+even-numbered), or on the stack by value if none is available. After a
+variadic argument has been passed on the stack, all future arguments will also
+be passed on the stack (i.e. the last argument register may be left unused due
+to the aligned register pair rule).</p>
+</div>
+<div class="paragraph">
+<p>Values are returned in the same manner as a first named argument of the same
+type would be passed.  If such an argument would have been passed by
+reference, the caller allocates memory for the return value, and passes the
+address as an implicit first parameter.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There is no requirement that the address be returned from the function
+and so software should not assume that a0 will hold the address of the return
+value on return.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The stack grows downwards (towards lower addresses) and the stack pointer shall
+be aligned to a 128-bit boundary upon procedure entry.
+The first argument passed on the stack is located at offset zero of the stack pointer
+on function entry; following arguments are stored at correspondingly
+higher addresses.</p>
+</div>
+<div class="paragraph">
+<p>In the standard ABI, the stack pointer must remain
+aligned throughout procedure execution. Non-standard ABI code must realign the
+stack pointer prior to invoking standard ABI procedures.  The operating system
+must realign the stack pointer prior to invoking a signal handler; hence,
+POSIX signal handlers need not realign the stack pointer.  In systems that
+service interrupts using the interruptee&#8217;s stack, the interrupt service
+routine must realign the stack pointer if linked with any code that uses
+a non-standard stack-alignment discipline, but need not realign the stack
+pointer if all code adheres to the standard ABI.</p>
+</div>
+<div class="paragraph">
+<p>Procedures must not rely upon the persistence of
+stack-allocated data whose addresses lie below the stack pointer.</p>
+</div>
+<div class="paragraph">
+<p>Registers s0-s11 shall be preserved across procedure calls.
+No floating-point registers, if present, are preserved across calls. (This
+property changes when the integer calling convention is augmented by the
+hardware floating-point calling convention.)</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-2-hardware-floating-point-calling-convention"><a class="anchor" href="#2-1-2-hardware-floating-point-calling-convention"></a>2.1.2. Hardware Floating-point Calling Convention</h3>
+<div class="paragraph">
+<p>The hardware floating-point calling convention adds eight floating-point
+argument registers, fa0-fa7, the first two of which are also used to return
+values.  Values are passed in floating-point registers whenever possible,
+whether or not the integer registers have been exhausted.</p>
+</div>
+<div class="paragraph">
+<p>The remainder of this section applies only to named arguments.  Variadic
+arguments are passed according to the integer calling convention.</p>
+</div>
+<div class="paragraph">
+<p>ABI_FLEN refers to the width of a floating-point register in the ABI.
+The ABI_FLEN must be no wider than the ISA&#8217;s FLEN.  The ISA might have wider
+floating-point registers than the ABI.</p>
+</div>
+<div class="paragraph">
+<p>For the purposes of this section, "struct" refers to a C struct with its
+hierarchy flattened, including any array fields.  That is, <code>struct { struct
+{ float f[1]; } g[2]; }</code> and <code>struct { float f; float g; }</code> are
+treated the same.  Fields containing empty structs or unions are ignored while
+flattening, even in C&#43;&#43;, unless they have nontrivial copy constructors or
+destructors.  Fields containing zero-length bit-fields are ignored while
+flattening.  Attributes such as <code>aligned</code> or <code>packed</code> do not interfere with a
+struct&#8217;s eligibility for being passed in registers according to the rules
+below, i.e. <code>struct { int i; double d; }</code> and <code>struct
+__attribute__((__packed__)) { int i; double d }</code> are treated the same, as are
+<code>struct { float f; float g; }</code> and <code>struct { float f; float g __attribute__
+((aligned (8))); }</code>.</p>
+</div>
+<div class="paragraph">
+<p>A real floating-point argument is passed in a floating-point argument
+register if it is no more than ABI_FLEN bits wide and at least one floating-point
+argument register is available.  Otherwise, it is passed according to the
+integer calling convention.
+When a floating-point argument narrower than FLEN bits is passed in a
+floating-point register, it is 1-extended (NaN-boxed) to FLEN bits.</p>
+</div>
+<div class="paragraph">
+<p>A struct containing just one floating-point real is passed as though it were
+a standalone floating-point real.</p>
+</div>
+<div class="paragraph">
+<p>A struct containing two floating-point reals is passed in two floating-point
+registers, if neither real is more than ABI_FLEN bits wide and at least two floating-point
+argument registers are available.  (The registers need not be an aligned pair.)
+Otherwise, it is passed according to the integer calling convention.</p>
+</div>
+<div class="paragraph">
+<p>A complex floating-point number, or a struct containing just one complex
+floating-point number, is passed as though it were a struct containing two
+floating-point reals.</p>
+</div>
+<div class="paragraph">
+<p>A struct containing one floating-point real and one integer (or bitfield), in
+either order, is passed in a floating-point register and an integer register,
+provided the floating-point real is no more than ABI_FLEN bits wide and the
+integer is no more than XLEN bits wide, and at least one floating-point
+argument register and at least one integer argument register is available.
+If the struct is passed in this manner, and the integer is narrower than XLEN
+bits, the remaining bits are unspecified.
+If the struct is not passed in this manner, then it is passed according to the
+integer calling convention.</p>
+</div>
+<div class="paragraph">
+<p>Unions are never flattened and are always passed according to the integer
+calling convention.</p>
+</div>
+<div class="paragraph">
+<p>Values are returned in the same manner as a first named argument of the same
+type would be passed.</p>
+</div>
+<div class="paragraph">
+<p>Floating-point registers fs0-fs11 shall be preserved across procedure calls,
+provided they hold values no more than ABI_FLEN bits wide.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-3-ilp32e-calling-convention"><a class="anchor" href="#2-1-3-ilp32e-calling-convention"></a>2.1.3. ILP32E Calling Convention</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+RV32E is not a ratified base ISA and so we cannot guarantee the
+stability of ILP32E, in contrast with the rest of this document. This documents
+the current implementation in GCC as of the time of writing, but may be subject
+to change.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The ILP32E calling convention is designed to be usable with the RV32E ISA. This
+calling convention is the same as the integer calling convention, except for the
+following differences.  The stack pointer need only be aligned to a 32-bit
+boundary.  Registers x16-x31 do not participate in the calling convention, so
+there are only six argument registers, a0-a5, only two callee-saved registers,
+s0-s1, and only three temporaries, t0-t2.</p>
+</div>
+<div class="paragraph">
+<p>If used with an ISA that has any of the registers x16-x31 and f0-f31, then
+these registers are considered temporaries.</p>
+</div>
+<div class="paragraph">
+<p>The ILP32E calling convention is not compatible with ISAs that have registers
+that require load and store alignments of more than 32 bits. In particular, this
+calling convention must not be used with the D ISA extension.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-4-named-abis"><a class="anchor" href="#2-1-4-named-abis"></a>2.1.4. Named ABIs</h3>
+<div class="paragraph">
+<p>This specification defines the following named ABIs:</p>
+</div>
+<div id="abi-ilp32" class="dlist">
+<dl>
+<dt class="hdlist1">ILP32</dt>
+<dd>
+<p>Integer calling-convention only, hardware
+floating-point calling convention is not used (i.e. <a href="#ELFCLASS32">ELFCLASS32</a> and
+<a href="#EF_RISCV_FLOAT_ABI_SOFT">EF_RISCV_FLOAT_ABI_SOFT</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-ilp32f" class="dlist">
+<dl>
+<dt class="hdlist1">ILP32F</dt>
+<dd>
+<p>ILP32 with hardware floating-point calling
+convention for ABI_FLEN=32 (i.e. <a href="#ELFCLASS32">ELFCLASS32</a> and
+<a href="#EF_RISCV_FLOAT_ABI_SINGLE">EF_RISCV_FLOAT_ABI_SINGLE</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-ilp32d" class="dlist">
+<dl>
+<dt class="hdlist1">ILP32D</dt>
+<dd>
+<p>ILP32 with hardware floating-point calling
+convention for ABI_FLEN=64 (i.e. <a href="#ELFCLASS32">ELFCLASS32</a> and
+<a href="#EF_RISCV_FLOAT_ABI_DOUBLE">EF_RISCV_FLOAT_ABI_DOUBLE</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-ilp32e" class="dlist">
+<dl>
+<dt class="hdlist1">ILP32E</dt>
+<dd>
+<p><a href="#ILP32E Calling Convention">ILP32E calling-convention</a> only,
+hardware floating-point calling convention is not used (i.e. <a href="#ELFCLASS32">ELFCLASS32</a>,
+<a href="#EF_RISCV_FLOAT_ABI_SOFT">EF_RISCV_FLOAT_ABI_SOFT</a>, and <a href="#EF_RISCV_RVE">EF_RISCV_RVE</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-lp64" class="dlist">
+<dl>
+<dt class="hdlist1">LP64</dt>
+<dd>
+<p>Integer calling-convention only, hardware
+floating-point calling convention is not used (i.e. <a href="#ELFCLASS64">ELFCLASS64</a> and
+<a href="#EF_RISCV_FLOAT_ABI_SOFT">EF_RISCV_FLOAT_ABI_SOFT</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-lp64f" class="dlist">
+<dl>
+<dt class="hdlist1">LP64F</dt>
+<dd>
+<p>LP64 with hardware floating-point calling
+convention for ABI_FLEN=32 (i.e. <a href="#ELFCLASS64">ELFCLASS64</a> and
+<a href="#EF_RISCV_FLOAT_ABI_SINGLE">EF_RISCV_FLOAT_ABI_SINGLE</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-lp64d" class="dlist">
+<dl>
+<dt class="hdlist1">LP64D</dt>
+<dd>
+<p>LP64 with hardware floating-point calling
+convention for ABI_FLEN=64 (i.e. <a href="#ELFCLASS64">ELFCLASS64</a> and
+<a href="#EF_RISCV_FLOAT_ABI_DOUBLE">EF_RISCV_FLOAT_ABI_DOUBLE</a>).</p>
+</dd>
+</dl>
+</div>
+<div id="abi-lp64q" class="dlist">
+<dl>
+<dt class="hdlist1">LP64Q</dt>
+<dd>
+<p>LP64 with hardware floating-point calling
+convention for ABI_FLEN=128 (i.e. <a href="#ELFCLASS64">ELFCLASS64</a> and
+<a href="#EF_RISCV_FLOAT_ABI_QUAD">EF_RISCV_FLOAT_ABI_QUAD</a>).</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>The ILP32* ABIs are only compatible with RV32* ISAs, and the LP64* ABIs are
+only compatible with RV64* ISAs. A future version of this specification may
+define an ILP32 ABI for the RV64 ISA, but currently this is not a supported
+operating mode.</p>
+</div>
+<div class="paragraph">
+<p>The *F ABIs require the *F ISA extension, the *D ABIs require the *D ISA
+extension, and the LP64Q ABI requires the Q ISA extension.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This means code targeting the Zfinx extension always uses the ILP32,
+ILP32E or LP64 integer calling-convention only ABIs as there is no dedicated
+hardware floating-point register file.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-5-default-abis"><a class="anchor" href="#2-1-5-default-abis"></a>2.1.5. Default ABIs</h3>
+<div class="paragraph">
+<p>While various different ABIs are technically possible, for software
+compatibility reasons it is strongly recommended to use the following
+default ABIs for specific architectures:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+on RV32G
+</td>
+<td class="hdlist2">
+<p><a href="#abi-ilp32d">ILP32D</a></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+on RV64G
+</td>
+<td class="hdlist2">
+<p><a href="#abi-lp64d">LP64D</a></p>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Although RV64GQ systems can technically use <a href="#abi-lp64q">LP64Q</a>, it is
+strongly recommended to use LP64D on general-purpose RV64GQ systems for
+compatibility with standard RV64G software.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="riscv-cc-register-convention.html">Chapter 1. Register Convention</a></span>
+  <span class="next"><a href="riscv-cc-system-calls.html">Chapter 3. Calling Conventions for System Calls</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

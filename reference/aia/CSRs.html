@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/aia/CSRs.html">
+    <link rel="prev" href="intro.html">
+    <link rel="next" href="IMSIC.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="aia">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="aia" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../hardware-overview/index.html">Hardware</a>
+</div>        <div class="nav-trees" data-component="aia">
+          <div class="version-box">
+            <select data-component="aia" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="aia" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Interrupt Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="CSRs.html">Chapter 2. CSRs Added to Harts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IMSIC.html">Chapter 3. Incoming MSI Controller (IMSIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="AdvPLIC.html">Chapter 4. Advanced PLIC (APLIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="MSLevel.html">Chapter 5. Interrupts for Machine and Supervisor Levels</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="VSLevel.html">Chapter 6. Interrupts for Virtual Machines (VS Level)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IPIs.html">Chapter 7. Interprocessor Interrupts (IPIs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="IOMMU.html">Chapter 8. IOMMU Support for MSIs to Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="iommu">
+          <div class="version-box">
+            <select data-component="iommu" class="select-version">
+                <option
+                  value="../iommu/index.html"
+                  data-version="20260222"
+                  
+                  selected>
+                  20260222
+                </option>
+            </select>
+          </div>
+              <div data-component="iommu" data-version="20260222" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V IOMMU</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_data_structures.html">Chapter 2. Data Structures</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_in_memory_queues.html">Chapter 3. In-memory Queue Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_debug.html">Chapter 4. Debug Support</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_registers.html">Chapter 5. Memory-mapped Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_sw_guidelines.html">Chapter 6. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_hw_guidelines.html">Chapter 7. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/iommu_extensions.html">Chapter 8. IOMMU Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../iommu/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="plic">
+          <div class="version-box">
+            <select data-component="plic" class="select-version">
+                <option
+                  value="../plic/index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="plic" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform-Level Interrupt Controller</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/licensing.html">Copyright and license</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/contributor.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-op-parms.html">Chapter 2. RISC-V PLIC Operation Parameters</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-memory-map.html">Chapter 3. Memory Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-priority.html">Chapter 4. Interrupt Priorities</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-interrupts.html">Chapter 5. Interrupt Pending Bits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-enables.html">Chapter 6. Interrupt Enables</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-thresholds.html">Chapter 7. Priority Thresholds</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-claims.html">Chapter 8. Interrupt Claim Process</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../plic/plic-completion.html">Chapter 9. Interrupt Completion</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="server-soc">
+          <div class="version-box">
+            <select data-component="server-soc" class="select-version">
+                <option
+                  value="../server-soc/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="server-soc" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Server SoC</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/server_soc_preamble.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/server_soc_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/server_soc_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/server_soc_requirements.html">Chapter 2. Server SoC Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../server-soc/server_soc_bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-aia/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-aia" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-interrupts.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../hardware-overview/index.html">Hardware Overview</a></li>
+              <li><a href="index.html">Advanced Interrupt Architecture</a></li>
+                      <li>
+            <a href="CSRs.html">Chapter 2. CSRs Added to Harts</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="CSRs"><a class="anchor" href="#CSRs"></a>2.1. Control and Status Registers (CSRs) Added to Harts</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For each privilege level at which a RISC-V hart can take interrupt traps, the
+Advanced Interrupt Architecture adds CSRs for interrupt control and
+handling.</p>
+</div>
+<div class="sect2">
+<h3 id="2-1-1-machine-level-csrs"><a class="anchor" href="#2-1-1-machine-level-csrs"></a>2.1.1. Machine-level CSRs</h3>
+<div class="paragraph">
+<p><a href="#CSRs-M">Table 1</a> lists both the CSRs added for machine
+level and existing machine-level CSRs whose size is changed by the
+Advanced Interrupt Architecture. Existing CSRs <code>mie</code>, <code>mip</code>, and <code>mideleg</code> are widened to 64 bits to support a total of 64 interrupt causes.</p>
+</div>
+<div class="paragraph">
+<p>For RV32, the <em>high-half</em> CSRs listed in the table allow access to the
+upper 32 bits of registers <code>mideleg</code>, <code>mie</code>, <code>mvien</code>, <code>mvip</code>, and <code>mip</code>. The Advanced Interrupt Architecture requires that these high-half CSRs exist for RV32, but the bits they access may all be merely read-only zeros.</p>
+</div>
+<div class="paragraph">
+<p>CSRs <code>miselect</code> and <code>mireg</code> provide a window for accessing multiple registers beyond the CSRs in <a href="#CSRs-M">Table 1</a>. The value of <code>miselect</code> determines which
+register is currently accessible through alias CSR <code>mireg</code>. <code>miselect</code> is a <strong>WARL</strong> register, and it must support a minimum range of values depending on the implemented features. When an IMSIC is not implemented, <code>miselect</code> must be able to hold at least any 6-bit value in the range 0 to 0<code>x3F</code>. When an IMSIC is implemented, <code>miselect</code> must be able to hold any 8-bit value in the range 0 to 0<code>xFF</code>.
+The Advanced Interrupt Architecture makes use
+of these subranges of values for <code>miselect</code>:</p>
+</div>
+<table class="tableblock frame-none grid-none fit-content center">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x30-0x3F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">major interrupt priorities</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x70-0xFF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">external interrupts (only with an IMSIC)</p></td>
+</tr>
+</tbody>
+</table>
+<table id="CSRs-M" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 1. Machine-level CSRs added or widened by the Advanced Interrupt Architecture.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Number</th>
+<th class="tableblock halign-center valign-top">Privilege</th>
+<th class="tableblock halign-center valign-top">Width</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Machine-Level Window to Indirectly Accessed Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x350<br>
+0x351</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">MRW<br>
+MRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">XLEN<br>
+XLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>miselect</code><br>
+<code>mireg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine indirect register select<br>
+Machine indirect register alias</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Machine-Level Interrupts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x304<br>
+0x344<br>
+0x35C<br>
+0xFB0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRO</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">64<br>
+64<br>
+MXLEN<br>
+MXLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mie</code><br>
+<code>mip</code><br>
+<code>mtopei</code><br>
+<code>mtopi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine interrupt-enable bits<br>
+Machine interrupt-pending bits<br>
+Machine top external interrupt (only with an IMSIC)<br>
+Machine top interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Delegated and Virtual Interrupts for Supervisor Level</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x303<br>
+0x308<br>
+0x309</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">64<br>
+64<br>
+64</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>mideleg</code><br>
+<code>mvien</code><br>
+<code>mvip</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine interrupt delegation<br>
+Machine virtual interrupt enables<br>
+Machine virtual interrupt-pending bits</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Machine-Level High-Half CSRs (RV32 only)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x313<br>
+0x314<br>
+0x318<br>
+0x319<br>
+0x354</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">MRW<br>
+MRW<br>
+MRW<br>
+MRW<br>
+MRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">32<br>
+32<br>
+32<br>
+32<br>
+32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>midelegh</code><br>
+<code>mieh</code><br>
+<code>mvienh</code><br>
+<code>mviph</code><br>
+<code>miph</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Upper 32 bits of <code>mideleg</code> (only with S-mode)<br>
+Upper 32 bits of <code>mie</code><br>
+Upper 32 bits of <code>mvien</code> (only with S-mode)<br>
+Upper 32 bits of <code>mvip</code> (only with S-mode)<br>
+Upper 32 bits of <code>mip</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Values of <code>miselect</code> with the most-significant bit set (bit
+<code>XLEN - 1</code> = <code>1</code>) are designated for custom use,
+presumably for accessing custom registers through <code>mireg</code>. If <code>XLEN</code> changes, the
+most-significant bit of <code>miselect</code> moves to the new position, retaining its value
+from before. An implementation is not required to support any custom
+values for <code>miselect</code>.</p>
+</div>
+<div class="paragraph">
+<p>Other <code>miselect</code> values are reserved for other RISC-V extensions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>RISC-V extension Smcsrind generalizes the mechanism of
+indirect register access provided by <code>miselect</code> and <code>mireg</code>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Normally, the range for external interrupts, 0x70-0xFF, is populated only when
+an IMSIC is implemented; else, attempts to access <code>mireg</code> when <code>miselect</code> is in this range
+cause an illegal instruction exception. The contents of the
+external-interrupts region are documented in
+<a href="IMSIC.html#IMSIC" class="xref page">Incoming MSI Controller (IMSIC)</a> on the IMSIC.</p>
+</div>
+<div class="paragraph">
+<p>CSR <code>mtopei</code> also exists only when an IMSIC is implemented, so is documented in
+<a href="IMSIC.html#IMSIC" class="xref page">Incoming MSI Controller (IMSIC)</a> along with the indirectly accessed IMSIC
+registers.</p>
+</div>
+<div class="paragraph">
+<p>CSR <code>mtopi</code> reports the highest-priority interrupt that is pending and enabled
+for machine level, as specified in <a href="MSLevel.html#mtopi" class="xref page">Machine top interrupt CSR (<code>mtopi</code>)</a>.</p>
+</div>
+<div class="paragraph">
+<p>When S-mode is implemented, CSRs <code>mvien</code> and <code>mvip</code> support interrupt filtering and
+virtual interrupts for supervisor level. These facilities are explained
+in <a href="MSLevel.html#virtIntrs-S" class="xref page">Interrupt filtering and virtual interrupts for supervisor level</a>.</p>
+</div>
+<div class="paragraph">
+<p>If extension Smcsrind is also implemented, then when <code>miselect</code> has a value in the
+range 0x30-0x3F
+or 0x70-0xFF, attempts to access alias CSRs <code>mireg2</code> through <code>mireg6</code> raise an illegal
+instruction exception.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-2-supervisor-level-csrs"><a class="anchor" href="#2-1-2-supervisor-level-csrs"></a>2.1.2. Supervisor-level CSRs</h3>
+<div class="paragraph">
+<p><a href="#CSRs-S">Table 2</a> lists the supervisor-level CSRs that are
+added and existing CSRs that are widened to 64 bits, if the hart
+implements S-mode. The functions of these registers all match their
+machine-level counterparts.</p>
+</div>
+<table id="CSRs-S" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Supervisor-level CSRs added or widened by the Advanced Interrupt Architecture.</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Number</th>
+<th class="tableblock halign-center valign-top">Privilege</th>
+<th class="tableblock halign-center valign-top">Width</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Supervisor-Level Window to Indirectly Accessed Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x150<br>
+0x151</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">SRW<br>
+SRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">XLEN<br>
+XLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>siselect</code><br>
+<code>sireg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor indirect register select<br>
+Supervisor indirect register alias</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Supervisor-Level Interrupts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x104<br>
+0x144<br>
+0x15C<br>
+0xDB0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">SRW<br>
+SRW<br>
+SRW<br>
+SRO</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">64<br>
+64<br>
+SXLEN<br>
+SXLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sie</code><br>
+<code>sip</code><br>
+<code>stopei</code><br>
+<code>stopi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor interrupt-enable bits<br>
+Supervisor interrupt-pending bits<br>
+Supervisor top external interrupt (only with an IMSIC)<br>
+Supervisor top interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Supervisor-Level High-Half CSRs (RV32 only)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x114<br>
+0x154</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">SRW<br>
+SRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">32<br>
+32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>sieh</code><br>
+<code>siph</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Upper 32 bits of <code>sie</code><br>
+Upper 32 bits of <code>sip</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The space of registers accessible through the <code>siselect</code>/<code>sireg</code> window is separate from
+but parallels that of machine level, being for supervisor-level
+interrupts instead of machine-level interrupts.
+The subranges of values used for <code>siselect</code> are once again these:</p>
+</div>
+<table class="tableblock frame-none grid-none fit-content center">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x30-0x3F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">major interrupt priorities</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x70-0xFF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">external interrupts (only with an IMSIC)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For maximum compatibility, it is recommended that <code>siselect</code> support at least a
+9-bit range, <code>0</code> to <code>0x1FF</code>, regardless of whether an IMSIC exists.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Because the VS CSR <code>vsiselect</code> (<a href="#hypervisor-vs-csrs">2.1.3. Hypervisor and VS CSRs</a>) always has at
+least 9 bits, and like other VS CSRs, <code>vsiselect</code> substitutes for <code>siselect</code> when executing in
+a virtual machine (VS-mode or VU-mode), implementing a smaller range for
+<code>siselect</code> allows software to discover it is not running in a virtual machine.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Like <code>miselect</code>, values of <code>siselect</code> with the most-significant bit set (bit
+XLEN - 1 = 1) are designated for custom use.
+If XLEN changes, the most-significant bit of <code>siselect</code> moves to the new position,
+retaining its value from before. An implementation is not required to
+support any custom values for <code>siselect</code>.</p>
+</div>
+<div class="paragraph">
+<p>Other <code>siselect</code> values are reserved for other RISC-V extensions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>At supervisor level, extension Sscsrind generalizes the mechanism
+of indirect register access provided by <code>siselect</code> and <code>sireg</code>,
+as well as the parallel at VS-level provided by <code>vsiselect</code> and <code>vsireg</code>,
+described in the next subsection.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Note that the widths of 'siselect' and 'sireg' are always the current XLEN rather than
+SXLEN. Hence, for example, if MXLEN = 64 and SXLEN = 32, then these
+registers are 64 bits when the current privilege mode is M (running RV64
+code) but 32 bits when the privilege mode is S (RV32 code).</p>
+</div>
+<div class="paragraph">
+<p>CSR <code>stopei</code> is described with the IMSIC in <a href="IMSIC.html#IMSIC" class="xref page">Incoming MSI Controller (IMSIC)</a>.</p>
+</div>
+<div class="paragraph">
+<p>Register <code>stopi</code> reports the highest-priority interrupt that is pending and
+enabled for supervisor level, as specified in
+<a href="MSLevel.html#stopi" class="xref page">Supervisor top interrupt CSR (<code>stopi</code>)</a>.</p>
+</div>
+<div class="paragraph">
+<p>If extension Sscsrind is also implemented, then when <code>siselect</code> has a value in the range <code>0x30-0x3F</code> or <code>0x70-0xFF</code>, attempts to access alias CSRs <code>sireg2</code> through <code>sireg6</code> raise an illegal instruction exception (unless executing in a virtual machine, covered in the next section).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="hypervisor-vs-csrs"><a class="anchor" href="#hypervisor-vs-csrs"></a>2.1.3. Hypervisor and VS CSRs</h3>
+<div class="paragraph">
+<p>If a hart implements the H extension,
+then the hypervisor and VS CSRs listed in <a href="#CSRs-hypervisor">Table 3</a> are also either added or widened to 64 bits.</p>
+</div>
+<div class="paragraph">
+<p>The new hypervisor CSRs in the table (<code>hvien</code>, <code>hvictl</code> , <code>hviprio1</code>, and <code>hviprio2</code>) augment <code>hvip</code> for injecting interrupts into VS level. The use of these registers is covered in <a href="VSLevel.html#VSLevel" class="xref page">Interrupts for Virtual Machines (VS Level)</a> on interrupts for virtual machines.</p>
+</div>
+<div class="paragraph">
+<p>The new VS CSRs (<code>vsiselect</code>, <code>vsireg</code>, <code>vstopei</code>, and <code>vstopi</code>) all match supervisor CSRs, and substitute for those supervisor CSRs when executing in a virtual machine (in VS-mode or VU-mode).</p>
+</div>
+<div class="paragraph">
+<p>CSR <code>vsiselect</code> is required to support at least a 9-bit range of <code>0</code> to <code>0x1FF</code>, whether or not an IMSIC is implemented. As with <code>siselect</code>, values of <code>vsiselect</code> with the most-significant bit set (bit XLEN - 1 = 1) are designated for custom use. If XLEN changes, the most-significant bit
+of <code>vsiselect</code> moves to the new position, retaining its value from before.</p>
+</div>
+<div class="paragraph">
+<p>Like <code>siselect</code> and <code>sireg</code>, the widths of <code>vsiselect</code> and <code>vsireg</code> are always the current XLEN rather than VSXLEN. Hence, for example, if HSXLEN = 64 and VSXLEN = 32, then these registers are 64 bits when accessed by a hypervisor in HS-mode (running RV64 code) but 32 bits for a guest OS in VS-mode (RV32 code).</p>
+</div>
+<table id="CSRs-hypervisor" class="tableblock frame-all grid-all stretch center">
+<caption class="title">Table 3. Hypervisor and VS CSRs added or widened by the Advanced Interrupt Architecture. (Parameter HSXLEN is just another name for SXLEN for hypervisor-extended S-mode).</caption>
+<colgroup>
+<col style="width: 13.3333%;">
+<col style="width: 13.3333%;">
+<col style="width: 13.3333%;">
+<col style="width: 13.3333%;">
+<col style="width: 46.6668%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Number</th>
+<th class="tableblock halign-center valign-top">Privilege</th>
+<th class="tableblock halign-center valign-top">Width</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Delegated and Virtual Interrupts, Interrupt Priorities, for VS Level</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x603<br>
+0x608<br>
+0x609<br>
+0x645<br>
+0x646<br>
+0x647</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">64<br>
+64<br>
+HSXLEN<br>
+64<br>
+64<br>
+64</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hideleg</code><br>
+<code>hvien</code><br>
+<code>hvictl</code><br>
+<code>hvip</code><br>
+<code>hviprio1</code><br>
+<code>hviprio2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor interrupt delegation<br>
+Hypervisor virtual interrupt enables<br>
+Hypervisor virtual interrupt control<br>
+Hypervisor virtual interrupt-pending bits<br>
+Hypervisor VS-level interrupt priorities<br>
+Hypervisor VS-level interrupt priorities</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">VS-Level Window to Indirectly Accessed Registers</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x250<br>
+0x251</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HRW<br>
+HRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">XLEN<br>
+XLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vsiselect</code><br>
+<code>vsireg</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual supervisor indirect register select<br>
+Virtual supervisor indirect register alias</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">VS-Level Interrupts</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x204<br>
+0x244<br>
+0x25C<br>
+&nbsp;<br>
+0xEB0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+&nbsp;<br>
+HRO</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">64<br>
+64<br>
+VSXLEN<br>
+&nbsp;<br>
+VSXLEN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>vsie</code><br>
+<code>vsip</code><br>
+<code>vstopei</code><br>
+&nbsp;<br>
+<code>vstopi</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual supervisor interrupt-enable bits<br>
+Virtual supervisor interrupt-pending bits<br>
+Virtual supervisor top external interrupt<br>
+ (only with an IMSIC)<br>
+Virtual supervisor top interrupt</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="5"><p class="tableblock">Hypervisor and VS-Level High-Half CSRs (RV32 only)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x613<br>
+0x618<br>
+0x655<br>
+0x656<br>
+0x657<br>
+0x214<br>
+0x254</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW<br>
+HRW</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">32<br>
+32<br>
+32<br>
+32<br>
+32<br>
+32<br>
+32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hidelegh</code><br>
+<code>hvienh</code><br>
+<code>hviph</code><br>
+<code>hviprio1h</code><br>
+<code>hviprio2h</code><br>
+<code>vsieh</code><br>
+<code>vsiph</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Upper 32 bits of <code>hideleg</code><br>
+Upper 32 bits of <code>hvien</code><br>
+Upper 32 bits of <code>hvip</code><br>
+Upper 32 bits of <code>hviprio1</code><br>
+Upper 32 bits of <code>hviprio2</code><br>
+Upper 32 bits of <code>vsie</code><br>
+Upper 32 bits of <code>vsip</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The space of registers selectable by <code>vsiselect</code> is more limited than for machine and supervisor levels:</p>
+</div>
+<table class="tableblock frame-none grid-none fit-content center">
+<colgroup>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x030-0x03F</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">inaccessible</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>0x070-0x0FF</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">external interrupts (IMSIC only), or inaccessible</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Other <code>vsiselect</code> values are reserved for other RISC-V extensions.</p>
+</div>
+<div class="paragraph">
+<p>For alias CSRs <code>sireg</code> and <code>vsireg</code>, the H extension&#8217;s usual rules for when to raise a virtual instruction exception (based on whether an instruction is <em>HS-qualified</em>) are not applicable. The rules given in this section for <code>sireg</code> and <code>vsireg</code> apply instead, unless overridden by the requirements of <a href="#CSRs-stateen">2.1.5. Access control by the state-enable CSRs</a>, which take precedence over this section
+when extension Smstateen is also implemented.</p>
+</div>
+<div class="paragraph">
+<p>A virtual instruction exception is raised for attempts from VS-mode or
+VU-mode to directly access <code>vsireg</code>, or attempts from VU-mode to access <code>sireg</code>.</p>
+</div>
+<div class="paragraph">
+<p>When <code>vsiselect</code> has the number of an <em>inaccessible</em> register, attempts from M-mode or HS-mode to access <code>vsireg</code> raise an illegal instruction exception, and attempts from VS-mode to access <code>sireg</code> (really <code>vsireg</code>) raise a virtual instruction exception.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Requiring a range of 0-0x1FF for <code>vsiselect</code>, even though most or all of the space is reserved or inaccessible, permits a hypervisor to emulate indirectly
+accessed registers in the implemented range, including registers that
+are not currently defined but may be standardized in the future.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The indirectly accessed registers for external interrupts (numbers 0x70-0xFF)
+are accessible only when field VGEIN of <code>hstatus</code> is the number of an implemented guest external interrupt, not zero. If VGEIN is not the number of an implemented guest external interrupt (including the case when no IMSIC
+is implemented), then all indirect register numbers in the ranges 0x030-0x03F and 0x070-0x0FF designate an inaccessible register at VS level.</p>
+</div>
+<div class="paragraph">
+<p>Along the same lines, when <code>hstatus.VGEIN</code> is not the number of an implemented
+guest external interrupt, attempts from M-mode or HS-mode to access CSR <code>vstopei</code> raise an illegal instruction exception, and attempts from VS-mode to
+access <code>stopei</code> raise a virtual instruction exception.</p>
+</div>
+<div class="paragraph">
+<p>If extension Sscsrind is also implemented, then when <code>vsiselect</code> has a value in the range 0x30-0x3F or 0x70-0xFF, attempts from M-mode or HS-mode to access alias CSRs <code>vsireg2</code> through <code>vsireg6</code> raise an illegal instruction exception, and attempts from VS-mode to access <code>sireg2</code> through <code>sireg6</code> raise a virtual instruction exception.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-4-virtual-instruction-exceptions"><a class="anchor" href="#2-1-4-virtual-instruction-exceptions"></a>2.1.4. Virtual instruction exceptions</h3>
+<div class="paragraph">
+<p>Following the default rules for the H extension, attempts from
+VS-mode to directly access a hypervisor or VS CSR other than <code>vsireg</code>, or from
+VU-mode to access any supervisor-level CSR (including hypervisor and VS
+CSRs) other than <code>sireg</code> or <code>vsireg</code>, usually raise not an illegal instruction exception but instead a virtual instruction exception. For details, see the H extension documentation.</p>
+</div>
+<div class="paragraph">
+<p>Instructions that read/write CSR <code>stopei</code> or <code>vstopei</code> are considered to be <em>HS-qualified</em> unless all of following are true: the hart has an IMSIC, extension Smstateen is implemented, and bit 58 of <code>mstateen0</code> is zero. (See the next section, <a href="#CSRs-stateen">2.1.5. Access control by the state-enable CSRs</a>, about <code>mstateen0</code>.)</p>
+</div>
+<div class="paragraph">
+<p>For <code>sireg</code> and <code>vsireg</code>, see both the previous section, <a href="#hypervisor-vs-csrs">2.1.3. Hypervisor and VS CSRs</a>, and the next, <a href="#CSRs-stateen">2.1.5. Access control by the state-enable CSRs</a>, for when a virtual instruction exception is required instead of an illegal instruction exception.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CSRs-stateen"><a class="anchor" href="#CSRs-stateen"></a>2.1.5. Access control by the state-enable CSRs</h3>
+<div class="paragraph">
+<p>If extension Smstateen is implemented together with the Advanced
+Interrupt Architecture (AIA), three bits of state-enable register <code>mstateen0</code> control access to AIA-added state from privilege modes less privileged
+than M-mode:</p>
+</div>
+<table class="tableblock frame-none grid-none fit-content center">
+<colgroup>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 60 CSRIND: CSRs <code>siselect</code>, <code>sireg</code>, <code>vsiselect</code>, and <code>vsireg</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 59 AIA: all other state added by the AIA and not controlled by bits CSRIND and IMSIC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 58 IMSIC: all IMSIC state, including CSRs <code>stopei</code> and <code>vstopei</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If one of these bits is zero in <code>mstateen0</code>, an attempt to access the corresponding state from a privilege mode less privileged than M-mode results in an illegal instruction trap. As always, the state-enable CSRs do not affect
+the accessibility of any state when in M-mode, only in less privileged modes. For more explanation, see the documentation for extension Smstateen.</p>
+</div>
+<div class="paragraph">
+<p>The AIA bit controls access to AIA CSRs <code>siph</code>, <code>sieh</code>, <code>stopi</code>, <code>hidelegh</code>, <code>hvien</code>/<code>hvienh</code>, <code>hviph</code>, <code>hvictl</code>, <code>hviprio1</code>/<code>hviprio1h</code>, <code>hviprio2</code>/<code>hviprio2h</code>, <code>vsiph</code>, <code>vsieh</code>, and <code>vstopi</code>, as well as to the supervisor-level interrupt priorities accessed through <code>siselect</code> + <code>sireg</code> (the <code>iprio</code> array of <a href="MSLevel.html#intrPrios-S" class="xref page">Configuring priorities of major interrupts at supervisor level</a>).</p>
+</div>
+<div class="paragraph">
+<p>The IMSIC bit is implemented in <code>mstateen0</code> only if the hart has an IMSIC. If the
+H extension is also implemented, this bit does not affect the
+behavior or accessibility of hypervisor CSRs <code>hgeip</code> and <code>hgeie</code>, or field VGEIN of <code>hstatus</code>. In particular, guest external interrupts from an IMSIC continue to be visible to HS-mode in <code>hgeip</code> even when <code>mstateen0</code>.IMSIC is zero.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>An earlier, pre-ratification draft of Smstateen said that when <code>mstateen0</code>.IMSIC is zero, registers <code>hgeip</code> and <code>hgeie</code> and field VGEIN of <code>hstatus</code> are all read-only zeros. That effect is no longer correct.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the hart does not have an IMSIC, the IMSIC bit of <code>mstateen0</code> is read-only zero, but Smstateen has no effect on attempts to access the nonexistent IMSIC
+state.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This means in particular that, when the hart does not have an IMSIC, the
+following raise a virtual instruction exception as described in <a href="#CSRs-hypervisor">Table 3</a>, not an illegal instruction exception, despite that <code>mstateen0</code>.IMSIC is zero:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>attempts from VS-mode to access <code>sireg</code> (really <code>vsireg</code>) while <code>vsiselect</code> has a value in the range 0x70–0xFF; and</p>
+</li>
+<li>
+<p>attempts from VS-mode to access <code>stopei</code> (really <code>vstopei</code>).</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the CSRIND bit of <code>mstateen0</code> is one, then regardless of any other <code>mstateen</code> bits (including the AIA and IMSIC bits of <code>mstateen0</code>), a virtual instruction exception is raised as described in <a href="#hypervisor-vs-csrs">2.1.3. Hypervisor and VS CSRs</a> for all attempts from VS-mode or
+VU-mode to directly access <code>vsireg</code>, and for all attempts from VU-mode to access <code>sireg</code>. This behavior is overridden only when <code>mstateen0</code>.CSRIND is zero.</p>
+</div>
+<div class="paragraph">
+<p>If the H extension is implemented, the same three bits are
+defined also in hypervisor CSR <code>hstateen0</code> but concern only the state potentially accessible to a virtual machine executing in privilege modes VS and VU:</p>
+</div>
+<table class="tableblock frame-none grid-none fit-content center">
+<colgroup>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 60 CSRIND: CSRs <code>siselect</code> and <code>sireg</code> (really <code>vsiselect</code> and <code>vsireg</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 59 AIA: CSRs <code>siph</code> and <code>sieh</code> (RV32 only) and <code>stopi</code> (really <code>vsiph</code>, <code>vsieh</code>, and <code>vstopi</code>)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">bit 58 IMSIC: all state of IMSIC guest interrupt files, including CSR <code>stopei</code>(really <code>vstopei</code>)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If one of these bits is zero in <code>hstateen0</code>, and the same bit is one in <code>mstateen0</code>, then an attempt to access the corresponding state from VS or VU-mode raises a virtual instruction exception. (But note that, for high-half CSRs <code>siph</code> and <code>sieh</code>, this applies only when XLEN = 32. When XLEN &gt; 32, an attempt to access <code>siph</code> or <code>sieh</code> raises an illegal instruction exception as usual, not a virtual instruction exception.)</p>
+</div>
+<div class="paragraph">
+<p>If the CSRIND bit is one in <code>mstateen0</code> but is zero in <code>hstateen0</code>, then all attempts from VS or VU-mode to access <code>siselect</code> or <code>sireg</code> raise a virtual instruction exception, not an illegal instruction exception, regardless of the value of <code>vsiselect</code> or any other <code>mstateen</code> bits.</p>
+</div>
+<div class="paragraph">
+<p>The IMSIC bit is implemented in <code>hstateen0</code> only if the hart has an IMSIC. Furthermore, even with an IMSIC, <code>hstateen0</code>.IMSIC may (or may not) be read-only zero if the IMSIC has no <em>guest interrupt files</em> for guest external interrupts (<a href="IMSIC.html#IMSIC" class="xref page">Incoming MSI Controller (IMSIC)</a>). When this bit is zero (whether read-only zero or set to zero), a virtual machine is prevented from accessing the hart&#8217;s IMSIC the same as when <code>hstatus.VGEIN</code> = 0.</p>
+</div>
+<div class="paragraph">
+<p>Extension Ssstateen is defined as the supervisor-level view of Smstateen. Therefore, the combination of Ssaia and Ssstateen incorporates the bits defined above for <code>hstateen0</code> but not those for <code>mstateen0</code>, since machine-level CSRs are not visible to supervisor level.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="intro.html">Chapter 1. Introduction</a></span>
+  <span class="next"><a href="IMSIC.html">Chapter 3. Incoming MSI Controller (IMSIC)</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/nexus-trace/ntrace_optimizations.html">
+    <link rel="prev" href="ntrace_field_encoding.html">
+    <link rel="next" href="ntrace_generation_rules.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="nexus-trace">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="nexus-trace" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS</a>
+</div>        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../debug/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../e-trace/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../cbqri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../ras-eri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../trace-connectors/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../trace-control-interface/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../trace-encap/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/RISC-V-N-Trace.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">N-Trace</a></li>
+                      <li>
+            <a href="ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="9-1-optimization-extensions"><a class="anchor" href="#9-1-optimization-extensions"></a>9.1. Optimization Extensions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table <a href="#Details_Control_Parameters">Details_Control_Parameters</a> describes all control bits to enable these optimizations.</p>
+</div>
+<div class="sect2">
+<h3 id="9-1-1-sequential-jump-optimization"><a class="anchor" href="#9-1-1-sequential-jump-optimization"></a>9.1.1. Sequential Jump Optimization</h3>
+<div class="paragraph">
+<p>This optimization must be enabled by <a href="#trTeInstEnSequentialJump">trTeInstEnSequentialJump</a> control bit.</p>
+</div>
+<div class="paragraph">
+<p>By default, the target of an indirect unconditional jump is always considered an uninferable PC discontinuity.
+However, if the register that specifies the jump target was loaded with a constant then it can be
+considered inferable under some circumstances. The hart must identify indirect unconditional jumps with sequentially
+inferable targets and provide this information separately to the encoder. The final decision as to
+whether to treat the indirect unconditional jump as inferable or not must be made by the encoder. Both the constant
+load and the indirect unconditional jump must be traced as consecutive instructions in the same message for the decoder to be able to infer the indirect unconditional jump target.</p>
+</div>
+<div class="paragraph">
+<p>Some jump targets that are supplied via:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>an <strong>LUI</strong> or <strong>C.LUI</strong> (a register which contains a constant), or</p>
+</li>
+<li>
+<p>an <strong>AUIPC</strong> (a register which contains a constant offset from the PC).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Such indirect unconditional jump targets are classified as sequentially inferable if the pair of instructions are retired
+consecutively (i.e. the <strong>AUIPC</strong>, <strong>LUI</strong> or <strong>C.LUI</strong> immediately precedes the indirect unconditional jump). When decoder is processing instructions (always forward) it must encounter the <strong>AUIPC</strong>, <strong>LUI</strong> or <strong>C.LUI</strong> immediately directly before <strong>JR</strong> and then calculate target address of a jump. I-CNT in that message must span over both (consecutive) instruction.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The restriction
+that the instructions must be retired consecutively is necessary to minimize the additional
+signals needed between the hart and the encoder, and should have a minimal impact on trace
+efficiency as it is anticipated that consecutive execution will be the norm.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="9-1-2-implicit-return-optimization"><a class="anchor" href="#9-1-2-implicit-return-optimization"></a>9.1.2. Implicit Return Optimization</h3>
+<div class="paragraph">
+<p>This optimization must be enabled by the <a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a> control field different than 0.</p>
+</div>
+<div class="paragraph">
+<p>Although a function return is usually an indirect unconditional jump, most programs return to the
+point in the program from which the function was called using a standard calling convention. For
+those programs, it is possible to determine the execution path without being explicitly notified
+of the destination addresses of the returns. The implicit return mode can result in very significant
+improvements in trace encoder efficiency.</p>
+</div>
+<div class="paragraph">
+<p>Returns can only be treated as inferable if the associated call has already been reported in an earlier
+message. The encoder must ensure that this is the case.</p>
+</div>
+<div class="paragraph">
+<p>There are 3 possible ways of handling return address stack (values of <a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a> control field):</p>
+</div>
+<div class="paragraph">
+<p><strong>Simple counting (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=1)</strong></p>
+</div>
+<div class="paragraph">
+<p>This can be accomplished by utilizing a
+counter to keep track of the number of nested calls being traced. The counter increments on calls
+and decrements on returns. The counter will not over or underflow, and is reset to 0 whenever a synchronizing message is sent. Returns will be
+treated as inferable and will not generate a trace message if the count is non-zero (i.e. the associated
+call was already reported in an earlier message). Such a scheme is low cost, and will work as long as programs are "well behaved". The encoder will not be able to check that the return address is that of the instruction following the associated call. As such, any program that modifies return addresses cannot be traced using this mode with this minimal implementation. Due to these limitations <strong>this is NOT recommended implementation</strong>.</p>
+</div>
+<div class="paragraph">
+<p><strong>Stack with Full Addresses (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=3)</strong></p>
+</div>
+<div class="paragraph">
+<p>The encoder maintains a stack of expected return addresses (created when call is encountered), and only treat a
+return as inferable if the actual return address matches the value on the stack. This is fully robust for all
+programs but is more expensive to implement. In this case, if a return address does not match the
+prediction, it must be reported explicitly via a message. This ensures that the decoder can determine which return is being reported. This method may use shadow stack if implemented by the core.</p>
+</div>
+<div class="paragraph">
+<p><strong>Stack with Partial Addresses (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=2)</strong></p>
+</div>
+<div class="paragraph">
+<p>Call stack maintained by encoder may not include all addresses, but only keep some least significant part of it and use them to compare if return is matching the call or not. Changes that program making incorrect return will return to address with the same least significant portion are very slim.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Decoder does not need to know what actual depth of the call stack is implemented by encoder but for efficiency reasons it should assume max depth. N-Trace implementation should never implement call stack deeper than 32 levels. Such deep calls will be most likely interrupted by other events/messages (like periodic SYNC).
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="9-1-3-repeated-history-optimization"><a class="anchor" href="#9-1-3-repeated-history-optimization"></a>9.1.3. Repeated History Optimization</h3>
+<div class="paragraph">
+<p>This optimization must be enabled by the <a href="#trTeInstEnRepeatedHistory">trTeInstEnRepeatedHistory</a> control bit.</p>
+</div>
+<div class="paragraph">
+<p>A typical loop either has a direct conditional branch at the start of a loop (which must be typically 'taken' to terminate the loop) or has a direct conditional branch at the end of the loop (which must be typically taken to repeat the loop).
+In the first case, the direct conditional branch is not taken most of the time and taken once at the end. In the second case, the direct conditional branch is taken most of the time, but not taken at the end of the loop.</p>
+</div>
+<div class="paragraph">
+<p>Loops with many iterations such as those in functions like memcpy/strcpy have identical flow in each iteraction. Instead of sending the same history bits many times, repeated patterns can be detected and counted. This is a big saving! As an example, a memcpy of 4MB buffer using 32-bit transfers will execute at least 1M of direct conditional branches and 1M of history bits must be included in trace (it is a lot of trace).</p>
+</div>
+<div class="paragraph">
+<p>The IEEE-5001 Nexus Standard defines a <a href="#msg_RepeatBranch">Repeat Branch</a> message. This message will provide a single <a href="#field_B-CNT">B-CNT</a> (Branch Count) field instead of generating many identical <a href="#msg_DirectBranch">Direct Branch</a> messages. But this message cannot be used in <a href="#mode_HTM">HTM</a> mode as repeated messages (Direct Branch) do not include the HIST field.</p>
+</div>
+<div class="paragraph">
+<p>To allow generation of repeated history of direct conditional branches in HTM mode an extra encoding for <a href="#field_RCODE">RCODE</a>=2 in <a href="#msg_ResourceFull">Resource Full</a> message is added.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+It is allowed to generate any sequence of <a href="#msg_ResourceFull">Resource Full</a> messages as long as the logically concatenated sequence of (repeated or not &#8230;&#8203;) HIST bits (excluding most significant stop-bit[s]) is the same.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tracing of such simple, long loops would benefit from generating special messages/fields which provide counters of taken/not-taken direct conditional branches (in a way like <a href="#msg_RepeatBranch">Repeat Branch</a> message).</p>
+</div>
+<div class="paragraph">
+<p>But this approach will not work with more complex code with a conditional statement (or several of them) inside of a loop.</p>
+</div>
+<div class="paragraph">
+<p>In such a case, it is desired to detect repeated sequences of taken/not-taken direct conditional branches and instead generate many messages with HIST fields, generate a message consisting of a HIST pattern and repeat count.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s assume that we have a loop, which generates a long sequence of repeated taken/not-taken direct conditional branches. Trace may generate <a href="#msg_ResourceFull">Resource Full</a> messages with the following HIST records:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Msg#1:
+    TCODE=27 (ResourceFull)
+    RCODE=1 (full HIST record is provided as RDATA)
+    RDATA=0b1_01_0101_0101_0101_0101_0101_0101_0101 = 0x55555555
+            (stop-bit + pattern 01 repeated 15 times)
+Msg#2:
+    TCODE=27 (ResourceFull)
+    RCODE=1 (full HIST record is provided as RDATA)
+    RDATA=0b1_01_0101_0101_0101_0101_0101_0101_0101 = 0x55555555
+            (stop-bit + pattern 01 repeated 15 times)
+...
+Msg#10:
+    TCODE=27 (ResourceFull)
+    RCODE=1 (full HIST record is provided as RDATA)
+    RDATA=0b1_01_0101_0101_0101_0101_0101_0101_0101 = 0x55555555
+            (stop-bit + pattern 01 repeated 15 times)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instead of generating many messages with identical HIST record, encoder can detect repeated pattern and generate the following single message:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Msg#1:
+    TCODE=27 (ResourceFull)
+    RCODE=2 (full HIST record is provided as RDATA and
+            repeat count is provided as HREPEAT field)
+    RDATA=0b1_01_0101_0101_0101_0101_0101_0101_0101 = 0x55555555
+            (stop-bit + pattern 01 repeated 15 times)
+    HREPEAT=10  (Repeat Count=10 instead 10 messages)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Above example shows a 2-bit pattern, but using the same technique it can be expanded to any size of pattern. The exact way to detect these patterns is not specified as it does not change encoding of messages. So, it is possible to generate the following, a bit smaller, message:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Msg#1:
+    TCODE=27 (ResourceFull)
+    RCODE=2 (full HIST record is provided as RDATA and
+            repeat count is provided as HREPEAT field)
+    RDATA=0b1_01 = 0x5 (stop-bit + single pattern 01)
+    HREPEAT=150 (Repeat Count is bigger, but pattern is smaller)</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This type of compression (reporting shorter patterns and larger counts) may not be practical as it may save only a little. Trace is compressed a lot already and it really should not matter if we report 150 iterations of a loop in 6 or 7 bytes. Example above is provided to assure that trace encoders must handle this type of trace compression.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+When number of repeated branches is bigger than max HREPEAT counter value then several consecutive messages with max HREPEAT value should be generated. Total count represented by all these messages (sum of all HREPEAT fields) will be a number of repeated branch history message.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+HREPEAT counter should not have too many bits as it is not desired to not generate any trace messages for longer periods of time. Bigger HREPEAT will not make compression better but will produce timestamp rarely.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="9-1-4-virtual-addresses-optimization"><a class="anchor" href="#9-1-4-virtual-addresses-optimization"></a>9.1.4. Virtual Addresses Optimization</h3>
+<div class="paragraph">
+<p>This optimization must be enabled by <a href="#trTeInstExtendAddrMSB">trTeInstExtendAddrMSB</a> control bit.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Normally (without the above bit enabled or implemented), addresses with many
+most significant bits set to 1 will be sent as long messages (as variable size
+fields skip only the most significant 0-s). An address,
+<strong>0xFFFF_FFFF_8000_31F4</strong>, a real address from the Linux kernel, will be encoded
+as F-ADDR = <strong>0x7FFF_FFFF_C000_18FA</strong> (with the least significant 0-bit skipped).
+Such a 63-bit variable field value will require 11 bytes to be sent (as we
+have 6 MDO bits in each byte).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following additional rules are used when <a href="#trTeInstExtendAddrMSB">trTeInstExtendAddrMSB</a> control bit is implemented and set:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The encoder may skip any number of most significant identical bits in the U-ADDR/F-ADDR fields. However, it must ensure that if any bits are skipped, then the number of transmitted bits is a multiple of the MDO size. Additionally, the most significant transmitted bit must have the same value as the skipped bits.</p>
+</li>
+<li>
+<p>If F-ADDR/U-ADDR field is received by decoder, then the last (most significant) bit of the very last MDO record must be extended up to bit#63 or bit#31 (depending on XLEN of the core). It is like sign-extension, but it is NOT a sign bit.</p>
+</li>
+<li>
+<p>This method does NOT require a trace decoder to know what a virtual memory system mode is or if an address is physical or virtual. The decoder must look at the most significant bit of the last MDO in F-ADDR/U-ADDR field and either extend or not.</p>
+</li>
+<li>
+<p>Simple implementations may not implement an enable bit and always send full address. Benefits of using it on 32-bit cores is small, so it may not be implemented.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This way of encoding allows an encoder to efficiently send:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Any physical address.</p>
+</li>
+<li>
+<p>Any virtual address (in any mode).</p>
+</li>
+<li>
+<p>Any illegal address.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Trace encoder must implement a most significant bit detection (skipping identical 1-s or 0-s in addition to skipping identical 0-s as for any other variable size field) while sending F-ADDR/U-ADDR field. Trace decoders must do it in reverse order, which means that a sign extension (if needed) must be done after collecting the last MDO bit in an F-ADDR/U-ADDR field. Calculation of full address (as defined in <a href="#Address Compression">Address Compression</a> chapter above) must be done after sign extension of U-ADDR field.</p>
+</div>
+<div class="paragraph">
+<p><strong>Example Encodings</strong></p>
+</div>
+<div class="paragraph">
+<p><strong>Non-extended address (most significant MDO bit = 0)</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>           MDO_MSEO
+#byte:  543210        &lt;- MDO bit index (bit#5 is most significant bit)
+ -------------------
+   #0:  111111_00
+   #1:  111111_00
+   #2:  111111_00
+   #3:  111111_00
+   #4:  111111_00
+   #5:  011111_01     &lt;- Last MDO+MSO byte. Most significant bit #5 is 0, so NO extension.
+                      F-ADDR field=0x7_FFFF_FFFF, Encoded address=0xF_FFFF_FFFE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Extended address (most significant MDO bit = 1)</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>           MDO_MSEO
+#byte:  543210        &lt;- MDO bit index (bit#5 is most significant bit)
+ -------------------
+   #0:  111111_00
+   #1:  111111_00
+   #2:  111111_00
+   #3:  111111_00
+   #4:  011111_00
+   #5:  111100_01     &lt;- Last MDO+MSEO byte. Most significant bit #5 is 1, so WITH extension.
+                      F-ADDR field=0xF_1FFF_FFFF, Encoded address=0xFFFF_FFFE_3FFF_FFFE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Non-extended address (extra MDO with all 0-s prevents extension)</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>           MDO_MSEO
+#byte:  543210        &lt;- MDO bit index (bit#5 is most significant bit)
+ -------------------
+   #0:  111111_00
+   #1:  111111_00
+   #2:  111111_00
+   #3:  111111_00
+   #4:  111111_00
+   #5:  111111_00
+   #6:  000000_01     &lt;- Last MDO+MSEO byte. Most significant bit #5 is 0, so NO extension.
+                      F-ADDR field=0xF_FFFF_FFFF, Encoded address=0x1F_FFFF_FFFE</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Non-extended full 64-bit address (invalid address)</strong></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>           MDO_MSEO
+#byte:  543210        &lt;- MDO bit index (bit#5 is most significant bit)
+ -------------------
+   #0:  111111_00
+   #1:  111111_00
+   #2:  111111_00
+   #3:  111111_00
+   #4:  111111_00
+   #5:  111111_00
+   #6:  111111_00
+   #7:  111111_00
+   #8:  111111_00
+   #9:  111111_00
+  #10:  000101_01     &lt;- Last MDO+MSEO byte. Most significant bit #5 is 0, so NO extension.
+                      F-ADDR field=0x5FFF_FFFF_FFFF_FFFF, Encoded address=0xBFFF_FFFF_FFFF_FFFE</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Address <strong>0xBFFF_FFFF_FFFF_FFFF</strong> is NOT a legal address in any RISC-V virtual memory modes as it does not have all most significant bits identical. But such an address may be encountered as result of a bug and as such should be reported.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ntrace_field_encoding.html">Chapter 8. Field Encoding</a></span>
+  <span class="next"><a href="ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

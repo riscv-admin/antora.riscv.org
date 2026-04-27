@@ -1,0 +1,2448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/trace-control-interface/tci_encoder_control.html">
+    <link rel="prev" href="tci_versioning.html">
+    <link rel="next" href="tci_ram_sink.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="trace-control-interface">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="trace-control-interface" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS</a>
+</div>        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../debug/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../e-trace/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../nexus-trace/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../cbqri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../ras-eri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../trace-connectors/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../trace-encap/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/RISC-V-Trace-Control-Interface.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">Trace Control Interface</a></li>
+                      <li>
+            <a href="tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="trace-encoder-control-interface"><a class="anchor" href="#trace-encoder-control-interface"></a>Trace Encoder Control Interface</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Many features of the Trace Encoder (TE for short) are optional. In most cases, optional features are enabled using a WARL (write any, read legal) register field. A debugger can determine if optional feature is present by writing to the register field and reading back the result.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. <strong>Register: trTeControl: Trace Encoder Control Register (trBaseEncoder+0x000)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeActive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary activate/reset bit for the TE. When 0, the TE may have clocks gated off or be powered
+down, and other register locations may be inaccessible. Hardware may take an arbitrarily long time to process power-up and power-down and will indicate completion when the read value of this bit matches what was written. See <a href="#Reset and Discovery">Reset and Discovery</a> chapter for more details.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeEnable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Trace Encoder is enabled. Allows <code>trTeInstTracing</code> and <code>trTeDataTracing</code> to turn tracing on and off. Setting <code>trTeEnable</code> to 0 flushes any queued trace data to the sink or funnel attached to this encoder. This bit can be set to 1 only by direct writing to it. This write of 1 should be done after all other settings are done. See <a href="#Enabling and Disabling">Enabling and Disabling</a> chapter for more details.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstTracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Instruction trace is being generated. Written from a trace tool (after a write to <code>trTeEnable</code>) or controlled by triggers. When <code>trTeInstTracing=1</code>, instruction trace data may be subject to additional filtering in some implementations (additional <code>trTeInstMode</code> settings).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeEmpty</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reads as 1 when all generated trace have been emitted.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstMode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction trace generation mode<br>
+<strong>0:</strong> Full Instruction trace is disabled, but other trace (data trace) may be emitted.<br>
+<strong>1-2:</strong> Protocol defined trace mode.<br>
+<strong>3:</strong> Baseline instruction trace (for example <a href="#Branch Trace Messaging">Branch Trace</a>).<br>
+<strong>4-5:</strong> Protocol defined trace mode.<br>
+<strong>6:</strong> Optimized instruction trace (for example <a href="#Branch History Messaging">Branch History Trace</a>).<br>
+<strong>7:</strong> Reserved for vendor-defined instruction trace mode.<br>
+NOTE: When non-supported mode (different than 0) is set, it cannot revert to 0 but MUST revert to supported non-0 mode.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8:7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeContext</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable sending trace messages/fields with scontext/mcontext values and/or privilege levels.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstTrigEnable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Allows <code>trTeInstTracing</code> to be set or cleared by Trace-on
+and Trace-off signals generated by the corresponding trigger module.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstStallOrOverflow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to 1 by hardware when trace buffer overflow (also known as trace lost) occurs, or when the TE requests a hart stall. Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstStallEna</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>0:</strong> If TE cannot send a message, the message is dropped. The protocol dependent overflow instruction trace synchronization message/packet is generated when the trace is restarted, so the decoder will know that trace is lost and must reset any internal decoder state.<br>
+<strong>1:</strong> If TE cannot send a message, the hart is stalled until it can. With this option execution of instructions by the hart may be intrusively affected, but in many cases it is acceptable.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInhibitSrc</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>0:</strong> Messages/packets generated by the trace encoder include a message source field if the
+ source width held in <code>trTeSrcBits</code> is not 0.<br>
+<strong>1:</strong> Disable inclusion of source field in trace messages/packets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstSyncMode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Select the periodic instruction trace synchronization message/packet generation mechanism. At least one non-zero mechanism must be implemented.<br>
+<strong>0:</strong> Off<br>
+<strong>1:</strong> Count trace messages/packets<br>
+<strong>2:</strong> Count hart clock cycles<br>
+<strong>3:</strong> Count instruction 16-bit half-words<br>
+Once the max value of periodic counter is reached, an instruction trace synchronization message/packet should be generated.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19:18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23:20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstSyncMax</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The maximum interval (in units determined by <code>trTeInstSyncMode</code>) between instruction trace synchronization messages/packets. Generate synchronization when count reaches 2^(<code>trTeInstSyncMax</code>+4). If an instruction trace synchronization message/packet is generated for another reason, the internal counter should be reset.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">26:24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFormat</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace recording/protocol format:<br>
+<strong>0:</strong> Format defined by Efficient Trace for RISC-V (E-Trace) Specification<br>
+<strong>1:</strong> Format defined by RISC-V N-Trace (Nexus-based Trace) Specification<br>
+<strong>2-6:</strong> Reserved for future formats<br>
+<strong>7:</strong> Vendor-specific format</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:27</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Writing to this register while trace is enabled may unintentionally change a value of <code>trTeInstTracing</code> bit because that bit may dynamically change by triggers.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. <strong>Register: trTeImpl: Trace Encoder Implementation Register (trBaseEncoder+0x004)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeVerMajor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Encoder Component Major Version. Value 1 means the component is compliant with this document. Value 0 means pre-ratified/initial version - see 'Pre-ratified/Initial Interface Version' chapter at the end.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeVerMinor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Encoder Component Minor Version. Value 0 means the component is compliant with this document.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11:8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Encoder Component Type (Trace Encoder)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future versions of this standard</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeProtocolMajor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Protocol Major Version. As specified by specification governing <code>trTeFormat</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23:20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeProtocolMinor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace Protocol Minor Version. As specified by specification governing <code>trTeFormat</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for vendor specific implementation details</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>trTeProtocol??</code> fields are separated from <code>trTeVer??</code> as we may have the same control interface, but protocol itself may be extended with new packets/ messages/ fields.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. <strong>Register: trTeInstFeatures: Trace Instruction Features Register (trBaseEncoder+0x008)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstNoAddrDiff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, trace messages/packets always carry a full address.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstNoTrapAddr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, do not include trap handler address in trap messages/packets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnSequentialJump</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, treat sequentially inferrable jumps as inferable PC discontinuities.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnImplicitReturn</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, treat returns as inferable PC discontinuities when returning from a recent call on a stack. Field <code>trTeInstImplicitReturnMode</code> below provides more details.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnBranchPrediction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, Branch Predictor based compression is enabled.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnJumpTargetCache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, Jump Target Cache based compression is enabled.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstImplicitReturnMode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Defines how the decoder is handling stack of return addresses (if enabled by <code>trTeInstEnImplicitReturn</code> bit):<br>
+<strong>0:</strong> Implicit Return mode is not supported, or implementation is not reporting how it is implemented.<br>
+<strong>1:</strong> Simple level counting without the return address comparing.<br>
+<strong>2:</strong> Partial (LSB portion of return address) compare (smaller logic cost than 3 below, but in most cases adequate as chances to have an incorrect return address with same LSB bits is very slim).<br>
+<strong>3:</strong> Full address comparing (always assures skipped return addresses are the same as addresses deducted from call instruction). Implementation may take advantage of RAS (Return Address Stack) if implemented by the hart.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnRepeatedHistory</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable repeated branch history/map detection when set.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnAllJumps</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable emitting of trace message or add history/map bit for direct unconditional/inferable control flow changes (jumps or calls). Normally these instructions do not generate any trace as the decoder can determine the next instruction. Trace will not compress well but timestamp accuracy will be better - may be used when profiling loops.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstExtendAddrMSB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, allow extended handing of MSB address bits. Encoding details are trace protocol dependent.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for additional instruction trace control/status bits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeSrcID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Trace source ID assigned to this trace encoder. If <code>trTeSrcBits</code> is not 0 and trace source is not disabled by <code>trTeInhibitSrc</code>, then trace messages from this TE will all include a trace source field of <code>trTeSrcBits</code> bits and all messages from this TE will use this value as trace source field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeSrcBits</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The number of bits in the trace source field (0..12), unless disabled by <code>trTeInhibitSrc</code>. Some trace protocols may require that this field is identical for all enabled trace encoders within the same trace stream.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Applicability of different <code>trTeInst??</code> fields for each trace encoding protocol is described in a document which defines the protocol (and not all fields are applicable to all protocols).
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. <strong>Register: trTeInstFilters: Trace Instruction Filters Register (trBaseEncoder+0x00C)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstFilters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#trace-encoder-filter-registers">Trace Encoder Filter Registers</a> chapter qualify an instruction trace. If bit <strong><em>n</em></strong> is a 1 then instructions will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all instructions are traced.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. <strong>Register: trTeDataControl: Data Trace Control Register (trBaseEncoder+0x010)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataImplemented</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read as 1 if data trace is implemented.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataTracing</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Data trace is being generated. Written from a trace tool or controlled by triggers. When <code>trTeDataTracing</code>=1, data trace  may be subject to additional filtering in some implementations.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataTrigEnable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global enable/disable for data trace triggers</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataStallOrOverflow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set to 1 by hardware when data trace causes trace buffer overflow, or when the TE requests a hart stall due to data trace. Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataStallEna</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>0:</strong> If TE cannot send data trace messages, an overflow message is generated when the trace is restarted.<br>
+<strong>1:</strong> If TE cannot send data trace messages, the hart is stalled until it can.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataDrop</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Written to 1 by hardware when the data trace packet was dropped (if enabled). Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataDropEna</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Allow temporary suppression of data trace (at some watermark level) to prevent trace overflow or stall. This way instruction trace will have higher priority.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for additional data trace control/status bits.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataNoValue</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, omit data values from data trace packets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataNoAddr</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, omit data address from data trace packets.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19:18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataAddrCompress</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data trace address compression selection:<br>
+<strong>0:</strong> Only send full (unmodified) addresses<br>
+<strong>1:</strong> Use XOR compression<br>
+<strong>2:</strong> Use differential compression<br>
+<strong>3:</strong> Protocol defined address compression</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Writing to this register while trace is enabled may unintentionally change a value of <code>trTeDataTracing</code> bit because that bit may dynamically change by triggers.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Applicability of different <code>trTeData??</code> fields for each trace encoding protocol is described in a document which defines the protocol (and not all fields are applicable to all protocols).
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. <strong>Register: trTeDataFilters: Trace Data Filters Register (trBaseEncoder+0x01C)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataFilters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#trace-encoder-filter-registers">Trace Encoder Filter Registers</a> chapter qualify data trace. If bit <strong><em>n</em></strong> is a 1 then data accessed will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all data accesses are traced.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="timestamp-unit"><a class="anchor" href="#timestamp-unit"></a>Timestamp Unit</h3>
+<div class="paragraph">
+<p>Timestamp Unit is an optional sub-component present in either Trace Encoder or Trace Funnel. An implementation may choose from several modes of timestamps:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Internal System</strong> - fixed clock in a system (such as bus clock) is used to increment the timestamp counter (for both Trace Encoders and Trace Funnels)</p>
+</li>
+<li>
+<p><strong>Internal Core</strong> - core clock is used to increment the timestamp counter (only for Trace Encoders)</p>
+</li>
+<li>
+<p><strong>Shared</strong> - shares timestamp with another Trace Encoder or Trace Funnel</p>
+</li>
+<li>
+<p><strong>External</strong> - accepts a binary timestamp value from an outside source such as ARM CoreSight&#8482; trace (for both Trace Encoders and Trace Funnels)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Implementations may have no timestamp, one timestamp mode, or more than one mode. The WARL field <code>trTsMode</code> is used to determine the system capability and to set the desired timestamp mode.</p>
+</div>
+<div class="paragraph">
+<p>The width of the timestamp is implementation dependent, typically 40 or 48 bits (40-bit timestamp will overflow every 4.7 minutes assuming 1GHz timestamp clock).</p>
+</div>
+<div class="paragraph">
+<p>In a system with Funnels, typically all the Funnels are built with a Timestamp Unit. The top-level Funnel is the source of the timestamp (Internal System or External) and all the Encoders and other Funnels have a Shared timestamp. This assures that all timestamps in the system are the same and trace from different harts may be time-correlated. To perform the forwarding function, the mid-level Funnels must be programmed with <code>trFunnelActive</code> = 1 (which is natural as all trace messages must pass through that funnel).</p>
+</div>
+<div class="paragraph">
+<p>An Internal System or Core timestamp unit may include a timestamp clock pre-scaler divider, which can extend the range of a narrower timestamp and uses less power but has less resolution.</p>
+</div>
+<div class="paragraph">
+<p>In a system with an Internal Core timestamp counter (implemented in Trace Encoder associated with a hart) an optional control bit is provided to stop the counter when the hart is halted by a debugger.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. <strong>Register: trBaseEncoder/Funnel+0x040 trTsControl: Timestamp Control Register</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsActive</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Primary activate/reset bit for timestamp unit.
+This must either be RW or, if separated reset for timestamp component is not implemented, a read-only copy of the corresponding <code>trTeActive</code> or <code>trFunnelActive</code> bit.
+See <a href="#Reset and Discovery">Reset and Discovery</a> chapter for more details.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SD</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Internal System or Core</strong> timestamp only.<br>
+<strong>1:</strong> counter runs,<br>
+<strong>0:</strong> counter stopped.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsReset</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Internal System or Core</strong> timestamp only.<br>
+Write 1 to reset the timestamp counter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">W1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsRunInDebug</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Internal Core</strong> timestamp only.<br>
+<strong>1:</strong> counter runs when hart is halted (in debug mode),<br>
+<strong>0:</strong> stopped</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsMode</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Mode used by Timestamp unit:<br>
+<strong>0:</strong> None<br>
+<strong>1:</strong> External<br>
+<strong>2:</strong> Internal System<br>
+<strong>3:</strong> Internal Core<br>
+<strong>4:</strong> Shared<br>
+<strong>5-7:</strong> Vendor-specific mode</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9:8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsPrescale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Internal System or Core</strong> timestamp only.<br>
+Prescale timestamp input clock by 2^(2*trTsPrescale). It will be divided by 1, 4, 16, 64 respectively.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14:10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsEnable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Enable for timestamp field in trace messages/packets (for Trace Encoder only).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23:16</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vendor-specific bits to control what message/packet types include timestamp fields.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">29:24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsWidth</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Width of timestamp in bits (0..63)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. <strong>Register: trTsCounterLow: Timestamp Counter Lower Bits (trBaseEncoder/Funnel+0x048)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsCounterLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Lower 32 bits of timestamp counter.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. <strong>Register: trTsCounterHigh: Timestamp Counter Upper Bits (trBaseEncoder/Funnel+0x04C)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTsCounterHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Upper bits of timestamp counter, zero-extended.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="trace-encoder-triggers"><a class="anchor" href="#trace-encoder-triggers"></a>Trace Encoder Triggers</h3>
+<div class="sect3">
+<h4 id="debug-trigger-module"><a class="anchor" href="#debug-trigger-module"></a>Debug Trigger Module</h4>
+<div class="paragraph">
+<p>Debug module triggers are signals from the hart that a trigger was hit, but the action associated with that trigger is a trace-related action. Action identifiers 2-5 are reserved for trace actions in the RISC-V Debug Specification, where triggers are defined. Actions 2-4 are defined by the Efficient Trace for RISC-V (E-Trace) Specification. The desired action is written to the <code>action</code> field of the Match Control <code>mcontrol</code> CSR (0x7a1). As not all harts may support all trace actions, the debugger should read back the <code>mcontrol</code> CSR after setting the desired trace action to verify that the option exists.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. <strong>Debug Trigger Actions</strong></caption>
+<colgroup>
+<col style="width: 30%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Trigger Action (from debug spec)</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Effect</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Breakpoint exception (as defined in RISC-V Debug Specification)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug exception (as defined in RISC-V Debug Specification)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Trace-on action</strong><br>
+When <code>trTeInstTrigEnable</code> = 1 it will start instruction tracing (<code>trTeInstTracing</code> &#8594; 1).<br>
+When <code>trTeDataTrigEnable</code> = 1 it will start data tracing (<code>trTeDataTracing</code> &#8594; 1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Trace-off action</strong><br>
+When <code>trTeInstTrigEnable</code> = 1 it will stop instruction tracing (<code>trTeInstTracing</code> &#8594; 0).<br>
+When <code>trTeDataTrigEnable</code> = 1 it will stop data tracing (<code>trTeDataTracing</code> &#8594; 0).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Trace-notify action</strong><br>
+If tracing is active (<code>trTeInstTracing</code> = 1), then the encoder generates a packet with the current PC and, if enabled, a timestamp.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Vendor-specific trace action</strong> (optional)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>If there are vendor-specific features that require control, the <code>trTeTrigDbgControl</code> register is used.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. <strong>Register: trTeTrigDbgControl: Debug Trigger Control Register (trBaseEncoder+0x050)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigDbgControl</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Vendor-specific trigger setup</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect3">
+<h4 id="external-trace-triggers"><a class="anchor" href="#external-trace-triggers"></a>External Trace Triggers</h4>
+<div class="paragraph">
+<p>The TE may be configured with up to 8 external trigger inputs for controlling trace. These are in addition to the external triggers present in the Debug Module when Halt Groups are implemented. The specific hardware signals comprising an external trigger are implementation dependent.</p>
+</div>
+<div class="paragraph">
+<p>External Trigger Outputs may also be present. A trigger out may be generated by trace starting, trace stopping, a watchpoint, or by other system-specific events.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. <strong>Register: trTeTrigExtInControl: External Trigger Input Control Register (trBaseEncoder+0x054)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtInAction0</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Select action to perform when external trigger input #0 fires. If external trigger input #0 does not exist, then its action is fixed at 0.<br>
+<strong>0:</strong> No action<br>
+<strong>1:</strong> Reserved<br>
+<strong>2:</strong> <strong>Trace-on action</strong><br>
+When <code>trTeInstTrigEnable</code> = 1 it will start instruction tracing (<code>trTeInstTracing</code> &#8594; 1).<br>
+When <code>trTeDataTrigEnable</code> = 1 it will start data tracing (<code>trTeDataTracing</code> &#8594; 1).<br>
+<strong>3:</strong> <strong>Trace-off action</strong><br>
+When <code>trTeInstTrigEnable</code> = 1 it will stop instruction tracing (<code>trTeInstTracing</code> &#8594; 0).<br>
+When <code>trTeDataTrigEnable</code> = 1 it will stop data tracing (<code>trTeDataTracing</code> &#8594; 0).<br>
+<strong>4:</strong> <strong>Trace-notify action</strong><br>
+If tracing is active (<code>trTeInstTracing</code> = 1), then the encoder generates a packet with the current PC and, if enabled, a timestamp.<br>
+<strong>5-15:</strong> Reserved<br></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtInAction<strong>N</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Select actions (as defined for bits 3-0) for external trigger input #<strong>N</strong> (1..7). If an external trigger input does not exist, then its action is fixed at 0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. <strong>Register: trTeTrigExtOutControl: External Trigger Output Control Register (trBaseEncoder+0x058)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtOutEvent0</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Bitmap to select which event(s) cause external trigger #0 output to fire. If external trigger output #0 does not exist, then all bits are fixed at 0. Bits 2 and 3 may be fixed at 0 if the corresponding feature is not implemented.<br>
+<strong>Bit 0:</strong><br>
+Start trace transition (<code>trTeInstTracing</code> 0 &#8594; 1) will fire the trigger.<br>
+<strong>Bit 1:</strong><br>
+Stop trace transition (<code>trTeInstTracing</code> 1 &#8594; 0) will fire the trigger.<br>
+<strong>Bit 2-3:</strong><br>
+Vendor-specific event (optional)</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtOutEvent<strong>N</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Select events for external trigger output #<strong>N</strong> (1..7). If an external trigger output does not exist, then its event bits are fixed at 0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="triggers-precedence"><a class="anchor" href="#triggers-precedence"></a>Triggers Precedence</h4>
+<div class="paragraph">
+<p>It is implementation dependent what happens when triggers (from debug module or external) with conflicting actions occur simultaneously (signaled at the same ingress port cycle) or if triggers occur too frequently. It is recommended that tracing starts from the oldest instruction retired in the cycle that Trace-on is asserted, and stops following the newest instruction retired in the cycle that Trace-off is asserted.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="trace-encoder-filter-registers"><a class="anchor" href="#trace-encoder-filter-registers"></a>Trace Encoder Filter Registers</h3>
+<div class="paragraph">
+<p>All registers with offsets 0x400 .. 0x7FC are designated for additional trace encoder filter options (context, addresses, modes, etc.).</p>
+</div>
+<div class="paragraph">
+<p>Trace encoder filters are an optional feature that can be used to control the generated trace in various ways.</p>
+</div>
+<div class="paragraph">
+<p>The registers below divide the filter logic into filters and comparators to provide maximum flexibility at low cost. The number of filters and comparators depends on the system. Each filter unit can specify filtering against instruction and optionally against data trace inputs from the hart. When filter <em>i</em> is implemented, the registers <code>trTeFilter<em>i</em>Control</code> and <code>trTeInstFilters</code> must be implemented to enable it. And to apply filter <em>i</em> to the data trace, the <code>trTeDataFilters</code> register must also be present. And if a match bit in the <code>trTeFilter<em>i</em>Control</code> register can be set to 1 (= enabling a filter option), the corresponding register from the bit&#8217;s description must have a correct value already set as otherwise the trigger may fire unintentionally. Each of the mentioned comparator units is a pair of comparators (primary and secondary, or P and S), so a limited range can be matched with a single comparator unit if needed.
+Each enabled filter define independent condition where trace is enabled - if several filters are enabled they act as <code>logical OR</code>. Several conditions for single filter act as <code>logical AND</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Filter and comparator registers refer to values of some signals (as <strong>priv</strong>, <strong>itype</strong>, <strong>ecause</strong>, <strong>dtype</strong>, <strong>dsize</strong>, &#8230;&#8203;) available on Trace Ingress Port. See E-Trace specification for details of encoding of these values.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 14. <strong>Register: trTeFilter??: Trace Encoder Filter Registers (trBaseEncoder+0x400..0x5FF)</strong></caption>
+<colgroup>
+<col style="width: 17%;">
+<col style="width: 30%;">
+<col style="width: 12%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Address Offset</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Register Name</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Compliance</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x400 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>Control</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> control</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x404 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchInst</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> instruction match control</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x408 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchEcauseLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> Ecause match control (bits 31:0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x40C + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchEcauseHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> Ecause match control (bits 63:32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x410 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchValueImpdef</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> impdef value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x414 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchMaskImpdef</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> impdef mask</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x418 + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilter<em>i</em>MatchData</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Filter <em>i</em> Data trace match control</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x41C + 0x20*<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 15. <strong>Register: trTeComp??: Trace Encoder Comparator Registers (trBaseEncoder+0x600..0x6FF)</strong></caption>
+<colgroup>
+<col style="width: 17%;">
+<col style="width: 30%;">
+<col style="width: 12%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Address Offset</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Register Name</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Compliance</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x600 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeComp<em>j</em>Control</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparator <em>j</em> control</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x604 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x608 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x60c + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x610 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeComp<em>j</em>PmatchLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparator <em>j</em> primary match (bits 31:0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x614 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeComp<em>j</em>PmatchHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparator <em>j</em> primary match (bits 63:32)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x618 + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeComp<em>j</em>SmatchLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparator <em>j</em> secondary match (bits 31:0)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x61C + 0x20*<em>j</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeComp<em>j</em>SmatchHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Optional</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Comparator <em>j</em> secondary match (bits 63:32)</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 16. <strong>Register: trTeFilter<em>i</em>Control : Filter <em>i</em> Control Register (trBaseEncoder+0x400 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterEnable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overall filter enable for filter #<em>i</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchPrivilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, match privilege levels specified by <code>trTeFilterMatchChoicePrivilege</code> field for filter #<em>i</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchEcause</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, start matching from exception cause codes specified by <code>trTeFilterMatchChoiceEcause</code> field for filter #<em>i</em>, and
+stop matching upon return from the 1st matching exception.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchInterrupt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, start matching from either an interrupt or exception as specified by
+<code>trTeFilterMatchValueInterrupt</code> field for filter #<em>i</em>, and stop matching upon return from the 1st matching trap.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp1</code> must be true for the filter to match.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 1st comparison.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp2</code> must be true for the filter to match.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11:9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 2nd comparison.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp3</code> must be true for the filter to match.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 3rd comparison.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchImpdef</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>impdef</strong> values as specified by <code>trTeFilterMatchValueImpdef</code> and
+<code>trTeFilterMatchMaskImpdef</code> fields for filter #<em>i</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23:17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchDtype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>dtype</strong> values as specified by <code>trTeFilterMatchChoiceDtype</code> field for filter #<em>i</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchDsize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>dsize</strong> values as specified by <code>trTeFilterMatchChoiceDsize</code> field for filter #<em>i</em>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Handling of <code>trTeFilterMatchEcause</code> and <code>trTeFilterMatchInterrupt</code> should include a count of nested traps. The size of the counter is implementation dependent. If the number of nested traps exceeds the number that can be counted, the counter will saturate, meaning that the filtering will turn off prematurely.
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 17. <strong>Register: trTeFilter<em>i</em>MatchInst : Filter <em>i</em> Instruction Match Control Register (trBaseEncoder+0x404 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 30%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoicePrivilege</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchPrivilege</code> field for filter #<em>i</em> is set, match all privilege
+levels for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>priv</strong> value at ingress port is N. Setting several bits allow matching several privileges.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchValueInterrupt</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchInterrupt</code> field for filter #<em>i</em> is set, match <strong>itype</strong> of 2 or 1 depending on whether this bit is 1 or 0
+respectively.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 18. <strong>Register: trTeFilter<em>i</em>MatchEcauseLow : Filter <em>i</em> Ecause Match Control (low) Register (trBaseEncoder+0x408 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 30%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceEcauseLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchEcause</code> field for filter #<em>i</em> is set, match all excepion causes for which the corresponding bit is set. If bit N is 1, then match if the <strong>ecause</strong> is N.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 19. <strong>Register: trTeFilter<em>i</em>MatchEcauseHigh : Filter <em>i</em> Ecause Match Control (high) Register (trBaseEncoder+0x40C + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 30%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceEcauseHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Stores bits 63:32 to allow matching of higher <strong>ecause</strong> codes. If bit N is 1, then match if the <strong>ecause</strong> is N+32.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 20. <strong>Register: trTeFilter<em>i</em>MatchValueImpdef : Filter <em>i</em> Impdef Match Value Register (trBaseEncoder+0x410 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchValueImpdef</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchimpdef</code> field for filter #<em>i</em> is set, match if
+(<strong>impdef</strong> &amp; <code>trTeFilterMatchMaskImpdef</code>) ==
+(<code>trTeFilterMatchValueImpdef</code> &amp; <code>trTeFilterMatchMaskImpdef</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 21. <strong>Register: trTeFilter<em>i</em>MatchMaskImpdef : Filter <em>i</em> Impdef Match Mask Register (trBaseEncoder+0x414 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchMaskImpdef</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchimpdef</code> field for filter #<em>i</em> is set, match if
+(<strong>impdef</strong> &amp; <code>trTeFilterMatchMaskImpdef</code>) ==
+(<code>trTeFilterMatchValueImpdef</code> &amp; <code>trTeFilterMatchMaskImpdef</code>).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 22. <strong>Register: trTeFilter<em>i</em>MatchData : Filter <em>i</em> Data Match Control Register (trBaseEncoder+0x418 + 0x20<em>i</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceDtype</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchDtype</code> field for filter #<em>i</em> is set, match all data access types
+for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>dtype</strong> value is N.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceDsize</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchDsize</code> field for filter #<em>i</em> is set, match all data access sizes
+for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>dsize</strong> value is N.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 23. <strong>Register: trTeComp<em>j</em>Control : Comparator <em>j</em> Control Register (trBaseEncoder+0x600 + 0x20<em>j</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPInput</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determines which input to compare against the primary comparator.<br>
+<strong>0:</strong> <strong>iaddr</strong><br>
+<strong>1:</strong> <strong>context</strong><br>
+<strong>2:</strong> <strong>tval</strong><br>
+<strong>3:</strong> <strong>daddr</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3:2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSInput</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determines which input to compare against the secondary comparator.  Same encoding as <code>trTeCompPInput</code>.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPFunction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Selects the primary comparator function.  Primary result is true if input selected via <code>trTeCompPInput</code> is:<br>
+<strong>0:</strong> equal to <code>trTeCompPMatch</code><br>
+<strong>1:</strong> not equal to <code>trTeCompPMatch</code><br>
+<strong>2:</strong> less than <code>trTeCompPMatch</code><br>
+<strong>3:</strong> less than or equal to <code>trTeCompPMatch</code><br>
+<strong>4:</strong> greater than <code>trTeCompPMatch</code><br>
+<strong>5:</strong> greater than or equal to <code>trTeCompPMatch</code><br>
+<strong>6:</strong> Result always false (input ignored).  Prime latch to 1 if <code>trTeCompMatchMode</code> is 3<br>
+<strong>7:</strong> Result always true (input ignored)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10:8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSFunction</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Selects the secondary comparator function.  Secondary result is true if input selected via <code>trTeCompSInput</code> is:<br>
+<strong>0:</strong> equal to <code>trTeCompSMatch</code><br>
+<strong>1:</strong> not equal to <code>trTeCompSMatch</code><br>
+<strong>2:</strong> less than <code>trTeCompSMatch</code><br>
+<strong>3:</strong> less than or equal to <code>trTeCompSMatch</code><br>
+<strong>4:</strong> greater than <code>trTeCompSMatch</code><br>
+<strong>5:</strong> greater than or equal to <code>trTeCompSMatch</code><br>
+<strong>6:</strong> Result always true (input ignored).  Use <code>trTeCompSMatch</code> as a mask for <code>trTeCompPMatch</code><br>
+<strong>7:</strong> Result always true (input ignored)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13:12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompMatchMode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Selects the match condition used to assert the overall comparator output<br>
+<strong>0:</strong> primary result true<br>
+<strong>1:</strong> primary and secondary result both true: (P &amp;&amp; S)<br>
+<strong>2:</strong> Either primary or secondary result does not match: !(P &amp;&amp; S)<br>
+<strong>3:</strong> Set when primary result is true and continue to assert until instruction after secondary result is true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPNotify</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate a trace packet explicitly reporting the address
+of the final instruction in a block that causes a
+primary match. This is also known as a watchpoint.
+Requires <code>trTeCompPInput</code> to be 0, and has no effect otherwise.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSNotify</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Generate a trace packet explicitly reporting the address
+of the final instruction in a block that causes a
+secondary match. This is also known as a watchpoint.
+Requires <code>trTeCompSInput</code> to be 0, and has no effect otherwise.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Comparisions are performed as unsigned numbers. Only bits from an input signal (as defined by <code>trTeCompPInput</code> and/or <code>trTeCompSInput</code> fields), should be compared. Additional most significant bits from the <code>trTeComp<em>j</em>PMatchLow/High</code> registers must be ignored.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 24. <strong>Register: trTeComp<em>j</em>PMatchLow : Comparator <em>j</em> Primary match (low) Register (trBaseEncoder+0x610 + 0x20<em>j</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPMatchLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the primary comparator (bits 31:0).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 25. <strong>Register: trTeComp<em>j</em>PMatchHigh : Comparator <em>j</em> Primary match (high) Register (trBaseEncoder+0x614 + 0x20<em>j</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPMatchHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the primary comparator (bits 63:32).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 26. <strong>Register: trTeComp<em>j</em>SMatchLow : Comparator <em>j</em> Secondary match (low) Register (trBaseEncoder+0x618 + 0x20<em>j</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSMatchLow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the secondary comparator (bits 31:0).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 27. <strong>Register: trTeComp<em>j</em>SMatchHigh : Comparator <em>j</em> Secondary match (high) Register (trBaseEncoder+0x61C + 0x20<em>j</em>)</strong></caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 24%;">
+<col>
+<col style="width: 7%;">
+<col style="width: 7%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><strong>Bit</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Field</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Description</strong></th>
+<th class="tableblock halign-left valign-top"><strong>RW</strong></th>
+<th class="tableblock halign-left valign-top"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">31:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSMatchHigh</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the secondary comparator (bits 63:32).</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="tci_versioning.html">Chapter 5. Versioning of Components</a></span>
+  <span class="next"><a href="tci_ram_sink.html">Chapter 7. Trace RAM Sink</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

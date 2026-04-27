@@ -1,0 +1,2084 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/sbi/ext-sse.html">
+    <link rel="prev" href="ext-steal-time.html">
+    <link rel="next" href="ext-firmware-features.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v3.0">
+    <meta name="component" content="sbi">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="sbi" data-version="v3.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../platform-software-overview/index.html">Platform Software</a>
+</div>        <div class="nav-trees" data-component="brs">
+          <div class="version-box">
+            <select data-component="brs" class="select-version">
+                <option
+                  value="../brs/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="brs" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot and Runtime Services</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/recipes.html">Chapter 2. Recipes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/hart.html">Chapter 3. Hart Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/sbi.html">Chapter 4. SBI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/uefi.html">Chapter 5. BRS-I UEFI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/acpi.html">Chapter 6. BRS-I ACPI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/smbios.html">Chapter 7. BRS-I SMBIOS Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../brs/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-ffh">
+          <div class="version-box">
+            <select data-component="acpi-ffh" class="select-version">
+                <option
+                  value="../acpi-ffh/index.html"
+                  data-version="v1.0.1"
+                  
+                  selected>
+                  v1.0.1
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-ffh" data-version="v1.0.1" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Functional Fixed Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_resource_descriptor.html">Chapter 2. RISC-V FFH Resource Descriptor Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_use_cases.html">Chapter 3. Use Cases</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_lpi_examples.html">Appendix A. _LPI Object Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-ffh/ffh_cpc_examples.html">Appendix B. _CPC Object Examples</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-rimt">
+          <div class="version-box">
+            <select data-component="acpi-rimt" class="select-version">
+                <option
+                  value="../acpi-rimt/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-rimt" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IO Mapping Table</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/rimt-main.html">Chapter 2. RISC-V IO Mapping Table (RIMT)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/mapping-example.html">Chapter 3. ID Mapping Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../acpi-rimt/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="rpmi">
+          <div class="version-box">
+            <select data-component="rpmi" class="select-version">
+                <option
+                  value="../rpmi/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rpmi" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform Management Interface (RPMI)</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/transport.html">Chapter 2. Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/message-protocol.html">Chapter 3. Messaging Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/service-groups.html">Chapter 4. Service Groups</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/rpmi-mpxy.html">Chapter 5. Integration with SBI MPXY Extension</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../rpmi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="semihosting">
+          <div class="version-box">
+            <select data-component="semihosting" class="select-version">
+                <option
+                  value="../semihosting/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="semihosting" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Semihosting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/binary-interface.html">Chapter 2. Semihosting Binary Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../semihosting/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="sbi">
+          <div class="version-box">
+            <select data-component="sbi" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v3.0"
+                  
+                  selected>
+                  v3.0
+                </option>
+            </select>
+          </div>
+              <div data-component="sbi" data-version="v3.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Supervisor Binary Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="changelog.html">Chapter 1. Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="terms.html">Chapter 3. Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="binary-encoding.html">Chapter 4. Binary Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-base.html">Chapter 5. Base Extension (EID #0x10)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-legacy.html">Chapter 6. Legacy Extensions (EIDs #0x00 - #0x0F)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-time.html">Chapter 7. Timer Extension (EID #0x54494D45 "TIME")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-ipi.html">Chapter 8. IPI Extension (EID #0x735049 "sPI: s-mode IPI")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-rfence.html">Chapter 9. RFENCE Extension (EID #0x52464E43 "RFNC")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-hsm.html">Chapter 10. Hart State Management Extension (EID #0x48534D "HSM")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sys-reset.html">Chapter 11. System Reset Extension (EID #0x53525354 "SRST")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-pmu.html">Chapter 12. Performance Monitoring Unit Extension (EID #0x504D55 "PMU")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-debug-console.html">Chapter 13. Debug Console Extension (EID #0x4442434E "DBCN")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sys-suspend.html">Chapter 14. System Suspend Extension (EID #0x53555350 "SUSP")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-cppc.html">Chapter 15. CPPC Extension (EID #0x43505043 "CPPC")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-nested-acceleration.html">Chapter 16. Nested Acceleration Extension (EID #0x4E41434C "NACL")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-steal-time.html">Chapter 17. Steal-time Accounting Extension (EID #0x535441 "STA")</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ext-sse.html">Chapter 18. Supervisor Software Events Extension (EID #0x535345 "SSE")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-firmware-features.html">Chapter 19. SBI Firmware Features Extension (EID #0x46574654 "FWFT")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-debug-triggers.html">Chapter 20. Debug Triggers Extension (EID #0x44425452 "DBTR")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-mpxy.html">Chapter 21. Message Proxy Extension (EID #0x4D505859 “MPXY”)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-experimental.html">Chapter 22. Experimental SBI Extension Space (EIDs #0x08000000 - #0x08FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-vendor.html">Chapter 23. Vendor Specific Extension Space (EIDs #0x09000000 - #0x09FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-firmware.html">Firmware Specific Extension Space (EIDs #0x0A000000 - #0x0AFFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="references.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="uefi">
+          <div class="version-box">
+            <select data-component="uefi" class="select-version">
+                <option
+                  value="../uefi/index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="uefi" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">UEFI PROTOCOL</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/copyright.html">Chapter 1. Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/intro.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/boot_protocol.html">RISCV_EFI_BOOT_PROTOCOL</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../uefi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-sbi.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../platform-software-overview/index.html">Platform Software Overview</a></li>
+              <li><a href="index.html">Supervisor Binary Interface</a></li>
+                      <li>
+            <a href="ext-sse.html">Chapter 18. Supervisor Software Events Extension (EID #0x535345 "SSE")</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="18-1-supervisor-software-events-extension-eid-0x535345-sse"><a class="anchor" href="#18-1-supervisor-software-events-extension-eid-0x535345-sse"></a>18.1. Supervisor Software Events Extension (EID #0x535345 "SSE")</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The SBI Supervisor Software Events (SSE) extension provides a mechanism to
+inject software events from an SBI implementation to supervisor software such
+that it preempts all other traps and interrupts. The supervisor software will
+receive software events only on harts which are ready to receive them. A software
+event is delivered only after supervisor software has registered an event handler
+and enabled the software event.</p>
+</div>
+<div class="paragraph">
+<p>The software events are one of two types: local or global. A local software
+event is local to a hart and can be handled only on that hart whereas a
+global software event is a system event and can be handled by any participating
+hart.</p>
+</div>
+<div class="sect2">
+<h3 id="18-1-1-software-event-identification"><a class="anchor" href="#18-1-1-software-event-identification"></a>18.1.1. Software Event Identification</h3>
+<div class="paragraph">
+<p>Each software event is identified by a unique 32-bit unsigned integer called
+<code>event_id</code>. The <code>event_id</code> space is divided into multiple 16-bit ranges where
+each 16-bit range is encoded as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">    event_id[14:14] = Platform (0: Standard event, 1: Platform specific event)
+    event_id[15:15] = Global (0: Local event, 1: Global event)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <a href="#table_sse_event_ids">Table 67</a> below show the complete <code>event_id</code> space along
+with standard events based on the above encoding.</p>
+</div>
+<table id="table_sse_event_ids" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 67. SSE Event ID Space</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Software Event ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Range 0x00000000 - 0x0000ffff</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local High Priority RAS event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local double trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000002 - 0x00003fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00004000 - 0x00007fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific local events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00008000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global High Priority RAS event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00008001 - 0x0000bfff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0000c000 - 0x0000ffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific global events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Range 0x00010000 - 0x0001ffff</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00010000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local PMU overflow event (depends on overflow
+                                 IRQ)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00010001 - 0x00013fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00014000 - 0x00017fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific local events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00018000 - 0x0001bfff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0001c000 - 0x0001ffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific global events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Range 0x00100000 - 0x0010ffff</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00100000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local Low Priority RAS event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00100001 - 0x00103fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00104000 - 0x00107fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific local events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00108000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global Low Priority RAS event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00108001 - 0x0010bfff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x0010c000 - 0x0010ffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific global events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top" colspan="2"><p class="tableblock">Range 0xffff0000 - 0xffffffff</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffff0000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software injected local event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffff0001 - 0xffff3fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffff4000 - 0xffff7fff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific local events</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffff8000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software injected global event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffff8001 - 0xffffbfff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global events reserved for future use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0xffffc000 - 0xffffffff</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific global events</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Local double trap event: For SSE double trap events to be generated,
+supervisor software <strong>MUST</strong> enable the double trap feature (<code>DOUBLE_TRAP</code>)
+via the Firmware Feature extension (<a href="#sbi_firmware_features_extension">[sbi_firmware_features_extension]</a>).
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="18-1-2-software-event-states"><a class="anchor" href="#18-1-2-software-event-states"></a>18.1.2. Software Event States</h3>
+<div class="paragraph">
+<p>At any point in time, a software event <strong>MUST</strong> be in one of the following
+states:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><strong>UNUSED</strong>     - Software event is not used by supervisor software</p>
+</li>
+<li>
+<p><strong>REGISTERED</strong> - Supervisor software has provided an event handler for
+the software event</p>
+</li>
+<li>
+<p><strong>ENABLED</strong>    - Supervisor software is ready to handle the software event</p>
+</li>
+<li>
+<p><strong>RUNNING</strong>    - Supervisor software is handling the software event</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>A <strong>global</strong> software event <strong>MUST</strong> be registered and enabled only once by
+any hart. By default, a global software event will be routed to any hart which
+is ready to receive software events but supervisor software can provide a
+preferred hart to handle this software event. The state of a global software
+event <strong>MUST</strong> be common to all harts.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The preferred hart assigned to a global software event by the
+supervisor software is only a hint about supervisor software&#8217;s preference.
+The SBI implementation may choose a different hart for handling the
+global software event to avoid an inter-processor interrupt.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>A <strong>local</strong> software event <strong>MUST</strong> be registered and enabled by all harts
+which want to handle this event. A local event is delivered to a hart only
+when the hart is ready to receive software events and the local event is
+registered and enabled on that hart. The state of a local software event
+<strong>MUST</strong> be tracked separately for each hart.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a software event in <code>RUNNING</code> state is signalled by the event source
+again, the software event will be taken only after the running event handler
+completes, provided that supervisor software doesn&#8217;t disable the software
+event upon completion.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The <a href="#figure_sbi_sse_state_machine">Figure 4</a> below shows the state transitions of a
+software event.</p>
+</div>
+<div id="figure_sbi_sse_state_machine" class="imageblock">
+<div class="content">
+<img src="_images/riscv-sbi-sse-sm.png" alt="riscv sbi sse sm">
+</div>
+<div class="title">Figure 4. SBI SSE State Machine</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="software_event_priority"><a class="anchor" href="#software_event_priority"></a>18.1.3. Software Event Priority</h3>
+<div class="paragraph">
+<p>Each software event has an associated priority (referred as <code>event_priority</code>)
+which is used by an SBI implementation to select a software event for
+injection when multiple software events are pending on the same hart.</p>
+</div>
+<div class="paragraph">
+<p>The priority of a software event is a 32-bit unsigned integer where lower
+value means higher priority. By default, all software events have event
+priority as zero.</p>
+</div>
+<div class="paragraph">
+<p>If two or more software events have same priority on a given hart then the
+SBI implementation must use <code>event_id</code> for tie-breaking where lower <code>event_id</code>
+has higher priority.</p>
+</div>
+<div class="paragraph">
+<p>A higher priority software event, unless disabled by supervisor software,
+<strong>always</strong> preempts a lower priority software event in <code>RUNNING</code> state on
+the same hart. Once a higher priority software event is completed, the
+previous lower priority software event will be resumed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="18-1-4-software-event-attributes"><a class="anchor" href="#18-1-4-software-event-attributes"></a>18.1.4. Software Event Attributes</h3>
+<div class="paragraph">
+<p>A software event can have various XLEN bits wide attributes associated to it
+where each event attribute is identified by a unique 32-bit unsigned integer
+called <code>attr_id</code>. A software event attribute has Read-Only or Read-Write
+access permissions. The <a href="#table_sse_event_attributes">Table 2</a> below provides a list
+event attributes.</p>
+</div>
+<table id="table_sse_event_attributes" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 2. SSE Event Attributes</caption>
+<colgroup>
+<col style="width: 27.2727%;">
+<col style="width: 18.1818%;">
+<col style="width: 13.6363%;">
+<col style="width: 40.9092%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Attribute Name</th>
+<th class="tableblock halign-left valign-top">Attribute ID<br>
+  (attr_id)</th>
+<th class="tableblock halign-left valign-top">Access<br>
+  (RO / RW)</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STATUS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Status of the software event which is encoded as follows:<br>
+ <br>
+  <code>bit[1:0]</code>: Event state with following possible values: 0 = UNUSED,
+  1 = REGISTERED, 2 = ENABLED, and 3 = RUNNING<br>
+ <br>
+  <code>bit[2:2]</code>: Event pending status (1 = Pending and 0 = Not Pending). This
+  flag is set by the event source and it is cleared when the software event
+  is moved to <code>RUNNING</code> state.<br>
+ <br>
+  <code>bit[3:3]</code>: Event injection using the <code>sbi_sse_inject</code> call (1 = Allowed
+  and 0 = Not allowed)<br>
+ <br>
+  <code>bit[XLEN-1:4]</code>: Reserved for future use and must be zero<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRIORITY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software event priority where only lower 32-bits of the value are used and
+  other bits are always set to zero. This attribute can be updated only when
+  the software event is in <code>UNUSED</code> or <code>REGISTERED</code> state.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CONFIG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000002</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Additional configuration of the software event. This attribute can be
+  updated only when the software event is in <code>UNUSED</code> or <code>REGISTERED</code>
+  state. The encoding of this event attribute is as follows:<br>
+ <br>
+  <code>bit[0:0]</code>: Disable software event upon <code>sbi_sse_complete</code> call (one-shot)<br>
+ <br>
+  <code>bit[XLEN-1:1]</code>: Reserved for future use and must be zero<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PREFERRED_HART</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW (global)<br>
+   RO (local)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hart ID of the preferred hart that should handle the global software event.
+  The value of this attribute must always be valid hart ID for both local and
+  global software events. This attribute is read-only for local software events
+  and for global software events it can be updated only when the software event
+  is in <code>UNUSED</code> or <code>REGISTERED</code> state.<br>
+ <br>
+  The reset value of this attribute is SBI implementation specific.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTRY_PC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000004</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entry program counter value for handling the software event in supervisor
+  software. The value of this event attribute MUST be 2-bytes aligned.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ENTRY_ARG</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000005</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Entry argument (or parameter) value for handling the software event in
+  supervisor software. This attribute value is passed to the supervisor
+  software via <code>A7</code> GPR.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INTERRUPTED_SEPC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000006</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupted <code>sepc</code> CSR value which is saved before handling the software
+  event in supervisor software. This attribute can be updated only when the
+  software event is in <code>RUNNING</code> state. For global events, only the hart
+  executing the event handler can modify it.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INTERRUPTED_FLAGS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000007</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupted flags which are saved before handling the software event in
+  supervisor software. This attribute can be updated only when the
+  software event is in <code>RUNNING</code> state. For global events, only the hart
+  executing the event handler can modify it. The encoding of this event
+  attribute is as follows:<br>
+ <br>
+  <code>bit[0:0]</code>: interrupted <code>sstatus.SPP</code> CSR bit value<br>
+ <br>
+  <code>bit[1:1]</code>: interrupted <code>sstatus.SPIE</code> CSR bit value<br>
+ <br>
+  <code>bit[2:2]</code>: interrupted <code>hstatus.SPV</code> CSR bit value<br>
+ <br>
+  <code>bit[3:3]</code>: interrupted <code>hstatus.SPVP</code> CSR bit value<br>
+ <br>
+  <code>bit[4:4]</code>: interrupted <code>sstatus.SPELP</code> CSR bit value if <code>Zicfilp</code> extension
+  is available to supervisor mode<br>
+ <br>
+  <code>bit[5:5]</code>: interrupted <code>sstatus.SDT</code> CSR bit value if <code>Ssdbltrp</code> extension
+  is available to supervisor mode<br>
+ <br>
+  <code>bit[XLEN-1:6]</code>: Reserved for future use and must be set to zero<br></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INTERRUPTED_A6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupted <code>A6</code> GPR value which is saved before handling the software event
+  in supervisor software. This attribute can be updated only when the software
+  event is in <code>RUNNING</code> state. For global events, only the hart executing the
+  event handler can modify it.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INTERRUPTED_A7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x00000009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Interrupted <code>A7</code> GPR value which is saved before handling the software event
+  in supervisor software. This attribute can be updated only when the software
+  event is in <code>RUNNING</code> state. For global events, only the hart executing the
+  event handler can modify it.<br>
+ <br>
+  The reset value of this attribute is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RESERVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&gt; 0x00000009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">---</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future use.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-5-software-event-injection"><a class="anchor" href="#18-1-5-software-event-injection"></a>18.1.5. Software Event Injection</h3>
+<div class="paragraph">
+<p>To inject a software event on a hart, the SBI implementation must do the
+following:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Save interrupted state of supervisor mode</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set <code>INTERRUPTED_FLAGS</code> event attribute as follows:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p><code>INTERRUPTED_FLAGS[0:0]</code> = interrupted <code>sstatus.SPP</code> CSR bit value</p>
+</li>
+<li>
+<p><code>INTERRUPTED_FLAGS[1:1]</code> = interrupted <code>sstatus.SPIE</code> CSR bit value</p>
+</li>
+<li>
+<p>if H-extension is available to supervisor mode:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p>Set <code>INTERRUPTED_FLAGS[2:2]</code> = interrupted <code>hstatus.SPV</code> CSR bit value</p>
+</li>
+<li>
+<p>Set <code>INTERRUPTED_FLAGS[3:3]</code> = interrupted <code>hstatus.SPVP</code> CSR bit value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>else</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p>Set <code>INTERRUPTED_FLAGS[3:2]</code> = zero</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if <code>Zicfilp</code> extension is available to supervisor mode:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>INTERRUPTED_FLAGS[4:4]</code> = interrupted <code>sstatus.SPELP</code> CSR bit value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>else</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>INTERRUPTED_FLAGS[4:4]</code> = zero</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if <code>Ssdbltrp</code> extension is available to supervisor mode:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>INTERRUPTED_FLAGS[5:5]</code> = interrupted <code>sstatus.SDT</code> CSR bit value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>else</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p><code>INTERRUPTED_FLAGS[5:5]</code> = zero</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set <code>INTERRUPTED_FLAGS[XLEN-1:6]</code> = zero</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set <code>INTERRUPTED_SEPC</code> event attribute = interrupted <code>sepc</code> CSR</p>
+</li>
+<li>
+<p>Set <code>INTERRUPTED_A6</code> event attribute = interrupted <code>A6</code> GPR value</p>
+</li>
+<li>
+<p>Set <code>INTERRUPTED_A7</code> event attribute = interrupted <code>A7</code> GPR value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Redirect execution to supervisor event handler</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set <code>A6</code> GPR = Current Hart ID</p>
+</li>
+<li>
+<p>Set <code>A7</code> GPR = <code>ENTRY_ARG</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>sepc</code> = Interrupted program counter value</p>
+</li>
+<li>
+<p>Set <code>sstatus.SPP</code> CSR bit = interrupted privilege mode</p>
+</li>
+<li>
+<p>Set <code>sstatus.SPIE</code> CSR bit = <code>sstatus.SIE</code> CSR bit value</p>
+</li>
+<li>
+<p>Set <code>sstatus.SIE</code> CSR bit = zero</p>
+</li>
+<li>
+<p>if <code>Zicfilp</code> extension is available to supervisor mode:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Set <code>sstatus.SPELP</code> = interrupted landing pad state</p>
+</li>
+<li>
+<p>Set landing pad state = NO_LP_EXPECTED</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if H-extension is available to supervisor mode:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Set <code>hstatus.SPV</code> CSR bit = interrupted virtualization state</p>
+</li>
+<li>
+<p>if <code>hstatus.SPV</code> CSR bit == 1:</p>
+<div class="olist upperalpha">
+<ol class="upperalpha" type="A">
+<li>
+<p>Set <code>hstatus.SPVP</code> CSR bit = <code>sstatus.SPP</code> CSR bit value</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if <code>Ssdbltrp</code> extension is available to supervisor mode:</p>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>Set S-mode-disable-trap = 1</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set virtualization state = OFF</p>
+</li>
+<li>
+<p>Set privilege mode = S-mode</p>
+</li>
+<li>
+<p>Set program counter = <code>ENTRY_PC</code> event attribute value</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="18-1-6-software-event-completion"><a class="anchor" href="#18-1-6-software-event-completion"></a>18.1.6. Software Event Completion</h3>
+<div class="paragraph">
+<p>After handling the software event on a hart, the supervisor software must
+notify the SBI implementation about completion of event handling using
+<code>sbi_sse_complete</code> call. The SBI implementation must do the following to
+resume the interrupted state for a completed event:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Set program counter = <code>sepc</code> CSR value</p>
+</li>
+<li>
+<p>Set privilege mode = <code>sstatus.SPP</code> CSR bit value</p>
+</li>
+<li>
+<p>if <code>Ssdbltrp</code> extension is available to supervisor mode:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set <code>sstatus.SDT</code> CSR bit = <code>INTERRUPTED_FLAGS[5:5]</code> event attribute value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if <code>Zicfilp</code> extension is available to supervisor mode:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set <code>sstatus.SPELP</code> CSR bit = <code>INTERRUPTED_FLAGS[4:4]</code> event attribute value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>if H-extension is available to supervisor mode:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Set virtualization state = <code>hstatus.SPV</code> CSR bit value</p>
+</li>
+<li>
+<p>Set <code>hstatus.SPV</code> CSR bit = <code>INTERRUPTED_FLAGS[2:2]</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>hstatus.SPVP</code> CSR bit = <code>INTERRUPTED_FLAGS[3:3]</code> event attribute value</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Set <code>sstatus.SIE</code> CSR bit = <code>sstatus.SPIE</code> CSR bit</p>
+</li>
+<li>
+<p>Set <code>sstatus.SPIE</code> CSR bit = <code>INTERRUPTED_FLAGS[1:1]</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>sstatus.SPP</code> CSR bit = <code>INTERRUPTED_FLAGS[0:0]</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>A7</code> GPR = <code>INTERRUPTED_A7</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>A6</code> GPR = <code>INTERRUPTED_A6</code> event attribute value</p>
+</li>
+<li>
+<p>Set <code>sepc</code> = <code>INTERRUPTED_SEPC</code> event attribute value</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>If the supervisor software wishes to resume from a different location,
+it can update the event attributes of the software event before calling
+<code>sbi_sse_complete</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="18-1-7-function-read-software-event-attributes-fid-0"><a class="anchor" href="#18-1-7-function-read-software-event-attributes-fid-0"></a>18.1.7. Function: Read software event attributes (FID #0)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_read_attrs(uint32_t event_id,
+                                 uint32_t base_attr_id, uint32_t attr_count,
+                                 unsigned long output_phys_lo,
+                                 unsigned long output_phys_hi)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Read a range of event attribute values from a software event.</p>
+</div>
+<div class="paragraph">
+<p>The <code>event_id</code> parameter specifies the software event ID whereas <code>base_attr_id</code>
+and <code>attr_count</code> parameters specifies the range of event attribute IDs.</p>
+</div>
+<div class="paragraph">
+<p>The event attribute values are written to a output shared memory which is
+specified by the <code>output_phys_lo</code> and <code>output_phys_hi</code> parameters where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>output_phys_lo</code> parameter MUST be <code>XLEN / 8</code> bytes aligned</p>
+</li>
+<li>
+<p>The size of output shared memory is assumed to be <code>(XLEN / 8) * attr_count</code></p>
+</li>
+<li>
+<p>The value of event attribute with ID <code>base_attr_id + i</code> should be written
+at offset <code>(XLEN / 8) * (base_attr_id + i)</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In case of an error, the possible error codes are shown in the
+<a href="#table_sse_read_attrs_errors">Table 68</a> below:</p>
+</div>
+<table id="table_sse_read_attrs_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 68. SSE Event Attributes Read Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event attribute values read successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is invalid or <code>attr_count</code> is zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_BAD_RANGE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One of the event attribute IDs in the range
+                            specified by <code>base_attr_id</code> and <code>attr_count</code> is
+                            reserved.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The shared memory pointed to by the
+                            <code>output_phys_lo</code> and <code>output_phys_hi</code> parameters
+                            does not satisfy the requirements described in
+                            <a href="#_shared_memory_physical_address_range_parameter">[_shared_memory_physical_address_range_parameter]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The read failed for unspecified or unknown other
+                            reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-8-function-write-software-event-attributes-fid-1"><a class="anchor" href="#18-1-8-function-write-software-event-attributes-fid-1"></a>18.1.8. Function: Write software event attributes (FID #1)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_write_attrs(uint32_t event_id,
+                                 uint32_t base_attr_id, uint32_t attr_count,
+                                 unsigned long input_phys_lo,
+                                 unsigned long input_phys_hi)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Write a range of event attribute values to a software event.</p>
+</div>
+<div class="paragraph">
+<p>The <code>event_id</code> parameter specifies the software event ID whereas <code>base_attr_id</code>
+and <code>attr_count</code> parameters specifies the range of event attribute IDs.</p>
+</div>
+<div class="paragraph">
+<p>The event attribute values are read from a input shared memory which is
+specified by the <code>input_phys_lo</code> and <code>input_phys_hi</code> parameters where:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The <code>input_phys_lo</code> parameter MUST be <code>XLEN / 8</code> bytes aligned</p>
+</li>
+<li>
+<p>The size of input shared memory is assumed to be <code>(XLEN / 8) * attr_count</code></p>
+</li>
+<li>
+<p>The value of event attribute with ID <code>base_attr_id + i</code> should be read
+from offset <code>(XLEN / 8) * (base_attr_id + i)</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>For local events, the event attributes are updated only for the calling hart.
+For global events, the event attributes are updated for all the harts.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in
+<a href="#table_sse_write_attrs_errors">Table 69</a> below. In case of errors with attribute values,
+the first error encountered (based on attributes ID order) is returned.</p>
+</div>
+<table id="table_sse_write_attrs_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 69. SSE Event Attributes Write Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event attribute values written successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Attribute write operation failed because either:<br>
+                            - <code>event_id</code> is invalid<br>
+                            - <code>attr_count</code> is zero<br>
+                            - <code>event_id</code> is valid but one of the attribute
+                            values violates the legal values described in
+                            <a href="#table_sse_event_attributes">Table 2</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_DENIED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but one of the attributes is
+                            read-only.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_STATE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but one of the attribute values
+                            violates the state rules described in
+                            <a href="#table_sse_event_attributes">Table 2</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_BAD_RANGE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">One of the event attribute IDs in the range
+                            specified by <code>base_attr_id</code> and <code>attr_count</code> is
+                            reserved.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_ADDRESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The shared memory pointed to by the
+                            <code>input_phys_lo</code> and <code>input_phys_hi</code> parameters
+                            does not satisfy the requirements described in
+                            <a href="#_shared_memory_physical_address_range_parameter">[_shared_memory_physical_address_range_parameter]</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The write failed for unspecified or unknown other
+                            reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-9-function-register-a-software-event-fid-2"><a class="anchor" href="#18-1-9-function-register-a-software-event-fid-2"></a>18.1.9. Function: Register a software event (FID #2)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_register(uint32_t event_id,
+                               unsigned long handler_entry_pc,
+                               unsigned long handler_entry_arg)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Register an event handler for the software event.</p>
+</div>
+<div class="paragraph">
+<p>The <code>event_id</code> parameter specifies the event ID for which an event handler
+is being registered. The <code>handler_entry_pc</code> parameter MUST be 2-bytes aligned
+and specifies the <code>ENTRY_PC</code> event attribute of the software event whereas
+the <code>handler_entry_arg</code> parameter specifies the <code>ENTRY_ARG</code> event attribute
+of the software event.</p>
+</div>
+<div class="paragraph">
+<p>For local events, the event is registered only for the calling hart.
+For global events, the event is registered for all the harts.</p>
+</div>
+<div class="paragraph">
+<p>The event MUST be in <code>UNUSED</code> state otherwise this function will fail.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is advisable to use different values for <code>handler_entry_arg</code> for
+different events because higher priority events preempt lower priority
+events.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Upon success, the event state moves from <code>UNUSED</code> to <code>REGISTERED</code>. In case
+of an error, possible error codes are listed in <a href="#table_sse_register_errors">Table 5</a>
+below.</p>
+</div>
+<table id="table_sse_register_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 5. SSE Event Register Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event handler is registered successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_STATE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but the event is not in
+                            <code>UNUSED</code> state.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is invalid or <code>handler_entry_pc</code>
+                            is not 2-bytes aligned.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-10-function-unregister-a-software-event-fid-3"><a class="anchor" href="#18-1-10-function-unregister-a-software-event-fid-3"></a>18.1.10. Function: Unregister a software event (FID #3)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_unregister(uint32_t event_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Unregister the event handler for given <code>event_id</code>.</p>
+</div>
+<div class="paragraph">
+<p>For local events, the event is unregistered only for the calling hart.
+For global events, the event is unregistered for all the harts.</p>
+</div>
+<div class="paragraph">
+<p>The event MUST be in <code>REGISTERED</code> state otherwise this function will fail.</p>
+</div>
+<div class="paragraph">
+<p>Upon success, the event state moves from <code>REGISTERED</code> to <code>UNUSED</code>. In case
+of an error, possible error codes are listed in <a href="#table_sse_unregister_errors">Table 70</a>
+below.</p>
+</div>
+<table id="table_sse_unregister_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 70. SSE Event Unregister Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event handler is unregistered successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_STATE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but the event is not in
+                            <code>REGISTERED</code> state.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is invalid.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-11-function-enable-a-software-event-fid-4"><a class="anchor" href="#18-1-11-function-enable-a-software-event-fid-4"></a>18.1.11. Function: Enable a software event (FID #4)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_enable(uint32_t event_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Enable the software event specified by the <code>event_id</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>For local events, the event is enabled only for the calling hart.
+For global events, the event is enabled for all the harts.</p>
+</div>
+<div class="paragraph">
+<p>The event MUST be in <code>REGISTERED</code> state otherwise this function will fail.</p>
+</div>
+<div class="paragraph">
+<p>Upon success, the event state moves from <code>REGISTERED</code> to <code>ENABLED</code>. In case
+of an error, possible error codes are listed in <a href="#table_sse_enable_errors">Table 71</a>
+below.</p>
+</div>
+<table id="table_sse_enable_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 71. SSE Event Enable Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event is successfully enabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not valid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_STATE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but the event is not in
+                            <code>REGISTERED</code> state.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-12-function-disable-a-software-event-fid-5"><a class="anchor" href="#18-1-12-function-disable-a-software-event-fid-5"></a>18.1.12. Function: Disable a software event (FID #5)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_disable(uint32_t event_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Disable the software event specified by the <code>event_id</code> parameter.</p>
+</div>
+<div class="paragraph">
+<p>For local events, the event is disabled only for the calling hart.
+For global events, the event is disabled for all the harts.</p>
+</div>
+<div class="paragraph">
+<p>The event MUST be in <code>ENABLED</code> state otherwise this function will fail.</p>
+</div>
+<div class="paragraph">
+<p>Upon success, the event state moves from <code>ENABLED</code> to <code>REGISTERED</code>. In case
+of an error, possible error codes are listed in <a href="#table_sse_disable_errors">Table 72</a>
+below.</p>
+</div>
+<table id="table_sse_disable_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 72. SSE Event Disable Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event is successfully disabled.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not valid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_STATE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is valid but the event is not in
+                            <code>ENABLED</code> state.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-13-function-complete-software-event-handling-fid-6"><a class="anchor" href="#18-1-13-function-complete-software-event-handling-fid-6"></a>18.1.13. Function: Complete software event handling (FID #6)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_complete(void)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Complete the supervisor event handling for the highest priority event in
+<code>RUNNING</code> state on the calling hart.</p>
+</div>
+<div class="paragraph">
+<p>If there were no events in <code>RUNNING</code> state on the calling hart then this
+function does nothing and returns <code>SBI_SUCCESS</code> otherwise it moves the
+highest priority event in <code>RUNNING</code> state to:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>REGISTERED</code> if the event is configured as one-shot (see the <code>CONFIG</code>
+attribute in <a href="#table_sse_event_attributes">Table 2</a>.)</p>
+</li>
+<li>
+<p><code>ENABLED</code> state otherwise</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>It then resumes the interrupted supervisor state as described in
+<a href="#_software_event_completion">[_software_event_completion]</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="18-1-14-function-inject-a-software-event-fid-7"><a class="anchor" href="#18-1-14-function-inject-a-software-event-fid-7"></a>18.1.14. Function: Inject a software event (FID #7)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_inject(uint32_t event_id, unsigned long hart_id)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The supervisor software can inject a software event with this function.
+The <code>event_id</code> paramater refers to the ID of the event to be injected.</p>
+</div>
+<div class="paragraph">
+<p>For local events, the <code>hart_id</code> parameter refers to the hart on which the
+event is to be injected.
+For global events, the <code>hart_id</code> parameter is ignored.</p>
+</div>
+<div class="paragraph">
+<p>An event can only be injected if it is allowed by the event attribute as
+described in <a href="#table_sse_event_attributes">Table 2</a>.</p>
+</div>
+<div class="paragraph">
+<p>If an event is injected from within an SSE event handler, if it is ready to be
+run, it will be handled according to the priority rules described in
+<a href="#software_event_priority">18.1.3. Software Event Priority</a>:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>If it has a higher priority than the one currently running, then it will be
+handled immediately, effectively preempting the currently running one.</p>
+</li>
+<li>
+<p>If it has a lower priority, it will be run after the one that is currently
+running completes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In case of an error, possible error codes are listed in
+<a href="#table_sse_inject_errors">Table 73</a> below.</p>
+</div>
+<table id="table_sse_inject_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 73. SSE Event Inject Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event is successfully injected.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> is not reserved and valid, but the
+                            platform does not support it due to one or more
+                            missing dependencies (Hardware or SBI
+                            implementation).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>event_id</code> or <code>hart_id</code> is invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The injection failed for unspecified or unknown other
+                            reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-15-function-unmask-software-events-on-a-hart-fid-8"><a class="anchor" href="#18-1-15-function-unmask-software-events-on-a-hart-fid-8"></a>18.1.15. Function: Unmask software events on a hart (FID #8)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_hart_unmask(void)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Start receiving (or unmask) software events on the calling hart. In other
+words, the calling hart is ready to receive software events from the SBI
+implementation.</p>
+</div>
+<div class="paragraph">
+<p>The software events are masked initially on all harts so the supervisor
+software must explicitly unmask software events on relevant harts at
+boot-time.</p>
+</div>
+<div class="paragraph">
+<p>In case of an error, possible error codes are listed in
+<a href="#table_sse_hard_unmask_errors">Table 74</a> below.</p>
+</div>
+<table id="table_sse_hard_unmask_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 74. SSE Hart Unmask Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software events unmasked successfully on the calling hart.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_ALREADY_STARTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software events were already unmasked on the calling hart.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request failed for unspecified or unknown other reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-16-function-mask-software-events-on-a-hart-fid-9"><a class="anchor" href="#18-1-16-function-mask-software-events-on-a-hart-fid-9"></a>18.1.16. Function: Mask software events on a hart (FID #9)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_sse_hart_mask(void)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Stop receiving (or mask) software events on the calling hart. In other
+words, the calling hart will no longer be ready to receive software events
+from the SBI implementation.</p>
+</div>
+<div class="paragraph">
+<p>In case of an error, possible error codes are listed in
+<a href="#table_sse_hard_mask_errors">Table 75</a> below.</p>
+</div>
+<table id="table_sse_hard_mask_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 75. SSE Hart Mask Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software events masked successfully on the calling hart.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_ALREADY_STOPPED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software events were already masked on the calling hart.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The request failed for unspecified or unknown other reasons.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="18-1-17-function-listing"><a class="anchor" href="#18-1-17-function-listing"></a>18.1.17. Function Listing</h3>
+<table id="table_sse_function_list" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 76. SSE Function List</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function Name</th>
+<th class="tableblock halign-left valign-top">SBI Version</th>
+<th class="tableblock halign-left valign-top">FID</th>
+<th class="tableblock halign-left valign-top">EID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_read_attrs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_write_attrs</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_unregister</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_enable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_disable</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_complete</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_inject</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_hart_unmask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_sse_hart_mask</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3.0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x535345</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ext-steal-time.html">Chapter 17. Steal-time Accounting Extension (EID #0x535441 "STA")</a></span>
+  <span class="next"><a href="ext-firmware-features.html">Chapter 19. SBI Firmware Features Extension (EID #0x46574654 "FWFT")</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

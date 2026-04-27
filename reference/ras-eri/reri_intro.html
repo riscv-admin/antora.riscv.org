@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/ras-eri/reri_intro.html">
+    <link rel="prev" href="reri_contributors.html">
+    <link rel="next" href="reri_err_reporting.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="ras-eri">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="ras-eri" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS</a>
+</div>        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../debug/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../e-trace/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../nexus-trace/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../cbqri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../cbqri/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../trace-connectors/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../trace-control-interface/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../trace-encap/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-ras-eri/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-ras-eri" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-reri.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">RERI Architecture</a></li>
+                      <li>
+            <a href="reri_intro.html">Chapter 1. Introduction</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="intro"><a class="anchor" href="#intro"></a>1.1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RAS Error Record Register Interface (RERI) specification augments
+Reliability, Availability, and Serviceability (RAS) features in the SoC with a
+standard mechanism for reporting errors by means of a memory-mapped register
+interface to enable error reporting, provide the facility to log the detected
+errors (including their severity, nature, and location), and configuring means
+to signal the error to a RAS handler component. The RAS handler may use this
+information to determine suitable recovery actions that may include terminating
+the computation (e.g., terminating a process), restarting parts or all of
+the system, etc. to recover from the errors. Additionally, this specification
+shall support software-initiated error logging, reporting, and testing of RAS
+handlers. Lastly, this specification shall provide maximal flexibility to
+implement error handling and coexists with RAS frameworks defined by other
+standards such as PCIe [<a href="reri_bibliography.html#bib-pci" class="xref page">1</a>] and CXL [<a href="reri_bibliography.html#bib-cxl" class="xref page">2</a>].</p>
+</div>
+<div class="paragraph">
+<p>A system is an entity that interacts with other entities such as other systems,
+software, operators, etc. to deliver one or more services in its role as a
+service provider. A system may itself be a consumer of one or more services
+provided by one or more other systems. A system thus is a collection of
+interacting components that implement one or more functions to provide a
+service.</p>
+</div>
+<div class="paragraph">
+<p>A service is the behavior as perceived by the consumers of the service. A system
+may implement the service as one or more functions in the system. The functions
+used to compose the service may be implemented by one or more components in the
+system.</p>
+</div>
+<div class="paragraph">
+<p>A service is described as a set of states that can be observed by the consumer
+of the service. The set of states observed by the consumer of the service may be
+further dependent on a set of internal states of the functions that implement
+the service.</p>
+</div>
+<div class="paragraph">
+<p>A service is said to be correct if the set of states observed by the consumer of
+the service match the specification of that service. The specifications of a
+service may include its functional behavior, performance goals,
+security objectives, and RAS requirements.</p>
+</div>
+<div class="paragraph">
+<p>Reliability of a system as a function of time is the probability it continues to
+provide correct service and may be characterized by metrics such as mean time
+between failures (MTBF). The services provided by a reliable system fail on
+faults instead of silently producing incorrect results. Reliable systems
+incorporate methods to detect occurrence of errors and to signal the errors to
+the consumers of the service.</p>
+</div>
+<div class="paragraph">
+<p>Availability of a system as a function of time is the probability that the
+system provides the expected service and is a measure of tolerance to errors.
+Systems may increase their availability by minimizing the impact of the errors in
+one part of the system to the rest of the system. This may be achieved by means
+such as error correction, redundancy, state checkpoints and rollbacks, error
+prediction, and error containment.</p>
+</div>
+<div class="paragraph">
+<p>Serviceability is a measure of time to restore the service to correct operation
+with minimal disruption to the consumers of the service. These may be achieved
+by means such as identifying and reporting failures and supporting mechanisms to
+repair and bring the system back online.</p>
+</div>
+<div class="sect2">
+<h3 id="1-1-1-faults-and-errors"><a class="anchor" href="#1-1-1-faults-and-errors"></a>1.1.1. Faults and Errors</h3>
+<div class="paragraph">
+<p>A fault is an incorrect state resulting from failures of components or due to
+interference from the environment in which the system operates. A fault is
+permanent if it reflects an irreversible change to the observable system state
+and is transient otherwise. A permanent fault may occur due to a physical
+defect or due to a flaw in the design of the functions implementing the service
+itself. A transient fault may occur due to temporary environmental conditions
+(cosmic rays, voltage glitches, etc.) or due to instability (e.g. marginal
+hardware).</p>
+</div>
+<div class="paragraph">
+<p>Some faults that occur in a component may be dormant and only affect the
+internal state of the component. Such dormant faults however may turn into
+active faults when that internal state is used by the computation process in
+that component and produce an error. An error is detected when its presence is
+indicated by an error message or signal.</p>
+</div>
+<div class="paragraph">
+<p>Software faults may similarly cause errors that cause the service provided by
+the system to deviate from its specification. Well known software engineering
+and reliability techniques may be employed to prevent, detect and recover from
+software errors. Software errors are not in the scope of this specification.
+Software should not have the ability to induce hardware errors.</p>
+</div>
+<div class="paragraph">
+<p>A service failure occurs when the service deviates from its specification due
+to errors.</p>
+</div>
+<div class="paragraph">
+<p>A reliable system deals with errors through one or more of the following
+techniques [<a href="reri_bibliography.html#bib-ras_tax" class="xref page">3</a>] [<a href="reri_bibliography.html#bib-exa_ras" class="xref page">4</a>]:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Fault prevention</p>
+</li>
+<li>
+<p>Error detection and correction</p>
+</li>
+<li>
+<p>Error prediction</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="1-1-2-fault-prevention"><a class="anchor" href="#1-1-2-fault-prevention"></a>1.1.2. Fault Prevention</h3>
+<div class="paragraph">
+<p>Fault prevention involves use of techniques that reduce or prevent errors that
+may occur after the product has been shipped. These may be accomplished through
+the use of high quality in product design, technology selection, materials
+selection, and manufacturing time screening for defects. Through the use of
+systematic design, technology selection, and manufacturing tests many errors
+such as those induced by electric fields, temperature stress, switching/coupling
+noise (e.g. DRAM RowHammer [<a href="reri_bibliography.html#bib-rham" class="xref page">5</a>] effect), incorrect V/F operating points,
+insufficient guard bands, meta-stability, etc. can be prevented.</p>
+</div>
+<div class="paragraph">
+<p>Faults that are not prevented may manifest as errors during operation of the
+system. Errors that are not detected may still lead to a service failure. For
+example, an undetected error in an adder used to produce the address of a load
+may produce a bad address which causes the load to incur an exception and lead
+to a service failure. Some undetected errors however may not manifest as
+exceptions and cause a service failure due to silent data corruption. For
+example, a circuit performing encryption of a database may silently cause an
+error in the ciphertext produced leading to the entire database being left in a
+state where it cannot be decrypted. Such undetected errors that do not lead to a
+service failure are called Silent Data Errors (SDE). The impact of SDE is
+generally much higher than errors that lead to a service failure. A resilient
+system attempts to minimize the probability of SDE to the largest extent
+possible by implementing error detection capabilities.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="1-1-3-error-detection-and-correction"><a class="anchor" href="#1-1-3-error-detection-and-correction"></a>1.1.3. Error Detection and Correction</h3>
+<div class="paragraph">
+<p>Error detection involves the use of coding and protocols to detect errors
+[<a href="reri_bibliography.html#bib-eu_hpc" class="xref page">6</a>] [<a href="reri_bibliography.html#bib-exa_2014" class="xref page">7</a>]. For example, caches with error correcting codes,
+TLB entries with parity protection, buses with parity protection on transaction
+fields, circuitry to detect unexpected and/or illegal encodings, gray codes,
+voltage sensors, clock/PLL monitors, timing margin sensors, etc. Some components
+such as memory controllers may actively attempt to detect errors using techniques
+such as periodic background scrubbing or on-demand scrubbing.</p>
+</div>
+<div class="paragraph">
+<p>Error correction involves the use of techniques to correct the detected errors.
+Error correction may be performed by employing error correcting codes and
+protocols.  For example, a processor cache may employ error correcting codes
+(ECC) to detect and correct errors. Some components may recover from errors by
+using protocols that involve a retry. For example, a TLB that detects an error
+may invalidate the entry and attempt to refill it from the page tables, a
+receiver on a bus that detects an error may request the transmitter to
+retransmit the transaction, etc. Error correction is thus complete when the
+error is either corrected or it does not recur on retry. Such errors that were
+corrected by the hardware are called <strong>Corrected Errors (CE)</strong>.</p>
+</div>
+<div class="paragraph">
+<p>Errors that could not be corrected are called uncorrected errors. A component
+that detects an uncorrected error may allow possibly corrupted data to
+propagate to the requester of the data but associate an indicator (e.g., poison)
+with the data. Such errors are said to be <strong>Uncorrected Errors Deferred (UED)</strong> as
+they allow the component to continue operation and defer dealing with the error
+to a later point in time if the data corrupted by the error is consumed. Deferring
+errors allows deferring the error handling to an ultimate consumer of the
+corrupted data that may be able to provide more precise information to a RAS
+handler about the contexts affected by the corruption and thus enable more
+precise error recovery actions by the RAS handler. The component that detected
+and deferred the error may notify a RAS handler by reporting the UED
+but such a UED does not need an immediate remedial action to be performed by the
+RAS handler.  For example, a memory controller may detect an uncorrectable ECC
+error on data in memory but since there is no immediate consumer of the data the
+memory controller may just mark the data as poisoned and defer the error
+handling to a component that requests the data. If the poisoned data is never
+consumed then deferred errors are benign. If the poisoned data is completely
+overwritten with new data then the associated poison is cleared. If the poisoned
+data is only partially written then the data continues to be marked as poisoned.</p>
+</div>
+<div class="paragraph">
+<p>A component that detects an uncorrected error may be unable to defer the
+handling of the error by techniques such as poisoning. Such errors are said to
+be <strong>Uncorrected Errors Critical (UEC)</strong> and a RAS handler is invoked as
+immediate remedial actions are required. For example, a cache controller
+may detect an uncorrectable ECC error on the memory used to hold cache tags
+and since such errors cannot be attributed to any particular data element
+these errors may be classified as UEC. If poisoned data is attempted to be
+consumed by a component (e.g. a hart, an IOMMU, a device, etc.) then an UEC
+occurs as immediate remedial actions are required and further deferral of the
+error is not possible.</p>
+</div>
+<div class="paragraph">
+<p>A component that signals a request for execution of an RAS handler
+for an UEC may indicate that the error has not propagated beyond the boundaries
+of the component that detected the error and thus may be <strong>containable</strong> through
+recovery actions (e.g., terminating the computation, etc.) carried out by the
+RAS handler.</p>
+</div>
+<div class="paragraph">
+<p>Some components act as an intermediary through which the data passes through.
+For example, a PCIe/CXL port is an intermediary component that by itself does
+not consume the data it receives from memory but forwards the data to the
+endpoint. In such cases the component may receive the data with a deferred
+error. Such a component may propagate the error and not log an error by itself.
+However, if the component to which the data is being propagated (e.g. a PCIe
+endpoint) is not capable of handling poison then the former component  must
+signal a UEC instead of propagating the corrupted data, as the act of
+propagation breaks containment of the error.</p>
+</div>
+<div class="paragraph">
+<p>An error detected by a component may lead to a failure mode where the component
+may not be able to service requests anymore (e.g. colloquially called jammed,
+wedged, etc.). For example, an error in the hart pipeline may cause the hart to
+stop committing instructions, a fabric may be in a state where it cannot process
+any further requests, the link connecting the memory module to the host may have
+failed, etc. In such cases invoking a RAS handler may not be useful
+as the RAS handler itself may need to generate requests to the failed component
+to perform the recovery actions. Components in such failed states may use an
+implementation-defined signal to a system recovery controller (e.g., a Baseboard
+Management Controller (BMC), an on-chip service controller, etc.) to initiate a
+RAS-handling reset to restart the component, sub-system, or the system itself to
+restore correct service operations.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="1-1-4-error-prediction"><a class="anchor" href="#1-1-4-error-prediction"></a>1.1.4. Error Prediction</h3>
+<div class="paragraph">
+<p>Error prediction involves the use of corrected errors as a predictor of future
+uncorrectable permanent failures or other systemic issues, such as marginality
+due to aging. Monitoring corrected errors may facilitate the avoidance of future
+service failures.</p>
+</div>
+<div class="paragraph">
+<p>Studies indicate that the probability of an uncorrected DRAM error is elevated
+if the DIMM previously experienced corrected errors [<a href="reri_bibliography.html#bib-dram_wild" class="xref page">8</a>]
+[<a href="reri_bibliography.html#bib-sri_2012" class="xref page">9</a>] [<a href="reri_bibliography.html#bib-ziv_2019" class="xref page">10</a>]. Such reasoning is used by system protection
+mechanisms, which utilize simple heuristics for offlining potentially failing
+memory pages [<a href="reri_bibliography.html#bib-hwa_2012" class="xref page">11</a>] [<a href="reri_bibliography.html#bib-mez_2015" class="xref page">12</a>] [<a href="reri_bibliography.html#bib-tang_2006" class="xref page">13</a>] [<a href="reri_bibliography.html#bib-du_2021" class="xref page">14</a>] or
+for replacing compromised DIMMs [<a href="reri_bibliography.html#bib-mar_2014" class="xref page">15</a>] [<a href="reri_bibliography.html#bib-dram_wild" class="xref page">8</a>] [<a href="reri_bibliography.html#bib-du_2020" class="xref page">16</a>].</p>
+</div>
+<div class="paragraph">
+<p>Reporting of detected and corrected hardware errors is requisite for any
+quantitative analysis of system resilience and for the prediction of future
+uncorrected errors [<a href="reri_bibliography.html#bib-eu_hpc" class="xref page">6</a>]. This prediction capability facilitates the
+deployment of preventive mechanisms, such as pre-failure alerts in
+High-Performance Computing (HPC) cluster management software, thus mitigating
+the costs associated with unscheduled outages and system repairs.</p>
+</div>
+<div class="paragraph">
+<p>Components of a resilient system may also include corrected error counters to
+count the corrections performed. Such components may additionally include a
+fixed or programmable threshold to notify a RAS handler when the number of
+corrected errors surpasses the threshold.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="1-1-5-reri-features"><a class="anchor" href="#1-1-5-reri-features"></a>1.1.5. RERI Features</h3>
+<div class="paragraph">
+<p>Version 1.0 of the RISC-V RERI specification supports the following features:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Error severity classes and standard error codes.</p>
+</li>
+<li>
+<p>Standard register format and addressing for memory-mapped error-record
+registers and error-record banks.</p>
+</li>
+<li>
+<p>Rules for prioritized overwriting of valid error records with new error
+records.</p>
+</li>
+<li>
+<p>Corrected error counting.</p>
+</li>
+<li>
+<p>Error record injection for RAS handler testing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>This specification is intended to accommodate a wide variety of systems
+designs and needs - from high-end server-class systems to low-end embedded
+systems. This is accomplished through providing implementation flexibility
+and options - both within the registers of an error record and the number
+of error records in an error bank, and with respect to the association
+between hardware components and error errors/banks.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="1-1-6-glossary"><a class="anchor" href="#1-1-6-glossary"></a>1.1.6. Glossary</h3>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 1. Terms and definitions</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-center valign-top">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced Error Reporting. A PCIe capability to support
+                     advanced error control and reporting.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BMC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baseboard Management Controller.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Corrected Error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Custom</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A register or data structure field designated for custom
+                     use. Software that is not aware of the custom use must
+                     ignore custom fields and preserve value held in these
+                     fields when writing values to other fields in the same
+                     register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CXL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compute Express Link bus standard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In this specification data refers broadly to all forms of
+                     information being stored or transferred in a computing
+                     system. In the case of a CPU, for example, this encompasses
+                     information that may be treated as instructions that are
+                     fetched and executed, as well as data that is loaded and
+                     stored.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DIMM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dual-In-line Memory Module. A packaging arrangement of
+                     memory devices on a socketable substrate.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DRAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Dynamic random-access memory. Devices made using Dynamic
+                     RAM circuit configurations that have data storage that must
+                     be refreshed periodically.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Correcting Code.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error Reporting</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Error reporting is the process of logging information
+                     (including their severity, nature, and location) about
+                     a detected error in an error record and signaling, if
+                     required, the occurrence of the error to an appropriate
+                     RAS handler.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FSM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Finite-State Machine. An abstract machine that can be in
+                     exactly one of a finite number of states at any time.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guest Physical Address. See Priv. specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HPC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">High-performance Computing. High-Performance Computing
+                     (HPC) refers to the use of parallel processing techniques
+                     to solve complex computational problems. It enables faster
+                     data processing and simulation by leveraging multiple
+                     processors or servers.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifier.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOMMU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Input-Output Memory Management Unit. A system-level
+                     Memory Management Unit (MMU) that connects
+                     direct-memory-access capable Input/Output (I/O) devices to
+                     system memory.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NMI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Non-Maskable interrupt. See Priv. specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operating System.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PLL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Phase-Locked Loop. A control system that generates an
+                     output signal whose phase is related to the phase of an
+                     input signal. PLLs are commonly used to perform clock
+                     synthesis.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PCIe</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Peripheral Component Interconnect Express bus standard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reliability, Availability, and Serviceability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RERI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RAS error record register interface.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A register or data structure field reserved for future use.
+                     Reserved fields in data structures must be set to 0 by
+                     software. Software must ignore reserved fields in registers
+                     and preserve the value held in these fields when writing
+                     values to other fields in the same register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read-Only - Register bits are read-only and cannot be altered
+                     by software. Where explicitly defined, these bits are used
+                     to reflect changing hardware state, and as a result bit
+                     values can be observed to change at run time.<br>
+                     If the optional feature that would Set the bits is not
+                     implemented, the bits must be hardwired to Zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read-Write - Register bits are read-write and are permitted
+                     to be either Set or Cleared by software to the desired
+                     state.<br>
+                     If the optional feature that is associated with the bits is
+                     not implemented, the bits are permitted to be hardwired to
+                     Zero.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write-1-to-Clear status - Register bits indicate status when
+                     read. A Set bit indicates a status event which is Cleared by
+                     writing a 1b. Writing a 0b to RW1C bits has no effect.<br>
+                     If the optional feature that would Set the bit is not
+                     implemented, the bit must be read-only and hardwired to Zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RW1S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read-Write-1-to-Set - register bits indicate status when
+                     read. The bit may be Set by writing 1b. Writing a 0b to RW1S
+                     bits has no effect.<br>
+                     If the optional feature that introduces the bit is not
+                     implemented, the bit must be read-only and hardwired to Zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SDE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Silent Data Error.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SOC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System On a Chip, also referred as System-On-a-Chip and
+                     System-On-Chip.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor Physical Address. See Priv. specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Translation Lookaside Buffer.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual Address. See Priv. specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uncorrected Error Deferred.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UEC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Uncorrected Error Critical.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write Any values, Reads Legal values: Attribute of a
+                     register field that is only defined for a subset of bit
+                     encodings, but allow any value to be written while
+                     guaranteeing to return a legal value whenever read.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WPRI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writes Preserve values, Reads Ignore values:
+                     Attribute of a register field that is reserved for future
+                     standard use.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="reri_contributors.html">Contributors</a></span>
+  <span class="next"><a href="reri_err_reporting.html">Chapter 2. Error Reporting</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

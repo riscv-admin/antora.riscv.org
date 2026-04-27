@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>RISC-V Ratified Specifications Library :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/home/index.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="">
+    <meta name="component" content="home">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs"  autofocus>
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="home" data-version=""
+   data-is-home="true"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <span class="title">RISC-V Specifications</span>
+  </div>          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="RISC-V Ratified Specifications Library"
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-admin/antora.riscv.org/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-admin/antora.riscv.org" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<h1 id="page-title" class="page">RISC-V Ratified Specifications Library</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Welcome to the RISC-V Ratified Specifications Library. This site provides access to all ratified RISC-V specifications.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="about-riscv"><a class="anchor" href="#about-riscv"></a>About RISC-V</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>RISC-V (pronounced "risk-five") is an open standard instruction set architecture (ISA) based on established reduced instruction set computer (RISC) principles. These specifications are maintained by RISC-V International and represent the ratified, stable specifications for the RISC-V ecosystem.</p>
+</div>
+<div class="paragraph">
+<p>For more information, visit <a href="https://riscv.org">riscv.org</a>.</p>
+</div>
+<details class="section-cards-toggle" id="core-architecture" open>
+	<summary>Core Architecture</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Unprivileged ISA</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v20260120</div><div>January 2026</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">User-level instruction set and standard extensions.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../isa/unpriv/unpriv-index.html" class="button button--primary">HTML</a><a href="../isa/_attachments/riscv-unprivileged.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/MzM1NWFmYmFjNzlkNGMyMDg0NThjM2ZlODVkZTA3MDE" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Privileged ISA</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v20260120</div><div>January 2026</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Privileged architecture, execution modes, and system control.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../isa/priv/priv-index.html" class="button button--primary">HTML</a><a href="../isa/_attachments/riscv-privileged.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NDdlNzQ3YTRiNWZkNDI2ZjlhY2M2YzFkMmExNjI5NTg" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+<details class="section-cards-toggle" id="profiles">
+	<summary>Profiles</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">RISC-V Profiles</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>April 2023</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Base profile definitions and guidance.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../rva20-rvi20-rva22/index.html" class="button button--primary">HTML</a><a href="../rva20-rvi20-rva22/_attachments/RISC-V_Profiles.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ODAwNTY1YzNmZDQ3NDg5N2FkMGQ5MTRjZWY1ZGY4Yjc" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">RVA23 Profile</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>October 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Application-class profile requirements.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../rva23/index.html" class="button button--primary">HTML</a><a href="../rva23/_attachments/rva23-profile.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/MWRiOWY4ZjBhZjkzNDI2MTk4ZGMxZDhjNjZjOTMyNDk" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">RVB23 Profile</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>October 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Embedded and edge profile requirements.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../rvb23/index.html" class="button button--primary">HTML</a><a href="../rvb23/_attachments/rvb23-profile.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/OTQ3N2Q3MmQwNDFmNDUxMDlkMzY0NTgyMjk5YTI3MzE" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+<details class="section-cards-toggle" id="hardware-specifications">
+	<summary>Hardware</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Advanced Interrupt Architecture</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>June 2023</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Interrupt architecture and related interfaces.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../aia/index.html" class="button button--primary">HTML</a><a href="../aia/_attachments/riscv-interrupts.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/MTc1MTUwOTg5NTRkNDk0YjlkOGY1MDk5MTljZGU2MjA" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">IOMMU</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> 20260222</div><div>February 2026</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">IOMMU architecture, registers, queues, and integration guidance.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../iommu/index.html" class="button button--primary">HTML</a><a href="../iommu/_attachments/riscv-iommu.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ZGY0YjgxZTZhOTY3NDhiZGJhMGZiNzAwMzk3ZmNkNDg" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Platform-Level Interrupt Controller</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0.0</div><div>February 2023</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Interrupt controller behavior and programming model.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../plic/index.html" class="button button--primary">HTML</a><a href="../plic/_attachments/riscv-plic.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/Mzg2YjQ2ZTBiODYyNDBkNDg2N2JmZmQ1ZTUwOWNmZWI" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Server SoC</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>February 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Server-class SoC requirements and conventions.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../server-soc/index.html" class="button button--primary">HTML</a><a href="../server-soc/_attachments/riscv-server-soc.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NTg4MWJjYjJmZDkxNDdmNWFmMTdkZjYxYTk2MzFjOGI" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+<details class="section-cards-toggle" id="debug-trace-and-ras">
+	<summary>Debug, Trace, and RAS</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Efficient Trace for RISC-V</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v2.0</div><div>June 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Trace architecture for efficient execution visibility.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../e-trace/index.html" class="button button--primary">HTML</a><a href="../e-trace/_attachments/riscv-trace-spec.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NjI1Y2M5ODdiYmUxNGE5MzkzYzdkNzNjNGE3NWFjNDA" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">QoS Register Interface</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>June 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">QoS register interface for capacity and bandwidth control.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../cbqri/index.html" class="button button--primary">HTML</a><a href="../cbqri/_attachments/riscv-cbqri.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/YmYxMjUzMmYyOTIxNGIzMmJiZjNiYWY0MGVhNjBkYTc" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">RERI Architecture</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>May 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Reliability, availability, and serviceability error records.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../ras-eri/index.html" class="button button--primary">HTML</a><a href="../ras-eri/_attachments/riscv-reri.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ODE1N2Q2OTJkY2U5NDk2MmI5Zjk2ZmJmYzFiNmI1OTg" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Debug Specification</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>February 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Defines the interfaces for external debugging of RISC-V processors.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../debug/index.html" class="button button--primary">HTML</a><a href="../debug/_attachments/riscv-debug-specification.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/YTljNWI1NDgxMzE2NDIzOGEyYjMzMWRmZmRjOGEwNmE" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Unformatted Trace &amp; Data Encapsulation</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>June 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Encapsulation format for emitted trace data.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../trace-encap/index.html" class="button button--primary">HTML</a><a href="../trace-encap/_attachments/e-trace-encap.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NDZjYTFmZjQ1YTRhNDIxMjljODViYWU1YzQwMjRlNjk" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">N-Trace</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>November 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Nexus-based trace data formatting and transport.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../nexus-trace/index.html" class="button button--primary">HTML</a><a href="../nexus-trace/_attachments/RISC-V-N-Trace.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ZTUxYTJmNWRkYzhmNDM4ZDg5OWNlMmQxODMyYjY3YjI" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Trace Connectors</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>November 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Connector definitions for trace interoperability.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../trace-connectors/index.html" class="button button--primary">HTML</a><a href="../trace-connectors/_attachments/RISC-V-Trace-Connectors.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/N2E0Mjk1ZDkzZTM0NDQ2YmJmM2IzZDIxNjBlZTkxNTI" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Trace Control Interface</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>November 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Control and configuration interface for trace features.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../trace-control-interface/index.html" class="button button--primary">HTML</a><a href="../trace-control-interface/_attachments/RISC-V-Trace-Control-Interface.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ZmZkYWMzYmU5NzZjNDk0M2FkNmJmOWFhOWVjODk4MzE" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+<details class="section-cards-toggle" id="platform-software">
+	<summary>Platform Software</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Semihosting</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>February 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Semihosting interface for development and debugging.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../semihosting/index.html" class="button button--primary">HTML</a><a href="../semihosting/_attachments/riscv-semihosting.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/YjY0ZDBkZjg2M2E4NDYxM2FmMmMwMWM0YTgxZjRmYTc" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Boot and Runtime Services</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>August 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Boot-time and runtime software interface requirements.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../brs/index.html" class="button button--primary">HTML</a><a href="../brs/_attachments/riscv-brs-spec.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/YTc0N2FlZDJmNTdiNDJlYzhiMGIyODFlOGQ0YWQyZDg" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Functional Fixed Hardware</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0.1</div><div>January 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">FFH interface definitions for platform integration.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../acpi-ffh/index.html" class="button button--primary">HTML</a><a href="../acpi-ffh/_attachments/riscv-ffh.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NGVhZDQ2MzY3MzZkNGE1MWIxYTYyMWM5N2Y2NTFjZjA" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">IO Mapping Table</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>March 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Standardized interrupt mapping table format.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../acpi-rimt/index.html" class="button button--primary">HTML</a><a href="../acpi-rimt/_attachments/rimt-spec.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/ODdiOTYxZjIwOTJlNGM1NWJlM2Y4MDllMzZiODIyNTU" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Platform Management Interface</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>July 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Platform management services and messaging definitions.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../rpmi/index.html" class="button button--primary">HTML</a><a href="../rpmi/_attachments/riscv-rpmi.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/OWIyYzBlNTUyNWM5NDI4ZmIzMDliZjcxOGY1ZDYwZWY" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Supervisor Binary Interface</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v3.0</div><div>July 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Standard interface between supervisor software and firmware.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../sbi/index.html" class="button button--primary">HTML</a><a href="../sbi/_attachments/riscv-sbi.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NDZmZTk3MDI0ZTA0NDVhOTg5Y2ZlZWI3NGNjZTlmYTQ" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">UEFI PROTOCOL</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0.0</div><div>July 2024</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Defines a software interface between an operating system and platform firmware.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../uefi/index.html" class="button button--primary">HTML</a><a href="../uefi/_attachments/RISCV_UEFI_PROTOCOL-spec.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NDEzOThmNmRjZmZhNDdhNzgxYmYwOWRmMTRkOTBlMTE" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+<details class="section-cards-toggle" id="app-enablement">
+	<summary>Application Enablement</summary>
+<div class="card-grid card-grid-3">
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Application Binary Interface</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>November 2022</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Application binary interface definitions for ELF tooling.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../abi/index.html" class="button button--primary">HTML</a><a href="../abi/_attachments/riscv-abi.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/NWMwYmRhMDBkZGI5NDdiNjllZDRkODI2YTRhZDE4ZDc" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+	<div class="card shadow-tl card--xxs">
+        <div class="card-header"><div style="display:flex;flex-direction:column;justify-content:center;width:100%;text-align:center;min-height:5.8rem;"><h5 style="hyphens:none;word-break:normal;overflow-wrap:normal;line-height:1.25;min-height:2.5em;">Vector C Intrinsic</h5><div class="card-meta" style="display:block;width:100%;box-sizing:border-box;margin-top:0.25rem;margin-bottom:0;font-size:calc(11 / var(--rem-base) * 1rem);line-height:1.25;text-align:center;border:1px solid #fdb515;padding:0.2rem 0.35rem;"><div><strong>Version:</strong> v1.0</div><div>April 2025</div></div></div></div>
+        <div class="card-body"><div style="display:block;width:100%;"><div style="display:block;width:100%;hyphens:none;word-break:normal;overflow-wrap:normal;">Compiler intrinsics for vector extension programming.</div></div></div>
+        <div class="card-footer"><div class="card-actions"><a href="../vector-c-intrinsics/index.html" class="button button--primary">HTML</a><a href="../vector-c-intrinsics/_attachments/v-intrinsic-spec.pdf" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a></div><a href="https://riscv.atlassian.net/wiki/external/YTMyZTE5NDkyNTM5NDZjMjliYTVmMjBjOTBhZWM4ODY" class="card-more-link" target="_blank" rel="noopener noreferrer">More</a></div>
+    </div>
+</div>
+</details>
+</div>
+</div>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>

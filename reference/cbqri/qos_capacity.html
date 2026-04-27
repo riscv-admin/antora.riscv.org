@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/cbqri/qos_capacity.html">
+    <link rel="prev" href="qos_identifiers.html">
+    <link rel="next" href="qos_bandwidth.html">
+    <meta name="generator" content="Antora 3.1.14">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../_/css/site.css">
+    <link rel="stylesheet" href="../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../_/css/vendor/spring-tabs.css">
+
+    <meta name="antora-ui-version" content="8cdbab67e2e8944bd29d1982a5eb5aad14ecfaf3"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="cbqri">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../_/img/riscv-library.svg" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../_/img/riscv-library_white.svg" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="cbqri" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS</a>
+</div>        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../debug/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../debug/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../e-trace/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../e-trace/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../nexus-trace/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../nexus-trace/ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../ras-eri/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../ras-eri/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../trace-connectors/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-connectors/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../trace-control-interface/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-control-interface/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../trace-encap/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../trace-encap/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-cbqri/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-cbqri" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+
+          <a href="_attachments/riscv-cbqri.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">QoS Register Interface</a></li>
+                      <li>
+            <a href="qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+          </li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="CC_QOS"><a class="anchor" href="#CC_QOS"></a>3.1. Capacity-controller QoS Register Interface</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Controllers, such as cache controllers, that support capacity allocation and
+usage monitoring provide a memory-mapped capacity-controller QoS register
+interface.</p>
+</div>
+<div class="paragraph">
+<p>The capacity controller allocates capacity in fixed multiples of <em>capacity
+units</em>. A group of these <em>capacity units</em> is referred to as a <em>capacity block</em>.
+One or more <em>capacity blocks</em> can be allocated to a workload. When a workload
+requests capacity allocation, the capacity is allocated by using <em>capacity units</em>
+situated within the <em>capacity blocks</em> assigned to the workload. Capacity blocks
+can also be shared among one or more workloads. Optionally, the capacity
+controller might allow configuration of a limit on the maximum number of <em>capacity
+units</em> that can be occupied in the <em>capacity blocks</em> allocated to a specific
+workload.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For example, a cache controller allocates capacity in multiples of cache
+blocks. In this context, a cache block serves as a <em>capacity unit</em>, and a group
+of cache blocks forms a <em>capacity block</em>. A cache controller supporting capacity
+allocation <em>by ways</em> might define a <em>capacity block</em> to be the cache blocks in one
+way of the cache.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The capacity allocation affects the decision regarding which <em>capacity blocks</em>
+to use when a new <em>capacity unit</em> is requested by a workload, but usually does
+not affect other operations of the controller.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For example, when a request is made to a cache controller, the request involves
+scanning the entire cache to determine if the requested data is present. If the
+data is located, then the request is fulfilled with this data, even if the
+cache block containing the data was initially allocated for a different
+workload. The data continues to reside in the same cache block. Consequently,
+the cache lookup function remains unaffected by the capacity allocation
+constraints set for the workload that initiated the request. Conversely, if the data
+is not found, a new cache block must be allocated. This allocation is executed
+by using the <em>capacity blocks</em> assigned to the workload that made the request.
+Hence, a workload might only trigger evictions within <em>capacity blocks</em> designated
+to it, but can access shared data in <em>capacity blocks</em> allocated to other
+workloads.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<table id="CC_REG" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Capacity-controller QoS Register Layout (size and offset are in bytes)</caption>
+<colgroup>
+<col style="width: 7.5%;">
+<col style="width: 25%;">
+<col style="width: 10%;">
+<col style="width: 45%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Offset</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-center valign-top">Size</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Optional?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_capabilities</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_CAP">Capabilities </a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_mon_ctl</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_MCTL">Usage monitoring
+                                    control</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_mon_ctr_val</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_MCTR">Monitoring
+                                    counter value</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_alloc_ctl</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_ALLOC">Capacity
+                                    allocation control </a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_block_mask</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>BMW</code>/8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_BMASK">Capacity
+                                    block mask </a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">N</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cc_cunits</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#CC_CUNITS">Capacity units
+                                    count</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The size of the <code>cc_block_mask</code> register is determined by the <code>NCBLKS</code> field
+of the <code>cc_capabilities</code> register but is always a multiple of 8 bytes. The
+formula for determination of <code>BMW</code> is defined in <a href="#CC_BMASK">3.1.5. Capacity Block Mask (<code>cc_block_mask</code>)</a>. The offset <code>N</code> is
+determined as <code>32 + BMW/8</code>.</p>
+</div>
+<div class="paragraph">
+<p>The reset value is 0 for the following register fields.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cc_mon_ctl.BUSY</code> field</p>
+</li>
+<li>
+<p><code>cc_alloc_ctl.BUSY</code> field</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The reset value is <code>UNSPECIFIED</code> for all other registers fields.</p>
+</div>
+<div class="paragraph">
+<p>The capacity controllers at reset must allocate all available capacity to <code>RCID</code>
+value of 0. When the capacity controller supports capacity allocation per
+access-type, then all available capacity is shared by all the access-type for
+<code>RCID=0</code>. The capacity allocation for all other <code>RCID</code> values is <code>UNSPECIFIED</code>.
+The capacity controller behavior for handling a request with a non-zero <code>RCID</code>
+value before configuring the capacity controller with capacity allocation for
+that <code>RCID</code> is <code>UNSPECIFIED</code>.</p>
+</div>
+<div class="sect2">
+<h3 id="CC_CAP"><a class="anchor" href="#CC_CAP"></a>3.1.1. Capacity-controller Capabilities</h3>
+<div class="paragraph">
+<p>The <code>cc_capabilities</code> register is a read-only register that holds the
+capacity-controller capabilities.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-ab2459cfbc6d51417953349d85dff96813659f68.svg" alt="Capacity-controller Capabilities Register">
+</div>
+<div class="title">Figure 1. Capacity-controller Capabilities Register</div>
+</div>
+<div class="paragraph">
+<p>The <code>VER</code> field holds the version of the specification implemented by the
+capacity controller. The low nibble is used to hold the minor version of the
+specification and the upper nibble is used to hold the major version of the
+specification. For example, an implementation that supports version 1.0 of the
+specification reports 0x10.</p>
+</div>
+<div class="paragraph">
+<p>The <code>NCBLKS</code> field holds the total number of allocatable <em>capacity blocks</em> in
+the controller. The capacity represented by an allocatable <em>capacity block</em> is
+<code>UNSPECIFIED</code>. The capacity controllers support allocating capacity in fixed
+multiples of an allocatable <em>capacity block</em>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For example, a cache controller that defines a way of the cache as a <em>capacity
+block</em> may report the number of ways as the number of allocatable <em>capacity
+blocks</em>.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If <code>CUNITS</code> is 1, the controller supports specifying a limit on the <em>capacity
+units</em> that can be occupied by an <code>RCID</code> in <em>capacity blocks</em> allocated to it.</p>
+</div>
+<div class="paragraph">
+<p>If <code>FRCID</code> is 1, the controller supports an operation to flush and deallocate
+the <em>capacity blocks</em> occupied by an <code>RCID</code>.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>When the <code>RCID</code>-prefixed mode (<code>RPFX</code>) is 1, the controller operates in <code>RPFX</code>
+mode. The parameter <code>P</code> (prefixed bits) indicates the number of least significant
+bits of the <code>MCID</code> carried in the request that should be prefixed by the RCID. The
+controller uses <code>RCID</code> in the requests along with <code>P</code> number of least significant
+bits of the <code>MCID</code> to compute an effective <code>MCID</code> (<a href="#EMCID">[EMCID]</a>). This <code>MCID</code> is used
+to identify the monitoring counter. Legal values of <code>P</code> range from 0 to 12.</p>
+</div>
+<div class="paragraph">
+<p>If <code>RPFX</code> is 0, <code>P</code> is set to 0, and the effective <code>MCID</code> is the same as the <code>MCID</code>
+in the request.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CC_MCTL"><a class="anchor" href="#CC_MCTL"></a>3.1.2. Capacity Usage Monitoring Control</h3>
+<div class="paragraph">
+<p>The <code>cc_mon_ctl</code> register is used to control monitoring of capacity usage by a
+<code>MCID</code>. When the controller does not support capacity usage monitoring the
+<code>cc_mon_ctl</code> register is read-only zero.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-162d092e66bc48cb21fbd7a767a4dfd60241b10e.svg" alt="Capacity Usage Monitoring Control Register (`cc_mon_ctl`)">
+</div>
+<div class="title">Figure 2. Capacity Usage Monitoring Control Register (<code>cc_mon_ctl</code>)</div>
+</div>
+<div class="paragraph">
+<p>Capacity controllers that support capacity usage monitoring implement a usage
+monitoring counter for each supported <code>MCID</code>. The usage monitoring counter can
+be configured to count a monitoring event. When an event matching the event
+configured for the <code>MCID</code> occurs, then the monitoring counter is updated. The
+event matching might optionally be filtered by the access-type identifier.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OP</code>, <code>AT</code>, <code>ATV</code>, <code>MCID</code>, and <code>EVT_ID</code> fields of the register are WARL
+fields.</p>
+</div>
+<div class="paragraph">
+<p>The <code>OP</code> field is used to instruct the controller to perform an operation listed
+in <a href="#CC_MON_OP">Table 2</a>.</p>
+</div>
+<table id="CC_MON_OP" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Capacity Usage Monitoring Operations (<code>OP</code>)</caption>
+<colgroup>
+<col style="width: 16.3265%;">
+<col style="width: 12.2448%;">
+<col style="width: 71.4287%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Operation</th>
+<th class="tableblock halign-center valign-top">Encoding</th>
+<th class="tableblock halign-center valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONFIG_EVENT</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure the counter selected by <code>MCID</code> to count
+                             the event selected by <code>EVT_ID</code>, <code>AT</code>, and <code>ATV</code>.
+                             The <code>EVT_ID</code> encodings are listed in <a href="#CC_EVT_ID">Table 2</a>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>READ_COUNTER</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Snapshot the value of the counter selected by
+                             <code>MCID</code> into <code>cc_mon_ctr_val</code> register. The
+                             <code>EVT_ID</code>, <code>AT</code>, and <code>ATV</code> fields are not used by
+                             this operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3-23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">24-31</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designated for custom use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The <code>EVT_ID</code> field is used to program the identifier of the event to count in
+the monitoring counter selected by <code>MCID</code>. The <code>AT</code> field (See <a href="#AT_ENC">[AT_ENC]</a>) is
+used to program the access-type identifier to count, and its validity is indicated by the
+<code>ATV</code> field. When <code>ATV</code> is 0, the counter counts requests with all access-type identifiers,
+and the <code>AT</code> value is ignored.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<table id="CC_EVT_ID" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Capacity Usage Monitoring Event ID (<code>EVT_ID</code>)</caption>
+<colgroup>
+<col style="width: 12.7659%;">
+<col style="width: 12.7659%;">
+<col style="width: 74.4682%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Event ID</th>
+<th class="tableblock halign-center valign-top">Encoding</th>
+<th class="tableblock halign-center valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>None</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter does not count.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Occupancy</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Counter is incremented by 1 when a request with a
+                             matching <code>MCID</code> and <code>AT</code> allocates a unit of
+                             capacity. The counter is decremented by 1 when a
+                             unit of capacity is de-allocated.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2-127</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">128-256</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designated for custom use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When the <code>EVT_ID</code> for a <code>MCID</code> is programmed with a non-zero and legal value by
+using the <code>CONFIG_EVENT</code> operation, the counter is reset to 0 and starts counting
+matching events for requests with the matching <code>MCID</code> and <code>AT</code> (if <code>ATV</code> is 1).
+However, if the <code>EVT_ID</code> is programmed to 0, the counter stops counting.</p>
+</div>
+<div class="paragraph">
+<p>A controller that does not support monitoring by access-type identifier can hardwire the
+<code>ATV</code> and the <code>AT</code> fields to 0, indicating that the counter counts requests with
+all access-types identifiers.</p>
+</div>
+<div class="paragraph">
+<p>When the <code>cc_mon_ctl</code> register is written, the controller can perform
+several actions that might not complete synchronously with the write. A write to
+the <code>cc_mon_ctl</code> sets the read-only <code>BUSY</code> bit to 1, indicating the controller
+is performing the requested operation. When the <code>BUSY</code> bit reads 0, the operation
+is complete, and the read-only <code>STATUS</code> field provides a status value (see
+<a href="#CC_MON_STS">Table 3</a> for  details). Written values to the <code>BUSY</code> and the <code>STATUS</code>
+fields are ignored. An implementation that can complete the operation
+synchronously with the write may hardwire the <code>BUSY</code> bit to 0. The state of the
+ <code>BUSY</code> bit, when not hardwired to 0, shall only change in response to a write to
+the register. The <code>STATUS</code> field remains valid until a subsequent write to the
+<code>cc_mon_ctl</code> register.</p>
+</div>
+<table id="CC_MON_STS" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. <code>cc_mon_ctl.STATUS</code> Field Encodings</caption>
+<colgroup>
+<col style="width: 14.6341%;">
+<col style="width: 85.3659%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><code>STATUS</code></th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The operation was successfully completed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An invalid operation (<code>OP</code>) was requested.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operation was requested for an invalid <code>MCID</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operation was requested for an invalid <code>EVT_ID</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operation was requested for an invalid <code>AT</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6-63</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64-127</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designated for custom use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When the <code>BUSY</code> bit is set to 1, the behavior of writes to the <code>cc_mon_ctl</code> is
+<code>UNSPECIFIED</code>. Some implementations ignore the second write, while others
+might perform the operation determined by the second write. To ensure proper
+operation, software must first verify that the <code>BUSY</code> bit is 0 before writing
+the <code>cc_mon_ctl</code> register.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CC_MCTR"><a class="anchor" href="#CC_MCTR"></a>3.1.3. Capacity Usage Monitoring Counter Value</h3>
+<div class="paragraph">
+<p>The <code>cc_mon_ctr_val</code> is a read-only register that holds a snapshot of the
+counter that is selected by the <code>READ_COUNTER</code> operation. When the controller does not
+support capacity usage monitoring, the <code>cc_mon_ctr_val</code> register always reads as
+zero.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-0f774051a3dcdd794ba4449388a8cd44a92bcb87.svg" alt="Capacity Usage Monitoring Counter Value Register (`cc_mon_ctr_val`)">
+</div>
+<div class="title">Figure 3. Capacity Usage Monitoring Counter Value Register (<code>cc_mon_ctr_val</code>)</div>
+</div>
+<div class="paragraph">
+<p>The counter is valid if the <code>INV</code> field is 0. The counter is marked <code>INV</code> if
+the controller determines the count to be not valid for <code>UNSPECIFIED</code> reasons.
+The counters marked <code>INV</code> can become valid in future.</p>
+</div>
+<div class="paragraph">
+<p>The counter shall not decrement below zero. If an event occur that would
+otherwise result in a negative value, the counter continues to hold a value
+of 0.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Following a reset of the counter to zero, a capacity de-allocation attempts
+to drive its value below zero. This scenario occurs when the <code>MCID</code> is
+reassigned to a new workload, yet the capacity controller continues to hold
+capacity that was initially allocated by the previous workload. In such cases, the
+counter shall not decrement below zero and shall remain at zero. After a brief
+period of execution for the new workload post-counter reset, the counter value is
+expected to stabilize to reflect the capacity usage of this new workload.</p>
+</div>
+<div class="paragraph">
+<p>Some implementations might not store the <code>MCID</code> of the request that caused the
+capacity to be allocated with every unit of capacity in the controller to
+optimize for the storage overheads. Such controllers, in turn, rely on
+statistical sampling to report the capacity usage by tagging only a subset
+of the capacity units.</p>
+</div>
+<div class="paragraph">
+<p>Set-sampling is a technique commonly used in caches to estimate the cache
+occupancy with a relatively small sample size. The basic idea behind
+set-sampling is to select a subset of the cache sets and monitor only those
+sets. By keeping track of the hits and misses in the monitored sets, it is
+possible to estimate the overall cache occupancy with a high degree of accuracy.
+The size of the subset needed to obtain accurate estimates depends on various
+factors, such as the size of the cache, the cache access patterns, and the
+desired accuracy level. Research [<a href="qos_biblio.html#bib-ssample" class="xref page">6</a>] shows that set-sampling can
+provide statistically accurate estimates with a relatively small sample size,
+such as 10% or less, depending on the cache properties and sampling technique
+used.</p>
+</div>
+<div class="paragraph">
+<p>When the controller has not observed enough samples to provide an accurate
+value in the monitoring counter, it might report the counter as being <code>INV</code>
+until more accurate measurements are available. This state helps to prevent inaccurate
+or misleading data from being used in capacity planning or other decision-making
+processes.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CC_ALLOC"><a class="anchor" href="#CC_ALLOC"></a>3.1.4. Capacity Allocation Control</h3>
+<div class="paragraph">
+<p>The <code>cc_alloc_ctl</code> register is used to configure allocation of capacity to an
+<code>RCID</code> per access type (<code>AT</code>). The <code>OP</code>, <code>RCID</code> and <code>AT</code> fields in this register
+are WARL. If a controller does not support capacity allocation, then this
+register is read-only zero. If the controller does not support capacity
+allocation per access type, then the <code>AT</code> field is read-only zero.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-1c4adea840207d816fcbe59d0dc7abfe92f9c651.svg" alt="Capacity Allocation Control Register (`cc_alloc_ctl`)">
+</div>
+<div class="title">Figure 4. Capacity Allocation Control Register (<code>cc_alloc_ctl</code>)</div>
+</div>
+<div class="paragraph">
+<p>The <code>OP</code> field is used to instruct the capacity controller to perform an
+operation listed in <a href="#CC_ALLOC_OP">Table 5</a>. Some operations necessitate the
+specification of the <em>capacity blocks</em> to act upon. For such operations, the
+targeted <em>capacity blocks</em> are designated in the form of a bitmask in the
+<code>cc_block_mask</code> register. Additionally, certain operations require the <em>capacity
+unit</em> limit to be defined in the <code>cc_cunits</code> register. To execute operations that
+require a capacity block mask and/or a capacity unit limit, software must first
+program the <code>cc_block_mask</code> and/or the <code>cc_cunits</code> register, followed by
+initiating the operation with the <code>cc_alloc_ctl</code> register.</p>
+</div>
+<table id="CC_ALLOC_OP" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Capacity Allocation Operations (<code>OP</code>)</caption>
+<colgroup>
+<col style="width: 16.3265%;">
+<col style="width: 12.2448%;">
+<col style="width: 71.4287%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Operation</th>
+<th class="tableblock halign-center valign-top">Encoding</th>
+<th class="tableblock halign-center valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>CONFIG_LIMIT</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure a capacity allocation for requests by
+                             <code>RCID</code> and of access type <code>AT</code>. The <em>capacity
+                             blocks</em> allocation is specified in the
+                             <code>cc_block_mask</code> register, and a limit on capacity
+                             units is specified in the <code>cc_cunits</code> register.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>READ_LIMIT</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read back the previously configured capacity
+                             allocation for requests by <code>RCID</code> and of
+                             access-type <code>AT</code>. The configured <em>capacity block</em>
+                             allocation is returned as a bit-mask in the
+                             <code>cc_block_mask</code> register, and the configured limit
+                             on <em>capacity units</em> is available in the <code>cc_cunits</code>
+                             register on successful completion of the operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>FLUSH_RCID</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Flushes the <em>capacity units</em> used by the specified
+                             <code>RCID</code> and access-type <code>AT</code>. This operation is
+                             supported if the <code>capabilities.FRCID</code> bit is 1.  <br>
+                                                                              <br>
+                             The <code>cc_block_mask</code> and <code>cc_cunits</code> registers
+                             are not used for this operation.                 <br>
+                                                                              <br>
+                             The configured <em>capacity block</em> allocation or the
+                             <em>capacity unit</em> limit is not changed by this
+                             operation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4-23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">24-31</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designated for custom use.</p></td>
+</tr>
+</tbody>
+</table>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>Capacity controllers enumerate the allocatable <em>capacity blocks</em> in the <code>NCBLKS</code>
+field of the <code>cc_capabilities</code> register. The <code>cc_block_mask</code> register is
+programmed with a bit-mask value, where each bit represents a <em>capacity block</em> for the
+operation. If configuring <em>capacity unit</em> limits is supported (for example,
+<code>cc_capabilities.CUNIT=1</code>), then a limit on the <em>capacity unit</em> that can be
+occupied in the allocated capacity blocks can be programmed in the <code>cc_cunits</code>
+register. If configuring limits is not supported, then the controller allows
+the use of all <em>capacity units</em> in the allocated <em>capacity blocks</em>. A value of
+zero programmed into <code>cc_cunits</code> indicates that no limits shall be enforced on
+<em>capacity unit</em> allocation.</p>
+</div>
+<div class="paragraph">
+<p>A capacity allocation must be configured for each supported access type by the
+controller. An implementation that does not support capacity allocation per
+access type can hardwire the <code>AT</code> field to 0 and associate the same capacity
+allocation configuration for requests with all access types. When capacity
+allocation per access type is supported, identical limits can be configured for
+two or more access types, if different capacity allocation per access type is not
+required. If capacity is not allocated for each access type supported by the
+controller, the behavior is <code>UNSPECIFIED</code>.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A cache controller that supports capacity allocation indicates the number of
+allocatable <em>capacity blocks</em> in <code>cc_capabilities.NCBLKS</code> field. For example,
+consider a cache with <code>NCBLKS=8</code>. In this example, the <code>RCID=5</code> is
+allocated <em>capacity blocks</em> numbered 0 and 1 for requests with access type <code>AT=0</code>,
+and <em>capacity blocks</em> numbered 2 for requests with access type
+<code>AT=1</code>. The <code>RCID=3</code> in this example is allocated <em>capacity blocks</em>
+numbered 3 and 4 for both <code>AT=0</code> and <code>AT=1</code> access types as separate capacity
+allocation by access type is not required for this workload. Further in this
+example, the <code>RCID=6</code> has been configured with the same <em>capacity block</em>
+allocations as <code>RCID=3</code>. This configuration implies that they share a common capacity
+allocation in this cache, but might be associated with different <code>RCID</code> to
+allow differentiated treatment in another capacity and/or bandwidth controller.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3333%;">
+<col style="width: 8.3336%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"></th>
+<th class="tableblock halign-center valign-top">7</th>
+<th class="tableblock halign-center valign-top">6</th>
+<th class="tableblock halign-center valign-top">5</th>
+<th class="tableblock halign-center valign-top">4</th>
+<th class="tableblock halign-center valign-top">3</th>
+<th class="tableblock halign-center valign-top">2</th>
+<th class="tableblock halign-center valign-top">1</th>
+<th class="tableblock halign-center valign-top">0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=3</code>, <code>AT=0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=3</code>, <code>AT=1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=5</code>, <code>AT=0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=5</code>, <code>AT=1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=6</code>, <code>AT=0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>RCID=6</code>, <code>AT=1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>0</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Some controllers allow setting a limit on <em>capacity units</em> in allocated capacity
+blocks. In exclusive allocations, like for <code>RCID=5</code>, the limit can be the
+capacity block&#8217;s maximum capacity. For shared allocations, such as between
+<code>RCID=3</code> and <code>RCID=6</code>, individual limits can be set. For example, if two
+capacity blocks represent 100 units and <code>RCID=3</code> has a 30-unit limit while
+<code>RCID=6</code> has a 70-unit limit, they can use 30% and 70% of the shared capacity
+blocks, respectively.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>The <code>FLUSH_RCID</code> operation can incur a long latency to complete. However, the
+<code>RCID</code> can submit new requests to the controller while it is being flushed.
+Additionally, the controller is allowed to deallocate capacity that was allocated
+after the operation was initiated.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>For cache controllers, the <code>FLUSH_RCID</code> operation perfoms an operation
+similar to that performed by the RISC-V <code>CBO.FLUSH</code> instruction on each cache
+block that is part of the allocation configured for the <code>RCID</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>FLUSH_RCID</code> operation can be used as part of reclaiming a previously
+allocated <code>RCID</code> and associating it with a new workload. When such a
+reallocation is performed, the capacity controllers might have capacity allocated
+by the old workload and thus for a short warm-up duration, the capacity controller
+might be enforcing capacity allocation limits that reflect the usage by the old
+workload. Such warm-up durations are typically not statistically significant, but
+if that is not desired, then the <code>FLUSH_RCID</code> operation can be used to flush and
+evict capacity allocated by the old workload.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When the <code>cc_alloc_ctl</code> register is written, the controller might perform
+several actions that might not complete synchronously with the write. A write to
+the <code>cc_alloc_ctl</code> sets the read-only <code>BUSY</code> bit to 1, indicating the controller
+is performing the requested operation. When the <code>BUSY</code> bit reads 0, the operation
+is complete, and the read-only <code>STATUS</code> field provides a status value
+(<a href="#CC_ALLOC_STS">Table 6</a>) of the requested operation. Values that are written to the <code>BUSY</code> and
+the <code>STATUS</code> fields are always ignored. An implementation that can complete the
+operation synchronously with the write might hardwire the <code>BUSY</code> bit to 0. The
+state of the <code>BUSY</code> bit, when not hardwired to 0, shall change only in response
+to a write to the register. The <code>STATUS</code> field remains valid until a subsequent
+write to the <code>cc_alloc_ctl</code> register.</p>
+</div>
+<table id="CC_ALLOC_STS" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. <code>cc_alloc_ctl.STATUS</code> Field Encodings</caption>
+<colgroup>
+<col style="width: 14.6341%;">
+<col style="width: 85.3659%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top"><code>STATUS</code></th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The operation was successfully completed.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An invalid or unsupported operation (<code>OP</code>) requested.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operation was requested for an invalid <code>RCID</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An operation was requested for an invalid <code>AT</code>.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">An invalid <em>capacity block</em> mask was specified.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6-63</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for future standard use.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64-127</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Designated for custom use.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>When the <code>BUSY</code> bit is set to 1, the behavior of writes to the <code>cc_alloc_ctl</code>
+register, <code>cc_cunits</code> register, or to the <code>cc_block_mask</code> register is
+<code>UNSPECIFIED</code>. Some implementations might ignore the second write and others might
+perform the operation determined by the second write. To ensure proper operation,
+software must verify that <code>BUSY</code> bit  is 0 before writing any of these registers.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CC_BMASK"><a class="anchor" href="#CC_BMASK"></a>3.1.5. Capacity Block Mask (<code>cc_block_mask</code>)</h3>
+<div class="paragraph">
+<p>The <code>cc_block_mask</code> is a WARL register. If the controller does not support
+capacity allocation, for example, <code>NCBLKS</code> is 0, then this register is read-only 0.</p>
+</div>
+<div class="paragraph">
+<p>The register has <code>NCBLKS</code> bits, each corresponding to one allocatable
+<em>capacity block</em> in the controller. The width of this register is variable, but
+always a multiple of 64 bits. The bitmap width in bits (<code>BMW</code>) is determined by
+the following equation. The division operation in this equation is an integer
+division.</p>
+</div>
+  <div class="stemblock">
+    <div class="content halign-center valign-middle" style="padding-top: 1rem">
+      <svg style="vertical-align: -1.602ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="33.001ex" height="4.726ex" role="img" focusable="false" viewBox="0 -1381 14586.4 2089"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(759,0)"><path data-c="1D440" d="M289 629Q289 635 232 637Q208 637 201 638T194 648Q194 649 196 659Q197 662 198 666T199 671T201 676T203 679T207 681T212 683T220 683T232 684Q238 684 262 684T307 683Q386 683 398 683T414 678Q415 674 451 396L487 117L510 154Q534 190 574 254T662 394Q837 673 839 675Q840 676 842 678T846 681L852 683H948Q965 683 988 683T1017 684Q1051 684 1051 673Q1051 668 1048 656T1045 643Q1041 637 1008 637Q968 636 957 634T939 623Q936 618 867 340T797 59Q797 55 798 54T805 50T822 48T855 46H886Q892 37 892 35Q892 19 885 5Q880 0 869 0Q864 0 828 1T736 2Q675 2 644 2T609 1Q592 1 592 11Q592 13 594 25Q598 41 602 43T625 46Q652 46 685 49Q699 52 704 61Q706 65 742 207T813 490T848 631L654 322Q458 10 453 5Q451 4 449 3Q444 0 433 0Q418 0 415 7Q413 11 374 317L335 624L267 354Q200 88 200 79Q206 46 272 46H282Q288 41 289 37T286 19Q282 3 278 1Q274 0 267 0Q265 0 255 0T221 1T157 2Q127 2 95 1T58 0Q43 0 39 2T35 11Q35 13 38 25T43 40Q45 46 65 46Q135 46 154 86Q158 92 223 354T289 629Z"></path></g><g data-mml-node="mi" transform="translate(1810,0)"><path data-c="1D44A" d="M436 683Q450 683 486 682T553 680Q604 680 638 681T677 682Q695 682 695 674Q695 670 692 659Q687 641 683 639T661 637Q636 636 621 632T600 624T597 615Q597 603 613 377T629 138L631 141Q633 144 637 151T649 170T666 200T690 241T720 295T759 362Q863 546 877 572T892 604Q892 619 873 628T831 637Q817 637 817 647Q817 650 819 660Q823 676 825 679T839 682Q842 682 856 682T895 682T949 681Q1015 681 1034 683Q1048 683 1048 672Q1048 666 1045 655T1038 640T1028 637Q1006 637 988 631T958 617T939 600T927 584L923 578L754 282Q586 -14 585 -15Q579 -22 561 -22Q546 -22 542 -17Q539 -14 523 229T506 480L494 462Q472 425 366 239Q222 -13 220 -15T215 -19Q210 -22 197 -22Q178 -22 176 -15Q176 -12 154 304T131 622Q129 631 121 633T82 637H58Q51 644 51 648Q52 671 64 683H76Q118 680 176 680Q301 680 313 683H323Q329 677 329 674T327 656Q322 641 318 637H297Q236 634 232 620Q262 160 266 136L501 550L499 587Q496 629 489 632Q483 636 447 637Q428 637 422 639T416 648Q416 650 418 660Q419 664 420 669T421 676T424 680T428 682T436 683Z"></path></g><g data-mml-node="mo" transform="translate(3135.8,0)"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mo" transform="translate(4191.6,0)"><path data-c="230A" d="M174 734Q174 735 175 737T177 740T180 744T184 747T189 749T196 750Q206 748 214 735V-210H310H373Q401 -210 411 -213T422 -230T411 -247T369 -251Q362 -251 338 -251T298 -250H190Q178 -246 174 -234V734Z"></path></g><g data-mml-node="TeXAtom" data-mjx-texclass="ORD" transform="translate(4635.6,0)"><g data-mml-node="mfrac"><g data-mml-node="mrow" transform="translate(220,676)"><g data-mml-node="mi"><path data-c="1D441" d="M234 637Q231 637 226 637Q201 637 196 638T191 649Q191 676 202 682Q204 683 299 683Q376 683 387 683T401 677Q612 181 616 168L670 381Q723 592 723 606Q723 633 659 637Q635 637 635 648Q635 650 637 660Q641 676 643 679T653 683Q656 683 684 682T767 680Q817 680 843 681T873 682Q888 682 888 672Q888 650 880 642Q878 637 858 637Q787 633 769 597L620 7Q618 0 599 0Q585 0 582 2Q579 5 453 305L326 604L261 344Q196 88 196 79Q201 46 268 46H278Q284 41 284 38T282 19Q278 6 272 0H259Q228 2 151 2Q123 2 100 2T63 2T46 1Q31 1 31 10Q31 14 34 26T39 40Q41 46 62 46Q130 49 150 85Q154 91 221 362L289 634Q287 635 234 637Z"></path></g><g data-mml-node="mi" transform="translate(888,0)"><path data-c="1D436" d="M50 252Q50 367 117 473T286 641T490 704Q580 704 633 653Q642 643 648 636T656 626L657 623Q660 623 684 649Q691 655 699 663T715 679T725 690L740 705H746Q760 705 760 698Q760 694 728 561Q692 422 692 421Q690 416 687 415T669 413H653Q647 419 647 422Q647 423 648 429T650 449T651 481Q651 552 619 605T510 659Q484 659 454 652T382 628T299 572T226 479Q194 422 175 346T156 222Q156 108 232 58Q280 24 350 24Q441 24 512 92T606 240Q610 253 612 255T628 257Q648 257 648 248Q648 243 647 239Q618 132 523 55T319 -22Q206 -22 128 53T50 252Z"></path></g><g data-mml-node="mi" transform="translate(1648,0)"><path data-c="1D435" d="M231 637Q204 637 199 638T194 649Q194 676 205 682Q206 683 335 683Q594 683 608 681Q671 671 713 636T756 544Q756 480 698 429T565 360L555 357Q619 348 660 311T702 219Q702 146 630 78T453 1Q446 0 242 0Q42 0 39 2Q35 5 35 10Q35 17 37 24Q42 43 47 45Q51 46 62 46H68Q95 46 128 49Q142 52 147 61Q150 65 219 339T288 628Q288 635 231 637ZM649 544Q649 574 634 600T585 634Q578 636 493 637Q473 637 451 637T416 636H403Q388 635 384 626Q382 622 352 506Q352 503 351 500L320 374H401Q482 374 494 376Q554 386 601 434T649 544ZM595 229Q595 273 572 302T512 336Q506 337 429 337Q311 337 310 336Q310 334 293 263T258 122L240 52Q240 48 252 48T333 46Q422 46 429 47Q491 54 543 105T595 229Z"></path></g><g data-mml-node="mi" transform="translate(2407,0)"><path data-c="1D43F" d="M228 637Q194 637 192 641Q191 643 191 649Q191 673 202 682Q204 683 217 683Q271 680 344 680Q485 680 506 683H518Q524 677 524 674T522 656Q517 641 513 637H475Q406 636 394 628Q387 624 380 600T313 336Q297 271 279 198T252 88L243 52Q243 48 252 48T311 46H328Q360 46 379 47T428 54T478 72T522 106T564 161Q580 191 594 228T611 270Q616 273 628 273H641Q647 264 647 262T627 203T583 83T557 9Q555 4 553 3T537 0T494 -1Q483 -1 418 -1T294 0H116Q32 0 32 10Q32 17 34 24Q39 43 44 45Q48 46 59 46H65Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Q285 635 228 637Z"></path></g><g data-mml-node="mi" transform="translate(3088,0)"><path data-c="1D43E" d="M285 628Q285 635 228 637Q205 637 198 638T191 647Q191 649 193 661Q199 681 203 682Q205 683 214 683H219Q260 681 355 681Q389 681 418 681T463 682T483 682Q500 682 500 674Q500 669 497 660Q496 658 496 654T495 648T493 644T490 641T486 639T479 638T470 637T456 637Q416 636 405 634T387 623L306 305Q307 305 490 449T678 597Q692 611 692 620Q692 635 667 637Q651 637 651 648Q651 650 654 662T659 677Q662 682 676 682Q680 682 711 681T791 680Q814 680 839 681T869 682Q889 682 889 672Q889 650 881 642Q878 637 862 637Q787 632 726 586Q710 576 656 534T556 455L509 418L518 396Q527 374 546 329T581 244Q656 67 661 61Q663 59 666 57Q680 47 717 46H738Q744 38 744 37T741 19Q737 6 731 0H720Q680 3 625 3Q503 3 488 0H478Q472 6 472 9T474 27Q478 40 480 43T491 46H494Q544 46 544 71Q544 75 517 141T485 216L427 354L359 301L291 248L268 155Q245 63 245 58Q245 51 253 49T303 46H334Q340 37 340 35Q340 19 333 5Q328 0 317 0Q314 0 280 1T180 2Q118 2 85 2T49 1Q31 1 31 11Q31 13 34 25Q38 41 42 43T65 46Q92 46 125 49Q139 52 144 61Q147 65 216 339T285 628Z"></path></g><g data-mml-node="mi" transform="translate(3977,0)"><path data-c="1D446" d="M308 24Q367 24 416 76T466 197Q466 260 414 284Q308 311 278 321T236 341Q176 383 176 462Q176 523 208 573T273 648Q302 673 343 688T407 704H418H425Q521 704 564 640Q565 640 577 653T603 682T623 704Q624 704 627 704T632 705Q645 705 645 698T617 577T585 459T569 456Q549 456 549 465Q549 471 550 475Q550 478 551 494T553 520Q553 554 544 579T526 616T501 641Q465 662 419 662Q362 662 313 616T263 510Q263 480 278 458T319 427Q323 425 389 408T456 390Q490 379 522 342T554 242Q554 216 546 186Q541 164 528 137T492 78T426 18T332 -20Q320 -22 298 -22Q199 -22 144 33L134 44L106 13Q83 -14 78 -18T65 -22Q52 -22 52 -14Q52 -11 110 221Q112 227 130 227H143Q149 221 149 216Q149 214 148 207T144 186T142 153Q144 114 160 87T203 47T255 29T308 24Z"></path></g><g data-mml-node="mo" transform="translate(4844.2,0)"><path data-c="2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path></g><g data-mml-node="mn" transform="translate(5844.4,0)"><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path data-c="33" d="M127 463Q100 463 85 480T69 524Q69 579 117 622T233 665Q268 665 277 664Q351 652 390 611T430 522Q430 470 396 421T302 350L299 348Q299 347 308 345T337 336T375 315Q457 262 457 175Q457 96 395 37T238 -22Q158 -22 100 21T42 130Q42 158 60 175T105 193Q133 193 151 175T169 130Q169 119 166 110T159 94T148 82T136 74T126 70T118 67L114 66Q165 21 238 21Q293 21 321 74Q338 107 338 175V195Q338 290 274 322Q259 328 213 329L171 330L168 332Q166 335 166 348Q166 366 174 366Q202 366 232 371Q266 376 294 413T322 525V533Q322 590 287 612Q265 626 240 626Q208 626 181 615T143 592T132 580H135Q138 579 143 578T153 573T165 566T175 555T183 540T186 520Q186 498 172 481T127 463Z" transform="translate(500,0)"></path></g></g><g data-mml-node="mn" transform="translate(3142.2,-686)"><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z" transform="translate(500,0)"></path></g><rect width="7044.4" height="60" x="120" y="220"></rect></g></g><g data-mml-node="mo" transform="translate(11920,0)"><path data-c="230B" d="M229 734Q229 735 230 737T232 740T235 744T239 747T244 749T251 750Q262 748 269 735V-235Q266 -240 256 -249L147 -250H77Q43 -250 32 -247T21 -230T32 -213T72 -209Q79 -209 99 -209T133 -210H229V734Z"></path></g><g data-mml-node="mo" transform="translate(12586.2,0)"><path data-c="D7" d="M630 29Q630 9 609 9Q604 9 587 25T493 118L389 222L284 117Q178 13 175 11Q171 9 168 9Q160 9 154 15T147 29Q147 36 161 51T255 146L359 250L255 354Q174 435 161 449T147 471Q147 480 153 485T168 490Q173 490 175 489Q178 487 284 383L389 278L493 382Q570 459 587 475T609 491Q630 491 630 471Q630 464 620 453T522 355L418 250L522 145Q606 61 618 48T630 29Z"></path></g><g data-mml-node="mn" transform="translate(13586.4,0)"><path data-c="36" d="M42 313Q42 476 123 571T303 666Q372 666 402 630T432 550Q432 525 418 510T379 495Q356 495 341 509T326 548Q326 592 373 601Q351 623 311 626Q240 626 194 566Q147 500 147 364L148 360Q153 366 156 373Q197 433 263 433H267Q313 433 348 414Q372 400 396 374T435 317Q456 268 456 210V192Q456 169 451 149Q440 90 387 34T253 -22Q225 -22 199 -14T143 16T92 75T56 172T42 313ZM257 397Q227 397 205 380T171 335T154 278T148 216Q148 133 160 97T198 39Q222 21 251 21Q302 21 329 59Q342 77 347 104T352 209Q352 289 347 316T329 361Q302 397 257 397Z"></path><path data-c="34" d="M462 0Q444 3 333 3Q217 3 199 0H190V46H221Q241 46 248 46T265 48T279 53T286 61Q287 63 287 115V165H28V211L179 442Q332 674 334 675Q336 677 355 677H373L379 671V211H471V165H379V114Q379 73 379 66T385 54Q393 47 442 46H471V0H462ZM293 211V545L74 212L183 211H293Z" transform="translate(500,0)"></path></g></g></g></svg>
+    </div>
+  </div>
+<div class="paragraph">
+<p>Bits <code>NCBLKS-1:0</code> are read-write, and the bits <code>BMW-1:NCBLKS</code> are read-only zero.</p>
+</div>
+<div class="paragraph">
+<p>The process of configuring capacity allocation for an <code>RCID</code> and <code>AT</code> begins by
+programming the <code>cc_block_mask</code> register with a bit-mask value that identifies the
+<em>capacity blocks</em> to be allocated and, if supported, by programming the
+<code>cc_cunits</code> register with a limit on the capacity units that might be occupied in
+those capacity blocks. Next, the <code>cc_alloc_ctl register</code> is written to request a
+<code>CONFIG_LIMIT</code> operation for the <code>RCID</code> and <code>AT</code>. After a capacity allocation
+limit is established, a request can be allocated capacity in the <em>capacity
+blocks</em> allocated to the <code>RCID</code> and <code>AT</code> associated with the request. It is
+important to note that some implementations might require at least one <em>capacity
+block</em> to be allocated by using <code>cc_block_mask</code> when allocating capacity;
+otherwise, the operation fails with <code>STATUS=5</code>.  Overlapping <em>capacity block</em>
+masks among <code>RCID</code> and/or <code>AT</code> are allowed to be configured.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>A multiway set-associative cache controller that supports capacity allocation <em>by
+ways</em> can advertise <code>NCBLKS</code> as the number of ways per set in the cache. To allocate
+capacity in such a cache for an <code>RCID</code> and <code>AT</code>, a subset of ways must be
+selected and a mask of the selected ways must be programmed in <code>cc_block_mask</code> field when
+the <code>CONFIG_LIMIT</code> operation is requested.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To read the <em>capacity block</em> allocation for an <code>RCID</code> and <code>AT</code>, the controller
+provides the <code>READ_LIMIT</code> operation, which can be requested by writing to the
+<code>cc_alloc_ctl</code> register. When the operation completes successfully, the
+<code>cc_block_mask</code> register holds the configured <em>capacity block</em> allocation.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="CC_CUNITS"><a class="anchor" href="#CC_CUNITS"></a>3.1.6. Capacity Units</h3>
+<div class="paragraph">
+<p>The <code>cc_cunits</code> register is a read-write WARL register. If the controller does
+not support capacity allocation (for example, <code>NCBLKS</code> is set to 0), this register
+shall be read-only zero.</p>
+</div>
+<div class="paragraph">
+<p>If the controller does not support configuring limits on <em>capacity units</em> that
+may be occupied in the allocated <em>capacity blocks</em> (for example,
+<code>cc_capabilities.CUNITS=0</code>), then this register shall be read-only zero. In such
+cases, the controller allows the utilization of all available <em>capacity units</em> by
+an <code>RCID</code> within the <em>capacity blocks</em> allocated to it.</p>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="paragraph">
+<p>If the controller supports configuring limits on <em>capacity units</em> that might be
+occupied in the allocated <em>capacity blocks</em> (for example, <code>cc_capabilities.CUNITS=1</code>)
+then this register sets an upper limit on the number of <em>capacity units</em> that
+can be occupied by an <code>RCID</code> in the <em>capacity blocks</em> allocated for an <code>AT</code>. A
+value of zero specified in the <code>cc_cunits</code> register indicates that no limit is
+configured.</p>
+</div>
+<div class="paragraph">
+<p>The sum of the <code>cc_cunits</code> configured for the <code>RCID</code> sharing a <em>capacity block</em>
+allocation may exceed the <em>capacity units</em> represented by that <em>capacity block</em>
+allocation.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When multiple <code>RCID</code> instances share a <em>capacity block</em> allocation, the
+<code>cc_cunits</code> register can be employed to set an upper limit on the number of
+<em>capacity units</em> each <code>RCID</code> can occupy.</p>
+</div>
+<div class="paragraph">
+<p>For instance, consider a group of four <code>RCID</code> instances configured to share a
+set of <em>capacity blocks</em>, representing a total of 100 capacity units. Each
+<code>RCID</code> can be configured with a limit of 30 capacity units, ensuring that no
+individual <code>RCID</code> exceeds 30% of the total shared <em>capacity units</em>.</p>
+</div>
+<div class="paragraph">
+<p>The capacity controller might enforce these limits through various techniques.
+Examples include:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Refraining from allocating new capacity units to an <code>RCID</code> that reached
+its limit.</p>
+</li>
+<li>
+<p>Evicting previously allocated capacity units when a new allocation is
+required.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>These methods are not exhaustive and can be applied either individually or in
+combination to maintain <em>capacity unit</em> limits.</p>
+</div>
+<div class="paragraph">
+<p>When the limit on the <em>capacity units</em> is reached or is about to be reached,
+the capacity controller can initiate additional operations. These could include
+throttling certain activities (for example, prefetches) of the corresponding workload
+requests.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To read the <em>capacity unit</em> limit for an <code>RCID</code> and <code>AT</code>, the controller
+provides the <code>READ_LIMIT</code> operation that can be requested by writing to the
+<code>cc_alloc_ctl</code> register. When the operation completes successfully, the
+<code>cc_cunits</code> register holds the configured <em>capacity unit</em> allocation limit.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="qos_identifiers.html">Chapter 2. QoS Identifiers</a></span>
+  <span class="next"><a href="qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../_/js/vendor/import.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+<script async
+    src="../_/js/vendor/spring-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../_/js/vendor/lunr.js"></script>
+<script src="../_/js/search-ui.js" id="search-ui-script" data-site-root-path=".." data-snippet-length="100" data-stylesheet="../_/css/search.css"></script>
+<script async src="../search-index.js"></script>
+  </body>
+</html>
