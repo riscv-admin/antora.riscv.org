@@ -98,26 +98,33 @@ module.exports.register = function ({ config }) {
             continue
           }
           
-          // Skip if no directory structure
+          // Bare filename (no directory) — treat as a partial in the current module
           if (!target.includes('/')) {
-            console.log(`[Include Rewriter] Skipping (no directory)`)
+            if (target.endsWith('.adoc')) {
+              const newLine = 'include::' + module + ':partial$' + target + brackets
+              console.log(`[Include Rewriter]   New line (bare partial): ${newLine}`)
+              lines[i] = newLine
+              modified = true
+            } else {
+              console.log(`[Include Rewriter] Skipping (no directory, non-adoc)`)
+            }
             continue
           }
-          
+
           // Parse the target path
           const slashIndex = target.indexOf('/')
           const firstDir = target.substring(0, slashIndex)
           const restOfPath = target.substring(slashIndex + 1)
-          
+
           console.log(`[Include Rewriter]   firstDir: "${firstDir}"`)
           console.log(`[Include Rewriter]   restOfPath: "${restOfPath}"`)
-          
+
           // Map the first directory to a family
           const family = familyMap[firstDir] || 'partials'
-          
+
           console.log(`[Include Rewriter]   family: "${family}"`)
           console.log(`[Include Rewriter]   module: "${module}"`)
-          
+
           // Build the new line
           const newLine = 'include::' + module + ':' + family + '$' + restOfPath + brackets
           

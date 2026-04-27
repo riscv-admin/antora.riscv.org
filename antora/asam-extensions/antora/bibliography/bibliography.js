@@ -19,7 +19,7 @@ const {parseBibFile, normalizeFieldValue} = require("bibtex")
  * @param {Array <Object>} bibliographyFiles - An array of all bibliography (.bib) files, one per component & version.
  */
 function applyBibliography(mapInput, bibliographyFiles) {
-    if (!mapInput.componentAttributes['asamBibliography']) {return}    
+    if (!mapInput.componentAttributes['asamBibliography']) {return}
     // Set up regular expressions
     const reException = /ifndef::use-antora-rules\[\](.*\r\n*)*?endif::\[\]/gm
     const reBibliography = /^\s*bibliography::\[\]/gm
@@ -64,9 +64,25 @@ function applyBibliography(mapInput, bibliographyFiles) {
 function getBibliographyFiles(contentAggregate) {
     let bibliographyFiles = []
     contentAggregate.forEach(v => {
-        if(v.asciidoc && v.asciidoc.attributes.asamBibliography) {
+        if(v.asciidoc && v.asciidoc.attributes && v.asciidoc.attributes.asamBibliography) {
             const pathToBibFile = ContentAnalyzer.getSrcPathFromFileId(v.asciidoc.attributes.asamBibliography)
-            bibliographyFiles.push({component:v.name, version:v.version, file: v.files.find(x => x.src.path && x.src.path.includes(pathToBibFile.relative))})
+            let bibFile = v.files.find(x => x.src.path && x.src.path.includes(pathToBibFile.relative))
+            // Resolve git symlinks: if the file content is a relative path rather than BibTeX content,
+            // the file is a git symlink. Resolve the target path and find the real file in v.files.
+            if (bibFile) {
+                const content = bibFile.contents.toString().trim()
+                if (!content.includes('@') && content.endsWith('.bib')) {
+                    const symlinkDir = bibFile.src.path.split('/').slice(0, -1)
+                    const resolved = [...symlinkDir]
+                    for (const part of content.split('/')) {
+                        if (part === '..') resolved.pop()
+                        else if (part !== '.') resolved.push(part)
+                    }
+                    const resolvedFile = v.files.find(x => x.src.path && x.src.path === resolved.join('/'))
+                    if (resolvedFile) bibFile = resolvedFile
+                }
+            }
+            bibliographyFiles.push({component:v.name, version:v.version, file: bibFile})
         }
     })
     return bibliographyFiles
@@ -82,46 +98,67 @@ function getBibliographyFiles(contentAggregate) {
  * @param {String} pathToId - The path to the identified bibliography page.
  * @returns {Integer} - The current index after processing the file.
  */
-function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes = {}) {
+function replaceCitationsWithLinks(f, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes = {}, visitedFiles = new Set()) {
+    const fileId = f?.src?.path || f?.path || f?.src?.relative
+    if (fileId && visitedFiles.has(fileId)) {
+        return currentIndex
+    }
+    if (fileId) {
+        visitedFiles.add(fileId)
+    }
+
     const reReference = /(?<!\/{2} .*)cite:\[([^\]]+)\]/g
     let fileContentReplaced = f.contents.toString().replaceAll(reException,``).split("\n")
-    let fileContent = f.contents.toString()
-    for (let line of fileContentReplaced) {
+    for (let i = 0; i < fileContentReplaced.length; i++) {
+        const line = fileContentReplaced[i]
         // Check for included file and apply function to that if found. Update the currentIndex accordingly
         ContentAnalyzer.updatePageAttributes(pageAttributes,line)
         const lineWithoutAttributes = ContentAnalyzer.replaceAllAttributesInLine(mapInput.componentAttributes, pageAttributes, line)
         const includedFile = ContentAnalyzer.checkForIncludedFileFromLine(mapInput.catalog,f,lineWithoutAttributes)
         if (includedFile) {
-            currentIndex = replaceCitationsWithLinks(includedFile, reException, mapInput, bibEntries, currentIndex, pathToId, pageAttributes)
+            currentIndex = replaceCitationsWithLinks(
+                includedFile,
+                reException,
+                mapInput,
+                bibEntries,
+                currentIndex,
+                pathToId,
+                { ...pageAttributes },
+                visitedFiles
+            )
         }
         let result = line;
         const matches = [...line.matchAll(reReference)]
         for (let m of matches){
-            if (m[1] && bibEntries.getEntry(m[1].toLowerCase())) {
-                if (!bibEntries.entries$[m[1].toLowerCase()].index) {
-                    bibEntries.entries$[m[1].toLowerCase()].index = currentIndex
-                    currentIndex++
+            const keys = m[1] ? m[1].split(',').map(k => k.trim()) : []
+            const xrefs = []
+            for (const key of keys) {
+                if (key && bibEntries.getEntry(key.toLowerCase())) {
+                    if (!bibEntries.entries$[key.toLowerCase()].index) {
+                        bibEntries.entries$[key.toLowerCase()].index = currentIndex
+                        currentIndex++
+                    }
+                    xrefs.push(`xref:${pathToId}#bib-${key.toLowerCase()}[${bibEntries.entries$[key.toLowerCase()].index}]`)
                 }
-                const subst = `[xref:${pathToId}#bib-${m[1].toLowerCase()}[${bibEntries.entries$[m[1].toLowerCase()].index}]]`;
-                result = result.replace(m[0], subst);
+                else if (key) {
+                    console.log("Could not find bibliography entry for", key)
+                }
             }
-            else if (m[1]) {
-                console.log("Could not find bibliography entry for",m[1])
+            if (xrefs.length > 0) {
+                result = result.replace(m[0], `[${xrefs.join('][')}]`)
             }
         }
-        fileContent = fileContent.replace(line,result)
-        fileContentReplaced[fileContentReplaced.indexOf(line)] = result
+        fileContentReplaced[i] = result
     }
 
-    // f.contents = Buffer.from(fileContentReplaced.join("\n"))    
-    f.contents = Buffer.from(fileContent)
+    f.contents = Buffer.from(fileContentReplaced.join("\n"))
     return currentIndex
 }
 
 /**
  * Creates the bibliography page from the indexed bibEntries.
  * @param {Object} antoraBibliography - The (first) file with the bibliography::[] macro in this component-version.
- * @param {Object} bibEntries - An object containing all entries of the bibliography (using the bibtex library), annotated with indices. 
+ * @param {Object} bibEntries - An object containing all entries of the bibliography (using the bibtex library), annotated with indices.
  */
 function createBibliography(antoraBibliography, bibEntries) {
     // Sort entries by index
@@ -148,7 +185,7 @@ function convertBibliographyEntry(key, e) {
     let entryIndex = `[[bib-${key}]][${e.index}]`;
     let body = []
     let suffix = []
-    // Create an entry based on its type. Each entry consists of an index ([[anchor]] [index]), a body (where all parts are joined by commas), and a suffix (separated by a dot from the body, then joined by commas). 
+    // Create an entry based on its type. Each entry consists of an index ([[anchor]] [index]), a body (where all parts are joined by commas), and a suffix (separated by a dot from the body, then joined by commas).
     // Typically, the entry is terminated with a dot, unless the last entry is the URL field.
     switch (e.type) {
         case 'book':

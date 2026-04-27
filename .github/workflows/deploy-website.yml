@@ -1,52 +1,44 @@
 name: Deploy Portal
-
 on:
   workflow_dispatch:
   push:
     branches: [ "main" ]
-
 permissions:
   contents: write
-
 jobs:
   deploy:
     concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [20.x]
-
     steps:
     - uses: actions/checkout@v4
-    #- name: Use Node.js ${{ matrix.node-version }}
-    #  uses: actions/setup-node@v4
-    #  with:
-    #    node-version: ${{ matrix.node-version }}
-    #    cache: 'yarn'
+    - name: Cache Kroki diagrams
+      uses: actions/cache@v4
+      with:
+        path: antora/.cache/kroki
+        key: kroki-cache-${{ hashFiles('antora/**/*.adoc') }}
+        restore-keys: |
+          kroki-cache-
     - name: Install Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.4.1' # Not needed with a .ruby-version, .tool-versions or mise.toml
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+        ruby-version: '3.4.1'
+        bundler-cache: true
     - name: Install Antora Dependencies
       run: |
         cd antora
         gem install bundler
         bundle install
         npm install
-
-    #- name: Install Docusaurus dependencies
-    #  run: yarn install
     - name: Start Kroki
       run: docker compose -f antora/docker-compose.yml up -d
-
     - name: Wait for Kroki to be ready
       run: |
         echo "Waiting for Kroki to start..."
         timeout 60 bash -c 'until curl -sf http://localhost:9870/health > /dev/null; do sleep 2; done'
         echo "Kroki is ready!"
-
     - name: Install dependencies
       run: |
         npm install -g @antora/cli@3.1 @antora/site-generator@3.1
@@ -55,26 +47,32 @@ jobs:
       continue-on-error: true
       run: |
         cd antora
-        npx antora antora-playbook.yml --stacktrace
+        npx antora --cache-dir .cache/antora antora-playbook.yml --stacktrace
+
+    - name: Check build output exists
+      run: |
+        if [ ! -d "antora/build" ]; then
+          echo "Build directory does not exist - build failed"
+          exit 1
+        fi
+        echo "Build directory exists, proceeding with deploy"
+        ls antora/build/ | head -20
+
     - name: Stop Kroki
       if: always()
       run: docker compose -f antora/docker-compose.yml down
+    - name: Copy root redirect index
+      run: cp antora/site-root/index.html antora/build/index.html
+
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
       run: |
         cd antora
         cp -a ./pdfs/. ./build/reference/
-
-    #- name: Build Docusaurus
-      # continue-on-error: true
-    #  run: yarn build
-
     - name: Deploy to GitHub Pages
-      # run: yarn deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
-        folder: antora/build # The folder the action should deploy.
-
+        folder: antora/build
     - name: Upload Artifact Logs
       uses: actions/upload-artifact@v4
       if: ${{ always() }}
