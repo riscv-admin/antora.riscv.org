@@ -122,7 +122,7 @@ content:
 
   # IOMMU — component: iommu | chapters 6–14
   - url: https://github.com/riscv-non-isa/riscv-iommu.git
-    branches: v20260222-antora
+    branches: [v20260222-antora, 20250828-antora, 20250620-antora, 20240911-antora, 20230605-antora]
     start_page: ROOT::index.adoc
     start_path: /
     worktrees: true
@@ -199,8 +199,7 @@ content:
 
  # ACPI FFH — component: ffh | chapters
   - url: https://github.com/riscv-non-isa/riscv-acpi-ffh.git
-    branches: v1.0-antora
-    #tags: [v1.0.0,v1.0.1]
+    branches: [v1.0.1-antora, v1.0.0-antora]
     start_page: ROOT::index.adoc
     start_path: /
 
@@ -219,7 +218,7 @@ content:
 
   # SBI — component: sbi | chapters 5–27
   - url: https://github.com/riscv-non-isa/riscv-sbi-doc.git
-    branches: v3.0-antora
+    branches: [v3.0-antora, v2.0-antora, v1.0-antora]
     start_page: ROOT::index.adoc
     start_path: /
 
@@ -468,7 +467,7 @@ antora:
       # --- IOMMU -------------------------------------------------------------
       - component: iommu
         module: ROOT
-        branches: ['v20260222-antora']
+        branches: ['v20260222-antora', 'v20250828-antora', 'v20250620-antora', 'v20240911-antora', 'v20230605-antora']
         chapters: {start: 6, end: 13}
 
       # --- Server SOC --------------------------------------------------------
@@ -523,7 +522,7 @@ antora:
       # --- FFH ---------------------------------------------------------------
       - component: acpi-ffh
         module: ROOT
-        branches: ['v1.0-antora']
+        branches: ['v1.0.1-antora', 'v1.0.0-antora']
         chapters: {start: 6, end: 8}
         appendices: {start: 9, end: 10}
 
@@ -540,10 +539,22 @@ antora:
         branches: ['v1.0-antora']
         chapters: {start: 7, end: 11}
 
-      # --- SBI ---------------------------------------------------------------
+      # --- SBI 3.0 -----------------------------------------------------------
       - component: sbi
         module: ROOT
         branches: ['v3.0-antora']
+        chapters: {start: 6, end: 27}
+
+     # --- SBI 2.0 - ----------------------------------------------------------
+      - component: sbi
+        module: ROOT
+        branches: ['v2.0-antora']
+        chapters: {start: 6, end: 27}
+
+    # --- SBI 1.0 - ----------------------------------------------------------
+      - component: sbi
+        module: ROOT
+        branches: ['v1.0-antora']
         chapters: {start: 5, end: 27}
 
       # --- UEFI --------------------------------------------------------------
@@ -618,6 +629,5 @@ antora:
 ui:
   bundle:
     url: https://github.com/riscv-admin/riscv-antora-only-ui-dev/releases/download/latest/ui-bundle.zip
-    #url: ../../riscv-antora-only-ui-dev/build/ui-bundle.zip
     snapshot: true
   supplemental_files: ./supplemental-ui
