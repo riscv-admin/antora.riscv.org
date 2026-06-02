@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/sbi/ext-pmu.html">
+    <link rel="prev" href="ext-sys-reset.html">
+    <link rel="next" href="ext-experimental.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="69b6156115394a74ffb9b40a195c91afd14e3d6c"> 
+    <meta name="version" content="v1.0.0">
+    <meta name="component" content="sbi">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+
+<div id="dev-banner" class="dev-banner">
+  Welcome to the RISC-V Library Development site. See <a href="https://docs.riscv.org/">https://docs.riscv.org/</a> for the official documentation.
+</div>
+
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="sbi" data-version="v1.0.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../platform-software-overview/index.html">Platform Software</a>
+</div>
+        <div class="nav-trees" data-component="brs">
+          <div class="version-box">
+            <select data-component="brs" class="select-version">
+                <option
+                  value="../../brs/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="brs" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Boot and Runtime Services</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/recipes.html">Chapter 2. Recipes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/hart.html">Chapter 3. Hart Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/sbi.html">Chapter 4. SBI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/uefi.html">Chapter 5. BRS-I UEFI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/acpi.html">Chapter 6. BRS-I ACPI Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/smbios.html">Chapter 7. BRS-I SMBIOS Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../brs/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-ffh">
+          <div class="version-box">
+            <select data-component="acpi-ffh" class="select-version">
+                <option
+                  value="../../acpi-ffh/index.html"
+                  data-version="v1.0.1"
+                  
+                  selected>
+                  v1.0.1
+                </option>
+                <option
+                  value="../../acpi-ffh/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  >
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-ffh" data-version="v1.0.1" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Functional Fixed Hardware</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_resource_descriptor.html">Chapter 2. RISC-V FFH Resource Descriptor Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_use_cases.html">Chapter 3. Use Cases</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_lpi_examples.html">Appendix A. _LPI Object Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-ffh/ffh_cpc_examples.html">Appendix B. _CPC Object Examples</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="acpi-rimt">
+          <div class="version-box">
+            <select data-component="acpi-rimt" class="select-version">
+                <option
+                  value="../../acpi-rimt/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="acpi-rimt" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">IO Mapping Table</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/rimt-main.html">Chapter 2. RISC-V IO Mapping Table (RIMT)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/mapping-example.html">Chapter 3. ID Mapping Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../acpi-rimt/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="rpmi">
+          <div class="version-box">
+            <select data-component="rpmi" class="select-version">
+                <option
+                  value="../../rpmi/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rpmi" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform Management Interface (RPMI)</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/transport.html">Chapter 2. Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/message-protocol.html">Chapter 3. Messaging Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/service-groups.html">Chapter 4. Service Groups</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/rpmi-mpxy.html">Chapter 5. Integration with SBI MPXY Extension</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../rpmi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="semihosting">
+          <div class="version-box">
+            <select data-component="semihosting" class="select-version">
+                <option
+                  value="../../semihosting/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="semihosting" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Semihosting</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/binary-interface.html">Chapter 2. Semihosting Binary Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../semihosting/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="sbi">
+          <div class="version-box">
+            <select data-component="sbi" class="select-version">
+                <option
+                  value="../index.html"
+                  data-version="v3.0"
+                  
+                  >
+                  v3.0
+                </option>
+                <option
+                  value="../v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  >
+                  v2.0
+                </option>
+                <option
+                  value="index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="sbi" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Supervisor Binary Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="terms.html">Chapter 2. Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="binary-encoding.html">Chapter 3. Binary Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-base.html">Chapter 4. Base Extension (EID #0x10)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-legacy.html">Chapter 5. Legacy Extensions (EIDs #0x00 - #0x0F)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-ipi.html">Chapter 6. IPI Extension (EID #0x735049 "sPI: s-mode IPI")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-rfence.html">Chapter 7. RFENCE Extension (EID #0x52464E43 "RFNC")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-hsm.html">Chapter 8. Hart State Management Extension (EID #0x48534D "HSM")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-sys-reset.html">Chapter 9. System Reset Extension (EID #0x53525354 "SRST")</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ext-pmu.html">Chapter 10. Performance Monitoring Unit Extension (EID #0x504D55 "PMU")</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-experimental.html">Chapter 11. Experimental SBI Extension Space (EIDs #0x08000000 - #0x08FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-vendor.html">Chapter 12. Vendor Specific Extension Space (EIDs #0x09000000 - #0x09FFFFFF)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ext-firmware.html">Chapter 13. Firmware Specific Extension Space (EIDs #0x0A000000 - #0x0AFFFFFF)</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="uefi">
+          <div class="version-box">
+            <select data-component="uefi" class="select-version">
+                <option
+                  value="../../uefi/index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="uefi" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">UEFI PROTOCOL</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/index.html">Title page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/copyright.html">Chapter 1. Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/contributors.html">Chapter 2. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/intro.html">Chapter 3. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/boot_protocol.html">RISCV_EFI_BOOT_PROTOCOL</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../uefi/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-sbi-doc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/NDZmZTk3MDI0ZTA0NDVhOTg5Y2ZlZWI3NGNjZTlmYTQ" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/riscv-sbi.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../platform-software-overview/index.html">Platform Software Overview</a></li>
+              <li><a href="index.html">Supervisor Binary Interface</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="admonitionblock important latest">
+  <table>
+    <tbody><tr>
+      <td class="icon">
+        <i class="fa icon-important" title="Important"></i>
+      </td>
+      <td class="content">
+        <div class="paragraph">
+          <p> For the latest stable version, please use <a href="../ext-pmu.html">Supervisor Binary Interface v3.0</a>!</p>
+        </div>
+      </td>
+    </tr></tbody>
+  </table>
+</div>
+<div class="sect1">
+<h2 id="10-1-performance-monitoring-unit-extension-eid-0x504d55-pmu"><a class="anchor" href="#10-1-performance-monitoring-unit-extension-eid-0x504d55-pmu"></a>10.1. Performance Monitoring Unit Extension (EID #0x504D55 "PMU")</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RISC-V hardware performance counters such as <code>mcycle</code>, <code>minstret</code>, and
+<code>mhpmcounterX</code> CSRs are accessible as read-only from supervisor-mode using
+<code>cycle</code>, <code>instret</code>, and <code>hpmcounterX</code> CSRs. The SBI performance monitoring
+unit (PMU) extension is an interface for supervisor-mode to configure and
+use the RISC-V hardware performance counters with assistance from the
+machine-mode (or hypervisor-mode). These hardware performance counters
+can only be started, stopped, or configured from machine-mode using
+<code>mcountinhibit</code> and <code>mhpmeventX</code> CSRs. Due to this, a machine-mode SBI
+implementation may choose to disallow SBI PMU extension if <code>mcountinhibit</code>
+CSR is not implemented by the RISC-V platform.</p>
+</div>
+<div class="paragraph">
+<p>A RISC-V platform generally supports monitoring of various hardware events
+using a limited number of hardware performance counters which are up to
+64 bits wide. In addition, a SBI implementation can also provide firmware
+performance counters which can monitor firmware events such as number of
+misaligned load/store instructions, number of RFENCEs, number of IPIs, etc.
+The firmware counters are always 64 bits wide.</p>
+</div>
+<div class="paragraph">
+<p>The SBI PMU extension provides:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>An interface for supervisor-mode software to discover and configure
+per-HART hardware/firmware counters</p>
+</li>
+<li>
+<p>A typical <a href="https://en.wikipedia.org/wiki/Perf_(Linux)">perf</a> compatible
+interface for hardware/firmware performance counters and events</p>
+</li>
+<li>
+<p>Full access to microarchitecture&#8217;s raw event encodings</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>To define SBI PMU extension calls, we first define important entities
+<code>counter_idx</code>, <code>event_idx</code>, and <code>event_data</code>. The <code>counter_idx</code> is a
+logical number assigned to each hardware/firmware counter. The <code>event_idx</code>
+represents a hardware (or firmware) event whereas the <code>event_data</code> is
+64 bits wide and represents additional configuration (or parameters) for
+a hardware (or firmware) event.</p>
+</div>
+<div class="paragraph">
+<p>The event_idx is a 20 bits wide number encoded as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">    event_idx[19:16] = type
+    event_idx[15:0] = code</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-1-event-hardware-general-events-type-0"><a class="anchor" href="#10-1-1-event-hardware-general-events-type-0"></a>10.1.1. Event: Hardware general events (Type #0)</h3>
+<div class="paragraph">
+<p>The <code>event_idx.type</code> (i.e. <strong>event type</strong>) should be <code>0x0</code> for all hardware
+general events and each hardware general event is identified by an unique
+<code>event_idx.code</code> (i.e. <strong>event code</strong>) described in the
+<a href="#table_pmu_hardware_events">Table 1</a> below.</p>
+</div>
+<table id="table_pmu_hardware_events" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 1. PMU Hardware Events</caption>
+<colgroup>
+<col style="width: 54.5454%;">
+<col style="width: 9.0909%;">
+<col style="width: 36.3637%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">General Event Name</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_NO_EVENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unused event because
+                                              <code>event_idx</code> cannot be zero</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CPU_CYCLES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for each CPU cycle</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_INSTRUCTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for each completed
+                                              instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_REFERENCES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for cache hit</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_MISSES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for cache miss</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_BRANCH_INSTRUCTIONS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for a branch instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_BRANCH_MISSES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for a branch misprediction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_BUS_CYCLES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for each BUS cycle</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_STALLED_CYCLES_FRONTEND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for a stalled cycle in
+                                              microarchitecture frontend</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_STALLED_CYCLES_BACKEND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for a stalled cycle in
+                                              microarchitecture backend</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_REF_CPU_CYCLES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event for each reference
+                                              CPU cycle</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <code>event_data</code> (i.e. <strong>event data</strong>) is unused for hardware
+general events and all non-zero values of <code>event_data</code> are reserved
+for future use.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> A RISC-V platform might halt the CPU clock when it enters WAIT
+state using the WFI instruction or enters platform specific SUSPEND state
+using the SBI HSM HART suspend call.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <strong>SBI_PMU_HW_CPU_CYCLES</strong> event counts CPU clock cycles as
+counted by the <code>cycle</code> CSR. These may be variable frequency cycles, and
+are not counted when the CPU clock is halted.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <strong>SBI_PMU_HW_REF_CPU_CYCLES</strong> counts fixed-frequency clock
+cycles while the CPU clock is not halted. The fixed-frequency of counting
+might, for example, be the same frequency at which the <code>time</code> CSR counts.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <strong>SBI_PMU_HW_BUS_CYCLES</strong> counts fixed-frequency clock cycles.
+The fixed-frequency of counting might be the same frequency at which the
+<code>time</code> CSR counts, or may be the frequency of the clock at the boundary
+between the HART (and it&#8217;s private caches) and the rest of the system.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-2-event-hardware-cache-events-type-1"><a class="anchor" href="#10-1-2-event-hardware-cache-events-type-1"></a>10.1.2. Event: Hardware cache events (Type #1)</h3>
+<div class="paragraph">
+<p>The <code>event_idx.type</code> (i.e. <strong>event type</strong>) should be <code>0x1</code> for all hardware
+cache events and each hardware cache event is identified by an unique
+<code>event_idx.code</code> (i.e. <strong>event code</strong>) which is encoded as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">    event_idx.code[15:3] = cache_id
+    event_idx.code[2:1] = op_id
+    event_idx.code[0:0] = result_id</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Below tables show possible values of: <code>event_idx.code.cache_id</code> (i.e.
+<strong>cache event id</strong>), <code>event_idx.code.op_id</code> (i.e. <strong>cache operation id</strong>)
+and <code>event_idx.code.result_id</code> (i.e. <strong>cache result id</strong>).</p>
+</div>
+<table id="table_pmu_cache_event_id" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 23. PMU Cache Event ID</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Cache Event Name</th>
+<th class="tableblock halign-left valign-top">Event ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_L1D</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Level1 data cache event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_L1I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Level1 instruction cache event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_LL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Last level cache event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_DTLB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Data TLB event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_ITLB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction TLB event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_BPU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Branch predictor unit event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_NODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NUMA node cache event</p></td>
+</tr>
+</tbody>
+</table>
+<table id="table_pmu_cache_ops_id" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 24. PMU Cache Operation ID</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Cache Operation Name</th>
+<th class="tableblock halign-left valign-top">Operation ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_OP_READ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read cache line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_OP_WRITE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write cache line</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_OP_PREFETCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Prefetch cache line</p></td>
+</tr>
+</tbody>
+</table>
+<table id="table_pmu_cache_result_id" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 25. PMU Cache Operation Result ID</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Cache Result Name</th>
+<th class="tableblock halign-left valign-top">Result ID</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_RESULT_ACCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache access</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_HW_CACHE_RESULT_MISS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cache miss</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <code>event_data</code> (i.e. <strong>event data</strong>) is unused for hardware cache
+events and all non-zero values of <code>event_data</code> are reserved for future use.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-3-event-hardware-raw-events-type-2"><a class="anchor" href="#10-1-3-event-hardware-raw-events-type-2"></a>10.1.3. Event: Hardware raw events (Type #2)</h3>
+<div class="paragraph">
+<p>The <code>event_idx.type</code> (i.e. <strong>event type</strong>) should be <code>0x2</code> for all hardware
+raw events and <code>event_idx.code</code> (i.e. <strong>event code</strong>) should be zero.</p>
+</div>
+<div class="paragraph">
+<p>On RISC-V platform with 32 bits wide <code>mhpmeventX</code> CSRs, the <code>event_data</code>
+configuration (or parameter) should have the 32-bit value to to be programmed
+in the <code>mhpmeventX</code> CSR.</p>
+</div>
+<div class="paragraph">
+<p>On RISC-V platform with 64 bits wide <code>mhpmeventX</code> CSRs, the <code>event_data</code>
+configuration (or parameter) should have the 48-bit value to to be programmed
+in the lower 48-bits of <code>mhpmeventX</code> CSR and the SBI implementation shall
+determine the value to be programmed in the upper 16 bits of <code>mhpmeventX</code>
+CSR.</p>
+</div>
+<div class="paragraph">
+<p><strong>Note:</strong> The RISC-V platform hardware implementation may choose to define
+the expected value to be written to <code>mhpmeventX</code> CSR for a hardware event.
+In case of hardware general/cache events, the RISC-V platform hardware
+implementation may use the zero-extended <code>event_idx</code> as the expected
+value for simplicity.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-4-event-firmware-events-type-15"><a class="anchor" href="#10-1-4-event-firmware-events-type-15"></a>10.1.4. Event: Firmware events (Type #15)</h3>
+<div class="paragraph">
+<p>The <code>event_idx.type</code> (i.e. <strong>event type</strong>) should be <code>0xf</code> for all firmware
+events and each firmware event is identified by an unique <code>event_idx.code</code>
+(i.e. <strong>event code</strong>) described in the <a href="#table_pmu_firmware_events">Table 26</a> below.</p>
+</div>
+<table id="table_pmu_firmware_events" class="tableblock frame-all grid-all" style="width: 95%;">
+<caption class="title">Table 26. PMU Firmware Events</caption>
+<colgroup>
+<col style="width: 54.5454%;">
+<col style="width: 9.0909%;">
+<col style="width: 36.3637%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Firmware Event Name</th>
+<th class="tableblock halign-left valign-top">Code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_MISALIGNED_LOAD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Misaligned load trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_MISALIGNED_STORE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Misaligned store trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_ACCESS_LOAD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Load access trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_ACCESS_STORE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Store access trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_ILLEGAL_INSN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Illegal instruction trap event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_SET_TIMER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set timer event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_IPI_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent IPI to other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_IPI_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received IPI from other
+                                                HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_FENCE_I_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent FENCE.I request to
+                                                other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_FENCE_I_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received FENCE.I request
+                                                from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_SFENCE_VMA_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent SFENCE.VMA request
+                                                to other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_SFENCE_VMA_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received SFENCE.VMA request
+                                                from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_SFENCE_VMA_ASID_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent SFENCE.VMA with ASID
+                                                request to other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_SFENCE_VMA_ASID_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received SFENCE.VMA with ASID
+                                                request from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_GVMA_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent HFENCE.GVMA request to
+                                                other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_GVMA_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received HFENCE.GVMA request
+                                                from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_GVMA_VMID_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent HFENCE.GVMA with VMID
+                                                request to other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_GVMA_VMID_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received HFENCE.GVMA with VMID
+                                                request from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_VVMA_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent HFENCE.VVMA request to
+                                                other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_VVMA_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received HFENCE.VVMA request
+                                                from other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_VVMA_ASID_SENT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sent HFENCE.VVMA with ASID
+                                                request to other HART event</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_FW_HFENCE_VVMA_ASID_RECEIVED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Received HFENCE.VVMA with ASID
+                                                request from other HART event</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>NOTE:</strong> the <code>event_data</code> (i.e. <strong>event data</strong>) is unused for firmware events
+and all non-zero values of <code>event_data</code> are reserved for future use.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-5-function-get-number-of-counters-fid-0"><a class="anchor" href="#10-1-5-function-get-number-of-counters-fid-0"></a>10.1.5. Function: Get number of counters (FID #0)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_num_counters()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong> the number of counters (both hardware and firmware) in
+<code>sbiret.value</code> and always returns <code>SBI_SUCCESS</code> in sbiret.error.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="10-1-6-function-get-details-of-a-counter-fid-1"><a class="anchor" href="#10-1-6-function-get-details-of-a-counter-fid-1"></a>10.1.6. Function: Get details of a counter (FID #1)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_counter_get_info(unsigned long counter_idx)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Get details about the specified counter such as underlying CSR number,
+width of the counter, type of counter hardware/firmware, etc.</p>
+</div>
+<div class="paragraph">
+<p>The <code>counter_info</code> returned by this SBI call is encoded as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">    counter_info[11:0] = CSR (12bit CSR number)
+    counter_info[17:12] = Width (One less than number of bits in CSR)
+    counter_info[XLEN-2:18] = Reserved for future use
+    counter_info[XLEN-1] = Type (0 = hardware and 1 = firmware)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If <code>counter_info.type == 1</code> then <code>counter_info.csr</code> and <code>counter_info.width</code>
+should be ignored.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong> the <code>counter_info</code> described above in <code>sbiret.value</code>.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in the
+<a href="#table_pmu_counter_get_info_errors">Table 27</a> below.</p>
+</div>
+<table id="table_pmu_counter_get_info_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 27. PMU Counter Get Info Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>counter_info</code> read successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>counter_idx</code> points to an invalid counter.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="10-1-7-function-find-and-configure-a-matching-counter-fid-2"><a class="anchor" href="#10-1-7-function-find-and-configure-a-matching-counter-fid-2"></a>10.1.7. Function: Find and configure a matching counter (FID #2)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_counter_config_matching(unsigned long counter_idx_base,
+					      unsigned long counter_idx_mask,
+					      unsigned long config_flags,
+					      unsigned long event_idx,
+					      uint64_t event_data)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Find and configure a counter from a set of counters which is not started
+(or enabled) and can monitor the specified event. The <code>counter_idx_base</code>
+and <code>counter_idx_mask</code> parameters represent the set of counters whereas
+the <code>event_idx</code> represent the event to be monitored and <code>event_data</code>
+represents any additional event configuration.</p>
+</div>
+<div class="paragraph">
+<p>The <code>config_flags</code> parameter represent additional counter configuration
+and filter flags. The bit definitions of the <code>config_flags</code> parameter are
+shown in the <a href="#table_pmu_counter_cfg_match_flags">Table 28</a> below.</p>
+</div>
+<table id="table_pmu_counter_cfg_match_flags" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 28. PMU Counter Config Match Flags</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag Name</th>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SKIP_MATCH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Skip the counter matching</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_CLEAR_VALUE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1:1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear (or zero) the counter
+                                             value in counter configuration</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_AUTO_START</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2:2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Start the counter after
+                                             configuring a matching counter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SET_VUINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3:3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event counting inhibited<br>
+                                             in VU-mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SET_VSINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4:4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event counting inhibited<br>
+                                             in VS-mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SET_UINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5:5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event counting inhibited<br>
+                                             in U-mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SET_SINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event counting inhibited<br>
+                                             in S-mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_CFG_FLAG_SET_MINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Event counting inhibited<br>
+                                             in M-mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>RESERVED</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8:(XLEN-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All non-zero values are
+                                             reserved for future use</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>NOTE:</strong> When <strong>SBI_PMU_CFG_FLAG_SKIP_MATCH</strong> is set in <code>config_flags</code>, the
+SBI implementation will unconditionally select the first counter from the
+set of counters specified by the <code>counter_idx_base</code> and <code>counter_idx_mask</code>.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <strong>SBI_PMU_CFG_FLAG_AUTO_START</strong> flag in <code>config_flags</code> has no
+impact on the counter value.</p>
+</div>
+<div class="paragraph">
+<p><strong>NOTE:</strong> The <code>config_flags[3:7]</code> bits are event filtering hints so these
+can be ignored or overridden by the SBI implementation for security concerns
+or due to lack of event filtering support in the underlying RISC-V platform.</p>
+</div>
+<div class="paragraph">
+<p><strong>Returns</strong> the <code>counter_idx</code> in <code>sbiret.value</code> upon success.</p>
+</div>
+<div class="paragraph">
+<p>In case of failure, the possible error codes returned in <code>sbiret.error</code> are
+shown in the <a href="#table_pmu_counter_cfg_match_errors">Table 29</a> below.</p>
+</div>
+<table id="table_pmu_counter_cfg_match_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 29. PMU Counter Config Match Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">counter found and configured successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">set of counters has an invalid counter.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_NOT_SUPPORTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none of the counters can monitor specified event.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="10-1-8-function-start-a-set-of-counters-fid-3"><a class="anchor" href="#10-1-8-function-start-a-set-of-counters-fid-3"></a>10.1.8. Function: Start a set of counters (FID #3)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_counter_start(unsigned long counter_idx_base,
+				    unsigned long counter_idx_mask,
+				    unsigned long start_flags,
+				    uint64_t initial_value)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Start or enable a set of counters on the calling HART with the specified
+initial value. The <code>counter_idx_base</code> and <code>counter_idx_mask</code> parameters
+represent the set of counters whereas the <code>initial_value</code> parameter
+specifies the initial value of the counter.</p>
+</div>
+<div class="paragraph">
+<p>The bit definitions of the <code>start_flags</code> parameter are shown in the
+<a href="#table_pmu_counter_start_flags">Table 30</a> below.</p>
+</div>
+<table id="table_pmu_counter_start_flags" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 30. PMU Counter Start Flags</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag Name</th>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_START_SET_INIT_VALUE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set the value of counters
+                                              based on the <code>initial_value</code>
+                                              parameter</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>RESERVED</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1:(XLEN-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All non-zero values are
+                                              reserved for future use</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>NOTE:</strong> When SBI_PMU_START_SET_INIT_VALUE is not set in <code>start_flags</code>,
+the counter value will not be modified and event counting will start
+from current counter value.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in the
+<a href="#table_pmu_counter_start_errors">Table 31</a> below.</p>
+</div>
+<table id="table_pmu_counter_start_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 31. PMU Counter Start Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">counter started successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">some of the counters specified in parameters
+                            are invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_ALREADY_STARTED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">some of the counters specified in parameters
+                            are already started.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="10-1-9-function-stop-a-set-of-counters-fid-4"><a class="anchor" href="#10-1-9-function-stop-a-set-of-counters-fid-4"></a>10.1.9. Function: Stop a set of counters (FID #4)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_counter_stop(unsigned long counter_idx_base,
+				    unsigned long counter_idx_mask,
+				    unsigned long stop_flags)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Stop or disable a set of counters on the calling HART. The <code>counter_idx_base</code>
+and <code>counter_idx_mask</code> parameters represent the set of counters. The bit
+definitions of the <code>stop_flags</code> parameter are shown in the
+<a href="#table_pmu_counter_stop_flags">Table 32</a> below.</p>
+</div>
+<table id="table_pmu_counter_stop_flags" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 32. PMU Counter Stop Flags</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 16.6666%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Flag Name</th>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_PMU_STOP_FLAG_RESET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0:0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reset the counter to event mapping.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>RESERVED</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1:(XLEN-1)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">All non-zero values are reserved
+                                         for future use</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in the
+<a href="#table_pmu_counter_stop_errors">Table 33</a> below.</p>
+</div>
+<table id="table_pmu_counter_stop_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 33. PMU Counter Stop Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">counter stopped successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">some of the counters specified in parameters
+                            are invalid.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_ALREADY_STOPPED</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">some of the counters specified in parameters
+                            are already stopped.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="10-1-10-function-read-a-firmware-counter-fid-5"><a class="anchor" href="#10-1-10-function-read-a-firmware-counter-fid-5"></a>10.1.10. Function: Read a firmware counter (FID #5)</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-C hljs" data-lang="C">struct sbiret sbi_pmu_counter_fw_read(unsigned long counter_idx)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Provide the current value of a firmware counter in <code>sbiret.value</code>.</p>
+</div>
+<div class="paragraph">
+<p>The possible error codes returned in <code>sbiret.error</code> are shown in the
+<a href="#table_pmu_counter_fw_read_errors">Table 34</a> below.</p>
+</div>
+<table id="table_pmu_counter_fw_read_errors" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 34. PMU Counter Firmware Read Errors</caption>
+<colgroup>
+<col style="width: 40%;">
+<col style="width: 60%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Error code</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">firmware counter read successfully.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SBI_ERR_INVALID_PARAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>counter_idx</code> points to a hardware counter
+                          or an invalid counter.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="10-1-11-function-listing"><a class="anchor" href="#10-1-11-function-listing"></a>10.1.11. Function Listing</h3>
+<table id="table_pmu_function_list" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 35. PMU Function List</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 20%;">
+<col style="width: 10%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Function Name</th>
+<th class="tableblock halign-left valign-top">SBI Version</th>
+<th class="tableblock halign-left valign-top">FID</th>
+<th class="tableblock halign-left valign-top">EID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_num_counters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_counter_get_info</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_counter_config_matching</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_counter_start</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_counter_stop</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sbi_pmu_counter_fw_read</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0.3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x504D55</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ext-sys-reset.html">Chapter 9. System Reset Extension (EID #0x53525354 "SRST")</a></span>
+  <span class="next"><a href="ext-experimental.html">Chapter 11. Experimental SBI Extension Space (EIDs #0x08000000 - #0x08FFFFFF)</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
