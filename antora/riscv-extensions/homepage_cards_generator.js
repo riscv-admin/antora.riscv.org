@@ -68,8 +68,10 @@ module.exports.register = function () {
             const attrs = (latestVersion.asciidoc && latestVersion.asciidoc.attributes) || {}
             // Exclude components with no-cards: true
             if (attrs['no-cards'] === true || attrs['no-cards'] === 'true') return
-            const group = attrs['page-group']
+            let group = attrs['page-group']
             if (!group) return
+            // Normalize group name to match marker and overview usage
+            group = group.trim().toLowerCase() === 'platforms' ? 'platforms' : group.trim()
 
             // Resolve source-level playbook attributes as a fallback.
             // Find any page from this component version to get its origin URL,
@@ -154,6 +156,7 @@ module.exports.register = function () {
             'platform-software-overview',
             'trace-debug-ras-overview',
             'app-enablement-overview',
+            'platforms-overview',
             'home',
         ]
 
@@ -181,7 +184,8 @@ module.exports.register = function () {
             const isHomePage = page.src && page.src.component === 'home';
 
             content = content.replace(sectionRe, (_, anchorId, headingText, group) => {
-                const specs = specsByGroup.get(group.trim());
+                let groupKey = group.trim().toLowerCase() === 'platforms' ? 'platforms' : group.trim();
+                const specs = specsByGroup.get(groupKey);
                 if (!specs || specs.length === 0) {
                     console.log(`[homepage-cards] No specs found for group '${group}' — section left empty.`);
                     return '';
@@ -198,7 +202,8 @@ module.exports.register = function () {
             });
 
             content = content.replace(markerRe, (_, group) => {
-                const specs = specsByGroup.get(group.trim());
+                let groupKey = group.trim().toLowerCase() === 'platforms' ? 'platforms' : group.trim();
+                const specs = specsByGroup.get(groupKey);
                 if (!specs || specs.length === 0) {
                     console.log(`[homepage-cards] No specs found for group '${group}' — marker left empty.`);
                     return '';
