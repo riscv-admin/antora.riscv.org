@@ -2982,11 +2982,11 @@ register&#8217;s PPN field.</p>
 <div class="paragraph">
 <p>The PTE format for Sv39 is shown in <a href="#sv39pte">Figure 43</a>.
 Bits 9-0 have the same meaning as for Sv32.
-Bit 63 is reserved for use by the Svnapot extension in <a href="#svnapot"><em>12.2. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</em></a>.
+Bit 63 is reserved for use by the Svnapot extension in <a href="#svnapot">12.1.7. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</a>.
 <span id="norm:Sv39_pte_svnapot_rsv">If Svnapot is not implemented, bit 63 remains
 reserved and must be zeroed by software for forward compatibility, or
 else a page-fault exception is raised</span>.
-Bits 62-61 are reserved for use by the Svpbmt extension in <a href="#svpbmt"><em>12.3. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</em></a>.
+Bits 62-61 are reserved for use by the Svpbmt extension in <a href="#svpbmt">12.1.8. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</a>.
 <span id="norm:Sv39_pte_svpbmt_rsv">If Svpbmt is not implemented, bits 62-61 remain
 reserved and must be zeroed by software for forward compatibility, or
 else a page-fault exception is raised</span>.
@@ -3199,11 +3199,8 @@ in <a href="#sv32algorithm">12.1.3.2. Virtual Address Translation Process</a>, e
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="svnapot"><a class="anchor" href="#svnapot"></a>12.2. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="svnapot"><a class="anchor" href="#svnapot"></a>12.1.7. "Svnapot" Extension for NAPOT Translation Contiguity, Version 1.0</h3>
 <div class="paragraph">
 <p>In Sv39, Sv48, and Sv57, when a PTE has
 <span id="norm:Svnapot_pte_N">N=1</span>, the PTE represents a translation that is part
@@ -3437,10 +3434,8 @@ first step.</p>
 translation</span>.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="svpbmt"><a class="anchor" href="#svpbmt"></a>12.3. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="svpbmt"><a class="anchor" href="#svpbmt"></a>12.1.8. "Svpbmt" Extension for Page-Based Memory Types, Version 1.0</h3>
 <div class="paragraph">
 <p>In Sv39, Sv48, and Sv57, bits 62-61 of a leaf page table entry indicate
 the use of page-based memory types that override the PMA(s) for the
@@ -3638,10 +3633,8 @@ e.g. VS-stage page-table accesses, the intermediate attributes apply instead.
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="svinval"><a class="anchor" href="#svinval"></a>12.4. "Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="svinval"><a class="anchor" href="#svinval"></a>12.1.9. "Svinval" Extension for Fine-Grained Address-Translation Cache Invalidation, Version 1.0</h3>
 <div class="paragraph">
 <p>The Svinval extension splits SFENCE.VMA, HFENCE.VVMA, and HFENCE.GVMA
 instructions into finer-grained invalidation and ordering operations
@@ -3779,10 +3772,8 @@ instructions as no-ops.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sec:svadu"><a class="anchor" href="#sec:svadu"></a>12.5. "Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sec:svadu"><a class="anchor" href="#sec:svadu"></a>12.1.10. "Svadu" Extension for Hardware Updating of A/D Bits, Version 1.0</h3>
 <div class="paragraph">
 <p>The Svadu extension adds support and CSR controls for hardware updating of PTE A/D bits.</p>
 </div>
@@ -3799,10 +3790,8 @@ which mandates exceptions when A/D bits need be set, instead takes effect.</span
 The Svade extension is also defined in <a href="#translation">12.1.3.1. Addressing and Memory Protection</a>.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sec:svvptc"><a class="anchor" href="#sec:svvptc"></a>12.6. "Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sec:svvptc"><a class="anchor" href="#sec:svvptc"></a>12.1.11. "Svvptc" Extension for Obviating Memory-Management Instructions after Marking PTEs Valid, Version 1.0</h3>
 <div class="paragraph">
 <p><span id="norm:Svvptc_explicit_stores_update_valid_bit">When the Svvptc extension is implemented, explicit stores by a hart that update
 the Valid bit of leaf and/or non-leaf PTEs from 0 to 1 and are visible to a hart
@@ -3841,10 +3830,8 @@ coherent with store instructions that modify PTEs.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="sec:svrsw60t59b"><a class="anchor" href="#sec:svrsw60t59b"></a>12.7. "Svrsw60t59b" Extension for PTE Reserved-for-Software Bits 60-59, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="sec:svrsw60t59b"><a class="anchor" href="#sec:svrsw60t59b"></a>12.1.12. "Svrsw60t59b" Extension for PTE Reserved-for-Software Bits 60-59, Version 1.0</h3>
 <div class="paragraph">
 <p><span id="norm:Svrsw60t59b_reserved_bits_60_59">If the Svrsw60t59b extension is implemented, then bits 60-59 of the page table
 entries (PTEs) are reserved for use by supervisor software and are ignored by
@@ -3878,10 +3865,8 @@ zero.</p>
 </table>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="ssqosid"><a class="anchor" href="#ssqosid"></a>12.8. "Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="ssqosid"><a class="anchor" href="#ssqosid"></a>12.1.13. "Ssqosid" Extension for Quality-of-Service (QoS) Identifiers, Version 1.0</h3>
 <div class="paragraph">
 <p>Quality of Service (QoS) is defined as the minimal end-to-end performance
 guaranteed in advance by a service level agreement (SLA) to a workload.
@@ -3936,8 +3921,8 @@ The Ssqosid extension does not require that S-mode mode be implemented.
 </tr>
 </table>
 </div>
-<div class="sect2">
-<h3 id="12-8-1-supervisor-resource-management-configuration-srmcfg-register"><a class="anchor" href="#12-8-1-supervisor-resource-management-configuration-srmcfg-register"></a>12.8.1. Supervisor Resource Management Configuration (<code>srmcfg</code>) register</h3>
+<div class="sect3">
+<h4 id="12-1-13-1-supervisor-resource-management-configuration-srmcfg-register"><a class="anchor" href="#12-1-13-1-supervisor-resource-management-configuration-srmcfg-register"></a>12.1.13.1. Supervisor Resource Management Configuration (<code>srmcfg</code>) register</h4>
 <div class="paragraph">
 <p><span id="norm:Ssqosid_srmcfg_register_size">The <code>srmcfg</code> register is an SXLEN-bit read/write register used to configure a
 Resource Control ID (<code>RCID</code>) and a Monitoring Counter ID (<code>MCID</code>). Both <code>RCID</code>
@@ -4022,6 +4007,7 @@ contexts.</p>
 </td>
 </tr>
 </table>
+</div>
 </div>
 </div>
 </div>
