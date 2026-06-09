@@ -114,8 +114,8 @@ module.exports.register = function () {
                 const unprivDetailsUrl = attrs['more_details_unpriv_url'] || sourceAttrs['moreDetailsUnprivUrl'] || entry.detailsUrl
                 const privDetailsUrl = attrs['more_details_priv_url'] || sourceAttrs['moreDetailsPrivUrl'] || entry.detailsUrl
 
-                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || buildVersionedPath(component.name, latestVersion.version, 'unpriv/unpriv-index.html')
-                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || buildVersionedPath(component.name, latestVersion.version, 'priv/priv-index.html')
+                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || buildShortPath(component.name, 'unpriv/unpriv-index.html')
+                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || buildShortPath(component.name, 'priv/priv-index.html')
 
                 specsByGroup.get(group).push({
                     ...entry,
@@ -264,7 +264,7 @@ ${cards}
  * one level below the site root where all component directories reside.
  */
 function buildCard(spec) {
-    const htmlHref = spec.htmlPath || buildVersionedPath(spec.name, spec.version, 'index.html')
+    const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
     const pdfButton  = buildPdfButton(spec)
     const meta = buildCardMeta(spec)
     const moreLink   = spec.detailsUrl
@@ -351,4 +351,10 @@ function buildVersionedPath(componentName, version, relativePath) {
     if (!componentName) return cleanPath
     if (!version || version === '~') return `../${componentName}/${cleanPath}`
     return `../${componentName}/${version}/${cleanPath}`
+}
+
+function buildShortPath(componentName, relativePath) {
+    const cleanPath = String(relativePath || '').replace(/^\/+/, '')
+    if (!componentName) return cleanPath
+    return `../${componentName}/${cleanPath}`
 }
