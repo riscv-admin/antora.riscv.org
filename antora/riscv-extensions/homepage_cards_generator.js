@@ -305,8 +305,8 @@ function buildPdfButton(spec) {
     if (/^https?:\/\//i.test(spec.pdfUrl)) {
         return `<a href="${spec.pdfUrl}" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a>`
     }
-    // Relative path — prepend the versioned component directory to navigate up from home/.
-    const href = buildVersionedPath(spec.name, spec.version, spec.pdfUrl.replace(/^\//, ''))
+    // Relative path — use the short component path so attachment aliases can track the latest version.
+    const href = buildShortPath(spec.name, spec.pdfUrl.replace(/^\//, ''))
     return `<a href="${href}" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a>`
 }
 
