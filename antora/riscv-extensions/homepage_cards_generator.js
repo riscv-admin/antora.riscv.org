@@ -191,6 +191,9 @@ module.exports.register = function () {
                     return '';
                 }
                 replaced++;
+                if (groupKey === 'under-development') {
+                    return buildCollapsibleList(specs, headingText.trim(), anchorId, sectionIndex === 0)
+                }
                 if (isHomePage) {
                     const isOpen = sectionIndex === 0;
                     sectionIndex++;
@@ -209,6 +212,9 @@ module.exports.register = function () {
                     return '';
                 }
                 replaced++;
+                if (groupKey === 'under-development') {
+                    return buildSpecList(specs)
+                }
                 // Home: twistie, Overview: flat grid
                 if (isHomePage) {
                     return buildCardGrid(specs); // Home page marker: keep as grid (no twistie)
@@ -238,6 +244,29 @@ module.exports.register = function () {
 function buildCardGrid(specs) {
     const cards = specs.map(buildCard).join('\n');
     return `++++\n<div class="card-grid card-grid-3">\n${cards}\n</div>\n++++`;
+}
+
+function buildSpecList(specs) {
+    const sortedSpecs = [...specs].sort((a, b) => String(a.title).localeCompare(String(b.title)))
+    const items = sortedSpecs.map((spec) => {
+        const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
+        const versionSuffix = spec.version ? ` <span class="spec-list-version">(${escapeHtml(spec.version)})</span>` : ''
+        return `\t<li><a href="${htmlHref}">${escapeHtml(spec.title)}</a>${versionSuffix}</li>`
+    }).join('\n')
+
+    return `++++\n<ul class="spec-list spec-list-under-development">\n${items}\n</ul>\n++++`
+}
+
+function buildCollapsibleList(specs, headingText, anchorId, isOpen) {
+    const sortedSpecs = [...specs].sort((a, b) => String(a.title).localeCompare(String(b.title)))
+    const items = sortedSpecs.map((spec) => {
+        const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
+        const versionSuffix = spec.version ? ` <span class="spec-list-version">(${escapeHtml(spec.version)})</span>` : ''
+        return `\t\t<li><a href="${htmlHref}">${escapeHtml(spec.title)}</a>${versionSuffix}</li>`
+    }).join('\n')
+    const idAttr = anchorId ? ` id="${escapeHtml(anchorId)}"` : ''
+    const openAttr = isOpen ? ' open' : ''
+    return `++++\n<details class="section-cards-toggle"${idAttr}${openAttr}>\n\t<summary>${escapeHtml(headingText)}</summary>\n\t<ul class="spec-list spec-list-under-development">\n${items}\n\t</ul>\n</details>\n++++`
 }
 
 /**
