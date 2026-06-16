@@ -114,8 +114,8 @@ module.exports.register = function () {
                 const unprivDetailsUrl = attrs['more_details_unpriv_url'] || sourceAttrs['moreDetailsUnprivUrl'] || entry.detailsUrl
                 const privDetailsUrl = attrs['more_details_priv_url'] || sourceAttrs['moreDetailsPrivUrl'] || entry.detailsUrl
 
-                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || `../${component.name}/unpriv/unpriv-index.html`
-                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || `../${component.name}/priv/priv-index.html`
+                const unprivHtmlPath = attrs['page-unpriv-html-path'] || sourceAttrs['pageUnprivHtmlPath'] || buildShortPath(component.name, 'unpriv/unpriv-index.html')
+                const privHtmlPath = attrs['page-priv-html-path'] || sourceAttrs['pagePrivHtmlPath'] || buildShortPath(component.name, 'priv/priv-index.html')
 
                 specsByGroup.get(group).push({
                     ...entry,
@@ -191,6 +191,9 @@ module.exports.register = function () {
                     return '';
                 }
                 replaced++;
+                if (groupKey === 'under-development') {
+                    return buildCollapsibleList(specs, headingText.trim(), anchorId, sectionIndex === 0)
+                }
                 if (isHomePage) {
                     const isOpen = sectionIndex === 0;
                     sectionIndex++;
@@ -209,6 +212,9 @@ module.exports.register = function () {
                     return '';
                 }
                 replaced++;
+                if (groupKey === 'under-development') {
+                    return buildSpecList(specs)
+                }
                 // Home: twistie, Overview: flat grid
                 if (isHomePage) {
                     return buildCardGrid(specs); // Home page marker: keep as grid (no twistie)
@@ -240,6 +246,29 @@ function buildCardGrid(specs) {
     return `++++\n<div class="card-grid card-grid-3">\n${cards}\n</div>\n++++`;
 }
 
+function buildSpecList(specs) {
+    const sortedSpecs = [...specs].sort((a, b) => String(a.title).localeCompare(String(b.title)))
+    const items = sortedSpecs.map((spec) => {
+        const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
+        const versionSuffix = spec.version ? ` <span class="spec-list-version">(${escapeHtml(spec.version)})</span>` : ''
+        return `\t<li><a href="${htmlHref}">${escapeHtml(spec.title)}</a>${versionSuffix}</li>`
+    }).join('\n')
+
+    return `++++\n<ul class="spec-list spec-list-under-development">\n${items}\n</ul>\n++++`
+}
+
+function buildCollapsibleList(specs, headingText, anchorId, isOpen) {
+    const sortedSpecs = [...specs].sort((a, b) => String(a.title).localeCompare(String(b.title)))
+    const items = sortedSpecs.map((spec) => {
+        const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
+        const versionSuffix = spec.version ? ` <span class="spec-list-version">(${escapeHtml(spec.version)})</span>` : ''
+        return `\t\t<li><a href="${htmlHref}">${escapeHtml(spec.title)}</a>${versionSuffix}</li>`
+    }).join('\n')
+    const idAttr = anchorId ? ` id="${escapeHtml(anchorId)}"` : ''
+    const openAttr = isOpen ? ' open' : ''
+    return `++++\n<details class="section-cards-toggle"${idAttr}${openAttr}>\n\t<summary>${escapeHtml(headingText)}</summary>\n\t<ul class="spec-list spec-list-under-development">\n${items}\n\t</ul>\n</details>\n++++`
+}
+
 /**
  * Builds a full collapsible section where the summary text is the section
  * heading itself.
@@ -264,7 +293,7 @@ ${cards}
  * one level below the site root where all component directories reside.
  */
 function buildCard(spec) {
-    const htmlHref = spec.htmlPath || `../${spec.name}/index.html`
+    const htmlHref = spec.htmlPath || buildShortPath(spec.name, 'index.html')
     const pdfButton  = buildPdfButton(spec)
     const meta = buildCardMeta(spec)
     const moreLink   = spec.detailsUrl
@@ -294,8 +323,8 @@ function buildCardMeta(spec) {
 /**
  * Returns the PDF button HTML.
  * - If page-pdf_url starts with http(s), treat as an external link (no download attr).
- * - If it looks like a relative path (e.g. _attachments/spec.pdf), prefix '../{component}'
- *   so the path resolves correctly from home/index.html to the site root.
+ * - If it looks like a relative path (e.g. _attachments/spec.pdf), prefix the
+ *   versioned component path so the path resolves correctly from home/index.html.
  * - If absent, renders a disabled placeholder.
  */
 function buildPdfButton(spec) {
@@ -305,8 +334,8 @@ function buildPdfButton(spec) {
     if (/^https?:\/\//i.test(spec.pdfUrl)) {
         return `<a href="${spec.pdfUrl}" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a>`
     }
-    // Relative path — prepend '../{component}' to navigate up from home/ to site root.
-    const href = `../${spec.name}/${spec.pdfUrl.replace(/^\//, '')}`
+    // Relative path — use the short component path so attachment aliases can track the latest version.
+    const href = buildShortPath(spec.name, spec.pdfUrl.replace(/^\//, ''))
     return `<a href="${href}" class="button button--secondary" target="_blank" rel="noopener noreferrer">PDF</a>`
 }
 
@@ -344,4 +373,17 @@ function formatMonthYear(value) {
 
     // Preserve non-date values as-is so user-provided content still shows.
     return trimmed
+}
+
+function buildVersionedPath(componentName, version, relativePath) {
+    const cleanPath = String(relativePath || '').replace(/^\/+/, '')
+    if (!componentName) return cleanPath
+    if (!version || version === '~') return `../${componentName}/${cleanPath}`
+    return `../${componentName}/${version}/${cleanPath}`
+}
+
+function buildShortPath(componentName, relativePath) {
+    const cleanPath = String(relativePath || '').replace(/^\/+/, '')
+    if (!componentName) return cleanPath
+    return `../${componentName}/${cleanPath}`
 }
