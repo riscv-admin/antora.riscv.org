@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/trace-connectors/v1.0/connectors_mipi20.html">
+    <link rel="prev" href="connectors_debug_trace.html">
+    <link rel="next" href="connectors_mictor38.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="trace-connectors">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="trace-connectors" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../trace-debug-ras-overview/index.html">Debug, Trace, and RAS</a>
+</div>
+        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../../debug/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../../e-trace/v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../../nexus-trace/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../../cbqri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../../ras-eri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../../trace-control-interface/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../../trace-encap/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/N2E0Mjk1ZDkzZTM0NDQ2YmJmM2IzZDIxNjBlZTkxNTI" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/RISC-V-Trace-Connectors.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">Trace Connectors</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="2-1-mipi20-debug-and-trace-connector"><a class="anchor" href="#2-1-mipi20-debug-and-trace-connector"></a>2.1. MIPI20 Debug and Trace Connector</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This connector is an extension of a MIPI10 and MIPI20 connectors as defined by ratified
+<strong>RISC-V External Debug Support, Version 0.13.2, Mar 22 2019</strong> or newer.</p>
+</div>
+<div class="paragraph">
+<p>This connector adds 1-bit/2-bit/4-bit parallel trace and serial trace options on the same physical MIPI20 connector.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Trace related pins (added by this specification) are <code><strong>highlighted</strong></code>.</p>
+</li>
+<li>
+<p>All JTAG/cJTAG pins have the same meaning as defined in the Debug Specification.</p>
+</li>
+<li>
+<p>Notation  "A / B" as signal name is used to separate two alternative functions of the same pin.</p>
+</li>
+</ul>
+</div>
+<table id="MIPI20_Connector_Layout" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 1. MIPI20 Connector Layout</caption>
+<colgroup>
+<col>
+<col style="width: 8%;">
+<col style="width: 8%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Signal</th>
+<th class="tableblock halign-left valign-top">Odd Pin#</th>
+<th class="tableblock halign-left valign-top">Even Pin#</th>
+<th class="tableblock halign-left valign-top">Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VREF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TMS / TMSC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCK / TCKC</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TDO / <code><strong>SerialTrace</strong></code> (primary)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND or KEY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TDI</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GNDDetect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nRESET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND / TgtPwr+Cap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_CLK</strong></code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND / TgtPwr+Cap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[0]</strong></code> / <code><strong>SerialTrace</strong></code> (secondary)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[1]</strong></code> / nTRST</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[2]</strong></code> / TRIGIN</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[3]</strong></code> / TRIGOUT</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code><strong>SerialTrace</strong></code> via pin #6 (TDO signal) is considered primary but it requires cJTAG interface to be used for debugging. Pin #14 is secondary and can be used when JTAG is used for debugging.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Smaller MIPI10 version of this connector (pins #1 .. #10 only) can provide <code><strong>SerialTrace</strong></code> via pin #6 (TDO signal) when cJTAG is used for debugging.
+</td>
+</tr>
+</table>
+</div>
+<table id="Details_of_MIPI20_Signals" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Details of MIPI20 Signals</caption>
+<colgroup>
+<col style="width: 6%;">
+<col style="width: 25%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Pin#</th>
+<th class="tableblock halign-left valign-top">Pin Name</th>
+<th class="tableblock halign-left valign-top">Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VREF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reference voltage for all other pins and signals (single voltage for debug and trace).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TMS / TMSC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JTAG TMS (from probe to target) or cJTAG TMSC (bi-directional) signal.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCK / TCKC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JTAG TCK (from probe to target) or cJTAG TCKC (from probe to target) signal.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TDO / <code><strong>SerialTrace</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either JTAG TDO (from target to probe) or serial trace (from target to probe) available in case cJTAG is used for debugging.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND or KEY</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">May be removed pin (to prevent wrong insertion for non-shrouded connectors and cable with plug in pin#7). In case the pin is not removed, it must be GND on the target side.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TDI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">JTAG TDI (from probe to target) signal</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GNDDetect</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Must be GND on the probe. On-board debug circuitry can use this pin to disable itself when the external debug probe is connected. If not used for that purpose it must be GND on the target side.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">nRESET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Active-low, open-drain SoC reset signal driven and monitored by the debug probe. Some debug probes may monitor this signal to handle and report resets from the target.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND / TgtPwr+Cap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In standard, most common configuration, these must be connected to GND. See below for explanation of optional TgtPwr+Cap function.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_CLK</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Parallel trace clock (from target to probe).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GND / TgtPwr+Cap</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">In standard, most common configuration, these must be connected to GND. See below for explanation of optional TgtPwr+Cap function.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[0]</strong></code> / <code><strong>SerialTrace</strong></code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either parallel trace signal (from target to probe) or serial trace (from target to probe).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[1]</strong></code> / nTRST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either parallel trace signal (from target to probe) or in case nTRST signal is needed this pin can be used as nTRST. NOTE: Still 1-bit parallel or serial trace is possible.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[2]</strong></code> / TRIGIN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either parallel trace signal (from target to probe) or input debug trigger (from probe to target) or application UART (from probe to target).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code><strong>TRC_DATA[3]</strong></code> / TRIGOUT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Either parallel trace signal (from target to probe) or output debug trigger (from target to probe) or application UART (from target to probe).</p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="2-1-1-possible-use-of-trigintrigout-or-tditdo-for-an-application-uart"><a class="anchor" href="#2-1-1-possible-use-of-trigintrigout-or-tditdo-for-an-application-uart"></a>2.1.1. Possible use of TRIGIN/TRIGOUT or TDI/TDO for an application UART</h3>
+<div class="paragraph">
+<p>Some debug probes may allow definition of pin functions and provide a virtual UART port/terminal for the target. UART is often needed for testing and production and having both debug and UART on a single connector is desired. Supporting UART over TRIGIN/TRIGOUT pins will limit parallel trace to 1-bit or 2-bit options. Supporting UART over TDI/TDO pins will require 2-pin cJTAG to be used as a debug interface.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="2-1-2-explanation-of-tgtpwrcap-option-for-pins1113"><a class="anchor" href="#2-1-2-explanation-of-tgtpwrcap-option-for-pins1113"></a>2.1.2. Explanation of TgtPwr+Cap option for pins#11/#13</h3>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This chapter explains optional use of MIPI20 pins #11/#13 to power-up small evaluations boards. This optional functionality is already provided by several debug and trace probe vendors. If you are not interested in such a functionality, you may skip reading this chapter and simply connect these pins to GND on the target PCB.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Meaning of optional TgtPwr+Cap function of pins #11/#13 is often misunderstood, so it deserves a more elaborated explanation.</p>
+</div>
+<div class="paragraph">
+<p>When the target cannot be powered from MIPI20 both these pins must be GND (as most of the pins on the odd side of MIPI20 connector).</p>
+</div>
+<div class="paragraph">
+<p>Another function of these pins (TgtPwr+Cap) is to provide target power supply voltage into the evaluation target. This way to power-up evaluation target is equivalent to power from the USB connector VBUS, so the expected voltage is around 5V. Target should not assume this voltage is regulated - the same way as voltage provided by USB cable is. Max current taken from these pins should not be larger than 100mA.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Some debug probes may provide regulated voltage and dynamically measure total power consumption by the target via TgtPwr pins.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Target boards should use jumper/switch to select board power-source (either from MIPI20 or USB connector). It is recommended to use a jumper/switch layout preventing both sources to be enabled at the same time.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+It is specifically <strong>FORBIDDEN</strong> to short together 5V power from USB (VBUS) and MIPI20 (pins#11/13) on target PCB. It will allow handling a case when a trace/debug probe or adapter has both pin#11/#13 connected to GND.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>It is possible to use two diodes (instead of jumpers) to auto-select the 5V power source and prevent back-feeding voltage from one source to the other, but it is not recommended as diodes will provide additional voltage drop.</p>
+</div>
+<div class="paragraph">
+<p>Term <strong>TgtPwr+Cap</strong> means that if these pins are used to provide power to the target, it must have a capacitor (as close to the pin as possible) to improve the quality of adjacent TRC_CLK and TRC_DATA pins. Another term for using a capacitor on the supply pin is an "AC ground" or "high frequency ground". We recommend 10pf capacitors placed extremely close to pins#11/#13.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Leaving these pins not connected (NC) as can be seen on some schematics, is not a very good option when trace is used. There is simply not enough GND around TRC_CLK and TRC_DATA[0] signals. Some leave it as NC as they perhaps worry that debug probes may provide voltage there and it will create problems. Debug probes which support TgtPwr function provide GND detection and/or current protection and will disable TgtPwr voltage once detecting that target has these pins shorted to GND.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>No matter what pins #11 and #13 must be <strong>always</strong> connected - it is NOT possible that one of them will function as GND and second as TgtPwr.</p>
+</div>
+<div class="paragraph">
+<p>If you are in doubt, your board may have a jumper to either isolate these pins (NC) or connect them to GND or use them as target power. A jumper with 3 pins <strong>A-B-C</strong> should work.</p>
+</div>
+<div class="paragraph">
+<p>Middle pin <strong>B</strong> should go to MIPI20 pins#11/#13, the left pin <strong>A</strong> should be GND and the right pin <strong>C</strong> should be the 5V rail on the target (via another 3-way jumper allowing to select 5V from MIPI20 or USB VBUS). This allows to select one of three configuration options:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Jumper between <strong>A-B</strong> &#8658; MIPI20 pins #11/#13 are connected to GND.</p>
+</li>
+<li>
+<p>Jumper between <strong>B-C</strong> &#8658; MIPI20 pins #11/#13 will be able to supply 5V power to the target.</p>
+</li>
+<li>
+<p>No jumper &#8658; MIPI20 pins #11/#13 are left NC (<strong>this is not a recommended option</strong>).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+It is not possible to have both GND and 5V connections enabled at the same time as two jumpers cannot physically fit into 3 pins.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a></span>
+  <span class="next"><a href="connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

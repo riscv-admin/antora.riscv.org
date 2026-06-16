@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/rva23/v1.0/rva23-profiles.html">
+    <link rel="prev" href="rv-profile-defined-extensions.html">
+    <link rel="next" href="glossary-of-isa-extensions.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="rva23">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="rva23" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../profiles-overview/index.html">Profiles</a>
+</div>
+        <div class="nav-trees" data-component="rva20-rvi20-rva22">
+          <div class="version-box">
+            <select data-component="rva20-rvi20-rva22" class="select-version">
+                <option
+                  value="../../rva20-rvi20-rva22/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rva20-rvi20-rva22" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V Profiles</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/changelog.html">Chapter 1. Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/profilevsplat.html">Chapter 3. Profiles versus Platforms</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/components.html">Chapter 4. Components of a Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/rvi20.html">Chapter 5. RVI20 Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/rva20.html">Chapter 6. RVA20 Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/rva22.html">Chapter 7. RVA22 Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/extensions.html">New ISA Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rva20-rvi20-rva22/v1.0/glossary.html">Glossary</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="rva23">
+          <div class="version-box">
+            <select data-component="rva23" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rva23" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RVA23 Profile</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="copyright.html">Chapter 1. Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="rva-profile-overview-body.html">Chapter 2. RVA Profiles Rationale</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="rv-profile-defined-extensions.html">Chapter 3. Profile-Defined Extensions</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link"  href="rva23-profiles.html">Chapter 4. RVA23 Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="glossary-of-isa-extensions.html">Glossary of ISA Extensions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="rvb23">
+          <div class="version-box">
+            <select data-component="rvb23" class="select-version">
+                <option
+                  value="../../rvb23/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="rvb23" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RVB23 Profile</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/copyright.html">Chapter 1. Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/profile-defined.html">Chapter 3. Profile-Defined Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/rvb23.html">Chapter 4. RVB23 Profile</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../rvb23/v1.0/glossary.html">Glossary of ISA Extensions</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-profiles/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-profiles" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/MWRiOWY4ZjBhZjkzNDI2MTk4ZGMxZDhjNjZjOTMyNDk" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/rva23-profile.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../profiles-overview/index.html">Profiles Overview</a></li>
+              <li><a href="index.html">RVA23 Profile</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="4-1-rva23-profiles"><a class="anchor" href="#4-1-rva23-profiles"></a>4.1. RVA23 Profiles</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RVA23 profiles are intended to align implementations of RISC-V
+64-bit application processors to allow binary software ecosystems to
+rely on a large set of guaranteed extensions and a small number of
+discoverable coarse-grain options.  It is explicitly a non-goal of
+RVA23 to allow more hardware implementation flexibility by supporting
+only a minimal set of features and a large number of fine-grain
+extensions.</p>
+</div>
+<div class="paragraph">
+<p>Only user-mode (RVA23U64) and supervisor-mode (RVA23S64) profiles are
+specified in this family.</p>
+</div>
+<div class="sect2">
+<h3 id="4-1-1-rva23u64-profile"><a class="anchor" href="#4-1-1-rva23u64-profile"></a>4.1.1. RVA23U64 Profile</h3>
+<div class="paragraph">
+<p>The RVA23U64 profile specifies the ISA features available to user-mode
+execution environments in 64-bit applications processors.  This is the
+most important profile within the application processor family in
+terms of the amount of software that targets this profile.</p>
+</div>
+<div class="sect3">
+<h4 id="4-1-1-1-rva23u64-mandatory-base"><a class="anchor" href="#4-1-1-1-rva23u64-mandatory-base"></a>4.1.1.1. RVA23U64 Mandatory Base</h4>
+<div class="paragraph">
+<p>RV64I is the mandatory base ISA for RVA23U64 and is little-endian.  As
+per the unprivileged architecture specification, the <code>ECALL</code>
+instruction causes a requested trap to the execution environment.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-1-2-rva23u64-mandatory-extensions"><a class="anchor" href="#4-1-1-2-rva23u64-mandatory-extensions"></a>4.1.1.2. RVA23U64 Mandatory Extensions</h4>
+<div class="paragraph">
+<p>The following mandatory extensions were present in RVA22U64.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>M</strong> Integer multiplication and division.</p>
+</li>
+<li>
+<p><strong>A</strong> Atomic instructions.</p>
+</li>
+<li>
+<p><strong>F</strong> Single-precision floating-point instructions.</p>
+</li>
+<li>
+<p><strong>D</strong> Double-precision floating-point instructions.</p>
+</li>
+<li>
+<p><strong>C</strong> Compressed instructions.</p>
+</li>
+<li>
+<p><strong>B</strong> Bit-manipulation instructions.</p>
+</li>
+<li>
+<p><strong>Zicsr</strong>  CSR instructions.  These are implied by presence of F.</p>
+</li>
+<li>
+<p><strong>Zicntr</strong> Base counters and timers.</p>
+</li>
+<li>
+<p><strong>Zihpm</strong> Hardware performance counters.</p>
+</li>
+<li>
+<p><strong>Ziccif</strong> Main memory regions with both the cacheability and
+coherence PMAs must support instruction fetch, and any instruction
+fetches of naturally aligned power-of-2 sizes up to min(ILEN,XLEN)
+(i.e., 32 bits for RVA23) are atomic.</p>
+</li>
+<li>
+<p><strong>Ziccrse</strong> Main memory regions with both the cacheability and coherence PMAs must support RsrvEventual.</p>
+</li>
+<li>
+<p><strong>Ziccamoa</strong> Main memory regions with both the cacheability and coherence PMAs must support all atomics in A.</p>
+</li>
+<li>
+<p><strong>Zicclsm</strong> Misaligned loads and stores to main memory regions with both the
+cacheability and coherence PMAs must be supported.</p>
+</li>
+<li>
+<p><strong>Za64rs</strong> Reservation sets are contiguous, naturally aligned, and a
+maximum of 64 bytes.</p>
+</li>
+<li>
+<p><strong>Zihintpause</strong> Pause hint.</p>
+</li>
+<li>
+<p><strong>Zic64b</strong> Cache blocks must be 64 bytes in size, naturally aligned in the
+address space.</p>
+</li>
+<li>
+<p><strong>Zicbom</strong> Cache-block management instructions.</p>
+</li>
+<li>
+<p><strong>Zicbop</strong> Cache-block prefetch instructions.</p>
+</li>
+<li>
+<p><strong>Zicboz</strong> Cache-Block Zero Instructions.</p>
+</li>
+<li>
+<p><strong>Zfhmin</strong> Half-precision floating-point.</p>
+</li>
+<li>
+<p><strong>Zkt</strong> Data-independent execution latency.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following mandatory extensions are new in RVA23U64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>V</strong> Vector extension.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+V was optional in RVA22U64.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zvfhmin</strong> Vector minimal half-precision floating-point.</p>
+</li>
+<li>
+<p><strong>Zvbb</strong> Vector basic bit-manipulation instructions.</p>
+</li>
+<li>
+<p><strong>Zvkt</strong> Vector data-independent execution latency.</p>
+</li>
+<li>
+<p><strong>Zihintntl</strong> Non-temporal locality hints.</p>
+</li>
+<li>
+<p><strong>Zicond</strong> Integer conditional operations.</p>
+</li>
+<li>
+<p><strong>Zimop</strong> may-be-operations.</p>
+</li>
+<li>
+<p><strong>Zcmop</strong> Compressed may-be-operations.</p>
+</li>
+<li>
+<p><strong>Zcb</strong> Additional compressed instructions.</p>
+</li>
+<li>
+<p><strong>Zfa</strong> Additional floating-Point instructions.</p>
+</li>
+<li>
+<p><strong>Zawrs</strong> Wait-on-reservation-set instructions.</p>
+</li>
+<li>
+<p><strong>Supm</strong> Pointer masking, with the execution environment providing a means to
+select PMLEN=0 and PMLEN=7 at minimum.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-1-3-rva23u64-optional-extensions"><a class="anchor" href="#4-1-1-3-rva23u64-optional-extensions"></a>4.1.1.3. RVA23U64 Optional Extensions</h4>
+<div class="sect4">
+<h5 id="4-1-1-3-1-localized-options"><a class="anchor" href="#4-1-1-3-1-localized-options"></a>4.1.1.3.1. Localized Options</h5>
+<div class="paragraph">
+<p>The following localized options are new in RVA23U64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zvkng</strong> Vector crypto NIST algorithms with GCM.</p>
+</li>
+<li>
+<p><strong>Zvksg</strong> Vector crypto ShangMi algorithms with GCM.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The scalar crypto extensions Zkn and Zks that were options in
+RVA22 are not options in RVA23.  The goal is for both hardware and
+software vendors to move to use vector crypto, as vectors are now
+mandatory and vector crypto is substantially faster than scalar
+crypto.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+We have included only the Zvkng/Zvksg options with GCM to
+standardize on a higher performance crypto alternative. Zvbc is listed
+as a development option for use in other algorithms, and will become
+mandatory.  Scalar Zbc is now listed as an expansion option, i.e., it
+will probably not become mandatory.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-1-3-2-development-options"><a class="anchor" href="#4-1-1-3-2-development-options"></a>4.1.1.3.2. Development Options</h5>
+<div class="paragraph">
+<p>The following are new development options intended to become mandatory in a future RVA profile.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zabha</strong> Byte and halfword atomic memory operations.</p>
+</li>
+<li>
+<p><strong>Zacas</strong> Compare-and-Swap instructions.</p>
+</li>
+<li>
+<p><strong>Ziccamoc</strong> Main memory regions with both the cacheability and coherence PMAs
+must provide <code>AMOCASQ</code> level PMA support.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ziccamoc is a new profile-defined extension that ensures
+Compare and Swap instructions are properly supported in main memory
+regions.  The extension will be added to the PMA section of the
+privileged architecture manual.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zvbc</strong> Vector carryless multiplication.</p>
+</li>
+<li>
+<p><strong>Zama16b</strong> Misaligned loads, stores, and AMOs to main memory regions that do not cross a naturally aligned 16-byte boundary are atomic.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zama16b is a new profile-defined extension that represents
+the presence of the new Misaligned Atomicity Granule feature added in
+Sm1p13.  The extension will be added to the PMA section of the
+privileged architecture manual.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-1-3-3-expansion-options"><a class="anchor" href="#4-1-1-3-3-expansion-options"></a>4.1.1.3.3. Expansion Options</h5>
+<div class="paragraph">
+<p>The following expansion options were also present in RVA22U64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zfh</strong> Scalar half-precision floating-point.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following are new expansion options in RVA23U64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Zbc</strong> Scalar carryless multiply.</p>
+</li>
+<li>
+<p><strong>Zicfilp</strong> Landing Pads.</p>
+</li>
+<li>
+<p><strong>Zicfiss</strong> Shadow Stack.</p>
+</li>
+<li>
+<p><strong>Zvfh</strong> Vector half-precision floating-point.</p>
+</li>
+<li>
+<p><strong>Zfbfmin</strong> Scalar BF16 converts.</p>
+</li>
+<li>
+<p><strong>Zvfbfmin</strong> Vector BF16 converts.</p>
+</li>
+<li>
+<p><strong>Zvfbfwma</strong> Vector BF16 widening mul-add.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-1-3-4-transitory-options"><a class="anchor" href="#4-1-1-3-4-transitory-options"></a>4.1.1.3.4. Transitory Options</h5>
+<div class="paragraph">
+<p>There are no transitory options in RVA23U64.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Scalar crypto is no longer an option in RVA23U64, though the Zbc
+extension has now been exposed as an expansion option.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-1-4-rva23u64-recommendations"><a class="anchor" href="#4-1-1-4-rva23u64-recommendations"></a>4.1.1.4. RVA23U64 Recommendations</h4>
+<div class="paragraph">
+<p>Implementations are strongly recommended to raise illegal-instruction
+exceptions on attempts to execute unimplemented opcodes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-2-rva23s64-profile"><a class="anchor" href="#4-1-2-rva23s64-profile"></a>4.1.2. RVA23S64 Profile</h3>
+<div class="paragraph">
+<p>The RVA23S64 profile specifies the ISA features available to a
+supervisor-mode execution environment in 64-bit applications
+processors.  RVA23S64 is based on privileged architecture version
+1.13.</p>
+</div>
+<div class="sect3">
+<h4 id="4-1-2-1-rva23s64-mandatory-base"><a class="anchor" href="#4-1-2-1-rva23s64-mandatory-base"></a>4.1.2.1. RVA23S64 Mandatory Base</h4>
+<div class="paragraph">
+<p>RV64I is the mandatory base ISA for RVA23S64 and is little-endian.
+The <code>ECALL</code> instruction operates as per the unprivileged architecture
+specification.  An <code>ECALL</code> in user mode causes a contained trap to
+supervisor mode.  An <code>ECALL</code> in supervisor mode causes a requested
+trap to the execution environment.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-2-2-rva23s64-mandatory-extensions"><a class="anchor" href="#4-1-2-2-rva23s64-mandatory-extensions"></a>4.1.2.2. RVA23S64 Mandatory Extensions</h4>
+<div class="paragraph">
+<p>The following unprivileged extensions are mandatory:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>The RVA23S64 mandatory unprivileged extensions include all the
+mandatory unprivileged extensions in RVA23U64.</p>
+</li>
+<li>
+<p><strong>Zifencei</strong>  Instruction-Fetch Fence.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Zifencei is mandated as it is the only standard way to support
+instruction-cache coherence in RVA23 application processors.  A new
+instruction-cache coherence mechanism is under development
+(tentatively named Zjid) which might be added as an option in the
+future.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following privileged extensions are mandatory:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Ss1p13</strong>  Supervisor architecture version 1.13.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ss1p13 supersedes Ss1p12.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following privileged extensions were also mandatory in RVA22S64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Svbare</strong> The <code>satp</code> mode Bare must be supported.</p>
+</li>
+<li>
+<p><strong>Sv39</strong> Page-based 39-bit virtual-Memory system.</p>
+</li>
+<li>
+<p><strong>Svade</strong> Page-fault exceptions are raised when a page is accessed
+when A bit is clear, or written when D bit is clear.</p>
+</li>
+<li>
+<p><strong>Ssccptr</strong> Main memory regions with both the cacheability and
+coherence PMAs must support hardware page-table reads.</p>
+</li>
+<li>
+<p><strong>Sstvecd</strong> <code>stvec.MODE</code> must be capable of holding the value 0
+(Direct).  When <code>stvec.MODE=Direct</code>, <code>stvec.BASE</code> must be capable of
+holding any valid four-byte-aligned address.</p>
+</li>
+<li>
+<p><strong>Sstvala</strong> <code>stval</code> must be written with the faulting virtual address
+for load, store, and instruction page-fault, access-fault, and
+misaligned exceptions, and for breakpoint exceptions other than
+those caused by execution of the <code>EBREAK</code> or <code>C.EBREAK</code> instructions.
+For virtual-instruction and illegal-instruction exceptions, <code>stval</code> must be written with the
+faulting instruction.</p>
+</li>
+<li>
+<p><strong>Sscounterenw</strong> For any <code>hpmcounter</code> that is not read-only zero, the
+corresponding bit in <code>scounteren</code> must be writable.</p>
+</li>
+<li>
+<p><strong>Svpbmt</strong> Page-based memory types</p>
+</li>
+<li>
+<p><strong>Svinval</strong> Fine-grained address-translation cache invalidation.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following are new mandatory extensions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Svnapot</strong> NAPOT translation contiguity.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Svnapot was optional in RVA22.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sstc</strong> supervisor-mode timer interrupts.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Sstc was optional in RVA22.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sscofpmf</strong> count overflow and mode-based filtering.</p>
+</li>
+<li>
+<p><strong>Ssnpm</strong> Pointer masking, with <code>senvcfg.PME</code> and <code>henvcfg.PME</code> supporting,
+at minimum, settings PMLEN=0 and PMLEN=7.</p>
+</li>
+<li>
+<p><strong>Ssu64xl</strong> <code>sstatus.UXL</code> must be capable of holding the value 2
+(i.e., UXLEN=64 must be supported).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ssu64xl was optional in RVA22.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sha</strong> The augmented hypervisor extension.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Sha is a new profile-defined extension that captures the
+full set of features that are mandated to be supported along with the
+H extension.  There is no change to the features added by including
+the hypervisor extension in a profile&#8212;&#8203;the new name is solely to
+simplify the text of the profiles.  The definition has been added to
+the RVA22 profile text, where the hypervisor extension was first
+added, but will be added to the hypervisor section of the combined ISA
+manual.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><strong>Sha</strong> comprises the following extensions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>H</strong> The hypervisor extension.</p>
+</li>
+<li>
+<p><strong>Ssstateen</strong> Supervisor-mode view of the state-enable extension.  The
+supervisor-mode (<code>sstateen0-3</code>) and hypervisor-mode (<code>hstateen0-3</code>)
+state-enable registers must be provided.</p>
+</li>
+<li>
+<p><strong>Shcounterenw</strong> For any <code>hpmcounter</code> that is not read-only zero, the corresponding bit in <code>hcounteren</code> must be writable.</p>
+</li>
+<li>
+<p><strong>Shvstvala</strong> <code>vstval</code> must be written in all cases described above for <code>stval</code>.</p>
+</li>
+<li>
+<p><strong>Shtvala</strong> <code>htval</code> must be written with the faulting guest physical
+address in all circumstances permitted by the ISA.</p>
+</li>
+<li>
+<p><strong>Shvstvecd</strong> <code>vstvec.MODE</code> must be capable of holding the value 0 (Direct).
+When <code>vstvec.MODE</code>=Direct, <code>vstvec.BASE</code> must be capable of holding
+any valid four-byte-aligned address.</p>
+</li>
+<li>
+<p><strong>Shvsatpa</strong> All translation modes supported in <code>satp</code> must be supported in <code>vsatp</code>.</p>
+</li>
+<li>
+<p><strong>Shgatpa</strong> For each supported virtual memory scheme SvNN supported in
+<code>satp</code>, the corresponding hgatp SvNNx4 mode must be supported.  The
+<code>hgatp</code> mode Bare must also be supported.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The augmented hypervisor extension (exactly equivalet to Sha) was optional in RVA22.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-2-3-rva23s64-optional-extensions"><a class="anchor" href="#4-1-2-3-rva23s64-optional-extensions"></a>4.1.2.3. RVA23S64 Optional Extensions</h4>
+<div class="sect4">
+<h5 id="4-1-2-3-1-localized-options"><a class="anchor" href="#4-1-2-3-1-localized-options"></a>4.1.2.3.1. Localized Options</h5>
+<div class="paragraph">
+<p>There are no privileged localized options in RVA23S64.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-2-3-2-development-options"><a class="anchor" href="#4-1-2-3-2-development-options"></a>4.1.2.3.2. Development Options</h5>
+<div class="paragraph">
+<p>There are no privileged development options in RVA23S64.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-2-3-3-expansion-options"><a class="anchor" href="#4-1-2-3-3-expansion-options"></a>4.1.2.3.3. Expansion Options</h5>
+<div class="paragraph">
+<p>The following privileged expansion options were present in RVA22S64:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Sv48</strong> Page-based 48-bit virtual-memory system.</p>
+</li>
+<li>
+<p><strong>Sv57</strong> Page-based 57-bit virtual-memory system.</p>
+</li>
+<li>
+<p><strong>Zkr</strong>  Entropy CSR.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The following are new privileged expansion options in RVA23S64</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Svadu</strong> Hardware A/D bit updates.</p>
+</li>
+<li>
+<p><strong>Sdtrig</strong> Debug triggers.</p>
+</li>
+<li>
+<p><strong>Ssstrict</strong> No non-conforming extensions are present.  Attempts to
+execute unimplemented opcodes or access unimplemented CSRs in the
+standard or reserved encoding spaces raises an illegal instruction
+exception that results in a contained trap to the supervisor-mode
+trap handler.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ssstrict is a new profile-defined extension that restricts the
+behavior of reserved encoding spaces.  The extension will be added to
+the supervisor chapter of the privileged architecture.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ssstrict does not prescribe behavior for the custom encoding
+spaces or CSRs.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Ssstrict definition applies to the execution environment
+claiming to be RVA23-compatible, which must have the hypervisor
+extension. That execution environment will take a contained trap to
+supervisor-mode (however that trap is implemented, including, but not
+limited to, emulation/delegation in the outer execution
+environment). Ssstrict (and all the other RVA23 mandates and options)
+do not apply to any guest VMs run by a hypervisor. An RVA23 hypervisor
+can provide guest VMs that are also RVA23-compatible but with an
+expanded set of emulated standard instructions. An RVA23 hypervisor
+can also choose to implement guest VMs that are not RVA23 compatible
+(e.g., lacking H, or only RVA20).
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Svvptc</strong> Transitions from invalid to valid PTEs will be visible in
+bounded time without an explicit memory-management fence.</p>
+</li>
+<li>
+<p><strong>Sspm</strong> Supervisor-mode pointer masking, with the supervisor execution
+environment providing a means to select PMLEN=0 and PMLEN=7 at minimum.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="4-1-2-3-4-transitory-options"><a class="anchor" href="#4-1-2-3-4-transitory-options"></a>4.1.2.3.4. Transitory Options</h5>
+<div class="paragraph">
+<p>There are no privileged transitory options in RVA23S64.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="4-1-2-4-rva23s64-recommendations"><a class="anchor" href="#4-1-2-4-rva23s64-recommendations"></a>4.1.2.4. RVA23S64 Recommendations</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>Implementations are strongly recommended to raise
+illegal-instruction exceptions when attempting to execute
+unimplemented opcodes or access unimplemented CSRs.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="rv-profile-defined-extensions.html">Chapter 3. Profile-Defined Extensions</a></span>
+  <span class="next"><a href="glossary-of-isa-extensions.html">Glossary of ISA Extensions</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

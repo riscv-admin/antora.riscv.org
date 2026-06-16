@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/debug/v1.0/Sdext.html">
+    <link rel="prev" href="debug_module.html">
+    <link rel="next" href="Sdtrig.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="debug">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="debug" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../trace-debug-ras-overview/index.html">Debug, Trace, and RAS</a>
+</div>
+        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../../e-trace/v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../../nexus-trace/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../../cbqri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../../ras-eri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../../trace-connectors/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../../trace-control-interface/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../../trace-encap/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-debug-spec/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-debug-spec" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/YTljNWI1NDgxMzE2NDIzOGEyYjMzMWRmZmRjOGEwNmE" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/riscv-debug-specification.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">Debug Specification</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="core_debug"><a class="anchor" href="#core_debug"></a>4.1. Sdext (ISA Extension)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter describes the Sdext ISA extension. It must be implemented
+to make external debug work, and is only useful in conjunction with
+external debug.</p>
+</div>
+<div class="paragraph">
+<p>Modifications to the RISC-V core to support debug are kept to a minimum.
+There is a special execution mode (Debug Mode) and a few extra CSRs. The
+DM takes care of the rest.</p>
+</div>
+<div class="paragraph">
+<p>In order to be compatible with this specification an implementation must
+implement everything described in this chapter that is not explicitly
+listed as optional.</p>
+</div>
+<div class="paragraph">
+<p>If Sdext is implemented and Sdtrig is not implemented, then accessing
+any of the Sdtrig CSRs must raise an illegal instruction exception.</p>
+</div>
+<div class="sect2">
+<h3 id="debugmode"><a class="anchor" href="#debugmode"></a>4.1.1. Debug Mode</h3>
+<div class="paragraph">
+<p>Debug Mode is a special processor mode used only when a hart is halted
+for external debugging. Because the hart is halted, there is no forward
+progress in the normal instruction stream. How Debug Mode is implemented
+is not specified here.</p>
+</div>
+<div class="paragraph">
+<p>When executing code due to an abstract command, the hart stays in Debug
+Mode and the following apply:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>All implemented instructions operate just as they do in M-mode, unless
+an exception is mentioned in this list.</p>
+</li>
+<li>
+<p>All operations are executed with machine mode privilege, except that
+additional Debug Mode CSRs are accessible and <code>mprv</code> in <code>mstatus</code> may be ignored
+according to <a href="#dcsr-mprven">mprven</a>. Full permission checks, or a relaxed set of permission
+checks, will apply according to <a href="debug_module.html#abstractcs-relaxedpriv" class="xref page">relaxedpriv</a>.</p>
+</li>
+<li>
+<p>All interrupts (including NMI) are masked.</p>
+</li>
+<li>
+<p>Traps don&#8217;t take place. Instead, they end execution of the program
+buffer and the hart remains in Debug Mode. Because they do not trap to
+M-mode, they do not update registers such as , <code>mepc</code>, <code>mcause</code>,
+<code>mtval</code>, <code>mtval2</code>, and <code>mtinst</code>. The same is true for the equivalent
+privileged registers that are updated when trapping to other modes.
+Registers that may be updated as part of execution before the exception
+are allowed to be updated. For example, vector load/store instructions
+which raise exceptions may partially update the destination register and
+set <code>vstart</code> appropriately.</p>
+</li>
+<li>
+<p>Triggers don&#8217;t match or fire.</p>
+</li>
+<li>
+<p>If <a href="#dcsr-stopcount">stopcount</a> is 0 then counters continue. If it is 1 then counters are stopped.</p>
+</li>
+<li>
+<p>If <a href="#dcsr-stoptime">stoptime</a> is 0 then <code>time</code> continues to update. If it is 1 then <code>time</code> will not update. It will resynchronize with <code>time</code> after leaving Debug Mode.</p>
+</li>
+<li>
+<p>Instructions that place the hart into a stalled state act as a <code>nop</code>.
+This includes <code>wfi</code>, <code>wrs.sto</code>, and <code>wrs.nto</code>.</p>
+</li>
+<li>
+<p>Almost all instructions that change the privilege mode have UNSPECIFIED behavior.
+This includes <code>ecall</code>, <code>mret</code>, <code>sret</code>, and <code>uret</code>. (To change the
+privilege mode, the debugger can write <a href="#dcsr-prv">prv</a> and <a href="#dcsr-v">v</a> in <a href="#csr-dcsr">dcsr</a>). The only exception is
+<code>ebreak</code>, which ends execution of the Program Buffer when executed.</p>
+</li>
+<li>
+<p>All control transfer instructions may act as illegal instructions if
+their destination is in the Program Buffer. If one such instruction acts
+as an illegal instruction, all such instructions must act as illegal
+instructions.</p>
+</li>
+<li>
+<p>All control transfer instructions may act as illegal instructions if
+their destination is outside the Program Buffer. If one such instruction
+acts as an illegal instruction, all such instructions must act as
+illegal instructions.</p>
+</li>
+<li>
+<p>Instructions that depend on the value of the PC (e.g. <code>auipc</code>) may act
+as illegal instructions.</p>
+</li>
+<li>
+<p>When the Zicfilp extension is implemented, the <code>ELP</code> state is
+<code>NO_LP_EXPECTED</code> and is not updated by any instructions. LPAD instruction
+executes as a no-op.</p>
+</li>
+<li>
+<p>Effective XLEN is DXLEN.</p>
+</li>
+<li>
+<p>Forward progress is guaranteed.</p>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When <a href="#dcsr-mprven">mprven</a>, the external debugger can set MPRV and MPP appropriately to have
+hardware perform memory accesses with the appropriate endianness,
+address translation, permission checks, and PMP/PMA checks (subject to <a href="debug_module.html#abstractcs-relaxedpriv" class="xref page">relaxedpriv</a>). This is also the only way to access all of physical memory when
+34-bit physical addresses are supported on a Sv32 hart. If hardware ties <a href="#dcsr-mprven">mprven</a> to 0 then the external debugger is expected to simulate all the effects
+of MPRV, including any extensions that affect memory accesses. For these
+reasons it is recommended to tie <a href="#dcsr-mprven">mprven</a> to 1.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-2-load-reservedstore-conditional-instructions"><a class="anchor" href="#4-1-2-load-reservedstore-conditional-instructions"></a>4.1.2. Load-Reserved/Store-Conditional Instructions</h3>
+<div class="paragraph">
+<p>The reservation registered by an <code>lr</code> instruction on a memory address
+may be lost when entering Debug Mode or while in Debug Mode. This means
+that there may be no forward progress if Debug Mode is entered between
+<code>lr</code> and <code>sc</code> pairs.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This is a behavior that debug users must be aware of. If they have a
+breakpoint set between a <code>lr</code> and <code>sc</code> pair, or are stepping through
+such code, the <code>sc</code> may never succeed. Fortunately in general use there
+will be very few instructions in such a sequence, and anybody debugging
+it will quickly notice that the reservation is not occurring. The
+solution in that case is to set a breakpoint on the first instruction
+after the <code>sc</code> and run to it. A higher level debugger may choose to
+automate this.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-3-wait-for-interrupt-instruction"><a class="anchor" href="#4-1-3-wait-for-interrupt-instruction"></a>4.1.3. Wait for Interrupt Instruction</h3>
+<div class="paragraph">
+<p>If halt is requested while <code>wfi</code> is executing, then the hart must leave
+the stalled state, completing this instruction&#8217;s execution, and then
+enter Debug Mode.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-4-wait-on-reservation-set-instructions"><a class="anchor" href="#4-1-4-wait-on-reservation-set-instructions"></a>4.1.4. Wait-on-Reservation-Set Instructions</h3>
+<div class="paragraph">
+<p>If halt is requested while <code>wrs.sto</code> or <code>wrs.nto</code> is executing, then the
+hart must leave the stalled state, completing this instruction&#8217;s
+execution, and then enter Debug Mode.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-5-single-step"><a class="anchor" href="#4-1-5-single-step"></a>4.1.5. Single Step</h3>
+<div class="sect3">
+<h4 id="stepbit"><a class="anchor" href="#stepbit"></a>4.1.5.1. Step Bit In Dcsr</h4>
+<div class="paragraph">
+<p>This method is only available to external debuggers, and is the
+preferred way to single step.</p>
+</div>
+<div class="paragraph">
+<p>An external debugger can cause a halted hart to execute a single
+instruction or trap and then re-enter Debug Mode by setting <a href="#dcsr-step">step</a> before
+resuming. If <a href="#dcsr-step">step</a> is set when a hart resumes then it will single step,
+regardless of the reason for resuming.</p>
+</div>
+<div class="paragraph">
+<p>If control is transferred to a trap handler while executing the
+instruction, then Debug Mode is re-entered immediately after the PC is
+changed to the trap handler, and the appropriate <code>tval</code> and <code>cause</code>
+registers are updated. In this case none of the trap handler is
+executed, and if the cause was a pending interrupt no instructions might
+be executed at all.</p>
+</div>
+<div class="paragraph">
+<p>If executing or fetching the instruction causes a trigger to fire with
+action=1, Debug Mode is re-entered immediately after that trigger has
+fired. In that case <a href="#dcsr-cause">cause</a> is set to 2 (trigger) instead of 4 (single step).
+Whether the instruction is executed or not depends on the specific
+configuration of the trigger.</p>
+</div>
+<div class="paragraph">
+<p>If the instruction that is executed causes the PC to change to an
+address where an instruction fetch causes an exception, that exception
+does not occur until the next time the hart is resumed. Similarly, a
+trigger at the new address does not fire until the hart actually
+attempts to execute that instruction.</p>
+</div>
+<div class="paragraph">
+<p>If the instruction being stepped over would normally stall the hart,
+then instead the instruction is treated as a <code>nop</code>. This includes <code>wfi</code>,
+<code>wrs.sto</code>, and <code>wrs.nto</code>.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="stepicount"><a class="anchor" href="#stepicount"></a>4.1.5.2. Icount Trigger</h4>
+<div class="paragraph">
+<p>Native debuggers won&#8217;t have access to <a href="#csr-dcsr">dcsr</a>, but can use the <a href="Sdtrig.html#csr-icount" class="xref page">icount</a> trigger by setting <a href="Sdtrig.html#icount-count" class="xref page">count</a> to 1.</p>
+</div>
+<div class="paragraph">
+<p>This approach does have some limitations:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Interrupts will fire as usual. Debuggers that want to disable interrupts
+while stepping must disable them by changing <code>mstatus</code>, and specially handle
+instructions that read <code>mstatus</code>.</p>
+</li>
+<li>
+<p><code>wfi</code> instructions are not treated specially and might take a very long
+time to complete.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>This mechanism cleanly supports a system which supports multiple
+privilege levels, where the OS or a debug stub runs in M-Mode while the
+program being debugged runs in a less privileged mode. Systems that only
+support M-Mode can use <a href="Sdtrig.html#csr-icount" class="xref page">icount</a> as well, but <a href="Sdtrig.html#icount-count" class="xref page">count</a> must be able to count
+several instructions (depending on the software implementation). See
+<a href="#nativestep">[nativestep]</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-6-reset"><a class="anchor" href="#4-1-6-reset"></a>4.1.6. Reset</h3>
+<div class="paragraph">
+<p>If the halt signal (driven by the hart&#8217;s halt request bit in the Debug
+Module) or <a href="debug_module.html#dmstatus-hasresethaltreq" class="xref page">hasresethaltreq</a> are asserted when a hart comes out of reset, the hart must
+enter Debug Mode before executing any instructions, but after performing
+any initialization that would usually happen before the first
+instruction is executed.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-7-halt"><a class="anchor" href="#4-1-7-halt"></a>4.1.7. Halt</h3>
+<div class="paragraph">
+<p>When a hart halts:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="#dcsr-cause">cause</a> is updated.</p>
+</li>
+<li>
+<p><a href="#dcsr-prv">prv</a> and <a href="#dcsr-v">v</a> are set to reflect current privilege mode and virtualization mode.</p>
+</li>
+<li>
+<p>If the Zicfilp extension is implemented, <a href="#dcsr-pelp">pelp</a> is set to the current
+<code>ELP</code> state and <code>ELP</code> is set to <code>NO_LP_EXPECTED</code></p>
+</li>
+<li>
+<p><a href="#csr-dpc">dpc</a> is set to the next instruction that should be executed.</p>
+</li>
+<li>
+<p>If the current instruction can be partially executed and should be
+restarted to complete, then the relevant state for that is updated. E.g.
+if a halt occurs during a partially executed vector instruction, then
+<code>vstart</code> is updated, and <a href="#csr-dpc">dpc</a> is updated to the address of the partially
+executed instruction. This is analogous to how vector instructions behave for exceptions.</p>
+</li>
+<li>
+<p>The hart enters Debug Mode.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="4-1-8-resume"><a class="anchor" href="#4-1-8-resume"></a>4.1.8. Resume</h3>
+<div class="paragraph">
+<p>When a hart resumes:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>pc</code> changes to the value stored in <a href="#csr-dpc">dpc</a>.</p>
+</li>
+<li>
+<p>The current privilege mode and virtualization mode are changed to that
+specified by <a href="#dcsr-prv">prv</a> and <a href="#dcsr-v">v</a>.</p>
+</li>
+<li>
+<p>If the Zicfilp extension is enabled at the new privilege mode, the current
+<code>ELP</code> state is changed to that specified by <a href="#dcsr-pelp">pelp</a> else it is set to
+<code>NO_LP_EXPECTED</code>. <a href="#dcsr-pelp">pelp</a> is set to <code>NO_LP_EXPECTED</code>.</p>
+</li>
+<li>
+<p>If the new privilege mode is less privileged than M-mode, <code>MPRV</code> in <code>mstatus</code> is cleared.</p>
+</li>
+<li>
+<p>If the Smdbltrp extension is implemented and the new privilege mode is not M,
+then the <code>MDT</code> bit is set to 0.</p>
+</li>
+<li>
+<p>If the Ssdbltrp extension is implemented and the new privilege mode is U, VS,
+or VU, then <code>sstatus.SDT</code> is set to 0. Additionally, if it is VU, then
+<code>vsstatus.SDT</code> is also set to 0.</p>
+</li>
+<li>
+<p>The hart is no longer in debug mode.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="debreg"><a class="anchor" href="#debreg"></a>4.1.9. Core Debug Registers</h3>
+<div class="paragraph">
+<p>The supported Core Debug Registers must be implemented for each hart
+that can be debugged. They are CSRs, accessible using the RISC-V <code>csr</code>
+opcodes and optionally also using abstract debug commands.</p>
+</div>
+<div class="paragraph">
+<p>Attempts to access an unimplemented Core Debug Register raise an illegal
+instruction exception.</p>
+</div>
+<div class="paragraph">
+<p>These registers are only accessible from Debug Mode.</p>
+</div>
+<table id="tab:core" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Core Debug Registers</caption>
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 66.6666%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Address</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x7b0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug Control and Status (<a href="#csr-dcsr">dcsr</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#csr-dcsr">Debug Control and Status (dcsr, at 0x7b0)</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x7b1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug PC (<a href="#csr-dpc">dpc</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#csr-dpc">Debug PC (dpc, at 0x7b1)</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x7b2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug Scratch Register 0 (<a href="#csr-dscratch0">dscratch0</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#csr-dscratch0">Debug Scratch Register 0 (dscratch0, at 0x7b2)</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x7b3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Debug Scratch Register 1 (<a href="#csr-dscratch1">dscratch1</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#csr-dscratch1">Debug Scratch Register 1 (dscratch1, at 0x7b3)</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="csr-dcsr"><a class="anchor" href="#csr-dcsr"></a>Debug Control and Status (dcsr, at 0x7b0)</h4>
+<div class="paragraph">
+<p>Upon entry into Debug Mode, <a href="#dcsr-v">v</a> and <a href="#dcsr-prv">prv</a> are updated
+with the privilege level the hart was previously in, and <a href="#dcsr-cause">cause</a>
+is updated with the reason for Debug Mode entry.  Other than these
+fields and <a href="#dcsr-nmip">nmip</a>, the other fields of <a href="#csr-dcsr">dcsr</a> are only
+writable by the external debugger.</p>
+</div>
+<div class="paragraph">
+<p><a href="#tab:dcsrcausepriority">Table 2</a> shows the priorities of
+reasons for entering Debug Mode.  Implementations should implement
+priorities as shown in the table. For compatibility with old versions of this spec, resethaltreq and haltreq are
+allowed to be at different positions than shown as long as:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>resethaltreq is higher priority than haltreq</p>
+</li>
+<li>
+<p>the relative order of the other four causes is maintained</p>
+</li>
+</ol>
+</div>
+<table id="tab:dcsrcausepriority" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 2. Priority of reasons for entering Debug Mode from highest to lowest.</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><a href="#dcsr-cause">cause</a> encoding</th>
+<th class="tableblock halign-center valign-top">Cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">resethaltreq</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">halt group</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">haltreq</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">trigger (See <a href="#tab:priority">[tab:priority]</a> for detailed priority)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ebreak</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">step</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Note that mcontrol/mcontrol6 triggers which fire after the
+instruction which hit the trigger are considered
+to be high priority causes on the subsequent instruction.  Therefore,
+an execute trigger with timing=after on an ebreak instruction is lower
+priority than the ebreak itself because the trigger will fire after the
+ebreak instruction.  For the same reason, if a single instruction is
+stepped with both icount and <a href="#dcsr-step">step</a> then the <a href="#dcsr-step">step</a> has
+priority.  See <a href="#tab:priority">[tab:priority]</a> for the relative priorities of
+triggers with respect to the ebreak instruction.</p>
+</div>
+<div class="paragraph">
+<p>Most multi-hart implementations will probably hardwire <a href="#dcsr-stoptime">stoptime</a>
+to 0, as the implementation can get complicated and the benefit is
+small.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>This CSR is read/write.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-e8e0e041c424fb631a3d64f836cea68d767b7c5a.svg" alt="Diagram">
+</div>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-fc38fb790946fa50a681d5e00797b6a7a30198f3.svg" alt="Diagram">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 22.1153%;">
+<col style="width: 58.6538%;">
+<col style="width: 9.6153%;">
+<col style="width: 9.6156%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top">Access</th>
+<th class="tableblock halign-center valign-top">Reset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-debugver"></a> <code>debugver</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (none): There is no debug support.</p>
+</div>
+<div class="paragraph">
+<p>4 (1.0): Debug support exists as it is described in this document.</p>
+</div>
+<div class="paragraph">
+<p>15 (custom): There is debug support, but it does not conform to any
+available version of this spec.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>Preset</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-extcause"></a> <code>extcause</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>When <a href="#dcsr-cause">cause</a> is 7, this optional field contains the value of a
+more specific halt reason than "other." Otherwise it contains 0.</p>
+</div>
+<div class="paragraph">
+<p>0 (critical error): The hart entered a critical error state, as defined in the
+Smdbltrp extension.</p>
+</div>
+<div class="paragraph">
+<p>All other values are reserved for future versions of this spec, or
+for use by other RISC-V extensions.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-cetrig"></a> <code>cetrig</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This bit is part of Smdbltrp and only exists when that extension
+is implemented.</p>
+</div>
+<div class="paragraph">
+<p>0 (disabled): A hart in a critical error state does not enter Debug Mode but
+instead asserts the critical-error signal to the platform.</p>
+</div>
+<div class="paragraph">
+<p>1 (enabled): A hart in a critical error state enters Debug Mode instead of
+asserting the critical-error signal to the platform. Upon such
+entry into Debug Mode, the cause field is set to 7, and the
+extcause field is set to 0, indicating a critical error
+triggered the Debug Mode entry.  This cause has the highest
+priority among all reasons for entering Debug Mode. Resuming
+from Debug Mode following an entry from the critical error state
+returns the hart to the critical error state.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>When <a href="#dcsr-cetrig">cetrig</a> is 1, resuming from Debug Mode
+following an entry due to a critical error will result in an
+immediate re-entry into Debug Mode due to the critical error.
+The debugger may resume with <a href="#dcsr-cetrig">cetrig</a> set to 0 to allow the
+platform defined actions on critical-error signal to occur.
+Other possible actions include initiating a hart or platform
+reset using the Debug Module reset control.</p>
+</div>
+</td>
+</tr>
+</table>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-pelp"></a> <code>pelp</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>This bit is part of Zicfilp and only exists when that extension
+is implemented.</p>
+</div>
+<div class="paragraph">
+<p>0 (NO_LP_EXPECTED): No landing pad instruction expected.</p>
+</div>
+<div class="paragraph">
+<p>1 (LP_EXPECTED): A landing pad instruction is expected.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-ebreakvs"></a> <code>ebreakvs</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (exception): <code>ebreak</code> instructions in VS-mode behave as described in the
+Privileged Spec.</p>
+</div>
+<div class="paragraph">
+<p>1 (debug mode): <code>ebreak</code> instructions in VS-mode enter Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>This bit is hardwired to 0 if the hart does not support virtualization mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-ebreakvu"></a> <code>ebreakvu</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (exception): <code>ebreak</code> instructions in VU-mode behave as described in the
+Privileged Spec.</p>
+</div>
+<div class="paragraph">
+<p>1 (debug mode): <code>ebreak</code> instructions in VU-mode enter Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>This bit is hardwired to 0 if the hart does not support virtualization mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-ebreakm"></a> <code>ebreakm</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (exception): <code>ebreak</code> instructions in M-mode behave as described in the
+Privileged Spec.</p>
+</div>
+<div class="paragraph">
+<p>1 (debug mode): <code>ebreak</code> instructions in M-mode enter Debug Mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R/W</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-ebreaks"></a> <code>ebreaks</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (exception): <code>ebreak</code> instructions in S-mode behave as described in the
+Privileged Spec.</p>
+</div>
+<div class="paragraph">
+<p>1 (debug mode): <code>ebreak</code> instructions in S-mode enter Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>This bit is hardwired to 0 if the hart does not support S-mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-ebreaku"></a> <code>ebreaku</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (exception): <code>ebreak</code> instructions in U-mode behave as described in the
+Privileged Spec.</p>
+</div>
+<div class="paragraph">
+<p>1 (debug mode): <code>ebreak</code> instructions in U-mode enter Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>This bit is hardwired to 0 if the hart does not support U-mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-stepie"></a> <code>stepie</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (interrupts disabled): Interrupts (including NMI) are disabled during single stepping
+with <a href="#dcsr-step">step</a> set.
+This value should be supported.</p>
+</div>
+<div class="paragraph">
+<p>1 (interrupts enabled): Interrupts (including NMI) are enabled during single stepping
+with <a href="#dcsr-step">step</a> set.</p>
+</div>
+<div class="paragraph">
+<p>Implementations may hard wire this bit to 0.
+In that case interrupt behavior can be emulated by the debugger.</p>
+</div>
+<div class="paragraph">
+<p>The debugger must not change the value of this bit while the hart
+is running.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-stopcount"></a> <code>stopcount</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (normal): Increment counters as usual.</p>
+</div>
+<div class="paragraph">
+<p>1 (freeze): Don&#8217;t increment any hart-local counters while in Debug Mode or
+on <code>ebreak</code> instructions that cause entry into Debug Mode.
+These counters include the <code>instret</code> CSR. On single-hart cores
+<code>cycle</code> should be stopped, but on multi-hart cores it must keep
+incrementing.</p>
+</div>
+<div class="paragraph">
+<p>An implementation may hardwire this bit to 0 or 1.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>Preset</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-stoptime"></a> <code>stoptime</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (normal): <code>time</code> continues to reflect <code>mtime</code>.</p>
+</div>
+<div class="paragraph">
+<p>1 (freeze): <code>time</code> is frozen at the time that Debug Mode was entered. When
+leaving Debug Mode, <code>time</code> will reflect the latest
+value of <code>mtime</code> again.</p>
+</div>
+<div class="paragraph">
+<p>While all harts have <a href="#dcsr-stoptime">stoptime</a>=1 and are in Debug Mode,
+<code>mtime</code> is allowed to stop incrementing.</p>
+</div>
+<div class="paragraph">
+<p>An implementation may hardwire this bit to 0 or 1.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>Preset</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-cause"></a> <code>cause</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Explains why Debug Mode was entered.</p>
+</div>
+<div class="paragraph">
+<p>When there are multiple reasons to enter Debug Mode in a single
+cycle, hardware should set <a href="#dcsr-cause">cause</a> to the cause with the highest
+priority.  See <a href="#tab:dcsrcausepriority">Table 2</a> for priorities.</p>
+</div>
+<div class="paragraph">
+<p>1 (ebreak): An <code>ebreak</code> instruction was executed.</p>
+</div>
+<div class="paragraph">
+<p>2 (trigger): A Trigger Module trigger fired with action=1.</p>
+</div>
+<div class="paragraph">
+<p>3 (haltreq): The debugger requested entry to Debug Mode using <a href="debug_module.html#dmcontrol-haltreq" class="xref page">haltreq</a>.</p>
+</div>
+<div class="paragraph">
+<p>4 (step): The hart single stepped because <a href="#dcsr-step">step</a> was set.</p>
+</div>
+<div class="paragraph">
+<p>5 (resethaltreq): The hart halted directly out of reset due to `resethaltreq` It
+is also acceptable to report 3 when this happens.</p>
+</div>
+<div class="paragraph">
+<p>6 (group): The hart halted because it&#8217;s part of a halt group.
+Harts may report 3 for this cause instead.</p>
+</div>
+<div class="paragraph">
+<p>7 (other): The hart halted for a reason other than the ones mentioned above.
+<a href="#dcsr-extcause">extcause</a> may contain a more specific reason.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-v"></a> <code>v</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Extends the prv field with the virtualization mode the hart was operating
+in when Debug Mode was entered. The encoding is described in <a href="#tab:privmode">Table 5</a>.
+A debugger can change this value to change the hart&#8217;s virtualization mode
+when exiting Debug Mode.
+This bit is hardwired to 0 on harts that do not support virtualization mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-mprven"></a> <code>mprven</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>0 (disabled): <code>mprv</code> in <code>mstatus</code> is ignored in Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>1 (enabled): <code>mprv</code> in <code>mstatus</code> takes effect in Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>Implementing this bit is optional. It may be tied to either 0 or 1.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>Preset</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-nmip"></a> <code>nmip</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>When set, there is a Non-Maskable-Interrupt (NMI) pending for the hart.</p>
+</div>
+<div class="paragraph">
+<p>Since an NMI can indicate a hardware error condition,
+reliable debugging may no longer be possible once this bit becomes set.
+This is implementation-dependent.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-step"></a> <code>step</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>When set and not in Debug Mode, the hart will only execute a single
+instruction and then enter Debug Mode. See <a href="#stepbit">4.1.5.1. Step Bit In Dcsr</a>
+for details.</p>
+</div>
+<div class="paragraph">
+<p>The debugger must not change the value of this bit while the hart
+is running.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R/W</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-prv"></a> <code>prv</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Contains the privilege mode the hart was operating in when Debug
+Mode was entered. The encoding is described in <a href="#tab:privmode">Table 5</a>.  A debugger can change this value to change
+the hart&#8217;s privilege mode when exiting Debug Mode.</p>
+</div>
+<div class="paragraph">
+<p>Not all privilege modes are supported on all harts. If the
+encoding written is not supported or the debugger is not allowed to
+change to it, the hart may change to any supported privilege mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>3</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="csr-dpc"><a class="anchor" href="#csr-dpc"></a>Debug PC (dpc, at 0x7b1)</h4>
+<div class="paragraph">
+<p>Upon entry to debug mode, <a href="#csr-dpc">dpc</a> is updated with the virtual address of
+the next instruction to be executed. The behavior is described in more
+detail in <a href="#tab:dpc">Table 3</a>.</p>
+</div>
+<table id="tab:dpc" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 3. Virtual address in DPC.</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-right valign-top">Cause</th>
+<th class="tableblock halign-center valign-top">Virtual Address in DPC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Address of the <code>ebreak</code> instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">single step</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Address of the instruction that would be executed next if no debugging was going on. Ie. <code>pc</code> + 4 for
+32-bit instructions that don&#8217;t change program flow, the destination PC on taken jumps/branches, etc.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">trigger module</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">The address of the next instruction to be executed at the time that debug mode was entered. If the trigger is <a href="Sdtrig.html#csr-mcontrol" class="xref page">mcontrol</a> and <a href="Sdtrig.html#mcontrol-timing" class="xref page">timing</a> is 0 or if the trigger is
+<a href="Sdtrig.html#csr-mcontrol6" class="xref page">mcontrol6</a> and <code>hit1</code> is 0, this corresponds to the address of the instruction which caused the trigger to fire.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top"><p class="tableblock">halt request</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Address of the next instruction to be executed at the time that debug mode was entered.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Executing the Program Buffer may cause the value of <a href="#csr-dpc">dpc</a> to become
+UNSPECIFIED. If that is the case, it must be possible to read/write
+<a href="#csr-dpc">dpc</a> using an abstract command with <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a> not
+set.  The debugger must attempt to save <a href="#csr-dpc">dpc</a> between halting and
+executing a Program Buffer, and then restore <a href="#csr-dpc">dpc</a> before leaving
+Debug Mode.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Allowing <a href="#csr-dpc">dpc</a> to become UNSPECIFIED upon Program Buffer
+execution allows for direct implementations that don&#8217;t have a
+separate PC register, and do need to use the PC when executing the
+Program Buffer.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>If the Access Register abstract command supports reading <a href="#csr-dpc">dpc</a> while
+the hart is running, then the value read should be the address of a
+recently executed instruction.</p>
+</div>
+<div class="paragraph">
+<p>If the Access Register abstract command supports writing <a href="#csr-dpc">dpc</a> while
+the hart is running, then the executing program should jump to the
+written address shortly after the write occurs.</p>
+</div>
+<div class="paragraph">
+<p>The writability of <a href="#csr-dpc">dpc</a> follows the same rules as <code>mepc</code> as defined
+in the Privileged Spec.  In particular, <a href="#csr-dpc">dpc</a> must be able to hold
+all valid virtual addresses and the writability of the low bits depends
+on IALIGN.</p>
+</div>
+<div class="paragraph">
+<p>When resuming, the hart&#8217;s PC is updated to the virtual address stored in
+<a href="#csr-dpc">dpc</a>. A debugger may write <a href="#csr-dpc">dpc</a> to change where the hart resumes.</p>
+</div>
+<div class="paragraph">
+<p>This CSR is read/write.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-6de3af4b6e5c401fae75e901c91b6bbb84e8e6b6.svg" alt="Diagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="csr-dscratch0"><a class="anchor" href="#csr-dscratch0"></a>Debug Scratch Register 0 (dscratch0, at 0x7b2)</h4>
+<div class="paragraph">
+<p>Optional scratch register that can be used by implementations that need
+it. A debugger must not write to this register unless <a href="debug_module.html#dm-hartinfo" class="xref page">hartinfo</a>
+explicitly mentions it (the Debug Module may use this register internally).</p>
+</div>
+<div class="paragraph">
+<p>This CSR is read/write.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-9303aeb8c1e4714d323a0a68125effd4bb96b35c.svg" alt="Diagram">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="csr-dscratch1"><a class="anchor" href="#csr-dscratch1"></a>Debug Scratch Register 1 (dscratch1, at 0x7b3)</h4>
+<div class="paragraph">
+<p>Optional scratch register that can be used by implementations that need
+it. A debugger must not write to this register unless <a href="debug_module.html#dm-hartinfo" class="xref page">hartinfo</a>
+explicitly mentions it (the Debug Module may use this register internally).</p>
+</div>
+<div class="paragraph">
+<p>This CSR is read/write.</p>
+</div>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-dce304802bfb65ef5cfccd27ab0431dad6cde921.svg" alt="Diagram">
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="virtreg"><a class="anchor" href="#virtreg"></a>4.1.10. Virtual Debug Registers</h3>
+<div class="paragraph">
+<p>A virtual register is one that doesn&#8217;t exist directly in the hardware, but
+that the debugger exposes as if it does. Debug software should implement
+them, but hardware can skip this section. Virtual registers exist to give
+users access to functionality that&#8217;s not part of standard debuggers without
+requiring them to carefully modify debug registers while the debugger is
+also accessing those same registers.</p>
+</div>
+<table id="tab:virtual" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Virtual Core Debug Registers</caption>
+<colgroup>
+<col style="width: 11.1111%;">
+<col style="width: 66.6666%;">
+<col style="width: 22.2223%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Address</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Section</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">virtual</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Privilege Mode (<a href="#virt-priv">priv</a>)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#virt-priv">Privilege Mode (priv, at virtual)</a></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect3">
+<h4 id="virt-priv"><a class="anchor" href="#virt-priv"></a>Privilege Mode (priv, at virtual)</h4>
+<div class="paragraph">
+<p>Users can read this register to inspect the privilege mode that
+the hart was running in when the hart halted.
+Users can write this register to change the privilege mode that
+the hart will run in when it resumes.</p>
+</div>
+<div class="paragraph">
+<p>This register contains <a href="#dcsr-prv">prv</a> and <a href="#dcsr-v">v</a> from <a href="#csr-dcsr">dcsr</a>, but in a place that the user
+is expected to access. The user should not access <a href="#csr-dcsr">dcsr</a> directly,
+because doing so might interfere with the debugger.</p>
+</div>
+<table id="tab:privmode" class="tableblock frame-all grid-all fit-content center">
+<caption class="title">Table 5. Privilege Mode and Virtualization Mode Encoding</caption>
+<colgroup>
+<col>
+<col>
+<col>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">H extension supported</th>
+<th class="tableblock halign-center valign-top">v</th>
+<th class="tableblock halign-center valign-top">prv</th>
+<th class="tableblock halign-left valign-top">Abbreviation</th>
+<th class="tableblock halign-left valign-top">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">No</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">User mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HS-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor-enabled supervisor mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">M-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Machine mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VU-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual user mode</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VS-mode</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual supervisor mode</p></td>
+</tr>
+</tbody>
+</table>
+<div class="imageblock kroki">
+<div class="content">
+<img src="_images/diag-783580259a36aeb92c9e6129f0218b3043c685f5.svg" alt="Diagram">
+</div>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 22.1153%;">
+<col style="width: 58.6538%;">
+<col style="width: 9.6153%;">
+<col style="width: 9.6156%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-center valign-top">Access</th>
+<th class="tableblock halign-center valign-top">Reset</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="priv-v"></a> <code>v</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Contains the virtualization mode the hart was operating in when Debug
+Mode was entered. The encoding is described in <a href="#tab:privmode">Table 5</a>,
+and matches the virtualization mode encoding from the Privileged Spec.
+A user can write this value to change the hart&#8217;s virtualization mode
+when exiting Debug Mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>WARL</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="priv-prv"></a> <code>prv</code></p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>Contains the privilege mode the hart was operating in when Debug
+Mode was entered. The encoding is described in <a href="#tab:privmode">Table 5</a>, and matches the privilege mode encoding from
+the Privileged Spec. A user can write this
+value to change the hart&#8217;s privilege mode when exiting Debug Mode.</p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p><strong>R/W</strong></p>
+</div></div></td>
+<td class="tableblock halign-center valign-top"><div class="content"><div class="paragraph">
+<p>0</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="debug_module.html">Chapter 3. Debug Module</a></span>
+  <span class="next"><a href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

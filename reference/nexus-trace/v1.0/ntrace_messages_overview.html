@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/nexus-trace/v1.0/ntrace_messages_overview.html">
+    <link rel="prev" href="ntrace_modes.html">
+    <link rel="next" href="ntrace_messages_details.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="nexus-trace">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="nexus-trace" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../trace-debug-ras-overview/index.html">Debug, Trace, and RAS</a>
+</div>
+        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../../debug/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../../e-trace/v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../../cbqri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../../ras-eri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../../trace-connectors/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../../trace-control-interface/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../../trace-encap/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/ZTUxYTJmNWRkYzhmNDM4ZDg5OWNlMmQxODMyYjY3YjI" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/RISC-V-N-Trace.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">N-Trace</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="6-1-n-trace-messages-overview"><a class="anchor" href="#6-1-n-trace-messages-overview"></a>6.1. N-Trace Messages (Overview)</h2>
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The terminology <code>Indirect Branch</code> as used by the IEEE-5001 Nexus Standard may lead to confusion, given that the RISC-V ISA exclusively permits direct conditional branches, which are always relative. Furthermore, the RISC-V ISA makes a distinction between 'jump' (unconditional flow change) and 'branch' (conditional flow change), a differentiation not observed in Nexus terminology, where any flow change, including exceptions and interrupts, is uniformly referred to as a 'branch'. This specification employs the terms 'branch' and 'jump' as defined by RISC-V ISA.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="6-1-1-fields-in-messages"><a class="anchor" href="#6-1-1-fields-in-messages"></a>6.1.1. Fields in Messages</h3>
+<div class="paragraph">
+<p>The table presented below enumerates all message types that can be generated, with each row comprehensively defining the fields associated with a particular message type. Fields that are present in different messages are consistently ordered.</p>
+</div>
+<div class="paragraph">
+<p>Message field attributes are described using the following terminology:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>[n]</strong>: A fixed-length field that is <strong>n</strong> bits wide.</p>
+</li>
+<li>
+<p><strong>[Var]</strong>: A variable-length, non-empty (at least 1-bit wide), field.</p>
+</li>
+<li>
+<p><strong>[Cfg]</strong>: A configurable field, where the existence and size depend on the encoder configuration options.</p>
+</li>
+</ul>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Fields in Messages</caption>
+<colgroup>
+<col style="width: 22%;">
+<col style="width: 8%;">
+<col style="width: 5%;">
+<col style="width: 6%;">
+<col style="width: 8%;">
+<col style="width: 14%;">
+<col style="width: 7%;">
+<col style="width: 8%;">
+<col style="width: 8%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Message ID/Field [size]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_TCODE">TCODE</a> [6]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_SRC">SRC</a> [Cfg]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_SYNC">SYNC</a> [4]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_B-TYPE">B-TYPE</a> [2]</th>
+<th class="tableblock halign-left valign-top">Other fields</th>
+<th class="tableblock halign-left valign-top"><a href="#field_I-CNT">I-CNT</a> [Var]</th>
+<th class="tableblock halign-left valign-top"><a href="#Address Compression">x-ADDR</a> [Var]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_HIST">HIST</a> [Var]</th>
+<th class="tableblock halign-left valign-top"><a href="#field_TSTAMP">TSTAMP</a> [Var,Cfg]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_Ownership"></a><a href="#msg2_Ownership">Ownership</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_PROCESS">PROCESS</a> <strong>[Var]</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_DirectBranch"></a><a href="#msg2_DirectBranch">DirectBranch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_IndirectBranch"></a><a href="#msg2_IndirectBranch">IndirectBranch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_U-ADDR">U-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_Error"></a><a href="#msg2_Error">Error</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_ETYPE">ETYPE</a> <strong>[4]</strong> + <a href="#field_ECODE">ECODE</a> <strong>[Var]</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_ProgTraceSync"></a><a href="#msg2_ProgTraceSync">ProgTraceSync</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_F-ADDR">F-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_DirectBranchSync"></a><a href="#msg2_DirectBranchSync">DirectBranchSync</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_F-ADDR">F-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_IndirectBranchSync"></a><a href="#msg2_IndirectBranchSync">IndirectBranchSync</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_F-ADDR">F-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_ResourceFull"></a><a href="#msg2_ResourceFull">ResourceFull</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_RCODE">RCODE</a> <strong>[4]</strong> + <a href="#field_RDATA">RDATA</a> <strong>[Var]</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_IndirectBranchHist"></a><a href="#msg2_IndirectBranchHist">IndirectBranchHist</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">28</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_U-ADDR">U-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_IndirectBranchHistSync"></a><a href="#msg2_IndirectBranchHistSync">IndirectBranchHistSync</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">29</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_F-ADDR">F-ADDR</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_RepeatBranch"></a><a href="#msg2_RepeatBranch">RepeatBranch</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_B-CNT">B-CNT</a> <strong>[Var]</strong></p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a id="msg_ProgTraceCorrelation"></a><a href="#msg2_ProgTraceCorrelation">ProgTraceCorrelation</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">33</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#field_EVCODE">EVCODE</a> <strong>[4]</strong> + <a href="#field_CDF">CDF</a> <strong>[2]</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Cfg</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#msg_other">Vendor Defined</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">56..62</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock">Designated for use by Vendor Defined messages</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#msg_other">Reserved</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">other</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top" colspan="7"><p class="tableblock">Reserved for future extensions of N-Trace specification</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Any message may include the optional <a href="#field_TSTAMP">TSTAMP</a> <strong>[Var,Cfg]</strong> field as the very last field of a message. It must be enabled by <a href="#trTsEnable">trTsEnable</a> control bit. Timestamp field always starts at byte-boundary (as it is always preceded by variable-length field). See <a href="#Timestamp Reporting">Timestamp Reporting</a> chapter for more details.
+</td>
+</tr>
+</table>
+</div>
+<div id="msg_other" class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Messages marked as <strong>Reserved</strong> or <strong>Vendor Defined</strong> should be ignored by decoders interested in program flow only.
+However, decoders should provide an option to display/dump them and/or generate a warning as such a message may be seen when trace capture is corrupted.
+<strong>Vendor Defined</strong> messages can be used for prototyping, debugging, validation and maintenance purposes.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Reference code header <a href="https://github.com/riscv-non-isa/tg-nexus-trace/blob/main/refcode/c/NexRvMsg.h">NexRvMsg.h</a> defines all N-Trace messages in machine-readable format. Here is small snipped from this file as an example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">  // Naming:
+  //    NEXM=Nexus Message, BEG/END=Beginning/End of definition.
+  //    SRC=Message source (system-field). Name of an option given.
+  //    FLD/VAR=Fixed/variable size field.
+  //    ADR=Special case of variable field (without least significant bit).
+  //    CFG=Configurable, Name of an option given.
+  NEXM_BEG(IndirectBranchSync, 12)
+    NEXM_SRC(SrcBits)                         // Configurable
+    NEXM_FLD(SYNC, 4)
+    NEXM_FLD(BTYPE, 2)
+    NEXM_VAR(ICNT)
+    NEXM_ADR(FADDR)
+    NEXM_VAR(TSTAMP)
+  NEXM_END()
+
+  NEXM_BEG(ResourceFull, 27)
+    NEXM_SRC(SrcBits)                         // Configurable
+    NEXM_FLD(RCODE, 4)
+    NEXM_VAR(RDATA)
+    NEXM_VAR_CFG(HREPEAT, EnaRepeatedHistory) // Configurable
+    NEXM_VAR(TSTAMP)
+  NEXM_END()
+
+  NEXM_BEG(IndirectBranchHist, 28)
+    NEXM_SRC(SrcBits)                         // Configurable
+    NEXM_FLD(BTYPE, 2)
+    NEXM_VAR(ICNT)
+    NEXM_ADR(UADDR)
+    NEXM_VAR(HIST)
+    NEXM_VAR(TSTAMP)
+  NEXM_END()</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Reference code is using plain C-style identifiers, so the field name as <strong>B-TYPE</strong> will become <strong>BTYPE</strong>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="6-1-2-common-fields"><a class="anchor" href="#6-1-2-common-fields"></a>6.1.2. Common Fields</h3>
+<div class="paragraph">
+<p>The table below provides details for fields which are used in more than one message type. Fields which are present in only one message are described with each message.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. Details of Common Fields</caption>
+<colgroup>
+<col style="width: 9%;">
+<col style="width: 5%;">
+<col style="width: 15%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Description</th>
+<th class="tableblock halign-left valign-top">Values/Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="4"><p class="tableblock"><strong>Fields used in many messages</strong>
+<a id="field_TCODE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Transfer Code</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message header that identifies the number and/or size of fields to be transferred, and how to interpret each of the fields following it.
+<a id="field_SRC"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Cfg</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Source of Message Transmission</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Width of SRC field is defined by <a href="#trTeSrcBits">trTeSrcBits</a> control field and it may be enabled/disabled by <a href="#trTeInhibitSrc">trTeInhibitSrc</a> control bit. This optional field is used to identify the source of the message transmission. In configurations that comprise only a single hart, this field need not be transmitted. For devices that comprise multiple harts, this field must be transmitted (if enabled) as part of the message to identify the source of the message transmission. The transmitted SRC field size should be the same for all enabled trace encoders sharing a trace stream.
+<a id="field_SYNC"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reason for Synchronization</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Encodings and details are provided in the <a href="#Synchronizing Messages">Synchronizing Messages</a> chapter.<br>
+<strong>NOTE:</strong> The SYNC field is always sent together with the <a href="#field_F-ADDR">F-ADDR</a> field, so decoding may start from a message containing the SYNC field.
+<a id="field_B-TYPE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Branch Type</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reason for indirect flow change:<br>
+                                <strong>0:</strong> Indirect control flow change (jump, call or return) or in a <a href="#Synchronizing Messages">synchronizing message</a> not related to code execution.<br>
+                                <strong>1:</strong> Exception or interrupt (if the encoder is not capable of reporting 2 and 3).<br>
+                                <strong>2:</strong> <strong>Extension:</strong> Exception<br>
+                                <strong>3:</strong> <strong>Extension:</strong> Interrupt<br>
+<strong>NOTE:</strong> Either 1-only or both 2 and 3 should be implemented and consistently reported. Extended values 2 and 3 allow trace tools to distinguish exceptions and interrupts easily.
+<a id="field_I-CNT"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Var</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Instruction Count</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">As RISC-V allows variable-length instructions, this is the number of 16-bit (INST_LEN/2) instruction units executed/retired since the I-CNT counter was transmitted or reset.  See <a href="#I-CNT Details">I-CNT Details</a> chapter for more details.
+<a id="field_F-ADDR"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Var</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Full Target Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Full PC without the least significant bit.
+The least significant bit is not reported as it is always 0.
+See <a href="#Address Compression">Address Compression</a> chapter for more details.<br>
+<strong>NOTE:</strong> The F-ADDR field is always sent together with the <a href="#field_SYNC">SYNC</a> field.
+<a id="field_U-ADDR"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Var</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique part of Target Address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unique part of PC address (XOR with recently reported address).
+See <a href="#Address Compression">Address Compression</a> chapter for more details.<br>
+The U-ADDR field is always sent together with the <a href="#field_B-TYPE">B-TYPE</a> field.
+<a id="field_HIST"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Var</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Branch History map</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Most significant bit (always 1) serves as a 'stop-bit', the least significant bit denotes the last direct conditional branch. See <a href="#HIST Field Generation">HIST Field Generation</a> chapter for more details.
+<a id="field_TSTAMP"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Var</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Timestamp (optional)</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It must be enabled by <a href="#trTsEnable">trTsEnable</a> control bit. See <a href="#Timestamp Reporting">Timestamp Reporting</a> chapter for more details.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>IEEE-5001 Nexus Standard does not define limits for variable-length fields, but N-Trace provides some limits. It will help to write efficient decoding software but is not limiting hardware in any way.</p>
+</div>
+<table id="Max_Field_Sizes" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Maximum Field Sizes</caption>
+<colgroup>
+<col style="width: 10%;">
+<col style="width: 25%;">
+<col style="width: 5%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Symbol</th>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Description
+<a id="NTRACE_MAX_SRC"></a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determined by size of Trace Control register field. Enough for 4096 (4K) trace sources.
+<a id="NTRACE_MAX_ICNT"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_ICNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Usually a smaller value will be sufficient. An overflow bit may be used for efficient I-CNT full detection.
+<a id="NTRACE_MAX_ADDR"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR, U-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">63</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only 63 bits suffice as the least significant bit of an instruction address is always 0 and does not need to be reported.
+<a id="NTRACE_MAX_HIST"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">32</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It includes stop-bit. This size is optimal for not wasting any bits in very often used <a href="#msg_ResourceFull">ResourceFull</a> messages.
+<a id="NTRACE_MAX_TSTAMP"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">64</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">It is certainly big enough. It corresponds to architecture defined timer and cycle count registers.
+<a id="NTRACE_MAX_HREPEAT"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HREPEAT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_HREPEAT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assure some trace is periodically generated for very long loops.
+<a id="NTRACE_MAX_BCNT"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTRACE_MAX_BCNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Assure some trace is periodically generated for very long loops.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ntrace_modes.html">Chapter 5. Trace Modes</a></span>
+  <span class="next"><a href="ntrace_messages_details.html">Chapter 7. Messages Details</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

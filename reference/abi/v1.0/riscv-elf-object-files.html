@@ -1,0 +1,2613 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/abi/v1.0/riscv-elf-object-files.html">
+    <link rel="prev" href="riscv-elf-cpp-name-mangling.html">
+    <link rel="next" href="riscv-elf-linker-relaxation.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="abi">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="abi" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../app-enablement-overview/index.html">Application Enablement</a>
+</div>
+        <div class="nav-trees" data-component="abi">
+          <div class="version-box">
+            <select data-component="abi" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="abi" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">ABIs Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="preamble.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="terms.html">Terms and Abbreviations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="status.html">Status of ABI</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-register-convention.html">Chapter 1. Register Convention</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-procedure-calling-convention.html">Chapter 2. Procedure Calling Convention</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-system-calls.html">Chapter 3. Calling Conventions for System Calls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-c-cpp-type-details.html">Chapter 4. C/C++ type details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-cc-linux-specific-abi.html">Appendix A. Linux-specific ABI</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V ELF Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-code-models.html">Chapter 5. Code Models</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-dynamic-linking.html">Chapter 6. Dynamic Linking</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-cpp-name-mangling.html">Chapter 7. C++ Name Mangling</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-object-files.html">Chapter 8. ELF Object Files</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-elf-linker-relaxation.html">Chapter 9. Linker Relaxation</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="elf-bib.html">References</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V DWARF Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-dwarf-debugging-format.html">Chapter 10. DWARF Debugging Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="riscv-dwarf-register-numbers.html">Chapter 11. DWARF Register Numbers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dwarf-bib.html">References</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="vector-c-intrinsics">
+          <div class="version-box">
+            <select data-component="vector-c-intrinsics" class="select-version">
+                <option
+                  value="../../vector-c-intrinsics/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="vector-c-intrinsics" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Vector C Intrinsic</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/copyright.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/rvv-intrinsic-spec.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/rvv-intrinsic-examples.html">Chapter 2. Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix A: Explicit (Non-overloaded) intrinsics</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">A.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">A.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">A.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">A.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/04_vector_floating-point_intrinsics.html">A.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/05_vector_reduction_operations.html">A.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/06_vector_mask_intrinsics.html">A.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/07_vector_permutation_intrinsics.html">A.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">A.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix B: Explicit (Non-overloaded) intrinsics, policy variants</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">B.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">B.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">B.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">B.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/04_vector_floating-point_intrinsics.html">B.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/05_vector_reduction_operations.html">B.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/06_vector_mask_intrinsics.html">B.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/07_vector_permutation_intrinsics.html">B.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">B.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix C: Implicit (Overloaded) intrinsics</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">C.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">C.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">C.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">C.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/04_vector_floating-point_intrinsics.html">C.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/05_vector_reduction_operations.html">C.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/06_vector_mask_intrinsics.html">C.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/07_vector_permutation_intrinsics.html">C.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/overloaded_intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">C.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Appendix D: Implicit (Overloaded) intrinsics, policy variants</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/00_vector_loads_and_stores_intrinsics.html">D.1. Vector Loads and Stores Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/01_vector_loads_and_stores_segment_intrinsics.html">D.2. Vector Loads and Stores Segment Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/02_vector_integer_arithmetic_intrinsics.html">D.3. Vector Integer Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/03_vector_fixed-point_arithmetic_intrinsics.html">D.4. Vector Fixed-Point Arithmetic Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/04_vector_floating-point_intrinsics.html">D.5. Vector Floating-Point Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/05_vector_reduction_operations.html">D.6. Vector Reduction Operations</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/06_vector_mask_intrinsics.html">D.7. Vector Mask Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/07_vector_permutation_intrinsics.html">D.8. Vector Permutation Intrinsics</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/policy_funcs/overloaded_intrinsic_funcs/08_miscellaneous_vector_utility_intrinsics.html">D.9. Miscellaneous Vector Utility Intrinsics</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../vector-c-intrinsics/v1.0/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/riscv-elf-psabi-doc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/riscv-elf-psabi-doc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/NWMwYmRhMDBkZGI5NDdiNjllZDRkODI2YTRhZDE4ZDc" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/riscv-abi.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../app-enablement-overview/index.html">Application Enablement Overview</a></li>
+                    <li><a href="index.html">Application Binary Interface</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="8-1-elf-object-files"><a class="anchor" href="#8-1-elf-object-files"></a>8.1. ELF Object Files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The ELF object file format for RISC-V follows the
+<em>Generic System V Application Binary Interface</em> <a href="elf-bib.html#gabi" class="xref page">elf-bib.adoc#gabi</a>
+("gABI"); this specification only describes RISC-V-specific definitions.</p>
+</div>
+<div class="sect2">
+<h3 id="8-1-1-file-header"><a class="anchor" href="#8-1-1-file-header"></a>8.1.1. File Header</h3>
+<div class="paragraph">
+<p>The section below lists the defined RISC-V-specific values for several ELF
+header fields; any fields not listed in this section have no RISC-V-specific
+values.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">e_ident</dt>
+<dd>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">EI_CLASS</dt>
+<dd>
+<p>Specifies the base ISA, either RV32 or RV64.
+Linking RV32 and RV64 code together is not supported.</p>
+<div class="openblock">
+<div class="content">
+<div id="ELFCLASS64" class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+ELFCLASS64
+</td>
+<td class="hdlist2">
+<p>ELF-64 Object File</p>
+</td>
+</tr>
+</table>
+</div>
+<div id="ELFCLASS32" class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+ELFCLASS32
+</td>
+<td class="hdlist2">
+<p>ELF-32 Object File</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</dd>
+<dt class="hdlist1">EI_DATA</dt>
+<dd>
+<p>Specifies the endianness; either big-endian or little-endian.
+Linking big-endian and little-endian code together is not supported.</p>
+<div class="openblock">
+<div class="content">
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+ELFDATA2LSB
+</td>
+<td class="hdlist2">
+<p>Little-endian Object File</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+ELFDATA2MSB
+</td>
+<td class="hdlist2">
+<p>Big-endian Object File</p>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</dd>
+<dt class="hdlist1">e_machine</dt>
+<dd>
+<p>Identifies the machine this ELF file targets.  Always contains
+EM_RISCV (243) for RISC-V ELF files.</p>
+</dd>
+<dt class="hdlist1">e_flags</dt>
+<dd>
+<p>Describes the format of this ELF file.  These flags are used by the
+linker to disallow linking ELF files with incompatible ABIs together,
+<a href="#e-flags-layout">Table 1</a> shows the layout of e_flags, and flag details are listed
+below.</p>
+<table id="e-flags-layout" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 1. Layout of e_flags</caption>
+<colgroup>
+<col style="width: 7.6923%;">
+<col style="width: 15.3846%;">
+<col style="width: 7.6923%;">
+<col style="width: 7.6923%;">
+<col style="width: 23.0769%;">
+<col style="width: 38.4616%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bit 0</th>
+<th class="tableblock halign-left valign-top">Bits 1 - 2</th>
+<th class="tableblock halign-left valign-top">Bit 3</th>
+<th class="tableblock halign-left valign-top">Bit 4</th>
+<th class="tableblock halign-left valign-top">Bits 5 - 23</th>
+<th class="tableblock halign-left valign-top">Bits 24 - 31</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RVC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Float ABI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RVE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSO</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Reserved</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Non-standard extensions</strong></p></td>
+</tr>
+</tbody>
+</table>
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">EF_RISCV_RVC (0x0001)</dt>
+<dd>
+<p>This bit is set when the binary targets the C ABI,
+which allows instructions to be aligned to 16-bit boundaries (the base RV32
+and RV64 ISAs only allow 32-bit instruction alignment).  When linking
+objects which specify EF_RISCV_RVC, the linker is permitted to use RVC
+instructions such as C.JAL in the linker relaxation process.</p>
+</dd>
+<dt class="hdlist1">EF_RISCV_FLOAT_ABI_SOFT (0x0000)</dt>
+</dl>
+</div>
+<div id="EF_RISCV_FLOAT_ABI_SOFT" class="dlist">
+<dl>
+<dt class="hdlist1">EF_RISCV_FLOAT_ABI_SINGLE (0x0002)</dt>
+</dl>
+</div>
+<div id="EF_RISCV_FLOAT_ABI_SINGLE" class="dlist">
+<dl>
+<dt class="hdlist1">EF_RISCV_FLOAT_ABI_DOUBLE (0x0004)</dt>
+</dl>
+</div>
+<div id="EF_RISCV_FLOAT_ABI_DOUBLE" class="dlist">
+<dl>
+<dt class="hdlist1">EF_RISCV_FLOAT_ABI_QUAD (0x0006)</dt>
+<dd>
+<p><a id="EF_RISCV_FLOAT_ABI_QUAD"></a> These flags identify the floating point
+  ABI in use for this ELF file.  They store the largest floating-point type
+  that ends up in registers as part of the ABI (but do not control if code
+  generation is allowed to use floating-point internally).  The rule is that
+  if you have a floating-point type in a register, then you also have all
+  smaller floating-point types in registers.  For example _DOUBLE would
+  store "float" and "double" values in F registers, but would not store "long
+  double" values in F registers.  If none of the float ABI flags are set, the
+  object is taken to use the soft-float ABI.</p>
+</dd>
+<dt class="hdlist1">EF_RISCV_FLOAT_ABI (0x0006)</dt>
+<dd>
+<p>This macro is used as a mask to test for one
+of the above floating-point ABIs, e.g.,
+<code>(e_flags &amp; EF_RISCV_FLOAT_ABI) == EF_RISCV_FLOAT_ABI_DOUBLE</code>.</p>
+</dd>
+</dl>
+</div>
+<div id="EF_RISCV_RVE" class="dlist">
+<dl>
+<dt class="hdlist1">EF_RISCV_RVE (0x0008)</dt>
+<dd>
+<p>This bit is set when the binary targets the E ABI.</p>
+</dd>
+<dt class="hdlist1">EF_RISCV_TSO (0x0010)</dt>
+<dd>
+<p>This bit is set when the binary requires the RVTSO
+memory consistency model.</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Until such a time that the <strong>Reserved</strong> bits (0x00ffffe0) are allocated by future
+versions of this specification, they shall not be set by standard software.
+Non-standard extensions are free to use bits 24-31 for any purpose. This may
+conflict with other non-standard extensions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+There is no provision for compatibility between conflicting uses of the
+e_flags bits reserved for non-standard extensions, and many standard RISC-V
+tools will ignore them. Do not use them unless you control both the toolchain
+and the operating system, and the ABI differences are so significant they
+cannot be done with a .RISCV.attributes tag nor an ELF note, such as using a
+different syscall ABI.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>==== 8.1.1.1. Policy for Merge Objects With Different File Headers</p>
+</div>
+<div class="paragraph">
+<p>This section describe the behavior when the inputs files come with different
+file headers.</p>
+</div>
+<div class="paragraph">
+<p><code>e_ident</code> and <code>e_machine</code> should have exact same value otherwise linker should
+raise an error.</p>
+</div>
+<div class="paragraph">
+<p><code>e_flags</code> has different different policy for different fields:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">RVC</dt>
+<dd>
+<p>Input file could have different values for the RVC field; the linker
+should set this field into EF_RISCV_RVC if any of the input objects has
+been set.</p>
+</dd>
+<dt class="hdlist1">Float ABI</dt>
+<dd>
+<p>Linker should report errors if object files of different value
+for float ABI field.</p>
+</dd>
+<dt class="hdlist1">RVE</dt>
+<dd>
+<p>Linker should report errors if object files of different value
+for RVE field.</p>
+</dd>
+<dt class="hdlist1">TSO</dt>
+<dd>
+<p>Linker should report errors if object files of different value
+for TSO field.</p>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The static linker may ignore the compatibility checks if all fields in the
+<code>e_flags</code> are zero and all sections in the input file are non-executable
+sections.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-2-string-tables"><a class="anchor" href="#8-1-2-string-tables"></a>8.1.2. String Tables</h3>
+<div class="paragraph">
+<p>There are no RISC-V specific definitions relating to ELF string tables.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-3-symbol-table"><a class="anchor" href="#8-1-3-symbol-table"></a>8.1.3. Symbol Table</h3>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">st_other</dt>
+<dd>
+<p>The lower 2 bits are used to specify a symbol&#8217;s visibility. The
+remaining 6 bits have no defined meaning in the ELF gABI. We use the highest
+bit to mark functions that do not follow the standard calling convention for
+the ABI in use.</p>
+<div class="paragraph">
+<p>The defined processor-specific <code>st_other</code> flags are listed in <a href="#rv-st-other">Table 2</a>.</p>
+</div>
+<table id="rv-st-other" class="tableblock frame-all grid-all" style="width: 60%;">
+<caption class="title">Table 2. RISC-V-specific <code>st_other</code> flags</caption>
+<colgroup>
+<col style="width: 75%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Mask</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">STO_RISCV_VARIANT_CC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x80</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>See <a href="#Dynamic Linking">[Dynamic Linking]</a> for the meaning of <code>STO_RISCV_VARIANT_CC</code>.</p>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p><code>__global_pointer$</code> must be exported in the dynamic symbol table of dynamically-linked
+executables if there are any GP-relative accesses present in the executable.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-4-relocations"><a class="anchor" href="#8-1-4-relocations"></a>8.1.4. Relocations</h3>
+<div class="paragraph">
+<p>RISC-V is a classical RISC architecture that has densely packed non-word
+sized instruction immediate values. While the linker can make relocations on
+arbitrary memory locations, many of the RISC-V relocations are designed for
+use with specific instructions or instruction sequences. RISC-V has several
+instruction specific encodings for PC-Relative address loading, jumps,
+branches and the RVC compressed instruction set.</p>
+</div>
+<div class="paragraph">
+<p>The purpose of this section is to describe the RISC-V specific instruction
+sequences with their associated relocations in addition to the general purpose
+machine word sized relocations that are used for symbol addresses in the
+Global Offset Table or DWARF meta data.</p>
+</div>
+<div class="paragraph">
+<p><a href="#reloc-table">Table 3</a> provides details of the RISC-V ELF relocations; the meaning of each
+column is given below:</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Enum</dt>
+<dd>
+<p>The number of the relocation, encoded in the r_info field</p>
+</dd>
+<dt class="hdlist1">ELF Reloc Type</dt>
+<dd>
+<p>The name of the relocation, omitting the prefix of <code>R_RISCV_</code>.</p>
+</dd>
+<dt class="hdlist1">Type</dt>
+<dd>
+<p>Whether the relocation is a static or dynamic relocation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>A static relocation relocates a location in a relocatable file, processed by a static linker.</p>
+</li>
+<li>
+<p>A dynamic relocation relocates a location in an executable or shared object, processed by a run-time linker.</p>
+</li>
+<li>
+<p><code>Both</code>: Some relocation types are used by both static relocations and dynamic relocations.</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Field</dt>
+<dd>
+<p>Describes the set of bits affected by this relocation; see <a href="#Field Symbols">[Field Symbols]</a> for the definitions of the individual types</p>
+</dd>
+<dt class="hdlist1">Calculation</dt>
+<dd>
+<p>Formula for how to resolve the relocation value; definitions of the
+symbols can be found in <a href="#Calculation Symbols">[Calculation Symbols]</a></p>
+</dd>
+<dt class="hdlist1">Description</dt>
+<dd>
+<p>Additional information about the relocation</p>
+</dd>
+</dl>
+</div>
+<table id="reloc-table" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Relocation types</caption>
+<colgroup>
+<col style="width: 7.1428%;">
+<col style="width: 21.4285%;">
+<col style="width: 10.7142%;">
+<col style="width: 21.4285%;">
+<col style="width: 39.286%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-right valign-top">Enum</th>
+<th class="tableblock halign-left valign-top">ELF Reloc Type</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Field / Calculation</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">NONE</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">None</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Both</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32-bit relocation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Both</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">64-bit relocation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">RELATIVE</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>wordclass</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Adjust a link address (A) to its load address (B + A)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">COPY</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Must be in executable; not allowed in shared library</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">JUMP_SLOT</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>wordclass</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Indicates the symbol associated with a PLT entry</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_DTPMOD32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLSMODULE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_DTPMOD64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLSMODULE</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_DTPREL32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - TLS_DTV_OFFSET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_DTPREL64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - TLS_DTV_OFFSET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_TPREL32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A + TLSOFFSET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_TPREL64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A + TLSOFFSET</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">BRANCH</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>B-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">12-bit PC-relative branch offset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">JAL</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>J-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">20-bit PC-relative jump offset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">CALL</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U+I-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Deprecated, please use CALL_PLT instead</strong> 32-bit PC-relative function call, macros <code>call</code>, <code>tail</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">CALL_PLT</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U+I-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32-bit PC-relative function call, macros <code>call</code>, <code>tail</code> (PIC)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">GOT_HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of 32-bit PC-relative GOT access, <code>%got_pcrel_hi(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G + GOT + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_GOT_HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of 32-bit PC-relative TLS IE GOT access, macro <code>la.tls.ie</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">22</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS_GD_HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of 32-bit PC-relative TLS GD GOT reference, macro <code>la.tls.gd</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">23</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">PCREL_HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of 32-bit PC-relative reference, <code>%pcrel_hi(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">24</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">PCREL_LO12_I</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>I-type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of a 32-bit PC-relative, <code>%pcrel_lo(address of %pcrel_hi)</code>, the addend must be 0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">25</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">PCREL_LO12_S</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>S-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of a 32-bit PC-relative, <code>%pcrel_lo(address of %pcrel_hi)</code>, the addend must be 0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">26</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of 32-bit absolute address, <code>%hi(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">27</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">LO12_I</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>I-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of 32-bit absolute address, <code>%lo(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">28</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">LO12_S</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>S-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of 32-bit absolute address, <code>%lo(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">29</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TPREL_HI20</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 20 bits of TLS LE thread pointer offset, <code>%tprel_hi(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">30</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TPREL_LO12_I</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>I-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of TLS LE thread pointer offset, <code>%tprel_lo(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">31</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TPREL_LO12_S</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>S-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Low 12 bits of TLS LE thread pointer offset, <code>%tprel_lo(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TPREL_ADD</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">TLS LE thread pointer usage, <code>%tprel_add(symbol)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">33</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">ADD8</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word8</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">8-bit label addition</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V + S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">34</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">ADD16</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word16</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">16-bit label addition</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V + S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">35</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">ADD32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32-bit label addition</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V + S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">36</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">ADD64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">64-bit label addition</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V + S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">37</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SUB8</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word8</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">8-bit label subtraction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V - S - A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">38</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SUB16</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word16</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">16-bit label subtraction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V - S - A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">39</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SUB32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32-bit label subtraction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V - S - A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">40</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SUB64</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">64-bit label subtraction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V - S - A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">41-42</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Reserved</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Reserved for future standard use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">43</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">ALIGN</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Alignment statement. The addend indicates the number of bytes occupied by <code>nop</code> instructions at the relocation offset. The alignment boundary is specified by the addend rounded up to the next power of two.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">44</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">RVC_BRANCH</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CB-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">8-bit PC-relative branch offset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">45</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">RVC_JUMP</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CJ-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">11-bit PC-relative jump offset</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">46</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">RVC_LUI</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CI-Type</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">High 6 bits of 18-bit absolute address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">47-50</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Reserved</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Reserved for future standard use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">51</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">RELAX</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Instruction can be relaxed, paired with a normal relocation at the same address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">52</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SUB6</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word6</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Local label subtraction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V - S - A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">53</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SET6</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word6</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Local label assignment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">54</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SET8</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word8</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Local label assignment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">55</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SET16</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word16</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Local label assignment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">56</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">SET32</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Local label assignment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">57</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32_PCREL</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Static</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">32-bit PC relative</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S + A - P</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">58</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">IRELATIVE</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Dynamic</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>wordclass</em></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Relocation against a non-preemptible ifunc symbol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>ifunc_resolver(B + A)</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">59-191</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Reserved</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Reserved for future standard use</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-right valign-top" rowspan="2"><p class="tableblock">192-255</p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock"><strong>Reserved</strong></p></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top" rowspan="2"><p class="tableblock">Reserved for nonstandard ABI extensions</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Nonstandard extensions are free to use relocation numbers 192-255 for any
+purpose.  These relocations may conflict with other nonstandard extensions.</p>
+</div>
+<div class="paragraph">
+<p>This section and later ones contain fragments written in assembler. The precise
+assembler syntax, including that of the relocations, is described in the
+<em>RISC-V Assembly Programmer&#8217;s Manual</em> <a href="elf-bib.html#rv-asm" class="xref page">elf-bib.adoc#rv-asm</a>.</p>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-1-calculation-symbols"><a class="anchor" href="#8-1-4-1-calculation-symbols"></a>8.1.4.1. Calculation Symbols</h4>
+<div class="paragraph">
+<p><a href="#var-reloc-calc">Table 4</a> provides details on the variables used in relocation
+calculation:</p>
+</div>
+<table id="var-reloc-calc" class="tableblock frame-all grid-all fit-content">
+<caption class="title">Table 4. Variables used in relocation calculation</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Addend field in the relocation entry associated with the symbol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Base address of a shared object loaded into memory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">G</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Offset of the symbol into the GOT (Global Offset Table)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GOT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Address of the GOT (Global Offset Table)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Position of the relocation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value of the symbol in the symbol table</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value at the position of the relocation</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value of <code>__global_pointer$</code> symbol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLSMODULE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS module index for the object containing the symbol</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLSOFFSET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS static block offset (relative to <code>tp</code>) for the object containing the symbol</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Global Pointer</strong>: It is assumed that program startup code will load the value
+of the <code>__global_pointer$</code> symbol into register <code>gp</code> (aka <code>x3</code>).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-2-field-symbols"><a class="anchor" href="#8-1-4-2-field-symbols"></a>8.1.4.2. Field Symbols</h4>
+<div class="paragraph">
+<p><a href="#var-reloc-field">Table 5</a> provides details on the variables used in relocation fields:</p>
+</div>
+<table id="var-reloc-field" class="tableblock frame-all grid-all fit-content">
+<caption class="title">Table 5. Variables used in relocation fields</caption>
+<colgroup>
+<col>
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Variable</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word6</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the 6 least significant bits of a <em>word8</em> field</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word8</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies an 8-bit word</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word16</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a 16-bit word</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word32</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a 32-bit word</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>word64</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a 64-bit word</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>wordclass</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a <em>word32</em> field for ILP32 or a <em>word64</em> field for LP64</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>B-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in a B-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CB-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in a CB-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CI-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in a CI-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>CJ-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in a CJ-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>I-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in an I-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>S-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in an S-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in an U-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>J-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate field in a J-type instruction</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>U+I-Type</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Specifies a field as the immediate fields in a U-type and I-type instruction pair</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-3-constants"><a class="anchor" href="#8-1-4-3-constants"></a>8.1.4.3. Constants</h4>
+<div class="paragraph">
+<p><a href="#const-reloc-field">Table 6</a> provides details on the constants used in relocation fields:</p>
+</div>
+<table id="const-reloc-field" class="tableblock frame-all grid-all" style="width: 30%;">
+<caption class="title">Table 6. Constants used in relocation fields</caption>
+<colgroup>
+<col style="width: 75%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS_DTV_OFFSET</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x800</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-4-absolute-addresses"><a class="anchor" href="#8-1-4-4-absolute-addresses"></a>8.1.4.4. Absolute Addresses</h4>
+<div class="paragraph">
+<p>32-bit absolute addresses in position dependent code are loaded with a pair
+of instructions which have an associated pair of relocations:
+<code>R_RISCV_HI20</code> plus <code>R_RISCV_LO12_I</code> or <code>R_RISCV_LO12_S</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>R_RISCV_HI20</code> refers to an <code>LUI</code> instruction containing the high
+20-bits to be relocated to an absolute symbol address. The <code>LUI</code> instruction
+is used in conjunction with one or more I-Type instructions (add immediate or
+load) with <code>R_RISCV_LO12_I</code> relocations or S-Type instructions (store) with
+<code>R_RISCV_LO12_S</code> relocations.
+The addresses for pair of relocations are
+calculated like this:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+HI20
+</td>
+<td class="hdlist2">
+<p><code>(symbol_address + 0x800) &gt;&gt; 12</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+LO12
+</td>
+<td class="hdlist2">
+<p><code>symbol_address</code></p>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following assembly and relocations show loading an absolute address:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    lui  a0, %hi(symbol)     # R_RISCV_HI20 (symbol)
+    addi a0, a0, %lo(symbol) # R_RISCV_LO12_I (symbol)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-5-global-offset-table"><a class="anchor" href="#8-1-4-5-global-offset-table"></a>8.1.4.5. Global Offset Table</h4>
+<div class="paragraph">
+<p>For position independent code in dynamically linked objects, each shared
+object contains a GOT (Global Offset Table), which contains addresses of
+global symbols (objects and functions) referred to by the dynamically
+linked shared object. The GOT in each shared library is filled in by the
+dynamic linker during program loading, or on the first call to extern functions.</p>
+</div>
+<div class="paragraph">
+<p>To avoid dynamic relocations within the text segment of position independent
+code the GOT is used for indirection. Instead of code loading virtual addresses
+directly, as can be done in static code, addresses are loaded from the GOT.
+This allows runtime binding to external objects and functions at the expense of
+a slightly higher runtime overhead for access to extern objects and functions.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-6-program-linkage-table"><a class="anchor" href="#8-1-4-6-program-linkage-table"></a>8.1.4.6. Program Linkage Table</h4>
+<div class="paragraph">
+<p>The PLT (Program Linkage Table) exists to allow function calls between
+dynamically linked shared objects. Each dynamic object has its own
+GOT (Global Offset Table) and PLT (Program Linkage Table).</p>
+</div>
+<div class="paragraph">
+<p>The first entry of a shared object PLT is a special entry that calls
+<code>_dl_runtime_resolve</code> to resolve the GOT offset for the called function.
+The <code>_dl_runtime_resolve</code> function in the dynamic loader resolves the
+GOT offsets lazily on the first call to any function, except when
+<code>LD_BIND_NOW</code> is set in which case the GOT entries are populated by the
+dynamic linker before the executable is started. Lazy resolution of GOT
+entries is intended to speed up program loading by deferring symbol
+resolution to the first time the function is called. The first entry
+in the PLT occupies two 16 byte entries:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">1:  auipc  t2, %pcrel_hi(.got.plt)
+    sub    t1, t1, t3               # shifted .got.plt offset + hdr size + 12
+    l[w|d] t3, %pcrel_lo(1b)(t2)    # _dl_runtime_resolve
+    addi   t1, t1, -(hdr size + 12) # shifted .got.plt offset
+    addi   t0, t2, %pcrel_lo(1b)    # &amp;.got.plt
+    srli   t1, t1, log2(16/PTRSIZE) # .got.plt offset
+    l[w|d] t0, PTRSIZE(t0)          # link map
+    jr     t3</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Subsequent function entry stubs in the PLT take up 16 bytes and load a
+function pointer from the GOT. On the first call to a function, the
+entry redirects to the first PLT entry which calls <code>_dl_runtime_resolve</code>
+and fills in the GOT entry for subsequent calls to the function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">1:  auipc   t3, %pcrel_hi(function@.got.plt)
+    l[w|d]  t3, %pcrel_lo(1b)(t3)
+    jalr    t1, t3
+    nop</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-7-procedure-calls"><a class="anchor" href="#8-1-4-7-procedure-calls"></a>8.1.4.7. Procedure Calls</h4>
+<div class="paragraph">
+<p><code>R_RISCV_CALL</code> and <code>R_RISCV_CALL_PLT</code> relocations are associated with
+pairs of instructions (<code>AUIPC+JALR</code>) generated by the <code>CALL</code> or <code>TAIL</code>
+pseudoinstructions.  Originally, these relocations had slightly different
+behavior, but that has turned out to be unnecessary, and they are now
+interchangeable,  <code>R_RISCV_CALL</code> is deprecated, suggest using <code>R_RISCV_CALL_PLT</code>
+instead.</p>
+</div>
+<div class="paragraph">
+<p>With linker relaxation enabled, the <code>AUIPC</code> instruction in the <code>AUIPC+JALR</code> pair has
+both a <code>R_RISCV_CALL</code> or <code>R_RISCV_CALL_PLT</code> relocation and an <code>R_RISCV_RELAX</code>
+relocation indicating the instruction sequence can be relaxed during linking.</p>
+</div>
+<div class="paragraph">
+<p>Procedure call linker relaxation allows the <code>AUIPC+JALR</code> pair to be relaxed
+to the <code>JAL</code> instruction when the procedure or PLT entry is within (-1MiB to
++1MiB-2) of the instruction pair.</p>
+</div>
+<div class="paragraph">
+<p>The pseudoinstruction:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    call symbol
+    call symbol@plt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>expands to the following assembly and relocation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    auipc ra, 0           # R_RISCV_CALL (symbol), R_RISCV_RELAX (symbol)
+    jalr  ra, ra, 0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and when symbol has an <code>@plt</code> suffix it expands to:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    auipc ra, 0           # R_RISCV_CALL_PLT (symbol), R_RISCV_RELAX (symbol)
+    jalr  ra, ra, 0</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-8-pc-relative-jumps-and-branches"><a class="anchor" href="#8-1-4-8-pc-relative-jumps-and-branches"></a>8.1.4.8. PC-Relative Jumps and Branches</h4>
+<div class="paragraph">
+<p>Unconditional jump (J-Type) instructions have a <code>R_RISCV_JAL</code> relocation
+that can represent an even signed 21-bit offset (-1MiB to +1MiB-2).</p>
+</div>
+<div class="paragraph">
+<p>Branch (SB-Type) instructions have a <code>R_RISCV_BRANCH</code> relocation that
+can represent an even signed 13-bit offset (-4096 to +4094).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-9-pc-relative-symbol-addresses"><a class="anchor" href="#8-1-4-9-pc-relative-symbol-addresses"></a>8.1.4.9. PC-Relative Symbol Addresses</h4>
+<div class="paragraph">
+<p>32-bit PC-relative relocations for symbol addresses on sequences of
+instructions such as the <code>AUIPC+ADDI</code> instruction pair expanded from
+the <code>la</code> pseudoinstruction, in position independent code typically
+have an associated pair of relocations: <code>R_RISCV_PCREL_HI20</code> plus
+<code>R_RISCV_PCREL_LO12_I</code> or <code>R_RISCV_PCREL_LO12_S</code>.</p>
+</div>
+<div class="paragraph">
+<p>The <code>R_RISCV_PCREL_HI20</code> relocation refers to an <code>AUIPC</code> instruction
+containing the high 20-bits to be relocated to a symbol relative to the
+program counter address of the <code>AUIPC</code> instruction. The <code>AUIPC</code>
+instruction is used in conjunction with one or more I-Type instructions
+(add immediate or load) with <code>R_RISCV_PCREL_LO12_I</code> relocations or S-Type
+instructions (store) with <code>R_RISCV_PCREL_LO12_S</code> relocations.</p>
+</div>
+<div class="paragraph">
+<p>The <code>R_RISCV_PCREL_LO12_I</code> or <code>R_RISCV_PCREL_LO12_S</code> relocations contain
+a label pointing to an instruction in the same section with an
+<code>R_RISCV_PCREL_HI20</code> relocation entry that points to the target symbol:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>At label: <code>R_RISCV_PCREL_HI20</code> relocation entry &#8594; symbol</p>
+</li>
+<li>
+<p><code>R_RISCV_PCREL_LO12_I</code> relocation entry &#8594; label</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>To get the symbol address to perform the calculation to fill the 12-bit
+immediate on the add, load or store instruction the linker finds the
+<code>R_RISCV_PCREL_HI20</code> relocation entry associated with the <code>AUIPC</code>
+instruction. The addresses for pair of relocations are calculated like this:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+HI20
+</td>
+<td class="hdlist2">
+<p><code>(symbol_address - hi20_reloc_offset + 0x800) &gt;&gt; 12</code></p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+LO12
+</td>
+<td class="hdlist2">
+<p><code>symbol_address - hi20_reloc_offset</code></p>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The successive instruction has a signed 12-bit immediate so the value of the
+preceding high 20-bit relocation may have 1 added to it.</p>
+</div>
+<div class="paragraph">
+<p>Note the compiler emitted instructions for PC-relative symbol addresses are
+not necessarily sequential or in pairs. There is a constraint is that the
+instruction with the <code>R_RISCV_PCREL_LO12_I</code> or <code>R_RISCV_PCREL_LO12_S</code>
+relocation label points to a valid HI20 PC-relative relocation pointing to
+the symbol.</p>
+</div>
+<div class="paragraph">
+<p>Here is example assembler showing the relocation types:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">label:
+    auipc t0, %pcrel_hi(symbol)   # R_RISCV_PCREL_HI20 (symbol)
+    lui t1, 1
+    lw t2, t0, %pcrel_lo(label)   # R_RISCV_PCREL_LO12_I (label)
+    add t2, t2, t1
+    sw t2, t0, %pcrel_lo(label)   # R_RISCV_PCREL_LO12_S (label)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-4-10-relocation-for-alignment"><a class="anchor" href="#8-1-4-10-relocation-for-alignment"></a>8.1.4.10. Relocation for Alignment</h4>
+<div class="paragraph">
+<p>The relocation type <code>R_RISCV_ALIGN</code> marks a location that must be aligned to
+<code>N</code>-bytes, where <code>N</code> is the smallest power of two that is greater than the value
+of the addend field, e.g. <code>R_RISCV_ALIGN</code> with addend value 2 means align to 4
+bytes, <code>R_RISCV_ALIGN</code> with addend value 4 means align to 8 bytes; this
+relocation is only required if the containing section has any <code>R_RISCV_RELAX</code>
+relocations, <code>R_RISCV_ALIGN</code> points to the beginning of the padding bytes,
+and the instruction that actually needs to be aligned is located at the point
+of <code>R_RISCV_ALIGN</code> plus its addend.</p>
+</div>
+<div class="paragraph">
+<p>To ensure the linker can always satisfy the required alignment solely by
+deleting bytes, the compiler or assembler must emit a <code>R_RISCV_ALIGN</code> relocation
+and then insert <code>N</code> - <a href="#IALIGN">[IALIGN]</a> padding bytes before the location where we need to
+align, it could be mark by an alignment directive like <code>.align</code>, <code>.p2align</code> or
+<code>.balign</code> or emit by compiler directly, the addend value of that relocation
+is the number of padding bytes.</p>
+</div>
+<div class="paragraph">
+<p>The compiler and assembler must ensure padding bytes are valid instructions
+without any side-effect like <code>nop</code> or <code>c.nop</code>, and make sure those instructions
+are aligned to IALIGN if possible.</p>
+</div>
+<div class="paragraph">
+<p>The linker may remove part of the padding bytes at the linking process to meet
+the alignment requirement, and must make sure those padding bytes still are
+valid instructions and each instruction is aligned to at least IALIGN byte.</p>
+</div>
+<div class="paragraph">
+<p>Here is example to showing how <code>R_RISCV_ALIGN</code> is used:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">0x0    c.nop           # R_RISCV_ALIGN with addend 2
+0x2    add t1, t2, t3  # This instruction must align to 4 byte.</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>R_RISCV_ALIGN</code> relocation is needed because linker relaxation can shrink
+preceding code during the linking process, which may cause an aligned location
+to become mis-aligned.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+IALIGN<a id="IALIGN"></a> means the instruction-address alignment constraint. IALIGN is 4
+bytes in the base ISA, but some ISA extensions, including the compressed ISA
+extension, relax IALIGN to 2 bytes. IALIGN may not take on any value other than
+4 or 2. This term is also defined in <code>The RISC-V Instruction Set Manual</code> with a
+similar meaning, the only difference being it is specified in terms of the number
+of bits instead of the number of bytes.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Here is pseudocode to decide the alignment of <code>R_RISCV_ALIGN</code> relocation:
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-python hljs" data-lang="python"># input:
+#   addend: addend value of relocation with R_RISCV_ALIGN type.
+# output:
+#   Alignment of this relocation.
+
+def align(addend):
+  ALIGN = 1
+  while addend &gt;= ALIGN:
+    ALIGN *= 2
+  return ALIGN</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-5-thread-local-storage"><a class="anchor" href="#8-1-5-thread-local-storage"></a>8.1.5. Thread Local Storage</h3>
+<div class="paragraph">
+<p>RISC-V adopts the ELF Thread Local Storage Model in which ELF objects define
+<code>.tbss</code> and <code>.tdata</code> sections and <code>PT_TLS</code> program headers that contain the
+TLS "initialization images" for new threads. The <code>.tbss</code> and <code>.tdata</code> sections
+are not referenced directly like regular segments, rather they are copied or
+allocated to the thread local storage space of newly created threads.
+See <em>ELF Handling For Thread-Local Storage</em> <a href="elf-bib.html#tls" class="xref page">elf-bib.adoc#tls</a>.</p>
+</div>
+<div class="paragraph">
+<p>In The ELF Thread Local Storage Model, TLS offsets are used instead of pointers.
+The ELF TLS sections are initialization images for the thread local variables of
+each new thread. A TLS offset defines an offset into the dynamic thread vector
+which is pointed to by the TCB (Thread Control Block). RISC-V uses Variant I as
+described by the ELF TLS specification, with <code>tp</code> containing the address one
+past the end of the TCB.</p>
+</div>
+<div class="paragraph">
+<p>There are various thread local storage models for statically allocated or
+dynamically allocated thread local storage. <a href="#tls-model">Table 7</a> lists the
+thread local storage models:</p>
+</div>
+<table id="tls-model" class="tableblock frame-all grid-all" style="width: 70%;">
+<caption class="title">Table 7. TLS models</caption>
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 66.6667%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Mnemonic</th>
+<th class="tableblock halign-left valign-top">Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS LE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local Exec</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS IE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Initial Exec</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS LD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Local Dynamic</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLS GD</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Global Dynamic</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The program linker in the case of static TLS or the dynamic linker in the case
+of dynamic TLS allocate TLS offsets for storage of thread local variables.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<code>Global Dynamic</code> model is also known as <code>General Dynamic</code> model.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="8-1-5-1-local-exec"><a class="anchor" href="#8-1-5-1-local-exec"></a>8.1.5.1. Local Exec</h4>
+<div class="paragraph">
+<p>Local exec is a form of static thread local storage. This model is used
+when static linking as the TLS offsets are resolved during program linking.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Variable attribute</dt>
+<dd>
+<p><code>__thread int i __attribute__((tls_model("local-exec")));</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Example assembler load and store of a thread local variable <code>i</code> using the
+<code>%tprel_hi</code>, <code>%tprel_add</code> and <code>%tprel_lo</code> assembler functions. The emitted
+relocations are in comments.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    lui  a5,%tprel_hi(i)           # R_RISCV_TPREL_HI20 (symbol)
+    add  a5,a5,tp,%tprel_add(i)    # R_RISCV_TPREL_ADD (symbol)
+    lw   t0,%tprel_lo(i)(a5)       # R_RISCV_TPREL_LO12_I (symbol)
+    addi t0,t0,1
+    sw   t0,%tprel_lo(i)(a5)       # R_RISCV_TPREL_LO12_S (symbol)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>%tprel_add</code> assembler function does not return a value and is used purely
+to associate the <code>R_RISCV_TPREL_ADD</code> relocation with the <code>add</code> instruction.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-5-2-initial-exec"><a class="anchor" href="#8-1-5-2-initial-exec"></a>8.1.5.2. Initial Exec</h4>
+<div class="paragraph">
+<p>Initial exec is is a form of static thread local storage that can be used in
+shared libraries that use thread local storage. TLS relocations are performed
+at load time. <code>dlopen</code> calls to libraries that use thread local storage may fail
+when using the initial exec thread local storage model as TLS offsets must all
+be resolved at load time. This model uses the GOT to resolve TLS offsets.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Variable attribute</dt>
+<dd>
+<p><code>__thread int i __attribute__((tls_model("initial-exec")));</code></p>
+</dd>
+<dt class="hdlist1">ELF flags</dt>
+<dd>
+<p>DF_STATIC_TLS</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Example assembler load and store of a thread local variable <code>i</code> using the
+<code>la.tls.ie</code> pseudoinstruction, with the emitted TLS relocations in comments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    la.tls.ie a5,i
+    add  a5,a5,tp
+    lw   t0,0(a5)
+    addi t0,t0,1
+    sw   t0,0(a5)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The assembler pseudoinstruction:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    la.tls.ie a5,symbol</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>expands to the following assembly instructions and relocations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">label:
+    auipc a5, 0                   # R_RISCV_TLS_GOT_HI20 (symbol)
+    {ld,lw} a5, 0(a5)             # R_RISCV_PCREL_LO12_I (label)</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="8-1-5-3-global-dynamic"><a class="anchor" href="#8-1-5-3-global-dynamic"></a>8.1.5.3. Global Dynamic</h4>
+<div class="paragraph">
+<p>RISC-V local dynamic and global dynamic TLS models generate equivalent object code.
+The Global dynamic thread local storage model is used for PIC Shared libraries and
+handles the case where more than one library uses thread local variables, and
+additionally allows libraries to be loaded and unloaded at runtime using <code>dlopen</code>.
+In the global dynamic model, application code calls the dynamic linker function
+<code>__tls_get_addr</code> to locate TLS offsets into the dynamic thread vector at runtime.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Variable attribute</dt>
+<dd>
+<p><code>__thread int i __attribute__((tls_model("global-dynamic")));</code></p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Example assembler load and store of a thread local variable <code>i</code> using the
+<code>la.tls.gd</code> pseudoinstruction, with the emitted TLS relocations in comments:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    la.tls.gd a0,i
+    call  __tls_get_addr@plt
+    mv   a5,a0
+    lw   t0,0(a5)
+    addi t0,t0,1
+    sw   t0,0(a5)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The assembler pseudoinstruction:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">    la.tls.gd a0,symbol</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>expands to the following assembly instructions and relocations:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asm hljs" data-lang="asm">label:
+    auipc a0,0                    # R_RISCV_TLS_GD_HI20 (symbol)
+    addi  a0,a0,0                 # R_RISCV_PCREL_LO12_I (label)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the Global Dynamic model, the runtime library provides the <code>__tls_get_addr</code> function:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">extern void *__tls_get_addr (tls_index *ti);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>where the type tls_index is defined as:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-c hljs" data-lang="c">typedef struct
+{
+  unsigned long int ti_module;
+  unsigned long int ti_offset;
+} tls_index;</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-6-sections"><a class="anchor" href="#8-1-6-sections"></a>8.1.6. Sections</h3>
+<div class="sect3">
+<h4 id="8-1-6-1-section-types"><a class="anchor" href="#8-1-6-1-section-types"></a>8.1.6.1. Section Types</h4>
+<div class="paragraph">
+<p>The defined processor-specific section types are listed in <a href="#rv-section-type">Table 8</a>.</p>
+</div>
+<table id="rv-section-type" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 8. RISC-V-specific section types</caption>
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 42.8571%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SHT_RISCV_ATTRIBUTES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x70000003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="8-1-6-2-special-sections"><a class="anchor" href="#8-1-6-2-special-sections"></a>8.1.6.2. Special Sections</h4>
+<div class="paragraph">
+<p><a href="#rv-section">Table 9</a> lists the special sections defined by this ABI.</p>
+</div>
+<table id="rv-section" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 9. RISC-V-specific sections</caption>
+<colgroup>
+<col style="width: 42.8571%;">
+<col style="width: 42.8571%;">
+<col style="width: 14.2858%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Type</th>
+<th class="tableblock halign-left valign-top">Attributes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">.riscv.attributes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SHT_RISCV_ATTRIBUTES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">none</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>.riscv.attributes names a section that contains RISC-V ELF attributes.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-7-program-header-table"><a class="anchor" href="#8-1-7-program-header-table"></a>8.1.7. Program Header Table</h3>
+<div class="paragraph">
+<p>The defined processor-specific segment types are listed in <a href="#rv-seg-type">Table 10</a>.</p>
+</div>
+<table id="rv-seg-type" class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 10. RISC-V-specific segment types</caption>
+<colgroup>
+<col style="width: 37.5%;">
+<col style="width: 25%;">
+<col style="width: 37.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PT_RISCV_ATTRIBUTES</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x70000003</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RISC-V ELF attribute section.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><code>PT_RISCV_ATTRIBUTES</code> describes the location of RISC-V ELF attribute section.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-8-note-sections"><a class="anchor" href="#8-1-8-note-sections"></a>8.1.8. Note Sections</h3>
+<div class="paragraph">
+<p>There are no RISC-V specific definitions relating to ELF note sections.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-9-dynamic-section"><a class="anchor" href="#8-1-9-dynamic-section"></a>8.1.9. Dynamic Section</h3>
+<div class="paragraph">
+<p>The defined processor-specific dynamic array tags are listed in <a href="#rv-dyn-tag">Table 11</a>.</p>
+</div>
+<table id="rv-dyn-tag" class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 11. RISC-V-specific dynamic array tags</caption>
+<colgroup>
+<col style="width: 30.7692%;">
+<col style="width: 15.3846%;">
+<col style="width: 7.6923%;">
+<col style="width: 23.0769%;">
+<col style="width: 23.077%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Value</th>
+<th class="tableblock halign-left valign-top">d_un</th>
+<th class="tableblock halign-left valign-top">Executable</th>
+<th class="tableblock halign-left valign-top">Shared Object</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DT_RISCV_VARIANT_CC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0x70000001</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d_val</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Platform specific</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>An object must have the dynamic tag <code>DT_RISCV_VARIANT_CC</code> if it has one or more
+<code>R_RISCV_JUMP_SLOT</code> relocations against symbols with the <code>STO_RISCV_VARIANT_CC</code>
+attribute.</p>
+</div>
+<div class="paragraph">
+<p><code>DT_INIT</code> and <code>DT_FINI</code> are not required to be supported and should be avoided
+in favour of <code>DT_PREINIT_ARRAY</code>, <code>DT_INIT_ARRAY</code> and <code>DT_FINI_ARRAY</code>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-10-hash-table"><a class="anchor" href="#8-1-10-hash-table"></a>8.1.10. Hash Table</h3>
+<div class="paragraph">
+<p>There are no RISC-V specific definitions relating to ELF hash tables.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="8-1-11-attributes"><a class="anchor" href="#8-1-11-attributes"></a>8.1.11. Attributes</h3>
+<div class="paragraph">
+<p>Attributes are used to record information about an object file/binary that a
+linker or runtime loader needs to check compatibility.</p>
+</div>
+<div class="paragraph">
+<p>Attributes are encoded in a vendor-specific section of type SHT_RISCV_ATTRIBUTES
+and name .riscv.attributes. The value of an attribute can hold an integer
+encoded in the uleb128 format or a null-terminated byte string (NTBS).</p>
+</div>
+<div class="paragraph">
+<p>RISC-V attributes have a string value if the tag number is odd and an integer
+value if the tag number is even.</p>
+</div>
+<div class="sect3">
+<h4 id="8-1-11-1-list-of-attributes"><a class="anchor" href="#8-1-11-1-list-of-attributes"></a>8.1.11.1. List of attributes</h4>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. RISC-V attributes</caption>
+<colgroup>
+<col style="width: 30.7692%;">
+<col style="width: 15.3846%;">
+<col style="width: 15.3846%;">
+<col style="width: 38.4616%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Tag</th>
+<th class="tableblock halign-right valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Parameter type</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_stack_align</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uleb128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the stack alignment requirement in bytes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_arch</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NTBS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates the target architecture of this object.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_unaligned_access</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uleb128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Indicates whether to impose unaligned memory accesses in code generation.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_priv_spec</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uleb128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Deprecated</strong>, indicates the major version of the privileged specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_priv_spec_minor</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uleb128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Deprecated</strong>, indicates the minor version of the privileged specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Tag_RISCV_priv_spec_revision</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">uleb128</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Deprecated</strong>, indicates the revision version of the privileged specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for non-standard attribute</p></td>
+<td class="tableblock halign-right valign-top"><p class="tableblock">&gt;= 32768</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="8-1-11-2-detailed-attribute-description"><a class="anchor" href="#8-1-11-2-detailed-attribute-description"></a>8.1.11.2. Detailed attribute description</h4>
+<div class="sect4">
+<h5 id="8-1-11-2-1-how-does-this-specification-describe-public-attributes"><a class="anchor" href="#8-1-11-2-1-how-does-this-specification-describe-public-attributes"></a>8.1.11.2.1. How does this specification describe public attributes?</h5>
+<div class="paragraph">
+<p>Each attribute is described in the following structure:
+<code>&lt;Tag name&gt;, &lt;Value&gt;, &lt;Parameter type 1&gt;=&lt;Parameter name 1&gt;[, &lt;Parameter type 2&gt;=&lt;Parameter name 2&gt;]</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-2-tag_riscv_stack_align-4-uleb128value"><a class="anchor" href="#8-1-11-2-2-tag_riscv_stack_align-4-uleb128value"></a>8.1.11.2.2. Tag_RISCV_stack_align, 4, uleb128=value</h5>
+<div class="paragraph">
+<p>Tag_RISCV_stack_align records the N-byte stack alignment for this object. The
+default value is 16 for RV32I or RV64I, and 4 for RV32E.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Policy</dt>
+<dd>
+<p>The linker should report erros if link object files with different <code>Tag_RISCV_stack_align</code> values.</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-3-tag_riscv_arch-5-ntbssubarch"><a class="anchor" href="#8-1-11-2-3-tag_riscv_arch-5-ntbssubarch"></a>8.1.11.2.3. Tag_RISCV_arch, 5, NTBS=subarch</h5>
+<div class="paragraph">
+<p>Tag_RISCV_arch contains a string for the target architecture taken from
+the option <code>-march</code>. Different architectures will be integrated into a superset
+when object files are merged.</p>
+</div>
+<div class="paragraph">
+<p>Tag_RISCV_arch should be recorded in lowercase, and all extensions should be
+separated by underline(<code>_</code>).</p>
+</div>
+<div class="paragraph">
+<p>Note that the version information for target architecture must be presented
+explicitly in the attribute and abbreviations must be expanded. The version
+information, if not given by <code>-march</code>, must agree with the default
+specified by the tool. For example, the architecture <code>rv32i</code> has to be recorded
+in the attribute as <code>rv32i2p1</code> in which <code>2p1</code> stands for the default version of
+its based ISA. On the other hand, the architecture <code>rv32g</code> has to be presented
+as <code>rv32i2p1_m2p0_a2p1_f2p2_d2p2_zicsr2p0_zifencei2p0</code> in which the
+abbreviation <code>g</code> is expanded to the <code>imafd_zicsr_zifencei</code> combination with
+default versions of the standard extensions.</p>
+</div>
+<div class="paragraph">
+<p>The toolchain should normalized the architecture string into canonical order
+whcih defined in
+<em>The RISC-V Instruction Set Manual, Volume I: User-Level ISA, Document</em> <a href="elf-bib.html#riscv-unpriv" class="xref page">elf-bib.adoc#riscv-unpriv</a>
+, expanded with all required extension and should add shorthand extension into
+architecture string if all expanded extensions are included in architecture
+string.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+A shorthand extension is an extension that does not define any actual
+instructions, registers or behavior, but requires other extensions, such as the
+<code>zks</code> extension, which is defined in the cryptographic extension,
+<code>zks</code> extension is shorthand for <code>zbkb</code>, <code>zbkc</code>, <code>zbkx</code>, <code>zksed</code> and <code>zksh</code>, so
+the toolchain should normalize <code>rv32i_zbkb_zbkc_zbkx_zksed_zksh</code> to
+<code>rv32i_zbkb_zbkc_zbkx_zks_zksed_zksh</code>; <code>g</code> is an exception and does not apply to
+this rule.
+</td>
+</tr>
+</table>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge Policy</dt>
+<dd>
+<p>The linker should merge the different architectures into a superset when
+object files are merged, and should report errors if the merge result contains
+conflict extensions.</p>
+<div class="paragraph">
+<p>This specification does not mandate rules on how to merge ISA strings that
+refer to different versions of the same ISA extension.
+The suggested merge rules are as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Merge versions into the latest version of all input versions that are
+ratified without warning or error.</p>
+</li>
+<li>
+<p>The linker should emit a warning or error if input versions have different
+versions and any extension versions are not ratified.</p>
+</li>
+<li>
+<p>The linker may report a warning or error if it detects incompatible
+versions, even if it&#8217;s ratified.</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Example of conflicting merge result: <code>RV32IF</code> and <code>RV32IZfinx</code> will
+be merged into <code>RV32IFZfinx</code>, which is an invalid architecture since <code>F</code> and
+<code>Zfinx</code> conflict.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-4-tag_riscv_unaligned_access-6-uleb128value"><a class="anchor" href="#8-1-11-2-4-tag_riscv_unaligned_access-6-uleb128value"></a>8.1.11.2.4. Tag_RISCV_unaligned_access, 6, uleb128=value</h5>
+<div class="paragraph">
+<p>Tag_RISCV_unaligned_access denotes the code generation policy for this object
+file. Its values are defined as follows:</p>
+</div>
+<div class="hdlist">
+<table>
+<tr>
+<td class="hdlist1">
+0
+</td>
+<td class="hdlist2">
+<p>This object does not perform any unaligned memory accesses.</p>
+</td>
+</tr>
+<tr>
+<td class="hdlist1">
+1
+</td>
+<td class="hdlist2">
+<p>This object may perform unaligned memory accesses.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge policy</dt>
+<dd>
+<p>Input file could have different values for the Tag_RISCV_unaligned_access;
+the linker should set this field into 1 if any of the input objects has
+been set.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-5-tag_riscv_priv_spec-8-uleb128version"><a class="anchor" href="#8-1-11-2-5-tag_riscv_priv_spec-8-uleb128version"></a>8.1.11.2.5. Tag_RISCV_priv_spec, 8, uleb128=version</h5>
+
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-6-tag_riscv_priv_spec_minor-10-uleb128version"><a class="anchor" href="#8-1-11-2-6-tag_riscv_priv_spec_minor-10-uleb128version"></a>8.1.11.2.6. Tag_RISCV_priv_spec_minor, 10, uleb128=version</h5>
+
+</div>
+<div class="sect4">
+<h5 id="8-1-11-2-7-tag_riscv_priv_spec_revision-12-uleb128version"><a class="anchor" href="#8-1-11-2-7-tag_riscv_priv_spec_revision-12-uleb128version"></a>8.1.11.2.7. Tag_RISCV_priv_spec_revision, 12, uleb128=version</h5>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Those three attributes are deprecated since RISC-V using extensions
+with version rather than a single privileged specification version scheme for
+privileged ISA.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Tag_RISCV_priv_spec contains the major/minor/revision version information of
+the privileged specification.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Merge policy</dt>
+<dd>
+<p>The linker should report errors if object files of different privileged
+specification versions are merged.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="riscv-elf-cpp-name-mangling.html">Chapter 7. C++ Name Mangling</a></span>
+  <span class="next"><a href="riscv-elf-linker-relaxation.html">Chapter 9. Linker Relaxation</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

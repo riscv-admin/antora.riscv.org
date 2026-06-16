@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/server-soc/v1.0/server_soc_intro.html">
+    <link rel="prev" href="server_soc_contributors.html">
+    <link rel="next" href="server_soc_requirements.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="server-soc">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="server-soc" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../hardware-overview/index.html">Hardware</a>
+</div>
+        <div class="nav-trees" data-component="aia">
+          <div class="version-box">
+            <select data-component="aia" class="select-version">
+                <option
+                  value="../../aia/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="aia" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Advanced Interrupt Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/CSRs.html">Chapter 2. CSRs Added to Harts</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/IMSIC.html">Chapter 3. Incoming MSI Controller (IMSIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/AdvPLIC.html">Chapter 4. Advanced PLIC (APLIC)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/MSLevel.html">Chapter 5. Interrupts for Machine and Supervisor Levels</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/VSLevel.html">Chapter 6. Interrupts for Virtual Machines (VS Level)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/IPIs.html">Chapter 7. Interprocessor Interrupts (IPIs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../aia/v1.0/IOMMU.html">Chapter 8. IOMMU Support for MSIs to Virtual Machines</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="iommu">
+          <div class="version-box">
+            <select data-component="iommu" class="select-version">
+                <option
+                  value="../../iommu/v20260222/index.html"
+                  data-version="v20260222"
+                  
+                  selected>
+                  20260222
+                </option>
+                <option
+                  value="../../iommu/v20250828/index.html"
+                  data-version="v20250828"
+                  
+                  >
+                  20250828
+                </option>
+                <option
+                  value="../../iommu/v20250620/index.html"
+                  data-version="v20250620"
+                  
+                  >
+                  20250620
+                </option>
+                <option
+                  value="../../iommu/v20240911/index.html"
+                  data-version="v20240911"
+                  
+                  >
+                  20240911
+                </option>
+                <option
+                  value="../../iommu/v20230605/index.html"
+                  data-version="v20230605"
+                  
+                  >
+                  20230605
+                </option>
+            </select>
+          </div>
+              <div data-component="iommu" data-version="v20260222" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RISC-V IOMMU</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_data_structures.html">Chapter 2. Data Structures</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_in_memory_queues.html">Chapter 3. In-memory Queue Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_debug.html">Chapter 4. Debug Support</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_registers.html">Chapter 5. Memory-mapped Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_sw_guidelines.html">Chapter 6. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_hw_guidelines.html">Chapter 7. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/iommu_extensions.html">Chapter 8. IOMMU Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../iommu/v20260222/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="plic">
+          <div class="version-box">
+            <select data-component="plic" class="select-version">
+                <option
+                  value="../../plic/v1.0.0/index.html"
+                  data-version="v1.0.0"
+                  
+                  selected>
+                  v1.0.0
+                </option>
+            </select>
+          </div>
+              <div data-component="plic" data-version="v1.0.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Platform-Level Interrupt Controller</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/changelog.html">Changelog</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/licensing.html">Copyright and license</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/contributor.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-op-parms.html">Chapter 2. RISC-V PLIC Operation Parameters</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-memory-map.html">Chapter 3. Memory Map</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-priority.html">Chapter 4. Interrupt Priorities</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-interrupts.html">Chapter 5. Interrupt Pending Bits</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-enables.html">Chapter 6. Interrupt Enables</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-thresholds.html">Chapter 7. Priority Thresholds</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-claims.html">Chapter 8. Interrupt Claim Process</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../plic/v1.0.0/plic-completion.html">Chapter 9. Interrupt Completion</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="server-soc">
+          <div class="version-box">
+            <select data-component="server-soc" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="server-soc" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Server SoC</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_preamble.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="server_soc_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_requirements.html">Chapter 2. Server SoC Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="server_soc_bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/server-soc/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/server-soc" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/NTg4MWJjYjJmZDkxNDdmNWFmMTdkZjYxYTk2MzFjOGI" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/riscv-server-soc.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../hardware-overview/index.html">Hardware Overview</a></li>
+              <li><a href="index.html">Server SoC</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="intro"><a class="anchor" href="#intro"></a>1.1. Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The RISC-V server SoC specification defines a standardized set of capabilities
+that portable system software such as operating systems and hypervisors, can
+rely on being present in a RISC-V server SoC.</p>
+</div>
+<div class="paragraph">
+<p>A server is a computing system designed to manage and distribute resources,
+services, and data to other computers or devices on a network. It is often
+referred to as a 'server' because it serves or provides information and
+resources upon request. Such computing systems are designed to operate
+continually and have higher requirements for capabilities such as RAS, security,
+performance, and quality of service. Examples of servers include web servers,
+file servers, database servers, mail servers, game servers, and more. This
+specification focuses on defining requirements for general-purpose server
+computing systems that may be used for one or more of these purposes.</p>
+</div>
+<div id="fig:RISC-V-Server-Platform" class="imageblock">
+<div class="content">
+<img src="_images/riscv-server-platform.png" alt="riscv server platform" width="800">
+</div>
+<div class="title">Figure 1. Components of a RISC-V Server Platform</div>
+</div>
+<div class="paragraph">
+<p>The RISC-V server platform is defined as the collection of SoC
+hardware, platform firmware, boot/runtime services, and security services. The
+platform provides hardware interfaces (e.g., harts, timers, interrupt
+controllers, PCIe root ports, etc.) to portable system software. It also offers
+a set of standardized RISC-V boot and runtime services [<a href="server_soc_bibliography.html#bib-brs" class="xref page">1</a>] based on the
+UEFI and ACPI standards. To support provisioning and platform management, it
+interfaces with a baseboard management controller (BMC) through both in-band and
+out-of-band (OOB) management interfaces. The in-band management interfaces
+support the use of standard manageability specifications like MCTP, PLDM, IPMI,
+and Redfish for provisioning and management of the operating system executing on
+the platform. The OOB interface supports the use of standard manageability
+specifications like MCTP, PLDM, Redfish, and IPMI for functions such as power
+management, telemetry, debug, and provisioning. The RISC-V security model
+[<a href="server_soc_bibliography.html#bib-sec" class="xref page">2</a>] includes guidelines and requirements for aspects such as debug
+authorization, secure/measured boot, firmware updates, firmware resilience, and
+confidential computing, among others.</p>
+</div>
+<div class="paragraph">
+<p>The platform firmware, typically operating at privilege level M, is
+considered part of the platform and is usually expected to be customized and
+tailored to meet the requirements of the SoC hardware (e.g., initialization
+of address decoders, memory controllers, RAS, etc.).</p>
+</div>
+<div class="paragraph">
+<p>This specification standardizes the requirements for the hardware interfaces and
+capabilities (e.g., timers, interrupt controllers, PCIe root complexes, RAS, QoS,
+in-band management, etc.) provided by the SoC to software executing on the
+application processor harts at privilege levels below M. It enables OS and
+hypervisor vendors to support such SoCs with a single binary OS image
+distribution model. The requirements posed by this specification represent a
+standard set of infrastructural capabilities, encompassing areas where divergence
+is typically unnecessary and where novelty is absent across implementations.</p>
+</div>
+<div class="paragraph">
+<p>To be compliant with this specification, the SoC MUST support all mandatory
+rules and MUST support the listed versions of the specifications. This
+standard set of capabilities MAY be extended by a specific implementation with
+additional standard or custom capabilities, including compatible later
+versions of listed standard specifications. Portable system software MUST
+support the specified mandatory capabilities to be compliant with this
+specification.</p>
+</div>
+<div class="paragraph">
+<p>The rules in this specification use the following format:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">ID#</th>
+<th class="tableblock halign-center valign-top">Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CAT_NNN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The <code>CAT</code> is a category prefix that logically groups the
+             rules and is followed by 3 digits - <code>NNN</code> - assigning a
+             numeric ID to the rule.                                         <br>
+                                                                             <br>
+             The rules use the key words "MUST", "MUST NOT", "REQUIRED",
+             "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED",
+             "NOT RECOMMENDED", "MAY", and "OPTIONAL" that are to be
+             interpreted as described in RFC 2119 [<a href="server_soc_bibliography.html#bib-rfc_2119" class="xref page">3</a>] when, and
+             only when, they appear in all capitals, as shown here. When
+             these words are not capitalized, they have their normal English
+             meanings.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top" colspan="2"><p class="tableblock"><em>A rule or a group of rules may be followed by non-normative text providing
+     context or justification for the rule. The non-normative text may also be
+     used to reference sources that are the origin of the rule.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This specification groups the rules in the following broad categories:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Clocks and Timers</p>
+</li>
+<li>
+<p>Interrupt Controllers</p>
+</li>
+<li>
+<p>IOMMU</p>
+</li>
+<li>
+<p>PCIe subsystem</p>
+</li>
+<li>
+<p>Reliability, Availability, and Serviceability</p>
+</li>
+<li>
+<p>Quality of Service</p>
+</li>
+<li>
+<p>Performance monitoring</p>
+</li>
+<li>
+<p>Security</p>
+</li>
+</ul>
+</div>
+<div style="page-break-after: always;"></div>
+<div class="sect2">
+<h3 id="1-1-1-glossary"><a class="anchor" href="#1-1-1-glossary"></a>1.1.1. Glossary</h3>
+<div class="paragraph">
+<p>Most terminology has the standard RISC-V meaning. This table captures other
+terms used in the document. Terms in the document prefixed by 'PCIe' have the
+meaning defined in the PCI Express (PCIe) Base Specification [<a href="server_soc_bibliography.html#bib-pci" class="xref page">4</a>] (even
+if they are not in this table).</p>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 90%;">
+<caption class="title">Table 1. Terms and definitions</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 80%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Term</th>
+<th class="tableblock halign-center valign-top">Definition</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACPI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced Configuration and Power Interface [<a href="server_soc_bibliography.html#bib-acpi" class="xref page">5</a>].</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ACS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Access Control Services. A set of
+                     capabilities used to provide controls over routing of PCIe
+                     transactions.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AER</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Advanced Error Reporting. Follows PCI Express. A PCIe
+                     defined error reporting paradigm.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">AIA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RISC-V Advanced Interrupt Architecture.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ATS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Address Translation Services.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BAR or
+  Base Address
+  Register</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. A register that is used by hardware to
+                     show the amount of system memory needed by a PCIe function
+                     and used by system software to set the base address of the
+                     allocated space.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">BMC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Baseboard Management Controller. A motherboard resident
+                     management controller that provides functions for platform
+                     management.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CXL</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Compute Express Link bus standard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DMA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Direct Memory Access.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DMTF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Distributed Management Task Force. Industry association for
+                     promoting systems management and interoperability.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECAM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Enhanced Configuration Access Method.
+                     A mechanism to allow addressing of Configuration Registers
+                     for PCIe functions. In addition to the PCI Express Base
+                     Specification, see the detailed rules in this specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EP, EP=1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Also called Data Poisoning. EP is an
+                     error flag that accompanies data in some PCIe transactions
+                     to indicate the data is known to contain an error. Defined
+                     in PCI Express Base Specification 6.0 section 2.7.2. Unless
+                     otherwise blocked, the poison associated with the data must
+                     continue to propagate in the SoC internal interconnect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">GPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guest Physical Address: An address in the virtualized
+                     physical memory space of a virtual machine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Guest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software in a virtual machine.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hierarchy ID or
+  Segment ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. An identifier of a PCIe Hierarchy
+                     within which the Requester IDs are unique.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Host Bridge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Part of a SoC that connects host CPUs and memory to PCIe
+                     root ports, RCiEP, and non-PCIe devices integrated in the
+                     SoC. The host bridge is placed between the device(s) and
+                     the platform interconnect to process DMA transactions. IO
+                     Devices may perform DMA transactions using IO Virtual
+                     Addresses (VA, GVA or GPA). The host bridge invokes the
+                     associated IOMMU to translate the IOVA to Supervisor
+                     Physical Addresses (SPA).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HPM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hardware Performance Monitor.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Hypervisor</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Software entity that controls virtualization.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Identifier.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IMSIC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Incoming Message-signaled Interrupt Controller.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IO Bridge</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">See host bridge.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">IOVA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I/O Virtual Address: Virtual address for DMA by devices.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MCTP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows DMTF Standard. Management Component Transport
+                     Protocol used for communication between components of a
+                     platform management system.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MSI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Message Signaled Interrupts.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">NUMA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Non-uniform memory access.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Operating System.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PASID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Process Address Space Identifier: It
+                     identifies the address space of a process. The PASID value is
+                     provided in the PASID TLP prefix of the request.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PBMT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page-Based Memory Types.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PRI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Page Request Interface. Follows PCI Express. A PCIe protocol
+                     that enables devices to request OS memory manager services to
+                     make pages resident.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RCiEP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root Complex Integrated Endpoint. Follows PCI Express. An
+                     internal peripheral that enumerates and behaves as
+                     specified in the PCIe standard.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RCEC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Root Complex Event Collector. A block
+                     for collecting errors and PME messages in a standard way
+                     from various internal peripherals.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RID or
+  Requester ID</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. An identifier that uniquely identifies
+                     the requester within a PCIe Hierarchy. Needs to be extended
+                     with a Hierarchy ID to ensure it is unique across the
+                     platform.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root Complex, RC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Part of the SoC that includes the Host
+                     Bridge, Root Port, and RCiEP.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Root Port, RP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. A PCIe port in a Root Complex used to
+                     map a Hierarchy Domain using a PCI-PCI bridge.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">P2P or
+  peer-to-peer</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Transfer of data directly from one
+                     device to another. If the devices are under different PCIe
+                     Root Ports or are internal to the SoC this may involve data
+                     movement across the SoC internal interconnect.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PLDM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows DMTF standard. Platform Level Data Model.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Physical Memory Attributes.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Physical Memory Protection.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Significant Cache</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">A large cache that might have significant impact on
+                     performance. This specification recommendeds that a cache
+                     with a capacity larger than 32 KiB be considered a
+                     significant cache if it has a significant impact on
+                     performance.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SMBIOS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System Management BIOS.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SoC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">System on a chip, also referred as system-on-a-chip and
+                     system-on-chip.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Supervisor Physical Address: Physical address used to
+                     to access memory and memory-mapped resources.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SPDM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows DMTF Standard. Security Protocols and Data Models.
+                     A standard for authentication, attestation and key exchange
+                     to assist in providing infrastructure security enablement.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SR-IOV</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Single-Root I/O Virtualization.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TLP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Transaction Layer Packet. Defined by
+                     Chapter 2 of the PCI Express Base Specification.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">QoS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Quality of Service. Quality of Service (QoS) is defined as
+                     the minimal end-to-end performance that is guaranteed in
+                     advance by a service level agreement (SLA) to a workload.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UEFI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Unified Extensible Firmware Interface. [<a href="server_soc_bibliography.html#bib-uefi" class="xref page">6</a>]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UR, CA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Follows PCI Express. Error returns to an access made to a
+                     PCIe hierarchy.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VM</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Virtual Machine.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="server_soc_contributors.html">Contributors</a></span>
+  <span class="next"><a href="server_soc_requirements.html">Chapter 2. Server SoC Requirements</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

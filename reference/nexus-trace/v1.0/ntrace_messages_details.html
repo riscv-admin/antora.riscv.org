@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/nexus-trace/v1.0/ntrace_messages_details.html">
+    <link rel="prev" href="ntrace_messages_overview.html">
+    <link rel="next" href="ntrace_field_encoding.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="nexus-trace">
+    <meta name="latest-version" content="false">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="nexus-trace" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../trace-debug-ras-overview/index.html">Debug, Trace, and RAS</a>
+</div>
+        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="../../debug/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../debug/v1.0/implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../../e-trace/v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Efficient Trace for RISC-V</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/control.html">Chapter 2. Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/branchTrace.html">Chapter 3. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/ingressPort.html">Chapter 4. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/filtering.html">Chapter 5. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/timestamping.html">Chapter 6. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/payload.html">Chapter 7. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/dataTracePayload.html">Chapter 8. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleAlgorithm.html">Chapter 9. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/discovery.html">Chapter 10. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/decoder.html">Chapter 11. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/fragmentCodeAndTransport.html">Chapter 13. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../e-trace/v2.0/future.html">Chapter 14. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">N-Trace</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_introduction.html">Chapter 1. Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_ingress_port.html">Chapter 2. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_transmission.html">Chapter 3. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_controls.html">Chapter 4. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_modes.html">Chapter 5. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_overview.html">Chapter 6. Messages Overview</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="ntrace_messages_details.html">Chapter 7. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_field_encoding.html">Chapter 8. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_optimizations.html">Chapter 9. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_generation_rules.html">Chapter 10. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_decoding.html">Chapter 11. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_nexus_compliance.html">Chapter 12. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ntrace_additional.html">Chapter 13. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../../cbqri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">QoS Register Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_identifiers.html">Chapter 2. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_capacity.html">Chapter 3. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_bandwidth.html">Chapter 4. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_iommu.html">Chapter 5. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_hw_guidelines.html">Chapter 6. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_sw_guidelines.html">Chapter 7. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_biblio.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../../ras-eri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">RERI Architecture</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_err_reporting.html">Chapter 2. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_bibliography.html">Chapter 3. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../../trace-connectors/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Connectors</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_debug_trace.html">Chapter 1. Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mipi20.html">Chapter 2. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mictor38.html">Chapter 3. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_adapters.html">Chapter 4. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_rationale.html">Chapter 5. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../../trace-control-interface/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Trace Control Interface</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_protocols.html">Chapter 2. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_system_overview.html">Chapter 3. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_control_interface.html">Chapter 4. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_versioning.html">Chapter 5. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_encoder_control.html">Chapter 6. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_ram_sink.html">Chapter 7. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_funnel.html">Chapter 8. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_pib_sink.html">Chapter 9. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_atb_bridge.html">Chapter 10. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_additional.html">Chapter 11. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../../trace-encap/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Unformatted Trace &amp; Data Encapsulation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/contributors.html">Chapter 1. Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/intro.html">Chapter 2. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/encapsulation.html">Chapter 3. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../../trace-encap/v1.0/e-trace-specifics.html">E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv-non-isa/tg-nexus-trace" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/ZTUxYTJmNWRkYzhmNDM4ZDg5OWNlMmQxODMyYjY3YjI" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="_attachments/RISC-V-N-Trace.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+          </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">N-Trace</a></li>
+                </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="7-1-n-trace-messages-details"><a class="anchor" href="#7-1-n-trace-messages-details"></a>7.1. N-Trace Messages (Details)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This chapter provides a detailed description of all N-Trace messages. Overview of all fields in all messages is provided in the <a href="#Fields in Messages">Fields in Messages</a> table.</p>
+</div>
+<div class="paragraph">
+<p>Common fields are described in the <a href="#Common Fields">Common Fields</a> chapter, but fields specific to message <strong>TCODE</strong> values are explained here.</p>
+</div>
+<div class="paragraph">
+<p>Size of field in <strong>Bits</strong> column may be one or more of the following values:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>n (1..6)</strong> - This is an <strong>n</strong>-bits wide, fixed-length field.</p>
+</li>
+<li>
+<p><strong>Var</strong> - This is a variable-length, at least 1-bit wide field.</p>
+</li>
+<li>
+<p><strong>Cfg</strong> - Size of this field depends on configuration setting (<strong>Cfg</strong> fields are always optional).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Each message has its own table showing all fields in that message.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+The IEEE-5001 Nexus Standard presents tables with <strong>TCODE</strong> (which is sent first) in the last row. In contrast, this specification shows <a href="#Fields in Messages">Fields in Messages</a> in the order they are sent (the first field sent is described first), aligning with the order of storage, processing, and text dumps.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="msg2_Ownership"><a class="anchor" href="#msg2_Ownership"></a>7.1.1. Ownership Message</h3>
+<div class="paragraph">
+<p>This message furnishes the requisite context (privileged mode and Context ID, as assigned by the operating system or hypervisor), enabling the decoder to correlate program flow with distinct code
+segments associated with various programs. Activation of this feature requires explicit enabling of the <a href="#trTeContext">trTeContext</a> control bit.</p>
+</div>
+<div class="paragraph">
+<p>Reporting of this information occurs under one of the following three conditions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Upon the retirement of an instruction that writes to the <strong>scontext/hcontext</strong> CSR (as reported via <code>priv</code> and <code>context</code> field on an ingress port).</p>
+</li>
+<li>
+<p>In the event of a trap or trap return that results in a change in privilege mode (including <strong>ECALL</strong> and <strong>EBREAK</strong> instructions).</p>
+</li>
+<li>
+<p>Following any trace <a href="#Synchronizing Messages">synchronizing message</a>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Should <strong>hcontext</strong> be implemented, the protocol requires two consecutive messages: the first presenting <strong>hcontext</strong> information
+and the second <strong>scontext</strong> information. This sequence is important for enabling the decoder to identify the code associated with a specific process.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If tracing multiple OS-es, main decoder may route messages to an OS-specific decoder after seeing <strong>hcontext</strong> and the <strong>scontext</strong> (which follows) will be decoded by decoder determined by <strong>hcontext</strong>.
+</td>
+</tr>
+</table>
+</div>
+<table id="Fields_Ownership" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. Ownership Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=2(0x2). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<a id="field_PROCESS"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PROCESS</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">This is a variable-length field, which encodes <strong>V</strong> and <strong>PRV</strong> privilege mode bits as well as <strong>scontext/hcontext</strong> CSR values. Details are provided below.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>Field PROCESS is encoded as 4 sub-fields (FORMAT, PRV, V, CONTEXT). Bit layout is defined in RTL-like syntax as follows:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PROCESS[x+5:0] = {CONTEXT[x:0], V[0], PRV[1:0], FORMAT[1:0]}</pre>
+</div>
+</div>
+<table class="tableblock frame-all grid-all" style="width: 80%;">
+<caption class="title">Table 2. Encoding of PROCESS field (in LSB to MSB order)</caption>
+<colgroup>
+<col style="width: 35%;">
+<col style="width: 20%;">
+<col style="width: 12%;">
+<col style="width: 8%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Reason</th>
+<th class="tableblock halign-left valign-top">FORMAT[1:0]</th>
+<th class="tableblock halign-left valign-top">PRV[1:0]</th>
+<th class="tableblock halign-left valign-top">V[0]</th>
+<th class="tableblock halign-left valign-top">CONTEXT[x:0]</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">V and/or PRV change</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">01</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sync or <strong>scontext</strong> change</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>scontext</strong> value</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sync or <strong>hcontext</strong> change</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Yes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>hcontext</strong> value</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Encodings of <strong>V/PRV</strong> follow ISA privilege mode encodings and are encoded as follows:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>U-mode:     V=0, PRV[1:0]=00
+S-mode:     V=0, PRV[1:0]=01
+M-mode:     V=0, PRV[1:0]=11
+VU-mode:    V=1, PRV[1:0]=00
+VS-mode:    V=1, PRV[1:0]=01</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All unused encodings are reserved.</p>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>PROCESS=0x3B2 = 0b11101_1_00_10   =&gt; scontext=0x1D,V=1,PRV[1:0]=00  (VU-mode)
+PROCESS=0xC           0b0_11_00   =&gt; V=0,PRV[1:0]=11                (M-mode)</pre>
+</div>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_DirectBranch"><a class="anchor" href="#msg2_DirectBranch"></a>7.1.2. DirectBranch Message</h3>
+<div class="paragraph">
+<p>It is applicable to <a href="#mode_BTM">BTM</a> mode only.</p>
+</div>
+<div class="paragraph">
+<p>This message is generated when the taken direct conditional branch has retired.</p>
+</div>
+<table id="Fields_DirectBranch" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. Direct Branch Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=3(0x3). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>Last instruction in the code block (or blocks) with all inferable instructions (described by I-CNT) is a taken, direct conditional branch instruction.
+Next PC is determined by decoding the conditional branch instruction opcode to determine the encoded signed offset and adding it to the address of the conditional branch instruction.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Not-taken direct conditional branches and direct unconditional jumps increment I-CNT but do not generate any trace.
+Direct unconditional jumps change the PC to the destination address of such a jump. The I-CNT enables determination of the PC of the last instruction in the code block(s).
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_IndirectBranch"><a class="anchor" href="#msg2_IndirectBranch"></a>7.1.3. IndirectBranch Message</h3>
+<div class="paragraph">
+<p>It is applicable to <a href="#mode_BTM">BTM</a> mode only.</p>
+</div>
+<div class="paragraph">
+<p>This message is generated under two conditions:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An instruction that causes an indirect unconditional control flow change has retired.</p>
+</li>
+<li>
+<p>A trap due to an interrupt or exception is delivered.</p>
+</li>
+</ul>
+</div>
+<table id="Fields_IndirectBranch" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. Indirect Branch Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=4(0x4). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="#field_U-ADDR">U-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>The last instruction within the code block(s), as specified by the I-CNT field, either represents an indirect unconditional control flow
+change (i.e., jump, call, or return) or this packet is generated in response to an exception or interrupt reported on the ingress port.
+The next PC is determined by applying the <a href="#Address Compression">Address Compression</a> rules to the U-ADDR field present in this message.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Not-taken conditional branches and direct unconditional jumps do not generate any trace. However, they do increase the I-CNT.
+Additionally, direct unconditional jumps modify the PC to the destination address specified in the instruction.
+Consequently, the PC of the last instruction in a code block(s) can be determined.
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_Error"><a class="anchor" href="#msg2_Error"></a>7.1.4. Error Message</h3>
+<div class="paragraph">
+<p>An error message must be generated in the event of an internal messages FIFO overflow, resulting in the loss of a trace message.</p>
+</div>
+<table id="Fields_Error" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. Error Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=8(0x8). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<a id="field_ETYPE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ETYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Error Type (a subset of IEEE-5001 Nexus Standard encoding):<br>
+<strong>0:</strong> A FIFO overrun has resulted in the loss of one or more messages.<br>
+<strong>1..7:</strong> Reserved.<br>
+<strong>8..15:</strong> Designated for Vendor Defined Error(s).
+<a id="field_ECODE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ECODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Error Code (a subset of IEEE-5001 Nexus Standard encoding). A bit mask that when not equal to 0 may have one or more bits set as follows to indicate errors: <br>
+ <strong>0:</strong> Exact reason unknown/not provided.<br>
+ <strong>xxxxxxx1:</strong>   Reserved.<br>
+ <strong>xxxxxx1x:</strong>   Reserved (for data trace in future).<br>
+ <strong>xxxxx1xx:</strong>   Program Trace Message(s) lost.<br>
+ <strong>xxxx1xxx:</strong>   Ownership Trace Message(s) lost.<br>
+ <strong>xxx1xxxx:</strong>   Reserved.<br>
+ <strong>xx1xxxxx:</strong>   Reserved (for data trace in future).<br>
+ <strong>x1xxxxxx:</strong>   Reserved.<br>
+ <strong>1xxxxxxx:</strong>    Vendor Defined Message(s) lost.<br>
+<strong>IMPORTANT:</strong> The field must be generated even if the reported value is always 0, to guarantee that the TSTAMP field aligns at the byte boundary.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>Error Message must be sent immediately prior to a <a href="#Synchronizing Messages">synchronizing message</a> as soon as space is available in the Trace Encoder output queue. It is recommended that the timestamp reported in the message corresponds to the moment when the first trace message was dropped; however, this is not a requirement.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>This message <strong>is required</strong> as otherwise decoder (even though restart after FIFO overflow is signaled) would not be aware that trace was lost in case of the following sequence of events:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Trace is turned off by trigger (or from any other reason).</p>
+</li>
+<li>
+<p>Message reporting 'trace off' event is lost (due to lack of space for it).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Here Error Message should be generated (as soon as there is a room)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Trace is never restarted.</p>
+</li>
+<li>
+<p>Trace is stopped (this will not generate any trace as trace is turned off).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the above case, Error Message will be the last message in trace stream.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_ProgTraceSync"><a class="anchor" href="#msg2_ProgTraceSync"></a>7.1.5. ProgTraceSync Message</h3>
+<table id="Fields_ProgTraceSync" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. Program Trace Synchronization Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=9(0x9). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>This message is produced at the start or restart of trace. In such instances, the I-CNT field is required to be set to 0. However, under certain conditions
+associated with the SYNC parameter (e.g., <code>External Trace Trigger</code>), the I-CNT field may not be zero.
+Instead, it serves to pinpoint the precise Program Counter (PC) location at which the specified trigger or event occurred.
+Additionally, the F-ADDR field provides the complete PC address at the moment the trigger was activated.</p>
+</div>
+<div class="paragraph">
+<p>This message may be also generated on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_DirectBranchSync"><a class="anchor" href="#msg2_DirectBranchSync"></a>7.1.6. DirectBranchSync Message</h3>
+<table id="Fields_DirectBranchSync" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. Direct Branch with Sync Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=11(0xB). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>This message is produced under the same conditions as the <a href="#msg2_DirectBranch">DirectBranch</a> message.
+However, it further includes details on the reason for synchronization via the SYNC field, as well as the full Program Counter (PC) address through the F-ADDR field.</p>
+</div>
+<div class="paragraph">
+<p>This message may be also generated on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_IndirectBranchSync"><a class="anchor" href="#msg2_IndirectBranchSync"></a>7.1.7. IndirectBranchSync Message</h3>
+<table id="Fields_IndirectBranchSync" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 8. Indirect Branch with Sync Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=12(0xC). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>This message is generated in the same conditions as <a href="#msg2_IndirectBranch">IndirectBranch</a> message, but additionally provides a reason for synchronization (SYNC field) and full PC (F-ADDR field).</p>
+</div>
+<div class="paragraph">
+<p>This message may be also generated (with <a href="#field_B-TYPE">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_ResourceFull"><a class="anchor" href="#msg2_ResourceFull"></a>7.1.8. ResourceFull Message</h3>
+<div class="paragraph">
+<p>This message is emitted when either the HIST register is full, or the I-CNT counter became full for a given encoder implementation.
+This mechanism ensures that no information is lost, as it enables the decoder to reconstruct larger I-CNT and HIST fields by concatenating or adding the emitted values.</p>
+</div>
+<table id="Fields_ResourceFull" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 9. Resource Full Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=27(0x1B). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<a id="field_RCODE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Resource Code field (defines a meaning of RDATA fields).<br>
+<strong>0:</strong> I-CNT counter has reached max value and is reported in the RDATA[0] field. See <a href="#I-CNT Details">I-CNT Details</a> chapter.<br>
+<strong>1:</strong> HIST field is full and is reported in the RDATA[0] field.  See <a href="#HIST Field Full">HIST Field Full</a> chapter for more details.<br>
+<strong>2</strong>: <strong>Extension:</strong> HIST field is full and is repeated. RDATA[0] field holds HIST value and RDATA[1] field holds HREPEAT (History Repeat) value. This optional extension can be enabled via the <a href="#trTeInstEnRepeatedHistory">trTeInstEnRepeatedHistory</a> control bit.<br>
+<strong>3..7:</strong> Reserved for future encodings.<br>
+<strong>8..15:</strong> Designated for vendor specific encodings.
+<a id="field_RDATA"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RDATA [0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard For RCODE=0, this is the I-CNT field. For RCODE=1 this is the HIST field (with most significant bit=1 being stop-bit).<br>
+<strong>Extension:</strong> For RCODE=2 this is the HIST field (with most significant bit=1 being stop-bit).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RDATA [1]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Extension:</strong> When RCODE=2 is reported this field includes HREPEAT (History Repeat) count.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>When RCODE is set to 1, this signifies that the HIST register is full and will not be repeated. Under these circumstances, the HIST field generally encapsulates
+the maximum number of history bits implemented within the HIST register.</p>
+</div>
+<div class="paragraph">
+<p>Nonetheless, implementations may opt to include any quantity of history bits in
+this field, with the range extending from a minimum of 2 bits up to the maximum defined by <a href="#NTRACE_MAX_HIST">NTRACE_MAX_HIST</a> bits.</p>
+</div>
+<div class="paragraph">
+<p>Should the I-CNT counter and the HIST register simultaneously reach their respective capacity limits, it is mandatory to emit two successive ResourceFull
+messages.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_IndirectBranchHist"><a class="anchor" href="#msg2_IndirectBranchHist"></a>7.1.9. IndirectBranchHist Message</h3>
+<table id="Fields_IndirectBranchHist" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 10. Indirect Branch History Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=28(0x1C). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">U-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="#field_U-ADDR">U-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>Last instruction in the code block (or blocks) (described by HIST and I-CNT fields) is indirect unconditional control flow change (jump, call, return) instruction or this message is generated when exception or interrupt is reported in the ingress port. See <a href="#HIST Field Generation">HIST Field Generation</a> and <a href="#I-CNT Details">I-CNT Details</a> chapters for clarifications.</p>
+</div>
+<div class="paragraph">
+<p>Next PC is determined by applying the <a href="#Address Compression">Address Compression</a> rules using the U-ADDR field in this message.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_IndirectBranchHistSync"><a class="anchor" href="#msg2_IndirectBranchHistSync"></a>7.1.10. IndirectBranchHistSync Message</h3>
+<table id="Fields_IndirectBranchHistSync" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 11. Indirect Branch History with Sync Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=29(0x1D). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>This message is generated in the same conditions as <a href="#msg2_IndirectBranchHist">IndirectBranchHist</a> message.
+However, it further includes details on the reason for synchronization via the SYNC field, as well as the full Program Counter (PC) address through the F-ADDR field.</p>
+</div>
+<div class="paragraph">
+<p>This message may be also generated (with <a href="#field_B-TYPE">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_RepeatBranch"><a class="anchor" href="#msg2_RepeatBranch"></a>7.1.11. RepeatBranch Message</h3>
+<table id="Fields_RepeatBranch" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 12. Repeat Branch Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=30(0x1E). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<a id="field_B-CNT"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">B-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Count field.
+Number of times the previous branch message (without a <a href="#field_SYNC">SYNC</a> field) is repeated. Generated if I-CNT, HIST and target address is the same as in the previous branch message.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>This message is reported when an identical (direct or indirect) branch message is encountered (just to save trace bandwidth). Trace decoder should just repeat handling of previous branch message B-CNT times.</p>
+</div>
+<div style="page-break-after: always;"></div>
+</div>
+<div class="sect2">
+<h3 id="msg2_ProgTraceCorrelation"><a class="anchor" href="#msg2_ProgTraceCorrelation"></a>7.1.12. ProgTraceCorrelation Message</h3>
+<div class="paragraph">
+<p>This message is emitted when the trace is disabled or stopped.</p>
+</div>
+<table id="Fields_ProgTraceCorrelation" class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 13. Program Trace Correlation Message Fields</caption>
+<colgroup>
+<col style="width: 8%;">
+<col style="width: 10%;">
+<col>
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Bits</th>
+<th class="tableblock halign-left valign-top">Name</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=33(0x21). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<a id="field_EVCODE"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EVCODE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Reason to generate Program Correlation:<br>
+                            <strong>0:</strong> Entry into Debug Mode. Required (do not send 4 instead!).<br>
+                            <strong>1:</strong> Entry into Low-power Mode. Optional.<br>
+                            <strong>2..3:</strong> Reserved for data trace.<br>
+                            <strong>4:</strong> Program Trace Disabled (hart may be still running). Optional.<br>
+                            <strong>5..7:</strong> Reserved for future extensions of N-Trace specification.<br>
+                            <strong>8..15:</strong> Designated for vendor specific encodings.
+<a id="field_CDF"></a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">CDF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard number of CDATA fields following it:<br>
+                            <strong>0:</strong> Only I-CNT field follows and there is no HIST field.<br>
+                            <strong>1:</strong> I-CNT field and single CDATA (HIST) field (for HTM trace).<br>
+                            <strong>2..3:</strong> Reserved for future extensions of N-Trace specification.<br>
+In BTM trace mode CDF must be 0. In HTM trace mode CDF must be 1 (even if HIST field is empty, encoded as 0x1).</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field. <strong>This field must be present in HTM mode</strong>, so decoder does not need to read CDF to determine its existence.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><strong>Explanations and Notes</strong></p>
+</div>
+<div class="paragraph">
+<p>It provides a reason (in EVCODE field) plus I-CNT and HIST fields, which allows the decoder to determine the PC where an execution or the trace stopped.</p>
+</div>
+<div class="paragraph">
+<p>This message includes the EVCODE field, which specifies the reason for generating this message, alongside the I-CNT and HIST fields.
+These fields collectively enable the decoder to accurately identify the PC location where execution or tracing was halted.</p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ntrace_messages_overview.html">Chapter 6. Messages Overview</a></span>
+  <span class="next"><a href="ntrace_field_encoding.html">Chapter 8. Field Encoding</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

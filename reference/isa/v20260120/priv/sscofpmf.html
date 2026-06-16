@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/isa/v20260120/priv/sscofpmf.html">
+    <link rel="prev" href="sstc.html">
+    <link rel="next" href="hypervisor.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/page-search.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="f80a88d2b0fb6bb15c5b5efa0635a1909cdda8e8"> 
+    <meta name="version" content="v20260120">
+    <meta name="component" content="isa">
+    <meta name="latest-version" content="true">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="isa" data-version="v20260120"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../../isa/index.html">ISA</a>
+</div>
+        <div class="nav-trees" data-component="isa">
+          <div class="version-box">
+            <select data-component="isa" class="select-version">
+                <option
+                  value="../index.html"
+                  data-version="v20260120"
+                  
+                  selected>
+                  20260120
+                </option>
+                <option
+                  value="../../v20250508/index.html"
+                  data-version="v20250508"
+                  
+                  >
+                  20250508
+                </option>
+                <option
+                  value="../../v20240411/index.html"
+                  data-version="v20240411"
+                  
+                  >
+                  20240411
+                </option>
+            </select>
+          </div>
+              <div data-component="isa" data-version="v20260120" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume I: RISC-V Unprivileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/colophon.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32.html">Chapter 2. RV32I Base Integer Instruction Set, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv32e.html">Chapter 3. RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv64.html">Chapter 4. RV64I Base Integer Instruction Set, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zifencei.html">Chapter 5. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicsr.html">Chapter 6. "Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/counters.html">Chapter 7. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintntl.html">Chapter 8. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zihintpause.html">Chapter 9. "Zihintpause" Extension for Pause Hint, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zimop.html">Chapter 10. "Zimop" Extension for May-Be-Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zicond.html">Chapter 11. "Zicond" Extension for Integer Conditional Operations, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/m-st-ext.html">Chapter 12. "M" Extension for Integer Multiplication and Division, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/a-st-ext.html">Chapter 13. "A" Extension for Atomic Instructions, Version 2.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zawrs.html">Chapter 14. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zacas.html">Chapter 15. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zabha.html">Chapter 16. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zalasr.html">Chapter 17. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rvwmo.html">Chapter 18. RVWMO Memory Consistency Model, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/ztso-st-ext.html">Chapter 19. "Ztso" Extension for Total Store Ordering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/cmo.html">Chapter 20. "CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/f-st-ext.html">Chapter 21. "F" Extension for Single-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/d-st-ext.html">Chapter 22. "D" Extension for Double-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/q-st-ext.html">Chapter 23. "Q" Extension for Quad-Precision Floating-Point, Version 2.2</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfh.html">Chapter 24. "Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bfloat16.html">Chapter 25. "BF16" Extensions for for BFloat16-precision Floating-Point, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfa.html">Chapter 26. "Zfa" Extension for Additional Floating-Point Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zfinx.html">Chapter 27. "Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/c-st-ext.html">Chapter 28. "C" Extension for Compressed Instructions, Version 2.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zc.html">Chapter 29. "Zc*" Extension for Code Size Reduction, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/b-st-ext.html">Chapter 30. "B" Extension for Bit Manipulation, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/v-st-ext.html">Chapter 31. "V" Standard Extension for Vector Operations, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/scalar-crypto.html">Chapter 32. Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-crypto.html">Chapter 33. Cryptography Extensions: Vector Instructions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/unpriv-cfi.html">Chapter 34. Control-flow Integrity (CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/zilsd.html">Chapter 35. "Zilsd", "Zclsd" Extensions for Load/Store pair for RV32, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rv-32-64g.html">Chapter 36. RV32/64G Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/naming.html">Chapter 37. ISA Extension Naming Conventions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-eplan.html">Appendix A. RVWMO Explanatory Material, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/mm-formal.html">Appendix B. Formal Memory Model Specifications, Version 0.1</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/vector-examples.html">Appendix C. Vector Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/calling-convention.html">Appendix D. Calling Convention for Vector State (Not authoritative - Placeholder Only)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/bitmanip-examples.html">Appendix E. Bit Manipulation Extensions Assembly Code Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../unpriv/rationale.html">Appendix F. Historical Rationale for Extensions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Volume II: RISC-V Privileged ISA Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-contributors.html">Preamble</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-csrs.html">Chapter 2. Control and Status Registers (CSRs)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="machine.html">Chapter 3. Machine-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smstateen.html">Chapter 4. "Smstateen/Ssstateen" Extensions, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="indirect-csr.html">Chapter 5. "Smcsrind/Sscsrind" Indirect CSR Access, version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smepmp.html">Chapter 6. "Smepmp" Extension for PMP Enhancements, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcntrpmf.html">Chapter 7. "Smcntrpmf" Cycke and Instret Privilege Mode Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="rnmi.html">Chapter 8. "Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smcdeleg.html">Chapter 9. "Smcdeleg" Counter Delegation Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smdbltrp.html">Chapter 10. "Smdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="smctr.html">Chapter 11. "Smctr" Control Transfer Records Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="supervisor.html">Chapter 12. Supervisor-Level ISA, Version 1.13</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="sstc.html">Chapter 13. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="sscofpmf.html">Chapter 14. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="hypervisor.html">Chapter 15. "H" Extension for Hypervisor Support, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-cfi.html">Chapter 16. Control-flow Integrity(CFI)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="ssdbltrp.html">Chapter 17. "Ssdbltrp" Double Trap Extension, Version 1.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="zpm.html">Chapter 18. Pointer Masking Extensions, Version 1.0.0</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-insns.html">Chapter 19. RISC-V Privileged Instruction Set Listings</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-history.html">Chapter 20. History</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="priv-rationale.html">Appendix A. Historical Rationale for Extensions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Bibliography</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="../biblio/bibliography.html">Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+      <div class="tag-toggle-container">
+        <button
+          class="tag-toggle-btn"
+          type="button"
+          onclick="document.documentElement.classList.toggle('tag-highlight-enabled');"
+        >
+          <div class="tag-toggle-switch"></div>
+          <span id="tag-toggle-label">Normative Rules</span>
+        </button>
+      </div>
+    <div
+      class="toc"
+      data-title=""
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-isa-manual/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-isa-manual" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+        <a href="https://riscv.atlassian.net/wiki/external/NDdlNzQ3YTRiNWZkNDI2ZjlhY2M2YzFkMmExNjI5NTg" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+
+            <a href="../_attachments/riscv-privileged.pdf" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../../home/index.html">RISC-V Specifications</a></li>
+
+        <li>
+            <a href="../../../isa/index.html">ISA</a>
+        </li>
+              <li><a href="priv-index.html">Privileged</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="sect1">
+<h2 id="Sscofpmf"><a class="anchor" href="#Sscofpmf"></a>14.1. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The current Privileged specification defines mhpmevent CSRs to select and
+control event counting by the associated hpmcounter CSRs, but provides no
+standardization of any fields within these CSRs. For at least Linux-class
+rich-OS systems it is desirable to standardize certain basic features that are
+broadly desired (and have come up over the past year plus on RISC-V lists, as
+well as have been the subject of past proposals). This enables there to be
+standard upstream software support that eliminates the need for implementations
+to provide their own custom software support.</p>
+</div>
+<div class="paragraph">
+<p>This extension serves to accomplish exactly this within the existing mhpmevent
+CSRs (and correspondingly avoids the unnecessary creation of whole new sets of
+CSRs - past just one new CSR).</p>
+</div>
+<div class="paragraph">
+<p>This extension sticks to addressing two basic well-understood needs that have
+been requested by various people. To make it easy to understand the deltas from
+the current Priv 1.11/1.12 specs, this is written as the actual exact changes
+to be made to existing paragraphs of Priv spec text (or additional paragraphs
+within the existing text).</p>
+</div>
+<div class="paragraph">
+<p>The extension name is "Sscofpmf" ('Ss' for Privileged arch and Supervisor-level
+extensions, and 'cofpmf' for Count OverFlow and Privilege Mode Filtering).</p>
+</div>
+<div class="paragraph">
+<p>Note that the new count overflow interrupt will be treated as a standard local
+interrupt that is assigned to bit 13 in the mip/mie/sip/sie registers.</p>
+</div>
+<div class="sect2">
+<h3 id="14-1-1-count-overflow-control"><a class="anchor" href="#14-1-1-count-overflow-control"></a>14.1.1. Count Overflow Control</h3>
+<div class="paragraph">
+<p>The following bits are added to <code>mhpmevent</code>:</p>
+</div>
+<table class="tableblock frame-all grid-all stripes-even stretch">
+<colgroup>
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+<col style="width: 12.5%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">63</th>
+<th class="tableblock halign-center valign-top">62</th>
+<th class="tableblock halign-center valign-top">61</th>
+<th class="tableblock halign-center valign-top">60</th>
+<th class="tableblock halign-center valign-top">59</th>
+<th class="tableblock halign-center valign-top">58</th>
+<th class="tableblock halign-center valign-top">57</th>
+<th class="tableblock halign-center valign-top">56</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">OF</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">MINH</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">SINH</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">UINH</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">VSINH</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">VUINH</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>WPRI</em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>WPRI</em></p></td>
+</tr>
+</tbody>
+</table>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 15%;">
+<col style="width: 85%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Field</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OF</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Overflow status and interrupt disable bit that is set when counter overflows</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">MINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set, then counting of events in M-mode is inhibited</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set, then counting of events in S/HS-mode is inhibited</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set, then counting of events in U-mode is inhibited</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VSINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set, then counting of events in VS-mode is inhibited</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">VUINH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">If set, then counting of events in VU-mode is inhibited</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WPRI</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>WPRI</em></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reserved</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>For each <code>x</code>INH bit, if the associated privilege mode is not implemented,
+the bit is read-only zero.</p>
+</div>
+<div id="norm:mhpmevent-INH_op" class="paragraph">
+<p>Each of the five <code>x</code>INH bits, when set, inhibit counting of events while in
+privilege mode <code>x</code>. All-zeroes for these bits results in counting of events in
+all modes.</p>
+</div>
+<div class="paragraph">
+<p><span id="norm:mhpmevent-OF_op">The OF bit is set when the corresponding hpmcounter overflows, and remains set
+until written by software.</span> <span id="norm:hpmcounter_overflow">Since hpmcounter values are unsigned values,
+overflow is defined as unsigned overflow of the implemented counter bits.</span> Note
+that there is no loss of information after an overflow since the counter wraps
+around and keeps counting while the sticky OF bit remains set.</p>
+</div>
+<div class="paragraph">
+<p>If supervisor mode is implemented, the 32-bit scountovf register contains
+read-only shadow copies of the OF bits in all 29 mhpmevent registers.</p>
+</div>
+<div id="norm:count_overflow_interrupt" class="paragraph">
+<p>If an hpmcounter overflows while the associated OF bit is zero, then a "count
+overflow interrupt request" is generated. If the OF bit is one, then no
+interrupt request is generated. Consequently the OF bit also functions as a
+count overflow interrupt disable for the associated hpmcounter.</p>
+</div>
+<div id="norm:count_overflow_trigger" class="paragraph">
+<p>Count overflow never results from writes to the mhpmcounter<em>n</em> or
+mhpmevent<em>n</em> registers, only from hardware increments of counter registers.</p>
+</div>
+<div class="paragraph">
+<p>This count-overflow-interrupt-request signal is treated as a standard local
+interrupt that corresponds to bit 13 in the <code>mip</code>/<code>mie</code>/<code>sip</code>/<code>sie</code> registers.
+The <code>mip</code>/<code>sip</code> LCOFIP and <code>mie</code>/<code>sie</code> LCOFIE bits are, respectively, the
+interrupt-pending and interrupt-enable bits for this interrupt.
+('LCOFI' represents 'Local Count Overflow Interrupt'.)</p>
+</div>
+<div class="paragraph">
+<p><span id="norm:mhpmevent-OF_bit_Set">Generation of a count-overflow-interrupt request by an <code>hpmcounter</code> sets the
+associated OF bit.</span>
+<span id="norm:LCOFIP_op">When an OF bit is set, it eventually, but not necessarily immediately, sets
+the LCOFIP bit in the <code>mip</code>/<code>sip</code> registers.</span>
+The LCOFIP bit is cleared by software before servicing the count overflow
+interrupt resulting from one or more count overflows. The <code>mideleg</code> register controls the delegation of this interrupt to S-mode
+versus M-mode.#</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>There are not separate overflow status and overflow interrupt enable bits. In
+practice, enabling overflow interrupt generation (by clearing the OF bit) is
+done in conjunction with initializing the counter to a starting value. Once a
+counter has overflowed, it and the OF bit must be reinitialized before another
+overflow interrupt can be generated.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Software can distinguish newly overflowed counters (yet to be serviced by an
+overflow interrupt handler) from overflowed counters that have already been
+serviced or that are configured to not generate an interrupt on overflow, by
+maintaining a bit mask reflecting which counters are active and due to
+eventually overflow.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="14-1-2-supervisor-count-overflow-scountovf-register"><a class="anchor" href="#14-1-2-supervisor-count-overflow-scountovf-register"></a>14.1.2. Supervisor Count Overflow (<code>scountovf</code>) Register</h3>
+<div id="norm:scountovf_op" class="paragraph">
+<p>This extension adds the <code>scountovf</code> CSR,
+a 32-bit read-only register that contains shadow copies of
+the OF bits in the 29 mhpmevent CSRs (mhpmevent<em>3</em> - mhpmevent<em>31</em>) - where
+scountovf bit <em>X</em> corresponds to mhpmevent<em>X</em>.</p>
+</div>
+<div class="paragraph">
+<p>This register enables supervisor-level overflow interrupt handler software to
+quickly and easily determine which counter(s) have overflowed (without needing
+to make an execution environment call or series of calls ultimately up to
+M-mode).</p>
+</div>
+<div class="paragraph">
+<p><span id="norm:scountovf_smode_read_access_control">Read access to bit <em>X</em> is subject to the same mcounteren (or mcounteren and
+hcounteren) CSRs that mediate access to the hpmcounter CSRs by S-mode (or
+VS-mode).</span> <span id="norm:scountovf_mmode_read_access">In M-mode, scountovf bit <em>X</em> is always readable.</span> <span id="norm:scountovf_smode_read_access">In S/HS-mode, scountovf bit <em>X</em> is readable when mcounteren bit
+<em>X</em> is set, and otherwise reads as zero.</span> <span id="norm:scountovf_vsmode_read_access">Similarly, in VS mode, scountovf bit
+<em>X</em> is readable when mcounteren bit <em>X</em> and hcounteren bit <em>X</em> are both set,
+and otherwise reads as zero.</span></p>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="sstc.html">Chapter 13. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0</a></span>
+  <span class="next"><a href="hypervisor.html">Chapter 15. "H" Extension for Hypervisor Support, Version 1.0</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../../_/js/vendor/import.js"></script>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>
