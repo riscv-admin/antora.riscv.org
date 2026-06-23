@@ -1,6 +1,7 @@
 site:
   title: RISC-V Ratified Specifications Library
-  url: https://docs.riscv.org/reference/
+  #url: https://docs.riscv.org/reference/
+  url: https://riscv-admin.github.io/antora-dev.riscv.org
   start_page: home::index.adoc
   keys:
     # Top link shown above the left TOC navigation tree
@@ -652,6 +653,18 @@ antora:
   # Add section numbering — reuses the anchor defined above
   - require: ./riscv-extensions/section_numbering_extension.js
     numbering_rules: *numbering_rules
+  - require: ./riscv-extensions/page_title_fallback_extension.js
+  - require: "@cerbos/antora-llm-generator"
+    skippaths:
+      - "isa/v20240411/**"
+      - "isa/v20250508/**"
+      - "iommu/v20250828/**"
+      - "iommu/v20250620/**"
+      - "iommu/v20240911/**"
+      - "iommu/v20230605/**"
+      - "sbi/v2.0/**"
+      - "sbi/v1.0.0/**"
+      - "acpi-ffh/v1.0/**"
 
 # =============================================================================
 # UI
