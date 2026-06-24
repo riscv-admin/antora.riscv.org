@@ -1,0 +1,360 @@
+# 5.1. Interrupts for Machine and Supervisor Levels
+
+## [](#MSLevel)5.1\. Interrupts for Machine and Supervisor Levels
+
+The RISC-V Privileged Architecture defines several major identities in the range 0-15 for interrupts at a hart, including machine-level and supervisor-level external interrupts (numbers 11 and 9), machine- and supervisor-level timer interrupts (7 and 5), and machine- and supervisor-level software interrupts (3 and 1). Beyond these major labels, the _external_ interrupts at each privilege level are given secondary, minor identities by an external interrupt controller such as an APLIC or IMSIC, distinguishing interrupts from different devices or causes. These minor identities for external interrupts were covered in[Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC) and [Advanced Platform-Level Interrupt Controller (APLIC)](AdvPLIC.html#AdvPLIC) specifying the IMSIC and APLIC components.
+
+The Advanced Interrupt Architecture reserves another 24 major interrupt identities for additional _local interrupts_ that arise within or in close proximity to the hart, often for reporting errors. A mechanism is also defined that allows software to selectively delegate both local and custom interrupts to the next less-privileged level, or in some cases to inject entirely virtual interrupts into a less-privileged level.
+
+Lastly, an optional facility lets software assign priorities to major interrupts (such as the timer and software interrupts, and any local interrupts) such that they may mix with the priorities set for external interrupts by a PLIC, APLIC, or IMSIC.
+
+### [](#majorIntrs)5.1.1\. Defined major interrupts and default priorities
+
+[Table 1](#TablemajorIntrs) lists all the major interrupts currently defined for RISC-V harts that conform to this Advanced Interrupt Architecture (AIA). Besides the major interrupts specified by the RISC-V Privileged Architecture, the AIA adds interrupt numbers 35 and 43 as local interrupts for low- and high-priority _RAS events_.
+
+__Table 1\. The standard major interrupt codes, listed in default priority order__
+| Default priority order      | Major interrupt numbers                                                                                                                                                                                   | Description                              |
+| --------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+| Highest Lowest              | 43                                                                                                                                                                                                        | Local interrupt: high-priority RAS event |
+| 11, 3, 79, 1, 51210, 2, 613 | Machine interrupts: external, software, timerSupervisor interrupts: external, software, timerSupervisor guest external interruptVS interrupts: external, software, timerLocal interrupt: counter overflow |                                          |
+| 35                          | Local interrupt: low-priority RAS event                                                                                                                                                                   |                                          |
+
+The default priority order in [Table 1](#TablemajorIntrs) is applicable only when multiple major interrupts would trap to the same privilege mode. Interrupt traps to a more-privileged mode always have priority over traps to a less-privileged mode.
+
+__Table 2\. Categorization of current and future major interrupts.__
+| Major interrupt numbers | Category                                                                                 |                                        |
+| ----------------------- | ---------------------------------------------------------------------------------------- | -------------------------------------- |
+| 0-1213-15               | Not Local interruptsLocal interrupts                                                     | Assigned by thePrivileged Architecture |
+| 16-2324-3132-47≥ 48     | Local interrupts _Designated for custom use_Local interrupts _Designated for custom use_ |                                        |
+
+Of the major interrupts controlled by the base Privileged Architecture (numbers 0-15), the AIA categorizes the counter overflow interrupt (code 13) as a _local interrupt_. It is assumed furthermore that any future definitions for reserved interrupt numbers 14 and 15 will also be local interrupts. Besides the two RAS interrupts, the AIA additionally reserves major interrupt numbers in the ranges 16-23 and 32-47 for standard local interrupts that other RISC-V extensions may define. The remaining major interrupts allocated to the Privileged Architecture, numbers 0-12, are categorized as not local interrupts. Taken altogether,[Table 2](#TablemajorIntrCategories) summarizes the AIA’s categorization of all major interrupt identities.
+
+_RAS_ is an abbreviation for _Reliability, Availability, and Serviceability_. Typically a RAS event corresponds to the detection of corrupted data (e.g. as a result of a soft or hard error) and/or the use of such data. The high-priority RAS event local interrupt may, for example, signal an occurrence of an urgent uncorrected error that needs action from a RAS error handler to contain the error and, if possible, to recover from it. The low-priority RAS event local interrupt may, for example, be triggered by non-urgent deferred or corrected errors.
+
+The AIA does not itself require that detected RAS events trigger one of the two local interrupts defined for this purpose. Systems are free to report any or all RAS events another way, such as by external interrupts routed through an APLIC or IMSIC, or by custom interrupts.
+
+| |  In all likelihood, the method for reporting a particular RAS event will depend on where in the system the event is detected. The AIA defines local interrupt numbers for RAS events so systems have a standard way to report such events when detected locally at a hart, without depending solely on external or custom interrupts. As always, platform standards may further constrain how a system reports events, whether RAS events or other. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  For the standard local interrupts not defined by the base RISC-V Privileged Architecture (numbers 16-23 and 32-47), the current plan is to assign default priorities in the order shown in this table: Highest Lowest 47, 23, 46, 45, 22, 44,43, 21, 42, 41, 20, 40 11, 3, 79, 1, 51210, 2, 613 Machine interrupts: external, software, timerSupervisor interrupts: external, software, timerSupervisor guest external interruptVS interrupts: external, software, timerCounter overflow interrupt 39, 19, 38, 37, 18, 36,35, 17, 34, 33, 16, 32 Among interrupts 16-23, a higher interrupt number conveys higher default priority, and likewise for interrupts 32-47\. These two groups are interleaved together in the complete order, and the Privileged Architecture’s standard interrupts, 0-15, are inserted into the middle of the sequence. This proposed default priority order is arranged so that interrupts 0-31 can potentially be an adequate subset on their own for 32-bit RISC-V systems. In actuality, future RISC-V extensions may or may not stick to this plan for the default priority order of interrupts they define. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+| |  In addition to the existing major interrupts of[Table 1](#TablemajorIntrs), the following local interrupts are tentatively proposed, listed in order of decreasing default priority: 23 Bus or system error 45 Per-core high-power or over-temperature event 17 Debug/trace interrupt These local interrupts are expected to be specified by other RISC-V extensions. Be aware, this list is not final and may change as the relevant extensions are developed and ratified. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  If a future version of the RISC-V Privileged Architecture defines interrupt 0, the Advanced Interrupt Architecture needs it to have a default priority lower than certain external interrupts. See [5.1.2.2\. Machine top interrupt CSR (mtopi)](#mtopi)and [5.1.4.2\. Supervisor top interrupt CSR (stopi)](#stopi) on CSRs mtopi and stopi. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+Interrupt numbers 24-31 and 48 and higher are all designated for custom use. If a hart implements any custom interrupts, their positions in the default priority order must be documented for the hart.
+
+| |  While many of the standard registers such as mip and mie have space for major interrupts only in the range 0-63, custom interrupts with numbers 64 and above are conceivable with added custom support. CSRs mtopi([5.1.2.2\. Machine top interrupt CSR (mtopi)](#mtopi)) and stopi ([5.1.4.2\. Supervisor top interrupt CSR (stopi)](#stopi)) allow for major interrupt numbers potentially as large as 4095. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+When a hart supports the arbitrary configuration of interrupt priorities by software (described in later sections), the default priority order still remains relevant for breaking ties when two interrupt sources are assigned the same priority number.
+
+### [](#5-1-2-interrupts-at-machine-level)5.1.2\. Interrupts at machine level
+
+For whichever standard local interrupts are implemented, the corresponding bits in CSRs `mip` and `mie` must be writable, and the corresponding bits in `mideleg` (if that CSR exists because supervisor mode is implemented) must each either be writable or be hardwired to zero. An occurrence of a local interrupt event causes the interrupt-pending bit in `mip` to be set to one. This bit then remains set until cleared by software.
+
+As established by the base RISC-V Privileged Architecture, an interrupt traps to M-mode whenever all of the following are true: (a) either the current privilege mode is M-mode and machine-level interrupts are enabled by the MIE bit of `mstatus`, or the current privilege mode has less privilege than M-mode; (b) matching bits in `mip` and `mie` are both one; and (c) if `mideleg` exists, the corresponding bit in `mideleg` is zero.
+
+When multiple interrupt causes are ready to trigger simultaneously, the interrupt taken first is determined by priority order, which may be the default order specified in the previous section [5.1.1\. Defined major interrupts and default priorities](#majorIntrs), or may be a modified order configured by software.
+
+#### [](#intrPrios-M)5.1.2.1\. Configuring priorities of major interrupts at machine level
+
+The machine-level priorities for major interrupts 0-63 may be configured by a set of registers accessed through the `miselect` and `mireg` CSRs introduced in[Control and Status Registers (CSRs) Added to Harts](CSRs.html#CSRs). When XLEN = 32, sixteen of these registers are defined, listed below with their `miselect` addresses:
+
+| 0x30 | iprio0  |
+| ---- | ------- |
+| 0x31 | iprio1  |
+| …​   | …​      |
+| 0x3F | iprio15 |
+
+Each register controls the priorities of four interrupts, with one 8-bit byte per interrupt. For a number  in the range 0-15, register `iprio`  controls the priorities of interrupts  through , formatted as follows:
+
+| bits 7:0   | Priority number for interrupt |
+| ---------- | ----------------------------- |
+| bits 15:8  | Priority number for interrupt |
+| bits 23:16 | Priority number for interrupt |
+| bits 31:24 | Priority number for interrupt |
+
+When XLEN = 64, only the even-numbered registers exist:
+
+| 0x30 | iprio0  |
+| ---- | ------- |
+| 0x32 | iprio2  |
+| …​   | …​      |
+| 0x3E | iprio14 |
+
+Each register controls the priorities of eight interrupts. For even  in the range 0-14, register `iprio` controls the priorities of interrupts through , formatted as follows:
+
+| bits 7:0   | Priority number for interrupt |
+| ---------- | ----------------------------- |
+| bits 15:8  | Priority number for interrupt |
+| bits 23:16 | Priority number for interrupt |
+| bits 31:24 | Priority number for interrupt |
+| bits 39:32 | Priority number for interrupt |
+| bits 47:40 | Priority number for interrupt |
+| bits 55:48 | Priority number for interrupt |
+| bits 63:56 | Priority number for interrupt |
+
+When XLEN = 64 and `miselect` is an odd value in the range `0x31`\-`0x3F`, attempting to access `mireg` raises an illegal instruction exception.
+
+The valid registers `iprio0`\-`iprio15` are known collectively as the `_iprio_` _array_ for machine level.
+
+The width of priority numbers for external interrupts is _IPRIOLEN_. This parameter is affected by the main external interrupt controller for the hart, whether a PLIC, APLIC, or IMSIC.
+
+For an APLIC, IPRIOLEN is in the range 1-8 as specified in [Advanced Platform-Level Interrupt Controller (APLIC)](AdvPLIC.html#AdvPLIC) on the APLIC.
+
+For an IMSIC, IPRIOLEN is 6, 7, or 8\. IPRIOLEN may be 6 only if the number of external interrupt identities implemented by the IMSIC is 63\. IPRIOLEN may be 7 only if the number of external interrupt identities implemented by the IMSIC is no more than 127\. IPRIOLEN may be 8 for any IMSIC, regardless of the number of external interrupt identities implemented.
+
+Each byte of a valid `iprio`  register is either a read-only zero or a **WARL** unsigned integer field implementing exactly IPRIOLEN bits. For a given interrupt number, if the corresponding bit in `mie` is read-only zero, then the interrupt’s priority number in the `iprio` array must be read-only zero as well. The priority number for a machine-level external interrupt (bits 31:24 of register `iprio2`) must also be read-only zero. Aside from these two restrictions, implementations may freely choose which priority number fields are settable and which are read-only zeros. If all bytes in the `iprio` array are read-only zeros, priorities can be configured only for external interrupts, not for any other interrupts.
+
+| |  Platform standards may require that priorities be configurable for certain interrupt causes. |
+| ----------------------------------------------------------------------------------------------- |
+
+The `iprio` array accessed via `miselect` and `mireg` affects the prioritization of interrupts only when they trap to M-mode. When an interrupt’s priority number in the array is zero (either read-only zero or set to zero), its priority is the default order from [5.1.1\. Defined major interrupts and default priorities](#majorIntrs). Setting an interrupt’s priority number instead to a nonzero value gives that interrupt nominally the same priority as a machine-level external interrupt with priority number . For a major interrupt that defaults to a higher priority than machine external interrupts, setting its priority number to a nonzero value _lowers_ its priority. For a major interrupt that defaults to a lower priority than machine external interrupts, setting its priority number to a nonzero value _raises_ its priority. When two interrupt causes have been assigned the same nominal priority, ties are broken by the default priority order. [Table 3](#TableintrPrios-M) summarizes the effect of priority numbers on interrupt priority.
+
+| |  When a hart has an IMSIC supporting more than 255 minor identities for external interrupts, the only non-default priorities that can be configured for other interrupts are those corresponding to external interrupt identities 1-255, not those of identities 256 or higher. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+__Table 3\. Effect of the machine-level iprio array on the priorities of interrupts taken in M-mode. For interrupts with the same priority number, the default order of [5.1.1\. Defined major interrupts and default priorities](#majorIntrs) prevails.__
+| Interrupts with default priority above machine external interrupts | Machine external interrupts                  | Interrupts with default priority below machine external interrupts |                                              |
+| ------------------------------------------------------------------ | -------------------------------------------- | ------------------------------------------------------------------ | -------------------------------------------- |
+| Priorityorder                                                      | Priority number in machine-level iprio array | Priority number from interrupt controller (APLIC or IMSIC)         | Priority number in machine-level iprio array |
+| Highest                                                            | 0                                            |                                                                    |                                              |
+| 12…​254255                                                         | 12…​254255                                   | 12…​254255                                                         |                                              |
+| 256 and above (IMSIC only)                                         |                                              |                                                                    |                                              |
+| Lowest                                                             | 0                                            |                                                                    |                                              |
+
+| |  Implementing the priority configurability of this section requires that a RISC-V hart’s external interrupt controller communicate to the hart not only the existence of a pending-and-enabled external interrupt but also the interrupt’s priority number. Typically this implies that the width of the connection for signaling an external interrupt to the hart is not just a single wire as usual but now wires. It is expected that many systems will forego priority configurability of major interrupts and simply have the array be all read-only zeros. Systems that need this priority configurability can try to arrange for each hart’s external interrupt controller to be relatively close to the hart, by, for example, limiting the system to at most a few small cores connected to an APLIC, or alternatively by giving every hart its own IMSIC. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+If supported, setting the priority number for supervisor-level external interrupts (bits 15:8 of `iprio2`) to a nonzero value  has the effect of giving the entire category of supervisor external interrupts nominally the same priority as a machine external interrupt with priority number . But note that this applies only to the case when supervisor external interrupts trap to M-mode.
+
+(Because supervisor guest external interrupts and VS-level external interrupts are required to be delegated to supervisor level when the H extension is implemented, the machine-level priority numbers for these interrupts are always ignored and should be read-only zeros.)
+
+If the system has an original PLIC for backward compatibility with older software, reset should initialize the machine-level `iprio` array to all zeros.
+
+#### [](#mtopi)5.1.2.2\. Machine top interrupt CSR (`mtopi`)
+
+Machine-level CSR `mtopi` is read-only with width MXLEN. A read of `mtopi` returns information about the highest-priority pending-and-enabled interrupt for machine level, in this format:
+
+| bits 27:16 | IID   |
+| ---------- | ----- |
+| bits 7:0   | IPRIO |
+
+All other bits of `mtopi` are reserved and read as zeros.
+
+The value of `mtopi` is zero unless there is an interrupt pending in `mip` and enabled in `mie` that is not delegated to a less-privileged level. When there is a pending-and-enabled major interrupt for machine level, field IID (Interrupt Identity) is the major identity number of the highest-priority interrupt, and field IPRIO indicates its priority.
+
+If all bytes of the machine-level `iprio` array are read-only zeros, a simplified implementation of field IPRIO is allowed in which its value is always 1 whenever `mtopi` is not zero.
+
+Otherwise, when `mtopi` is not zero, if the priority number for the reported interrupt is in the range 1 to 255, IPRIO is simply that number. If the interrupt’s priority number is zero or greater than 255, IPRIO is set to either 0 or 255 as follows:
+
+* If the interrupt’s priority number is greater than 255, then IPRIO is 255 (lowest representable priority).
+* If the interrupt’s priority number is zero and interrupt number IID has a default priority higher than a machine external interrupt, then IPRIO is 0 (highest priority).
+* If the interrupt’s priority number is zero and interrupt number IID has a default priority lower than a machine external interrupt, then IPRIO is 255 (lowest representable priority).
+
+| |  To ensure that mtopi is never zero when an interrupt is pending and enabled for machine level, if major interrupt 0 can trap to M-mode, it must have a default priority lower than a machine external interrupt. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The value of `mtopi` is not affected by the global interrupt enable MIE in CSR `mstatus`.
+
+The RISC-V Privileged Architecture ensures that, when the value of `mtopi` is not zero, a trap is taken to M-mode for the interrupt indicated by field IID if either the current privilege mode is M and `mstatus`.MIE is one, or the current privilege mode has less privilege than M-mode. The trap itself does not cause the value of `mtopi` to change.
+
+The following pseudocode shows how a machine-level trap handler might read `mtopi` to avoid redundant restoring and saving of processor registers when an interrupt arrives during the handling of another trap (either a synchronous exception or an earlier interrupt):
+
+```c
+save processor registers
+i = read CSR mcause
+if (i >= 0) {
+    handle synchronous exception i
+    restore mstatus if necessary
+}
+if (mstatus.MPIE == 1) {
+    loop {
+        i = read CSR mtopi
+        if (i == 0) exit loop
+        i = i>>16
+        call the interrupt handler for major interrupt i
+    }
+}
+restore processor registers
+return from trap
+```
+
+(This example can be further optimized, but with an increase in complexity.)
+
+In order for this algorithm to function correctly, `mstatus`.MPIE must be set to 1 before executing an MRET that changes the privilege mode.
+
+| |  Assuming mstatus is saved and restored by trap handlers at entry and exit as is common, it is sufficient to set mstatus.MPIE = 1 only once, before the first use of MRET that changes privilege mode. After an MRET, a trap back to M-mode will restore mstatus.MPIE = 1; and if the trap handler preserves mstatus, it will still be true before the next MRET that ends the handler. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#virtIntrs-S)5.1.3\. Interrupt filtering and virtual interrupts for supervisor level
+
+When supervisor mode is implemented, the Advanced Interrupt Architecture adds a facility for software filtering of interrupts and for virtual interrupts, making use of new CSRs `mvien` (Machine Virtual Interrupt Enables) and `mvip` (Machine Virtual Interrupt-Pending bits). _Interrupt filtering_permits a supervisor-level interrupt (SEI or SSI) or local or custom interrupt to trap to M-mode and then be selectively delegated by software to supervisor level, even while the corresponding bit in `mideleg`remains zero. The same hardware may also, under the right circumstances, allow machine level to assert _virtual interrupts_ to supervisor level that have no connection to any real interrupt events.
+
+Just as with CSRs `mip`, `mie`, and `mideleg`, each bit of registers `mvien` and `mvip` corresponds with an interrupt number in the range 0-63\. When a bit in `mideleg` is zero and the matching bit in `mvien` is one, then the same bit position in `sip` is an alias for the corresponding bit in `mvip`. A bit in `sip` is read-only zero when the corresponding bits in `mideleg` and `mvien` are both zero. The combined effects of `mideleg` and `mvien` on `sip` and `sie` are summarized in[Table 4](#TableintrFilteringForS).
+
+__Table 4\. The effects of mideleg and mvien on sip and sie (except for the H extension’s VS-level interrupts, which appear in hip and hie instead of sip and sie). A bit in mvien can be set to 1 only for major interrupts 1, 9, and 13-63\. For interrupts 0-12, some aliases of mip bits in sip may be read-only copies, as specified by the base Privileged Architecture.__
+| mideleg\[ \] | mvien\[ \] | sip\[ \]           | sie\[ \]          |
+| ------------ | ---------- | ------------------ | ----------------- |
+| 0            | 0          | Read-only 0        | Read-only 0       |
+| 0            | 1          | Alias of mvip\[ \] | Writable          |
+| 1            | \-         | Alias of mip\[ \]  | Alias of mie\[ \] |
+
+| |  The name of CSR mvien is not "mvie" because the function of this register is more analogous to mcounteren than to mie. The bits of mvien control whether the virtual interrupt-pending bits in register mvip are active and visible at supervisor level. This is different than how the usual interrupt-enable bits (such as in mie) mask pending interrupts. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+A bit in `sie` is writable if and only if the corresponding bit is set in either `mideleg` or `mvien`. When an interrupt is delegated by `mideleg`, the writable bit in `sie` is an alias of the corresponding bit in `mie`; else it is an independent writable bit. As usual, bits that are not writable in `sie` must be read-only zeros.
+
+If a bit of `mideleg` is zero and the corresponding bit in `mvien` is changed from zero to one, then the value of the matching bit in `sie` becomes UNSPECIFIED. Likewise, if a bit of `mvien` is one and the corresponding bit in `mideleg` is changed from one to zero, the value of the matching bit in `sie` again becomes UNSPECIFIED.
+
+For interrupt numbers 13-63, implementations may freely choose which bits of `mvien` are writable and which bits are read-only zero or one. If such a bit in `mvien` is read-only zero (preventing the virtual interrupt from being enabled), the same bit should be read-only zero in `mvip`. All other bits for interrupts 13-63 must be writable in `mvip`.
+
+| |  Platform standards or other extensions may require that bits of mvien for certain interrupt causes be writable, or be read-only zero or one. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The bits of `mvien` for supervisor software interrupts (code 1) and supervisor external interrupts (code 9) are each either writable or read-only zero; they cannot be read-only ones. The other bits of `mvien` for interrupts 0-12 are reserved and must be read-only zeros.
+
+It is strongly recommended that bit 9 of `mvien` be writable. Furthermore, if bit 1 (SSIP) of `mip` can be set automatically by an interrupt controller and not just by explicit writes to `mip` or `sip`, it is strongly recommended that bit 1 of `mvien` also be writable.
+
+When bit 1 of `mvien` is zero, bit 1 of `mvip` is an alias of the same bit (SSIP) of `mip`. But when bit 1 of `mvien` is one, bit 1 of `mvip` is a separate writable bit independent of `mip`.SSIP. When the value of bit 1 of `mvien` is changed from zero to one, the value of bit 1 of `mvip` becomes UNSPECIFIED.
+
+Bit 5 of `mvip` is an alias of the same bit (STIP) in `mip` when that bit is writable in `mip`. When STIP is not writable in `mip` (such as when `menvcfg`.STCE = 1), bit 5 of `mvip` is read-only zero.
+
+When bit 9 of `mvien` is zero, bit 9 of `mvip` is an alias of the software-writable bit 9 of `mip` (SEIP). But when bit 9 of `mvien` is one, bit 9 of `mvip` is a writable bit independent of `mip`.SEIP. Unlike for bit 1, changing the value of bit 9 of `mvien`does not affect the value of bit 9 of `mvip`.
+
+| |  The base Privileged Architecture specifies unusual read/write behavior for what it calls the software-writable SEIP bit of register mip. When bit 9 of mvien is zero, bit 9 of mvip makes the software-writable SEIP bit of mip directly accessible by itself. Furthermore, as explained below, setting bit 9 of mvien to one separates the software-writable SEIP bit from mip entirely, so it is then just a writable bit in mvip. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+Except for bits 1, 5, and 9 as specified above, the bits of `mvip` in the range 12:0 are reserved and must be read-only zeros.
+
+The value of bit 9 of `mvien` has some additional consequences for supervisor external interrupts:
+
+* When bit 9 of `mvien` is zero, the software-writable SEIP bit (bit 9 of `mvip`) interacts with reads and writes of `mip` in the way specified by the base RISC-V Privileged Architecture. In particular, for most purposes, the value of bit 9 of `mvip` is logically ORed into the readable value of `mip`.SEIP. But when bit 9 of `mvien` is one, bit SEIP in `mip` is read-only and does not include the value of bit 9 of `mvip`. Rather, the value of `mip`.SEIP is simply the supervisor external interrupt signal from the hart’s external interrupt controller (APLIC or IMSIC).
+* If the hart has an IMSIC, then when bit 9 of `mvien` is one, attempts from S-mode to explicitly access the supervisor-level interrupt file raise an illegal instruction exception. The exception is raised for attempts to access CSR `stopei`, or to access `sireg` when `siselect` has a value in the range `0x70`\-`0xFF`. Accesses to guest interrupt files (through `vstopei` or `viselect`+`vsireg`) are not affected.
+
+When the H extension is implemented, if a bit is zero in the same position in both `mideleg` and `mvien`, then that bit is read-only zero in `hideleg` (in addition to being read-only zero in `sip`, `sie`, `hip`, and `hie`). But if a bit for one of interrupts 13-63 is a one in either `mideleg` or `mvien`, then the same bit in `hideleg` may be writable or may be read-only zero, depending on the implementation. No bits in `hideleg` are ever read-only ones. The H extension further constrains bits 12:0 of `hideleg`.
+
+When supervisor mode is implemented, the minimal required implementation of `mvien` and `mvip` has all bits being read-only zeros except for `mvip` bits 1 and 9, and sometimes bit 5, each of which is an alias of an existing writable bit in `mip`. (Although, as noted, it is strongly recommended that bit 9 of `mvien` also be writable.) When supervisor mode is not implemented, registers `mvien` and `mvip` do not exist.
+
+### [](#intrs-S)5.1.4\. Interrupts at supervisor level
+
+If a standard local interrupt becomes pending (= 1) in `sip`, the bit in `sip` is writable and will remain set until cleared by software.
+
+Just as for machine level, the taking of interrupt traps at supervisor level remains essentially the same as specified by the base RISC-V Privileged Architecture. An interrupt traps into S-mode (or HS-mode) whenever all of the following are true: (a) either the current privilege mode is S-mode and supervisor-level interrupts are enabled by the SIE bit of `sstatus`, or the current privilege mode has less privilege than S-mode; (b) matching bits in `sip` and `sie` are both one, or, if the H extension is implemented, matching bits in `hip` and `hie` are both one; and (c) if the H extension is implemented, the corresponding bit in `hideleg` is zero.
+
+#### [](#intrPrios-S)5.1.4.1\. Configuring priorities of major interrupts at supervisor level
+
+Supervisor-level priorities for major interrupts 0-63 are optionally configurable in an array of supervisor-level `iprio`  registers accessed through `siselect` and `sireg`. This array has the same structure when XLEN = 32 or 64 as does the machine-level `iprio` array. To summarize, when XLEN = 32, there are sixteen 32-bit registers with these `siselect` addresses:
+
+| 0x30 | iprio0  |
+| ---- | ------- |
+| 0x31 | iprio1  |
+| …​   | …​      |
+| 0x3F | iprio15 |
+
+Each register controls the priorities of four interrupts, one 8-bit byte per interrupt. When XLEN = 64, only the even-numbered registers exist:
+
+| 0x30 | iprio0  |
+| ---- | ------- |
+| 0x32 | iprio2  |
+| …​   | …​      |
+| 0x3E | iprio14 |
+
+Each register controls the priorities of eight interrupts. If XLEN = 64 and `siselect` is an odd value in the range `0x31`\-`0x3F`, attempting to access `sireg` raises an illegal instruction exception.
+
+The valid registers `iprio0`\-`iprio15` are known collectively as the `_iprio_` _array_ for supervisor level. Each byte of a valid `iprio`  register is either a read-only zero or a **WARL** unsigned integer field implementing exactly IPRIOLEN bits.
+
+For a given interrupt number, if the corresponding bit is not writable either in `sie` or, if the H extension is implemented, in `hie`, then the interrupt’s priority number in the supervisor-level `iprio` array must be read-only zero as well. The priority number for a supervisor-level external interrupt (bits 15:8 of `iprio2`) must also be read-only zero. Aside from these two restrictions, implementations may freely choose which priority number fields are settable and which are read-only zeros.
+
+| |  As always, platform standards may require that priorities be configurable for certain interrupt causes. |
+| ---------------------------------------------------------------------------------------------------------- |
+
+| |  It is expected that many higher-end systems will not support the ability to configure the priorities of major interrupts at supervisor level as described in this section. Linux in particular is not designed to take advantage of such facilities if provided. The iprio array must be accessible but may simply be all read-only zeros. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The supervisor-level `iprio` array accessed via `siselect` and `sireg` affects the prioritization of interrupts only when they trap to S-mode. When an interrupt’s priority number in the array is zero (either read-only zero or set to zero), its priority is the default order from [5.1.1\. Defined major interrupts and default priorities](#majorIntrs). Setting an interrupt’s priority number instead to a nonzero value  gives that interrupt nominally the same priority as a supervisor-level external interrupt with priority number . For an interrupt that defaults to a higher priority than supervisor external interrupts, setting its priority number to a nonzero value lowers its priority. For an interrupt that defaults to a lower priority than supervisor external interrupts, setting its priority number to a nonzero value raises its priority. When two interrupt causes have been assigned the same nominal priority, ties are broken by the default priority order. [Table 5](#TableintrPrios-S) summarizes the effect of priority numbers on interrupt priority.
+
+If supported, setting the priority number for VS-level external interrupts (bits 23:16 of `iprio2`) to a nonzero value  has the effect of giving the entire category of VS external interrupts nominally the same priority as a supervisor external interrupt with priority number , when VS external interrupts trap to S-mode.
+
+__Table 5\. Effect of the supervisor-level iprio array on the priorities of interrupts taken in S-mode. For interrupts with the same priority number, the default order of [5.1.1\. Defined major interrupts and default priorities](#majorIntrs) prevails.__
+| Interrupts with default priority above supervisor external interrupts | Supervisor external interrupts                  | Interrupts with default priority below supervisor external interrupts |                                                 |
+| --------------------------------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------- | ----------------------------------------------- |
+| Priorityorder                                                         | Priority number in supervisor-level iprio array | Priority number from interrupt controller (APLIC or IMSIC)            | Priority number in supervisor-level iprio array |
+| Highest                                                               | 0                                               |                                                                       |                                                 |
+| 12…​254255                                                            | 12…​254255                                      | 12…​254255                                                            |                                                 |
+| 256 and above (IMSIC only)                                            |                                                 |                                                                       |                                                 |
+| Lowest                                                                | 0                                               |                                                                       |                                                 |
+
+If bit 9 for a supervisor external interrupt (SEI) is one in `mideleg` or `mvien` and in `mvip`, causing `sip`.SEIP to be one, but there is no supervisor-level interrupt from the hart’s external interrupt controller (APLIC or IMSIC), then a priority number for the SEI is not supplied by the external interrupt controller as usual. In that case, the SEI is assigned a priority number of 256.
+
+If the system has an original PLIC for backward compatibility with older software, reset should initialize the supervisor-level `iprio` array to all zeros.
+
+#### [](#stopi)5.1.4.2\. Supervisor top interrupt CSR (`stopi`)
+
+Supervisor-level CSR `stopi` is read-only with width SXLEN. A read of `stopi` returns information about the highest-priority pending-and-enabled interrupt for supervisor level, in this format:
+
+| bits 27:16 | IID   |
+| ---------- | ----- |
+| bits 7:0   | IPRIO |
+
+All other bits of `stopi` are reserved and read as zeros.
+
+The value of `stopi` is zero unless: (a) there is an interrupt that is both pending in `sip` and enabled in `sie`, or, if the H extension is implemented, both pending in `hip` and enabled in `hie`; and (b) the interrupt is not delegated to a less-privileged level (by `hideleg`, if the H extension is implemented). When there is a pending-and-enabled major interrupt for supervisor level, field IID is the major identity number of the highest-priority interrupt, and field IPRIO indicates its priority.
+
+If all bytes of the supervisor-level `iprio` array are read-only zeros, a simplified implementation of field IPRIO is allowed in which its value is always 1 whenever `stopi` is not zero.
+
+Otherwise, when `stopi` is not zero, if the priority number for the reported interrupt is in the range 1 to 255, IPRIO is simply that number. If the interrupt’s priority number is zero or greater than 255, IPRIO is set to either 0 or 255 as follows:
+
+* If the interrupt’s priority number is greater than 255, then IPRIO is 255 (lowest representable priority).
+* If the interrupt’s priority number is zero and interrupt number IID has a default priority higher than a supervisor external interrupt, then IPRIO is 0 (highest priority).
+* If the interrupt’s priority number is zero and interrupt number IID has a default priority lower than a supervisor external interrupt, then IPRIO is 255 (lowest representable priority).
+
+| |  To ensure that stopi is never zero when an interrupt is pending and enabled for supervisor level, if major interrupt 0 can trap to S-mode, it must have a default priority lower than a supervisor external interrupt. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The value of `stopi` is not affected by the global interrupt enable SIE in CSR `sstatus`.
+
+The RISC-V Privileged Architecture ensures that, when the value of `stopi` is not zero, a trap is taken to S-mode for the interrupt indicated by field IID if either the current privilege mode is S and `sstatus`.SIE is one, or the current privilege mode has less privilege than S-mode. The trap itself does not cause the value of `stopi` to change.
+
+The following pseudocode shows how a supervisor-level trap handler might read `stopi` to avoid redundant restoring and saving of processor registers when an interrupt arrives during the handling of another trap (either a synchronous exception or an earlier interrupt):
+
+```c
+save processor registers
+i = read CSR scause
+if (i >= 0) {
+    handle synchronous exception i
+    restore sstatus if necessary
+}
+if (sstatus.SPIE == 1) {
+    loop {
+        i = read CSR stopi
+        if (i == 0) exit loop
+        i = i>>16
+        call the interrupt handler for major interrupt i
+    }
+}
+restore processor registers
+return from trap
+```
+
+(This example can be further optimized, but with an increase in complexity.)
+
+In order for this algorithm to function correctly, `sstatus`.SPIE must be set to 1 before executing an SRET that changes the privilege mode.
+
+| |  Assuming sstatus is saved and restored by trap handlers at entry and exit as is common, it is sufficient to set sstatus.SPIE = 1 only once, before the first use of SRET that changes privilege mode. After an SRET, a trap back to S-mode will restore sstatus.SPIE = 1; and if the trap handler preserves sstatus, it will still be true before the next SRET that ends the handler. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#5-1-5-wfi-wait-for-interrupt-instruction)5.1.5\. WFI (Wait for Interrupt) instruction
+
+The RISC-V Privileged Architecture specifies that instruction WFI (Wait for Interrupt) may suspend execution at a hart until an interrupt is pending for the hart. The Advanced Interrupt Architecture (AIA) redefines when execution must resume following a WFI.
+
+According to the base RISC-V Privileged Architecture, instruction execution must resume from a WFI whenever any interrupt is both pending and enabled in CSRs `mip` and `mie`, ignoring any delegation indicated by `mideleg`. With the AIA, this succinct rule is no longer appropriate, due to the mechanisms the AIA adds for virtual interrupts. Instead, execution must resume from a WFI whenever an interrupt is pending at any privilege level (regardless of whether the interrupt privilege level is higher or lower than the hart’s current privilege mode).
+
+An interrupt is pending at machine level if register `mtopi` is not zero. If S-mode is implemented, an interrupt is pending at supervisor level if `stopi` is not zero. And if the H extension is implemented, an interrupt is pending at VS level if `vstopi` ([Virtual supervisor top interrupt CSR (vstopi)](VSLevel.html#vstopi)) is not zero.
+
+| |  The AIA’s rule for WFI gives the same behavior as the base Privileged Architecture’s rule when mvien \= 0 and, if the H extension is implemented, also hvien \= 0 and hvictl.VTI = 0, thus disabling all virtual interrupts not visible in mip. (The AIA’s hypervisor registers are covered in the next chapter, "Interrupts for Virtual Machines (VS Level)".) |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

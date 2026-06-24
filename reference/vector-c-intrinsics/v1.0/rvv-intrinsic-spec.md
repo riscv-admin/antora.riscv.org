@@ -1,0 +1,664 @@
+# 1.1. Introduction
+
+## [](#1-1-introduction)1.1\. Introduction
+
+The RISC-V vector C intrinsics provide users interfaces in the C language level to directly leverage the RISC-V "V" extension \[[1](bibliography.html#bib-riscv-v-spec)\] (also abbreviated as "RVV"), with assistance from the compiler in handling instruction scheduling and register allocation. The intrinsics also aim to free users from responsibility of maintaining the correct configuration settings for the vector instruction executions.
+
+This document uses the term "RVV" as an abbreviation for the RISC-V "V" extension. This document uses the term "the RVV specification" to indicate the RISC-V "V" extension specification.
+
+## [](#1-2-test-macro)1.2\. Test macro
+
+The `__riscv_v_intrinsic` macro is the C macro to test the compiler’s support for the RISC-V "V" extension intrinsics.
+
+This macro should be defined even if the vector extension is not enabled.
+
+The value of the test macro is defined as its version, which is computed using the following formula. The formula is identical to what is defined in the RISC-V C API specification \[[2](bibliography.html#bib-riscv-c-api)\].
+
+<MAJOR_VERSION> * 1,000,000 + <MINOR_VERSION> * 1,000 + <REVISION_VERSION>
+
+For example, the v1.0 version should define the macro with value `1000000`.
+
+## [](#1-3-header-file-inclusion)1.3\. Header file inclusion
+
+To leverage the intrinsics in the toolchain, the header `<riscv_vector.h>` needs to be included. We suggest guarding the inclusion with the test macro.
+
+```c
+#if __riscv_v_intrinsic >= 1000000
+#include <riscv_vector.h>
+#endif /* __riscv_v_intrinsic */
+```
+
+## [](#1-4-availability)1.4\. Availability
+
+With `<riscv_vector.h>` included, availability of intrinsic variants depends on the required architecture of their corresponding vector instructions. The supported architecture is specified to the compiler using the `-march` option \[[3](bibliography.html#bib-riscv-guide-llvm)\]\[[4](bibliography.html#bib-riscv-v-gcc)\].
+
+The standard vector extensions \[[1](bibliography.html#bib-riscv-v-spec)\] provides a set of smaller extensions for embedded use. Please check out the `Zve` extensions \[[1](bibliography.html#bib-riscv-v-spec)\] for the varying degree of support.
+
+For example, RVV type `vint64m1_t` and `__riscv_vle64_v_i64m1` are not available under architecture `rv64gc_zve32x`.
+
+## [](#control-of-vector-programming-model)1.5\. Control of the vector extension programming model
+
+The intrinsics allow users to control the fields in `vtype`, as well as the rounding modes for fixed-point (`vxrm`) and floating-point (`frm`) vector computations.
+
+In this chapter, we cover how the intrinsics embed the control of `vtype` fields in the function names. Please see [_1.6\. Naming scheme_](#naming-scheme) for the rules described in this chapter.
+
+### [](#1-5-1-control-of-effective-element-width-eew-and-effective-lmul-emul)1.5.1\. Control of effective element width (EEW) and effective LMUL (EMUL)
+
+The RISC-V vector intrinsics' data types are strongly-typed. The vector intrinsics encode the EEW (effective-element-width) and EMUL (effective LMUL) of the destination vector register in the suffix of the function name. Users can expect the results of the vector instruction intrinsics are computed under the specified EEW and EMUL.
+
+To see the full list of data types for the intrinsics, please see [_1.7\. Type system_](#type-system).
+
+In the following example, the intrinsic will produce the semantic of a `vadd.vv` instruction, with source vector operands of `EEW=32` and `EMUL=1`, which can be observed through provided RVV data type; and produce results for the destination vector operand with `EEW=32` and `EMUL=1`.
+
+```c
+vint32m1_t __riscv_vadd_vv_i32m1(vint32m1_t vs2, vint32m1_t vs1, size_t vl);
+```
+
+In the following example, the intrinsic will produce the semantic of a `vadd.vv` instruction, with source vector operands of `EEW=16` and `EMUL=1/2`, which can be observed through provided RVV data type; and produce results for the destination vector operand with `EEW=32` and `EMUL=1`.
+
+```c
+vint32m1_t __riscv_vwadd_vv_i32m1(vint16mf2_t vs2, vint16mf2_t vs1, size_t vl);
+```
+
+### [](#control-of-vl)1.5.2\. Control of number of elements to be processed
+
+The intrinsics do not directly expose the vector length control register to the intrinsics programmer. The intrinsics programmer specifies an "application vector length (AVL)" using the argument `size_t vl`. The implementation is responsible to set the correct value into the underlying vector length control register (`vl`) given the informed AVL.
+
+| |  The intrinsics for instructions that behave the same with different vl settings (e.g. vmv.x.s) do not have a size\_t vl argument. |
+| ------------------------------------------------------------------------------------------------------------------------------------ |
+
+| |  The actual value written to the vl control register is an implementation defined behavior and is typically not known until runtime. The actual setting of vl, given the provided AVL through the parameter, follows the rules in the RVV specification. The number of elements processed can be obtained through the _\_riscv\_vsetvl_\* intrinsics [1.8.1\. vsetvl](#pseudo-vsetvl). |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#control-of-masked)1.5.3\. Control of vector masking
+
+Instructions that are available for masking have masked variant intrinsics.
+
+The intrinsics fuse the control of vector masking (`vm`) together with the control for policy behavior (`vta`, `vma`) in the same suffix. Please check out [1.5.4\. Control of behavior of destination tail elements and destination inactive masked-off elements](#control-of-policy) and [1.6.1\. Policy and masked naming scheme](#policy-and-masked-naming-scheme) for the exact suffix that specifies a masked/unmasked vector operation along with its policy behavior.
+
+### [](#control-of-policy)1.5.4\. Control of behavior of destination tail elements and destination inactive masked-off elements
+
+The behavior of destination tail elements and destination inactive masked-off elements is controlled by the `vta` and `vma` bits.
+
+Given the general assumption that target audience of the intrinsics are high performance cores, and an "undisturbed" policy will generally slow down an out-of-order core, the intrinsics have a default policy scheme of tail-agnostic and mask-agnostic (that is, `vta=1` and `vma=1`).
+
+The intrinsics fuse the control of vector masking (`vm`) together with the control for policy behavior (`vta`, `vma`) in the same suffix. Please checkout [1.5.3\. Control of vector masking](#control-of-masked) and [1.6.1\. Policy and masked naming scheme](#policy-and-masked-naming-scheme) for the exact suffix that specifies a masked/unmasked vector operation along with its policy behavior.
+
+### [](#1-5-5-control-of-fixed-point-rounding-mode)1.5.5\. Control of fixed-point rounding mode
+
+For the fixed-point intrinsics, representing the fixed-point arithmetic instructions, the `vxrm` argument of the intrinsics indicates the rounding mode (`vxrm`) control.
+
+The `vxrm` argument is required to be a constant integer expression. The implementation should provide the following `enum` that maps to the defined rounding mode values under Table 4 of the RVV specification.
+
+```c
+enum __RISCV_VXRM {
+  __RISCV_VXRM_RNU = 0,
+  __RISCV_VXRM_RNE = 1,
+  __RISCV_VXRM_RDN = 2,
+  __RISCV_VXRM_ROD = 3,
+};
+```
+
+| |  Rounding mode does not affect the computations of vsadd, vsaddu, vssub, and vssubu; therefore, the intrinsics for these instructions do not have the vxrm argument. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  The RISC-V psABI \[[5](bibliography.html#bib-riscv-cc-vector)\] states that vxrm is not preserved across calls. Optimization for reducing the number of redundant writes to vxrm is a compiler and system specific issue. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  This specification does not provide support for manipulating the vxsat CSR. Since vxsat is not needed by a large majority of fixed-point code, we believe this specification is broadly useful as-is. Nevertheless, we expect that a future extension will define an additional set of fixed-point intrinsics that update vxsat in a specified manner, along with intrinsics to explicitly read and write vxsat. These new intrinsics would be interoperable with the intrinsics in this specification. The value of the vxsat after a fixed-point intrinsic is UNSPECIFIED. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#control-of-frm)1.5.6\. Control of floating-point rounding mode
+
+For the floating-point intrinsics, representing the floating-point arithmetic instructions, the intrinsics have two variants: _Implicit FP rounding mode_ and _Explicit FP Rounding mode_ intrinsics.
+
+| |  Control of the floating-point accrued exceptions flag fields (fflag) \[[6](bibliography.html#bib-riscv-f-spec)\] is not yet covered in the vector intrinsics v1.0\. We plan to support it in follow-up versions in a compatible way with existing intrinsics in v1.0. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+#### [](#1-5-6-1-implicit-fp-rounding-mode-intrinsics)1.5.6.1\. Implicit FP rounding mode intrinsics
+
+The implicit FP rounding mode intrinsics behave like any C-language floating-point expressions, using the default rounding mode when `FENV_ACCESS` is off, and using the `fenv` dynamic rounding mode when `FENV_ACCESS` is on.
+
+| |  Both GNU and LLVM compilers generate scalar floating-point instructions using dynamic rounding mode, relying on the environment initialization to set frm to RNE (specified as "roundTiesToEven" in IEEE-754 (a.k.a. IEC 60559)) \[[7](bibliography.html#bib-ieee754-2008)\]. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  The implicit FP rounding mode intrinsics are intended to be used regardless of FENV\_ACCESS. They are provided when FENV\_ACCESS is on for the (few) programmers who are already using fenv; and they are provided when FENV\_ACCESS is off for the (vast majority of) programmers who prefer the default rounding mode. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+#### [](#explicit-frm)1.5.6.2\. Explicit FP rounding mode intrinsics
+
+The explicit FP rounding mode intrinsics contain the `frm` argument which indicates the rounding mode (`frm`) \[[6](bibliography.html#bib-riscv-f-spec)\] control. The floating-point intrinsics with the `frm` argument are followed by an `_rm` suffix in the function name.
+
+The `frm` argument is required to be a constant integer expression. The implementation should provide the following `enum` that maps to the defined rounding mode values under RISC-V ISA Manual Table 8.1 \[[5](bibliography.html#bib-riscv-cc-vector)\].
+
+```c
+enum __RISCV_FRM {
+  __RISCV_FRM_RNE = 0,
+  __RISCV_FRM_RTZ = 1,
+  __RISCV_FRM_RDN = 2,
+  __RISCV_FRM_RUP = 3,
+  __RISCV_FRM_RMM = 4,
+};
+```
+
+| |  The explicit FP rounding mode intrinsics are intended to be used when FENV\_ACCESS is off, enabling more aggressive optimization while still providing the programmer with control over the rounding mode. Using explicit FP rounding mode intrinsics when FENV\_ACCESS is on will still work correctly, but is expected to lead to extra saving/restoring of frm, that could be avoided by using fenv functionality and implicit FP rounding mode intrinsics. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+## [](#naming-scheme)1.6\. Naming scheme
+
+The naming scheme of the intrinsics expresses the users' control of fields in `vtype`, `vl`, and rounding modes for fixed-point and floating-point vector computations. For details of these CSR controls, please see [\[control-of-vector-programming-mode\]](#control-of-vector-programming-mode).
+
+As mentioned in [1.5.3\. Control of vector masking](#control-of-masked) and [1.5.4\. Control of behavior of destination tail elements and destination inactive masked-off elements](#control-of-policy), the intrinsics fuses the control of `vm`, `vta`, and `vma` into the same suffix. [1.6.1\. Policy and masked naming scheme](#policy-and-masked-naming-scheme) enumerates the exact suffixes. You may find where these suffixes are appended in [1.6.2\. Explicit (Non-overloaded) naming scheme](#explicit-naming-scheme).
+
+The intrinsics can be split into two major types, called "explicit (non-overloaded) intrinsics" and "implicit (overloaded) intrinsics".
+
+The explicit (non-overloaded) intrinsics embed the control described in [_1.5\. Control of the vector extension programming model_](#control-of-vector-programming-model) in the function name. This scheme gives intrinsic codebase more readability as the execution states are explicitly specified in the code.
+
+The implicit (overloaded) intrinsics, on the contrary, omit the explicit specifications for `vtype` control. The implicit (overloaded) intrinsics aim to provide a generic interface to let users put values of different EEW and EMUL as the input argument.
+
+This section covers the general naming rule of the two types of intrinsics accordingly. Then, this section also enumerates the exceptions and the rationales behind them in [1.6.3\. Exceptions in the explicit (non-overloaded) naming scheme](#explicit-exception-naming) and [1.6.5\. Exceptions in the implicit (overloaded) naming scheme](#implicit-exception-naming).
+
+### [](#policy-and-masked-naming-scheme)1.6.1\. Policy and masked naming scheme
+
+With the default policy scheme mentioned under [1.5.4\. Control of behavior of destination tail elements and destination inactive masked-off elements](#control-of-policy), each intrinsic provides corresponding variants for their available control of `vm`, `vta` and `vma`. The following list enumerates the possible suffixes.
+
+* No suffix: Represents an unmasked (`vm=1`) vector operation with tail-agnostic (`vta=1`)
+* `_tu` suffix: Represents an unmasked (`vm=1`) vector operation with tail-undisturbed (`vta=0`) policy
+* `_m` suffix: Represents a masked (`vm=0`) vector operation with tail-agnostic (`vta=1`), mask-agnostic (`vma=1`) policy
+* `_tum` suffix: Represents a masked (`vm=0`) vector operation with tail-undisturbed (`vta=0`), mask-agnostic (`vma=1`) policy
+* `_mu` suffix: Represents a masked (`vm=0`) vector operation with tail-agnostic (`vta=1`), mask-undisturbed (`vma=0`) policy
+* `_tumu` suffix: Represents a masked (`vm=0`) vector operation with tail-undisturbed (`vta=0`), mask-undisturbed (`vma=0`) policy
+
+Using `vadd` with EEW=32 and EMUL=1 as an example, the variants are:
+
+```c
+// vm=1, vta=1
+vint32m1_t __riscv_vadd_vv_i32m1(vint32m1_t vs2, vint32m1_t vs1, size_t vl);
+// vm=1, vta=0
+vint32m1_t __riscv_vadd_vv_i32m1_tu(vint32m1_t vd, vint32m1_t vs2,
+                                    vint32m1_t vs1, size_t vl);
+// vm=0, vta=1, vma=1
+vint32m1_t __riscv_vadd_vv_i32m1_m(vbool32_t vm, vint32m1_t vs2, vint32m1_t vs1,
+                                   size_t vl);
+// vm=0, vta=0, vma=1
+vint32m1_t __riscv_vadd_vv_i32m1_tum(vbool32_t vm, vint32m1_t vd,
+                                     vint32m1_t vs2, vint32m1_t vs1, size_t vl);
+// vm=0, vta=1, vma=0
+vint32m1_t __riscv_vadd_vv_i32m1_mu(vbool32_t vm, vint32m1_t vd, vint32m1_t vs2,
+                                    vint32m1_t vs1, size_t vl);
+// vm=0, vta=0, vma=0
+vint32m1_t __riscv_vadd_vv_i32m1_tumu(vbool32_t vm, vint32m1_t vd,
+                                      vint32m1_t vs2, vint32m1_t vs1,
+                                      size_t vl);
+```
+
+| |  When policy is set to "agnostic", there is no guarantee of what will be in the tail/masked-off elements. Under this policy, users should not assume the values within to be deterministic. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  Pseudo intrinsics mentioned under [_1.8\. Pseudo intrinsics_](#pseudo-intrinsics) do not map to real vector instructions. Therefore these intrinsics are not affected by the policy setting, nor do they have intrinsic variants of the suffixes listed above. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#explicit-naming-scheme)1.6.2\. Explicit (Non-overloaded) naming scheme
+
+In general, the intrinsics are encoded as the following. The intrinsics under this naming scheme are the "non-overloaded intrinsics", which in parallel we have the "overloaded intrinsics" defined under [1.6.4\. Implicit (Overloaded) naming scheme](#implicit-naming-scheme).
+
+The naming rules are as follows.
+
+```c
+__riscv_{V_INSTRUCTION_MNEMONIC}_{OPERAND_MNEMONIC}_{RETURN_TYPE}_{ROUND_MODE}_{POLICY}{(...)
+```
+
+* `OPERAND_MNEMONIC` are like `v`, `vv`, `vx`, `vs`, `vvm`, `vxm`
+* `RETURN_TYPE` depends on whether the return type of the vector instruction is a mask register…​  
+   * For intrinsics that represents instructions with a non-mask destination register:  
+         * `EEW` is one of `i8 | i16 | i32 | i64 | u8 | u16 | u32 | u64 | f16 | f32 | f64`.  
+         * `EMUL` is one of `m1 | m2 | m4 | m8 | mf2 | mf4 | mf8`.  
+         * [_1.7\. Type system_](#type-system) explains the limited enumeration of EEW-EMUL pairs.  
+   * For intrinsics that represent intrinsics with a mask destination register:  
+         * `RETURN_TYPE` is one of `b1 | b2 | b4 | b8 | b16 | b32 | b64`, which is derived from the ratio `EEW`/`EMUL`.
+* `V_INSTRUCTION_MNEMONIC` are like `vadd`, `vfmacc`, `vsadd`.
+* `ROUND_MODE` is the `_rm` suffix mentioned in [1.5.6.2\. Explicit FP rounding mode intrinsics](#explicit-frm). Other intrinsics do not have this suffix.
+* `POLICY` are enumerated under [1.6.1\. Policy and masked naming scheme](#policy-and-masked-naming-scheme).
+
+The general naming scheme is not sufficient to express all intrinsics. The exceptions are enumerated in the proceeding section [1.6.3\. Exceptions in the explicit (non-overloaded) naming scheme](#explicit-exception-naming).
+
+### [](#explicit-exception-naming)1.6.3\. Exceptions in the explicit (non-overloaded) naming scheme
+
+This section enumerates the exceptions in the explicit (non-overloaded) naming scheme.
+
+#### [](#1-6-3-1-scalar-move-instructions)1.6.3.1\. Scalar move instructions
+
+Only encoding the return type will cause naming collisions for the permutation instruction intrinsics. The intrinsics encode the input vector type and the output scalar type in the suffix.
+
+```c
+int8_t __riscv_vmv_x_s_i8m1_i8 (vint8m1_t vs2);
+int8_t __riscv_vmv_x_s_i8m2_i8 (vint8m2_t vs2);
+int8_t __riscv_vmv_x_s_i8m4_i8 (vint8m4_t vs2);
+int8_t __riscv_vmv_x_s_i8m8_i8 (vint8m8_t vs2);
+```
+
+#### [](#1-6-3-2-reduction-instructions)1.6.3.2\. Reduction instructions
+
+Only encoding the return type will cause naming collisions for the reduction instruction intrinsics. The intrinsics encode the input vector type and the output vector type in the suffix.
+
+```c
+vint8m1_t __riscv_vredsum_vs_i8m1_i8m1(vint8m1_t vs2, vint8m1_t vs1, size_t vl);
+vint8m1_t __riscv_vredsum_vs_i8m2_i8m1(vint8m2_t vs2, vint8m1_t vs1, size_t vl);
+vint8m1_t __riscv_vredsum_vs_i8m4_i8m1(vint8m4_t vs2, vint8m1_t vs1, size_t vl);
+vint8m1_t __riscv_vredsum_vs_i8m8_i8m1(vint8m8_t vs2, vint8m1_t vs1, size_t vl);
+```
+
+#### [](#1-6-3-3-add-with-carry-subtract-with-borrow-instructions)1.6.3.3\. Add-with-carry / Subtract-with-borrow instructions
+
+Only encoding the return type will cause naming collisions for the reduction instruction intrinsics. The intrinsics encode the input vector type and the output mask vector type in the suffix.
+
+```c
+vbool64_t __riscv_vmadc_vvm_i8mf8_b64(vint8mf8_t vs2, vint8mf8_t vs1,
+                                      vbool64_t v0, size_t vl);
+vbool64_t __riscv_vmadc_vvm_i16mf4_b64(vint16mf4_t vs2, vint16mf4_t vs1,
+                                       vbool64_t v0, size_t vl);
+vbool64_t __riscv_vmadc_vvm_i32mf2_b64(vint32mf2_t vs2, vint32mf2_t vs1,
+                                       vbool64_t v0, size_t vl);
+vbool64_t __riscv_vmadc_vvm_i64m1_b64(vint64m1_t vs2, vint64m1_t vs1,
+                                      vbool64_t v0, size_t vl);
+```
+
+#### [](#1-6-3-4-vreinterpret-vlmul%5Ftruncvlmul%5Fext-and-vsetvget)1.6.3.4\. `vreinterpret`, `vlmul_trunc`/`vlmul_ext`, and `vset`/`vget`
+
+Only encoding the return type will cause naming collisions for these pseudo instructions. The intrinsics encode the input vector type before the return type in the suffix.
+
+The following shows an example with `__riscv_vreinterpret_v` of `vint32m1_t` input vector type.
+
+```c
+vfloat32m1_t __riscv_vreinterpret_v_i32m1_f32m1 (vint32m1_t src);
+vuint32m1_t __riscv_vreinterpret_v_i32m1_u32m1 (vint32m1_t src);
+vint8m1_t __riscv_vreinterpret_v_i32m1_i8m1 (vint32m1_t src);
+vint16m1_t __riscv_vreinterpret_v_i32m1_i16m1 (vint32m1_t src);
+vint64m1_t __riscv_vreinterpret_v_i32m1_i64m1 (vint32m1_t src);
+vbool64_t __riscv_vreinterpret_v_i32m1_b64 (vint32m1_t src);
+vbool32_t __riscv_vreinterpret_v_i32m1_b32 (vint32m1_t src);
+vbool16_t __riscv_vreinterpret_v_i32m1_b16 (vint32m1_t src);
+vbool8_t __riscv_vreinterpret_v_i32m1_b8 (vint32m1_t src);
+vbool4_t __riscv_vreinterpret_v_i32m1_b4 (vint32m1_t src);
+```
+
+### [](#implicit-naming-scheme)1.6.4\. Implicit (Overloaded) naming scheme
+
+The implicit (overloaded) interface aims to provide a generic interface that takes values of different EEW and EMUL as the input. Therefore, the implicit intrinsics omit the EEW and EMUL encoded in the function name. The `_rm` prefix for explicit FP rounding mode intrinsics ([1.5.6\. Control of floating-point rounding mode](#control-of-frm)) is also omitted. The intrinsics under this scheme are the "overloaded intrinsics", which in parallel we have the "non-overloaded intrinsics" defined under [1.6.2\. Explicit (Non-overloaded) naming scheme](#explicit-naming-scheme).
+
+Take the vector addition (`vadd`) instruction intrinsics as an example, stripping off the operand mnemonics and encoded EEW, EMUL information, the intrinsics provides the following overloaded interfaces.
+
+```c
+vint32m1_t __riscv_vadd(vint32m1_t v0, vint32m1_t v1, size_t vl);
+vint16m4_t __riscv_vadd(vint16m4_t v0, vint16m4_t v1, size_t vl);
+```
+
+Since the main intent is to let the users put different value(s) of EEW and EMUL as input argument(s), the overloaded intrinsics do not omit the policy suffix. That is, the suffix listed under [1.5.4\. Control of behavior of destination tail elements and destination inactive masked-off elements](#control-of-policy) is not omitted and is still encoded in the function name.
+
+The masked variants with the default policy shares the same interface with the unmasked variants with the default policy. They do not have any trailing suffixes.
+
+Take the vector floating-point add (`vfadd`) as an example, the intrinsics provides the following overloaded interfaces.
+
+```c
+vfloat32m1_t __riscv_vfadd(vfloat32m1_t vs2, vfloat32m1_t vs1, size_t vl);
+vfloat32m1_t __riscv_vfadd(vbool32_t vm, vfloat32m1_t vs2, vfloat32m1_t vs1,
+                           size_t vl);
+vfloat32m1_t __riscv_vfadd(vfloat32m1_t vs2, vfloat32m1_t vs1, unsigned int frm,
+                           size_t vl);
+vfloat32m1_t __riscv_vfadd(vbool32_t vm, vfloat32m1_t vs2, vfloat32m1_t vs1,
+                           unsigned int frm, size_t vl);
+vfloat32m1_t __riscv_vfadd_tu(vfloat32m1_t vd, vfloat32m1_t vs2,
+                              vfloat32m1_t vs1, size_t vl);
+vfloat32m1_t __riscv_vfadd_tum(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                               vfloat32m1_t vs1, size_t vl);
+vfloat32m1_t __riscv_vfadd_tumu(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                                vfloat32m1_t vs1, size_t vl);
+vfloat32m1_t __riscv_vfadd_mu(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                              vfloat32m1_t vs1, size_t vl);
+vfloat32m1_t __riscv_vfadd_tu(vfloat32m1_t vd, vfloat32m1_t vs2,
+                              vfloat32m1_t vs1, unsigned int frm, size_t vl);
+vfloat32m1_t __riscv_vfadd_tum(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                               vfloat32m1_t vs1, unsigned int frm, size_t vl);
+vfloat32m1_t __riscv_vfadd_tumu(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                                vfloat32m1_t vs1, unsigned int frm, size_t vl);
+vfloat32m1_t __riscv_vfadd_mu(vbool32_t vm, vfloat32m1_t vd, vfloat32m1_t vs2,
+                              vfloat32m1_t vs1, unsigned int frm, size_t vl);
+```
+
+The naming scheme to prune everything except the instruction mnemonics is not available for all the intrinsics. Please see [1.6.5\. Exceptions in the implicit (overloaded) naming scheme](#implicit-exception-naming) for overloaded intrinsics with irregular naming patterns.
+
+Due to the limitations of the C language (without the aid of features like C++ templates), some intrinsics do not have an overloaded version. Therefore these intrinsics do not possess a simplified, EEW/EMUL-omitted interface. Please see [1.6.6\. Un-supported intrinsics for implicit (overloaded) naming scheme](#unsupported-implicit-naming) for more detail.
+
+### [](#implicit-exception-naming)1.6.5\. Exceptions in the implicit (overloaded) naming scheme
+
+The following intrinsics have an irregular naming pattern.
+
+#### [](#1-6-5-1-widening-instructions)1.6.5.1\. Widening instructions
+
+Widening instruction intrinsics (e.g. `vwadd`) have the same return type but different types of arguments. The operand mnemonics are encoded into their overloaded versions to help distinguish them.
+
+```c
+vint32m1_t __riscv_vwadd_vv(vint16mf2_t vs2, vint16mf2_t vs1, size_t vl);
+vint32m1_t __riscv_vwadd_vx(vint16mf2_t vs2, int16_t rs1, size_t vl);
+vint32m1_t __riscv_vwadd_wv(vint32m1_t vs2, vint16mf2_t vs1, size_t vl);
+vint32m1_t __riscv_vwadd_wx(vint32m1_t vs2, int16_t rs1, size_t vl);
+```
+
+#### [](#1-6-5-2-type-convert-instructions)1.6.5.2\. Type-convert instructions
+
+Type-convert instruction intrinsics (e.g. `vfcvt.x.f`, `vfcvt.xu.f`, `vfcvt.rtz.xu.f`) encode the returning type mnemonics into their overloaded variants to help distinguish them.
+
+The following shows how `_x`, `_rtz_x`, `_xu`, and `_rtz_xu` are appended to the suffix for distinction.
+
+```c
+vint32m1_t __riscv_vfcvt_x (vfloat32m1_t src, size_t vl);
+vint32m1_t __riscv_vfcvt_rtz_x (vfloat32m1_t src, size_t vl);
+vuint32m1_t __riscv_vfcvt_xu (vfloat32m1_t src, size_t vl);
+vuint32m1_t __riscv_vfcvt_rtz_xu (vfloat32m1_t src, size_t vl);
+```
+
+#### [](#1-6-5-3-vreinterpret-lmul-truncateextension-and-vsetvget)1.6.5.3\. `vreinterpret`, LMUL truncate/extension, and `vset`/`vget`
+
+These pseudo intrinsics encode the return type (e.g. `__riscv_vreinterpret_b8`) into their overloaded variants to help distinguish them.
+
+The following shows how the return type is appended to the suffix for distinction.
+
+```c
+vfloat32m1_t __riscv_vreinterpret_f32m1 (vint32m1_t src);
+vuint32m1_t __riscv_vreinterpret_u32m1 (vint32m1_t src);
+vint8m1_t __riscv_vreinterpret_i8m1 (vint32m1_t src);
+vint16m1_t __riscv_vreinterpret_i16m1 (vint32m1_t src);
+vint64m1_t __riscv_vreinterpret_i64m1 (vint32m1_t src);
+vbool64_t __riscv_vreinterpret_b64 (vint32m1_t src);
+vbool32_t __riscv_vreinterpret_b32 (vint32m1_t src);
+vbool16_t __riscv_vreinterpret_b16 (vint32m1_t src);
+vbool8_t __riscv_vreinterpret_b8 (vint32m1_t src);
+vbool4_t __riscv_vreinterpret_b4 (vint32m1_t src);
+```
+
+### [](#unsupported-implicit-naming)1.6.6\. Un-supported intrinsics for implicit (overloaded) naming scheme
+
+Due to the limitation of the C language (without the aid of features like C++ templates), some intrinsics do not have an overloaded version. Intrinsics with characteristics of either of the following do not possess an overloaded version.
+
+* Intrinsics with input arguments that are all scalar types and scalar types alone (e.g. unmasked vector load instruction intrinsics, `vmv.s.x`)
+* Intrinsics with `vl` as the only argument (e.g. `vmclr`, `vmset`, `vid`)
+* Intrinsics with vector boolean input(s), returning a vector non-boolean vector type (e.g. `viota`)
+
+## [](#type-system)1.7\. Type system
+
+The intrinsics are designed to be strongly-typed. The intrinsics provide `vreinterpret` intrinsics to help users go across the strongly-typed scheme if necessary.
+
+Non-mask (integer and floating-point) data types have SEW and LMUL encoded.
+
+### [](#integer-type)1.7.1\. Integer types
+
+Integer types have EEW and EMUL encoded into the type. The first row describes the EMUL and the first column describes the data type and element width of the scalar type.
+
+Types with an asterisk (\*) are available when `ELEN >= 64` (that is, unavailable under `Zve32*` and require at least `Zve64x`).
+
+__Table 1\. Integer types__
+| Types     | EMUL=1/8       | EMUL=1/4        | EMUL=1/ 2       | EMUL=1         | EMUL=2         | EMUL=4         | EMUL=8         |
+| --------- | -------------- | --------------- | --------------- | -------------- | -------------- | -------------- | -------------- |
+| int8\_t   | vint8mf8\_t\*  | vint8mf4\_t     | vint8mf2\_t     | vint8m1\_t     | vint8m2\_t     | vint8m4\_t     | vint8m8\_t     |
+| int16\_t  | N/A            | vint16mf4\_t\*  | vint16mf2\_t    | vint16m1\_t    | vint16m2\_t    | vint16m4\_t    | vint16m8\_t    |
+| int32\_t  | N/A            | N/A             | vint32mf2\_t\*  | vint32m1\_t    | vint32m2\_t    | vint32m4\_t    | vint32m8\_t    |
+| int64\_t  | N/A            | N/A             | N/A             | vint64m1\_t\*  | vint64m2\_t\*  | vint64m4\_t\*  | vint64m8\_t\*  |
+| uint8\_t  | vuint8mf8\_t\* | vuint8mf4\_t    | vuint8mf2\_t    | vuint8m1\_t    | vuint8m2\_t    | vuint8m4\_t    | vuint8m8\_t    |
+| uint16\_t | N/A            | vuint16mf4\_t\* | vuint16mf2\_t   | vuint16m1\_t   | vuint16m2\_t   | vuint16m4\_t   | vuint16m8\_t   |
+| uint32\_t | N/A            | N/A             | vuint32mf2\_t\* | vuint32m1\_t   | vuint32m2\_t   | vuint32m4\_t   | vuint32m8\_t   |
+| uint64\_t | N/A            | N/A             | N/A             | vuint64m1\_t\* | vuint64m2\_t\* | vuint64m4\_t\* | vuint64m8\_t\* |
+
+### [](#floating-point-type)1.7.2\. Floating-point types
+
+| |  This specification uses \_Float16 to designate IEEE-754 binary16, float to designate IEEE-754 binary32 and double to designate IEEE-754 binary64. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+Floating-point types have EEW and EMUL encoded into the type. The first row describes the EMUL and the first column describes the data type and element width of the scalar type.
+
+Floating-point types with element widths of 16 (Types=`_Float16`) require the `zvfh` and `zvfhmin` extension to be specified in the architecture.
+
+Floating-point types with element widths of 32 (Types=`float`) require the `zve32f` extension to be specified in the architecture.
+
+Floating-point types with element widths of 64 (Types=`double`) require the `zve64d` extension to be specified in the architecture.
+
+Types with an asterisk (\*) are available when `ELEN >= 64` (that is, unavailable under `Zve32f` and require at least `Zve64f`).
+
+__Table 2\. Floating-point types__
+| Types     | EMUL=1/8 | EMUL=1/4         | EMUL=1/ 2        | EMUL=1        | EMUL=2        | EMUL=4        | EMUL=8        |
+| --------- | -------- | ---------------- | ---------------- | ------------- | ------------- | ------------- | ------------- |
+| \_Float16 | N/A      | vfloat16mf4\_t\* | vfloat16mf2\_t   | vfloat16m1\_t | vfloat16m2\_t | vfloat16m4\_t | vfloat16m8\_t |
+| float     | N/A      | N/A              | vfloat32mf2\_t\* | vfloat32m1\_t | vfloat32m2\_t | vfloat32m4\_t | vfloat32m8\_t |
+| double    | N/A      | N/A              | N/A              | vfloat64m1\_t | vfloat64m2\_t | vfloat64m4\_t | vfloat64m8\_t |
+
+### [](#1-7-3-mask-types)1.7.3\. Mask types
+
+Mask types have the ratio that is derived from `EEW`/`EMUL` encoded into the type. The mask types represent mask register values that follows the Mask Register Layout.
+
+Types with an asterisk (\*) are available when `ELEN >= 64` (that is, unavailable under `Zve32x` and require at least `Zve64x`).
+
+__Table 3\. Mask types__
+| Types | n = 1     | n = 2     | n = 4     | n = 8     | n = 16     | n = 32     | n = 64       |
+| ----- | --------- | --------- | --------- | --------- | ---------- | ---------- | ------------ |
+| bool  | vbool1\_t | vbool2\_t | vbool4\_t | vbool8\_t | vbool16\_t | vbool32\_t | vbool64\_t\* |
+
+### [](#1-7-4-tuple-type)1.7.4\. Tuple type
+
+Tuple types encode `SEW`, `LMUL`, and `NFIELD` into the data type.
+
+These types are utilized through the segment load/store instruction intrinsics along with getters [1.8.5\. vget](#pseudo-vget) and setters [1.8.6\. vset](#pseudo-vset) to extract/combine them. The types listed in [1.7.1\. Integer types](#integer-type) and [1.7.2\. Floating-point types](#floating-point-type) all have tuple types. Types under the combination of `LMUL`, `NFIELD` follows the restriction by the RVV specification, `EMUL * NFIELDS ≤ 8`.
+
+Availability of the tuple types follows the availability of their corresponding non-tuple (`NFIELD=1`) types.
+
+__Table 4\. Tuple types (EMUL=1/8)__
+| Non-tuple Types (NFILED=1) | NFIELD=2       | NFIELD=3       | NFIELD=4       | NFIELD=5       | NFIELD=6       | NFIELD=7       | NFIELD=8       |
+| -------------------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- | -------------- |
+| vint8mf8\_t                | vint8mf8x2\_t  | vint8mf8x3\_t  | vint8mf8x4\_t  | vint8mf8x5\_t  | vint8mf8x6\_t  | vint8mf8x7\_t  | vint8mf8x8\_t  |
+| vuint8mf8\_t               | vuint8mf8x2\_t | vuint8mf8x3\_t | vuint8mf8x4\_t | vuint8mf8x5\_t | vuint8mf8x6\_t | vuint8mf8x7\_t | vuint8mf8x8\_t |
+
+__Table 5\. Tuple types (EMUL=1/4)__
+| Non-tuple Types (NFILED=1) | NFIELD=2         | NFIELD=3         | NFIELD=4         | NFIELD=5         | NFIELD=6         | NFIELD=7         | NFIELD=8         |
+| -------------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
+| vint8mf4\_t                | vint8mf4x2\_t    | vint8mf4x3\_t    | vint8mf4x4\_t    | vint8mf4x5\_t    | vint8mf4x6\_t    | vint8mf4x7\_t    | vint8mf4x8\_t    |
+| vuint8mf4\_t               | vuint8mf4x2\_t   | vuint8mf4x3\_t   | vuint8mf4x4\_t   | vuint8mf4x5\_t   | vuint8mf4x6\_t   | vuint8mf4x7\_t   | vuint8mf4x8\_t   |
+| vint16mf4\_t               | vint16mf4x2\_t   | vint16mf4x3\_t   | vint16mf4x4\_t   | vint16mf4x5\_t   | vint16mf4x6\_t   | vint16mf4x7\_t   | vint16mf4x8\_t   |
+| vuint16mf4\_t              | vuint16mf4x2\_t  | vuint16mf4x3\_t  | vuint16mf4x4\_t  | vuint16mf4x5\_t  | vuint16mf4x6\_t  | vuint16mf4x7\_t  | vuint16mf4x8\_t  |
+| vfloat16mf4\_t             | vfloat16mf4x2\_t | vfloat16mf4x3\_t | vfloat16mf4x4\_t | vfloat16mf4x5\_t | vfloat16mf4x6\_t | vfloat16mf4x7\_t | vfloat16mf4x8\_t |
+
+__Table 6\. Tuple types (EMUL=1/2)__
+| Non-tuple Types (NFILED=1) | NFIELD=2         | NFIELD=3         | NFIELD=4         | NFIELD=5         | NFIELD=6         | NFIELD=7         | NFIELD=8         |
+| -------------------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- | ---------------- |
+| vint8mf2\_t                | vint8mf2x2\_t    | vint8mf2x3\_t    | vint8mf2x4\_t    | vint8mf2x5\_t    | vint8mf2x6\_t    | vint8mf2x7\_t    | vint8mf2x8\_t    |
+| vuint8mf2\_t               | vuint8mf2x2\_t   | vuint8mf2x3\_t   | vuint8mf2x4\_t   | vuint8mf2x5\_t   | vuint8mf2x6\_t   | vuint8mf2x7\_t   | vuint8mf2x8\_t   |
+| vint16mf2\_t               | vint16mf2x2\_t   | vint16mf2x3\_t   | vint16mf2x4\_t   | vint16mf2x5\_t   | vint16mf2x6\_t   | vint16mf2x7\_t   | vint16mf2x8\_t   |
+| vuint16mf2\_t              | vuint16mf2x2\_t  | vuint16mf2x3\_t  | vuint16mf2x4\_t  | vuint16mf2x5\_t  | vuint16mf2x6\_t  | vuint16mf2x7\_t  | vuint16mf2x8\_t  |
+| vint32mf2\_t               | vint32mf2x2\_t   | vint32mf2x3\_t   | vint32mf2x4\_t   | vint32mf2x5\_t   | vint32mf2x6\_t   | vint32mf2x7\_t   | vint32mf2x8\_t   |
+| vuint32mf2\_t              | vuint32mf2x2\_t  | vuint32mf2x3\_t  | vuint32mf2x4\_t  | vuint32mf2x5\_t  | vuint32mf2x6\_t  | vuint32mf2x7\_t  | vuint32mf2x8\_t  |
+| vfloat16mf2\_t             | vfloat16mf2x2\_t | vfloat16mf2x3\_t | vfloat16mf2x4\_t | vfloat16mf2x5\_t | vfloat16mf2x6\_t | vfloat16mf2x7\_t | vfloat16mf2x8\_t |
+| vfloat32mf2\_t             | vfloat32mf2x2\_t | vfloat32mf2x3\_t | vfloat32mf2x4\_t | vfloat32mf2x5\_t | vfloat32mf2x6\_t | vfloat32mf2x7\_t | vfloat32mf2x8\_t |
+
+__Table 7\. Tuple types (EMUL=1)__
+| Non-tuple Types (NFILED=1) | NFIELD=2        | NFIELD=3        | NFIELD=4        | NFIELD=5        | NFIELD=6        | NFIELD=7        | NFIELD=8        |
+| -------------------------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- | --------------- |
+| vint8m1\_t                 | vint8m1x2\_t    | vint8m1x3\_t    | vint8m1x4\_t    | vint8m1x5\_t    | vint8m1x6\_t    | vint8m1x7\_t    | vint8m1x8\_t    |
+| vuint8m1\_t                | vuint8m1x2\_t   | vuint8m1x3\_t   | vuint8m1x4\_t   | vuint8m1x5\_t   | vuint8m1x6\_t   | vuint8m1x7\_t   | vuint8m1x8\_t   |
+| vint16m1\_t                | vint16m1x2\_t   | vint16m1x3\_t   | vint16m1x4\_t   | vint16m1x5\_t   | vint16m1x6\_t   | vint16m1x7\_t   | vint16m1x8\_t   |
+| vuint16m1\_t               | vuint16m1x2\_t  | vuint16m1x3\_t  | vuint16m1x4\_t  | vuint16m1x5\_t  | vuint16m1x6\_t  | vuint16m1x7\_t  | vuint16m1x8\_t  |
+| vint32m1\_t                | vint32m1x2\_t   | vint32m1x3\_t   | vint32m1x4\_t   | vint32m1x5\_t   | vint32m1x6\_t   | vint32m1x7\_t   | vint32m1x8\_t   |
+| vuint32m1\_t               | vuint32m1x2\_t  | vuint32m1x3\_t  | vuint32m1x4\_t  | vuint32m1x5\_t  | vuint32m1x6\_t  | vuint32m1x7\_t  | vuint32m1x8\_t  |
+| vint64m1\_t                | vint64m1x2\_t   | vint64m1x3\_t   | vint64m1x4\_t   | vint64m1x5\_t   | vint64m1x6\_t   | vint64m1x7\_t   | vint64m1x8\_t   |
+| vuint64m1\_t               | vuint64m1x2\_t  | vuint64m1x3\_t  | vuint64m1x4\_t  | vuint64m1x5\_t  | vuint64m1x6\_t  | vuint64m1x7\_t  | vuint64m1x8\_t  |
+| vfloat16m1\_t              | vfloat16m1x2\_t | vfloat16m1x3\_t | vfloat16m1x4\_t | vfloat16m1x5\_t | vfloat16m1x6\_t | vfloat16m1x7\_t | vfloat16m1x8\_t |
+| vfloat32m1\_t              | vfloat32m1x2\_t | vfloat32m1x3\_t | vfloat32m1x4\_t | vfloat32m1x5\_t | vfloat32m1x6\_t | vfloat32m1x7\_t | vfloat32m1x8\_t |
+| vfloat64m1\_t              | vfloat64m1x2\_t | vfloat64m1x3\_t | vfloat64m1x4\_t | vfloat64m1x5\_t | vfloat64m1x6\_t | vfloat64m1x7\_t | vfloat64m1x8\_t |
+
+__Table 8\. Tuple types (EMUL=2)__
+| Non-tuple Types (NFILED=1) | NFIELD=2        | NFIELD=3        | NFIELD=4        | NFIELD=5 | NFIELD=6 | NFIELD=7 | NFIELD=8 |
+| -------------------------- | --------------- | --------------- | --------------- | -------- | -------- | -------- | -------- |
+| vint8m2\_t                 | vint8m2x2\_t    | vint8m2x3\_t    | vint8m2x4\_t    | N/A      | N/A      | N/A      | N/A      |
+| vuint8m2\_t                | vuint8m2x2\_t   | vuint8m2x3\_t   | vuint8m2x4\_t   | N/A      | N/A      | N/A      | N/A      |
+| vint16m2\_t                | vint16m2x2\_t   | vint16m2x3\_t   | vint16m2x4\_t   | N/A      | N/A      | N/A      | N/A      |
+| vuint16m2\_t               | vuint16m2x2\_t  | vuint16m2x3\_t  | vuint16m2x4\_t  | N/A      | N/A      | N/A      | N/A      |
+| vint32m2\_t                | vint32m2x2\_t   | vint32m2x3\_t   | vint32m2x4\_t   | N/A      | N/A      | N/A      | N/A      |
+| vuint32m2\_t               | vuint32m2x2\_t  | vuint32m2x3\_t  | vuint32m2x4\_t  | N/A      | N/A      | N/A      | N/A      |
+| vint64m2\_t                | vint64m2x2\_t   | vint64m2x3\_t   | vint64m2x4\_t   | N/A      | N/A      | N/A      | N/A      |
+| vuint64m2\_t               | vuint64m2x2\_t  | vuint64m2x3\_t  | vuint64m2x4\_t  | N/A      | N/A      | N/A      | N/A      |
+| vfloat16m2\_t              | vfloat16m2x2\_t | vfloat16m2x3\_t | vfloat16m2x4\_t | N/A      | N/A      | N/A      | N/A      |
+| vfloat32m2\_t              | vfloat32m2x2\_t | vfloat32m2x3\_t | vfloat32m2x4\_t | N/A      | N/A      | N/A      | N/A      |
+| vfloat64m2\_t              | vfloat64m2x2\_t | vfloat64m2x3\_t | vfloat64m2x4\_t | N/A      | N/A      | N/A      | N/A      |
+
+__Table 9\. Tuple types (EMUL=4)__
+| Non-tuple Types (NFILED=1) | NFIELD=2        | NFIELD=3 | NFIELD=4 | NFIELD=5 | NFIELD=6 | NFIELD=7 | NFIELD=8 |
+| -------------------------- | --------------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| vint8m4\_t                 | vint8m4x2\_t    | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vuint8m4\_t                | vuint8m4x2\_t   | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vint16m4\_t                | vint16m4x2\_t   | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vuint16m4\_t               | vuint16m4x2\_t  | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vint32m4\_t                | vint32m4x2\_t   | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vuint32m4\_t               | vuint32m4x2\_t  | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vint64m4\_t                | vint64m4x2\_t   | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vuint64m4\_t               | vuint64m4x2\_t  | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vfloat16m4\_t              | vfloat16m4x2\_t | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vfloat32m4\_t              | vfloat32m4x2\_t | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+| vfloat64m4\_t              | vfloat64m4x2\_t | N/A      | N/A      | N/A      | N/A      | N/A      | N/A      |
+
+## [](#pseudo-intrinsics)1.8\. Pseudo intrinsics
+
+Pseudo intrinsics provide additional utility functions to assist users in manipulating across intrinsic types. They do not map to any specific RVV instruction. The specific mapping to actual instructions is given in the description of each pseudo intrinsic.
+
+### [](#pseudo-vsetvl)1.8.1\. `vsetvl`
+
+The `vsetvl` intrinsics return the number of elements processed in a stripmining loop when provided with the element width and LMUL in the intrinsic suffix. This pseudo intrinsic is typically mapped to `vsetvli` or `vsetivli` instructions.
+
+| |  The implementation must respect the ratio between SEW and LMUL given to the intrinsic. On the other hand, as mentioned in [1.5.2\. Control of number of elements to be processed](#control-of-vl), the vsetvl intrinsics do not necessarily map to the emission a vsetvli or vsetivli instruction of that exact SEW and LMUL provided. The actual value written to the vl control register is an implementation defined behavior and typically not known until runtime. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#pseudo-vsetvlmax)1.8.2\. `vsetvlmax`
+
+The `vsetvlmax` intrinsics return `VLMAX` when provided with the element width and LMUL in the intrinsic suffix. This pseudo intrinsic is typically mapped to the `vsetvli` instruction.
+
+| |  As mentioned in [1.5.2\. Control of number of elements to be processed](#control-of-vl), the vsetvlmax intrinsics do not necessarily map to the emission a vsetvli instruction of that exact SEW and LMUL provided. The actual value written to the vl control register is an implementation defined behavior and typically not known until runtime. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#pseudo-vreinterpret)1.8.3\. `vreinterpret`
+
+The `vreinterpret` intrinsics are provided for users to transition across the strongly-typed scheme. The intrinsic is limited to conversion between types operating upon the same number of registers. These intrinsics are not mapped to any instruction because reinterpretation of registers is a no-operation.
+
+These pseudo intrinsics do not alter the bits held by a register. Please use `vfcvt/v(f)wcvt/v(f)ncvt` intrinsics if you seek to extend, narrow, or perform real float/interger type conversions for the values.
+
+### [](#pseudo-vundefined)1.8.4\. `vundefined`
+
+The `vundefined` intrinsics are placeholders to represent unspecified values in variable initialization, or as arguments of `vset` and `vcreate`. These pseudo intrinsics are not mapped to any instruction.
+
+### [](#pseudo-vget)1.8.5\. `vget`
+
+The `vget` intrinsics allow users to obtain small LMUL values from larger LMUL ones. The `vget` intrinsics also allows users to extract non-tuple (`NFIELD=1`) types from tuple (`NFIELD>1`) types after segment load intrinsics. The index provided must be a constant known at compile time.
+
+These pseudo intrinsics do not map to any real instruction. The compiler may emit zero or more instructions to implement the semantics of these pseudo intrinsics. The precise set of instructions emitted is a compiler optimization issue.
+
+### [](#pseudo-vset)1.8.6\. `vset`
+
+The `vset` intrinsics allow users to combine small LMUL values into larger LMUL ones. The `vset` intrinsics also allows users to combine non-tuple (`NFIELD=1`) types to tuple (`NFIELD>1`) types for segment store intrinsics. The index provided must be a constant known at compile time.
+
+These pseudo intrinsics do not map to any real instruction. The compiler may emit zero or more instructions to implement the semantics of these pseudo intrinsics. The precise set of instructions emitted is a compiler optimization issue.
+
+### [](#pseudo-vlmul%5Ftrunc)1.8.7\. `vlmul_trunc`
+
+The `vlmul_trunc` intrinsics are syntactic sugar for RVV vector types other than tuples and have the same semantic as `vget` with the `index` operand having the value `0`.
+
+### [](#pseudo-vlmul%5Fext)1.8.8\. `vlmul_ext`
+
+The `vlmul_ext` intrinsics are syntactic sugar for RVV vector types other than tuples and have the same semantic as `vset` with the `index` operand having the value `0`.
+
+### [](#pseudo-vcreate)1.8.9\. `vcreate`
+
+The `vcreate` intrinsics are syntactic sugar for the creation of values of RVV types. They have the same semantic as multiple `vset` pseudo intrinsics filling in values accordingly.
+
+Example 1\. Pseudo intrinsic `vcreate` used to build a SEW=32, LMUL=4 `float` vector (`vfloat32m4`) from two SEW=32, LMUL=2 `float` vectors (`vfloat32m2`).
+
+```c
+// Given the following declarations
+vfloat32m4_t dest;
+vfloat32m2_t v0 = ...;
+vfloat32m2_t v1 = ...;
+
+// this pseudo intrinsic
+dest = __riscv_vcreate_v_f32m2_f32m4(v0, v1);
+
+// is semantically equivalent to
+dest = __riscv_vset_v_f32m2_f32m4(__riscv_vundefined_f32m4(), 0, v0);
+dest = __riscv_vset_v_f32m2_f32m4(dest, 1, v1);
+```
+
+### [](#pseudo-vlenb)1.8.10\. `vlenb`
+
+The `vlenb` intrinsic returns what is held inside the read-only CSR `vlenb`, which is the vector register length in bytes. This pseudo intrinsic is mapped to a `csrr` instruction that reads from the CSR `vlenb`.
+
+```c
+unsigned __riscv_vlenb();
+```
+
+## [](#1-9-programming-notes)1.9\. Programming Notes
+
+### [](#1-9-1-agnostic-value-in-the-rvv-c-intrinsics)1.9.1\. Agnostic value in the RVV C intrinsics
+
+An agnostic value is in the granularity of "element" contained in an RVV type. Agnostic values are either:
+
+* Tail element(s) of an RVV value produced through a `ta` instruction
+* Masked-off element(s) of an RVV value produced through a `ma` instruction
+* All elements in an uninitialized value
+* A value assigned with the `vundefined` intrinsics
+
+An agnostic value is an indeterminate value and evaluation of an agnostic value is undefined behavior. Users should not rely on any evaluation to an agnostic value.
+
+### [](#1-9-2-copying-vector-register-group-contents)1.9.2\. Copying vector register group contents
+
+There is no intrinsic that directly maps to the whole vector register move instructions (`vmv<nr>r.v`).
+
+For copying of the vector contents in whole, we encourage the users to use the assignment operator (`=`).
+
+The assignment operator (`=`) represents the semantic of a whole vector register (group) copy for the expression on the right hand side to the RVV type object on the left hand side. The semantic will still maintain a whole vector register content copy for fractional LMUL types. This enables the compiler to coalesce register usage when possible.
+
+Users may leverage the vector move intrinsics (`vmv_v_v`) intrinsics if they hope to copy vector register groups with `vl != VLMAX`.
+
+### [](#1-9-3-the-passthrough-vd-argument-in-the-intrinsics)1.9.3\. The passthrough (`vd`) argument in the intrinsics
+
+Intrinsics whose computation is relevant to the value held in destination register (assembly mnemonics `vd`) have a `vd` argument in them. The following list enumerates the intrinsics that have a `vd` argument. Please see the appendix for the exact prototypes of these intrinsics.
+
+* Intrinsics with tail-undisturbed (`vta=0`)
+* Intrinsics with mask-undisturbed (`vma=0`)
+* Intrinsics representing Vector Multiply-Add Operations
+* Intrinsics representing Vector Slideup Instructions
+
+For intrinsics with no `vd` argument, the implementation is free to pick any register as the destination register.
+
+### [](#1-9-4-assumption-of-vstart0-for-intrinsics-users)1.9.4\. Assumption of `vstart=0` for intrinsics users.
+
+The `vstart` CSR is currently not exposed to the intrinsics programmer, and the intrinsics have the semantics of `vstart = 0`. Support for positive `vstart` values is implementation -defined; thus, portable application software should not set `vstart > 0`.
+
+### [](#1-9-5-assembly-generated-from-the-intrinsics)1.9.5\. Assembly generated from the intrinsics
+
+Some users may expect the intrinsics to directly translate and appear in the assembly; however, the intrinsics are the interfaces that expose the vector instruction semantics. The implementation is free to optimize them out if there is an opportunity.
+
+### [](#1-9-6-bookkeeping-of-configurations)1.9.6\. Bookkeeping of configurations
+
+Control of `vl`, `vtype`, `vxrm`, and `frm` is not directly exposed to the user. The implementation is responsible for setting the correct values into these CSRs to achieve the expected semantics of the intrinsic functions with respect to the conventions defined in the ISA specification \[[1](bibliography.html#bib-riscv-v-spec)\] and ABI specification \[[5](bibliography.html#bib-riscv-cc-vector)\].
+
+### [](#1-9-7-strided-loadstore-with-stride-of-0)1.9.7\. Strided load/store with stride of 0
+
+The RVV specification mentions that the strided load/store instruction with a stride of 0 could have different behaviors, performing all memory accesses or fewer memory operations. Since needing all memory accesses isn’t likely to be common, the implementation is allowed to generate fewer memory operations with strided load/store intrinsics.
+
+In other words, the compiler does not guarantee generating the instruction for all memory accesses in strided load/store intrinsics with a stride of 0\. If the user needs all memory accesses to be performed, they should use an indexed load/store intrinsics with all zero indices.
+
+### [](#1-9-8-leveraging-instructions-with-operand-mnemonics-of-vi)1.9.8\. Leveraging instructions with operand mnemonics of `vi`
+
+The intrinsics provide variants with operand mnemonics of `vv` and `vx`, but not `vi`. This was an intentional design to reduce the total amount of out-going intrinsics.
+
+It is an optimization issue for the implementation to emit instructions with operand mnemonics of `vi` when an immediate that can be expressed within 5-bit is provided to the intrinsics.
+
+### [](#1-9-9-mixing-inline-assembly-and-intrinsics)1.9.9\. Mixing inline assembly and intrinsics
+
+The compiler will be conservative to registers (`vtype`, `vxrm`, `frm`) when encountering inline assembly. Users should be aware that mixing uses of intrinsics and inline assembly will result in extra save and restore.
+
+### [](#1-9-10-the-new%5Fvl-argument-in-fault-only-first-load-intrinsics)1.9.10\. The `new_vl` argument in fault-only-first load intrinsics
+
+The fault-only-first load intrinsics write the new value inside the `vl` register into the address of the `new_vl` argument. Providing an illegal memory location is undefined behavior.

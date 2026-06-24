@@ -1,0 +1,19 @@
+# Terms and Abbreviations
+
+## [](#terms-and-abbreviations)Terms and Abbreviations
+
+| Term | Meaning                                                  |
+| ---- | -------------------------------------------------------- |
+| A2P  | Application Processor to Platform Microcontroller        |
+| ACPI | Advanced Configuration and Power Interface Specification |
+| APEI | ACPI Platform Error Interfaces                           |
+| AP   | Application Processor                                    |
+| CPPC | Collaborative Processor Performance Control              |
+| GHES | Generic Hardware Error Source                            |
+| MSI  | Message Signaled Interrupt                               |
+| P2A  | Platform Microcontroller to Application Processor        |
+| PMA  | Physical Memory Attributes                               |
+| PMP  | Physical Memory Protection                               |
+| PuC  | Platform Microcontroller                                 |
+| RAS  | Reliability, Availability, and Serviceability            |
+| SBI  | Supervisor Binary Interface                              |

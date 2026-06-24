@@ -1,0 +1,9 @@
+# 13.1. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
+
+## [](#Sstc)13.1\. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
+
+The current Privileged arch specification only defines a hardware mechanism for generating machine-mode timer interrupts (based on the mtime and mtimecmp registers). With the resultant requirement that timer services for S-mode/HS-mode (and for VS-mode) have to all be provided by M-mode - via SBI calls from S/HS-mode up to M-mode (or VS-mode calls to HS-mode and then to M-mode). M-mode software then multiplexes these multiple logical timers onto its one physical M-mode timer facility, and the M-mode timer interrupt handler passes timer interrupts back down to the appropriate lower privilege mode.
+
+This extension serves to provide supervisor mode with its own CSR-based timer interrupt facility that it can directly manage to provide its own timer service (in the form of having its own `stimecmp` register) - thus eliminating the large overheads for emulating S/HS-mode timers and timer interrupt generation up in M-mode. Further, this extension adds a similar facility to the Hypervisor extension for VS-mode.
+
+The extension name is "Sstc" ('Ss' for Privileged arch and Supervisor-level extensions, and 'tc' for timecmp). This extension adds the S-level `stimecmp`CSR ([Supervisor Timer (stimecmp) Register](supervisor.html#stimecmp)) and the VS-level `vstimecmp` CSR ([Virtual Supervisor Timer (vstimecmp) Register](hypervisor.html#vstimecmp). This extension adds the `STCE` bit to the `menvcfg` ([Machine Environment Configuration (menvcfg) Register](machine.html#sec:menvcfg)) and `henvcfg`([Hypervisor Environment Configuration Register (henvcfg)](hypervisor.html#sec:henvcfg)) CSRs.

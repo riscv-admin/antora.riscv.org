@@ -1,0 +1,85 @@
+# 2.1. Encoder Control
+
+## [](#encoderControl)2.1\. Encoder Control
+
+The fields required to control a Trace Encoder are defined in the[RISC-V Trace Control Interface Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), which is intended to apply to any and all RISC-V trace encoders, regardless of encoding protocol. This chapter details which of those fields apply to E-Trace. To avoid replication, descriptions are not provided here; additional E-Trace specific context or clarification is provided only where required.
+
+How fields are organized and accessed (e.g packet based or memory mapped) is outside the scope of this document. If a memory mapped approach is adopted, the 'Trace Component Register Map' from the[RISC-V Trace Control Interface Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/) should be used.
+
+Note: Upto and including the E-Trace v2.0.0 specification, which predated the creation of the RISC-V Trace Control Interface Specification, the full field definitions were included in this chapter. For versions later than this, the field definitions have simply moved from this specification to the RISC-V Trace Control Interface Specification, without any change to their meaning. However, in order to create a more widely applicable protocol agnostic specification it has been necessary to change the field names in the process.
+
+The applicability of fields for E-trace is categorized as follows:
+
+* N: Not applicable
+* M: Mandatory
+* O: Optional
+* MD: Mandatory if data trace is supported
+* OD: Optional for data trace
+
+### [](#sec:ctl-basic)2.1.1\. Basic Control
+
+The following fields control basic encoding behavior.
+
+__Table 1\. Basic Control__
+| **Field**                   | **Applicability** | **E-Trace Specific Details**                                                       |
+| --------------------------- | ----------------- | ---------------------------------------------------------------------------------- |
+| **trTeActive**              | M                 |                                                                                    |
+| **trTeEnable**              | M                 |                                                                                    |
+| **trTeInstTracing**         | M                 |                                                                                    |
+| **trTeDataTracing**         | MD                |                                                                                    |
+| **trTeInstTrigEnable**      | O                 |                                                                                    |
+| **trTeDataTrigEnable**      | OD                |                                                                                    |
+| **trTeInstStallOrOverflow** | O                 |                                                                                    |
+| **trTeDataStallOrOverflow** | OD                |                                                                                    |
+| **trTeInstStallEn**         | O                 |                                                                                    |
+| **trTeDataStallEn**         | OD                |                                                                                    |
+| **trTeEmpty**               | O                 | Recommended if the trace datapath requires manual flushing when trace is disabled. |
+| **trTeDataDrop**            | OD                |                                                                                    |
+| **trTeDataDropEn**          | OD                |                                                                                    |
+| **trTeInhibitSrc**          | O                 |                                                                                    |
+| **trTeInstSyncMode**        | M                 | If hardcoded, must be to a non-zero value.                                         |
+| **trTeInstSyncMax**         | M                 | May be hardcoded.                                                                  |
+| **trTeFormat**              | M                 | Must be set to 0 (denoting E-Trace format).                                        |
+| **trTeVerMajor**            | M                 |                                                                                    |
+| **trTeVerMinor**            | M                 |                                                                                    |
+| **trTeCompType**            | M                 |                                                                                    |
+| **trTeProtocolMajor**       | M                 | Must be 0 to indicate this version (2.0.x) of the E-Trace protocol.                |
+| **trTeProtocolMinor**       | M                 | Must be 0.                                                                         |
+| **trTeSrcID**               | O                 |                                                                                    |
+| **trTeSrcBits**             | O                 |                                                                                    |
+
+### [](#sec:ctl-modes)2.1.2\. Optional Modes
+
+See [\[optional\]](#optional) for details of the modes covered in this section.
+
+__Table 2\. Optional and run-time configurable modes.__
+| **Field**                      | **Applicability** | **E-Trace Specific Details** |
+| ------------------------------ | ----------------- | ---------------------------- |
+| **trTeInstNoAddrDiff**         | O                 |                              |
+| **trTeInstNoTrapAddr**         | O                 |                              |
+| **trTeInstEnSequentialJump**   | O                 |                              |
+| **trTeInstEnImplicitReturn**   | O                 |                              |
+| **trTeInstEnBranchPrediction** | O                 |                              |
+| **trTeInstJumpTargetCache**    | O                 |                              |
+| **trTeDataNoValue**            | OD                |                              |
+| **trTeDataNoAddr**             | OD                |                              |
+| **trTeDataAddrCompress**       | OD                |                              |
+| **trTeContext**                | N                 | Hardcode to 0.               |
+| **trTeInstMode**               | N                 | Hardcode to 7.               |
+| **trTeInstImplicitReturnMode** | N                 | Hardcode to 0.               |
+| **trTeInstEnRepeatedHistory**  | N                 | Hardcode to 0.               |
+| **trTeInstEnAllJumps**         | N                 | Hardcode to 0.               |
+| **trTeInstExtendAddrMSB**      | N                 | Hardcode to 0.               |
+
+### [](#sec:ctl-filter)2.1.3\. Filtering
+
+See [\[ch:filtering\]](#ch:filtering) for details of the filtering capabilities covered in this section.
+
+__Table 3\. Trace filtering selection__
+| **Field**           | **Applicability** | **E-Trace Specific Details** |
+| ------------------- | ----------------- | ---------------------------- |
+| **trTeInstFilters** | O                 |                              |
+| **trTeDataFilters** | OD                |                              |
+| **trTeFilter…​**    | O                 |                              |
+| **trTeComp…​**      | O                 |                              |
+| **trTeTrig…​**      | N                 | Hardcode to 0.               |

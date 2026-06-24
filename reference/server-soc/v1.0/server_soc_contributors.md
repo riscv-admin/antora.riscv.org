@@ -1,0 +1,7 @@
+# Contributors
+
+## [](#contributors)Contributors
+
+This RISC-V specification has been contributed to directly or indirectly by (in alphabetical order):
+
+Aaron Durbin, Andrea Bolognani, Andrei Warkentin, Andrew Jones, Beeman Strong, Cameron McNairy, Greg Favor, Heinrich Schuchardt, Isaac Chute, Jon Masters, Ken Dockser, Krste Asanovic, Manu Gulati, Mark Hayter, Michael Klinglesmith, Paul Walmsley, Ravi Sahita, Shaolin Xie, Shubu Mukherjee, Sibaranjan Pattnayak, Ved Shanbhogue

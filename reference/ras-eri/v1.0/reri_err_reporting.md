@@ -1,0 +1,382 @@
+# 2.1. Error Reporting
+
+## [](#2-1-error-reporting)2.1\. Error Reporting
+
+Components, such as a RISC-V hart or a memory controller, in a system that support error detection may implement one or more banks of error records. Each error bank may implement one or more error records. Each error record corresponds to one or more hardware units of the component and reports errors detected by those hardware units. A hardware unit may implement multiple error records. One or more error records may be valid at any given time due to one or more hardware units in the component detecting an error or due to a hardware unit having detected one or more errors.
+
+Each error bank is memory-mapped starting at an 8-byte aligned physical address and may include up to 63 error records. Each error record is a set of registers used to control that error record and to report status, address, and other information relevant to the error recorded in that error record.
+
+| |  Implementations may use a coarser alignment for the start address of an error bank. For example, some implementations may locate the error bank within a naturally aligned 4-KiB region (a page) of physical address space for each error bank, i.e., one page per bank. Coarser alignments may enable register decoding to be implemented without a hardware adder circuit. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The behavior for register accesses where the address is not aligned to the size of the access, or if the access spans multiple registers, or if the size of the access is not 4 bytes or 8 bytes, is `UNSPECIFIED`. An aligned 4-byte access to a RERI register must be single-copy atomic. Whether an 8-byte access to an RERI register is single-copy atomic is `UNSPECIFIED`, and such an access may appear, internally to the RERI implementation, as if two separate 4-byte accesses were performed.
+
+| |  The RERI registers are defined in such a way that software can perform two individual 4 byte accesses, or hardware can perform two independent 4 byte transactions resulting from an 8 byte access, to the high and low halves of the register as long as the register’s semantics, with regards to side-effects, are respected between the two software accesses, or two hardware transactions, respectively. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The RERI registers have little-endian byte order (even for systems where all harts are big-endian-only).
+
+| |  Big-endian-configured harts using RERI may implement the REV8 byte-reversal instruction defined by the Zbb extension. If REV8 is not implemented, then endianness conversion may be implemented using a sequence of instructions. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+An implementation-specific response occurs if the error bank and/or record is unavailable (e.g., powered down) to memory-mapped accesses. For example, an error bank and/or record may respond with all zero data on reads and may ignore writes. Other implementations may, for example, signal an error response on the attempted transaction.
+
+An error bank that is otherwise available for memory-mapped accesses must respond with all zero data on reads and must ignore writes to unimplemented registers in the page.
+
+### [](#2-1-1-register-layout)2.1.1\. Register Layout
+
+The error bank registers are organized as a 64-byte header providing information about the error bank followed by an array of 64-byte error records. The offset of the error record numbered `i` in the bank is (64 + `i` \* 64) where `i` may range from 0 to 62.
+
+__Table 1\. Error bank Memory-mapped register layout__
+| Offset        | Name               | Size | Description                                          |
+| ------------- | ------------------ | ---- | ---------------------------------------------------- |
+| 0             | vendor\_n\_imp\_id | 8    | Vendor and implementation ID.                        |
+| 8             | bank\_info         | 8    | Error bank information.                              |
+| 16            | valid\_summary     | 8    | Summary of valid error records.                      |
+| 24            | Reserved           | 32   | Reserved for future standard use.                    |
+| 56            | Custom             | 8    | Designated for custom use.                           |
+| 64 + 64 \* i  | control\_i         | 8    | Control register of error record i.                  |
+| 72 + 64 \* i  | status\_i          | 8    | Status register of error record i.                   |
+| 80 + 64 \* i  | addr\_info\_i      | 8    | Address-or-info. register of error record i.         |
+| 88 + 64 \* i  | info\_i            | 8    | Information register of error record i.              |
+| 96 + 64 \* i  | suppl\_info\_i     | 8    | Supplemental information register of error record i. |
+| 104 + 64 \* i | timestamp\_i       | 8    | Timestamp register of error record i.                |
+| 112 + 64 \* i | Reserved           | 16   | Reserved for future standard use.                    |
+
+All registers and register fields defined by this specification are WARL unless noted otherwise. While all registers and register fields of an error bank and the error records in an error bank must exist, is legal to implement a register and/or register field of as read-only zero or a read-only legal value if they are not required to report errors information in an implementation.
+
+| |  The number of error banks, the number of error records in an error bank and the amount of information reported in an error record may be implemented to meet the needs of the implementation. The error records are only required to implement the registers and register fields needed to report error information that is legally produced by the implementation. A minimal implementation with one error bank, which contains one error record only consumes 128 bytes of address space. In terms of storage, the minimal implementation requires only two bits of storage, for the v (valid) bit and the rdip (read-in-progress) bit, in the status\_i register in the single error record. All other register fields of the bank header and error record are WARL and may be hardwired to read-only zero or read-only one as appropriate. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#2-1-2-reset-behavior)2.1.2\. Reset Behavior
+
+The reset value is `UNSPECIFIED` for RERI registers.
+
+The registers of an error bank may preserve their value across certain types of reset. For example, a warm reset or a RAS initiated reset may preserve the register values whereas a cold reset may reset the values back to their initial state.
+
+| |  Under normal circumstances, when an error is signaled, the RAS handler retrieves the logged errors to process the error condition. In some cases, the RAS handler may not be able to do such processing. For example, the system may be unable to support execution of the RAS handler and cause a RAS initiated reset. Preserving the information logged in error records across such resets allows reporting of unhandled errors that occurred in a previous boot of the system. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+All registers in an error bank must have the same reset behavior.
+
+### [](#2-1-3-error-bank-header-registers)2.1.3\. Error Bank Header Registers
+
+#### [](#2-1-3-1-vendor-and-implementation-id-vendor%5Fn%5Fimp%5Fid)2.1.3.1\. Vendor and Implementation ID (`vendor_n_imp_id`)
+
+The `vendor_n_imp_id` register is a read-only register and its layout is:
+
+![Vendor and implementation ID](_images/svg-c1ba819ec801750bb2aad29441ee2b310d066635.svg) 
+
+Figure 1\. Vendor and implementation ID
+
+The `vendor_id` field follows the encoding as defined by `mvendorid` CSR and provides the JEDEC manufacturer ID of the provider of the component hosting the error bank. A value of 0 may be returned to indicate the field is not implemented or that this is a non-commercial implementation.
+
+The `imp_id` provides a unique identity, defined by the vendor, to identify the component and revisions of the component implementation hosting the error bank. A value of 0 may be returned to indicate that the field is not implemented. The value returned should reflect the design of the component itself and not of the surrounding system.
+
+| |  The vendor\_id and the imp\_id are expected to be used as a identifier to determine the format of fields and encodings that are UNSPECIFIED by this specification. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+#### [](#2-1-3-2-error-bank-information-bank%5Finfo)2.1.3.2\. Error Bank Information (`bank_info`)
+
+The `bank_info` is a read-only register and its layout is as follows:
+
+![Error bank information](_images/svg-5e170184bf335d4f69de8011fec6d9f0db30a911.svg) 
+
+Figure 2\. Error bank information
+
+The `version` field returns the version of the architectural register layout specification implemented by the error bank. The version defined by this specification is 0x01\. The encodings 0xF0 through 0xFF of this field are designated for custom use.
+
+The `layout` field along with the `version` field indicates the layout of the registers in the error bank and the error records. The `layout` encoding 0 indicates the registers are arranged and have meaning as defined by this specification.
+
+| |  The offset of the version and the layout fields in the error bank shall not change across versions of the specification or the layouts defined by a version. Software should first read the version and layout fields and use the values to determine the register layout. The layout field may be used for future standard extensions to define segment specific extensions to the error bank and/or the error records. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The `inst_id` field identifies a unique instance of an error bank, within a package or at least a silicon die, of the component; ideally unique in the whole system. The `inst_id` is defined by the vendor of the system as a unique identifier for the component. A value of 0 may be returned to indicate the field is not implemented.
+
+| |  The inst\_id is expected to be collected and logged as part of the RAS error logs. These may allow the vendor of the silicon to make inferences about the instances of the components that may be vulnerable. As these values differ between vendors of the system and even among systems provided by the same vendor, these are not expected to be useful to the majority of software besides software intimately familiar with that system implementation. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The `n_err_recs` field indicates the number of error records implemented by the error bank. The field is allowed to have an unsigned value between 1 and 63\. The error records of an error bank are located in the memory mapped region reserved for the error bank such that the first error record is at offset 64 and the last error record at offset (64 + 63 \* `n_err_recs`).
+
+#### [](#2-1-3-3-summary-of-valid-error-records-valid%5Fsummary)2.1.3.3\. Summary of Valid Error Records (`valid_summary`)
+
+The `valid_summary` is a read-only register and its layout is as follows:
+
+![Summary of valid error records](_images/svg-d005408d0bb00c26010570367d9881776b7c699d.svg) 
+
+Figure 3\. Summary of valid error records
+
+The `sv` bit when 1 indicates that the `valid_bitmap` provides a summary of the`valid` bits from the status registers of this error bank. If this bit is 0 then the error bank does not provide a summary of valid bits and the`valid_bitmap` is 0.
+
+| |  If SV is 1, then software may use the valid\_bitmap to determine which error records in the bank are valid. If this bit is 0 then software must read thestatus\_register\_i of each implemented error record in this bank to determine if there is a valid error logged in that error record. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+### [](#2-1-4-error-record-registers)2.1.4\. Error Record Registers
+
+#### [](#2-1-4-1-control-register-control%5Fi)2.1.4.1\. Control Register (`control_i`)
+
+The `control_i` is a read/write WARL register used to control error reporting by the corresponding error record in the error bank. The layout of this register is as follows:
+
+![Control register](_images/svg-b9a157fcfe4dd17e43d310ae63551e9ab585f008.svg) 
+
+Figure 4\. Control register
+
+Error reporting functionality in the error record is enabled if the error-logging-and-signaling-enable (`else`) field is set to 1\. The `else` field is WARL and may default to 1 or 0 at reset. When `else` is 1, the hardware unit logs and signals errors in the error record. When `else` is 0, any signaling associated with prior logged errors remains unaffected, the hardware unit does not log and signal new errors in the error record, and it is `UNSPECIFIED`whether the hardware unit continues detecting and correcting errors.
+
+| |  When error reporting is disabled, the hardware unit may continue to silently correct detected errors and when correction is not possible provide corrupt data to the consumers of the data. Alternatively an implementation may disable error detection altogether when error reporting is disabled. It is recommended that implementations continue performing error correction even when error reporting is disabled. It is recommended that a hardware component continue to produce error detection and correction codes on data generated by or stored in the hardware component even when error reporting is disabled. It is recommended hardware components continue to use containment techniques like data poisoning even when error reporting is disabled. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The `ces`, `ueds`, and `uecs` are WARL fields used to enable signaling of CE, UED, and UEC respectively when they are logged (i.e. when `else` is 1). Enables for unsupported classes of errors may be hardwired to 0\. The encodings of these fields are specified in [Table 2](#ERR%5FSIG%5FENABLES).
+
+__Table 2\. Error signaling enable field encodings__
+| **Encoding** | **Error signal**                             |
+| ------------ | -------------------------------------------- |
+| 0            | Signaling is disabled.                       |
+| 1            | Signal using a Low-priority RAS signal.      |
+| 2            | Signal using a High-priority RAS signal.     |
+| 3            | Signal using a platform specific RAS signal. |
+
+The RAS signals are usually used to notify a RAS handler. The physical manifestation of the signal is `UNSPECIFIED` by this specification. The information carried by the signal is `UNSPECIFIED` by this specification.
+
+| |  The error signaling enables typically default to 0 - disabled - at reset to allow a RAS handler an opportunity to initialize itself for handling RAS signals and to initialize the hardware units that generate the RAS signals before error reporting is enabled. The signal generated by the error record may in addition to causing an interrupt/event notification be also used to carry additional information to aid the RAS handler in the platform. The RAS handler may be implemented by a RISC-V application processor hart in the system, a dedicated RAS handling micro-controller, a Finite-State Machine (FSM), etc. The error signals may be configured, through platform specific means, to notify a RAS handler in the platform. For example, the High-priority RAS signal may be configured to cause a High-priority RAS local interrupt, an external interrupt, or an Non-Maskable Interrupt (NMI) and the Low-priority RAS signal may be configured to cause a Low-priority RAS local interrupt or an external interrupt. When error class and/or priority-specific RAS handlers are implemented, these handlers must take into consideration the possibility that an error record intended for a handler could be overwritten by an error of higher severity or priority — which also triggers a signal to another RAS handler for the new error — in the period between the first signal’s generation and its examination of the error record by the first RAS handler. In such instances, the first RAS handler may find an error record that is not intended for it. This handler may choose to disregard this error record as spurious from its perspective, and leave it to be handled by the other RAS handler. It may also note that an error occurred that concerns it, but information for the error is no longer available. Similarly, spurious signals may arise if the fields controlling the type of signal generated by an error record are modified while either the v field or the ceco field in the status\_i register is set to 1. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+If the error record supports corrected-error counting then the corrected-error-counting-enable (`cece`) field, when set to 1, enables counting corrected errors in the corrected-error-counter (`cec`) field of the status register `status_i` of the error record. The `cec` is a counter that holds an unsigned integer count. When `cece` is 0, the `cec` does not count and retains its value. If corrected error counting is not supported in the error record then`cece` and `cec` may be hardwired to 0\. An overflow of `cec` is signaled using the signal configured in the `ces` field. When `cece` is 1, the logging of a CE in the error record does not cause an error signal and an error signal configured in `ces` occurs only on a `cec` overflow that sets the `ceco` bit.
+
+The set-read-in-progress (`srdp`) field, when written with a value of 1, causes the `rdip` (read-in-progress) bit of the associated `status_i` register to be set. The `srdp` field always returns 0 on read. The `rdip` field in the`status_i` register is set to 1 by hardware when an error is recorded in an invalid error record causing the `v` field to change from 0 to 1\. The `rdip`field is cleared to 0 by hardware when a new error updates any field of a valid (`v=1`) error record.
+
+The status-register-invalidate (`sinv`) bit, when written with a value of 1, causes the `v` (valid) field of the associated `status_i` register to be cleared if the `rdip` field in the `status_i` register is also 1\. The `sinv`field always returns 0 on read. The `sinv` field enables software to read out and invalidate an error record without needing to explicitly write the`status_i` register. Qualifying the clearing of the `v` field with `rdip` field being 1 prevents losing information about an overwrite that might have occurred while reading of the error record is in progress. If the `sinv` and `srdp` are both written to 1 together then the `rdip` bit is set and the `v` bit is cleared to 0.
+
+| |  Software may determine if the error record was read atomically by first reading the registers of the error record, then clearing the valid in status\_i by writing 1 to control\_i.sinv and then reading the status\_i register again to determine if the v field was cleared to 0\. If the v field is still 1 but the rdip field is 0 then it is indicative of an overwrite that may have occurred during the process of reading the error record. If the v field is 1 and the rdip is also 1 then it indicates a new error was recorded after thev field was cleared; but the read of the error record to collect the previous error was atomic. If an overwrite occurred during the process of reading the error record then the process may be repeated, after setting the rdip field, to read the latest reported error. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The error-injection-delay (`eid`) is a WARL field used to control error record injection. When `eid` is written with a value greater than 0, the `eid` starts counting down, at an implementation defined rate, till the value reaches a count of 0\. Writing a value of 0 disables the counter. If error injection is not supported by the error record then the `eid` field may be hardwired to 0\. When`eid` reaches a count of 0, the status register is made valid by setting the`status_i.v` bit to 1\. The `status_i.v` transition from 0 to 1 generates a RAS signal corresponding to the class of error (CE, UED, or UEC) setup in the`status_i` register. The counter continues to count even if the `status_i`register was overwritten by a hardware detected error before the `eid` counts down to 0.
+
+| |  Software may setup the error record registers with desired values of the error record to be injected and then program eid to cause the status\_i register to be marked valid when eid count reaches 0. The error record injection capability only injects an error record and not an error into the hardware itself. The error record injection capability is expected to be used to test the RAS handlers and is not intended to be used for verification of the hardware implementation itself. Other implementation specific mechanisms may be provided to generate and/or emulate hardware error conditions. When hardware error injection capabilities are implemented, the implementation should ensure that these capabilities cannot be misused to maliciously inject hardware errors that may lead to security issues. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+#### [](#2-1-4-2-status-register-status%5Fi)2.1.4.2\. Status Register (`status_i`)
+
+The `status_i` is a read-write WARL register that reports errors detected by the hardware unit.
+
+![Status register](_images/svg-99fdd4c73edb9e1e00af3064eb39236f9aede299.svg) 
+
+Figure 5\. Status register
+
+The error record holds a valid error log if the valid (`v`) field is 1\. The`status_i` register does not accept a software write when the `v` field is 1.
+
+If the detected error was corrected then `ce` is set to 1\. If the detected error could not be corrected but was deferred then `ued` is set to 1\. If the detected error could not be corrected or deferred and thus needs immediate handling by an RAS handler, then the `uec` bit is set to 1\. If the error record does not log a class of errors (e.g., does not support UED), then the corresponding bit may be hardwired to 0\. If the bits corresponding to more than one error class are set to 1 then the error record holds information about the highest severity error class among the bits set. The error record may be used to provide an informational update by setting the `v` bit to 1 and setting `ce`, `ued`, and`uec` bits to 0\. Such informational updates are lower severity than a CE but are signaled using the signal configured in `control_i.ces`.
+
+When `v` is 1, if more errors of the same class as the error currently logged in the error record occur then the multiple-occurrence (`mo`) bit is set to indicate the multiple occurrence of errors of the same severity. See [2.1.5\. Error Record Overwrite Rules](#OVERWRITE%5FRULES)for rules on overwriting the error record in such cases.
+
+Each error of an error class (CE, UED, or UEC) that may be logged in an error record may be associated with a priority which is a number between 0 and 3; priority value of 3 being the highest priority and priority value of 0 being the lowest priority. The priority values indicate relative priority among errors of the same error class and therefore represent sub-classes of errors. Among errors of different error classes the priority values are unrelated.
+
+| |  Some implementations may report errors from more than one sources into a single error records. Such implementations may prioritize reporting of error from one source over the other using the pri associated with the error when both sources simultaneously detect an error of the same class (e.g., CE). The priority is also used to determine if a new error may overwrite a previously reported error of the same error class in the error record. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The priority (`pri`) field in the error record indicates the priority of the currently logged error in the error record. The `pri` is a WARL field and an implementation may support only a subset of legal values for this field and an implementation that does not support reporting of a priority per error may hardwire this field to 0.
+
+The error record overwrite rules use the error class (CE, UED, or UEC) and the error priority (`pri`) as specified in [2.1.5\. Error Record Overwrite Rules](#OVERWRITE%5FRULES).
+
+When an UEC occurs the containable (`c`) bit may be set to 1 to indicate that the error has not propagated beyond the boundaries of the hardware unit that detected the error and thus may be **containable** through recovery actions (e.g., terminating the computation, etc.) carried out by the RAS handler. The `c` bit is WARL. For error classes other than UEC, the interpretation of the `c` bit may be specified in a future standard extension.
+
+For a RISC-V hart, some UEC may cause a Hardware Error exception \[[17](reri%5Fbibliography.html#bib-priv)\]. A Hardware Error is a synchronous exception, triggered when corrupted or uncorrectable data is accessed, either explicitly or implicitly, by an instruction. In this context, "data" encompasses all types of information used within a RISC-V hart.
+
+| |  For example, a RISC-V hart by causing the precise hardware error exception on attempts to consume corrupted/poisoned data may contain the error to the program currently executing on the hart. Such errors may be reported with the c bit set to 1 indicating that the interrupted context may be restarted if the RAS handler is able to perform a suitable recovery operation. The _x_epc CSR on delivery of the hardware error exception holds the address of the instruction that attempted to access corrupted data, while the _x_tval CSR is either set to 0 or holds the virtual address of an instruction fetch, load, or store that attempted to access corrupted data. While the c bit indicates that the error may be containable the RAS handler may or may not be able to recover the system from such errors. The RAS handler must make the recovery determination based on additional information provided in the error record such as the address of the memory where corruption was detected. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+The address-or-info-type (`ait`) is a WARL field that indicates the type of information reported in the `addr_info_i` register. An error record that does not report information in this field may hardwire this field to 0\. The encodings of the `ait` field are listed in [Table 3](#AIT%5FENCODINGS).
+
+__Table 3\. Address-or-information type encodings__
+| **Encoding** | **Description**                                                                |
+| ------------ | ------------------------------------------------------------------------------ |
+| 0            | None. The contents of the addr\_info\_i register areUNSPECIFIED when ait is 0. |
+| 1            | Supervisor Physical Address (SPA).                                             |
+| 2            | Guest Physical Address (GPA).                                                  |
+| 3            | Virtual Address (VA).                                                          |
+| 4-15         | Component-specific address or information.                                     |
+
+| |  Component-specific information types, as defined in the range 4-15 of the aitfield, may be used to report component-specific addresses or other component-specific information in the register. The component-specific addresses may include information such as a local bus address or a Dynamic Random-Access Memory (DRAM) address. The interpretation of such information is component-specific. When a standard address type (a VA, SPA, or GPA) is reported in theaddr\_info\_i register, additional non-redundant information about the location accessed using the address (e.g., cache set and way, etc.) may be reported in the info\_i and/or the suppl\_info\_i registers. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The transaction-type (`tt`) is a WARL field to report the type of transaction that detected the error and its encodings are listed in [Table 4](#TT%5FENCODINGS). An error record that does not report transaction types may hardwire this field to 0.
+
+__Table 4\. Transaction type encodings__
+| **Encoding** | **Description**                   |
+| ------------ | --------------------------------- |
+| 0            | Unspecified or not applicable.    |
+| 1            | Designated for custom use.        |
+| 2-3          | Reserved for future standard use. |
+| 4            | Explicit read.                    |
+| 5            | Explicit write.                   |
+| 6            | Implicit read.                    |
+| 7            | Implicit write.                   |
+
+For a RISC-V hart, the Unprivileged specification \[[18](reri%5Fbibliography.html#bib-upriv)\] defines memory accesses by instructions as either explicit or implicit. An Implicit read or write is an access that may be implicitly performed by hardware to perform an explicit operation. For example, a load or store instruction executed by the hart may perform implicit memory accesses to page table data structures. Instruction memory accesses by a hart are termed as implicit accesses by the Unprivileged specification. However, for the purposes of error reporting, only the implicit accesses to data structures, such as the (guest) page tables that are used to determine the address of the instructions to be fetched, are termed as implicit accesses. The read to fetch the instruction bytes themselves is classified as an explicit read.
+
+| |  Implementations may report additional information about the transaction (e.g., whether speculative, on-demand vs. prefetch, etc.) in the info\_i and/orsuppl\_info\_i registers. A non-hart component may also perform implicit accesses in order to process an explicit transaction. For example, processing a memory transaction may require a fabric component to implicitly access a routing table data structure. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+If the detected error reports additional information in the `info_i` register then the information-valid (`iv`) field is set to 1\. If the detected error reports additional supplemental information in the `suppl_info_i` register then supplemental-information-valid (`siv`) field is set to 1\. The `iv` and/or `siv`fields may be hardwired to 0 if the error record does not provide information in`info_i` and/or `suppl_info_i` registers. When `iv` is 0, the value in `info_i`register is `UNSPECIFIED`. When `siv` is 0, the value in `suppl_info_i` register is `UNSPECIFIED`.
+
+If the error record holds a timestamp of when the last error was logged in the`timestamp_i` register then the timestamp-valid (`tsv`) field is set to 1\. This field may be hardwired to 0 if the error record does not report a timestamp with the error. When `tsv` field is 0, the value in `timestamp_i` register is`UNSPECIFIED`.
+
+The `scrub` bit is valid when a CE is logged and when set to 1 indicates that the storage location that held the data value has been updated with the corrected value (i.e., the data has been scrubbed). In an implementation that cannot make this distinction then it may conservatively report this field as 0\. When the error record is not associated with storage elements (e.g., correcting errors detected on bus transactions) this field may be hardwired to 0\. If this property is unconditionally true for a hardware unit then this field may be hardwired to 1\. For error classes other than CE, the interpretation of the `c`bit may be specified in a future standard extension.
+
+The error-code (`ec`) is a WARL field that holds an error code that provides a description of the detected error. Standard `ec` encodings are defined in[Table 5](#EC%5FENCODINGS). If an error record detects an error that does not correspond to a standard `ec` encoding then such errors may be reported using a custom encoding. The custom encodings have the most significant bit set to 1 to differentiate them from the standard encodings.
+
+The read-in-progress (`rdip`) field is set to 1 by hardware when a new error is recorded in an invalid status register and is cleared to 0 by hardware when a valid status register is overwritten. When the `control_i.sinv` field is written to 1, the `v` field is cleared to 0 only if the `rdip` field is 1\. Gating the clearing of the `v` field by the `rdip` field being 1 allows software to detect an overwrite that may occur while it is in process of reading an error record.
+
+An error record that supports the 1 setting of the `cece` field in `control_i`, implements a corrected-error-counter in the `cec` field. The `cec` is a WARL field. When `cece` is 1, the `cec` is incremented on each CE. If an unsigned integer overflow occurs on an `cec` increment then the corrected-error-counter-overflow (`ceco`) field is set to 1\. The `cec`continues to count following an overflow. The `cec` and `ceco` fields hold valid data and continue to count even when the `v` field is 0.
+
+| |  Some hardware units may maintain a history of CE and may report a CE and may increment the cec only if the error is not identical to a previously reported CE. Some hardware units may implement low pass filters (e.g., leaky buckets) that throttle the rate at which CE are reported and counted. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  To invalidate a valid error record (presumably after having first read the error record), software should write 1 to the control\_i.sinv control bit to clear the v bit in the status\_i register of the error record. Using the sinvcontrol to clear the v bit, as compared to an explicit write to the register, avoids overwriting the cec and ceco fields (which typically want to be maintained across logged errors). If software needs to initialize the cec and/or ceco, then a software write to the status\_i register is appropriate. Before performing the write, software should first check for and read any valid error record, invalidate the error record, and then write the register with the new cec and/or ceco value and with v=0. If status\_i register write was not accepted due to hardware writing a new error into the record and setting the v field to 1, then software should repeat this process. |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+
+When an UEC or UED error is logged in an error record, the `cec` and `ceco`fields of the error record are not modified and retain their values.
+
+#### [](#2-1-4-3-address-or-information-register-addr%5Finfo%5Fi)2.1.4.3\. Address-or-Information Register (`addr_info_i`)
+
+The `addr_info_i` WARL register reports the address or other information associated with the detected error when `status_i.ait` is not 0\. If`status_i.ait` is 0, the value in this register is `UNSPECIFIED`. An implementation that does not report information in this register may hardwire this register to 0\. Some fields of this register may be hardwired to zero if the field is unused to report any type of address or information.
+
+When an address (a VA, GPA, or an SPA) is reported in this register, to the extent possible, the error record should capture all significant parts of the address. However, as a function of the type of error being logged some address fields may be zeroes. Some of the highest address bits may be fixed or may be sign-extensions or may be zero-extensions of the next lowest address bit depending on the type of address reported.
+
+When component specific information is reported in this register, the interpretation of the information is component specific.
+
+#### [](#2-1-4-4-information-register-info%5Fi)2.1.4.4\. Information Register (`info_i`)
+
+The `info_i` WARL register provides additional information about the error when`status_i.iv` is 1\. If `status_i.iv` is 0, the value in this register is`UNSPECIFIED`. An implementation that does not report any additional information may hardwire this register to 0.
+
+The format of the register is `UNSPECIFIED` by this specification. This field may be interpreted using the error code in `status_i.ec` along with implementation defined format and rules.
+
+| |  This register may be used to report information for guiding recovery, error nature (transient/permanent), error location (set/way, parity group, ECC syndrome), and other details (protocol FSM state, assertion failures). Components that are or monitor field replaceable units may log information in this register to identify the failing component. For example, a memory controller may log the DIMM channel, bank, column, row, rank, subRank, device ID, etc. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+#### [](#2-1-4-5-supplemental-information-register-suppl%5Finfo%5Fi)2.1.4.5\. Supplemental Information Register (`suppl_info_i`)
+
+The `suppl_info_i` WARL register provides additional information about the error when `status_i.siv` is 1\. This information may supplement the information provided in `info_i` register. If `status_i.siv` is 0, the value in this register is `UNSPECIFIED`. An implementation that does not report any supplemental information may hardwire this register to 0.
+
+The format of the register is `UNSPECIFIED` by this specification. This field may be interpreted using the error code in `status_i.ec` along with implementation specific and implementation defined format and rules.
+
+#### [](#2-1-4-6-timestamp-register-timestamp%5Fi)2.1.4.6\. Timestamp Register (`timestamp_i`)
+
+The `timestamp_i` WARL register provides a timestamp for the last error recorded in the error record if `status_i.tsv` is 1\. When `status.tsv` is 0, the value in this register is `UNSPECIFIED`. An implementation that does not report a timestamp may hardwire this register to 0\. Some fields of the register may be hardwired to zero if the field is unused to report the timestamp.
+
+The nature, frequency, and resolution of the timestamp are `UNSPECIFIED`.
+
+| |  The timestamp may be constructed by a hardware unit using mechanism such as sampling a local cycles counter (e.g., the cycles counter of a RISC-V hart, a global counter (e.g, mtime, etc.), or other implementation specific means. |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#OVERWRITE%5FRULES)2.1.5\. Error Record Overwrite Rules
+
+When a hardware unit detects an error and its error record is not valid, it writes the error record with the error information and marks the record as valid. However, if the error record is already valid, owing to an earlier detected but unprocessed error, the decision to overwrite the error record with new error information is determined by the new error’s severity and/or priority.
+
+The overwrite rules allow a higher severity error to overwrite a lower severity error. UEC has the highest severity, followed by UED, then CE, and finally, informational. When the two errors have the same severity the priority of the errors (as determined by `status_i.pri`) is used to determine if the error record is overwritten. Higher priority errors overwrite the lower priority errors. When an error record is overwritten by a higher severity error (UED/CE by UEC, UED by UEC, or CE by UEC/UED), the status bits indicating the severity of the older errors are retained (i.e., are sticky).
+
+When an error writes or overwrites an error record, the `status_i.cec` and`status_i.ceco` fields update from CEs and retain value for errors of other severity. When implemented, `cec` counts CE occurrences; unsigned integer overflow on `cec` increment sets `ceco` to 1.
+
+Whenever a new error writes to or overwrites an error record, the signal configured in the `control_i` register for its severity level is asserted. When`status_i.ceco` changes from 0 to 1, the signal configured in `control_i.ces` is asserted.
+
+Error record writing rules
+
+    Let new_status be the value to be recorded in status_i register for the new error
+    overwrite = FALSE
+    if status_i.v == 1
+        // There is a valid first error recorded
+        if ( severity(new_error) > severity(status_i) )
+            // Higher severity errors overwrite less severe errors and clear mo
+            status_i.mo = 0
+            overwrite = TRUE
+        endif
+        if ( severity(new_status) == severity(status_i) )
+            // Second errors of the same severity set MO
+            status_i.mo = 1
+            // Second error of same severity overwrites previous error if it
+            // has higher priority (status_i.pri).
+            if ( new_status.pri > status_i.pri )
+                overwrite = TRUE;
+            endif
+        endif
+        // previous error status bits are retained (sticky) but rdip bit is cleared.
+        status_i.rdip = 0
+        status_i.uec |= new_status.uec
+        status_i.ued |= new_status.ued
+        status_i.ce  |= new_status.ce
+    else
+        // No valid error recorded; new error logged, clearing sticky history
+        // and MO bit, and rdip is set.
+        status_i.rdip = 1
+        status_i.uec = new_status.uec
+        status_i.ued = new_status.ued & ~new_status.uec
+        status_i.ce = new_status.ce & ~new_status.uec & ~new_status.ued
+        status_i.mo = 0
+        overwrite = TRUE;
+    endif
+    if ( overwrite = TRUE )
+        status_i.pri   = new_status.pri
+        status_i.c     = new_status.c
+        status_i.tt    = new_status.tt
+        status_i.ait   = new_status.ait
+        status_i.iv    = new_status.iv
+        status_i.siv   = new_status.siv
+        status_i.tsv   = new_status.tsv
+        status_i.scrub = new_status.scrub
+        status_i.ec    = new_status.ec
+        // Update addr_info_i, info_i, suppl_info_i, and timestamp_i with new
+        // error information, if valid.
+        status_i.v = 1
+    endif
+
+If the `status_i.v`, `status_i.mo`, and `status_i.uec` are all 1 then the RAS handler should preferably restart the system to bring it to a correct state as an UEC record has been lost. If the `status_i.v` and `status_i.mo` are 1 but`status_i.uec` is 0 (i.e., the logged error is a UED or a CE) then the RAS handler may keep the system operational.
+
+If multiple errors occur simultaneously then they may be recorded individually in any order and the rules outlined in [Error record writing rules](#REC%5FWRITE%5FRULE) lead to the highest severity error among them being retained in the error record. When the error record registers are written by an error, all registers that are written must be written with information related to that error.
+
+| |  When multiple errors occur simultaneously, some implementations may choose to record each error individually following the rules outlined in[Error record writing rules](#REC%5FWRITE%5FRULE). Other implementations may however choose to only record the highest severity error or when they have the same severity the highest priority error. And yet another implementation may choose to record one of the errors as determined by implementation specific rules. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#2-1-6-error-reporting-defined-by-other-standards)2.1.6\. Error Reporting Defined by Other Standards
+
+Standards such as PCIe \[[1](reri%5Fbibliography.html#bib-pci)\] and CXL \[[2](reri%5Fbibliography.html#bib-cxl)\] define standardized error reporting architectures such as the PCIe Advanced Error Reporting (AER). Specifications such as CXL define a standardized set of RAS requirements for hosts and devices.
+
+The RISC-V RERI specification complements the error reporting architecture defined by these standards with a RISC-V standard for reporting errors for components that are not PCIe/CXL components. There may also be other error reporting mechanisms, possibly custom, that are employed alongside the RERI specification.
+
+| |  The RISC-V system components such as PCIe root ports or PCIe Root Complex Event Collectors may themselves implement error reporting compliant with the RISC-V RERI specification and thus provide a unified error reporting mechanism in such systems. For example, a root complex event collector may support an error record to report errors logged in the Advanced Error Reporting (AER) log registers. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#2-1-7-error-code-encodings)2.1.7\. Error Code Encodings
+
+__Table 5\. Error code encodings__
+| **Encoding** | **Description**                                                                      |
+| ------------ | ------------------------------------------------------------------------------------ |
+| 0            | None                                                                                 |
+| 1            | Other unspecified error occurred                                                     |
+| 2            | Corrupted data access (e.g., attempt to consume poisoned data) error                 |
+| 3            | Cache block data (e.g., ECC error on cache data) error                               |
+| 4            | Cache scrubbing detected (e.g., ECC error on cache data) error                       |
+| 5            | Cache address/control state (e.g., parity error tag or state) error                  |
+| 6            | Cache unspecified error                                                              |
+| 7            | Snoop-filter/directory address/control state (e.g., ECC error on tag or state) error |
+| 8            | Snoop-filter/directory unspecified error                                             |
+| 9            | TLB/Page-walk cache data (e.g., ECC error on TLB data) error                         |
+| 10           | TLB/Page-walk cache address/control state (e.g., ECC error on TLB tag) error         |
+| 11           | TLB/Page-walk cache unspecified error                                                |
+| 12           | Hart state error (e.g., ECC error on CSRs or x/f/v registers)                        |
+| 13           | Interrupt controller state (e.g., ECC error on interrupt pending/enable state) error |
+| 14           | Interconnect data (e.g., ECC error on data bus) error                                |
+| 15           | Interconnect other (e.g., parity error on address bus) error                         |
+| 16           | Internal watchdog error                                                              |
+| 17           | Internal datapath, memory, or execution units error (e.g, ALU datapath parity)       |
+| 18           | System memory command/address bus error                                              |
+| 19           | System memory unspecified error                                                      |
+| 20           | System memory data (e.g., ECC error in SDRAM or HBM) error                           |
+| 21           | System Memory scrubbing detected error                                               |
+| 22           | Protocol Error - illegal input/output error                                          |
+| 23           | Protocol Error - illegal/unexpected state error                                      |
+| 24           | Protocol Error - timeout error                                                       |
+| 25           | System internal controller (power management, security, etc.) error                  |
+| 26           | Deferred error pass-through (e.g., forwarding poisoned data) not supported           |
+| 27           | PCIe/CXL detected (e.g., logged into PCIe AER, CXL.mem error log, etc.) errors       |
+| 28 - 63      | Reserved for future standard use                                                     |
+| 64 - 255     | Designated for custom use                                                            |

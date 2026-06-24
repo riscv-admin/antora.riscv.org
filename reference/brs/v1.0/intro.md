@@ -1,0 +1,51 @@
+# 1.1. Introduction
+
+## [](#intro)1.1\. Introduction
+
+The _RISC-V Boot and Runtime Services Specification_ (BRS) defines a standardized set of software capabilities, that portable system software, such as operating systems and hypervisors, can rely on being present in an implementation to utilize in acts of device discovery, OS boot and hand-off, system management, and other operations.
+
+The BRS specification is targeting systems that implement S/U privilege modes, and optionally the HS privilege mode. This is the expected deployment for OSVs and system vendors in a typical ecosystem covering client systems up through server systems where software is provided by different vendors than the system vendor.
+
+This specification standardizes the requirements for software interfaces and capabilities by building on top of relevant industry and ratified RISC-V standards.
+
+### [](#1-1-1-releases)1.1.1\. Releases
+
+It is expected that the BRS will periodically release a new specification. The determination of a new release will be based on the evaluation of significant changes to its underlying dependencies.
+
+### [](#1-1-2-approach-to-solutions)1.1.2\. Approach to Solutions
+
+The BRS focuses on two solutions in the form of what is deemed a recipe. Each recipe contains the requirements needed to fulfill each solution. The requirements of each recipe will be marked accordingly with a unique identifier. The recipes are BRS-I (Interoperable) and BRS-B (Bespoke).
+
+### [](#1-1-3-testing-and-conformance)1.1.3\. Testing and Conformance
+
+To be compliant with this specification, an implementation MUST support all mandatory rules and MUST support the listed versions of the specifications. This standard set of capabilities MAY be extended by a specific implementation with additional standard or custom capabilities, including compatible later versions of listed standard specifications. Portable system software MUST support the specified mandatory capabilities to be compliant with this specification.
+
+The rules in this specification use the following format:
+
+| ID#                                                                                                                                                                                                               | Rule                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| CAT\_NNN                                                                                                                                                                                                          | The CAT is a category prefix that logically groups the rules and is followed by 3 digits - NNN \- assigning a numeric ID to the rule.  The rules use the key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT", "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and "OPTIONAL" that are to be interpreted as described in RFC 2119 \[[1](bibliography.html#bib-rfc%5F2119)\] when, and only when, they appear in all capitals, as shown here. When these words are not capitalized, they have their normal English meanings. |
+| _A rule or a group of rules may be followed by non-normative text providing context or justification for the rule. The non-normative text may also be used to reference sources that are the origin of the rule._ |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+
+### [](#1-1-4-glossary)1.1.4\. Glossary
+
+Most terminology has the standard RISC-V meaning. This table captures other terms used in the document. Terms in the document prefixed by **PCIe** have the meaning defined in the _PCI Express Base Specification_ \[[2](bibliography.html#bib-pci)\] (even if they are not in this table).
+
+__Table 1\. Terms and definitions__
+| Term    | Definition                                                                                       |
+| ------- | ------------------------------------------------------------------------------------------------ |
+| ACPI    | _Advanced Configuration and Power Interface Specification_ \[[3](bibliography.html#bib-acpi)\].  |
+| BRS     | _RISC-V Boot and Runtime Services Specification_. This document.                                 |
+| BRS-I   | Boot and Runtime Services recipe targeting interoperation across different software suppliers.   |
+| BRS-B   | Boot and Runtime Services recipe using a bespoke solution.                                       |
+| DT      | _Device Tree_ \[[4](bibliography.html#bib-dt)\].                                                 |
+| EBBR    | _Embedded Base Boot Requirements Specification_ \[[5](bibliography.html#bib-ebbr)\].             |
+| OSV     | Operating System Vendor.                                                                         |
+| OS      | Operating System or Hypervisor.                                                                  |
+| Profile | _RISC-V Profile_ \[[6](bibliography.html#bib-profile)\].                                         |
+| RPMI    | _RISC-V Platform Management Interface_ \[[7](bibliography.html#bib-rpmi)\].                      |
+| RVI     | RISC-V International.                                                                            |
+| SBI     | _RISC-V Supervisor Binary Interface Specification_ \[[8](bibliography.html#bib-sbi)\].           |
+| SMBIOS  | _System Management BIOS (SMBIOS) Reference Specification_ \[[9](bibliography.html#bib-smbios)\]. |
+| SoC     | System on a chip, a combination of processor and supporting chipset logic in single package.     |
+| UEFI    | _Unified Extensible Firmware Interface Specification_ \[[10](bibliography.html#bib-uefi)\].      |

@@ -1,0 +1,13 @@
+# undefined
+
+Contributors to all versions of the spec in alphabetical order:
+
+Alex Bradbury, Andrew Burgess, Chih-Mao Chen, Zakk Chen, Kito Cheng, Nelson Chu, Michael Clark, Jessica Clarke, Palmer Dabbelt, Sam Elliott, Gonzalo Brito Gadeschi, Sebastian Huber, Roger Ferrer Ibanez, Quey-Liang Kao, Nick Knight, Luís Marques, Evandro Menezes, Max Nordlund, Stefan O’Rear, Konrad Schwarz, Fangrui Song, Hsiangkai Wang, Andrew Waterman, Jim Wilson
+
+It is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0). The full license text is available at<https://creativecommons.org/licenses/by/4.0/>.
+
+Please cite as: \`RISC-V ABIs Specification, Document Version 1.0', Editors Kito Cheng and Jessica Clarke, RISC-V International, November 2022.
+
+The latest version of this document can be found here:<https://github.com/riscv-non-isa/riscv-elf-psabi-doc>.
+
+This specification is written in collaboration with the development communities of the major open-source toolchain and operating system communities, and as such specifies what has been agreed upon and implemented. As a result, any changes to this specification that are not backwards-compatible would break ABI compatibility for those toolchains, which is not permitted unless for features explicitly marked as experimental, and so will not be made unless absolutely necessary, regardless of whether the specification is a pre-release version, ratified version or anything in between. This means any version of this specification published at the above link can be regarded as stable in the technical sense of the word (but not necessarily in the official RISC-V International specification state meaning), with the official specification state being an indicator of the completeness, clarity and general editorial quality of the specification.

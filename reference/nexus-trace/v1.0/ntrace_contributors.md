@@ -1,0 +1,13 @@
+# Contributors
+
+## [](#contributors)Contributors
+
+Key contributors to RISC-V N-Trace (Nexus-based Trace) specification in alphabetical order:  
+
+Bruce Ableidinger (SiFive) ⇒ Initial SiFive donation, reviews  
+Robert Chyla (IAR, SiFive, MIPS) ⇒ Most topics, editing, publishing  
+Ernie Edgar (SiFive) ⇒ Initial SiFive donation, reviews  
+Jay Gamoneda (NXP) ⇒ Reviews, contributing, editing  
+Markus Goehrle (Lauterbach) ⇒ Reviews, updates  
+Ved Shanbhogue (Rivos) ⇒ Detailed Architecture Review Committee notes  
+Nino Vidovic (Segger) ⇒ Reviews

@@ -1,0 +1,15 @@
+# Status of ABI
+
+| ABI Name | Status   |
+| -------- | -------- |
+| ILP32    | Ratified |
+| ILP32F   | Ratified |
+| ILP32D   | Ratified |
+| ILP32E   | Draft    |
+| LP64     | Ratified |
+| LP64F    | Ratified |
+| LP64D    | Ratified |
+| LP64Q    | Ratified |
+
+| |  ABI for big-endian is **NOT** included in this specification, we intend to define that in future version of this specification. |
+| ---------------------------------------------------------------------------------------------------------------------------------- |

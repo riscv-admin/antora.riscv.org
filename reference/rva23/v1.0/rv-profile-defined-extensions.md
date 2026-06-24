@@ -1,0 +1,5 @@
+# 3.1. Profile-Defined Extensions
+
+## [](#3-1-profile-defined-extensions)3.1\. Profile-Defined Extensions
+
+This profile, as with earlier profiles, includes several new extensions defined directly in the profile text. These profile-defined extensions name optional features or combinations of features that are already present in ratified specifications, but that were not previously explicitly named. Once the profile is ratified, these extension definitions will move into the appropriate sections of the combined ISA manual. The combined ISA manual was not available at the start of this profile definition. Future profile proposals will be presented as an update to the combined ISA manual, with new profile-defined extensions provided as edits to the appropriate sections of the combined ISA manual.

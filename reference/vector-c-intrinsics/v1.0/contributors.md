@@ -1,0 +1,9 @@
+# Contributors
+
+## [](#contributors)Contributors
+
+This RISC-V specification has been contributed to directly or indirectly by (in alphabetical order):
+
+Contributors to all versions of the spec in alphabetical order:
+
+Brandon Wu, Craig Topper, Eop Chen, HanKuan Chen, HsiangKai Wang, Jerry Zhang Jian, Kito Cheng, Nick Knight, Olaf Bernstein, Roger Ferrer Ibanez, Yi-Hsiu Hsu, Zakk Chen

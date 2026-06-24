@@ -1,0 +1,7 @@
+# Changelog
+
+## [](#changelog)Changelog
+
+### [](#version-1-0)Version 1.0
+
+* The RPMI specification version 1.0 with the foundations for the RPMI Message Protocol, RPMI Transport (shared memory based) and RPMI Service Groups for system control and management.

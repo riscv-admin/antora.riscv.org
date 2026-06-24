@@ -1,0 +1,33 @@
+# 1.1. Introduction
+
+## [](#intro)1.1\. Introduction
+
+Today’s platforms pose challenges in terms of manageability and controllability, where the operating system (OS) needs to support a variety of hardware with a variety of connected devices. The extra complexity and demand to manage and control the platform along with executing sophisticated workloads is a challenge for the application processors (APs) running a general purpose OS. To address this challenge, platforms today contain one or more microcontrollers which can offload various platform management and control tasks.
+
+This document describes the RISC-V Platform Management Interface (RPMI), which is an OS-agnostic, firmware-agnostic, scalable and extensible interface for platform management and control from dedicated microcontrollers (also referred to as platform microcontroller or PuC).
+
+The RPMI defines a message based communication between multiple application processors (APs) and platform microcontrollers (PuCs) for system management and control. This message based communication can also be virtualized by the machine-mode firmware or hypervisors using the SBI MPXY extension \[[1](bibliography.html#bib-sbi)\].
+
+All RPMI capabilities and services provided by platform microcontroller are discoverable at runtime which allows adding new capabilities and services in the future.
+
+### [](#1-1-1-rpmi-abstractions)1.1.1\. RPMI Abstractions
+
+**RPMI Transport**: An RPMI transport represents the mechanism by which the messages are exchanged between the application processor and the platform microcontroller. An RPMI transport instance is associated to a particular RISC-V privilege level of the application processors and it must be accessed only by that RISC-V privilege level.
+
+**RPMI Messaging Protocol**: The RPMI messaging protocol defines different types of RPMI messages and the format for each RPMI message type.
+
+**RPMI Service Groups**: The services provided by the platform microcontrollers to the application processors are grouped into RPMI service groups based on functionality. Each RPMI service group specifies the RISC-V privilege levels from which the application processor can access it. Platform vendors can implement custom RPMI service groups.
+
+**RPMI Client**: An RPMI client is a software or a driver running on the application processor which is capable of sending and receiving RPMI messages.
+
+**RPMI Context**: An RPMI context consists of an RPMI transport instance, RPMI message protocol layer, a mandatory RPMI BASE service group and other optional RPMI service groups. An RPMI context is associated with a RISC-V privilege level which matches the included RPMI transport instance. The RPMI service groups included in an RPMI context must be accessible from the RISC-V privilege level associated with that RPMI context.
+
+The RPMI is designed to work with a single or multi-tenant topology as shown in the [Figure 1](#fig%5Fintro%5Ftrans%5Ftopology) below whereas the high-level architecture is shown in the [Figure 2](#fig%5Fintro%5Fhigh%5Flevel%5Farch) below.
+
+![transport topologies](_images/transport-topologies.png) 
+
+Figure 1\. Transport for M-Mode and S-Mode
+
+![highlevel arch](_images/highlevel-arch.png) 
+
+Figure 2\. High Level Architecture

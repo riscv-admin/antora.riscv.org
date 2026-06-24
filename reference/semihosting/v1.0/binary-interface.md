@@ -1,0 +1,27 @@
+# 2.1. RISC-V Semihosting Binary Interface
+
+## [](#2-1-risc-v-semihosting-binary-interface)2.1\. RISC-V Semihosting Binary Interface
+
+The RISC-V semihosting binary interface consist of a breakpoint instruction sequence and a mechanism to pass parameters which are defined by the following sub-sections.
+
+### [](#2-1-1-semihosting-breakpoint-instruction-sequence)2.1.1\. Semihosting Breakpoint Instruction Sequence
+
+Semihosting operations are requested using a sequence of instructions including `EBREAK`. Because the RISC-V base ISA does not provide more than one `EBREAK` instruction, RISC-V semihosting uses a special sequence of instructions to distinguish a semihosting `EBREAK` from a debugger inserted`EBREAK`. The [RISC-V Semihosting Breakpoint Sequence](#breakpoint%5Finsns) shows the instruction sequence used to invoke a semihosting operation.
+
+RISC-V Semihosting Breakpoint Sequence
+
+slli x0, x0, 0x1f   # 0x01f01013   Entry NOP
+ebreak              # 0x00100073   Break to debugger
+srai x0, x0, 7      # 0x40705013   Exit NOP
+
+These three instructions must be 32-bit wide instructions. This sequence is applicable to all RISC-V base ISAs. If address translation and protection is enabled for the semihosting caller then the semihosting instruction sequence and data passed via memory must be paged in else the behavior of the semihosting call is UNSPECIFIED.
+
+| |  The SLLI, EBREAK, and SRAI instructions are part of the ratified RV32E, RV32I, RV64E and RV64I (aka Base Integer Instruction Set) specifications \[[2](bibliography.html#bib-riscvunprivref)\] hence these instructions are present on almost all RISC-V platforms. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+| |  The SLLI and SRAI instruction based NOPs which serve as semihosting marker have been randomly selected from the Base Integer Instruction Set since these are designated for custom use and unlikely to appear in real life code. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+### [](#2-1-2-semihosting-parameters)2.1.2\. Semihosting Parameters
+
+The type of semihosting operation and its parameters are specified using general purpose registers. The OPERATION NUMBER is specified in the `a0`register, and the PARAMETER is specified in the `a1` register, whereas the RETURN VALUE is available in the `a0` register. All registers and data block fields are XLEN wide.

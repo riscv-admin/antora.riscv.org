@@ -1,0 +1,7 @@
+# Contributors
+
+## [](#contributors)Contributors
+
+This RISC-V specification has been contributed to directly or indirectly by (in alphabetical order):
+
+Aaron Durbin, Andrei Warkentin, Andrew Jones, Anup Patel, Atish Patra, Beeman Strong, Darius Rad, Heinrich Schuchardt, Haibo Xu, Jamie Iles, John Hauser, Radim Krčmář, Rahul Pathak, Paul Walmsley, Samuel Holland, Sia Jee Heng, Sunil V L, Vedvyas Shanbhogue

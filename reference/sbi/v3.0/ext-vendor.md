@@ -1,0 +1,5 @@
+# 22.1. Vendor Specific Extension Space (EIDs #0x09000000 - #0x09FFFFFF)
+
+## [](#22-1-vendor-specific-extension-space-eids-0x09000000-0x09ffffff)22.1\. Vendor Specific Extension Space (EIDs #0x09000000 - #0x09FFFFFF)
+
+The lower 24 bits of vendor specific EID must match the lower 24 bits of the`mvendorid` value.

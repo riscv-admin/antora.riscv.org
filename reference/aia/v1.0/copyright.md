@@ -1,0 +1,6 @@
+# Copyright and license information
+
+## [](#copyright-and-license-information)Copyright and license information
+
+This document is released under a Creative Commons Attribution 4.0 International License.  
+<https://creativecommons.org/licenses/by/4.0/>.

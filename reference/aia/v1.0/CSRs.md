@@ -1,0 +1,181 @@
+# 2.1. Control and Status Registers (CSRs) Added to Harts
+
+## [](#CSRs)2.1\. Control and Status Registers (CSRs) Added to Harts
+
+For each privilege level at which a RISC-V hart can take interrupt traps, the Advanced Interrupt Architecture adds CSRs for interrupt control and handling.
+
+### [](#2-1-1-machine-level-csrs)2.1.1\. Machine-level CSRs
+
+[Table 1](#CSRs-M) lists both the CSRs added for machine level and existing machine-level CSRs whose size is changed by the Advanced Interrupt Architecture. Existing CSRs `mie`, `mip`, and `mideleg` are widened to 64 bits to support a total of 64 interrupt causes.
+
+For RV32, the _high-half_ CSRs listed in the table allow access to the upper 32 bits of registers `mideleg`, `mie`, `mvien`, `mvip`, and `mip`. The Advanced Interrupt Architecture requires that these high-half CSRs exist for RV32, but the bits they access may all be merely read-only zeros.
+
+CSRs `miselect` and `mireg` provide a window for accessing multiple registers beyond the CSRs in [Table 1](#CSRs-M). The value of `miselect` determines which register is currently accessible through alias CSR `mireg`. `miselect` is a **WARL** register, and it must support a minimum range of values depending on the implemented features. When an IMSIC is not implemented, `miselect` must be able to hold at least any 6-bit value in the range 0 to 0`x3F`. When an IMSIC is implemented, `miselect` must be able to hold any 8-bit value in the range 0 to 0`xFF`. The Advanced Interrupt Architecture makes use of these subranges of values for `miselect`:
+
+| 0x30-0x3F | major interrupt priorities               |
+| --------- | ---------------------------------------- |
+| 0x70-0xFF | external interrupts (only with an IMSIC) |
+
+__Table 1\. Machine-level CSRs added or widened by the Advanced Interrupt Architecture.__
+| Number                                                | Privilege       | Width          | Name                            | Description                                                                                                                                                          |
+| ----------------------------------------------------- | --------------- | -------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Machine-Level Window to Indirectly Accessed Registers |                 |                |                                 |                                                                                                                                                                      |
+| 0x3500x351                                            | MRWMRW          | XLENXLEN       | miselect mireg                  | Machine indirect register selectMachine indirect register alias                                                                                                      |
+| Machine-Level Interrupts                              |                 |                |                                 |                                                                                                                                                                      |
+| 0x3040x3440x35C0xFB0                                  | MRWMRWMRWMRO    | 6464MXLENMXLEN | mie mip mtopei mtopi            | Machine interrupt-enable bitsMachine interrupt-pending bitsMachine top external interrupt (only with an IMSIC)Machine top interrupt                                  |
+| Delegated and Virtual Interrupts for Supervisor Level |                 |                |                                 |                                                                                                                                                                      |
+| 0x3030x3080x309                                       | MRWMRWMRW       | 646464         | mideleg mvien mvip              | Machine interrupt delegationMachine virtual interrupt enablesMachine virtual interrupt-pending bits                                                                  |
+| Machine-Level High-Half CSRs (RV32 only)              |                 |                |                                 |                                                                                                                                                                      |
+| 0x3130x3140x3180x3190x354                             | MRWMRWMRWMRWMRW | 3232323232     | midelegh mieh mvienh mviph miph | Upper 32 bits of mideleg (only with S-mode)Upper 32 bits of mieUpper 32 bits of mvien (only with S-mode)Upper 32 bits of mvip (only with S-mode)Upper 32 bits of mip |
+
+Values of `miselect` with the most-significant bit set (bit`XLEN - 1` \= `1`) are designated for custom use, presumably for accessing custom registers through `mireg`. If `XLEN` changes, the most-significant bit of `miselect` moves to the new position, retaining its value from before. An implementation is not required to support any custom values for `miselect`.
+
+Other `miselect` values are reserved for other RISC-V extensions.
+
+| |  RISC-V extension Smcsrind generalizes the mechanism of indirect register access provided by miselect and mireg. |
+| ------------------------------------------------------------------------------------------------------------------ |
+
+Normally, the range for external interrupts, 0x70-0xFF, is populated only when an IMSIC is implemented; else, attempts to access `mireg` when `miselect` is in this range cause an illegal instruction exception. The contents of the external-interrupts region are documented in[Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC) on the IMSIC.
+
+CSR `mtopei` also exists only when an IMSIC is implemented, so is documented in[Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC) along with the indirectly accessed IMSIC registers.
+
+CSR `mtopi` reports the highest-priority interrupt that is pending and enabled for machine level, as specified in [Machine top interrupt CSR (mtopi)](MSLevel.html#mtopi).
+
+When S-mode is implemented, CSRs `mvien` and `mvip` support interrupt filtering and virtual interrupts for supervisor level. These facilities are explained in [Interrupt filtering and virtual interrupts for supervisor level](MSLevel.html#virtIntrs-S).
+
+If extension Smcsrind is also implemented, then when `miselect` has a value in the range 0x30-0x3F or 0x70-0xFF, attempts to access alias CSRs `mireg2` through `mireg6` raise an illegal instruction exception.
+
+### [](#2-1-2-supervisor-level-csrs)2.1.2\. Supervisor-level CSRs
+
+[Table 2](#CSRs-S) lists the supervisor-level CSRs that are added and existing CSRs that are widened to 64 bits, if the hart implements S-mode. The functions of these registers all match their machine-level counterparts.
+
+__Table 2\. Supervisor-level CSRs added or widened by the Advanced Interrupt Architecture.__
+| Number                                                   | Privilege    | Width          | Name                 | Description                                                                                                                                     |
+| -------------------------------------------------------- | ------------ | -------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| Supervisor-Level Window to Indirectly Accessed Registers |              |                |                      |                                                                                                                                                 |
+| 0x1500x151                                               | SRWSRW       | XLENXLEN       | siselect sireg       | Supervisor indirect register selectSupervisor indirect register alias                                                                           |
+| Supervisor-Level Interrupts                              |              |                |                      |                                                                                                                                                 |
+| 0x1040x1440x15C0xDB0                                     | SRWSRWSRWSRO | 6464SXLENSXLEN | sie sip stopei stopi | Supervisor interrupt-enable bitsSupervisor interrupt-pending bitsSupervisor top external interrupt (only with an IMSIC)Supervisor top interrupt |
+| Supervisor-Level High-Half CSRs (RV32 only)              |              |                |                      |                                                                                                                                                 |
+| 0x1140x154                                               | SRWSRW       | 3232           | sieh siph            | Upper 32 bits of sieUpper 32 bits of sip                                                                                                        |
+
+The space of registers accessible through the `siselect`/`sireg` window is separate from but parallels that of machine level, being for supervisor-level interrupts instead of machine-level interrupts. The subranges of values used for `siselect` are once again these:
+
+| 0x30-0x3F | major interrupt priorities               |
+| --------- | ---------------------------------------- |
+| 0x70-0xFF | external interrupts (only with an IMSIC) |
+
+For maximum compatibility, it is recommended that `siselect` support at least a 9-bit range, `0` to `0x1FF`, regardless of whether an IMSIC exists.
+
+| |  Because the VS CSR vsiselect ([2.1.3\. Hypervisor and VS CSRs](#hypervisor-vs-csrs)) always has at least 9 bits, and like other VS CSRs, vsiselect substitutes for siselect when executing in a virtual machine (VS-mode or VU-mode), implementing a smaller range forsiselect allows software to discover it is not running in a virtual machine. |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+Like `miselect`, values of `siselect` with the most-significant bit set (bit XLEN - 1 = 1) are designated for custom use. If XLEN changes, the most-significant bit of `siselect` moves to the new position, retaining its value from before. An implementation is not required to support any custom values for `siselect`.
+
+Other `siselect` values are reserved for other RISC-V extensions.
+
+| |  At supervisor level, extension Sscsrind generalizes the mechanism of indirect register access provided by siselect and sireg, as well as the parallel at VS-level provided by vsiselect and vsireg, described in the next subsection. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+Note that the widths of 'siselect' and 'sireg' are always the current XLEN rather than SXLEN. Hence, for example, if MXLEN = 64 and SXLEN = 32, then these registers are 64 bits when the current privilege mode is M (running RV64 code) but 32 bits when the privilege mode is S (RV32 code).
+
+CSR `stopei` is described with the IMSIC in [Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC).
+
+Register `stopi` reports the highest-priority interrupt that is pending and enabled for supervisor level, as specified in[Supervisor top interrupt CSR (stopi)](MSLevel.html#stopi).
+
+If extension Sscsrind is also implemented, then when `siselect` has a value in the range `0x30-0x3F` or `0x70-0xFF`, attempts to access alias CSRs `sireg2` through `sireg6` raise an illegal instruction exception (unless executing in a virtual machine, covered in the next section).
+
+### [](#hypervisor-vs-csrs)2.1.3\. Hypervisor and VS CSRs
+
+If a hart implements the H extension, then the hypervisor and VS CSRs listed in [Table 3](#CSRs-hypervisor) are also either added or widened to 64 bits.
+
+The new hypervisor CSRs in the table (`hvien`, `hvictl` , `hviprio1`, and `hviprio2`) augment `hvip` for injecting interrupts into VS level. The use of these registers is covered in [Interrupts for Virtual Machines (VS Level)](VSLevel.html#VSLevel) on interrupts for virtual machines.
+
+The new VS CSRs (`vsiselect`, `vsireg`, `vstopei`, and `vstopi`) all match supervisor CSRs, and substitute for those supervisor CSRs when executing in a virtual machine (in VS-mode or VU-mode).
+
+CSR `vsiselect` is required to support at least a 9-bit range of `0` to `0x1FF`, whether or not an IMSIC is implemented. As with `siselect`, values of `vsiselect` with the most-significant bit set (bit XLEN - 1 = 1) are designated for custom use. If XLEN changes, the most-significant bit of `vsiselect` moves to the new position, retaining its value from before.
+
+Like `siselect` and `sireg`, the widths of `vsiselect` and `vsireg` are always the current XLEN rather than VSXLEN. Hence, for example, if HSXLEN = 64 and VSXLEN = 32, then these registers are 64 bits when accessed by a hypervisor in HS-mode (running RV64 code) but 32 bits for a guest OS in VS-mode (RV32 code).
+
+__Table 3\. Hypervisor and VS CSRs added or widened by the Advanced Interrupt Architecture. (Parameter HSXLEN is just another name for SXLEN for hypervisor-extended S-mode).__
+| Number                                                               | Privilege             | Width             | Name                                                  | Description                                                                                                                                                                                                                      |
+| -------------------------------------------------------------------- | --------------------- | ----------------- | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Delegated and Virtual Interrupts, Interrupt Priorities, for VS Level |                       |                   |                                                       |                                                                                                                                                                                                                                  |
+| 0x6030x6080x6090x6450x6460x647                                       | HRWHRWHRWHRWHRWHRW    | 6464HSXLEN646464  | hideleg hvien hvictl hvip hviprio1 hviprio2           | Hypervisor interrupt delegationHypervisor virtual interrupt enablesHypervisor virtual interrupt controlHypervisor virtual interrupt-pending bitsHypervisor VS-level interrupt prioritiesHypervisor VS-level interrupt priorities |
+| VS-Level Window to Indirectly Accessed Registers                     |                       |                   |                                                       |                                                                                                                                                                                                                                  |
+| 0x2500x251                                                           | HRWHRW                | XLENXLEN          | vsiselect vsireg                                      | Virtual supervisor indirect register selectVirtual supervisor indirect register alias                                                                                                                                            |
+| VS-Level Interrupts                                                  |                       |                   |                                                       |                                                                                                                                                                                                                                  |
+| 0x2040x2440x25C 0xEB0                                                | HRWHRWHRW HRO         | 6464VSXLEN VSXLEN | vsie vsip vstopei vstopi                              | Virtual supervisor interrupt-enable bitsVirtual supervisor interrupt-pending bitsVirtual supervisor top external interrupt (only with an IMSIC)Virtual supervisor top interrupt                                                  |
+| Hypervisor and VS-Level High-Half CSRs (RV32 only)                   |                       |                   |                                                       |                                                                                                                                                                                                                                  |
+| 0x6130x6180x6550x6560x6570x2140x254                                  | HRWHRWHRWHRWHRWHRWHRW | 32323232323232    | hidelegh hvienh hviph hviprio1h hviprio2h vsieh vsiph | Upper 32 bits of hidelegUpper 32 bits of hvienUpper 32 bits of hvipUpper 32 bits of hviprio1Upper 32 bits of hviprio2Upper 32 bits of vsieUpper 32 bits of vsip                                                                  |
+
+The space of registers selectable by `vsiselect` is more limited than for machine and supervisor levels:
+
+| 0x030-0x03F | inaccessible                                      |
+| ----------- | ------------------------------------------------- |
+| 0x070-0x0FF | external interrupts (IMSIC only), or inaccessible |
+
+Other `vsiselect` values are reserved for other RISC-V extensions.
+
+For alias CSRs `sireg` and `vsireg`, the H extension’s usual rules for when to raise a virtual instruction exception (based on whether an instruction is _HS-qualified_) are not applicable. The rules given in this section for `sireg` and `vsireg` apply instead, unless overridden by the requirements of [2.1.5\. Access control by the state-enable CSRs](#CSRs-stateen), which take precedence over this section when extension Smstateen is also implemented.
+
+A virtual instruction exception is raised for attempts from VS-mode or VU-mode to directly access `vsireg`, or attempts from VU-mode to access `sireg`.
+
+When `vsiselect` has the number of an _inaccessible_ register, attempts from M-mode or HS-mode to access `vsireg` raise an illegal instruction exception, and attempts from VS-mode to access `sireg` (really `vsireg`) raise a virtual instruction exception.
+
+| |  Requiring a range of 0-0x1FF for vsiselect, even though most or all of the space is reserved or inaccessible, permits a hypervisor to emulate indirectly accessed registers in the implemented range, including registers that are not currently defined but may be standardized in the future. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+The indirectly accessed registers for external interrupts (numbers 0x70-0xFF) are accessible only when field VGEIN of `hstatus` is the number of an implemented guest external interrupt, not zero. If VGEIN is not the number of an implemented guest external interrupt (including the case when no IMSIC is implemented), then all indirect register numbers in the ranges 0x030-0x03F and 0x070-0x0FF designate an inaccessible register at VS level.
+
+Along the same lines, when `hstatus.VGEIN` is not the number of an implemented guest external interrupt, attempts from M-mode or HS-mode to access CSR `vstopei` raise an illegal instruction exception, and attempts from VS-mode to access `stopei` raise a virtual instruction exception.
+
+If extension Sscsrind is also implemented, then when `vsiselect` has a value in the range 0x30-0x3F or 0x70-0xFF, attempts from M-mode or HS-mode to access alias CSRs `vsireg2` through `vsireg6` raise an illegal instruction exception, and attempts from VS-mode to access `sireg2` through `sireg6` raise a virtual instruction exception.
+
+### [](#2-1-4-virtual-instruction-exceptions)2.1.4\. Virtual instruction exceptions
+
+Following the default rules for the H extension, attempts from VS-mode to directly access a hypervisor or VS CSR other than `vsireg`, or from VU-mode to access any supervisor-level CSR (including hypervisor and VS CSRs) other than `sireg` or `vsireg`, usually raise not an illegal instruction exception but instead a virtual instruction exception. For details, see the H extension documentation.
+
+Instructions that read/write CSR `stopei` or `vstopei` are considered to be _HS-qualified_ unless all of following are true: the hart has an IMSIC, extension Smstateen is implemented, and bit 58 of `mstateen0` is zero. (See the next section, [2.1.5\. Access control by the state-enable CSRs](#CSRs-stateen), about `mstateen0`.)
+
+For `sireg` and `vsireg`, see both the previous section, [2.1.3\. Hypervisor and VS CSRs](#hypervisor-vs-csrs), and the next, [2.1.5\. Access control by the state-enable CSRs](#CSRs-stateen), for when a virtual instruction exception is required instead of an illegal instruction exception.
+
+### [](#CSRs-stateen)2.1.5\. Access control by the state-enable CSRs
+
+If extension Smstateen is implemented together with the Advanced Interrupt Architecture (AIA), three bits of state-enable register `mstateen0` control access to AIA-added state from privilege modes less privileged than M-mode:
+
+| bit 60 CSRIND: CSRs siselect, sireg, vsiselect, and vsireg                               |
+| ---------------------------------------------------------------------------------------- |
+| bit 59 AIA: all other state added by the AIA and not controlled by bits CSRIND and IMSIC |
+| bit 58 IMSIC: all IMSIC state, including CSRs stopei and vstopei                         |
+
+If one of these bits is zero in `mstateen0`, an attempt to access the corresponding state from a privilege mode less privileged than M-mode results in an illegal instruction trap. As always, the state-enable CSRs do not affect the accessibility of any state when in M-mode, only in less privileged modes. For more explanation, see the documentation for extension Smstateen.
+
+The AIA bit controls access to AIA CSRs `siph`, `sieh`, `stopi`, `hidelegh`, `hvien`/`hvienh`, `hviph`, `hvictl`, `hviprio1`/`hviprio1h`, `hviprio2`/`hviprio2h`, `vsiph`, `vsieh`, and `vstopi`, as well as to the supervisor-level interrupt priorities accessed through `siselect` \+ `sireg` (the `iprio` array of [Configuring priorities of major interrupts at supervisor level](MSLevel.html#intrPrios-S)).
+
+The IMSIC bit is implemented in `mstateen0` only if the hart has an IMSIC. If the H extension is also implemented, this bit does not affect the behavior or accessibility of hypervisor CSRs `hgeip` and `hgeie`, or field VGEIN of `hstatus`. In particular, guest external interrupts from an IMSIC continue to be visible to HS-mode in `hgeip` even when `mstateen0`.IMSIC is zero.
+
+| |  An earlier, pre-ratification draft of Smstateen said that when mstateen0.IMSIC is zero, registers hgeip and hgeie and field VGEIN of hstatus are all read-only zeros. That effect is no longer correct. |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+If the hart does not have an IMSIC, the IMSIC bit of `mstateen0` is read-only zero, but Smstateen has no effect on attempts to access the nonexistent IMSIC state.
+
+| |  This means in particular that, when the hart does not have an IMSIC, the following raise a virtual instruction exception as described in [Table 3](#CSRs-hypervisor), not an illegal instruction exception, despite that mstateen0.IMSIC is zero: attempts from VS-mode to access sireg (really vsireg) while vsiselect has a value in the range 0x70–0xFF; and attempts from VS-mode to access stopei (really vstopei). |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+
+If the CSRIND bit of `mstateen0` is one, then regardless of any other `mstateen` bits (including the AIA and IMSIC bits of `mstateen0`), a virtual instruction exception is raised as described in [2.1.3\. Hypervisor and VS CSRs](#hypervisor-vs-csrs) for all attempts from VS-mode or VU-mode to directly access `vsireg`, and for all attempts from VU-mode to access `sireg`. This behavior is overridden only when `mstateen0`.CSRIND is zero.
+
+If the H extension is implemented, the same three bits are defined also in hypervisor CSR `hstateen0` but concern only the state potentially accessible to a virtual machine executing in privilege modes VS and VU:
+
+| bit 60 CSRIND: CSRs siselect and sireg (really vsiselect and vsireg)                         |
+| -------------------------------------------------------------------------------------------- |
+| bit 59 AIA: CSRs siph and sieh (RV32 only) and stopi (really vsiph, vsieh, and vstopi)       |
+| bit 58 IMSIC: all state of IMSIC guest interrupt files, including CSR stopei(really vstopei) |
+
+If one of these bits is zero in `hstateen0`, and the same bit is one in `mstateen0`, then an attempt to access the corresponding state from VS or VU-mode raises a virtual instruction exception. (But note that, for high-half CSRs `siph` and `sieh`, this applies only when XLEN = 32\. When XLEN > 32, an attempt to access `siph` or `sieh` raises an illegal instruction exception as usual, not a virtual instruction exception.)
+
+If the CSRIND bit is one in `mstateen0` but is zero in `hstateen0`, then all attempts from VS or VU-mode to access `siselect` or `sireg` raise a virtual instruction exception, not an illegal instruction exception, regardless of the value of `vsiselect` or any other `mstateen` bits.
+
+The IMSIC bit is implemented in `hstateen0` only if the hart has an IMSIC. Furthermore, even with an IMSIC, `hstateen0`.IMSIC may (or may not) be read-only zero if the IMSIC has no _guest interrupt files_ for guest external interrupts ([Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC)). When this bit is zero (whether read-only zero or set to zero), a virtual machine is prevented from accessing the hart’s IMSIC the same as when `hstatus.VGEIN` \= 0.
+
+Extension Ssstateen is defined as the supervisor-level view of Smstateen. Therefore, the combination of Ssaia and Ssstateen incorporates the bits defined above for `hstateen0` but not those for `mstateen0`, since machine-level CSRs are not visible to supervisor level.
