@@ -52,6 +52,7 @@ module.exports.register = function () {
 
     devSpecs = devSpecs.filter(spec => spec.title && spec.status && spec.group)
 
+    console.log(`[development-specs-bands] Loaded ${devSpecs.length} development specs`)
     if (devSpecs.length === 0) {
       console.log('[development-specs-bands] No development specs found in development-specs.yml — skipping.')
       return
@@ -85,7 +86,7 @@ module.exports.register = function () {
 
       if (replaced !== content) {
         page.contents = Buffer.from(replaced)
-        console.log('[development-specs-bands] Injected development spec bands into home page.')
+        console.log(`[development-specs-bands] Injected ${devSpecs.length} development spec bands into home page.`)
       }
     })
   })
@@ -98,9 +99,12 @@ module.exports.register = function () {
 function buildSpecsContainer(specs) {
   const searchHtml = `<div class="dev-specs-search"><input type="text" placeholder="Search specifications..."></div>`
 
-  const statusFilters = ['Draft', 'Frozen', 'Review']
-  const statusBtns = statusFilters
-    .map(status => `<button class="filter-btn" data-type="status" data-value="${status.toLowerCase()}">${status}</button>`)
+  const uniqueStatuses = [...new Set(specs.map(s => s.status))].sort()
+  const statusBtns = uniqueStatuses
+    .map(status => {
+      const label = status.charAt(0).toUpperCase() + status.slice(1)
+      return `<button class="filter-btn" data-type="status" data-value="${status}">${label}</button>`
+    })
     .join('')
 
   const groupFilters = [...new Set(specs.map(s => s.group))].sort()
@@ -170,10 +174,11 @@ function buildBand(spec) {
 
 function getStatusIndicator(status) {
   const indicators = {
-    'draft': '🟡',
-    'frozen': '🔵',
-    'review': '🟠',
-    'ratified': '🟢'
+    'planning': '📋',
+    'under development': '🔨',
+    'stabilization': '⚙️',
+    'freeze': '🔵',
+    'ratification-ready': '🟢'
   }
   return indicators[status.toLowerCase()] || '⭕'
 }
