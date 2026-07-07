@@ -99,7 +99,8 @@ module.exports.register = function () {
 function buildSpecsContainer(specs) {
   const searchHtml = `<div class="dev-specs-search"><input type="text" placeholder="Search specifications..."></div>`
 
-  const uniqueStatuses = [...new Set(specs.map(s => s.status))].sort()
+  const statusOrder = ['planning', 'under development', 'stabilization', 'freeze', 'ratification-ready']
+  const uniqueStatuses = [...new Set(specs.map(s => s.status))].sort((a, b) => statusOrder.indexOf(a) - statusOrder.indexOf(b))
   const statusBtns = uniqueStatuses
     .map(status => {
       const label = status.charAt(0).toUpperCase() + status.slice(1)
