@@ -101,7 +101,8 @@ function buildSpecsContainer(specs) {
 
   const statusOrder = ['planning', 'under development', 'stabilization', 'freeze', 'ratification-ready']
   const uniqueStatuses = [...new Set(specs.map(s => s.status))].sort((a, b) => statusOrder.indexOf(a) - statusOrder.indexOf(b))
-  const statusBtns = uniqueStatuses
+  const allStatusBtn = '<button class="filter-btn filter-all-status active" data-type="status-all">All States</button>'
+  const statusBtns = allStatusBtn + uniqueStatuses
     .map(status => {
       const label = status.charAt(0).toUpperCase() + status.slice(1)
       return `<button class="filter-btn" data-type="status" data-value="${status}">${label}</button>`
@@ -124,10 +125,12 @@ function buildSpecsContainer(specs) {
 <div class="dev-specs-container">
   <div class="dev-specs-filters">
     ${searchHtml}
-    <div class="dev-specs-controls">
+    <div class="dev-specs-state-filters">
       <div class="filter-group">
         ${statusBtns}
       </div>
+    </div>
+    <div class="dev-specs-controls">
       <div class="filter-group">
         ${groupBtns}
       </div>
