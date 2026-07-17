@@ -69,6 +69,11 @@ jobs:
     - name: Copy robots.txt to site root
       run: cp antora/build/reference/robots.txt antora/build/robots.txt || true
 
+    - name: Copy llms.txt and llms-full.txt to site root
+      run: |
+        cp antora/build/reference/llms.txt antora/build/llms.txt || true
+        cp antora/build/reference/llms-full.txt antora/build/llms-full.txt || true
+
     - name: Manually Migrate Standalone PDFs
       continue-on-error: true
       run: |
