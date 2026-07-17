@@ -1,7 +1,0 @@
-# Copyright and license information
-
-## [](#copyright-and-license-information)Copyright and license information
-
-This specification is licensed under the Creative Commons Attribution 4.0 International License (CC-BY 4.0). The full license text is available at<https://creativecommons.org/licenses/by/4.0/>.
-
-Copyright 2023 by RISC-V International.
