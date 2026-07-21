@@ -1,8 +1,8 @@
-# 5.1. "Smcsrind/Sscsrind" Indirect CSR Access, Version 1.0
+# 4.1. "Smcsrind/Sscsrind" Indirect CSR Access, Version 1.0
 
-## [](#indirect-csr)5.1\. "Smcsrind/Sscsrind" Indirect CSR Access, Version 1.0
+## [](#indirect-csr)4.1\. "Smcsrind/Sscsrind" Indirect CSR Access, Version 1.0
 
-### [](#5-1-1-introduction)5.1.1\. Introduction
+### [](#4-1-1-introduction)4.1.1\. Introduction
 
 Smcsrind/Sscsrind is an ISA extension that extends the indirect CSR access mechanism originally defined as part of the[Smaia/Ssaia extensions](https://github.com/riscv/riscv-aia), in order to make it available for use by other extensions without creating an unnecessary dependence on Smaia/Ssaia.
 
@@ -16,7 +16,7 @@ This extension confers two benefits:
 
 The machine-level extension **Smcsrind** encompasses all added CSRs and all behavior modifications for a hart, over all privilege levels. For a supervisor-level environment, extension **Sscsrind** is essentially the same as Smcsrind except excluding the machine-level CSRs and behavior not directly visible to supervisor level.
 
-### [](#body)5.1.2\. Machine-level CSRs
+### [](#body)4.1.2\. Machine-level CSRs
 
 | **Number** | **Privilege** | **Width** | **Name** | **Description**                   |
 | ---------- | ------------- | --------- | -------- | --------------------------------- |
@@ -53,7 +53,7 @@ Attempts to access `mireg*` while `miselect` holds a number in an allocated and 
 | |  Six \*ireg\* registers are defined in order to ensure that the needs of extensions in development are covered, with some room for growth. For example, for an siselect value associated with counter X, sireg/sireg2 could be used to access mhpmcounterX/mhpmeventX, while sireg4/sireg5 could access mhpmcounterXh/mhpmeventXh. Six \*ireg\* registers allows for accessing up to 3 CSR arrays per index (\*iselect) with RV32-only CSRs, or up to 6 CSR arrays per index value without RV32-only CSRs. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#5-1-3-supervisor-level-csrs)5.1.3\. Supervisor-level CSRs
+### [](#4-1-3-supervisor-level-csrs)4.1.3\. Supervisor-level CSRs
 
 | **Number** | **Privilege** | **Width** | **Name** | **Description**                      |
 | ---------- | ------------- | --------- | -------- | ------------------------------------ |
@@ -89,7 +89,7 @@ Otherwise, attempts to access `sireg*` from M-mode or S-mode while`siselect` hol
 
 Note that the widths of `siselect` and `sireg*` are always the current XLEN rather than SXLEN. Hence, for example, if MXLEN = 64 and SXLEN = 32, then these registers are 64 bits when the current privilege mode is M (running RV64 code) but 32 bits when the privilege mode is S (RV32 code).
 
-### [](#5-1-4-virtual-supervisor-level-csrs)5.1.4\. Virtual Supervisor-level CSRs
+### [](#4-1-4-virtual-supervisor-level-csrs)4.1.4\. Virtual Supervisor-level CSRs
 
 | **Number** | **Privilege** | **Width** | **Name**  | **Description**                              |
 | ---------- | ------------- | --------- | --------- | -------------------------------------------- |
@@ -126,7 +126,7 @@ Otherwise, while `vsiselect` holds a number in a standard-defined and implemente
 
 Like `siselect` and `sireg*`, the widths of `vsiselect` and `vsireg*` are always the current XLEN rather than VSXLEN. Hence, for example, if HSXLEN = 64 and VSXLEN = 32, then these registers are 64 bits when accessed by a hypervisor in HS-mode (running RV64 code) but 32 bits for a guest OS in VS-mode (RV32 code).
 
-### [](#5-1-5-access-control-by-the-state-enable-csrs)5.1.5\. Access control by the state-enable CSRs
+### [](#4-1-5-access-control-by-the-state-enable-csrs)4.1.5\. Access control by the state-enable CSRs
 
 If extension Smstateen is implemented together with Smcsrind, bit 60 of state-enable register `mstateen0` controls access to `siselect`, `sireg*`,`vsiselect`, and `vsireg*`. When `mstateen0`\[60\]=0, an attempt to access one of these CSRs from a privilege mode less privileged than M-mode results in an illegal-instruction exception. As always, the state-enable CSRs do not affect the accessibility of any state when in M-mode, only in less privileged modes. For more explanation, see the documentation for extension [Smstateen](smstateen.html#]).
 

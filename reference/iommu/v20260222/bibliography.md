@@ -1,6 +1,6 @@
-# Bibliography
+# 8.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#8-1-bibliography)8.1\. Bibliography
 
 \[1\] _Clarification updates to IOMMU v20250828_. \[Online\]. Available: <https://github.com/riscv-non-isa/riscv-iommu/pull/617/commits>
 

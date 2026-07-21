@@ -1,6 +1,6 @@
-# 5.1. Interrupt Pending Bits
+# 4.1. Interrupt Pending Bits
 
-## [](#5-1-interrupt-pending-bits)5.1\. Interrupt Pending Bits
+## [](#4-1-interrupt-pending-bits)4.1\. Interrupt Pending Bits
 
 The current status of the interrupt source pending bits in the PLIC core can be read from the pending array, organized as 32-bit register. The pending bit for interrupt ID N is stored in bit (N mod 32) of word (N/32). Bit 0 of word 0, which represents the non-existent interrupt source 0, is hardwired to zero.
 

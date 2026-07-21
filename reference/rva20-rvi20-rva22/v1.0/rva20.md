@@ -1,6 +1,6 @@
-# 6.1. RVA20 Profiles
+# 5.1. RVA20 Profiles
 
-## [](#6-1-rva20-profiles)6.1\. RVA20 Profiles
+## [](#5-1-rva20-profiles)5.1\. RVA20 Profiles
 
 The RVA20 profiles are intended to be used for 64-bit application processors running rich OS stacks. Only user-mode (RVA20U64) and supervisor-mode (RVA20S64) profiles are specified in this family.
 
@@ -10,13 +10,13 @@ The RVA20 profiles are intended to be used for 64-bit application processors run
 | |  Only XLEN=64 application processor profiles are currently defined. It would be possible to also define very similar XLEN=32 variants. |
 | ---------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#6-1-1-rva20u64-profile)6.1.1\. RVA20U64 Profile
+### [](#5-1-1-rva20u64-profile)5.1.1\. RVA20U64 Profile
 
 The RVA20U64 profile specifies the ISA features available to user-mode execution environments in 64-bit applications processors. This is the most important profile within the application processor family in terms of the amount of software that targets this profile.
 
 RVA20U64 has one optional extension (Zihpm).
 
-#### [](#6-1-1-1-rva20u64-mandatory-base)6.1.1.1\. RVA20U64 Mandatory Base
+#### [](#5-1-1-1-rva20u64-mandatory-base)5.1.1.1\. RVA20U64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA20U64, and is little-endian.
 
@@ -27,7 +27,7 @@ The `fence.tso` instruction is mandatory.
 | |  The fence.tso instruction was incorrectly described as optional in the 2019 ratified specifications. However, fence.tso is encoded within the standard fence encoding such that implementations must treat it as a simple global fence if they do not natively support TSO-ordering optimizations. As software can always assume without any penalty that fence.tso is being exploited by a hardware implementation, there is no advantage to making the instruction a profile option. Later versions of the unprivileged ISA specifications correctly indicate that fence.tso is mandatory. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#6-1-1-2-rva20u64-mandatory-extensions)6.1.1.2\. RVA20U64 Mandatory Extensions
+#### [](#5-1-1-2-rva20u64-mandatory-extensions)5.1.1.2\. RVA20U64 Mandatory Extensions
 
 * **M** Integer multiplication and division.
 * **A** Atomic instructions.
@@ -61,7 +61,7 @@ The `fence.tso` instruction is mandatory.
 | |  This introduces a new extension name for this feature. This requires misaligned support for all regular load and store instructions (including scalar and vector) but not AMOs or other specialized forms of memory access. Even though mandated, misaligned loads and stores might execute extremely slowly. Standard software distributions should assume their existence only for correctness, not for performance. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#6-1-1-3-rva20u64-optional-extensions)6.1.1.3\. RVA20U64 Optional Extensions
+#### [](#5-1-1-3-rva20u64-optional-extensions)5.1.1.3\. RVA20U64 Optional Extensions
 
 * **Zihpm** Hardware performance counters.
 
@@ -77,25 +77,25 @@ The `fence.tso` instruction is mandatory.
 | |  The execution environment must provide a means to synchronize writes to instruction memory with instruction fetches, the implementation of which likely relies on the Zifencei extension. For example, RISC-V Linux supplies the \_\_riscv\_flush\_icache system call and a corresponding vDSO call. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#6-1-1-4-rva20u64-recommendations)6.1.1.4\. RVA20U64 Recommendations
+#### [](#5-1-1-4-rva20u64-recommendations)5.1.1.4\. RVA20U64 Recommendations
 
 Recommendations are not strictly mandated but are included to guide implementers making design choices.
 
 Implementations are strongly recommended to raise illegal-instruction exceptions on attempts to execute unimplemented opcodes.
 
-### [](#6-1-2-rva20s64-profile)6.1.2\. RVA20S64 Profile
+### [](#5-1-2-rva20s64-profile)5.1.2\. RVA20S64 Profile
 
 The RVA20S64 profile specifies the ISA features available to a supervisor-mode execution environment in 64-bit applications processors. RVA20S64 is based on privileged architecture version 1.11.
 
 RVA20S64 has one unprivileged option (Zihpm) and one privileged option (Sv48).
 
-#### [](#6-1-2-1-rva20s64-mandatory-base)6.1.2.1\. RVA20S64 Mandatory Base
+#### [](#5-1-2-1-rva20s64-mandatory-base)5.1.2.1\. RVA20S64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA20S64, and is little-endian.
 
 The `ecall` instruction operates as per the unprivileged architecture specification. An `ecall` in user mode causes a contained trap to supervisor mode. An `ecall` in supervisor mode causes a requested trap to the execution environment.
 
-#### [](#6-1-2-2-rva20s64-mandatory-extensions)6.1.2.2\. RVA20S64 Mandatory Extensions
+#### [](#5-1-2-2-rva20s64-mandatory-extensions)5.1.2.2\. RVA20S64 Mandatory Extensions
 
 The following unprivileged extensions are mandatory:
 
@@ -134,7 +134,7 @@ The following privileged extensions are mandatory:
 | |  This is a new extension name for this feature. |
 | ------------------------------------------------- |
 
-#### [](#6-1-2-3-rva20s64-optional-extensions)6.1.2.3\. RVA20S64 Optional Extensions
+#### [](#5-1-2-3-rva20s64-optional-extensions)5.1.2.3\. RVA20S64 Optional Extensions
 
 RVA20S64 has one unprivileged option.
 

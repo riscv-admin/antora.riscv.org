@@ -1,6 +1,6 @@
-# 4.1. Service Groups
+# 3.1. Service Groups
 
-## [](#4-1-service-groups)4.1\. Service Groups
+## [](#3-1-service-groups)3.1\. Service Groups
 
 An RPMI service group is a collection of RPMI services that are logically grouped based on functionality. For example, all the voltage related services are grouped into a voltage service group. The functionality implemented by certain RPMI service groups may impact the architectural state of application processors due to this each RPMI service group specifies the RISC-V privilege levels of the application processor which can be access it. For example, the clock service groups can be accessed from M-mode and S-mode but the HSM service group can be only accessed from M-mode.
 

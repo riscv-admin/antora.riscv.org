@@ -1,6 +1,6 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#sec:intro)1.1\. Introduction
+## [](#sec:intro)Introduction
 
 In complex systems understanding program behavior is not easy. Unsurprisingly in such systems, software sometimes does not behave as expected. This may be due to a number of factors, for example, interactions with other cores, software, peripherals, realtime events, poor implementations or some combination of all of the above.
 
@@ -23,7 +23,7 @@ Interrupts generally occur asynchronously to the program’s execution rather th
 
 This document serves to specify the ingress port (the signals between the RISC-V core and the encoder), compressed branch trace algorithm and the packet format used to encapsulate the compressed branch trace information.
 
-### [](#sec:terminology)1.1.1\. Terminology
+### [](#sec:terminology)Terminology
 
 The following terms have a specific meaning in this specification.
 
@@ -57,7 +57,7 @@ The following terms have a specific meaning in this specification.
 * **trap**: the transfer of control to a trap handler caused by either an exception or an interrupt
 * **updiscon**: contraction of ’uninferable PC discontinuity’
 
-### [](#1-1-2-nomenclature)1.1.2\. Nomenclature
+### [](#nomenclature)Nomenclature
 
 In the following sections items in **bold** are signals or fields within a packet.
 

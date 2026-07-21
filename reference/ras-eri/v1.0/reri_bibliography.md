@@ -1,6 +1,6 @@
-# 3.1. Bibliography
+# 2.1. Bibliography
 
-## [](#3-1-bibliography)3.1\. Bibliography
+## [](#2-1-bibliography)2.1\. Bibliography
 
 \[1\] _PCI Express® Base Specification Revision 6.0_, . \[Online\]. Available: <https://pcisig.com/pci-express-6.0-specification>
 

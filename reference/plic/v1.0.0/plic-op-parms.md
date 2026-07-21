@@ -1,6 +1,6 @@
-# 2.1. RISC-V PLIC Operation Parameters
+# 1.1. RISC-V PLIC Operation Parameters
 
-## [](#2-1-risc-v-plic-operation-parameters)2.1\. RISC-V PLIC Operation Parameters
+## [](#1-1-risc-v-plic-operation-parameters)1.1\. RISC-V PLIC Operation Parameters
 
 General PLIC operation parameter register blocks are defined in this spec, those are:  
 

@@ -1,6 +1,6 @@
-# 8.1. IOMMU Support for MSIs to Virtual Machines
+# 7.1. IOMMU Support for MSIs to Virtual Machines
 
-## [](#IOMMU)8.1\. IOMMU Support for MSIs to Virtual Machines
+## [](#IOMMU)7.1\. IOMMU Support for MSIs to Virtual Machines
 
 The existence of an IOMMU in a system makes it possible for a guest operating system, running in a virtual machine, to be given direct control of an I/O device with only minimal hypervisor intervention. A guest OS with direct control of a device will program the device with guest physical addresses, because that is all the OS knows. When the device then performs memory accesses using those addresses, an IOMMU is responsible for translating those guest physical addresses into machine physical addresses, referencing address-translation data structures supplied by the hypervisor.
 
@@ -15,7 +15,7 @@ This chapter uses the term _IOMMU_ in a generic sense that encompasses all trans
 
 If a single physical I/O device can be subdivided for control by multiple separate device drivers, each sub-device is referred to here as one device.
 
-### [](#IOMMU-deviceContexts)8.1.1\. Device contexts at an IOMMU
+### [](#IOMMU-deviceContexts)7.1.1\. Device contexts at an IOMMU
 
 The following assumptions are made about the IOMMUs in a system:
 
@@ -27,14 +27,14 @@ The Advanced Interrupt Architecture adds to device contexts these fields, as nee
 * an _MSI address mask_ and _address pattern_, used together to identify pages in the guest physical address space that are the destinations of MSIs; and
 * the real physical address of an _MSI page table_ for controlling the translation and/or conversion of MSIs from the device.
 
-The MSI address mask and address pattern are each unsigned integers with the same width as guest physical page numbers, i.e., 12 bits narrower than the maximum supported width of a guest physical address. Their use is explained in [8.1.4\. Identification of page addresses of a VM’s interrupt files](#IOMMU-identIncomingMSIs).
+The MSI address mask and address pattern are each unsigned integers with the same width as guest physical page numbers, i.e., 12 bits narrower than the maximum supported width of a guest physical address. Their use is explained in [7.1.4\. Identification of page addresses of a VM’s interrupt files](#IOMMU-identIncomingMSIs).
 
 A device context’s MSI page table is separate from the usual address-translation data structures used to translate other memory accesses from the same device. The form and function of MSI page tables are the subject of most of the rest of this chapter.
 
-| |  A device context is given an independent page table for MSIs for two reasons: First, hypervisors running under Linux or a similar OS can benefit from separate control of MSI translations to help simplify the case when virtual harts are migrated from one physical hart to another. As noted in [\[virtHartMigration\]](#virtHartMigration), when a virtual hart’s interrupt files are mapped to guest interrupt files in the real machine, migration of the virtual hart causes the physical guest interrupt files underlying those virtual interrupt files to change. However, because on other systems (not RISC-V) the migration of a virtual hart does not affect the mapping from guest physical addresses to real physical addresses, the internal functions of Linux that perform this migration are not set up to modify an IOMMU’s address-translation tables to adjust for the changing physical locations of RISC-V virtual interrupt files. Giving a hypervisor control of a separate MSI translation table at an IOMMU bypasses this limitation. The MSI page table can be modified at will by the hypervisor and/or by the subsystem that manages interrupts without coordinating with the many other OS components concerned with regular address translation. Second, specifying a separate MSI page table facilitates the use of_memory-resident interrupt files_ (MRIFs), which are introduced in[8.1.3\. Memory-resident interrupt files](#IOMMU-MRIFs). A dedicated MSI page table can easily support a special table entry format for MRIFs ([8.1.5.2\. MSI PTE, MRIF mode](#IOMMU-MSIPTE-MRIF)) that would be entirely foreign and difficult to retrofit to any other address-translation data structures. |
+| |  A device context is given an independent page table for MSIs for two reasons: First, hypervisors running under Linux or a similar OS can benefit from separate control of MSI translations to help simplify the case when virtual harts are migrated from one physical hart to another. As noted in [\[virtHartMigration\]](#virtHartMigration), when a virtual hart’s interrupt files are mapped to guest interrupt files in the real machine, migration of the virtual hart causes the physical guest interrupt files underlying those virtual interrupt files to change. However, because on other systems (not RISC-V) the migration of a virtual hart does not affect the mapping from guest physical addresses to real physical addresses, the internal functions of Linux that perform this migration are not set up to modify an IOMMU’s address-translation tables to adjust for the changing physical locations of RISC-V virtual interrupt files. Giving a hypervisor control of a separate MSI translation table at an IOMMU bypasses this limitation. The MSI page table can be modified at will by the hypervisor and/or by the subsystem that manages interrupts without coordinating with the many other OS components concerned with regular address translation. Second, specifying a separate MSI page table facilitates the use of_memory-resident interrupt files_ (MRIFs), which are introduced in[7.1.3\. Memory-resident interrupt files](#IOMMU-MRIFs). A dedicated MSI page table can easily support a special table entry format for MRIFs ([7.1.5.2\. MSI PTE, MRIF mode](#IOMMU-MSIPTE-MRIF)) that would be entirely foreign and difficult to retrofit to any other address-translation data structures. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#8-1-2-translation-of-addresses-for-msis-from-devices)8.1.2\. Translation of addresses for MSIs from devices
+### [](#7-1-2-translation-of-addresses-for-msis-from-devices)7.1.2\. Translation of addresses for MSIs from devices
 
 To support the delivery of MSIs from I/O devices directly to RISC-V virtual machines without hypervisor intervention, an IOMMU must be able to translate the guest physical address of an MSI to the real physical address of an IMSIC’s guest interrupt file in the machine, as illustrated in [Figure 1](#IOMMU-guestIntrFiles). This address translation is controlled by the MSI page table configured in the appropriate device context at the IOMMU. Because every interrupt file, real or virtual, occupies a naturally aligned 4-KiB page of address space, the required address translation is from a virtual (guest) page address to a physical page address, the same as supported by regular RISC-V page-based address translation.
 
@@ -42,12 +42,12 @@ To support the delivery of MSIs from I/O devices directly to RISC-V virtual mach
 
 Figure 1\. Translation of a device-sourced MSI that a guest OS intended to go to a (virtual) IMSIC interrupt file in the OS’s virtual machine. Referencing an MSI page table supplied by the controlling hypervisor, the IOMMU redirects the MSI to a guest interrupt file of the real machine.
 
-Memory writes from a device are recognized as MSIs by the destination address of the write. If an IOMMU determines that a 32-bit write is to the location of a (virtual) interrupt file in the relevant virtual machine, the write is considered an MSI within the VM, else not. The exact formula for recognizing MSIs is documented in[8.1.4\. Identification of page addresses of a VM’s interrupt files](#IOMMU-identIncomingMSIs).
+Memory writes from a device are recognized as MSIs by the destination address of the write. If an IOMMU determines that a 32-bit write is to the location of a (virtual) interrupt file in the relevant virtual machine, the write is considered an MSI within the VM, else not. The exact formula for recognizing MSIs is documented in[7.1.4\. Identification of page addresses of a VM’s interrupt files](#IOMMU-identIncomingMSIs).
 
 | |  Although the translation of MSIs is controlled by its own separate page table, the fact that MSI translations are at the same page granularity as regular RISC-V address translations implies that an address translation cache within an IOMMU requires little modification to also cache MSI translations. Only on a translation cache miss does the IOMMU need to treat MSIs significantly differently than other memory accesses from the same device, to choose the correct translation table and to access and interpret the table properly. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#IOMMU-MRIFs)8.1.3\. Memory-resident interrupt files
+### [](#IOMMU-MRIFs)7.1.3\. Memory-resident interrupt files
 
 An IOMMU may optionally support memory-resident interrupt files (MRIFs). If implemented, the use of memory-resident interrupt files can greatly increase the number of virtual harts that can be given direct control of one or more physical devices in a system, assuming the rest of the system can still handle the added load.
 
@@ -74,7 +74,7 @@ An IOMMU can have one of these three levels of support for memory-resident inter
 
 Memory-resident interrupt files are most efficient when the memory system supports logical atomic memory operations (AMOs) corresponding to RISC-V instructions AMOAND and AMOOR, for memory accesses made both from harts and from the IOMMU. The AMOAND and AMOOR operations are required for_atomic update_ of a memory-resident interrupt file. A reduced level of support is possible without AMOs, relying solely on basic memory reads and writes.
 
-#### [](#IOMMU-MRIFFormat)8.1.3.1\. Format of a memory-resident interrupt file
+#### [](#IOMMU-MRIFFormat)7.1.3.1\. Format of a memory-resident interrupt file
 
 A memory-resident interrupt file occupies 512 bytes of memory, naturally aligned to a 512-byte address boundary. The 512 bytes are organized as an array of 32 pairs of 64-bit doublewords, 64 doublewords in all. Each doubleword is in little-endian byte order (even for systems where all harts are big-endian-only).
 
@@ -105,20 +105,20 @@ All MRIFs are the size to accommodate 2047 valid interrupt identities, the maxim
 | |  There is no need to specify to an IOMMU a desired size for an MRIF smaller than 2047 valid interrupt identities. The only use an IOMMU would make of this information would be to discard any MSIs indicating an interrupt identity greater than . If devices are properly configured by software, such errant MSIs should not occur; but even if they do, it is just as effective for software to ignore spurious interrupt identities _after_ they have been recorded in an MRIF as for an IOMMU to discard them before recording them in the MRIF. It is likewise unnecessary for IOMMUs to check for and discard MSIs indicating an invalid interrupt identity of zero. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#8-1-3-2-recording-of-incoming-msis-to-memory-resident-interrupt-files)8.1.3.2\. Recording of incoming MSIs to memory-resident interrupt files
+#### [](#7-1-3-2-recording-of-incoming-msis-to-memory-resident-interrupt-files)7.1.3.2\. Recording of incoming MSIs to memory-resident interrupt files
 
 The data component of an MSI write specifies the interrupt identity to raise in the destination interrupt file. (Recall[MSI encoding](IMSIC.html#MSIEncoding).) This data may be in little-endian or big-endian byte order. If an IOMMU supports memory-resident interrupt files, it can store to an MRIF MSIs of the same endianness that the machine’s IMSICs accept. All IMSIC interrupt files are required to accept MSIs in little-endian byte order written to memory-mapped register `seteipnum_le` ([Memory region for an interrupt file](IMSIC.html#IMSIC-memRegion)). IMSIC interrupt files may also accept MSIs in big-endian byte order if register `seteipnum_be` is implemented alongside `seteipnum_le`.
 
 If the interrupt identity indicated by an MSI’s data (when interpreted in the correct byte order) is in the range 0-2047, an IOMMU stores the MSI to an MRIF by setting to one the interrupt-pending bit in the MRIF for that identity. If atomic update is supported for MRIFs, the pending bit is set using an AMOOR operation, else it is set using a non-atomic read-modify-write sequence. After the interrupt-pending bit is set in the MRIF, the IOMMU sends the notice MSI that software has configured for the MRIF.
 
-The exact process of storing an MSI to an MRIF is specified more precisely in [8.1.5.2\. MSI PTE, MRIF mode](#IOMMU-MSIPTE-MRIF), which covers MSI page table entries configured in _MRIF mode_.
+The exact process of storing an MSI to an MRIF is specified more precisely in [7.1.5.2\. MSI PTE, MRIF mode](#IOMMU-MSIPTE-MRIF), which covers MSI page table entries configured in _MRIF mode_.
 
 | |  It is an open question whether an IOMMU might optionally examine the matching interrupt-enable bit within a destination MRIF to decide whether to send a notice MSI after setting an interrupt-pending bit. Currently, an IOMMU is required always to send a notice MSI after storing an MSI to an MRIF, even when the corresponding enable bit for the interrupt identity is zero. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#8-1-3-3-use-of-memory-resident-interrupt-files-with-atomic-update)8.1.3.3\. Use of memory-resident interrupt files with atomic update
+#### [](#7-1-3-3-use-of-memory-resident-interrupt-files-with-atomic-update)7.1.3.3\. Use of memory-resident interrupt files with atomic update
 
-To make use of a memory-resident interrupt file with support for atomic update, software must have memory locations to save an IMSIC interrupt file’s `eidelivery` and `eithreshold` registers, in addition to the MRIF structure itself from [8.1.3.1\. Format of a memory-resident interrupt file](#IOMMU-MRIFFormat).
+To make use of a memory-resident interrupt file with support for atomic update, software must have memory locations to save an IMSIC interrupt file’s `eidelivery` and `eithreshold` registers, in addition to the MRIF structure itself from [7.1.3.1\. Format of a memory-resident interrupt file](#IOMMU-MRIFFormat).
 
 Moving a virtual hart’s interrupt file from an IMSIC into an MRIF involves these steps:
 
@@ -143,7 +143,7 @@ To move the same interrupt file from the MRIF back to an IMSIC:
 3. Logically OR the interrupt-pending bits from the MRIF into the IMSIC interrupt file, using instruction CSRS to write to the `eip` array. Also, copy the interrupt-enable bits from the MRIF to the IMSIC interrupt file’s `eie` array.
 4. Load the IMSIC interrupt file’s registers `eithreshold` and `eidelivery` with the values that were earlier saved.
 
-#### [](#8-1-3-4-use-of-memory-resident-interrupt-files-without-atomic-update)8.1.3.4\. Use of memory-resident interrupt files without atomic update
+#### [](#7-1-3-4-use-of-memory-resident-interrupt-files-without-atomic-update)7.1.3.4\. Use of memory-resident interrupt files without atomic update
 
 Without support for atomic update, the use of memory-resident interrupt files is similar to the atomic-update case of the previous subsection, but with some added complexities.
 
@@ -169,20 +169,20 @@ To transfer an interrupt file from memory back to an IMSIC:
 3. Merge by bitwise logical OR the interrupt-pending bits of all MRIFs and the saved `eip` array, and logically OR these merged bits into the IMSIC interrupt file, using instruction CSRS to write to the `eip` array. Also, copy the interrupt-enable bits from one of the MRIFs to the IMSIC interrupt file’s `eie` array.
 4. Load the IMSIC interrupt file’s registers `eithreshold` and `eidelivery` with the values that were earlier saved.
 
-#### [](#8-1-3-5-allocation-of-guest-interrupt-files-for-receiving-notice-msis)8.1.3.5\. Allocation of guest interrupt files for receiving notice MSIs
+#### [](#7-1-3-5-allocation-of-guest-interrupt-files-for-receiving-notice-msis)7.1.3.5\. Allocation of guest interrupt files for receiving notice MSIs
 
 The processing a hypervisor does in response to notice MSIs can be minimized by assigning a separate interrupt identity for each MRIF, so the identity encoded in a notice MSI always indicates which one MRIF may have changed. However, if there are very many MRIFs (potentially in the thousands), a hypervisor may run short of interrupt identities within the supervisor-level interrupt files available in IMSICs. In that case, the hypervisor can increase its supply of interrupt identities by allocating one or more of the IMSICs’ guest interrupt files to itself for the purpose of receiving notice MSIs.
 
 | |  Although guest interrupt files exist primarily to act as supervisor-level interrupt files for virtual harts, the IMSIC hardware does not police exactly how they are used by software. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#IOMMU-identIncomingMSIs)8.1.4\. Identification of page addresses of a VM’s interrupt files
+### [](#IOMMU-identIncomingMSIs)7.1.4\. Identification of page addresses of a VM’s interrupt files
 
 When an I/O device is configured directly by a guest operating system, MSIs from the device are expected to be targeted to virtual IMSICs within the guest OS’s virtual machine, using guest physical addresses that are inappropriate and unsafe for the real machine. An IOMMU must recognize certain incoming writes from such devices as MSIs and convert them as needed for the real machine. (Recall[Figure 1](#IOMMU-guestIntrFiles).)
 
 MSIs originating from a single device that require conversion are expected to have been configured at the device by a single guest OS running within one RISC-V virtual machine. Assuming the VM itself conforms to the Advanced Interrupt Architecture, MSIs are sent to virtual harts within the VM by writing to the memory-mapped registers of the interrupt files of virtual IMSICs. Each of these virtual interrupt files occupies a separate 4-KiB page in the VM’s guest physical address space, the same as real interrupt files do in a real machine’s physical address space. A write to a guest physical address can thus be recognized as an MSI to a virtual hart if the write is to a page occupied by an interrupt file of a virtual IMSIC within the VM.
 
-The MSI address mask and address pattern specified in a device context ([8.1.1\. Device contexts at an IOMMU](#IOMMU-deviceContexts)) are used to identify the 4-KiB pages of virtual interrupt files in the guest physical address space of the relevant VM. An incoming 32-bit write made by a device is recognized as an MSI write to a virtual interrupt file if the destination guest physical page matches the supplied address pattern in all bit positions that are zeros in the supplied address mask. In detail, a memory access to guest physical address  is an access to a virtual interrupt file’s memory-mapped page if
+The MSI address mask and address pattern specified in a device context ([7.1.1\. Device contexts at an IOMMU](#IOMMU-deviceContexts)) are used to identify the 4-KiB pages of virtual interrupt files in the guest physical address space of the relevant VM. An incoming 32-bit write made by a device is recognized as an MSI write to a virtual interrupt file if the destination guest physical page matches the supplied address pattern in all bit positions that are zeros in the supplied address mask. In detail, a memory access to guest physical address  is an access to a virtual interrupt file’s memory-mapped page if
 
 ((A >> 12) & \~address mask) = (address pattern & \~address mask)
 
@@ -200,7 +200,7 @@ Here, extract( , ) is a "bit extract" that discards all bits from  whose matchin
 
 then the value of extract( , ) has bits 0 0 0 0 a c f g.
 
-### [](#8-1-5-msi-page-tables)8.1.5\. MSI page tables
+### [](#7-1-5-msi-page-tables)7.1.5\. MSI page tables
 
 When an IOMMU determines that a memory access is to a virtual interrupt file as specified in the previous section, the access is translated or converted by consulting the MSI page table configured for the device, instead of using the regular translation data structures that apply to all other memory accesses from the same device.
 
@@ -216,7 +216,7 @@ If V = 1, bit 63 of the first doubleword is field C (Custom), designated for cus
 
 If V = 1 and the custom-use bit C = 0, then bits 2:1 of the first doubleword contain field M (Mode). If M = 3, the MSI PTE specifies_basic translate mode_ for accesses to the page, and if M = 1, it specifies _MRIF mode_. Values of 0 and 2 for M are reserved. The interpretation of an MSI PTE for each of the two defined modes is detailed further in the next two subsections.
 
-#### [](#8-1-5-1-msi-pte-basic-translate-mode)8.1.5.1\. MSI PTE, basic translate mode
+#### [](#7-1-5-1-msi-pte-basic-translate-mode)7.1.5.1\. MSI PTE, basic translate mode
 
 When an MSI PTE has fields V = 1, C = 0, and M = 3 (basic translate mode), the PTE’s complete format is:
 
@@ -236,7 +236,7 @@ An MSI PTE in basic translate mode allows a hypervisor to route an MSI write int
 | |  An IOMMU that also employs standard RISC-V page tables for regular address translation can maximize the overlap between the handling of MSI PTEs and regular RISC-V leaf PTEs as follows: For RV64, the first doubleword of an MSI PTE in basic translate mode has the same encoding as a regular RISC-V leaf PTE for Sv39, Sv48, Sv57, Sv39x4, Sv48x4, or Sv57x4 page-based address translation, with PTE fields D, A, G, U, and X all zeros and W = R = 1\. Hence, the MSI PTE’s first doubleword appears the same as a regular PTE that grants read and write permission (R = W = 1) but not execute permissions (X = 0). This same-encoded regular PTE would translate an MSI write the same as the actual MSI PTE, except that what would be the PTE’s accessed (A), dirty (D), and user (U) bits are all zeros. An IOMMU needs to treat only these three bits differently for an MSI PTE versus a regular RV64 leaf PTE. The address computation used to select a PTE from a regular RISC-V page table must be modified to select an MSI PTE’s first doubleword from an MSI page table. However, the extraction of an interrupt file number from a guest physical address to obtain the index for accessing the MSI page table already creates an unavoidable difference in PTE addressing. For RV32, the lower 32-bit word of an MSI PTE’s first doubleword has the same format as a leaf PTE for Sv32 or Sv32x4 page-based address translation, except again for what would be PTE bits A, D, and U, which must be treated differently. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#IOMMU-MSIPTE-MRIF)8.1.5.2\. MSI PTE, MRIF mode
+#### [](#IOMMU-MSIPTE-MRIF)7.1.5.2\. MSI PTE, MRIF mode
 
 If memory-resident interrupt files are supported and an MSI PTE has fields V = 1, C = 0, and M = 1 (MRIF mode), the PTE’s complete format is:
 

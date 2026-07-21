@@ -1,6 +1,6 @@
-# 2.1. Examples
+# 1.1. Examples
 
-## [](#2-1-examples)2.1\. Examples
+## [](#1-1-examples)1.1\. Examples
 
 | |  This section is non-normative. |
 | --------------------------------- |
@@ -10,7 +10,7 @@
 
 This section presents examples that use the RVV intrinsics specified in this document. The examples are in C and assume `#include <riscv_vector.h>` has appeared earlier in the source code.
 
-### [](#2-1-1-memory-copy)2.1.1\. Memory copy
+### [](#1-1-1-memory-copy)1.1.1\. Memory copy
 
 Example 1\. An implementation of the `memcpy` function of the C Standard library using RVV intrinsics.
 
@@ -34,7 +34,7 @@ void *memcpy_rvv(void *restrict destination, const void *restrict source,
 }
 ```
 
-### [](#2-1-2-saxpy)2.1.2\. SAXPY
+### [](#1-1-2-saxpy)1.1.2\. SAXPY
 
 Consider the following function that implements a SAXPY-like kernel.
 
@@ -63,7 +63,7 @@ void saxpy_rvv(size_t n, const float a, const float *x, float *y) {
 }
 ```
 
-### [](#2-1-3-matrix-multiplication)2.1.3\. Matrix multiplication
+### [](#1-1-3-matrix-multiplication)1.1.3\. Matrix multiplication
 
 Consider the following function that implements a naive matrix multiplication.
 
@@ -119,7 +119,7 @@ void matmul_rvv(double *a, double *b, double *c, int n, int m, int p) {
 }
 ```
 
-### [](#2-1-4-string-copy)2.1.4\. String copy
+### [](#1-1-4-string-copy)1.1.4\. String copy
 
 Example 4\. An implementation of the `strcpy` function of the C Standard Library using RVV intrinsics.
 
@@ -159,7 +159,7 @@ char *strcpy_rvv(char *destination, const char *source) {
 }
 ```
 
-### [](#2-1-5-control-flow)2.1.5\. Control flow
+### [](#1-1-5-control-flow)1.1.5\. Control flow
 
 Consider the following function that computes the division of two arrays elementwise but sets the result to a given value when the element of the divisor array is zero.
 
@@ -206,7 +206,7 @@ void branch_rvv(double *a, double *b, double *c, int n, double constant) {
 }
 ```
 
-### [](#2-1-6-reduction-and-counting)2.1.6\. Reduction and counting
+### [](#1-1-6-reduction-and-counting)1.1.6\. Reduction and counting
 
 Consider the following function that computes the dot product of two arrays excluding elements of the first array (along with the correspondign element of the second array) where the value is 42\. The function also counts how many pairs of elements took part in the dot-product.
 

@@ -1,6 +1,6 @@
-# 16.1. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0
+# 15.1. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0
 
-## [](#16-1-zabha-extension-for-byte-and-halfword-atomic-memory-operations-version-1-0)16.1\. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0
+## [](#15-1-zabha-extension-for-byte-and-halfword-atomic-memory-operations-version-1-0)15.1\. "Zabha" Extension for Byte and Halfword Atomic Memory Operations, Version 1.0
 
 The A-extension offers atomic memory operation (AMO) instructions for _words_,_doublewords_, and _quadwords_ (only for `AMOCAS`). The absence of atomic operations for subword data types necessitates emulation strategies. For bitwise operations, this emulation can be performed via word-sized bitwise AMO\* instructions. For non-bitwise operations, emulation is achievable using word-sized `LR`/`SC` instructions.
 
@@ -13,7 +13,7 @@ Several limitations arise from this emulation approach:
 
 The Zabha extension addresses these limitations by adding support for _byte_ and_halfword_ atomic memory operations to the RISC-V Unprivileged ISA. The Zabha extension depends upon the Zaamo standard extension.
 
-### [](#16-1-1-byte-and-halfword-atomic-memory-operation-instructions)16.1.1\. Byte and Halfword Atomic Memory Operation Instructions
+### [](#15-1-1-byte-and-halfword-atomic-memory-operation-instructions)15.1.1\. Byte and Halfword Atomic Memory Operation Instructions
 
 Zabha extension provides the `AMO[ADD|AND|OR|XOR|SWAP|MIN[U]|MAX[U]].[B|H]`instructions. If Zacas extension is also implemented, Zabha further provides the`AMOCAS.[B|H]` instructions.
 

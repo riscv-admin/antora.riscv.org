@@ -1,6 +1,6 @@
-# 17.1. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0
+# 16.1. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0
 
-## [](#17-1-zalasr-atomic-load-acquire-and-store-release-instructions-version-1-0)17.1\. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0
+## [](#16-1-zalasr-atomic-load-acquire-and-store-release-instructions-version-1-0)16.1\. "Zalasr" Atomic Load-Acquire and Store-Release Instructions, Version 1.0
 
 The Zalasr (Load-Acquire and Store-Release) extension provides load-acquire and store-release instructions in RISC-V. These can be important for high performance designs by enabling finer-grained synchronisation than is possible with fences alone, by providing a unidirectional fence. Load-acquire and store-release are widely used in language-level memory models: both the Java and C++ memory models make use of acquire-release semantics, and C++'s `atomic` provides primitives that are meant to map directly to load-acquire and store-release instructions.
 
@@ -8,13 +8,13 @@ The Zalasr extension builds on the atomic support provided by the Zaamo (Atomic 
 
 Zalasr fills this gap by offering truly standalone atomic and ordered loads and stores. The Zalasr instructions are atomic loads and stores that support ordering annotations. With the combination of Zaamo, Zabha, and Zalasr all C++ atomic operations can be supported with single instructions.
 
-### [](#17-1-1-load-acquire-and-store-release-instructions)17.1.1\. Load-Acquire and Store-Release Instructions
+### [](#16-1-1-load-acquire-and-store-release-instructions)16.1.1\. Load-Acquire and Store-Release Instructions
 
 The Zalasr instructions always sign-extend the value placed in _rd_ and ignore the upper bits of the value of _rs2_. The instructions in the Zalasr extension require that the address held in _rs1_ be naturally aligned to the size in bytes (2width) of the operand. If the address is not naturally aligned, an address-misaligned exception or an access-fault exception will be generated. The access-fault exception can be generated for a memory access that would otherwise be able to complete except for the misalignment, if the misaligned access should not be emulated.
 
 The misaligned atomicity granule PMA, defined in Volume II of this manual, optionally relaxes this alignment requirement. If all accessed bytes lie within the same misaligned atomicity granule, the instruction will not raise an exception for reasons of address alignment, and the instruction will give rise to only one memory operation for the purposes of RVWMO—i.e., it will execute atomically.
 
-### [](#insns-ldatomic)17.1.2\. Load Acquire
+### [](#insns-ldatomic)16.1.2\. Load Acquire
 
 Synopsis
 
@@ -43,7 +43,7 @@ The versions without the _aq_ bit set are RESERVED. LD.{AQ, AQRL} is RV64-only.
 | |  The _aq_ bit is mandatory because the two encodings that would be produced are not seen as useful at this time. The version with neither the _aq_ nor the _rl_ bit set would correspond to a load with no ordering annotations that was guaranteed to be performed atomically. This can be achieved with ordinary load instructions by suitably aligning pointers. The version with only the _rl_ bit would correspond to load-release. Load-release has theoretical applications in seqlocks, but is not supported in language-level memory models and so is not included. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#insns-sdatomic)17.1.3\. Store Release
+### [](#insns-sdatomic)16.1.3\. Store Release
 
 Synopsis
 

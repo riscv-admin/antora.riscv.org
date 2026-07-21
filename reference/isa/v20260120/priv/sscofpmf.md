@@ -1,6 +1,6 @@
-# 14.1. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0
+# 13.1. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0
 
-## [](#Sscofpmf)14.1\. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0
+## [](#Sscofpmf)13.1\. "Sscofpmf" Extension for Count Overflow and Mode-Based Filtering, Version 1.0
 
 The current Privileged specification defines mhpmevent CSRs to select and control event counting by the associated hpmcounter CSRs, but provides no standardization of any fields within these CSRs. For at least Linux-class rich-OS systems it is desirable to standardize certain basic features that are broadly desired (and have come up over the past year plus on RISC-V lists, as well as have been the subject of past proposals). This enables there to be standard upstream software support that eliminates the need for implementations to provide their own custom software support.
 
@@ -12,7 +12,7 @@ The extension name is "Sscofpmf" ('Ss' for Privileged arch and Supervisor-level 
 
 Note that the new count overflow interrupt will be treated as a standard local interrupt that is assigned to bit 13 in the mip/mie/sip/sie registers.
 
-### [](#14-1-1-count-overflow-control)14.1.1\. Count Overflow Control
+### [](#13-1-1-count-overflow-control)13.1.1\. Count Overflow Control
 
 The following bits are added to `mhpmevent`:
 
@@ -53,7 +53,7 @@ Generation of a count-overflow-interrupt request by an `hpmcounter` sets the ass
 | |  Software can distinguish newly overflowed counters (yet to be serviced by an overflow interrupt handler) from overflowed counters that have already been serviced or that are configured to not generate an interrupt on overflow, by maintaining a bit mask reflecting which counters are active and due to eventually overflow. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#14-1-2-supervisor-count-overflow-scountovf-register)14.1.2\. Supervisor Count Overflow (`scountovf`) Register
+### [](#13-1-2-supervisor-count-overflow-scountovf-register)13.1.2\. Supervisor Count Overflow (`scountovf`) Register
 
 This extension adds the `scountovf` CSR, a 32-bit read-only register that contains shadow copies of the OF bits in the 29 mhpmevent CSRs (mhpmevent_3_ \- mhpmevent_31_) - where scountovf bit _X_ corresponds to mhpmevent_X_.
 

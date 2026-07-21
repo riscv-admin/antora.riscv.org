@@ -1,6 +1,6 @@
-# 5.1. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0
+# 4.1. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0
 
-## [](#zifencei)5.1\. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0
+## [](#zifencei)4.1\. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0
 
 This chapter defines the "Zifencei" extension, which includes the FENCE.I instruction that provides explicit synchronization between writes to instruction memory and instruction fetches on the same hart. Currently, this instruction is the only standard mechanism to ensure that stores visible to a hart will also be visible to its instruction fetches.
 

@@ -1,16 +1,16 @@
-# 32.1. Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1
+# 31.1. Cryptography Extensions: Scalar &amp; Entropy Source Instructions, Version 1.0.1
 
-## [](#crypto%5Fscalar%5Finstructions)32.1\. Cryptography Extensions: Scalar & Entropy Source Instructions, Version 1.0.1
+## [](#crypto%5Fscalar%5Finstructions)31.1\. Cryptography Extensions: Scalar & Entropy Source Instructions, Version 1.0.1
 
-### [](#crypto%5Fscalar%5Fintroduction)32.1.1\. Introduction
+### [](#crypto%5Fscalar%5Fintroduction)31.1.1\. Introduction
 
 This document describes the _scalar_ cryptography extension for RISC-V. All instructions described herein use the general-purpose `X`registers, and obey the 2-read-1-write register access constraint. These instructions are designed to be lightweight and suitable for `32` and `64` bit base architectures; from embedded IoT class cores to large, application class cores which do not implement a vector unit.
 
-This document also describes the architectural interface to an Entropy Source, which can be used to generate cryptographic secrets. This is found in [32.1.4\. Entropy Source](#crypto%5Fscalar%5Fes).
+This document also describes the architectural interface to an Entropy Source, which can be used to generate cryptographic secrets. This is found in [31.1.4\. Entropy Source](#crypto%5Fscalar%5Fes).
 
-It also contains a mechanism allowing core implementers to provide_"Constant Time Execution"_ guarantees in [32.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt).
+It also contains a mechanism allowing core implementers to provide_"Constant Time Execution"_ guarantees in [31.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt).
 
-#### [](#crypto%5Fscalar%5Faudience)32.1.1.1\. Intended Audience
+#### [](#crypto%5Fscalar%5Faudience)31.1.1.1\. Intended Audience
 
 Cryptography is a specialised subject, requiring people with many different backgrounds to cooperate in its secure and efficient implementation. Where possible, we have written this specification to be understandable by all, though we recognise that the motivations and references to algorithms or other specifications and standards may be unfamiliar to those who are not domain experts.
 
@@ -18,7 +18,7 @@ This specification anticipates being read and acted on by various people with di
 
 Cryptographers and cryptographic software developers
 
-These are the people we expect to write code using the instructions in this specification. They should understand fairly obviously the motivations for the instructions we include, and be familiar with most of the algorithms and outside standards to which we refer. We expect the sections on constant time execution ([32.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt)) and the entropy source ([32.1.4\. Entropy Source](#crypto%5Fscalar%5Fes)) to be chiefly understood with their help.
+These are the people we expect to write code using the instructions in this specification. They should understand fairly obviously the motivations for the instructions we include, and be familiar with most of the algorithms and outside standards to which we refer. We expect the sections on constant time execution ([31.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt)) and the entropy source ([31.1.4\. Entropy Source](#crypto%5Fscalar%5Fes)) to be chiefly understood with their help.
 
 Computer architects
 
@@ -34,15 +34,15 @@ Responsible for ensuring the correct implementation of the extension in hardware
 
 These are by no means the only people concerned with the specification, but they are the ones we considered most while writing it.
 
-#### [](#crypto%5Fscalar%5Fsail%5Fspecifications)32.1.1.2\. Sail Specifications
+#### [](#crypto%5Fscalar%5Fsail%5Fspecifications)31.1.1.2\. Sail Specifications
 
 RISC-V maintains a[formal model](https://github.com/riscv/sail-riscv)of the ISA specification, implemented in the Sail ISA specification language \[[27](../biblio/bibliography.html#bib-sail)\]. Note that _Sail_ refers to the specification language itself, and that there is a _model of RISC-V_, written using Sail. It is not correct to refer to "the Sail model". This is ambiguous, given there are many models of different ISAs implemented using Sail. We refer to the Sail implementation of RISC-V as "the RISC-V Sail model".
 
-The Cryptography extension uses inline Sail code snippets from the actual model to give canonical descriptions of instruction functionality. Each instruction is accompanied by its expression in Sail, and includes calls to supporting functions which are too verbose to include directly in the specification. This supporting code is listed in[32.1.9\. Supporting Sail Code](#crypto%5Fscalar%5Fappx%5Fsail). The[Sail Manual](https://alasdair.github.io/manual.html)is recommended reading in order to best understand the code snippets.
+The Cryptography extension uses inline Sail code snippets from the actual model to give canonical descriptions of instruction functionality. Each instruction is accompanied by its expression in Sail, and includes calls to supporting functions which are too verbose to include directly in the specification. This supporting code is listed in[31.1.9\. Supporting Sail Code](#crypto%5Fscalar%5Fappx%5Fsail). The[Sail Manual](https://alasdair.github.io/manual.html)is recommended reading in order to best understand the code snippets.
 
 Note that this document contains only a subset of the formal model: refer to the formal model GitHub[repository](https://github.com/riscv/sail-riscv)for the complete model.
 
-#### [](#crypto%5Fscalar%5Fpolicies)32.1.1.3\. Policies
+#### [](#crypto%5Fscalar%5Fpolicies)31.1.1.3\. Policies
 
 In creating this proposal, we tried to adhere to the following policies:
 
@@ -53,7 +53,7 @@ In creating this proposal, we tried to adhere to the following policies:
 * Historically, there has been some discussion \[[28](../biblio/bibliography.html#bib-lsyrr:04)\] on how newly supported operations in general-purpose computing might enable new bases for cryptographic algorithms. The standard will not try to anticipate new useful low-level operations which _may_ be useful as building blocks for future cryptographic constructs.
 * Regarding side-channel countermeasures: Where relevant, proposed instructions must aim to remove the possibility of any timing side-channels. For side-channels based on power or electro-magnetic (EM) measurements, the extension will not aim to support countermeasures which are implemented above the ISA abstraction layer. Recommendations will be given where relevant on how micro-architectures can implement instructions in a power/EM side-channel resistant way.
 
-### [](#crypto%5Fscalar%5Fextensions)32.1.2\. Extensions Overview
+### [](#crypto%5Fscalar%5Fextensions)31.1.2\. Extensions Overview
 
 The group of extensions introduced by the Scalar Cryptography Instruction Set Extension is listed here.
 
@@ -65,23 +65,23 @@ Detection of individual cryptography extensions uses the unified software-based 
 | |  A note on extension rationale Specialist encryption and decryption instructions are separated into different functional groups because some use cases (e.g., Galois/Counter Mode in TLS 1.3) do not require decryption functionality. The NIST and ShangMi algorithms suites are separated because their usefulness is heavily dependent on the countries a device is expected to operate in. NIST ciphers are a part of most standardised internet protocols, while ShangMi ciphers are required for use in China. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zbkb-sc)32.1.2.1\. `Zbkb` \- Bitmanip instructions for Cryptography
+#### [](#zbkb-sc)31.1.2.1\. `Zbkb` \- Bitmanip instructions for Cryptography
 
 This extension contains bit-manipulation instructions that are particularly useful for cryptography, most of which are also in the `Zbb` extension. Please refer to [Bit-manipulation for Cryptography](b-st-ext.html#zbkb) for more information.
 
-#### [](#zbkc-sc)32.1.2.2\. `Zbkc` \- Carry-less multiply instructions
+#### [](#zbkc-sc)31.1.2.2\. `Zbkc` \- Carry-less multiply instructions
 
 Constant time carry-less multiply for Galois/Counter Mode. These are separated from the [Bit-manipulation for Cryptography](b-st-ext.html#zbkb) because they have a considerable implementation overhead which cannot be amortised across other instructions.
 
 Please refer to [Carry-less multiplication for Cryptography](b-st-ext.html#zbkc).
 
-#### [](#zbkx-sc)32.1.2.3\. `Zbkx` \- Crossbar permutation instructions
+#### [](#zbkx-sc)31.1.2.3\. `Zbkx` \- Crossbar permutation instructions
 
 These instructions are useful for implementing SBoxes in constant time, and potentially with DPA protections. These are separated from the [Bit-manipulation for Cryptography](b-st-ext.html#zbkb) because they have an implementation overhead which cannot be amortised across other instructions.
 
 Please refer to [Crossbar permutation instructions](b-st-ext.html#zbkx).
 
-#### [](#zknd)32.1.2.4\. `Zknd` \- NIST Suite: AES Decryption
+#### [](#zknd)31.1.2.4\. `Zknd` \- NIST Suite: AES Decryption
 
 Instructions for accelerating the decryption and key-schedule functions of the AES block cipher.
 
@@ -98,7 +98,7 @@ Instructions for accelerating the decryption and key-schedule functions of the A
 | |  The [AES Key Schedule Instruction 1 (RV64)](#insns-aes64ks1i) and [AES Key Schedule Instruction 2 (RV64)](#insns-aes64ks2) instructions are present in both the [Zknd](#zknd) and [Zkne](#zkne) extensions. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zkne)32.1.2.5\. `Zkne` \- NIST Suite: AES Encryption
+#### [](#zkne)31.1.2.5\. `Zkne` \- NIST Suite: AES Encryption
 
 Instructions for accelerating the encryption and key-schedule functions of the AES block cipher.
 
@@ -114,7 +114,7 @@ Instructions for accelerating the encryption and key-schedule functions of the A
 | |  The[aes64ks1i](#insns-aes64ks1i)and[aes64ks2](#insns-aes64ks2)instructions are present in both the [Zknd](#zknd) and [Zkne](#zkne) extensions. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zknh)32.1.2.6\. `Zknh` \- NIST Suite: Hash Function Instructions
+#### [](#zknh)31.1.2.6\. `Zknh` \- NIST Suite: Hash Function Instructions
 
 Instructions for accelerating the SHA2 family of cryptographic hash functions, as specified in \[[29](../biblio/bibliography.html#bib-nist:fips:180:4)\].
 
@@ -135,7 +135,7 @@ Instructions for accelerating the SHA2 family of cryptographic hash functions, a
 | ✓    | sha512sum0  | [SHA2-512 Sum0 instruction (RV64)](#insns-sha512sum0)   |                                                  |
 | ✓    | sha512sum1  | [SHA2-512 Sum1 instruction (RV64)](#insns-sha512sum1)   |                                                  |
 
-#### [](#zksed)32.1.2.7\. `Zksed` \- ShangMi Suite: SM4 Block Cipher Instructions
+#### [](#zksed)31.1.2.7\. `Zksed` \- ShangMi Suite: SM4 Block Cipher Instructions
 
 Instructions for accelerating the SM4 Block Cipher. Note that unlike AES, this cipher uses the same core operation for encryption and decryption, hence there is only one extension for it.
 
@@ -144,7 +144,7 @@ Instructions for accelerating the SM4 Block Cipher. Note that unlike AES, this c
 | ✓    | ✓    | sm4ed    | [SM4 Encrypt/Decrypt Instruction](#insns-sm4ed) |
 | ✓    | ✓    | sm4ks    | [SM4 Key Schedule Instruction](#insns-sm4ks)    |
 
-#### [](#zksh)32.1.2.8\. `Zksh` \- ShangMi Suite: SM3 Hash Function Instructions
+#### [](#zksh)31.1.2.8\. `Zksh` \- ShangMi Suite: SM3 Hash Function Instructions
 
 Instructions for accelerating the SM3 hash function.
 
@@ -153,13 +153,13 @@ Instructions for accelerating the SM3 hash function.
 | ✓    | ✓    | sm3p0    | [SM3 P0 transform](#insns-sm3p0) |
 | ✓    | ✓    | sm3p1    | [SM3 P1 transform](#insns-sm3p1) |
 
-#### [](#zkr)32.1.2.9\. `Zkr` \- Entropy Source Extension
+#### [](#zkr)31.1.2.9\. `Zkr` \- Entropy Source Extension
 
 The entropy source extension defines the `seed` CSR at address `0x015`. This CSR provides up to 16 physical `entropy` bits that can be used to seed cryptographic random bit generators.
 
-See [32.1.4\. Entropy Source](#crypto%5Fscalar%5Fes) for the normative specification and access control notes. [32.1.7\. Entropy Source Rationale and Recommendations](#crypto%5Fscalar%5Fappx%5Fes) contains design rationale and further recommendations to implementers.
+See [31.1.4\. Entropy Source](#crypto%5Fscalar%5Fes) for the normative specification and access control notes. [31.1.7\. Entropy Source Rationale and Recommendations](#crypto%5Fscalar%5Fappx%5Fes) contains design rationale and further recommendations to implementers.
 
-#### [](#zkn)32.1.2.10\. `Zkn` \- NIST Algorithm Suite
+#### [](#zkn)31.1.2.10\. `Zkn` \- NIST Algorithm Suite
 
 This extension is shorthand for the following set of other extensions:
 
@@ -174,7 +174,7 @@ This extension is shorthand for the following set of other extensions:
 
 A core which implements `Zkn` must implement all of the above extensions.
 
-#### [](#zks)32.1.2.11\. `Zks` \- ShangMi Algorithm Suite
+#### [](#zks)31.1.2.11\. `Zks` \- ShangMi Algorithm Suite
 
 This extension is shorthand for the following set of other extensions:
 
@@ -188,7 +188,7 @@ This extension is shorthand for the following set of other extensions:
 
 A core which implements `Zks` must implement all of the above extensions.
 
-#### [](#zk)32.1.2.12\. `Zk` \- Standard scalar cryptography extension
+#### [](#zk)31.1.2.12\. `Zk` \- Standard scalar cryptography extension
 
 This extension is shorthand for the following set of other extensions:
 
@@ -200,13 +200,13 @@ This extension is shorthand for the following set of other extensions:
 
 A core which implements `Zk` must implement all of the above extensions.
 
-#### [](#32-1-2-13-zkt-data-independent-execution-latency)32.1.2.13\. `Zkt` \- Data Independent Execution Latency
+#### [](#31-1-2-13-zkt-data-independent-execution-latency)31.1.2.13\. `Zkt` \- Data Independent Execution Latency
 
-This extension allows CPU implementers to indicate to cryptographic software developers that a subset of RISC-V instructions are guaranteed to be implemented such that their execution latency is independent of the data values they operate on. A complete description of this extension is found in[32.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt).
+This extension allows CPU implementers to indicate to cryptographic software developers that a subset of RISC-V instructions are guaranteed to be implemented such that their execution latency is independent of the data values they operate on. A complete description of this extension is found in[31.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt).
 
-### [](#crypto%5Fscalar%5Finsns)32.1.3\. Instructions
+### [](#crypto%5Fscalar%5Finsns)31.1.3\. Instructions
 
-#### [](#insns-aes32dsi)32.1.3.1\. aes32dsi
+#### [](#insns-aes32dsi)31.1.3.1\. aes32dsi
 
 Synopsis
 
@@ -244,7 +244,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes32dsmi)32.1.3.2\. aes32dsmi
+#### [](#insns-aes32dsmi)31.1.3.2\. aes32dsmi
 
 Synopsis
 
@@ -283,7 +283,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes32esi)32.1.3.3\. aes32esi
+#### [](#insns-aes32esi)31.1.3.3\. aes32esi
 
 Synopsis
 
@@ -321,7 +321,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes32esmi)32.1.3.4\. aes32esmi
+#### [](#insns-aes32esmi)31.1.3.4\. aes32esmi
 
 Synopsis
 
@@ -360,7 +360,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64ds)32.1.3.5\. aes64ds
+#### [](#insns-aes64ds)31.1.3.5\. aes64ds
 
 Synopsis
 
@@ -400,7 +400,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64dsm)32.1.3.6\. aes64dsm
+#### [](#insns-aes64dsm)31.1.3.6\. aes64dsm
 
 Synopsis
 
@@ -441,7 +441,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64es)32.1.3.7\. aes64es
+#### [](#insns-aes64es)31.1.3.7\. aes64es
 
 Synopsis
 
@@ -481,7 +481,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64esm)32.1.3.8\. aes64esm
+#### [](#insns-aes64esm)31.1.3.8\. aes64esm
 
 Synopsis
 
@@ -522,7 +522,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64im)32.1.3.9\. aes64im
+#### [](#insns-aes64im)31.1.3.9\. aes64im
 
 Synopsis
 
@@ -559,7 +559,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64ks1i)32.1.3.10\. aes64ks1i
+#### [](#insns-aes64ks1i)31.1.3.10\. aes64ks1i
 
 Synopsis
 
@@ -604,7 +604,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-aes64ks2)32.1.3.11\. aes64ks2
+#### [](#insns-aes64ks2)31.1.3.11\. aes64ks2
 
 Synopsis
 
@@ -642,7 +642,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-andn-sc)32.1.3.12\. andn
+#### [](#insns-andn-sc)31.1.3.12\. andn
 
 Synopsis
 
@@ -673,7 +673,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | 1.0.0           | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-brev8-sc)32.1.3.13\. brev8
+#### [](#insns-brev8-sc)31.1.3.13\. brev8
 
 Synopsis
 
@@ -707,7 +707,7 @@ Included in
 | ----------------------- | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-clmul-sc)32.1.3.14\. clmul
+#### [](#insns-clmul-sc)31.1.3.14\. clmul
 
 Synopsis
 
@@ -748,7 +748,7 @@ Included in
 | Zbc ([Zbc](b-st-ext.html#zbc)) | 1.0.0           | Ratified        |
 | Zbkc ([Zbkc](#zbkc-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-clmulh-sc)32.1.3.15\. clmulh
+#### [](#insns-clmulh-sc)31.1.3.15\. clmulh
 
 Synopsis
 
@@ -789,7 +789,7 @@ Included in
 | Zbc ([Zbc](b-st-ext.html#zbc)) | 1.0.0           | Ratified        |
 | Zbkc ([Zbkc](#zbkc-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-orn-sc)32.1.3.16\. orn
+#### [](#insns-orn-sc)31.1.3.16\. orn
 
 Synopsis
 
@@ -820,7 +820,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-pack-sc)32.1.3.17\. pack
+#### [](#insns-pack-sc)31.1.3.17\. pack
 
 Synopsis
 
@@ -852,7 +852,7 @@ Included in
 | ----------------------- | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-packh-sc)32.1.3.18\. packh
+#### [](#insns-packh-sc)31.1.3.18\. packh
 
 Synopsis
 
@@ -884,7 +884,7 @@ Included in
 | ----------------------- | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-packw-sc)32.1.3.19\. packw
+#### [](#insns-packw-sc)31.1.3.19\. packw
 
 Synopsis
 
@@ -916,7 +916,7 @@ Included in
 | ----------------------- | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-rev8-sc)32.1.3.20\. rev8
+#### [](#insns-rev8-sc)31.1.3.20\. rev8
 
 Synopsis
 
@@ -966,7 +966,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-rol-sc)32.1.3.21\. rol
+#### [](#insns-rol-sc)31.1.3.21\. rol
 
 Synopsis
 
@@ -1002,7 +1002,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-rolw-sc)32.1.3.22\. rolw
+#### [](#insns-rolw-sc)31.1.3.22\. rolw
 
 Synopsis
 
@@ -1036,7 +1036,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-ror-sc)32.1.3.23\. ror
+#### [](#insns-ror-sc)31.1.3.23\. ror
 
 Synopsis
 
@@ -1072,7 +1072,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-rori-sc)32.1.3.24\. rori
+#### [](#insns-rori-sc)31.1.3.24\. rori
 
 Synopsis
 
@@ -1112,7 +1112,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-roriw-sc)32.1.3.25\. roriw
+#### [](#insns-roriw-sc)31.1.3.25\. roriw
 
 Synopsis
 
@@ -1145,7 +1145,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-rorw-sc)32.1.3.26\. rorw
+#### [](#insns-rorw-sc)31.1.3.26\. rorw
 
 Synopsis
 
@@ -1179,7 +1179,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-sha256sig0)32.1.3.27\. sha256sig0
+#### [](#insns-sha256sig0)31.1.3.27\. sha256sig0
 
 Synopsis
 
@@ -1216,7 +1216,7 @@ Included in
 | [Zkn](#zkn)   | v1.0.0          | Ratified        |
 | [Zk](#zk)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha256sig1)32.1.3.28\. sha256sig1
+#### [](#insns-sha256sig1)31.1.3.28\. sha256sig1
 
 Synopsis
 
@@ -1253,7 +1253,7 @@ Included in
 | [Zkn](#zkn)   | v1.0.0          | Ratified        |
 | [Zk](#zk)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha256sum0)32.1.3.29\. sha256sum0
+#### [](#insns-sha256sum0)31.1.3.29\. sha256sum0
 
 Synopsis
 
@@ -1290,7 +1290,7 @@ Included in
 | [Zkn](#zkn)   | v1.0.0          | Ratified        |
 | [Zk](#zk)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha256sum1)32.1.3.30\. sha256sum1
+#### [](#insns-sha256sum1)31.1.3.30\. sha256sum1
 
 Synopsis
 
@@ -1327,7 +1327,7 @@ Included in
 | [Zkn](#zkn)   | v1.0.0          | Ratified        |
 | [Zk](#zk)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig0h)32.1.3.31\. sha512sig0h
+#### [](#insns-sha512sig0h)31.1.3.31\. sha512sig0h
 
 Synopsis
 
@@ -1366,7 +1366,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig0l)32.1.3.32\. sha512sig0l
+#### [](#insns-sha512sig0l)31.1.3.32\. sha512sig0l
 
 Synopsis
 
@@ -1405,7 +1405,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig1h)32.1.3.33\. sha512sig1h
+#### [](#insns-sha512sig1h)31.1.3.33\. sha512sig1h
 
 Synopsis
 
@@ -1444,7 +1444,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig1l)32.1.3.34\. sha512sig1l
+#### [](#insns-sha512sig1l)31.1.3.34\. sha512sig1l
 
 Synopsis
 
@@ -1483,7 +1483,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sum0r)32.1.3.35\. sha512sum0r
+#### [](#insns-sha512sum0r)31.1.3.35\. sha512sum0r
 
 Synopsis
 
@@ -1522,7 +1522,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sum1r)32.1.3.36\. sha512sum1r
+#### [](#insns-sha512sum1r)31.1.3.36\. sha512sum1r
 
 Synopsis
 
@@ -1561,7 +1561,7 @@ Included in
 | [Zkn](#zkn) (RV32)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV32)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig0)32.1.3.37\. sha512sig0
+#### [](#insns-sha512sig0)31.1.3.37\. sha512sig0
 
 Synopsis
 
@@ -1596,7 +1596,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sig1)32.1.3.38\. sha512sig1
+#### [](#insns-sha512sig1)31.1.3.38\. sha512sig1
 
 Synopsis
 
@@ -1631,7 +1631,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sum0)32.1.3.39\. sha512sum0
+#### [](#insns-sha512sum0)31.1.3.39\. sha512sum0
 
 Synopsis
 
@@ -1666,7 +1666,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sha512sum1)32.1.3.40\. sha512sum1
+#### [](#insns-sha512sum1)31.1.3.40\. sha512sum1
 
 Synopsis
 
@@ -1701,7 +1701,7 @@ Included in
 | [Zkn](#zkn) (RV64)   | v1.0.0          | Ratified        |
 | [Zk](#zk) (RV64)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sm3p0)32.1.3.41\. sm3p0
+#### [](#insns-sm3p0)31.1.3.41\. sm3p0
 
 Synopsis
 
@@ -1740,7 +1740,7 @@ Included in
 | [Zksh](#zksh) | v1.0.0          | Ratified        |
 | [Zks](#zks)   | v1.0.0          | Ratified        |
 
-#### [](#insns-sm3p1)32.1.3.42\. sm3p1
+#### [](#insns-sm3p1)31.1.3.42\. sm3p1
 
 Synopsis
 
@@ -1779,7 +1779,7 @@ Included in
 | [Zksh](#zksh) | v1.0.0          | Ratified        |
 | [Zks](#zks)   | v1.0.0          | Ratified        |
 
-#### [](#insns-sm4ed)32.1.3.43\. sm4ed
+#### [](#insns-sm4ed)31.1.3.43\. sm4ed
 
 Synopsis
 
@@ -1821,7 +1821,7 @@ Included in
 | [Zksed](#zksed) | v1.0.0          | Ratified        |
 | [Zks](#zks)     | v1.0.0          | Ratified        |
 
-#### [](#insns-sm4ks)32.1.3.44\. sm4ks
+#### [](#insns-sm4ks)31.1.3.44\. sm4ks
 
 Synopsis
 
@@ -1862,7 +1862,7 @@ Included in
 | [Zksed](#zksed) | v1.0.0          | Ratified        |
 | [Zks](#zks)     | v1.0.0          | Ratified        |
 
-#### [](#insns-unzip-sc)32.1.3.45\. unzip
+#### [](#insns-unzip-sc)31.1.3.45\. unzip
 
 Synopsis
 
@@ -1898,7 +1898,7 @@ Included in
 | ------------------------------ | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) (RV32) | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-xnor-sc)32.1.3.46\. xnor
+#### [](#insns-xnor-sc)31.1.3.46\. xnor
 
 Synopsis
 
@@ -1929,7 +1929,7 @@ Included in
 | Zbb ([Zbb](b-st-ext.html#zbb)) | v1.0.0          | Ratified        |
 | Zbkb ([Zbkb](#zbkb-sc))        | v1.0.0-rc4      | Ratified        |
 
-#### [](#insns-xperm8-sc)32.1.3.47\. xperm8
+#### [](#insns-xperm8-sc)31.1.3.47\. xperm8
 
 Synopsis
 
@@ -1971,7 +1971,7 @@ Included in
 | --------------------------------- | --------------- | --------------- |
 | Zbkx ([Zbkx](b-st-ext.html#zbkx)) | v1.0            | Ratified        |
 
-#### [](#insns-xperm4-sc)32.1.3.48\. xperm4
+#### [](#insns-xperm4-sc)31.1.3.48\. xperm4
 
 Synopsis
 
@@ -2013,7 +2013,7 @@ Included in
 | --------------------------------- | --------------- | --------------- |
 | Zbkx ([Zbkx](b-st-ext.html#zbkx)) | v1.0            | Ratified        |
 
-#### [](#insns-zip-sc)32.1.3.49\. zip
+#### [](#insns-zip-sc)31.1.3.49\. zip
 
 Synopsis
 
@@ -2049,13 +2049,13 @@ Included in
 | ------------------------------ | --------------- | --------------- |
 | Zbkb ([Zbkb](#zbkb-sc)) (RV32) | v1.0.0-rc4      | Ratified        |
 
-### [](#crypto%5Fscalar%5Fes)32.1.4\. Entropy Source
+### [](#crypto%5Fscalar%5Fes)31.1.4\. Entropy Source
 
 The `seed` CSR provides an interface to a NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] or BSI AIS-31 \[[37](../biblio/bibliography.html#bib-kisc11)\] compliant physical Entropy Source (ES).
 
-An entropy source, by itself, is not a cryptographically secure Random Bit Generator (RBG), but can be used to build standard (and nonstandard) RBGs of many types with the help of symmetric cryptography. Expected usage is to condition (typically with SHA-2/3) the output from an entropy source and use it to seed a cryptographically secure Deterministic Random Bit Generator (DRBG) such as AES-based `CTR_DRBG` \[[38](../biblio/bibliography.html#bib-bake15)\]. The combination of an Entropy Source, Conditioning, and a DRBG can be used to create random bits securely \[[39](../biblio/bibliography.html#bib-bakero:21)\]. See [32.1.7\. Entropy Source Rationale and Recommendations](#crypto%5Fscalar%5Fappx%5Fes) for a non-normative description of a certification and self-certification procedures, design rationale, and more detailed suggestions on how the entropy source output can be used.
+An entropy source, by itself, is not a cryptographically secure Random Bit Generator (RBG), but can be used to build standard (and nonstandard) RBGs of many types with the help of symmetric cryptography. Expected usage is to condition (typically with SHA-2/3) the output from an entropy source and use it to seed a cryptographically secure Deterministic Random Bit Generator (DRBG) such as AES-based `CTR_DRBG` \[[38](../biblio/bibliography.html#bib-bake15)\]. The combination of an Entropy Source, Conditioning, and a DRBG can be used to create random bits securely \[[39](../biblio/bibliography.html#bib-bakero:21)\]. See [31.1.7\. Entropy Source Rationale and Recommendations](#crypto%5Fscalar%5Fappx%5Fes) for a non-normative description of a certification and self-certification procedures, design rationale, and more detailed suggestions on how the entropy source output can be used.
 
-#### [](#crypto%5Fscalar%5Fseed%5Fcsr)32.1.4.1\. The `seed` CSR
+#### [](#crypto%5Fscalar%5Fseed%5Fcsr)31.1.4.1\. The `seed` CSR
 
 `seed` is an unprivileged CSR located at address `0x015`. The 32-bit contents of `seed` are as follows:
 
@@ -2074,11 +2074,11 @@ Encoding
 
 ![svg](_images/svg-57188ebad0a4176f7cbe8d11290bf93710da536a.svg) 
 
-The `seed` CSR is also access controlled by execution mode, and attempted read or write access will raise an illegal-instruction exception outside M mode unless access is explicitly granted. See [32.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess) for more details.
+The `seed` CSR is also access controlled by execution mode, and attempted read or write access will raise an illegal-instruction exception outside M mode unless access is explicitly granted. See [31.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess) for more details.
 
 The status bits `seed[31:30]` \= `OPST` may be `ES16` (10), indicating successful polling, or one of three entropy polling failure statuses `BIST` (00), `WAIT` (01), or `DEAD` (11), discussed below.
 
-Each returned `seed[15:0]` \= `entropy` value represents unique randomness when `OPST`\=`ES16` (`seed[31:30]` \= `10`), even if its numerical value is the same as that of a previously polled `entropy` value. The implementation requirements of `entropy` bits are defined in [32.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq). When `OPST` is not `ES16`, `entropy` must be set to 0\. An implementation may safely set reserved and custom bits to zeros.
+Each returned `seed[15:0]` \= `entropy` value represents unique randomness when `OPST`\=`ES16` (`seed[31:30]` \= `10`), even if its numerical value is the same as that of a previously polled `entropy` value. The implementation requirements of `entropy` bits are defined in [31.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq). When `OPST` is not `ES16`, `entropy` must be set to 0\. An implementation may safely set reserved and custom bits to zeros.
 
 For security reasons, the interface guarantees that secret `entropy`words are not made available multiple times. Hence polling (reading) must also have the side effect of clearing (wipe-on-read) the `entropy` contents and changing the state to `WAIT` (unless there is `entropy`immediately available for `ES16`). Other states (`BIST`, `WAIT`, and `DEAD`) may be unaffected by polling.
 
@@ -2097,19 +2097,19 @@ Figure 1\. Entropy Source state transition diagram.
 
 Normally the operational state alternates between WAIT (no data) and ES16, which means that 16 bits of randomness (`entropy`) have been polled. BIST (Built-in Self-Test) only occurs after reset or to signal a non-fatal self-test alarm (if reached after WAIT or ES16). DEAD is an unrecoverable error state.
 
-#### [](#crypto%5Fscalar%5Fes%5Freq)32.1.4.2\. Entropy Source Requirements
+#### [](#crypto%5Fscalar%5Fes%5Freq)31.1.4.2\. Entropy Source Requirements
 
 The output `entropy` (`seed[15:0]` in ES16 state) is not necessarily fully conditioned randomness due to hardware and energy limitations of smaller, low-powered implementations. However, minimum requirements are defined. The main requirement is that 2-to-1 cryptographic post-processing in 256-bit input blocks will yield 128-bit "full entropy" output blocks. Entropy source users may make this conservative assumption but are not prohibited from using more than twice the number of seed bits relative to the desired resulting entropy.
 
 An implementation of the entropy source should meet at least one of the following requirements sets in order to be considered a secure and safe design:
 
-* [32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b): A physical entropy source meeting NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] criteria with evaluated min-entropy of 192 bits for each 256 output bits (min-entropy rate 0.75).
-* [32.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2): A physical entropy source meeting the AIS-31 PTG.2 \[[37](../biblio/bibliography.html#bib-kisc11)\] criteria, implying average Shannon entropy rate 0.997\. The source must also meet the NIST 800-90B min-entropy rate 192/256 = 0.75.
-* [32.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt): A virtual entropy source is a DRBG seeded from a physical entropy source. It must have at least a 256-bit (Post-Quantum Category 5) internal security level.
+* [31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b): A physical entropy source meeting NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] criteria with evaluated min-entropy of 192 bits for each 256 output bits (min-entropy rate 0.75).
+* [31.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2): A physical entropy source meeting the AIS-31 PTG.2 \[[37](../biblio/bibliography.html#bib-kisc11)\] criteria, implying average Shannon entropy rate 0.997\. The source must also meet the NIST 800-90B min-entropy rate 192/256 = 0.75.
+* [31.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt): A virtual entropy source is a DRBG seeded from a physical entropy source. It must have at least a 256-bit (Post-Quantum Category 5) internal security level.
 
-All implementations must signal initialization, test mode, and health alarms as required by respective standards. This may require the implementer to add non-standard (custom) test interfaces in a secure and safe manner, an example of which is described in [32.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)
+All implementations must signal initialization, test mode, and health alarms as required by respective standards. This may require the implementer to add non-standard (custom) test interfaces in a secure and safe manner, an example of which is described in [31.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)
 
-##### [](#crypto%5Fscalar%5Fes%5Freq%5F90b)32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements
+##### [](#crypto%5Fscalar%5Fes%5Freq%5F90b)31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements
 
 All NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] required components and health test mechanisms must be implemented.
 
@@ -2121,11 +2121,11 @@ Rather than attempting to define all the mathematical and architectural properti
 
 Even though the requirement is defined in terms of 128-bit full entropy blocks, we recommend 256-bit security. This can be accomplished by using at least 512 `entropy` bits to initialize a DRBG that has 256-bit security.
 
-##### [](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)32.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements
+##### [](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)31.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements
 
-For alternative Common Criteria certification (or self-certification), AIS 31 PTG.2 class \[[37](../biblio/bibliography.html#bib-kisc11)\] (Sect. 4.3.) required hardware components and mechanisms must be implemented. In addition to AIS-31 PTG.2 randomness requirements (Shannon entropy rate of 0.997 as evaluated in that standard), the overall min-entropy requirement of remains, as discussed in [32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b). Note that 800-90B min-entropy can be significantly lower than AIS-31 Shannon entropy. These two metrics should not be equated or confused with each other.
+For alternative Common Criteria certification (or self-certification), AIS 31 PTG.2 class \[[37](../biblio/bibliography.html#bib-kisc11)\] (Sect. 4.3.) required hardware components and mechanisms must be implemented. In addition to AIS-31 PTG.2 randomness requirements (Shannon entropy rate of 0.997 as evaluated in that standard), the overall min-entropy requirement of remains, as discussed in [31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b). Note that 800-90B min-entropy can be significantly lower than AIS-31 Shannon entropy. These two metrics should not be equated or confused with each other.
 
-##### [](#crypto%5Fscalar%5Fes%5Freq%5Fvirt)32.1.4.2.3\. Virtual Sources: Security Requirement
+##### [](#crypto%5Fscalar%5Fes%5Freq%5Fvirt)31.1.4.2.3\. Virtual Sources: Security Requirement
 
 | |  A virtual source is not an ISA compliance requirement. It is defined for the benefit of the RISC-V security ecosystem so that virtual systems may have a consistent level of security. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2140,15 +2140,15 @@ Any implementation of the `seed` CSR that limits the security strength shall not
 
 A virtual entropy source does not need to implement `WAIT` or `BIST` states. It should fail (`DEAD`) if the host DRBG or entropy source fails and there is insufficient seeding material for the host DRBG.
 
-#### [](#crypto%5Fscalar%5Fes%5Faccess)32.1.4.3\. Access Control to `seed`
+#### [](#crypto%5Fscalar%5Fes%5Faccess)31.1.4.3\. Access Control to `seed`
 
 The Zkr extension adds the `SSEED` and `USEED` fields to the `mseccfg` CSR to control access to the `seed` CSR from U, S, or HS modes (see Privileged ISA specification).
 
-Systems should implement carefully considered access control policies from lower privilege modes to physical entropy sources. The system can trap attempted access to `seed` and feed a less privileged client_virtual entropy source_ data ([32.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt)) instead of invoking an SP 800-90B ([32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b)) or PTG.2 ([32.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)) _physical entropy source_. Emulated `seed`data generation is made with an appropriately seeded, secure software DRBG. See [32.1.7.3.5\. Security Considerations for Direct Hardware Access](#crypto%5Fscalar%5Fappx%5Fes%5Faccess) for security considerations related to direct access to entropy sources.
+Systems should implement carefully considered access control policies from lower privilege modes to physical entropy sources. The system can trap attempted access to `seed` and feed a less privileged client_virtual entropy source_ data ([31.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt)) instead of invoking an SP 800-90B ([31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b)) or PTG.2 ([31.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)) _physical entropy source_. Emulated `seed`data generation is made with an appropriately seeded, secure software DRBG. See [31.1.7.3.5\. Security Considerations for Direct Hardware Access](#crypto%5Fscalar%5Fappx%5Fes%5Faccess) for security considerations related to direct access to entropy sources.
 
 Implementations may implement `mseccfg` such that `[s,u]seed` is a read-only constant value `0`. Software may discover if access to the `seed` CSR can be enabled in U and S mode by writing a `1` to `[s,u]seed` and reading back the result.
 
-### [](#crypto%5Fscalar%5Fzkt)32.1.5\. Data Independent Execution Latency Subset: Zkt
+### [](#crypto%5Fscalar%5Fzkt)31.1.5\. Data Independent Execution Latency Subset: Zkt
 
 The Zkt extension attests that the machine has data-independent execution time for a safe subset of instructions. This property is commonly called_"constant-time"_ although should not be taken with that literal meaning.
 
@@ -2157,7 +2157,7 @@ All currently defined cryptographic instructions (Zk\* and Zbk\* extensions) are
 | |  Note to software developers Failure to prevent leakage of sensitive parameters via the direct timing channel is considered a serious security vulnerability and will typically result in a CERT CVE security advisory. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#32-1-5-1-scope-and-goal)32.1.5.1\. Scope and Goal
+#### [](#31-1-5-1-scope-and-goal)31.1.5.1\. Scope and Goal
 
 An "ISA contract" is made between a programmer and the RISC-V implementation that Zkt instructions do not leak information about processed secret data (plaintext, keying information, or other "sensitive security parameters" — FIPS 140-3 term) through differences in execution latency. Zkt does _not_define a set of instructions available in the core; it just restricts the behaviour of certain instructions if those are implemented.
 
@@ -2179,7 +2179,7 @@ Out-of-order implementations adhering to Zkt are still free to fuse, crack, chan
 | |  Note to software developers Programming techniques can only mitigate leakage directly caused by arithmetic, caches, and branches. Other ISAs have had micro-architectural issues such as Spectre, Meltdown, Speculative Store Bypass, Rogue System Register Read, Lazy FP State Restore, Bounds Check Bypass Store, TLBleed, and L1TF/Foreshadow, etc. See e.g.[NSA Hardware and Firmware Security Guidance](https://github.com/nsacyber/Hardware-and-Firmware-Security-Guidance) It is not within the remit of this proposal to mitigate these_micro-architectural_ leakages. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#32-1-5-2-background)32.1.5.2\. Background
+#### [](#31-1-5-2-background)31.1.5.2\. Background
 
 * Timing attacks are much more powerful than was realised before the 2010s, which has led to a significant mitigation effort in current cryptographic code-bases.
 * Cryptography developers use static and dynamic security testing tools to trace the handling of secret information and detect occasions where it influences a branch or is used for a table lookup.
@@ -2188,7 +2188,7 @@ Out-of-order implementations adhering to Zkt are still free to fuse, crack, chan
 * Binary executables should not contain secrets in the instruction encodings (Kerckhoffs’s principle), so instruction timing may leak information about immediates, ordering of input registers, etc. There may be an exception to this in systems where a binary loader modifies the executable for purposes of relocation — and it is desirable to keep the execution location (PC) secret. This is why instructions such as LUI, AUIPC, and ADDI are on the list.
 * The rules used by audit tools are relatively simple to understand. Very briefly; we call the plaintext, secret keys, expanded keys, nonces, and other such variables "secrets". A secret variable (arithmetically) modifying any other variable/register turns that into a secret too. If a secret ends up in address calculation affecting a load or store, that is a violation. If a secret affects a branch’s condition, that is also a violation. A secret variable location or register becomes a non-secret via specific zeroization/sanitisation or by being declared ciphertext (or otherwise no-longer-secret information). In essence, secrets can only "touch" instructions on the Zkt list while they are secrets.
 
-#### [](#32-1-5-3-specific-instruction-rationale)32.1.5.3\. Specific Instruction Rationale
+#### [](#31-1-5-3-specific-instruction-rationale)31.1.5.3\. Specific Instruction Rationale
 
 * HINT instruction forms (typically encodings with _rd_\=`x0`) are excluded from the data-independent time requirement.
 * Floating point (F, D, Q, L extensions) are currently excluded from the constant-time requirement as they have very few applications in standardised cryptography. We may consider adding floating point add, sub, multiply as a constant time requirement for some floating point extension in case a specific algorithm (such as the PQC Signature algorithm Falcon) becomes critical.
@@ -2196,7 +2196,7 @@ Out-of-order implementations adhering to Zkt are still free to fuse, crack, chan
 * Zicsr, Zifencei are excluded.
 * Some instructions are on the list simply because we see no harm in including them in testing scope.
 
-#### [](#32-1-5-4-programming-information)32.1.5.4\. Programming Information
+#### [](#31-1-5-4-programming-information)31.1.5.4\. Programming Information
 
 For background information on secure programming "models", see:
 
@@ -2207,14 +2207,14 @@ For background information on secure programming "models", see:
 * Kris Kwiatkowski: _"Constant-time code verification with Memory Sanitizer."_ <https://www.amongbytes.com/post/20210709-testing-constant-time/>
 * For early examples of timing attack vulnerabilities, see<https://www.kb.cert.org/vuls/id/997481> and related academic papers.
 
-#### [](#32-1-5-5-zkt-listings)32.1.5.5\. Zkt listings
+#### [](#31-1-5-5-zkt-listings)31.1.5.5\. Zkt listings
 
 The following instructions are included in the `Zkt` subset They are listed here grouped by their original parent extension.
 
 | |  Note to implementers You do not need to implement all of these instructions to implement Zkt. Rather, every one of these instructions that the core does implement must adhere to the requirements of Zkt. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#32-1-5-5-1-rvi-base-instruction-set)32.1.5.5.1\. RVI (Base Instruction Set)
+##### [](#31-1-5-5-1-rvi-base-instruction-set)31.1.5.5.1\. RVI (Base Instruction Set)
 
 Only basic arithmetic and `slt*` (for carry computations) are included. The data-independent timing requirement does not apply to HINT instruction encoding forms of these instructions.
 
@@ -2251,7 +2251,7 @@ Only basic arithmetic and `slt*` (for carry computations) are included. The data
 | ✓    | srlw _rd_, _rs1_, _rs2_  |                          |
 | ✓    | sraw _rd_, _rs1_, _rs2_  |                          |
 
-##### [](#32-1-5-5-2-rvm-multiply)32.1.5.5.2\. RVM (Multiply)
+##### [](#31-1-5-5-2-rvm-multiply)31.1.5.5.2\. RVM (Multiply)
 
 Multiplication is included; division and remaindering excluded.
 
@@ -2263,7 +2263,7 @@ Multiplication is included; division and remaindering excluded.
 | ✓    | ✓                       | mulhu _rd_, _rs1_, _rs2_  |
 | ✓    | mulw _rd_, _rs1_, _rs2_ |                           |
 
-##### [](#32-1-5-5-3-rvc-compressed)32.1.5.5.3\. RVC (Compressed)
+##### [](#31-1-5-5-3-rvc-compressed)31.1.5.5.3\. RVC (Compressed)
 
 Same criteria as in RVI. Organised by quadrants.
 
@@ -2286,7 +2286,7 @@ Same criteria as in RVI. Organised by quadrants.
 | ✓    | ✓       | c.mv     |
 | ✓    | ✓       | c.add    |
 
-##### [](#32-1-5-5-4-zcb-extension)32.1.5.5.4\. Zcb Extension
+##### [](#31-1-5-5-4-zcb-extension)31.1.5.5.4\. Zcb Extension
 
 These instructions are compressed versions of I and M instructions that are included in Zkt.
 
@@ -2296,9 +2296,9 @@ These instructions are compressed versions of I and M instructions that are incl
 | ✓    | ✓    | c.not    | [c.not](zc.html#insns-c%5Fnot)         |
 | ✓    | ✓    | c.zext.b | [c.zext.b](zc.html#insns-c%5Fzext%5Fb) |
 
-##### [](#32-1-5-5-5-rvk-scalar-cryptography)32.1.5.5.5\. RVK (Scalar Cryptography)
+##### [](#31-1-5-5-5-rvk-scalar-cryptography)31.1.5.5.5\. RVK (Scalar Cryptography)
 
-All K-specific instructions are included. Additionally, `seed` CSR latency should be independent of `ES16` state output`entropy` bits, as that is a sensitive security parameter. See [32.1.7.3.5\. Security Considerations for Direct Hardware Access](#crypto%5Fscalar%5Fappx%5Fes%5Faccess).
+All K-specific instructions are included. Additionally, `seed` CSR latency should be independent of `ES16` state output`entropy` bits, as that is a sensitive security parameter. See [31.1.7.3.5\. Security Considerations for Direct Hardware Access](#crypto%5Fscalar%5Fappx%5Fes%5Faccess).
 
 | RV32 | RV64        | Mnemonic                                                       | Instruction                                      |
 | ---- | ----------- | -------------------------------------------------------------- | ------------------------------------------------ |
@@ -2332,7 +2332,7 @@ All K-specific instructions are included. Additionally, `seed` CSR latency shoul
 | ✓    | ✓           | sm4ed                                                          | [SM4 Encrypt/Decrypt Instruction](#insns-sm4ed)  |
 | ✓    | ✓           | sm4ks                                                          | [SM4 Key Schedule Instruction](#insns-sm4ks)     |
 
-##### [](#32-1-5-5-6-rvb-bitmanip)32.1.5.5.6\. RVB (Bitmanip)
+##### [](#31-1-5-5-6-rvb-bitmanip)31.1.5.5.6\. RVB (Bitmanip)
 
 The [Zbkb](#zbkb-sc), [Zbkc](#zbkc-sc) and [Zbkx](#zbkx-sc) extensions are included in their entirety.
 
@@ -2359,29 +2359,29 @@ The [Zbkb](#zbkb-sc), [Zbkc](#zbkc-sc) and [Zbkx](#zbkx-sc) extensions are inclu
 | ✓    | zip   | [Bit interleave](#insns-zip-sc)                         |                                                     |
 | ✓    | unzip | [Bit deinterleave](#insns-unzip-sc)                     |                                                     |
 
-### [](#crypto%5Fscalar%5Fappx%5Frationale)32.1.6\. Instruction Rationale
+### [](#crypto%5Fscalar%5Fappx%5Frationale)31.1.6\. Instruction Rationale
 
 This section contains various rationale, design notes and usage recommendations for the instructions in the scalar cryptography extension. It also tries to record how the designs of instructions were derived, or where they were contributed from.
 
-#### [](#32-1-6-1-aes-instructions)32.1.6.1\. AES Instructions
+#### [](#31-1-6-1-aes-instructions)31.1.6.1\. AES Instructions
 
 The 32-bit instructions were derived from work in \[[42](../biblio/bibliography.html#bib-mjs:lwaes:20)\] and contributed to the RISC-V cryptography extension. The 64-bit instructions were developed collaboratively by task group members on our mailing list.
 
 Supporting material, including rationale and a design space exploration for all of the AES instructions in the specification can be found in the paper_"[The design of scalar AES Instruction Set Extensions for RISC-V](https://doi.org/10.46586/tches.v2021.i1.109-136)"_ \[[43](../biblio/bibliography.html#bib-mnpsw:20)\].
 
-#### [](#32-1-6-2-sha2-instructions)32.1.6.2\. SHA2 Instructions
+#### [](#31-1-6-2-sha2-instructions)31.1.6.2\. SHA2 Instructions
 
 These instructions were developed based on academic work at the University of Bristol as part of the XCrypto project \[[44](../biblio/bibliography.html#bib-mpp:19)\], and contributed to the RISC-V cryptography extension.
 
 The RV32 SHA2-512 instructions were based on this work, and developed in \[[33](../biblio/bibliography.html#bib-mjs:lwsha:20)\], before being contributed in the same way.
 
-#### [](#32-1-6-3-sm3-and-sm4-instructions)32.1.6.3\. SM3 and SM4 Instructions
+#### [](#31-1-6-3-sm3-and-sm4-instructions)31.1.6.3\. SM3 and SM4 Instructions
 
 The SM4 instructions were derived from work in \[[42](../biblio/bibliography.html#bib-mjs:lwaes:20)\], and are hence very similar to the RV32 AES instructions.
 
 The SM3 instructions were inspired by the SHA2 instructions, and based on development work done in \[[33](../biblio/bibliography.html#bib-mjs:lwsha:20)\], before being contributed to the RISC-V cryptography extension.
 
-#### [](#crypto%5Fscalar%5Fzkb)32.1.6.4\. Bitmanip Instructions for Cryptography
+#### [](#crypto%5Fscalar%5Fzkb)31.1.6.4\. Bitmanip Instructions for Cryptography
 
 Many of the primitive operations used in symmetric key cryptography and cryptographic hash functions are well supported by the RISC-V Bitmanip extensions (see [Bitmanip](b-st-ext.html#bits)).
 
@@ -2390,7 +2390,7 @@ Many of the primitive operations used in symmetric key cryptography and cryptogr
 
 We proposed that the scalar cryptographic extension _reuse_ a subset of the instructions from the Bitmanip extensions `Zb[abc]` directly. Specifically, this would mean that a core implementing_either_the scalar cryptographic extensions,_or_the `Zb[abc]`,_or_both, would be required to implement these instructions.
 
-##### [](#32-1-6-4-1-rotations)32.1.6.4.1\. Rotations
+##### [](#31-1-6-4-1-rotations)31.1.6.4.1\. Rotations
 
 RV32, RV64:                         RV64 only:
     ror    rd, rs1, rs2                 rorw   rd, rs1, rs2
@@ -2402,7 +2402,7 @@ See [zbkb](b-st-ext.html#zbkb) for details of these instructions.
 | |  Notes to software developers Standard bitwise rotation is a primitive operation in many block ciphers and hash functions; it features particularly in the ARX (Add, Rotate, Xor) class of block ciphers and stream ciphers. Algorithms making use of 32-bit rotations: SHA256, AES (Shift Rows), ChaCha20, SM3. Algorithms making use of 64-bit rotations: SHA512, SHA3. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#32-1-6-4-2-bit-byte-permutations)32.1.6.4.2\. Bit & Byte Permutations
+##### [](#31-1-6-4-2-bit-byte-permutations)31.1.6.4.2\. Bit & Byte Permutations
 
 RV32, RV64:
     brev8   rd, rs1
@@ -2422,18 +2422,18 @@ See [zbkb](b-st-ext.html#zbkb) for details of these instructions.
 | |  Notes to software developers These instructions perform a bit-interleave (or de-interleave) operation, and are useful for implementing the 64-bit rotations in the SHA3 \[[46](../biblio/bibliography.html#bib-nist:fips:202)\] algorithm on a 32-bit architecture. On RV64, the relevant operations in SHA3 can be done natively using rotation instructions, so zip and unzip are not required. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#32-1-6-4-3-carry-less-multiply)32.1.6.4.3\. Carry-less Multiply
+##### [](#31-1-6-4-3-carry-less-multiply)31.1.6.4.3\. Carry-less Multiply
 
 RV32, RV64:
     clmul  rd, rs1, rs2
     clmulh rd, rs1, rs2
 
-See [zbkc](b-st-ext.html#zbkc) for details of these instructions. See [32.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt) for additional implementation requirements for these instructions, related to data independent execution latency.
+See [zbkc](b-st-ext.html#zbkc) for details of these instructions. See [31.1.5\. Data Independent Execution Latency Subset: Zkt](#crypto%5Fscalar%5Fzkt) for additional implementation requirements for these instructions, related to data independent execution latency.
 
 | |  Notes to software developers As is mentioned there, obvious cryptographic use-cases for carry-less multiply are for Galois Counter Mode (GCM) block cipher operations. GCM is recommended by NIST as a block cipher mode of operation \[[45](../biblio/bibliography.html#bib-nist:gcm)\], and is the only _required_ mode for the TLS 1.3 protocol. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-##### [](#32-1-6-4-4-logic-with-negate)32.1.6.4.4\. Logic With Negate
+##### [](#31-1-6-4-4-logic-with-negate)31.1.6.4.4\. Logic With Negate
 
 RV32, RV64:
     andn rd, rs1, rs2
@@ -2445,7 +2445,7 @@ See [zbkb](b-st-ext.html#zbkb) for details of these instructions. These instruct
 | |  Notes to software developers In the context of Cryptography, these instructions are useful for: SHA3/Keccak Chi step, Bit-sliced function implementations, Software based power/EM side-channel countermeasures based on masking. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-##### [](#32-1-6-4-5-packing)32.1.6.4.5\. Packing
+##### [](#31-1-6-4-5-packing)31.1.6.4.5\. Packing
 
 RV32, RV64:                         RV64:
     pack   rd, rs1, rs2                 packw  rd, rs1, rs2
@@ -2456,7 +2456,7 @@ See [zbkb](b-st-ext.html#zbkb) for details of these instructions.
 | |  Notes to software developers The pack\* instructions are useful for re-arranging halfwords within words, and generally getting data into the right shape prior to applying transforms. This is particularly useful for cryptographic algorithms which pass inputs around as (potentially unaligned) byte strings, but can operate on words made out of those byte strings. This occurs (for example) in AES when loading blocks and keys (which may not be word aligned) into registers to perform the round functions. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#32-1-6-4-6-crossbar-permutation-instructions)32.1.6.4.6\. Crossbar Permutation Instructions
+##### [](#31-1-6-4-6-crossbar-permutation-instructions)31.1.6.4.6\. Crossbar Permutation Instructions
 
 RV32, RV64:
     xperm4 rd, rs1, rs2
@@ -2471,28 +2471,28 @@ The `xperm8` instruction operates on bytes.`GPR[rs1]` contains a vector of `XLEN
 | |  Notes to software developers The instruction can be used to implement arbitrary bit permutations. For cryptography, they can accelerate bit-sliced implementations, permutation layers of block ciphers, masking based countermeasures and SBox operations. Lightweight block ciphers using 4-bit SBoxes include: PRESENT \[[47](../biblio/bibliography.html#bib-block:present)\], Rectangle \[[48](../biblio/bibliography.html#bib-block:rectangle)\], GIFT \[[49](../biblio/bibliography.html#bib-block:gift)\], Twine \[[50](../biblio/bibliography.html#bib-block:twine)\], Skinny, MANTIS \[[51](../biblio/bibliography.html#bib-block:skinny)\], Midori \[[52](../biblio/bibliography.html#bib-block:midori)\]. National ciphers using 8-bit SBoxes include: Camellia \[[53](../biblio/bibliography.html#bib-block:camellia)\] (Japan), Aria \[[54](../biblio/bibliography.html#bib-block:aria)\] (Korea), AES \[[30](../biblio/bibliography.html#bib-nist:fips:197)\] (USA, Belgium), SM4 \[[34](../biblio/bibliography.html#bib-gbt:sm4)\] (China) Kuznyechik (Russia). All of these SBoxes can be implemented efficiently, in constant time, using the xperm8 instruction\[[1](#%5Ffootnotedef%5F1 "View footnote.")\]. Note that this technique is also suitable for masking based side-channel countermeasures. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#crypto%5Fscalar%5Fappx%5Fes)32.1.7\. Entropy Source Rationale and Recommendations
+### [](#crypto%5Fscalar%5Fappx%5Fes)31.1.7\. Entropy Source Rationale and Recommendations
 
 This **non-normative** appendix focuses on the rationale, security, self-certification, and implementation aspects of entropy sources. Hence we also discuss non-ISA system features that may be needed for cryptographic standards compliance and security testing.
 
-#### [](#32-1-7-1-checklists-for-design-and-self-certification)32.1.7.1\. Checklists for Design and Self-Certification
+#### [](#31-1-7-1-checklists-for-design-and-self-certification)31.1.7.1\. Checklists for Design and Self-Certification
 
 The security of cryptographic systems is based on secret bits and keys. These bits need to be random and originate from cryptographically secure Random Bit Generators (RBGs). An Entropy Source (ES) is required to construct secure RBGs.
 
 While entropy source implementations do not have to be certified designs, RISC-V expects that they behave in a compatible manner and do not create unnecessary security risks to users. Self-evaluation and testing following appropriate security standards is usually needed to achieve this.
 
-* **ISA Architectural Tests.** Verify, to the extent possible, that RISC-V ISA requirements in this specification are correctly implemented. This includes the state transitions ([32.1.4\. Entropy Source](#crypto%5Fscalar%5Fes) and[32.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)), access control ([32.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess)), and that `seed` ES16 `entropy` words can only be read destructively. The scope of RISC-V ISA architectural tests are those behaviors that are independent of the physical entropy source details. A smoke test ES module may be helpful in design phase.
+* **ISA Architectural Tests.** Verify, to the extent possible, that RISC-V ISA requirements in this specification are correctly implemented. This includes the state transitions ([31.1.4\. Entropy Source](#crypto%5Fscalar%5Fes) and[31.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)), access control ([31.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess)), and that `seed` ES16 `entropy` words can only be read destructively. The scope of RISC-V ISA architectural tests are those behaviors that are independent of the physical entropy source details. A smoke test ES module may be helpful in design phase.
 * **Technical justification for entropy.** This may take the form of a stochastic model or a heuristic argument that explains why the noise source output is from a random, rather than pseudorandom (deterministic) process, and is not easily predictable or externally observable. A complete physical model is not necessary; research literature can be cited. For example, one can show that a good ring oscillator noise derives an amount of physical entropy from local, spontaneously occurring Johnson-Nyquist thermal noise \[[55](../biblio/bibliography.html#bib-sa21)\], and is therefore not merely "random-looking".
-* **Entropy Source Design Review.** An entropy source is more than a noise source, and must have features such as health tests ([32.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)), a conditioner ([32.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond)), and a security boundary with clearly defined interfaces. One may tabulate the SHALL statements of SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\], FIPS 140-3 Implementation Guidance \[[56](../biblio/bibliography.html#bib-nicc21)\], AIS-31 \[[37](../biblio/bibliography.html#bib-kisc11)\] or other standards being used. Official and non-official checklist tables are available:<https://github.com/usnistgov/90B-Shall-Statements>
-* **Experimental Tests.** The raw noise source is subjected to entropy estimation as defined in NIST 800-90B, Section 3 \[[36](../biblio/bibliography.html#bib-tubake:18)\]. The interface described in [32.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise) can used be to record datasets for this purpose. One also needs to show experimentally that the conditioner and health test components work appropriately to meet the ES16 output entropy requirements of [32.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq). For SP 800-90B, NIST has made a min-entropy estimation package freely available:<https://github.com/usnistgov/SP800-90B%5FEntropyAssessment>
+* **Entropy Source Design Review.** An entropy source is more than a noise source, and must have features such as health tests ([31.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)), a conditioner ([31.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond)), and a security boundary with clearly defined interfaces. One may tabulate the SHALL statements of SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\], FIPS 140-3 Implementation Guidance \[[56](../biblio/bibliography.html#bib-nicc21)\], AIS-31 \[[37](../biblio/bibliography.html#bib-kisc11)\] or other standards being used. Official and non-official checklist tables are available:<https://github.com/usnistgov/90B-Shall-Statements>
+* **Experimental Tests.** The raw noise source is subjected to entropy estimation as defined in NIST 800-90B, Section 3 \[[36](../biblio/bibliography.html#bib-tubake:18)\]. The interface described in [31.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise) can used be to record datasets for this purpose. One also needs to show experimentally that the conditioner and health test components work appropriately to meet the ES16 output entropy requirements of [31.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq). For SP 800-90B, NIST has made a min-entropy estimation package freely available:<https://github.com/usnistgov/SP800-90B%5FEntropyAssessment>
 * **Resilience.** Above physical engineering steps should consider the operational environment of the device, which may be unexpected or hostile (actively attempting to exploit vulnerabilities in the design).
 
-See [32.1.7.5\. Implementation Strategies](#crypto%5Fscalar%5Fappx%5Fes%5Fimplementation) for a discussion of various implementation options.
+See [31.1.7.5\. Implementation Strategies](#crypto%5Fscalar%5Fappx%5Fes%5Fimplementation) for a discussion of various implementation options.
 
 | |  It is one of the goals of the RISC-V Entropy Source specification that a standard 90B Entropy Source Module or AIS-31 RNG IP may be licensed from a third party and integrated with a RISC-V processor design. Compared to older (FIPS 140-2) RNG and DRBG modules, an entropy source module may have a relatively small area (just a few thousand NAND2 gate equivalent). CMVP is introducing an "Entropy Source Validation Scope" which potentially allows 90B validations to be reused for different (FIPS 140-3) modules. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#32-1-7-2-standards-and-terminology)32.1.7.2\. Standards and Terminology
+#### [](#31-1-7-2-standards-and-terminology)31.1.7.2\. Standards and Terminology
 
 As a fundamental security function, the generation of random numbers is governed by numerous standards and technical evaluation methods, the main ones being FIPS 140-3 \[[57](../biblio/bibliography.html#bib-ni19)\] \[[56](../biblio/bibliography.html#bib-nicc21)\] required for U.S. Federal use, and Common Criteria Methodology \[[58](../biblio/bibliography.html#bib-cr17)\] used in high-security evaluations internationally.
 
@@ -2504,35 +2504,35 @@ These standards set many of the technical requirements for the RISC-V entropy so
 
 The `seed` CSR provides an Entropy Source (ES) interface, not a stateful random number generator. As a result, it can support arbitrary security levels. Cryptographic (AES, SHA-2/3) ISA Extensions can be used to construct high-speed DRBGs that are seeded from the entropy source.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-es)32.1.7.2.1\. Entropy Source (ES)
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-es)31.1.7.2.1\. Entropy Source (ES)
 
-Entropy sources are built by sampling and processing data from a noise source ([32.1.7.5.1\. Ring Oscillators](#crypto%5Fscalar%5Fappx%5Fes%5Fnoise%5Fsources)). We will only consider physical sources of true randomness in this work. Since these are directly based on natural phenomena and are subject to environmental conditions (which may be adversarial), they require features that monitor the "health" and quality of those sources.
+Entropy sources are built by sampling and processing data from a noise source ([31.1.7.5.1\. Ring Oscillators](#crypto%5Fscalar%5Fappx%5Fes%5Fnoise%5Fsources)). We will only consider physical sources of true randomness in this work. Since these are directly based on natural phenomena and are subject to environmental conditions (which may be adversarial), they require features that monitor the "health" and quality of those sources.
 
-The requirements for physical entropy sources are specified in NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] ([32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b)) for U.S. Federal FIPS 140-3 \[[57](../biblio/bibliography.html#bib-ni19)\] evaluations and in BSI AIS-31 \[[59](../biblio/bibliography.html#bib-kisc01)\] \[[37](../biblio/bibliography.html#bib-kisc11)\] ([32.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)) for high-security Common Criteria evaluations. There is some divergence in the types of health tests and entropy metrics mandated in these standards, and RISC-V enables support for both alternatives.
+The requirements for physical entropy sources are specified in NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] ([31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b)) for U.S. Federal FIPS 140-3 \[[57](../biblio/bibliography.html#bib-ni19)\] evaluations and in BSI AIS-31 \[[59](../biblio/bibliography.html#bib-kisc01)\] \[[37](../biblio/bibliography.html#bib-kisc11)\] ([31.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2)) for high-security Common Criteria evaluations. There is some divergence in the types of health tests and entropy metrics mandated in these standards, and RISC-V enables support for both alternatives.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond)32.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond)31.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic
 
 Raw physical randomness (noise) sources are rarely statistically perfect, and some generate very large amounts of bits, which need to be "debiased" and reduced to a smaller number of bits. This process is called conditioning. A secure hash function is an example of a cryptographic conditioner. It is important to note that even though hashing may make any data look random, it does not increase its entropy content.
 
-Non-cryptographic conditioners and extractors such as von Neumann’s "debiased coin tossing" \[[60](../biblio/bibliography.html#bib-ne51)\] are easier to implement efficiently but may reduce entropy content (in individual bits removed) more than cryptographic hashes, which mix the input entropy very efficiently. However, they do not require cryptanalytic or computational hardness assumptions and are therefore inherently more future-proof. See [32.1.7.5.5\. Non-cryptographic Conditioners](#crypto%5Fscalar%5Fappx%5Fes%5Fnoncrypto) for a more detailed discussion.
+Non-cryptographic conditioners and extractors such as von Neumann’s "debiased coin tossing" \[[60](../biblio/bibliography.html#bib-ne51)\] are easier to implement efficiently but may reduce entropy content (in individual bits removed) more than cryptographic hashes, which mix the input entropy very efficiently. However, they do not require cryptanalytic or computational hardness assumptions and are therefore inherently more future-proof. See [31.1.7.5.5\. Non-cryptographic Conditioners](#crypto%5Fscalar%5Fappx%5Fes%5Fnoncrypto) for a more detailed discussion.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-prng)32.1.7.2.3\. Pseudorandom Number Generator (PRNG)
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-prng)31.1.7.2.3\. Pseudorandom Number Generator (PRNG)
 
 Pseudorandom Number Generators (PRNGs) use deterministic mathematical formulas to create abundant random numbers from a smaller amount of "seed" randomness. PRNGs are also divided into cryptographic and non-cryptographic ones.
 
 Non-cryptographic PRNGs, such as LFSRs and the linear-congruential generators found in many programming libraries, may generate statistically satisfactory random numbers but must never be used for cryptographic keying. This is because they are not designed to resist_cryptanalysis_; it is usually possible to take some output and mathematically derive the "seed" or the internal state of the PRNG from it. This is a security problem since knowledge of the state allows the attacker to compute future or past outputs.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-drbg)32.1.7.2.4\. Deterministic Random Bit Generator (DRBG)
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-drbg)31.1.7.2.4\. Deterministic Random Bit Generator (DRBG)
 
 Cryptographic PRNGs are also known as Deterministic Random Bit Generators (DRBGs), a term used by SP 800-90A \[[38](../biblio/bibliography.html#bib-bake15)\]. A strong cryptographic algorithm such as AES \[[30](../biblio/bibliography.html#bib-nist:fips:197)\] or SHA-2/3
 
 is used to produce random bits from a seed. The secret seed material is like a cryptographic key; determining the seed from the DRBG output is as hard as breaking AES or a strong hash function. This also illustrates that the seed/key needs to be long enough and come from a trusted Entropy Source. The DRBG should still be frequently refreshed (reseeded) for forward and backward security.
 
-#### [](#32-1-7-3-specific-rationale-and-considerations)32.1.7.3\. Specific Rationale and Considerations
+#### [](#31-1-7-3-specific-rationale-and-considerations)31.1.7.3\. Specific Rationale and Considerations
 
-##### [](#32-1-7-3-1-the-seed-csr)32.1.7.3.1\. The `seed` CSR
+##### [](#31-1-7-3-1-the-seed-csr)31.1.7.3.1\. The `seed` CSR
 
-See [32.1.4.1\. The seed CSR](#crypto%5Fscalar%5Fseed%5Fcsr).
+See [31.1.4.1\. The seed CSR](#crypto%5Fscalar%5Fseed%5Fcsr).
 
 The interface was designed to be simple so that a vendor- and device-independent driver component (e.g., in Linux kernel, embedded firmware, or a cryptographic library) may use `seed` to generate truly random bits.
 
@@ -2544,11 +2544,11 @@ A blocking instruction may have been easier to use, but most users should be que
 
 The reason for the particular `OPST = seed[31:0]` two-bit mechanism is to provide redundancy. The "fault" bit combinations `11` (`DEAD`) and `00`(`BIST`) are more likely for electrical reasons if feature discovery fails and the entropy source is actually not available.
 
-The 16-bit bandwidth was a compromise motivated by the desire to provide redundancy in the return value, some protection against potential Power/EM leakage (further alleviated by the 2:1 cryptographic conditioning discussed in [32.1.7.5.6\. Cryptographic Conditioners](#crypto%5Fscalar%5Fappx%5Fes%5Fcrypto-cond)), and the desire to have all of the bits "in the same place" on both RV32 and RV64 architectures for programming convenience.
+The 16-bit bandwidth was a compromise motivated by the desire to provide redundancy in the return value, some protection against potential Power/EM leakage (further alleviated by the 2:1 cryptographic conditioning discussed in [31.1.7.5.6\. Cryptographic Conditioners](#crypto%5Fscalar%5Fappx%5Fes%5Fcrypto-cond)), and the desire to have all of the bits "in the same place" on both RV32 and RV64 architectures for programming convenience.
 
-##### [](#32-1-7-3-2-nist-sp-800-90b)32.1.7.3.2\. NIST SP 800-90B
+##### [](#31-1-7-3-2-nist-sp-800-90b)31.1.7.3.2\. NIST SP 800-90B
 
-See [32.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b).
+See [31.1.4.2.1\. NIST SP 800-90B / FIPS 140-3 Requirements](#crypto%5Fscalar%5Fes%5Freq%5F90b).
 
 SP 800-90C \[[39](../biblio/bibliography.html#bib-bakero:21)\] states that each conditioned block of n bits is required to have n+64 bits of input entropy to attain full entropy. Hence NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\] min-entropy assessment must guarantee at least 128 + 64 = 192 bits input entropy per 256-bit block (\[[39](../biblio/bibliography.html#bib-bakero:21)\], Sections 4.1\. and 4.3.2). Only then a hashing of 16 \* 16 = 256 bits from the entropy source will produce the desired 128 bits of full entropy. This follows from the specific requirements, threat model, and distinguishability proof contained in SP 800-90C \[[39](../biblio/bibliography.html#bib-bakero:21)\], Appendix A. The implied min-entropy rate is 192/256=12/16=0.75\. The expected Shannon entropy is much larger.
 
@@ -2558,35 +2558,35 @@ The 128-bit output block size was selected because that is the output size of th
 
 If NIST SP 800-90B certification is chosen, the entropy source should implement at least the health tests defined in Section 4.4 of \[[36](../biblio/bibliography.html#bib-tubake:18)\]: the repetition count test and adaptive proportion test, or show that the same flaws will be detected by vendor-defined tests.
 
-##### [](#32-1-7-3-3-bsi-ais-31)32.1.7.3.3\. BSI AIS-31
+##### [](#31-1-7-3-3-bsi-ais-31)31.1.7.3.3\. BSI AIS-31
 
-See [32.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2).
+See [31.1.4.2.2\. BSI AIS-31 PTG.2 / Common Criteria Requirements](#crypto%5Fscalar%5Fes%5Freq%5Fptg2).
 
 PTG.2 is one of the security and functionality classes defined in BSI AIS 20/31 \[[37](../biblio/bibliography.html#bib-kisc11)\]. The PTG.2 source requirements work as a building block for other types of BSI generators (e.g., DRBGs, or PTG.3 TRNG with appropriate software post-processing).
 
-For validation purposes, the PTG.2 requirements may be mapped to security controls T1-3 ([32.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)) and the interface as follows:
+For validation purposes, the PTG.2 requirements may be mapped to security controls T1-3 ([31.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)) and the interface as follows:
 
 * P1 **\[PTG.2.1\]** Start-up tests map to T1 and reset-triggered (on-demand)`BIST` tests.
 * P2 **\[PTG.2.2\]** Continuous testing total failure maps to T2 and the`DEAD` state.
 * P3 **\[PTG.2.3\]** Online tests are continuous tests of T2 – entropy output is prevented in the `BIST` state.
 * P4 **\[PTG.2.4\]** Is related to the design of effective entropy source health tests, which we encourage.
-* P5 **\[PTG.2.5\]** Raw random sequence may be checked via the GetNoise interface ([32.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)).
+* P5 **\[PTG.2.5\]** Raw random sequence may be checked via the GetNoise interface ([31.1.7.6\. Suggested GetNoise Test Interface](#crypto%5Fscalar%5Fes%5Fgetnoise)).
 * P6 **\[PTG.2.6\]** Test Procedure A \[[37](../biblio/bibliography.html#bib-kisc11)\] (Sect 2.4.4.1) is a part of the evaluation process, and we suggest self-evaluation using these tests even if AIS-31 certification is not sought.
 * P7 **\[PTG.2.7\]** Average Shannon entropy of "internal random bits" exceeds 0.997.
 
 Note how P7 concerns Shannon entropy, not min-entropy as with NIST sources. Hence the min-entropy requirement needs to be also stated. PTG.2 modules built and certified to the AIS-31 standard can also meet the "full entropy" condition after 2:1 cryptographic conditioning, but not necessarily so. The technical validation process is somewhat different.
 
-##### [](#32-1-7-3-4-virtual-sources)32.1.7.3.4\. Virtual Sources
+##### [](#31-1-7-3-4-virtual-sources)31.1.7.3.4\. Virtual Sources
 
-[32.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt).
+[31.1.4.2.3\. Virtual Sources: Security Requirement](#crypto%5Fscalar%5Fes%5Freq%5Fvirt).
 
 All sources that are not direct physical sources (meeting the SP 800-90B or the AIS-31 PTG.2 requirements) need to meet the security requirements of virtual entropy sources. It is assumed that a virtual entropy source is not a limiting, shared bandwidth resource (but a software DRBG).
 
 DRBGs can be used to feed other (virtual) DRBGs, but that does not increase the absolute amount of entropy in the system. The entropy source must be able to support current and future security standards and applications. The 256-bit requirement maps to "Category 5" of NIST Post-Quantum Cryptography (4.A.5 "Security Strength Categories" in \[[40](../biblio/bibliography.html#bib-ni16)\]) and TOP SECRET schemes in Suite B and the newer U.S. Government CNSA Suite \[[61](../biblio/bibliography.html#bib-ns15)\].
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Faccess)32.1.7.3.5\. Security Considerations for Direct Hardware Access
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Faccess)31.1.7.3.5\. Security Considerations for Direct Hardware Access
 
-[32.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess).
+[31.1.4.3\. Access Control to seed](#crypto%5Fscalar%5Fes%5Faccess).
 
 The ISA implementation and system design must try to ensure that the hardware-software interface minimizes avenues for adversarial information flow even if not explicitly forbidden in the specification.
 
@@ -2606,7 +2606,7 @@ We urge implementers against creating unnecessary information flows via status o
 
 As an example of side-channel analysis, we note that the entropy polling interface is typically not "constant time." One needs to analyze what kind of information is revealed via the timing oracle; one way of doing it is to model `seed` as a rejection sampler. Such a timing oracle can reveal information about the noise source type and entropy source usage, but not about the random output`entropy` bits themselves. If it does, additional countermeasures are necessary.
 
-#### [](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)32.1.7.4\. Security Controls and Health Tests
+#### [](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)31.1.7.4\. Security Controls and Health Tests
 
 The primary purpose of a cryptographic entropy source is to produce secret keying material. In almost all cases, a hardware entropy source must implement appropriate _security controls_ to guarantee unpredictability, prevent leakage, detect attacks, and deny adversarial control over the entropy output or ts generation mechanism. Explicit security controls are required for security testing and certification.
 
@@ -2616,13 +2616,13 @@ Health checks are not intended for hardware diagnostics but for detecting securi
 
 We discuss three specific testing requirements T1-T3\. The testing requirement follows from the definition of an Entropy Source; without it, the module is simply a noise source and can’t be trusted to safely generate keying material.
 
-##### [](#32-1-7-4-1-t1-on-demand-testing)32.1.7.4.1\. T1: On-demand testing
+##### [](#31-1-7-4-1-t1-on-demand-testing)31.1.7.4.1\. T1: On-demand testing
 
 A sequence of simple tests is invoked via resetting, rebooting, or powering up the hardware (not an ISA signal). The implementation will simply return `BIST` during the initial start-up self-test period; in any case, the driver must wait for them to finish before starting cryptographic operations. Upon failure, the entropy source will enter a no-output `DEAD` state.
 
 **Rationale.**Interaction with hardware self-test mechanisms from the software side should be minimal; the term "on-demand" does not mean that the end-user or application program should be able to invoke them in the field (the term is a throwback to an age of discrete, non-autonomous crypto devices with human operators).
 
-##### [](#32-1-7-4-2-t2-continuous-checks)32.1.7.4.2\. T2: Continuous checks
+##### [](#31-1-7-4-2-t2-continuous-checks)31.1.7.4.2\. T2: Continuous checks
 
 If an error is detected in continuous tests or environmental sensors, the entropy source will enter a no-output state. We define that a non-critical alarm is signaled if the entropy source returns to `BIST` state from live (`WAIT` or `ES16`) states. Critical failures will result in `DEAD` state immediately. A hardware-based continuous testing mechanism must not make statistical information externally available, and it must be zeroized periodically or upon demand via reset, power-up, or similar signal.
 
@@ -2632,7 +2632,7 @@ The statistical nature of some tests makes "type-1" false positives a possibilit
 
 The state of statistical runtime health checks (such as counters) is potentially correlated with some secret keying material, hence the zeroization requirement.
 
-##### [](#32-1-7-4-3-t3-fatal-error-states)32.1.7.4.3\. T3: Fatal error states
+##### [](#31-1-7-4-3-t3-fatal-error-states)31.1.7.4.3\. T3: Fatal error states
 
 Since the security of most cryptographic operations depends on the entropy source, a system-wide "default deny" security policy approach is appropriate for most entropy source failures. A hardware test failure should at least result in the `DEAD` state and possibly reset/halt. It’s a show stopper: The entropy source (or its cryptographic client application) _must not_ be allowed to run if its secure operation can’t be guaranteed.
 
@@ -2642,7 +2642,7 @@ Some hardware random generators are, by their physical construction, exposed to 
 
 Security architects will understand to use permanent or hard-to-recover "security-fuse" lockdowns only if the threshold of a test is such that the probability of false-positive is negligible over the entire device lifetime.
 
-##### [](#32-1-7-4-4-information-flows)32.1.7.4.4\. Information Flows
+##### [](#31-1-7-4-4-information-flows)31.1.7.4.4\. Information Flows
 
 Some of the most devastating practical attacks against real-life cryptosystems have used inconsequential-looking additional information, such as padding error messages \[[62](../biblio/bibliography.html#bib-bafoka:12)\] or timing information \[[63](../biblio/bibliography.html#bib-mosuei:20)\]. In cryptography, such out-of-band information sources are called "oracles."
 
@@ -2657,7 +2657,7 @@ Noise Source Requirements
 
 An entropy source is a singular resource, subject to depletion and also covert channels \[[66](../biblio/bibliography.html#bib-evpo16)\]. Observation of the entropy can be the same as the observation of the noise source output, as cryptographic conditioning is mandatory only as a post-processing step. SP 800-90B and other security standards mandate protection of noise bits from observation and also influence.
 
-#### [](#crypto%5Fscalar%5Fappx%5Fes%5Fimplementation)32.1.7.5\. Implementation Strategies
+#### [](#crypto%5Fscalar%5Fappx%5Fes%5Fimplementation)31.1.7.5\. Implementation Strategies
 
 As a general rule, RISC-V specifies the ISA only. We provide some additional suggestions so that portable, vendor-independent middleware and kernel components can be created. The actual hardware implementation and certification are left to vendors and circuit designers; the discussion in this Section is purely informational.
 
@@ -2672,7 +2672,7 @@ When considering implementation options and trade-offs, one must look at the ent
 
 Steps 1-4 (possibly 5) are considered to be part of the Entropy Source (ES) and provided by the `seed` CSR. Adding the software-side cryptographic steps 5-6 and control logic complements it into a True Random Number Generator (TRNG).
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fnoise%5Fsources)32.1.7.5.1\. Ring Oscillators
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fnoise%5Fsources)31.1.7.5.1\. Ring Oscillators
 
 We will give some examples of common noise sources that can be implemented in the processor itself (using standard cells).
 
@@ -2686,15 +2686,15 @@ The main benefits of ring oscillators are: (1) They can be implemented with stan
 
 Ring oscillators also have well-known implementation pitfalls. Their output is sometimes highly dependent on temperature, which must be taken into account in testing and modeling. If the ring oscillator construction is parallelized, it is important that the number of stages and/or inverters in each chain is suitable to avoid entropy reduction due to harmonic "Huyghens synchronization" \[[76](../biblio/bibliography.html#bib-ba86)\]. Such harmonics can also be inserted maliciously in a frequency injection attack, which can have devastating results \[[77](../biblio/bibliography.html#bib-mamo09)\]. Countermeasures are related to circuit design; environmental sensors, electrical filters, and usage of a differential oscillator may help.
 
-##### [](#32-1-7-5-2-shot-noise)32.1.7.5.2\. Shot Noise
+##### [](#31-1-7-5-2-shot-noise)31.1.7.5.2\. Shot Noise
 
 A category of random sources consisting of discrete events and modeled as a Poisson process is called "shot noise." There’s a long-established precedent of certifying them; the AIS 31 document \[[37](../biblio/bibliography.html#bib-kisc11)\] itself offers reference designs based on noisy diodes. Shot noise sources are often more resistant to temperature changes than ring oscillators. Some of these generators can also be fully implemented with standard cells (The Rambus / Inside Secure generic TRNG IP \[[78](../biblio/bibliography.html#bib-ra20)\] is described as a Shot Noise generator).
 
-##### [](#32-1-7-5-3-other-types-of-noise)32.1.7.5.3\. Other types of noise
+##### [](#31-1-7-5-3-other-types-of-noise)31.1.7.5.3\. Other types of noise
 
-It may be possible to certify more exotic noise sources and designs, although their stochastic model needs to be equally well understood, and their CPU interfaces must be secure. See [32.1.7.5.8\. Quantum vs. Classical Random](#crypto%5Fscalar%5Fappx%5Fes%5Fquantum) for a discussion of Quantum entropy sources.
+It may be possible to certify more exotic noise sources and designs, although their stochastic model needs to be equally well understood, and their CPU interfaces must be secure. See [31.1.7.5.8\. Quantum vs. Classical Random](#crypto%5Fscalar%5Fappx%5Fes%5Fquantum) for a discussion of Quantum entropy sources.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fcont-tests)32.1.7.5.4\. Continuous Health Tests
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fcont-tests)31.1.7.5.4\. Continuous Health Tests
 
 Health monitoring requires some state information related to the noise source to be maintained. The tests should be designed in a way that a specific number of samples guarantees a state flush (no hung states). We suggest flush size `W =< 1024` to match with the NIST SP 800-90B required tests (See Section 4.4 in \[[36](../biblio/bibliography.html#bib-tubake:18)\]). The state is also fully zeroized in a system reset.
 
@@ -2704,11 +2704,11 @@ Section 4.5 of \[[36](../biblio/bibliography.html#bib-tubake:18)\] explicitly pe
 
 Especially if a non-cryptographic conditioner is used in hardware, it is possible that the AIS 31 \[[37](../biblio/bibliography.html#bib-kisc11)\] online tests are implemented by driver software. They can also be implemented in hardware. For some security profiles, AIS 31 mandates that their tolerances are set in a way that the probability of an alarm is at least 10\-6yearly under "normal usage." Such requirements are problematic in modern applications since their probability is too high for critical systems.
 
-There rarely is anything that can or should be done about a non-fatal alarm condition in an operator-free, autonomous system. However, AIS 31 allows the DRBG component to keep running despite a failure in its Entropy Source, so we suggest re-entering a temporary `BIST`state ([32.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)) to signal a non-fatal statistical error if such (non-actionable) signaling is necessary. Drivers and applications can react to this appropriately (or simply log it), but it will not directly affect the availability of the TRNG. A permanent error condition should result in `DEAD` state.
+There rarely is anything that can or should be done about a non-fatal alarm condition in an operator-free, autonomous system. However, AIS 31 allows the DRBG component to keep running despite a failure in its Entropy Source, so we suggest re-entering a temporary `BIST`state ([31.1.7.4\. Security Controls and Health Tests](#crypto%5Fscalar%5Fes%5Fsecurity%5Fcontrols)) to signal a non-fatal statistical error if such (non-actionable) signaling is necessary. Drivers and applications can react to this appropriately (or simply log it), but it will not directly affect the availability of the TRNG. A permanent error condition should result in `DEAD` state.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fnoncrypto)32.1.7.5.5\. Non-cryptographic Conditioners
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fnoncrypto)31.1.7.5.5\. Non-cryptographic Conditioners
 
-As noted in [32.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond), physical randomness sources generally require a post-processing step called _conditioning_ to meet the desired quality requirements, which are outlined in[32.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq).
+As noted in [31.1.7.2.2\. Conditioning: Cryptographic and Non-Cryptographic](#crypto%5Fscalar%5Fappx%5Fes%5Fintro-cond), physical randomness sources generally require a post-processing step called _conditioning_ to meet the desired quality requirements, which are outlined in[31.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq).
 
 The approach taken in this interface is to allow a combination of non-cryptographic and cryptographic filtering to take place. The first stage (hardware) merely needs to be able to distill the entropy comfortably above the necessary level.
 
@@ -2717,11 +2717,11 @@ The approach taken in this interface is to allow a combination of non-cryptograp
 * Blum’s extractor \[[79](../biblio/bibliography.html#bib-bl86)\] can be used on sources whose behavior resembles N-state Markov chains. If its assumptions hold, it also removes dependencies, creating an independent and identically distributed (IID) source.
 * Other linear and non-linear correctors such as those discussed by Dichtl and Lacharme \[[80](../biblio/bibliography.html#bib-la08)\].
 
-Note that the hardware may also implement a full cryptographic conditioner in the entropy source, even though the software driver still needs a cryptographic conditioner, too ([32.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq)).
+Note that the hardware may also implement a full cryptographic conditioner in the entropy source, even though the software driver still needs a cryptographic conditioner, too ([31.1.4.2\. Entropy Source Requirements](#crypto%5Fscalar%5Fes%5Freq)).
 
 **Rationale:**The main advantage of non-cryptographic extractors is in their energy efficiency, relative simplicity, and amenability to mathematical analysis. If well designed, they can be evaluated in conjunction with a stochastic model of the noise source itself. They do not require computational hardness assumptions.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fcrypto-cond)32.1.7.5.6\. Cryptographic Conditioners
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fcrypto-cond)31.1.7.5.6\. Cryptographic Conditioners
 
 For secure use, cryptographic conditioners are always required on the software side of the ISA boundary. They may also be implemented on the hardware side if necessary. In any case, the `entropy` ES16 output must always be compressed 2:1 (or more) before being used as keying material or considered "full entropy."
 
@@ -2731,7 +2731,7 @@ In some constructions, such as the Linux RNG and SHA-3/SHAKE \[[46](../biblio/bi
 
 **Rationale:**For many low-power targets constructions the type of hardware AES CBC-MAC conditioner used by Intel \[[81](../biblio/bibliography.html#bib-me18)\] and AMD \[[68](../biblio/bibliography.html#bib-am17)\] would be too complex and energy-hungry to implement solely to serve the `seed` CSR. On the other hand, simpler non-cryptographic conditioners may be too wasteful on input entropy if high-quality random output is required — (ARM TrustZone TRBG \[[69](../biblio/bibliography.html#bib-ar17)\] outputs only 10Kbit/sec at 200 MHz.) Hence a resource-saving compromise is made between hardware and software generation.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fdrbgs)32.1.7.5.7\. The Final Random: DRBGs
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fdrbgs)31.1.7.5.7\. The Final Random: DRBGs
 
 All random bits reaching end users and applications must come from a cryptographic DRBG. These are generally implemented by the driver component in software. The RISC-V AES and SHA instruction set extensions should be used if available since they offer additional security features such as timing attack resistance.
 
@@ -2739,7 +2739,7 @@ Currently recommended DRBGs are defined in NIST SP 800-90A (Rev 1) \[[38](../bib
 
 These are just recommendations; programmers can adjust the usage of the CPU Entropy Source to meet future requirements.
 
-##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fquantum)32.1.7.5.8\. Quantum vs. Classical Random
+##### [](#crypto%5Fscalar%5Fappx%5Fes%5Fquantum)31.1.7.5.8\. Quantum vs. Classical Random
 
 > The NCSC believes that classical RNGs will continue to meet our needs for government and military applications for the foreseeable future.
 
@@ -2756,7 +2756,7 @@ This security model means that many of the available QRNG devices do not use cry
 
 Relatively little research has gone into QRNG implementation security, but many QRNG designs are arguably more susceptible to leakage than classical generators (such as ring oscillators) as they tend to employ external components and mixed materials. As an example, amplification of a photon detector signal may be observable in power analysis, which classical noise-based sources are designed to resist.
 
-##### [](#32-1-7-5-9-post-quantum-cryptography)32.1.7.5.9\. Post-Quantum Cryptography
+##### [](#31-1-7-5-9-post-quantum-cryptography)31.1.7.5.9\. Post-Quantum Cryptography
 
 PQC public-key cryptography standards \[[40](../biblio/bibliography.html#bib-ni16)\] do not require quantum-origin randomness, just sufficiently secure keying material. Recall that cryptography aims to protect the confidentiality and integrity of data itself and does not place any requirements on the physical communication channel (like QKD).
 
@@ -2766,7 +2766,7 @@ Of course, one must avoid DRBGs that are based on problems that are easily solva
 
 As an example, the original Intel RNG \[[81](../biblio/bibliography.html#bib-me18)\], whose output generation is based on AES-128, can be attacked using Grover’s algorithm with approximately square-root effort \[[88](../biblio/bibliography.html#bib-janaro:20)\]. While even "64-bit" quantum security is extremely difficult to break, many applications specify a higher security requirement. NIST \[[40](../biblio/bibliography.html#bib-ni16)\] defines AES-128 to be "Category 1" equivalent post-quantum security, while AES-256 is "Category 5" (highest). We avoid this possible future issue by exposing direct access to the entropy source which can derive its security from information-theoretic assumptions only.
 
-#### [](#crypto%5Fscalar%5Fes%5Fgetnoise)32.1.7.6\. Suggested GetNoise Test Interface
+#### [](#crypto%5Fscalar%5Fes%5Fgetnoise)31.1.7.6\. Suggested GetNoise Test Interface
 
 Compliance testing, characterization, and configuration of entropy sources require access to raw, unconditioned noise samples. This conceptual test interface is named GetNoise in Section 2.3.2 of NIST SP 800-90B \[[36](../biblio/bibliography.html#bib-tubake:18)\].
 
@@ -2788,7 +2788,7 @@ Figure 2\. Entropy source can’t be read in test mode.
 
 In `NOISE_TEST` mode, the WAIT and ES16 states are unreachable, and no entropy is output. Implementation of test interfaces that directly affect ES16 entropy output from the `seed` CSR interface is discouraged. Such vendor test interfaces have been exploited in attacks. For example, an ECDSA \[[89](../biblio/bibliography.html#bib-nist:fips:186:4)\] signature process without sufficient entropy will not only create an insecure signature but can also reveal the secret signing key, that can be used for authentication forgeries by attackers. Hence even a temporary lapse in `entropy` security may have serious security implications.
 
-### [](#crypto%5Fscalar%5Fappx%5Fmaterials)32.1.8\. Supplementary Materials
+### [](#crypto%5Fscalar%5Fappx%5Fmaterials)31.1.8\. Supplementary Materials
 
 While this document contains the specifications for the RISC-V cryptography extensions, numerous supplementary materials and example codes have also been developed. All of the materials related to the RISC-V Cryptography extension live in a GitHub Repository, located at<https://github.com/riscv/riscv-crypto>
 
@@ -2798,7 +2798,7 @@ While this document contains the specifications for the RISC-V cryptography exte
 * `rtl/`Example Verilog implementations of each instruction.
 * `sail/`Formal model implementations in Sail.
 
-### [](#crypto%5Fscalar%5Fappx%5Fsail)32.1.9\. Supporting Sail Code
+### [](#crypto%5Fscalar%5Fappx%5Fsail)31.1.9\. Supporting Sail Code
 
 This section contains the supporting Sail code referenced by the instruction descriptions throughout the specification. The[Sail Manual](https://alasdair.github.io/manual.html)is recommended reading in order to best understand the supporting code.
 

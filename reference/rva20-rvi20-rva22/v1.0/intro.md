@@ -1,6 +1,6 @@
-# 2.1. Introduction.
+# 1.1. Introduction.
 
-## [](#2-1-introduction)2.1\. Introduction.
+## [](#1-1-introduction)1.1\. Introduction.
 
 RISC-V was designed to provide a highly modular and extensible instruction set, and includes a large and growing set of standard extensions. In addition, users may add their own custom extensions. This flexibility can be used to highly optimize a specialized design by including only the exact set of ISA features required for an application, but the same flexibility also leads to a combinatorial explosion in possible ISA choices. Profiles specify a much smaller common set of ISA choices that capture the most value for most users, and which thereby enable the software community to focus resources on building a rich software ecosystem with application and operating system portability across different implementations.
 

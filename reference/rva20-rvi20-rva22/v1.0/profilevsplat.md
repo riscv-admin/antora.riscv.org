@@ -1,6 +1,6 @@
-# 3.1. Profiles versus Platforms
+# 2.1. Profiles versus Platforms
 
-## [](#3-1-profiles-versus-platforms)3.1\. Profiles versus Platforms
+## [](#2-1-profiles-versus-platforms)2.1\. Profiles versus Platforms
 
 Profiles only describe ISA features, not a complete execution environment.
 

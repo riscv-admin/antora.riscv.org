@@ -1,6 +1,6 @@
-# 11.1. N-Trace Decoding Guidelines
+# 10.1. N-Trace Decoding Guidelines
 
-## [](#11-1-n-trace-decoding-guidelines)11.1\. N-Trace Decoding Guidelines
+## [](#10-1-n-trace-decoding-guidelines)10.1\. N-Trace Decoding Guidelines
 
 To reconstruct the program control flow using the N-Trace encoded stream of messages (as any other compressed trace) access to opcodes of instructions which were executed is necessary. This is usually done by providing an ELF file of a program being executed, but it can also be read-out from the target. Three types of information are needed:
 
@@ -13,7 +13,7 @@ Decoding must start from a [synchronizing message](#Synchronizing Messages). The
 | |  To provide partial decoding of big trace, messages with [F-ADDR](#field%5FF-ADDR) are transmitted periodically. Periodic [F-ADDR](#field%5FF-ADDR) transmission is also needed to decode trace from small, circular buffers. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#11-1-1-decoding-algorithm-principles)11.1.1\. Decoding Algorithm Principles
+### [](#10-1-1-decoding-algorithm-principles)10.1.1\. Decoding Algorithm Principles
 
 To reconstruct the control flow of the program from N-Trace messages do the following:
 
@@ -35,16 +35,16 @@ To reconstruct the control flow of the program from N-Trace messages do the foll
 | |  Phrase **inferable unconditional jumps (all types)** include indirect unconditional jumps, which may be inferable. Extra fields like [SYNC](#field%5FSYNC)/[B-TYPE](#field%5FB-TYPE) only provide extra details, but are NOT essential for a decoder to reconstruct the PC flow. See [N-Trace Reference Code](https://github.com/riscv-non-isa/tg-nexus-trace/tree/main/refcode/c) for simple but fully functional implementation. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#11-1-2-decoding-trace-from-multiple-harts)11.1.2\. Decoding trace from multiple harts
+### [](#10-1-2-decoding-trace-from-multiple-harts)10.1.2\. Decoding trace from multiple harts
 
 Decoder assigned to a specific hart should process only those messages tagged with a [SRC](#field%5FSRC) value corresponding to that hart. To facilitate this, all encoders operating within the same trace stream must configure the `trTeSrcBits` field identically to ensure a consistent source identifier bit width, and must each be assigned a unique `trTeSrcID` field value. This arrangement ensures that messages can be accurately attributed to their originating hart, allowing for precise and isolated trace analysis per hart.
 
-### [](#11-1-3-decoding-trace-of-operating-systems)11.1.3\. Decoding trace of operating systems
+### [](#10-1-3-decoding-trace-of-operating-systems)10.1.3\. Decoding trace of operating systems
 
 In case of complex operating systems (Linux etc.), where code consists of several independently built programs and libraries, decoders must be aware of different program images (e.g., ELF files) at different locations. [Ownership](#msg%5FOwnership) messages should provide enough context. Decoders must be also aware of assignment of **scontext/hcontext** values for programs and processes being traced.
 
 Operating systems may decide to migrate single process to different cores/harts. It may also be the case, when different threads from the same process (sharing code …​) will run in the same time on more than one core/hart.
 
-### [](#11-1-4-decoding-self-modifying-or-jit-just-in-time-compiled-code)11.1.4\. Decoding self-modifying or JIT (Just In Time compiled) code
+### [](#10-1-4-decoding-self-modifying-or-jit-just-in-time-compiled-code)10.1.4\. Decoding self-modifying or JIT (Just In Time compiled) code
 
 Trace encoder is just encoding a stream of instructions passed by ingress port from the hart running it, but decoder must be aware of types of all instructions being executed. In case of self-modifying code (or JIT code), binary image (at moment of execution) must be available to decoder. How this can be done is not in the scope of this specification.

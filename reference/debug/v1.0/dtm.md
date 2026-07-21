@@ -1,6 +1,6 @@
-# 6.1. Debug Transport Module (DTM) (non-ISA extension)
+# 5.1. Debug Transport Module (DTM) (non-ISA extension)
 
-## [](#dtm)6.1\. Debug Transport Module (DTM) (non-ISA extension)
+## [](#dtm)5.1\. Debug Transport Module (DTM) (non-ISA extension)
 
 Debug Transport Modules provide access to the DM over one or more transports (e.g. JTAG or USB).
 
@@ -8,19 +8,19 @@ There may be multiple DTMs in a single hardware platform. Ideally every componen
 
 Using multiple DTMs at the same time is not supported. It is left to the user to ensure this does not happen.
 
-This specification defines a JTAG DTM in [6.1.1\. JTAG Debug Transport Module](#sec:jtagdtm). Additional DTMs may be added in future versions of this specification.
+This specification defines a JTAG DTM in [5.1.1\. JTAG Debug Transport Module](#sec:jtagdtm). Additional DTMs may be added in future versions of this specification.
 
 An implementation can be compatible with this specification without implementing any of this section. In that case it must be advertised as conforming to "RISC-V Debug Specification, with custom DTM." If the JTAG DTM described here is implemented, it must be advertised as conforming to the "RISC-V Debug Specification, with JTAG DTM.""
 
-### [](#sec:jtagdtm)6.1.1\. JTAG Debug Transport Module
+### [](#sec:jtagdtm)5.1.1\. JTAG Debug Transport Module
 
 This Debug Transport Module is based around a normal JTAG Test Access Port (TAP). The JTAG TAP allows access to arbitrary JTAG registers by first selecting one using the JTAG instruction register (IR), and then accessing it through the JTAG data register (DR).
 
-#### [](#6-1-1-1-jtag-background)6.1.1.1\. JTAG Background
+#### [](#5-1-1-1-jtag-background)5.1.1.1\. JTAG Background
 
 JTAG refers to IEEE Std 1149.1-2013\. It is a standard that defines test logic that can be included in an integrated circuit to test the interconnections between integrated circuits, test the integrated circuit itself, and observe or modify circuit activity during the component’s normal operation. This specification uses the latter functionality. The JTAG standard defines a Test Access Port (TAP) that can be used to read and write a few custom registers, which can be used to communicate with debug hardware in a component.
 
-#### [](#6-1-1-2-jtag-dtm-registers)6.1.1.2\. JTAG DTM Registers
+#### [](#5-1-1-2-jtag-dtm-registers)5.1.1.2\. JTAG DTM Registers
 
 JTAG TAPs used as a DTM must have an IR of at least 5 bits. When the TAP is reset, IR must default to 00001, selecting the IDCODE instruction. A full list of JTAG registers along with their encoding is in[Table 1](#tab:jtag%5Fregisters). If the IR actually has more than 5 bits, then the encodings in[Table 1](#tab:jtag%5Fregisters) should be extended with 0’s in their most significant bits, except for the 0x1f encoding of BYPASS, which must be extended with 1’s in the most significant bits. The only regular JTAG registers a debugger might use are BYPASS and IDCODE, but this specification leaves IR space for many other standard JTAG instructions. Unimplemented instructions must select the BYPASS register.
 
@@ -98,9 +98,9 @@ This entire register is read-only.
 
 ![Diagram](_images/diag-384bd371721d4235c02b312b20cdd445d7a86797.svg) 
 
-#### [](#6-1-1-3-jtag-connector)6.1.1.3\. JTAG Connector
+#### [](#5-1-1-3-jtag-connector)5.1.1.3\. JTAG Connector
 
-##### [](#6-1-1-3-1-recommended-jtag-connector)6.1.1.3.1\. Recommended JTAG Connector
+##### [](#5-1-1-3-1-recommended-jtag-connector)5.1.1.3.1\. Recommended JTAG Connector
 
 To make it easy to acquire debug hardware, this spec recommends a connector that is compatible with the MIPI-10 .05 inch connector specification, as described in MIPI Debug & Trace Connector Recommendations, Version 1.20, 2 July 2021.
 
@@ -119,7 +119,7 @@ __Table 2\. MIPI 10-pin JTAG + nRESET Connector Diagram__
 If a hardware platform requires nTRST then it is permissible to reuse the nRESET pin as the nTRST signal, resulting in a MIPI 10-pin JTAG  
 nTRST connector.
 
-##### [](#6-1-1-3-2-alternate-jtag-connector)6.1.1.3.2\. Alternate JTAG Connector
+##### [](#5-1-1-3-2-alternate-jtag-connector)5.1.1.3.2\. Alternate JTAG Connector
 
 The MIPI-10 connector should provide plenty of signals for all modern hardware. If a design does need legacy JTAG signals, then the MIPI-20 connector should be used. Pins whose functionality isn’t needed may be left unconnected.
 
@@ -155,7 +155,7 @@ __Table 4\. MIPI 20-pin JTAG Connector Diagram__
 | GND        | 17 | 18 | TRIGIN or NC    |
 | GND        | 19 | 20 | TRIGOUT or GND  |
 
-#### [](#6-1-1-4-cjtag)6.1.1.4\. cJTAG
+#### [](#5-1-1-4-cjtag)5.1.1.4\. cJTAG
 
 This spec does not have specific recommendations on how to use the cJTAG protocol.
 

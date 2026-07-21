@@ -1,10 +1,10 @@
-# Historical Rationale for Extensions
+# 20.1. Historical Rationale for Extensions
 
-## [](#historical-rationale-for-extensions)Appendix A: Historical Rationale for Extensions
+## [](#20-1-historical-rationale-for-extensions)Appendix A: 20.1\. Historical Rationale for Extensions
 
 This appendix contains the rationale for RISC-V ISA extensions at the time they were ratified. Unlike the ISA specification, this appendix is ordered chronologically, so as to convey the motivation and architectural reasoning underpinning each extension at the time of ratification. For extensions ratified prior to the conception of this appendix (ca. 2025), the rationale will be added over time. In cases where the rationale was not recorded, the authors and editors will synthesize it from the historical record.
 
-### [](#smepmp%5Frationale)"Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode
+### [](#smepmp%5Frationale)20.1.1\. "Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode
 
 1. Since a CSR for security and / or global PMP behavior settings is not available with the current spec, we needed to define a new `mseccfg` CSR. This new CSR will allow us to add further security configuration options in the future and also allow developers to verify the existence of the new mechanisms defined on this extension.
 2. There are use cases where developers want to enforce PMP rules in M-mode during the boot process, that are also able to modify, merge, and / or remove later on. Since a rule that is enforced in M-mode also needs to be locked (or else badly written or malicious M-mode software can remove it at any time), the only way for developers to approach this is to keep adding PMP rules to the chain and rely on rule priority. This is a waste of PMP rules and since it’s only needed during boot, `mseccfg.RLB` is a simple workaround that can be used temporarily and then disabled and locked down.  

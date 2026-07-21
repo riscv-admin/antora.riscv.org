@@ -1,6 +1,6 @@
-# 10.1. Rules of Generating Messages
+# 9.1. Rules of Generating Messages
 
-## [](#10-1-rules-of-generating-messages)10.1\. Rules of Generating Messages
+## [](#9-1-rules-of-generating-messages)9.1\. Rules of Generating Messages
 
 This chapter explicitly addresses 16-bit and 32-bit instructions as defined in the currently ratified RISC-V instruction set. Nonetheless, the guidelines provided herein are applicable to any instruction size that is a multiple of 16-bit, should such instructions be defined in the future.
 
@@ -40,7 +40,7 @@ These rules are augmenting the above rules if the corresponding configuration se
    * Such instruction sequences may be detected and in such a case no trace is generated.  
    * This optional feature is described in detail in the [Sequential Jump Optimization](#Sequential Jump Optimization) chapter.
 
-### [](#10-1-1-custom-instructions)10.1.1\. Custom Instructions
+### [](#9-1-1-custom-instructions)9.1.1\. Custom Instructions
 
 Custom instructions (or any future ratified instructions) which are not changing PC flow do not require any special treatment. Trace decoders should only look at instructions which may change PC flow and for all other instructions only advance PC (+2 or +4).
 
@@ -73,7 +73,7 @@ It can be traced as follows (exact type of messages do not matter):
 | |  If a custom instruction cannot be mapped into one of existing **itype** encodings, it may use custom encoding. In such a case encoder (and decoder …​) must be enhanced. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#10-1-2-pseudo-code-of-simple-n-trace-encoder)10.1.2\. Pseudo-code of Simple N-Trace Encoder
+### [](#9-1-2-pseudo-code-of-simple-n-trace-encoder)9.1.2\. Pseudo-code of Simple N-Trace Encoder
 
 Code below is a simplified part of actual C-code used by the reference encoder (in C). It defines two functions:
 

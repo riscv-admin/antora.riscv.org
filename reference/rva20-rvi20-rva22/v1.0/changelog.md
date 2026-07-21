@@ -1,6 +1,6 @@
-# 1.1. Changes since Public Review version 0.8
+# Changes since Public Review version 0.8
 
-## [](#1-1-changes-since-public-review-version-0-8)1.1\. Changes since Public Review version 0.8
+## [](#changes-since-public-review-version-0-8)Changes since Public Review version 0.8
 
 * Clarified that profile name can be used as ISA base string
 * Renamed Ssptead to Svade

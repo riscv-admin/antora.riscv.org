@@ -1,6 +1,6 @@
-# Bibliography
+# 2.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#2-1-bibliography)2.1\. Bibliography
 
 \[1\] _Semihosting for AArch32 and AArch64 2023Q3_, 2023\. \[Online\]. Available: <https://github.com/ARM-software/abi-aa/releases/download/2023Q3/semihosting.pdf>
 

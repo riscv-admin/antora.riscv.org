@@ -1,6 +1,6 @@
-# 1.1. Introduction to N-Trace
+# Introduction to N-Trace
 
-## [](#1-1-introduction-to-n-trace)1.1\. Introduction to N-Trace
+## [](#introduction-to-n-trace)Introduction to N-Trace
 
 This **RISC-V N-Trace (Nexus based trace) Specification** is based on the well-established **IEEE-5001 Nexus Standard** tailored to support the trace of RISC-V ISA cores, harts and SoC/MCU designs.
 
@@ -21,7 +21,7 @@ The registers controlling the N-trace decoder are defined by the **RISC-V Trace 
 
 Trace connectors defined by IEEE-5001 Nexus Standard were debug oriented, so could not be directly applied. Instead, industry standard MIPI-compliant connectors are defined in **RISC-V Trace Connectors Specification**. These connectors are pure extensions of debug-only, MIPI-compliant connectors defined by ratified **RISC-V Debug Specification**.
 
-### [](#1-1-1-related-specifications)1.1.1\. Related Specifications
+### [](#related-specifications)Related Specifications
 
 This document provides reference to separated documents developed together with this **RISC-V N-Trace Specification**:
 
@@ -34,7 +34,7 @@ Ratified **Efficient Trace for RISC-V Specification** defines RISC-V Trace Ingre
 | |  In the future trace ingress port may be defined in separated document - in such a a case reference to E-Trace specification will not be necessary. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#1-1-2-trace-encoder-interfaces)1.1.2\. Trace Encoder Interfaces
+### [](#trace-encoder-interfaces)Trace Encoder Interfaces
 
 The diagram below shows one possible implementation with only a single RISC-V hart. In a system with multiple cores/harts the **Trace Ingress Port**, **Trace Encoder Control** and **Trace Encoder** blocks should be replicated for each hart. The main **Trace Control Layer** controlling other (shared) components in the trace system is not replicated.
 
@@ -45,7 +45,7 @@ Figure 1\. Trace Encoder Interfaces
 | |  Placement of the Trace Encoder and Trace Control Layer are implementation dependent. |
 | --------------------------------------------------------------------------------------- |
 
-### [](#1-1-3-definitions-and-terminology)1.1.3\. Definitions and Terminology
+### [](#definitions-and-terminology)Definitions and Terminology
 
 __Table 1\. Terms Used In This Specification__
 | Term                      | Definition                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |

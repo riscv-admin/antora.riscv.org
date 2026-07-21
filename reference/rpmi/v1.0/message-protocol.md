@@ -1,10 +1,10 @@
-# 3.1. Messaging Protocol
+# 2.1. Messaging Protocol
 
-## [](#3-1-messaging-protocol)3.1\. Messaging Protocol
+## [](#2-1-messaging-protocol)2.1\. Messaging Protocol
 
 The RPMI messaging protocol includes all the RPMI messages exchanged over a RPMI transport channel.
 
-### [](#3-1-1-message-types)3.1.1\. Message Types
+### [](#2-1-1-message-types)2.1.1\. Message Types
 
 The RPMI messaging protocol defines three types of RPMI messages namely:**REQUEST**, **ACKNOWLEDGEMENT** and **NOTIFICATION**. The [Table 1](#messaging%5Fmessage%5Ftypes%5Ftable)below summarize all RPMI message types.
 
@@ -21,7 +21,7 @@ __Table 1\. RPMI Message Types__
 | ACKNOWLEDGEMENT | _Not applicable_                                                                              | Response message corresponding to a NORMAL REQUEST message.                         |
 | NOTIFICATION    | _Not applicable_                                                                              | Asynchronous messages from the platform microcontroller representing system events. |
 
-### [](#3-1-2-message-format)3.1.2\. Message Format
+### [](#2-1-2-message-format)2.1.2\. Message Format
 
 An RPMI message consists of a fixed `8-byte` message header followed by a variable sized optional message data as show in the [Figure 1](#messaging%5Fformat)below. The byte ordering of an RPMI message is defined by the underlying RPMI transport.
 
@@ -29,7 +29,7 @@ An RPMI message consists of a fixed `8-byte` message header followed by a variab
 
 Figure 1\. RPMI Message Format
 
-#### [](#3-1-2-1-message-layout-tables)3.1.2.1\. Message Layout Tables
+#### [](#2-1-2-1-message-layout-tables)2.1.2.1\. Message Layout Tables
 
 The RPMI message header and message data are split into multiple **words**, where each word is `4-byte` wide and indexed starting from `0`. The RPMI message layout is presented throughout the RPMI specification in the form of tables as shown in the [Table 2](#table%5Fmessage%5Flayout%5Ftable%5Fexample) below. Some of the columns listed below may be omitted in the layout tables if not required.
 
@@ -38,7 +38,7 @@ __Table 2\. Message Layout Table Example__
 | ----------------------------------------------------------------------------------------- | ------------------------------------------------------- | ---------------------------------------- | -------------------------------------------- |
 | Index of the 4-byte word at which the field starts in the message header or message data. | Name of the field. Name may be omitted if not required. | Type of field, eg: int32 or uint32, etc. | Description and interpretation of the field. |
 
-#### [](#3-1-2-2-message-header)3.1.2.2\. Message Header
+#### [](#2-1-2-2-message-header)2.1.2.2\. Message Header
 
 The layout of the `8-byte` wide RPMI message header is shown in the[Table 3](#table%5Fmessage%5Fheader) below. The RPMI message header provide a unique identity to the corresponding RPMI message withing an RPMI context.
 
@@ -58,7 +58,7 @@ For an RPMI normal request message, the `TOKEN`, `SERVICEGROUP_ID`, and`SERVICE_
 
 For an RPMI notification message, the platform microcontroller will set appropriate values for the `TOKEN`, `SERVICEGROUP_ID`, and `DATALEN` fields whereas the `SERVICE_ID` field must be always set to `0x0`.
 
-#### [](#3-1-2-3-message-data)3.1.2.3\. Message Data
+#### [](#2-1-2-3-message-data)2.1.2.3\. Message Data
 
 The message data of an RPMI message is optional and variable sized. The maximum message data size of an RPMI message depends on the underlying RPMI transport implementation.
 
@@ -74,7 +74,7 @@ An RPMI acknowledgement message must have a signed `STATUS` field as the first 4
 
 If a physical address is passed in the message data of any message type, then it refers to the physical address space of the application processor.
 
-### [](#3-1-3-notifications)3.1.3\. Notifications
+### [](#2-1-3-notifications)2.1.3\. Notifications
 
 The platform microcontroller can use RPMI notification message to notify application processors about system events which are also referred to as**RPMI events**. An RPMI notification message has no associated response or acknowledgement from application processors. Multiple RPMI events can be packed into a single RPMI notification message depending on the space available in the message data. Each RPMI event may have additional data associated with it based on the type of RPMI event. Any action required for handling an RPMI event depends on the application processors. The format of an RPMI notification message in shown in the [Figure 2](#messaging%5Fnotif%5Fformat)below.
 
@@ -84,7 +84,7 @@ The RPMI events are defined separately for each RPMI service group. An RPMI serv
 
 Figure 2\. RPMI Notification Message Format
 
-#### [](#3-1-3-1-events)3.1.3.1\. Events
+#### [](#2-1-3-1-events)2.1.3.1\. Events
 
 An RPMI event consists of a header containing two fields: `EVENT_ID (8-bit)`and `EVENT_DATALEN (16-bit)`. An RPMI event may have associated data whose size is specified in the `EVENT_DATALEN` field of the header and this data size must be a multiple of `4-byte`.
 
@@ -104,7 +104,7 @@ __Table 4\. Event Format__
 
 Figure 3\. Event Header
 
-### [](#3-1-4-possible-error-codes)3.1.4\. Possible Error Codes
+### [](#2-1-4-possible-error-codes)2.1.4\. Possible Error Codes
 
 The [Table 5](#table%5Ferror%5Fcodes) below lists the error codes which can be returned by an RPMI service in the `STATUS` field of the RPMI acknowledgement message.
 

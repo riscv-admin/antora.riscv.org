@@ -1,6 +1,6 @@
-# Bibliography
+# 2.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#2-1-bibliography)2.1\. Bibliography
 
 \[1\] _Key words for use in RFCs to Indicate Requirement Levels_. \[Online\]. Available: <https://datatracker.ietf.org/doc/html/rfc2119>
 

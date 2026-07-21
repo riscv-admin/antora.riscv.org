@@ -1,14 +1,14 @@
-# 13.1. Code fragment and transport
+# 12.1. Code fragment and transport
 
-## [](#fragments)13.1\. Code fragment and transport
+## [](#fragments)12.1\. Code fragment and transport
 
 This section shows fragments of code, and associated data from one of the architectural tests in the repository. For the individual fragments the ingress signals are shown and the corresponding packets generated. It further shows how the packets are transported via on-chip transport fabric. The fragments shown below are extracted from the test whilst it is being executed. In order to give some context to the fragment of interest, code prior to and after the fragment is also given.
 
-### [](#13-1-1-illegal-opcode-test)13.1.1\. Illegal Opcode test
+### [](#12-1-1-illegal-opcode-test)12.1.1\. Illegal Opcode test
 
 In this example the test executes an illegal opcode (at line labelled 14) and traps. We show the output from the patched spike execution in line 30\. The input signals to the encoder are shown in lines labelled 38-46\. The HART will have set the signals shown in line 42 when the illegal instruction is executed and as can be seen it is not retired. Lines labelled 53, 56 and 59 show the packets output from the encoder for this fragment.
 
-#### [](#13-1-1-1-code-fragment)13.1.1.1\. Code fragment
+#### [](#12-1-1-1-code-fragment)12.1.1.1\. Code fragment
 
 1: *************************************************************************************
 2: ****************** Fragment 0x80000222 - 0x80000226:illegal_opcode ******************
@@ -79,11 +79,11 @@ In this example the test executes an illegal opcode (at line labelled 14) and tr
 60: <  next=800001e4 curr=800001e0 prev=800001b0
 61: <  next=800001e8 curr=800001e4 prev=800001e0
 
-#### [](#13-1-1-2-packet-data)13.1.1.2\. Packet data
+#### [](#12-1-1-2-packet-data)12.1.1.2\. Packet data
 
 The output from the encoder for the fragment of interest is given in line 56\. The least significant byte is output first, this means 32 is byte 0, 04 is byte 1 and and the final value 02 is byte 4.
 
-#### [](#13-1-1-3-siemens-transport)13.1.1.3\. Siemens transport
+#### [](#12-1-1-3-siemens-transport)12.1.1.3\. Siemens transport
 
 The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), with the following attributes:
 
@@ -97,7 +97,7 @@ Since the Siemens transport is byte stream based the data seen will be:
 
 `[0x06][0x81][0x32 0x04 0x00 0x00 0x02]`
 
-#### [](#13-1-1-4-atb-transport)13.1.1.4\. ATB transport
+#### [](#12-1-1-4-atb-transport)12.1.1.4\. ATB transport
 
 The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), with the following attributes:
 
@@ -112,9 +112,9 @@ Assuming a 32 bit ATB transport results in the following ATB transfers
 `[ATID=1] [ATBYTES = 3] [ATDATA = 0x00043205]`  
 `[ATID=1] [ATBYTES = 1] [ATDATA = 0x00000200]`
 
-### [](#13-1-2-timer-long-loop)13.1.2\. Timer Long Loop
+### [](#12-1-2-timer-long-loop)12.1.2\. Timer Long Loop
 
-#### [](#13-1-2-1-code-fragment)13.1.2.1\. Code fragment
+#### [](#12-1-2-1-code-fragment)12.1.2.1\. Code fragment
 
 1: **************************************************************************************
 2: ****************** Fragment 0x800001a2 - 0x800001b0:timer_long_loop ******************
@@ -188,11 +188,11 @@ Assuming a 32 bit ATB transport results in the following ATB transfers
 66: <  next=800001e8 curr=800001e4 prev=800001e0
 67: <  next=800001ea curr=800001e8 prev=800001e4
 
-#### [](#13-1-2-2-packet-data)13.1.2.2\. Packet data
+#### [](#12-1-2-2-packet-data)12.1.2.2\. Packet data
 
 The output from the encoder for the fragment of interest is given in line 61\. The least significant byte is output first, this means 77 is byte 0, 00 is byte 1 and and the final value 20 is byte 9.
 
-#### [](#13-1-2-3-siemens-transport)13.1.2.3\. Siemens transport
+#### [](#12-1-2-3-siemens-transport)12.1.2.3\. Siemens transport
 
 The packet is encapsulated according to the <https://github.com/riscv-non-isa/e-trace-encap/releases/latest/Unformatted> Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification\], with the following attributes:
 
@@ -204,7 +204,7 @@ The packet is encapsulated according to the <https://github.com/riscv-non-isa/e-
 
 `[0x8][0x8A][0xBD 0xAA 0xAA 0x68 0x00 0x00 0x20]`
 
-#### [](#13-1-2-4-atb-transport)13.1.2.4\. ATB transport
+#### [](#12-1-2-4-atb-transport)12.1.2.4\. ATB transport
 
 The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), with the following attributes:
 
@@ -219,9 +219,9 @@ Assuming at 32 bit ATB transport results in the following ATB transfers
 `[ATID=0xA] [ATBYTES = 3] [ATDATA = 0xAAAABD07]`  
 `[ATID=0xA] [ATBYTES = 3] [ATDATA = 0x20000068]`
 
-### [](#13-1-3-startup-xrle)13.1.3\. Startup xrle
+### [](#12-1-3-startup-xrle)12.1.3\. Startup xrle
 
-#### [](#13-1-3-1-code-fragment)13.1.3.1\. Code fragment
+#### [](#12-1-3-1-code-fragment)12.1.3.1\. Code fragment
 
 1: ***********************************************************************************
 2: ****************** Fragment 0x20010522 - 0x20010528:startup_xrle ******************
@@ -277,11 +277,11 @@ Assuming at 32 bit ATB transport results in the following ATB transfers
 50: <  next=20010530 curr=2001052e prev=2001052a
 51: <  next=20010534 curr=20010530 prev=2001052e
 
-#### [](#13-1-3-2-packet-data)13.1.3.2\. Packet data
+#### [](#12-1-3-2-packet-data)12.1.3.2\. Packet data
 
 The output from the encoder for the fragment of interest is given in line 45\. The least significant byte is output first, this means 73 is byte 0, 00 is byte 1 and and the final value 10 is byte 8.
 
-#### [](#13-1-3-3-siemens-transport)13.1.3.3\. Siemens transport
+#### [](#12-1-3-3-siemens-transport)12.1.3.3\. Siemens transport
 
 The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), with the following attributes:
 
@@ -293,7 +293,7 @@ The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data
 
 `[0xA][0x85][0x73 0x00 0x00 0x00 0x00 0x91 0x82 0x00 0x10]`
 
-#### [](#13-1-3-4-atb-transport)13.1.3.4\. ATB transport
+#### [](#12-1-3-4-atb-transport)12.1.3.4\. ATB transport
 
 The packet is encapsulated according to the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), with the following attributes:
 

@@ -1,6 +1,6 @@
-# 2.1. QoS Identifiers
+# 1.1. QoS Identifiers
 
-## [](#QOS%5FID)2.1\. QoS Identifiers
+## [](#QOS%5FID)1.1\. QoS Identifiers
 
 Monitoring or allocation of resources requires a way to identify the originator of the request to access the resource.
 
@@ -12,7 +12,7 @@ To monitor the resource utilization by a workload, CBQRI defines a mechanism to 
 
 [\[QOS\_SIZING\]](#QOS%5FSIZING) discusses guidelines for sizing the QoS IDs and the need for differentiated IDs for monitoring. All supported `RCID` and `MCID` can be actively used in the system at any instance.
 
-### [](#EMCID)2.1.1\. Associating `RCID` and `MCID` with requests
+### [](#EMCID)1.1.1\. Associating `RCID` and `MCID` with requests
 
 The `RCID` in the request is used by the resource controllers to determine the resource allocations (for example, cache occupancy limits, memory bandwidth limits, and so on) to enforce.
 
@@ -20,11 +20,11 @@ The `MCID` in the request is used by the resource controllers to identify the ID
 
 Legal values of `P` range from 0 to 12 and are enumerated in the capability register of the controller. Software should use the effective `MCID` as the`MCID` operand to the controller for operations on the monitoring counters.
 
-#### [](#2-1-1-1-risc-v-hart-initiated-requests-ssqosid)2.1.1.1\. RISC-V hart initiated requests (Ssqosid)
+#### [](#1-1-1-1-risc-v-hart-initiated-requests-ssqosid)1.1.1.1\. RISC-V hart initiated requests (Ssqosid)
 
 The Ssqosid extension \[[3](qos%5Fbiblio.html#bib-ssqosid)\] introduces a read/write S/HS-mode register (`srmcfg`) to configure QoS Identifiers to be used with requests made by the hart to shared resources. If Smstateen \[[4](qos%5Fbiblio.html#bib-stateen)\] is implemented then bit 55 of `mstateen0` controls access to `srmcfg` from privilege modes less than M.
 
-#### [](#2-1-1-2-device-initiated-requests)2.1.1.2\. Device initiated requests
+#### [](#1-1-1-2-device-initiated-requests)1.1.1.2\. Device initiated requests
 
 A RISC-V IOMMU \[[5](qos%5Fbiblio.html#bib-iommu)\] extension to support configuring QoS identifiers is specified in [\[QOS\_IOMMU\]](#QOS%5FIOMMU). If the system supports an IOMMU with this extension, the IOMMU can be configured with the `RCID` and `MCID` to associate with requests from devices and from the IOMMU itself.
 
@@ -33,7 +33,7 @@ If the system does not support an IOMMU with this extension, then the associatio
 * Devices can be configured with an `RCID` and `MCID` for requests originating from the device, provided the device implementation and the bus protocol used by the device support such capabilities. The method to configure the QoS identifiers into devices remains `UNSPECIFIED`.
 * Where the device does not natively support being configured with an `RCID`and `MCID`, the implementation might provide a shim at the device interface. This shim can be configured with the `RCID` and `MCID` to associate with requests originating from the device. The method to configure such QoS identifiers into a shim is `UNSPECIFIED`.
 
-### [](#2-1-2-access-type-at)2.1.2\. Access type (`AT`)
+### [](#1-1-2-access-type-at)1.1.2\. Access type (`AT`)
 
 In some usages, in addition to providing differentiated service among workloads, the ability to differentiate between resource usage for accesses made by the same workload might be required. For example, the capacity allocated in a shared cache for code storage might be differentiated from the capacity allocated for data storage and thereby avoid code from being evicted from such shared cache due to a data access.
 

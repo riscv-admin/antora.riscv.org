@@ -1,6 +1,6 @@
-# 3.1. Branch Trace
+# 2.1. Branch Trace
 
-## [](#BranchTrace)3.1\. Branch Trace
+## [](#BranchTrace)2.1\. Branch Trace
 
 Instruction delta tracing, also known as branch tracing, works by tracking execution from a known start address by sending information about the deltas taken by the program. Deltas are typically introduced by jump, call, return and branch type instructions, although interrupts and exceptions are also types of deltas.
 
@@ -12,13 +12,13 @@ While the program binary is sufficient, access to the assembly or higher-level s
 
 This approach can be extended to cope with small sections of deterministically dynamic code by arranging for the decoder to request instruction memory from the target. Memory lookups generally lead to a prohibitive reduction in performance, although they are suitable for examining modest jump tables, such as the exception/interrupt vector pointers of an operating system which may be adjusted at boot up and when services are registered. Both static and dynamically linked programs can be traced using this approach. Statically linked programs are straightforward as they generally operate in a known address space, often mapping directly to physical memory. Dynamically linked programs require the debugger to keep track of memory allocation operations using either trace or stop-mode debugging.
 
-### [](#TraceConcepts)3.1.1\. Instruction delta trace concepts
+### [](#TraceConcepts)2.1.1\. Instruction delta trace concepts
 
-#### [](#SequentialInstructions)3.1.1.1\. Sequential instructions
+#### [](#SequentialInstructions)2.1.1.1\. Sequential instructions
 
 For instruction set architectures such as RISC-V where all instructions are executed unconditionally or at least their execution can be determined based on the program binary, the instructions between the deltas are assumed to be executed sequentially. Consequently, there is no need to report them in the trace. The trace only needs to contain whether branches were taken or not, the addresses of taken indirect jumps, or other program counter discontinuities.
 
-#### [](#uninfpc)3.1.1.2\. Uninferable PC discontinuities
+#### [](#uninfpc)2.1.1.2\. Uninferable PC discontinuities
 
 An uninferable program counter discontinuity is a program counter change that can not be inferred from the program binary alone. For these cases, the instruction delta trace must include a destination address: the address of the next valid instruction.
 
@@ -26,13 +26,13 @@ Indirect jumps are an example of this, where the next instruction address is det
 
 Interrupts and exceptions are another form of uninferable PC discontinuity; these are discussed in detail below.
 
-#### [](#3-1-1-3-branches)3.1.1.3\. Branches
+#### [](#2-1-1-3-branches)2.1.1.3\. Branches
 
 A branch is an instruction where a jump is conditional on the value of a register or a flag. For a decoder to able to follow program flow, the trace must include whether a branch was taken or not.
 
 For a direct branch, where the destination address is encoded in the program binary (either as a constant, or as a constant offset from the program counter), no further information is required. Direct branches are the only type of branch that is supported by the RISC-V ISA.
 
-#### [](#interruptsexceptions)3.1.1.4\. Interrupts and exceptions
+#### [](#interruptsexceptions)2.1.1.4\. Interrupts and exceptions
 
 Interrupts are a different type of delta that generally occur asynchronously to the program’s execution rather than intentionally as a result of a specific instruction or event. Exceptions can be thought of in the same way, even though they can be typically linked back to a specific instruction address.
 
@@ -40,7 +40,7 @@ The decoder generally does not know where an interrupt occurred in the instructi
 
 Note: not all exceptions and interrupts cause traps (see[\[sec:terminology\]](#sec:terminology) for definitions). Most notably, floating point exceptions and disabled interrupts do not trap. If an exception or interrupt doesn’t trap, the program counter does not change. So, there is no need to trace all exceptions/interrupts, just traps. In this document, interrupts and exceptions are only traced when they cause traps to be taken.
 
-#### [](#sec:synchronization)3.1.1.5\. Synchronization
+#### [](#sec:synchronization)2.1.1.5\. Synchronization
 
 In order to make the trace robust there must be regular synchronization points within the trace. Synchronization is accomplished by sending a full valued instruction address (and potentially a context identifier). The decoder and debugger may also benefit from sending the reason for synchronizing. The frequency of synchronization is a trade-off between robustness and trace bandwidth.
 
@@ -52,7 +52,7 @@ The instruction trace encoder needs to synchronise fully:
 * If the privilege level changes;
 * After a prolonged period of time.
 
-#### [](#sec:endoftrace)3.1.1.6\. End of trace
+#### [](#sec:endoftrace)2.1.1.6\. End of trace
 
 If tracing stops for any reason, the address of the final traced instruction must be output.
 
@@ -64,7 +64,7 @@ Some examples of why tracing may stop are:
 * The matching criteria for any filtering capabilities implemented by the encoder may no longer be met;
 * The encoder may be disabled.
 
-### [](#optional)3.1.2\. Optional and run-time configurable modes
+### [](#optional)2.1.2\. Optional and run-time configurable modes
 
 An instruction trace encoder may support multiple tracing modes. To ensure that the decoder treats the incoming packets correctly, it needs to be informed of the current active configuration. The configuration is reported by a packet that is issued by the encoder whenever the encoder configuration is changed.
 
@@ -82,19 +82,19 @@ Modes may have associated parameters; see [\[tab:iparameters\]](#tab:iparameters
 
 All modes are optional apart from delta address mode, which must be supported.
 
-#### [](#sec:delta-address)3.1.2.1\. Delta address mode
+#### [](#sec:delta-address)2.1.2.1\. Delta address mode
 
 Related parameters: None
 
 In delta address mode, addresses are encoded as the difference between the actual address of the current instruction and the actual address of the instruction reported in the previous packet that contained an address. This differential encoding requires fewer bits than the full address, and thus results in more efficient trace compression.
 
-#### [](#sec:full-address)3.1.2.2\. Full address mode
+#### [](#sec:full-address)2.1.2.2\. Full address mode
 
 Related parameters: None
 
 In full address mode, all addresses in the trace are encoded as absolute addresses instead of in differential form. This kind of encoding is always less efficient, but it can be a useful debugging aid for software decoder developers.
 
-#### [](#sec:implicit-exception)3.1.2.3\. Implicit exception mode
+#### [](#sec:implicit-exception)2.1.2.3\. Implicit exception mode
 
 Related parameters: None
 
@@ -106,13 +106,13 @@ The implicit exception mode omits **_\*tvec_** (the trap handler address), from 
 
 This mode can only be used if the decoder can infer the address of the trap handler from just the exception cause.
 
-#### [](#sec:si-jump)3.1.2.4\. Sequentially inferable jump mode
+#### [](#sec:si-jump)2.1.2.4\. Sequentially inferable jump mode
 
 Related parameters: _sijump\_p_.
 
 By default, the target of an indirect jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant then it can be considered inferable under some circumstances. The hart must identify jumps with sequentially inferable targets and provide this information separately to the encoder. The final decision as to whether to treat the jump as inferable or not must be made by the encoder. Both the constant load and the jump must be traced in order for the decoder to be able to infer the jump target. See [\[JumpClasses\]](#JumpClasses) for details of what constitutes a sequentially inferable jump.
 
-#### [](#sec:implicit-return)3.1.2.5\. Implicit return mode
+#### [](#sec:implicit-return)2.1.2.5\. Implicit return mode
 
 Related parameters: _call\_counter\_size\_p_, _return\_stack\_size\_p_,_itype\_width\_p_.
 
@@ -124,7 +124,7 @@ Such a scheme is low cost, and will work as long as programs are "well behaved".
 
 Alternatively, the encoder can maintain a stack of expected return addresses, and only treat a return as inferable if the actual return address matches the prediction. This is fully robust for all programs, but is more expensive to implement. In this case, if a return address does not match the prediction, it must be reported explicitly via a packet, along with the number of return addresses currently on the stack. This ensures that the decoder can determine which return is being reported.
 
-#### [](#sec:branch-prediction)3.1.2.6\. Branch prediction mode
+#### [](#sec:branch-prediction)2.1.2.6\. Branch prediction mode
 
 Related parameters: _bpred\_size\_p_.
 
@@ -149,7 +149,7 @@ The MSB represents the predicted outcome, the LSB the most recent actual outcome
 
 The lookup table entries are initialized to 01 when a synchronization packet is sent.
 
-#### [](#sec:jump-cache)3.1.2.7\. Jump target cache mode
+#### [](#sec:jump-cache)2.1.2.7\. Jump target cache mode
 
 Related parameters: _cache\_size\_p_.
 

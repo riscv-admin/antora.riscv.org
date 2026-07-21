@@ -1,6 +1,6 @@
-# 14.1. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01
+# 13.1. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01
 
-## [](#14-1-zawrs-extension-for-wait-on-reservation-set-instructions-version-1-01)14.1\. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01
+## [](#13-1-zawrs-extension-for-wait-on-reservation-set-instructions-version-1-01)13.1\. "Zawrs" Extension for Wait-on-Reservation-Set instructions, Version 1.01
 
 The Zawrs extension defines a pair of instructions to be used in polling loops that allows a core to enter a low-power state and wait on a store to a memory location. Waiting for a memory location to be updated is a common pattern in many use cases such as:
 
@@ -15,7 +15,7 @@ Sometimes the program waiting on a memory update may also need to carry out a ta
 | |  The instructions in the Zawrs extension are only useful in conjunction with the LR instruction, which is provided by the Zalrsc component of the A extension. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#Zawrs)14.1.1\. Wait-on-Reservation-Set Instructions
+### [](#Zawrs)13.1.1\. Wait-on-Reservation-Set Instructions
 
 The `WRS.NTO` and `WRS.STO` instructions cause the hart to temporarily stall execution in a low-power state as long as the reservation set is valid and no pending interrupts, even if disabled, are observed. For `WRS.STO` the stall duration is bounded by an implementation defined short timeout. These instructions are available in all privilege modes.
 

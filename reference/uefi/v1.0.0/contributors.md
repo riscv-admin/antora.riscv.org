@@ -1,6 +1,6 @@
-# 2.1. Contributors
+# 1.1. Contributors
 
-## [](#2-1-contributors)2.1\. Contributors
+## [](#1-1-contributors)1.1\. Contributors
 
 This RISC-V specification has been contributed to directly or indirectly by:
 

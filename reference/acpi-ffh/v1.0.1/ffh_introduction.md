@@ -1,13 +1,13 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#1-1-introduction)1.1\. Introduction
+## [](#introduction)Introduction
 
 RISC-V systems which use Advanced Configuration and Power Interface (ACPI) require additional specifications for some ACPI object fields, typically those of type “Resource Descriptor”. A Functional Fixed Hardware (FFH) specification provides those additional specifications. The use cases addressed by this FFH are as follows:
 
 * Lower Power Idle States (LPI), \[ACPI 6.5\] section 8.4.3
 * Collaborative Processor Performance Control (CPPC), \[ACPI 6.5\] section 8.4.6
 
-### [](#1-1-1-terms-and-abbreviations)1.1.1\. Terms and Abbreviations
+### [](#terms-and-abbreviations)Terms and Abbreviations
 
 This specification uses the following terms and abbreviations:
 
@@ -23,7 +23,7 @@ This specification uses the following terms and abbreviations:
 | OSPM | Operating System-directed configuration and Power Management |
 | SBI  | Supervisor Binary Interface                                  |
 
-### [](#1-1-2-references)1.1.2\. References
+### [](#references)References
 
 | Reference    | Description                                                                                                    |
 | ------------ | -------------------------------------------------------------------------------------------------------------- |

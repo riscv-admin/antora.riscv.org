@@ -1,6 +1,6 @@
-# 7.1. N-Trace Messages (Details)
+# 6.1. N-Trace Messages (Details)
 
-## [](#7-1-n-trace-messages-details)7.1\. N-Trace Messages (Details)
+## [](#6-1-n-trace-messages-details)6.1\. N-Trace Messages (Details)
 
 This chapter provides a detailed description of all N-Trace messages. Overview of all fields in all messages is provided in the [Fields in Messages](#Fields in Messages) table.
 
@@ -17,7 +17,7 @@ Each message has its own table showing all fields in that message.
 | |  The IEEE-5001 Nexus Standard presents tables with **TCODE** (which is sent first) in the last row. In contrast, this specification shows [Fields in Messages](#Fields in Messages) in the order they are sent (the first field sent is described first), aligning with the order of storage, processing, and text dumps. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#msg2%5FOwnership)7.1.1\. Ownership Message
+### [](#msg2%5FOwnership)6.1.1\. Ownership Message
 
 This message furnishes the requisite context (privileged mode and Context ID, as assigned by the operating system or hypervisor), enabling the decoder to correlate program flow with distinct code segments associated with various programs. Activation of this feature requires explicit enabling of the [trTeContext](#trTeContext) control bit.
 
@@ -70,7 +70,7 @@ Examples:
 PROCESS=0x3B2 = 0b11101_1_00_10   => scontext=0x1D,V=1,PRV[1:0]=00  (VU-mode)
 PROCESS=0xC           0b0_11_00   => V=0,PRV[1:0]=11                (M-mode)
 
-### [](#msg2%5FDirectBranch)7.1.2\. DirectBranch Message
+### [](#msg2%5FDirectBranch)6.1.2\. DirectBranch Message
 
 It is applicable to [BTM](#mode%5FBTM) mode only.
 
@@ -91,7 +91,7 @@ Last instruction in the code block (or blocks) with all inferable instructions (
 | |  Not-taken direct conditional branches and direct unconditional jumps increment I-CNT but do not generate any trace. Direct unconditional jumps change the PC to the destination address of such a jump. The I-CNT enables determination of the PC of the last instruction in the code block(s). |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#msg2%5FIndirectBranch)7.1.3\. IndirectBranch Message
+### [](#msg2%5FIndirectBranch)6.1.3\. IndirectBranch Message
 
 It is applicable to [BTM](#mode%5FBTM) mode only.
 
@@ -117,7 +117,7 @@ The last instruction within the code block(s), as specified by the I-CNT field, 
 | |  Not-taken conditional branches and direct unconditional jumps do not generate any trace. However, they do increase the I-CNT. Additionally, direct unconditional jumps modify the PC to the destination address specified in the instruction. Consequently, the PC of the last instruction in a code block(s) can be determined. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#msg2%5FError)7.1.4\. Error Message
+### [](#msg2%5FError)6.1.4\. Error Message
 
 An error message must be generated in the event of an internal messages FIFO overflow, resulting in the loss of a trace message.
 
@@ -137,7 +137,7 @@ Error Message must be sent immediately prior to a [synchronizing message](#Synch
 | |  This message **is required** as otherwise decoder (even though restart after FIFO overflow is signaled) would not be aware that trace was lost in case of the following sequence of events: Trace is turned off by trigger (or from any other reason). Message reporting 'trace off' event is lost (due to lack of space for it). Here Error Message should be generated (as soon as there is a room) Trace is never restarted. Trace is stopped (this will not generate any trace as trace is turned off). In the above case, Error Message will be the last message in trace stream. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#msg2%5FProgTraceSync)7.1.5\. ProgTraceSync Message
+### [](#msg2%5FProgTraceSync)6.1.5\. ProgTraceSync Message
 
 __Table 6\. Program Trace Synchronization Message Fields__
 | Bits    | Name   | Description                                                           |
@@ -155,7 +155,7 @@ This message is produced at the start or restart of trace. In such instances, th
 
 This message may be also generated on linear code for certain synchronization events as described in [Synchronizing Message](#Synchronizing Messages) chapter.
 
-### [](#msg2%5FDirectBranchSync)7.1.6\. DirectBranchSync Message
+### [](#msg2%5FDirectBranchSync)6.1.6\. DirectBranchSync Message
 
 __Table 7\. Direct Branch with Sync Message Fields__
 | Bits    | Name   | Description                                                            |
@@ -173,7 +173,7 @@ This message is produced under the same conditions as the [DirectBranch](#msg2%5
 
 This message may be also generated on linear code for certain synchronization events as described in [Synchronizing Message](#Synchronizing Messages) chapter.
 
-### [](#msg2%5FIndirectBranchSync)7.1.7\. IndirectBranchSync Message
+### [](#msg2%5FIndirectBranchSync)6.1.7\. IndirectBranchSync Message
 
 __Table 8\. Indirect Branch with Sync Message Fields__
 | Bits    | Name   | Description                                                            |
@@ -192,7 +192,7 @@ This message is generated in the same conditions as [IndirectBranch](#msg2%5FInd
 
 This message may be also generated (with [B-TYPE](#field%5FB-TYPE)\=0 field) on linear code for certain synchronization events as described in [Synchronizing Message](#Synchronizing Messages) chapter.
 
-### [](#msg2%5FResourceFull)7.1.8\. ResourceFull Message
+### [](#msg2%5FResourceFull)6.1.8\. ResourceFull Message
 
 This message is emitted when either the HIST register is full, or the I-CNT counter became full for a given encoder implementation. This mechanism ensures that no information is lost, as it enables the decoder to reconstruct larger I-CNT and HIST fields by concatenating or adding the emitted values.
 
@@ -214,7 +214,7 @@ Nonetheless, implementations may opt to include any quantity of history bits in 
 
 Should the I-CNT counter and the HIST register simultaneously reach their respective capacity limits, it is mandatory to emit two successive ResourceFull messages.
 
-### [](#msg2%5FIndirectBranchHist)7.1.9\. IndirectBranchHist Message
+### [](#msg2%5FIndirectBranchHist)6.1.9\. IndirectBranchHist Message
 
 __Table 10\. Indirect Branch History Message Fields__
 | Bits    | Name   | Description                                                             |
@@ -233,7 +233,7 @@ Last instruction in the code block (or blocks) (described by HIST and I-CNT fiel
 
 Next PC is determined by applying the [Address Compression](#Address Compression) rules using the U-ADDR field in this message.
 
-### [](#msg2%5FIndirectBranchHistSync)7.1.10\. IndirectBranchHistSync Message
+### [](#msg2%5FIndirectBranchHistSync)6.1.10\. IndirectBranchHistSync Message
 
 __Table 11\. Indirect Branch History with Sync Message Fields__
 | Bits    | Name   | Description                                                             |
@@ -253,7 +253,7 @@ This message is generated in the same conditions as [IndirectBranchHist](#msg2%5
 
 This message may be also generated (with [B-TYPE](#field%5FB-TYPE)\=0 field) on linear code for certain synchronization events as described in [Synchronizing Message](#Synchronizing Messages) chapter.
 
-### [](#msg2%5FRepeatBranch)7.1.11\. RepeatBranch Message
+### [](#msg2%5FRepeatBranch)6.1.11\. RepeatBranch Message
 
 __Table 12\. Repeat Branch Message Fields__
 | Bits    | Name   | Description                                                                                                                                                                                                              |
@@ -267,7 +267,7 @@ __Table 12\. Repeat Branch Message Fields__
 
 This message is reported when an identical (direct or indirect) branch message is encountered (just to save trace bandwidth). Trace decoder should just repeat handling of previous branch message B-CNT times.
 
-### [](#msg2%5FProgTraceCorrelation)7.1.12\. ProgTraceCorrelation Message
+### [](#msg2%5FProgTraceCorrelation)6.1.12\. ProgTraceCorrelation Message
 
 This message is emitted when the trace is disabled or stopped.
 

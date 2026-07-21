@@ -1,6 +1,6 @@
-# 3.1. ID Mapping Examples
+# 2.1. ID Mapping Examples
 
-## [](#Mapping-Examples)3.1\. ID Mapping Examples
+## [](#Mapping-Examples)2.1\. ID Mapping Examples
 
 __Table 1\. PCIe device ID mapping example__
 | **Source ID Base** | **Number of IDs** | **Destination Device ID Base** | **Destination IOMMU Offset** | **Flags** |

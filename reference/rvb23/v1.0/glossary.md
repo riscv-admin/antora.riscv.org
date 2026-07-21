@@ -1,6 +1,6 @@
-# Glossary of ISA Extensions
+# 4.1. Glossary of ISA Extensions
 
-## [](#glossary-of-isa-extensions)Glossary of ISA Extensions
+## [](#4-1-glossary-of-isa-extensions)4.1\. Glossary of ISA Extensions
 
 The following unprivileged ISA extensions are defined in Volume I of the [RISC-V Instruction Set Manual](../../isa/v20260120/unpriv/unpriv-index.html).
 

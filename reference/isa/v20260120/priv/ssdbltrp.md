@@ -1,6 +1,6 @@
-# 17.1. "Ssdbltrp" Double Trap Extension, Version 1.0
+# 16.1. "Ssdbltrp" Double Trap Extension, Version 1.0
 
-## [](#ssdbltrp)17.1\. "Ssdbltrp" Double Trap Extension, Version 1.0
+## [](#ssdbltrp)16.1\. "Ssdbltrp" Double Trap Extension, Version 1.0
 
 The Ssdbltrp extension addresses a double trap (See [Double Trap Control in mstatus Register](machine.html#machine-double-trap)) privilege modes lower than M. It enables HS-mode to invoke a critical error handler in a virtual machine on a double trap in VS-mode. It also allows M-mode to invoke a critical error handler in the OS/Hypervisor on a double trap in S/HS-mode.
 

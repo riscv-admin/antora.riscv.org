@@ -1,6 +1,6 @@
-# 2.1. Introduction
+# 1.1. Introduction
 
-## [](#2-1-introduction)2.1\. Introduction
+## [](#1-1-introduction)1.1\. Introduction
 
 This document specifies the RVB23 profile family. RVB23 is the first major release of the RVB series of RISC-V Application Processor Profile.
 

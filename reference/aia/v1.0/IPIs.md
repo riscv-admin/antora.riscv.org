@@ -1,6 +1,6 @@
-# 7.1. Interprocessor Interrupts (IPIs)
+# 6.1. Interprocessor Interrupts (IPIs)
 
-## [](#IPIs)7.1\. Interprocessor Interrupts (IPIs)
+## [](#IPIs)6.1\. Interprocessor Interrupts (IPIs)
 
 By default, unless a platform has a different mechanism for interprocessor interrupts (IPIs), the base RISC-V Privileged Architecture specifies that a machine with multiple harts must provide for each hart an implementation-defined memory address that can be written to signal a machine-level _software interrupt_ (major code 3) at that hart. IPIs at machine level can thus be sent to any hart as machine-level software interrupts.
 

@@ -1,14 +1,14 @@
-# 16.1. Control-flow Integrity (CFI)
+# 15.1. Control-flow Integrity (CFI)
 
-## [](#priv-cfi)16.1\. Control-flow Integrity (CFI)
+## [](#priv-cfi)15.1\. Control-flow Integrity (CFI)
 
 Control-flow Integrity (CFI) capabilities help defend against Return-Oriented Programming (ROP) and Call/Jump-Oriented Programming (COP/JOP) style control-flow subversion attacks. The Zicfiss and Zicfilp extensions provide backward-edge and forward-edge control flow integrity respectively. Please see the Control-flow Integrity chapter of the Unprivileged ISA specification for further details on these CFI capabilities and the associated Unprivileged ISA.
 
-### [](#priv-forward)16.1.1\. Landing Pad (Zicfilp)
+### [](#priv-forward)15.1.1\. Landing Pad (Zicfilp)
 
 This section specifies the Privileged ISA for the Zicfilp extension.
 
-#### [](#FCFIACT)16.1.1.1\. Landing-Pad-Enabled (LPE) State
+#### [](#FCFIACT)15.1.1.1\. Landing-Pad-Enabled (LPE) State
 
 The term `xLPE` is used to determine if forward-edge CFI using landing pads provided by the Zicfilp extension is enabled at a privilege mode.
 
@@ -33,7 +33,7 @@ __Table 2\. xLPE determination when S-mode is not implemented__
 | |  The Zicfilp must be explicitly enabled for use at each privilege mode. Programs compiled with the LPAD instruction continue to function correctly, but without forward-edge CFI protection, when the Zicfilp extension is not implemented or is not enabled. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#ZICFILP%5FFORWARD%5FTRAPS)16.1.1.2\. Preserving Expected Landing Pad State on Traps
+#### [](#ZICFILP%5FFORWARD%5FTRAPS)15.1.1.2\. Preserving Expected Landing Pad State on Traps
 
 A trap may need to be delivered to the same or to a higher privilege mode upon completion of `JALR`/`C.JALR`/`C.JR`, but before the instruction at the target of indirect call/jump was decoded, due to:
 
@@ -48,20 +48,20 @@ In such cases, the `ELP` prior to the trap, the previous `ELP`, must be preserve
 
 When a trap is taken into privilege mode `x`, the `_x_PELP` is set to `ELP`and `ELP` is set to `NO_LP_EXPECTED`.
 
-An `MRET` or `SRET` instruction is used to return from a trap in M-mode or S-mode, respectively. When executing an `_x_RET` instruction, if the new privilege mode is `y`, then `ELP` is set to the value of `_x_PELP` if`_y_LPE` (see [16.1.1.1\. Landing-Pad-Enabled (LPE) State](#FCFIACT)) is 1; otherwise, it is set to `NO_LP_EXPECTED`;`_x_PELP` is set to `NO_LP_EXPECTED`.
+An `MRET` or `SRET` instruction is used to return from a trap in M-mode or S-mode, respectively. When executing an `_x_RET` instruction, if the new privilege mode is `y`, then `ELP` is set to the value of `_x_PELP` if`_y_LPE` (see [15.1.1.1\. Landing-Pad-Enabled (LPE) State](#FCFIACT)) is 1; otherwise, it is set to `NO_LP_EXPECTED`;`_x_PELP` is set to `NO_LP_EXPECTED`.
 
-Upon entry into Debug Mode, the `pelp` bit in `dcsr` is updated with the `ELP`at the privilege level the hart was previously in, and the `ELP` is set to`NO_LP_EXPECTED`. When a hart resumes from Debug Mode, if the new privilege mode is `y`, then `ELP` is set to the value of `pelp` if `_y_LPE` (see [16.1.1.1\. Landing-Pad-Enabled (LPE) State](#FCFIACT)) is 1; otherwise, it is set to `NO_LP_EXPECTED`.
+Upon entry into Debug Mode, the `pelp` bit in `dcsr` is updated with the `ELP`at the privilege level the hart was previously in, and the `ELP` is set to`NO_LP_EXPECTED`. When a hart resumes from Debug Mode, if the new privilege mode is `y`, then `ELP` is set to the value of `pelp` if `_y_LPE` (see [15.1.1.1\. Landing-Pad-Enabled (LPE) State](#FCFIACT)) is 1; otherwise, it is set to `NO_LP_EXPECTED`.
 
 See also ["Smrnmi" Extension for Resumable Non-Maskable Interrupts](rnmi.html#rnmi) for semantics added to the RNMI trap and the MNRET instruction when this extension is implemented.
 
 | |  The trap handler in privilege mode x must save the _x_PELP bit and thex7 register before performing an indirect call/jump if xLPE=1. If the privilege mode x can respond to interrupts and xLPE=1, then the trap handler should also save these values before enabling interrupts. The trap handler in privilege mode x must restore the saved _x_PELP bit and the x7 register before executing the _x_RET instruction to return from a trap. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#priv-backward)16.1.2\. Shadow Stack (Zicfiss)
+### [](#priv-backward)15.1.2\. Shadow Stack (Zicfiss)
 
 This section specifies the Privileged ISA for the Zicfiss extension.
 
-#### [](#16-1-2-1-shadow-stack-pointer-ssp-csr-access-control)16.1.2.1\. Shadow Stack Pointer (`ssp`) CSR access control
+#### [](#15-1-2-1-shadow-stack-pointer-ssp-csr-access-control)15.1.2.1\. Shadow Stack Pointer (`ssp`) CSR access control
 
 Attempts to access the `ssp` CSR may result in either an illegal-instruction exception or a virtual-instruction exception, contingent upon the state of the**_x_**`envcfg.SSE` fields. The conditions are specified as follows:
 
@@ -71,7 +71,7 @@ Attempts to access the `ssp` CSR may result in either an illegal-instruction exc
 * Otherwise, if in VU-mode and either `henvcfg.SSE` or `senvcfg.SSE` is 0, a virtual-instruction exception is raised.
 * Otherwise, the access is allowed.
 
-#### [](#16-1-2-2-shadow-stack-enabled-sse-state)16.1.2.2\. Shadow-Stack-Enabled (SSE) State
+#### [](#15-1-2-2-shadow-stack-enabled-sse-state)15.1.2.2\. Shadow-Stack-Enabled (SSE) State
 
 The term `xSSE` is used to determine if backward-edge CFI using shadow stacks provided by the Zicfiss extension is enabled at a privilege mode.
 
@@ -93,7 +93,7 @@ When S-mode is not implemented, then `xSSE` is 0 at both M and U privilege modes
 | |  Changes to xSSE take effect immediately; address-translation caches need not be synchronized with SFENCE.VMA, HFENCE.GVMA, or HFENCE.VVMA instructions. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#SSMP)16.1.2.3\. Shadow Stack Memory Protection
+#### [](#SSMP)15.1.2.3\. Shadow Stack Memory Protection
 
 To protect shadow stack memory, the memory is associated with a new page type – the Shadow Stack (SS) page – in the single-stage and VS-stage page tables. The encoding `R=0`, `W=1`, and `X=0`, is defined to represent an SS page. When`menvcfg.SSE=0`, this encoding remains reserved. Similarly, when `V=1` and`henvcfg.SSE=0`, this encoding remains reserved at `VS` and `VU` levels.
 

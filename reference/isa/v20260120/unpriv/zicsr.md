@@ -1,13 +1,13 @@
-# 6.1. "Zicsr" Extension for Control and Status Register (CSR) Instructions, Version 2.0
+# 5.1. "Zicsr" Extension for Control and Status Register (CSR) Instructions, Version 2.0
 
-## [](#csrinsts)6.1\. "Zicsr" Extension for Control and Status Register (CSR) Instructions, Version 2.0
+## [](#csrinsts)5.1\. "Zicsr" Extension for Control and Status Register (CSR) Instructions, Version 2.0
 
 RISC-V defines a separate address space of 4096 Control and Status registers associated with each hart. This chapter defines the full set of CSR instructions that operate on these CSRs.
 
 | |  While CSRs are primarily used by the privileged architecture, there are several uses in unprivileged code including for counters and timers, and for floating-point status. The counters and timers are no longer considered mandatory parts of the standard base ISAs, and so the CSR instructions required to access them have been moved out of [RV32I Base Integer Instruction Set, Version 2.1](rv32.html) into this separate chapter. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#6-1-1-csr-instructions)6.1.1\. CSR Instructions
+### [](#5-1-1-csr-instructions)5.1.1\. CSR Instructions
 
 All CSR instructions atomically read-modify-write a single CSR, whose CSR specifier is encoded in the 12-bit _csr_ field of the instruction held in bits 31-20\. The immediate forms use a 5-bit zero-extended immediate encoded in the _rs1_ field.
 
@@ -61,7 +61,7 @@ The assembler pseudoinstruction to read a CSR, CSRR _rd, csr_, is encoded as CSR
 
 Further assembler pseudoinstructions are defined to set and clear bits in the CSR when the old value is not required: CSRS/CSRC _csr, rs1_; CSRSI/CSRCI _csr, uimm_.
 
-#### [](#6-1-1-1-csr-access-ordering)6.1.1.1\. CSR Access Ordering
+#### [](#5-1-1-1-csr-access-ordering)5.1.1.1\. CSR Access Ordering
 
 Each RISC-V hart normally observes its own CSR accesses, including its implicit CSR accesses, as performed in program order. In particular, unless specified otherwise, a CSR access is performed after the execution of any prior instructions in program order whose behavior modifies or is modified by the CSR state and before the execution of any subsequent instructions in program order whose behavior modifies or is modified by the CSR state. Furthermore, an explicit CSR read returns the CSR state before the execution of the instruction, while an explicit CSR write suppresses and overrides any implicit writes or modifications to the same CSR by the same instruction.
 

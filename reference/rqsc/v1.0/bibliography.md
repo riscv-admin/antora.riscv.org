@@ -1,6 +1,6 @@
-# Bibliography
+# 3.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#3-1-bibliography)3.1\. Bibliography
 
 \[1\]
 

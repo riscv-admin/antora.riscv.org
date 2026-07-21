@@ -1,10 +1,10 @@
-# 26.1. "Zfa" Extension for Additional Floating-Point Instructions, Version 1.0
+# 25.1. "Zfa" Extension for Additional Floating-Point Instructions, Version 1.0
 
-## [](#zfa)26.1\. "Zfa" Extension for Additional Floating-Point Instructions, Version 1.0
+## [](#zfa)25.1\. "Zfa" Extension for Additional Floating-Point Instructions, Version 1.0
 
 This chapter describes the Zfa standard extension, which adds instructions for immediate loads, IEEE 754-2019 minimum and maximum operations, round-to-integer operations, and quiet floating-point comparisons. For RV32D, the Zfa extension also adds instructions to transfer double-precision floating-point values to and from integer registers, and for RV64Q, it adds analogous instructions for quad-precision floating-point values. The Zfa extension depends on the F extension.
 
-### [](#26-1-1-load-immediate-instructions)26.1.1\. Load-Immediate Instructions
+### [](#25-1-1-load-immediate-instructions)25.1.1\. Load-Immediate Instructions
 
 The FLI.S instruction loads one of 32 single-precision floating-point constants, encoded in the _rs1_ field, into floating-point register_rd_. The correspondence of _rs1_ field values and single-precision floating-point values is shown in [Table 1](#tab:flis). FLI.S is encoded like FMV.W.X, but with _rs2_\=1.
 
@@ -61,7 +61,7 @@ If the Zfh or Zvfh extension is implemented, FLI.H performs the analogous operat
 
 The FLI._fmt_ instructions never set any floating-point exception flags.
 
-### [](#26-1-2-minimum-and-maximum-instructions)26.1.2\. Minimum and Maximum Instructions
+### [](#25-1-2-minimum-and-maximum-instructions)25.1.2\. Minimum and Maximum Instructions
 
 The FMINM.S and FMAXM.S instructions are defined like the FMIN.S and FMAX.S instructions, except that if either input is NaN, the result is the canonical NaN.
 
@@ -76,7 +76,7 @@ These instructions are encoded like their FMIN and FMAX counterparts, but with i
 | |  These instructions implement the IEEE 754-2019 minimum and maximum operations. |
 | --------------------------------------------------------------------------------- |
 
-### [](#26-1-3-round-to-integer-instructions)26.1.3\. Round-to-Integer Instructions
+### [](#25-1-3-round-to-integer-instructions)25.1.3\. Round-to-Integer Instructions
 
 The FROUND.S instruction rounds the single-precision floating-point number in floating-point register _rs1_ to an integer, according to the rounding mode specified in the instruction’s _rm_ field. It then writes that integer, represented as a single-precision floating-point number, to floating-point register _rd_. Zero and infinite inputs are copied to_rd_ unmodified. Signaling NaN inputs cause the invalid operation exception flag to be set; no other exception flags are set. FROUND.S is encoded like FCVT.S.D, but with _rs2_\=4.
 
@@ -91,7 +91,7 @@ If the Q extension is implemented, FROUND.Q and FROUNDNX.Q instructions are anal
 | |  The FROUNDNX._fmt_ instructions implement the IEEE 754-2019 roundToIntegralExact operation, and the FROUND._fmt_ instructions implement the other operations in the roundToIntegral family. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#26-1-4-modular-convert-to-integer-instruction)26.1.4\. Modular Convert-to-Integer Instruction
+### [](#25-1-4-modular-convert-to-integer-instruction)25.1.4\. Modular Convert-to-Integer Instruction
 
 The FCVTMOD.W.D instruction is defined similarly to the FCVT.W.D instruction, with the following differences. FCVTMOD.W.D always rounds towards zero. Bits 31:0 are taken from the rounded, unbounded two’s complement result, then sign-extended to XLEN bits and written to integer register _rd_. ±∞ and NaN are converted to zero.
 
@@ -102,7 +102,7 @@ This instruction is only provided if the D extension is implemented. It is encod
 | |  The assembly syntax requires the RTZ rounding mode to be explicitly specified, i.e., fcvtmod.w.d rd, rs1, rtz. The FCVTMOD.W.D instruction was added principally to accelerate the processing of JavaScript Numbers. Numbers are double-precision values, but some operators implicitly truncate them to signed integers mod 232. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#26-1-5-move-instructions)26.1.5\. Move Instructions
+### [](#25-1-5-move-instructions)25.1.5\. Move Instructions
 
 For RV32 only, if the D extension is implemented, the FMVH.X.D instruction moves bits 63:32 of floating-point register _rs1_ into integer register _rd_. It is encoded in the OP-FP major opcode with_funct3_\=0, _rs2_\=1, and _funct7_\=1110001.
 
@@ -118,7 +118,7 @@ For RV64 only, if the Q extension is implemented, the FMVH.X.Q instruction moves
 
 For RV64 only, if the Q extension is implemented, the FMVP.Q.X instruction moves a double-precision number from a pair of integer registers into a floating-point register. Integer registers _rs1_ and_rs2_ supply bits 63:0 and 127:64, respectively; the result is written to floating-point register _rd_. FMVP.Q.X is encoded in the OP-FP major opcode with _funct3_\=0 and _funct7_\=1011011.
 
-### [](#26-1-6-comparison-instructions)26.1.6\. Comparison Instructions
+### [](#25-1-6-comparison-instructions)25.1.6\. Comparison Instructions
 
 The FLEQ.S and FLTQ.S instructions are defined like the FLE.S and FLT.S instructions, except that quiet NaN inputs do not cause the invalid operation exception flag to be set.
 

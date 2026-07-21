@@ -1,6 +1,6 @@
-# 3.1. Example ACPI Table Implementation
+# 2.1. Example ACPI Table Implementation
 
-## [](#chapter3)3.1\. Example ACPI Table Implementation
+## [](#chapter3)2.1\. Example ACPI Table Implementation
 
 This chapter covers some system implementation examples.
 

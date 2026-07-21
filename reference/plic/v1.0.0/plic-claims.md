@@ -1,6 +1,6 @@
-# 8.1. Interrupt Claim Process
+# 7.1. Interrupt Claim Process
 
-## [](#8-1-interrupt-claim-process)8.1\. Interrupt Claim Process
+## [](#7-1-interrupt-claim-process)7.1\. Interrupt Claim Process
 
 Sometime after a target receives an interrupt notification, it might decide to service the interrupt. The target sends an interrupt claim message to the PLIC core, which will usually be implemented as a non-idempotent memory-mapped I/O control register read. On receiving a claim message, the PLIC core will atomically determine the ID of the highest-priority pending interrupt for the target and then clear down the corresponding source’s IP bit. The PLIC core will then return the ID to the target. The PLIC core will return an ID of zero, if there were no pending interrupts for the target when the claim was serviced.  
 After the highest-priority pending interrupt is claimed by a target and the corresponding IP bit is cleared, other lower-priority pending interrupts might then become visible to the target, and so the PLIC EIP bit might not be cleared after a claim. The interrupt handler can check the local meip/seip/ueip bits before exiting the handler, to allow more efficient service of other interrupts without first restoring the interrupted context and taking another interrupt trap.  

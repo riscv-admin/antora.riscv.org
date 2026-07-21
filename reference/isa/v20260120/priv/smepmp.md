@@ -1,6 +1,6 @@
-# 6.1. "Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0
+# 5.1. "Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0
 
-## [](#smepmp)6.1\. "Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0
+## [](#smepmp)5.1\. "Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode, Version 1.0
 
 Being able to access the memory of a process running at a high privileged execution mode, such as the Supervisor or Machine mode, from a lower privileged mode such as the User mode, introduces an obvious attack vector since it allows for an attacker to perform privilege escalation, and tamper with the code and/or data of that process. A less obvious attack vector exists when the reverse happens, in which case an attacker instead of tampering with code and/or data that belong to a high-privileged process, can tamper with the memory of an unprivileged / less-privileged process and trick the high-privileged process to use or execute it.
 
@@ -9,7 +9,7 @@ Two mechanisms combine to prevent this attack vector. The first one prevents the
 | |  Terms: **PMP Entry**: A pair of pmpcfg\[i\] / pmpaddr\[i\] registers. **PMP Rule**: The contents of a pmpcfg register and its associated pmpaddr register(s), that encode a valid protected physical memory region, where pmpcfg\[i\].A != OFF, and if pmpcfg\[i\].A == TOR, pmpaddr\[i-1\] < pmpaddr\[i\]. **Ignored**: Any permissions set by a matching PMP rule are ignored, and _all_ accesses to the requested address range are allowed. **Enforced**: Only access types configured in the PMP rule matching the requested address range are allowed; failures will cause an access-fault exception. **Denied**: Any permissions set by a matching PMP rule are ignored, and _no_ accesses to the requested address range are allowed.; failures will cause an access-fault exception. **Locked**: A PMP rule/entry where the pmpcfg.L bit is set. **PMP reset**: A reset process where all PMP settings of the hart, including locked rules/settings, are re-initialized to a set of safe defaults, before releasing the hart (back) to the firmware / OS / application. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#smepmp%5Fthreat)6.1.1\. Threat model
+### [](#smepmp%5Fthreat)5.1.1\. Threat model
 
 The rationale that guided development of this extension is included in Section ["Smepmp" Extension for PMP Enhancements for memory access and execution prevention in Machine mode](priv-rationale.html#smepmp%5Frationale).
 
@@ -17,9 +17,9 @@ Without the Smepmp extension, it is not possible for a PMP rule to be **enforced
 
 Without being able to protect less-privileged modes from Machine mode, it is not possible to prevent the mentioned attack vector. This becomes even more important for RISC-V than on other architectures, since implementations are allowed where a hart only has Machine and User modes available, so the whole OS will run on Machine mode instead of the non-existent Supervisor mode. In such implementations the attack surface is greatly increased, and the same kind of attacks performed on Supervisor mode and mitigated through the virtual-memory system, can be performed on Machine mode without any available mitigations. Even on implementations with Supervisor mode present attacks are still possible against the Firmware and/or the Secure Monitor running on Machine mode.
 
-### [](#6-1-2-smepmp-physical-memory-protection-rules)6.1.2\. Smepmp Physical Memory Protection Rules
+### [](#5-1-2-smepmp-physical-memory-protection-rules)5.1.2\. Smepmp Physical Memory Protection Rules
 
-To address the threat model outlined in Section [6.1.1\. Threat model](#smepmp%5Fthreat), this extension introduces the `RLB`, `MMWP`, and `MML` fields in the `mseccfg` CSR and their associated rules. See [Machine security configuration (mseccfg) register](machine.html#norm:mseccfg%5Fenc%5Fimg) for the detailed specification of these fields and the corresponding rules.
+To address the threat model outlined in Section [5.1.1\. Threat model](#smepmp%5Fthreat), this extension introduces the `RLB`, `MMWP`, and `MML` fields in the `mseccfg` CSR and their associated rules. See [Machine security configuration (mseccfg) register](machine.html#norm:mseccfg%5Fenc%5Fimg) for the detailed specification of these fields and the corresponding rules.
 
 The physical memory protection rules when `mseccfg.MML` is set to 1 are summarized in the truth table below.
 
@@ -49,6 +49,6 @@ A visual representation of these rules is as follows:
 
 ![smepmp visual representation](_images/smepmp-visual-representation.png) 
 
-### [](#6-1-3-smepmp-software-discovery)6.1.3\. Smepmp software discovery
+### [](#5-1-3-smepmp-software-discovery)5.1.3\. Smepmp software discovery
 
 Since all fields defined in `mseccfg` as part of this extension are locked when set (`MMWP`/`MML`) or locked when cleared (`RLB`), software can’t poll them for determining the presence of Smepmp. It is expected that BootROM will set `mseccfg.MMWP` and/or `mseccfg.MML` during early boot, before jumping to the firmware, so that the firmware will be able to determine the presence of Smepmp by reading `mseccfg` and checking the state of `mseccfg.MMWP` and `mseccfg.MML`.

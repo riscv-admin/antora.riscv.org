@@ -1,6 +1,6 @@
-# 2.1. RISC-V IO Mapping Table (RIMT)
+# 1.1. RISC-V IO Mapping Table (RIMT)
 
-## [](#2-1-risc-v-io-mapping-table-rimt)2.1\. RISC-V IO Mapping Table (RIMT)
+## [](#1-1-risc-v-io-mapping-table-rimt)1.1\. RISC-V IO Mapping Table (RIMT)
 
 The [Table 1](#rimt) shows the structure of RIMT. Apart from the basic header, RIMT can contain several nodes. Each node represents a component, which can be an IOMMU, a PCIe root complex, or a platform device.
 
@@ -21,7 +21,7 @@ __Table 1\. RISC-V IO Mapping Table__
 | Reserved                  | 4               | 44              | Must be zero.                                                                                                                                                                              |
 | RIMT Node Array           | \-              | 48              | List of RIMT nodes in the platform. Nodes listed may be one of the types listed in[Table 2](#rimt%5Fnode%5Fstructure). This structure for node types is defined in the following sections. |
 
-### [](#2-1-1-rimt-node-structure-types)2.1.1\. RIMT node structure types
+### [](#1-1-1-rimt-node-structure-types)1.1.1\. RIMT node structure types
 
 RIMT node structures can be broadly classified as two types: one is the actual IOMMU node structure and the other is the device node structure for devices bound to an IOMMU. The device node structure can be further classified as PCIe root complex and platform device structures bound to an IOMMU. For example, in a system with a single IOMMU, RIMT should have at least two nodes. One for the IOMMU itself and another for the devices behind this particular IOMMU. [Table 2](#rimt%5Fnode%5Fstructure) lists possible types for those structures.
 
@@ -33,7 +33,7 @@ __Table 2\. RIMT Node Types__
 | 2         | Platform Device Node. See [Table 7](#platform%5Fnode%5Fstructure) |
 | 3-255     | Reserved                                                          |
 
-#### [](#2-1-1-1-iommu-node)2.1.1.1\. IOMMU Node
+#### [](#1-1-1-1-iommu-node)1.1.1.1\. IOMMU Node
 
 The IOMMU can be implemented as a platform device or as a PCIe device. The IOMMU node is the structure in RIMT used to report the configuration and capabilities of each IOMMU in the system.
 
@@ -62,7 +62,7 @@ __Table 4\. Interrupt Wire Structure__
 | Interrupt Number | 4               | 0               | Interrupt number. This should be a Global System Interrupt (GSI) number. These are wired interrupts with GSI numbers mapping to a particular PLIC or APLIC. The OSPM determines the mapping of the Global System Interrupts by determining how many interrupt inputs each PLIC or APLIC supports and by determining the global system interrupt base for each PLIC / APLIC. |
 | Flags            | 4               | 4               | Bit 0: Interrupt Mode 0: Edge Triggered. 1: Level Triggered. Bit 1: Interrupt Polarity 0: Active Low. 1: Active High. Bit \[31-2\]: Reserved, must be zero                                                                                                                                                                                                                  |
 
-#### [](#2-1-1-2-pcie-root-complex-node)2.1.1.2\. PCIe Root Complex Node
+#### [](#1-1-1-2-pcie-root-complex-node)1.1.1.2\. PCIe Root Complex Node
 
 The PCIe root complex node is the logical PCIe root complex that can be used to represent an entire physical root complex, an RCiEP/set of RCiEPs, a standalone PCIe device, or the hierarchy following a PCIe host bridge.
 
@@ -97,7 +97,7 @@ __Table 6\. ID Mapping Structure__
 | Destination IOMMU Offset   | 4               | 12              | The destination IOMMU that is associated with these IDs. This field is the offset of the RISC-V IOMMU node from the start of the RIMT table.                                                                                                                                                                             |
 | Flags                      | 4               | 16              | Bit 0: ATS Required 0: ATS does not need to be enabled for the device to function. 1: ATS needs to be enabled for the device to function. Bit 1: PRI Required 0: PRI does not need to be enabled for the device to function. 1: PRI needs to be enabled for the device to function. Bit \[31-2\]: Reserved, must be zero |
 
-#### [](#2-1-1-3-platform-device-node)2.1.1.3\. Platform Device Node
+#### [](#1-1-1-3-platform-device-node)1.1.1.3\. Platform Device Node
 
 There may be non-PCIe platform devices that are enumerated by using Differentiated System Description Table(DSDT). These devices can have one or more source IDs in the mapping table, but they can have their own scheme to define the source IDs. Hence, those source IDs can be unique to only the ACPI platform device. The interpretation of those source IDs is expected to be managed by the platform device’s device driver.
 

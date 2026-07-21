@@ -1,13 +1,13 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#priv-intro)1.1\. Introduction
+## [](#priv-intro)Introduction
 
 This document describes the RISC-V privileged architecture, which covers all aspects of RISC-V systems beyond the unprivileged ISA, including privileged instructions as well as additional functionality required for running operating systems and attaching external devices.
 
 | |  Commentary on our design decisions is formatted as in this paragraph, and can be skipped if the reader is only interested in the specification itself. We briefly note that the entire privileged-level design described in this document could be replaced with an entirely different privileged-level design without changing the unprivileged ISA, and possibly without even changing the ABI. In particular, this privileged specification was designed to run existing popular operating systems, and so embodies the conventional level-based protection model. Alternate privileged specifications could embody other more flexible protection-domain models. For simplicity of expression, the text is written as if this was the only possible privileged architecture. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#1-1-1-risc-v-privileged-software-stack-terminology)1.1.1\. RISC-V Privileged Software Stack Terminology
+### [](#risc-v-privileged-software-stack-terminology)RISC-V Privileged Software Stack Terminology
 
 This section describes the terminology we use to describe components of the wide range of possible privileged software stacks for RISC-V.
 
@@ -32,7 +32,7 @@ The rightmost configuration shows a virtual machine monitor configuration where 
 
 Hardware implementations of the RISC-V ISA will generally require additional features beyond the privileged ISA to support the various execution environments (AEE, SEE, or HEE).
 
-### [](#1-1-2-privilege-levels)1.1.2\. Privilege Levels
+### [](#privilege-levels)Privilege Levels
 
 At any time, a RISC-V hardware thread (_hart_) is running at some privilege level encoded as a mode in one or more CSRs (control and status registers). Three RISC-V privilege levels are currently definedas shown in [Table 1](#norm:priv-levels-tbl).
 
@@ -69,6 +69,6 @@ A hart normally runs application code in U-mode until some trap (e.g., a supervi
 | |  Horizontal traps can be implemented as vertical traps that return control to a horizontal trap handler in the less-privileged mode. |
 | -------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#1-1-3-debug-mode)1.1.3\. Debug Mode
+### [](#debug-mode)Debug Mode
 
 Implementations may also include a debug mode to support off-chip debugging and/or manufacturing test. Debug mode (D-mode) can be considered an additional privilege mode, with even more access than M-mode. The separate debug specification describes operation of a RISC-V hart in debug mode. Debug mode reserves a few CSR addresses that are only accessible in D-mode, and may also reserve some portions of the physical address space on a platform.

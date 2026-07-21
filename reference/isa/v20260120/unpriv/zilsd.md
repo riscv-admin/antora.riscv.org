@@ -1,6 +1,6 @@
-# 35.1. "Zilsd", "Zclsd" Extensions for Load/Store pair for RV32, Version 1.0
+# 34.1. "Zilsd", "Zclsd" Extensions for Load/Store pair for RV32, Version 1.0
 
-## [](#sec:zilsd)35.1\. "Zilsd", "Zclsd" Extensions for Load/Store pair for RV32, Version 1.0
+## [](#sec:zilsd)34.1\. "Zilsd", "Zclsd" Extensions for Load/Store pair for RV32, Version 1.0
 
 The Zilsd & Zclsd extensions provide load/store pair instructions for RV32, reusing the existing RV64 doubleword load/store instruction encodings.
 
@@ -8,7 +8,7 @@ Operands containing `src` for store instructions and `dest` for load instruction
 
 Regardless of endianness, the lower-numbered register holds the low-order bits, and the higher-numbered register holds the high-order bits: e.g., bits 31:0 of an operand in Zilsd might be held in register `x14`, with bits 63:32 of that operand held in `x15`.
 
-### [](#zilsd)35.1.1\. Load/Store pair instructions (Zilsd)
+### [](#zilsd)34.1.1\. Load/Store pair instructions (Zilsd)
 
 The Zilsd extension adds the following RV32-only instructions:
 
@@ -34,7 +34,7 @@ To ensure resumable trap handling is possible for the load instructions, the bas
 | |  If an implementation performs a doubleword load access atomically and the register file implements write-back for even/odd register pairs, the mentioned atomicity requirements are inherently fulfilled. Otherwise, an implementation either needs to delay the write-back until the write can be performed atomically, or order sequential writes to the registers to ensure the requirement above is satisfied. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#zclsd)35.1.2\. Compressed Load/Store pair instructions (Zclsd)
+### [](#zclsd)34.1.2\. Compressed Load/Store pair instructions (Zclsd)
 
 Zclsd depends on Zilsd and Zca. It has overlapping encodings with Zcf and is thus incompatible with Zcf.
 
@@ -47,7 +47,7 @@ Zclsd adds the following RV32-only instructions:
 | yes  | no   | c.ld rd', offset(rs1')  | [Load doubleword to register pair, 16-bit encoding](#insns-cld)                          |
 | yes  | no   | c.sd rs2', offset(rs1') | [Store doubleword from register pair, 16-bit encoding](#insns-csd)                       |
 
-### [](#35-1-3-use-of-x0-as-operand)35.1.3\. Use of x0 as operand
+### [](#34-1-3-use-of-x0-as-operand)34.1.3\. Use of x0 as operand
 
 LD instructions with destination `x0` are processed as any other load, but the result is discarded entirely and x1 is not written. For C.LDSP, usage of `x0` as the destination is reserved.
 
@@ -55,7 +55,7 @@ If using `x0` as `src` of SD or C.SDSP, the entire 64-bit operand is zero — i.
 
 C.LD and C.SD instructions can only use `x8-15`.
 
-### [](#35-1-4-exception-handling)35.1.4\. Exception Handling
+### [](#34-1-4-exception-handling)34.1.4\. Exception Handling
 
 For the purposes of RVWMO and exception handling, LD and SD instructions are considered to be misaligned loads and stores, with one additional constraint:an LD or SD instruction whose effective address is a multiple of 4 gives rise to two 4-byte memory operations.
 
@@ -65,9 +65,9 @@ For the purposes of RVWMO and exception handling, LD and SD instructions are con
 | |  Software should make no assumptions about the number or order of accesses these instructions might give rise to, beyond the 4-byte constraint mentioned above. For example, an interrupted store might overwrite the same bytes upon return from the interrupt handler. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#35-1-5-instructions)35.1.5\. Instructions
+### [](#34-1-5-instructions)34.1.5\. Instructions
 
-#### [](#insns-ld)35.1.5.1\. ld
+#### [](#insns-ld)34.1.5.1\. ld
 
 Synopsis
 
@@ -87,7 +87,7 @@ Loads a 64-bit value into registers `rd` and `rd+1`. The effective address is ob
 
 Included in: [Zilsd](#zilsd)
 
-#### [](#insns-sd)35.1.5.2\. sd
+#### [](#insns-sd)34.1.5.2\. sd
 
 Synopsis
 
@@ -107,7 +107,7 @@ Stores a 64-bit value from registers `rs2` and `rs2+1`. The effective address is
 
 Included in: [Zilsd](#zilsd)
 
-#### [](#insns-cldsp)35.1.5.3\. c.ldsp
+#### [](#insns-cldsp)34.1.5.3\. c.ldsp
 
 Synopsis
 
@@ -127,7 +127,7 @@ Loads stack-pointer relative 64-bit value into registers `rd'` and `rd'+1`. It c
 
 Included in: [Zclsd](#zclsd)
 
-#### [](#insns-csdsp)35.1.5.4\. c.sdsp
+#### [](#insns-csdsp)34.1.5.4\. c.sdsp
 
 Synopsis
 
@@ -147,7 +147,7 @@ Stores a stack-pointer relative 64-bit value from registers `rs2'` and `rs2'+1`.
 
 Included in: [Zclsd](#zclsd)
 
-#### [](#insns-cld)35.1.5.5\. c.ld
+#### [](#insns-cld)34.1.5.5\. c.ld
 
 Synopsis
 
@@ -167,7 +167,7 @@ Loads a 64-bit value into registers `rd'` and `rd'+1`. It computes an effective 
 
 Included in: [Zclsd](#zclsd)
 
-#### [](#insns-csd)35.1.5.6\. c.sd
+#### [](#insns-csd)34.1.5.6\. c.sd
 
 Synopsis
 

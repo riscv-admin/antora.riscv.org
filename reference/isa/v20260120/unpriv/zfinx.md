@@ -1,6 +1,6 @@
-# 27.1. "Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0
+# 26.1. "Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0
 
-## [](#sec:zfinx)27.1\. "Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0
+## [](#sec:zfinx)26.1\. "Zfinx", "Zdinx", "Zhinx", "Zhinxmin" Extensions for Floating-Point in Integer Registers, Version 1.0
 
 This chapter defines the "Zfinx" extension (pronounced "z-f-in-x") that provides instructions similar to those in the standard floating-point F extension for single-precision floating-point instructions but which operate on the `x` registers instead of the `f`registers. This chapter also defines the "Zdinx", "Zhinx", and "Zhinxmin" extensions that provide similar instructions for other floating-point precisions.
 
@@ -16,7 +16,7 @@ The Zfinx variants of these F-extension instructions have the same semantics, ex
 
 The Zfinx extension depends on the "Zicsr" extension for control and status register access.
 
-### [](#27-1-1-processing-of-narrower-values)27.1.1\. Processing of Narrower Values
+### [](#26-1-1-processing-of-narrower-values)26.1.1\. Processing of Narrower Values
 
 Floating-point operands of width _w_ < XLEN bits occupy bits _w_\-1:0 of an `x` register. Floating-point operations on _w_\-bit operands ignore operand bits XLEN-1: _w_.
 
@@ -25,7 +25,7 @@ Floating-point operations that produce _w_ < XLEN-bit results fill bits XLEN-1: 
 | |  The NaN-boxing scheme employed in the f registers was designed to efficiently support recoded floating-point formats. Recoding is less practical for Zfinx, though, since the same registers hold both floating-point and integer operands. Hence, the need for NaN boxing is diminished. Sign-extending 32-bit floating-point numbers when held in RV64 xregisters is compatible with the existing RV64 calling conventions, which leave bits 63-32 undefined when passing a 32-bit floating point value in x registers. To keep the architecture more regular, we extend this pattern to 16-bit floating-point numbers in both RV32 and RV64. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#27-1-2-zdinx)27.1.2\. Zdinx
+### [](#26-1-2-zdinx)26.1.2\. Zdinx
 
 The Zdinx extension provides analogous double-precision floating-point instructions. The Zdinx extension depends upon the Zfinx extension.
 
@@ -33,7 +33,7 @@ The Zdinx extension adds all of the instructions that the D extension adds, _exc
 
 The Zdinx variants of these D-extension instructions have the same semantics, except that whenever such an instruction would have accessed an `f` register, it instead accesses the `x` register with the same number.
 
-### [](#27-1-3-processing-of-wider-values)27.1.3\. Processing of Wider Values
+### [](#26-1-3-processing-of-wider-values)26.1.3\. Processing of Wider Values
 
 Double-precision operands in RV32Zdinx are held in aligned `x`\-register pairs, i.e., register numbers must be even. Use of misaligned (odd-numbered) registers for double-width floating-point operands is_reserved_.
 
@@ -46,7 +46,7 @@ When `x0` is used as a double-width floating-point operand, the entire operand i
 | |  Load-pair and store-pair instructions are contained in a separate extension (see [Extensions for Load/Store pair for RV32](zilsd.html#sec:zilsd)). In case this is not available, transferring double-precision operands in RV32Zdinx from or to memory requires two loads or stores. Register moves need only a single FSGNJ.D instruction, however. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#27-1-4-zhinx)27.1.4\. Zhinx
+### [](#26-1-4-zhinx)26.1.4\. Zhinx
 
 The Zhinx extension provides analogous half-precision floating-point instructions. The Zhinx extension depends upon the Zfinx extension.
 
@@ -54,7 +54,7 @@ The Zhinx extension adds all of the instructions that the Zfh extension adds, _e
 
 The Zhinx variants of these Zfh-extension instructions have the same semantics, except that whenever such an instruction would have accessed an `f` register, it instead accesses the `x` register with the same number.
 
-### [](#27-1-5-zhinxmin)27.1.5\. Zhinxmin
+### [](#26-1-5-zhinxmin)26.1.5\. Zhinxmin
 
 The Zhinxmin extension provides minimal support for 16-bit half-precision floating-point instructions that operate on the `x`registers. The Zhinxmin extension depends upon the Zfinx extension.
 
@@ -63,7 +63,7 @@ The Zhinxmin extension includes the following instructions from the Zhinx extens
 | |  In the future, an RV64Zqinx quad-precision extension could be defined analogously to RV32Zdinx. An RV32Zqinx extension could also be defined but would require quad-register groups. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#27-1-6-privileged-architecture-implications)27.1.6\. Privileged Architecture Implications
+### [](#26-1-6-privileged-architecture-implications)26.1.6\. Privileged Architecture Implications
 
 In the standard privileged architecture defined in Volume II, the`mstatus` field FS is hardwired to 0 if the Zfinx extension is implemented, and FS no longer affects the trapping behavior of floating-point instructions or `fcsr` accesses.
 

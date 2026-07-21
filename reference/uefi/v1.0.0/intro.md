@@ -1,10 +1,10 @@
-# 3.1. Introduction
+# 2.1. Introduction
 
-## [](#intro)3.1\. Introduction
+## [](#intro)2.1\. Introduction
 
 This specification details all new UEFI protocols required only for RISC-V platforms. These protocol specs are maintained by RISC-V community.
 
-## [](#3-2-revision-history)3.2\. Revision History
+## [](#2-2-revision-history)2.2\. Revision History
 
 | Date       | Revision  | Change                                                                                                                                                                                          |
 | ---------- | --------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,8 +1,8 @@
-# 20.1. History
+# 19.1. History
 
-## [](#20-1-history)20.1\. History
+## [](#19-1-history)19.1\. History
 
-### [](#20-1-1-research-funding-at-uc-berkeley)20.1.1\. Research Funding at UC Berkeley
+### [](#19-1-1-research-funding-at-uc-berkeley)19.1.1\. Research Funding at UC Berkeley
 
 Development of the RISC-V architecture and implementations has been partially funded by the following sponsors.
 

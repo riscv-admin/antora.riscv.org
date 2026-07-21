@@ -1,22 +1,22 @@
-# 31.1. "V" Standard Extension for Vector Operations, Version 1.0
+# 30.1. "V" Standard Extension for Vector Operations, Version 1.0
 
-## [](#vector)31.1\. "V" Standard Extension for Vector Operations, Version 1.0
+## [](#vector)30.1\. "V" Standard Extension for Vector Operations, Version 1.0
 
 | |  _The base vector extension is intended to provide general support for data-parallel execution within the 32-bit instruction encoding space, with later vector extensions supporting richer functionality for certain domains._ |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#31-1-1-introduction)31.1.1\. Introduction
+### [](#30-1-1-introduction)30.1.1\. Introduction
 
-[31.1.18\. Standard Vector Extensions](#sec-vector-extensions) lists the standard vector extensions and which instructions and element widths are supported by each extension.
+[30.1.18\. Standard Vector Extensions](#sec-vector-extensions) lists the standard vector extensions and which instructions and element widths are supported by each extension.
 
-### [](#31-1-2-implementation-defined-constant-parameters)31.1.2\. Implementation-defined Constant Parameters
+### [](#30-1-2-implementation-defined-constant-parameters)30.1.2\. Implementation-defined Constant Parameters
 
 Each hart supporting a vector extension defines two parameters:
 
 1. The maximum size in bits of a vector element that any operation can produce or consume, _ELEN_ ≥ 8, which must be a power of 2.
 2. The number of bits in a single vector register, _VLEN_ ≥ ELEN, which must be a power of 2, and must be no greater than 216.
 
-Standard vector extensions ([31.1.18\. Standard Vector Extensions](#sec-vector-extensions)) and architecture profiles may set further constraints on _ELEN_ and _VLEN_.
+Standard vector extensions ([30.1.18\. Standard Vector Extensions](#sec-vector-extensions)) and architecture profiles may set further constraints on _ELEN_ and _VLEN_.
 
 | |  Future extensions may allow ELEN > VLEN by holding one element using bits from multiple vector registers, but this extension does not include this option. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -32,7 +32,7 @@ The vector extension supports writing binary code that under certain constraints
 | |  In general, thread contexts with active vector state cannot be migrated during execution between harts that have any difference in VLEN or ELEN parameters. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#31-1-3-vector-extension-programmers-model)31.1.3\. Vector Extension Programmer’s Model
+### [](#30-1-3-vector-extension-programmers-model)30.1.3\. Vector Extension Programmer’s Model
 
 The vector extension adds 32 vector registers, and seven unprivileged CSRs (`vstart`, `vxsat`, `vxrm`, `vcsr`, `vtype`, `vl`, `vlenb`) to a base scalar RISC-V ISA.
 
@@ -50,13 +50,13 @@ __Table 1\. New vector CSRs__
 | |  The four CSR numbers 0x00B\-0x00E are tentatively reserved for future vector CSRs, some of which may be mirrored into vcsr. |
 | ------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-3-1-vector-registers)31.1.3.1\. Vector Registers
+#### [](#30-1-3-1-vector-registers)30.1.3.1\. Vector Registers
 
 The vector extension adds 32 architectural vector registers,`v0`\-`v31` to the base scalar RISC-V ISA.
 
 Each vector register has a fixed VLEN bits of state.
 
-#### [](#31-1-3-2-vector-context-status-in-mstatus)31.1.3.2\. Vector Context Status in `mstatus`
+#### [](#30-1-3-2-vector-context-status-in-mstatus)30.1.3.2\. Vector Context Status in `mstatus`
 
 A vector context status field, `VS`, is added to `mstatus[10:9]` and shadowed in `sstatus[10:9]`. It is defined analogously to the floating-point context status field, `FS`.
 
@@ -74,7 +74,7 @@ Implementations may have a writable `misa.V` field. Analogous to the way in whic
 | |  Allowing mstatus.VS to exist when misa.V is clear, enables vector emulation and simplifies handling of mstatus.VS in systems with writable misa.V. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-3-3-vector-context-status-in-vsstatus)31.1.3.3\. Vector Context Status in `vsstatus`
+#### [](#30-1-3-3-vector-context-status-in-vsstatus)30.1.3.3\. Vector Context Status in `vsstatus`
 
 When the hypervisor extension is present, a vector context status field, `VS`, is added to `vsstatus[10:9]`. It is defined analogously to the floating-point context status field, `FS`.
 
@@ -88,7 +88,7 @@ If `mstatus.VS` is Dirty, `mstatus.SD` is 1; otherwise, `mstatus.SD` is set in a
 
 For implementations with a writable `misa.V` field, the `vsstatus.VS` field may exist even if `misa.V` is clear.
 
-#### [](#31-1-3-4-vector-type-vtype-register)31.1.3.4\. Vector Type (`vtype`) Register
+#### [](#30-1-3-4-vector-type-vtype-register)30.1.3.4\. Vector Type (`vtype`) Register
 
 The read-only XLEN-wide _vector_ _type_ CSR, `vtype` provides the default type used to interpret the contents of the vector register file, and can only be updated by `vset_i_vl_i_` instructions. The vector type determines the organization of elements in each vector register, and how multiple vector registers are grouped. The`vtype` register also indicates how masked-off elements and elements past the current vector length in a vector result are handled.
 
@@ -121,7 +121,7 @@ __Table 2\. vtype register layout__
 | |  The primary motivation for the vtype CSR is to allow the vector instruction set to fit into a 32-bit instruction encoding space. A separate vset\_i\_vl\_i\_ instruction can be used to set vland/or vtype fields before execution of a vector instruction, and implementations may choose to fuse these two instructions into a single internal vector microop. In many cases, the vl and vtype values can be reused across multiple instructions, reducing the static and dynamic instruction overhead from the vset\_i\_vl\_i\_ instructions. It is anticipated that a future extended 64-bit instruction encoding would allow these fields to be specified statically in the instruction encoding. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#31-1-3-4-1-vector-selected-element-width-vsew20)31.1.3.4.1\. Vector Selected Element Width (`vsew[2:0]`)
+##### [](#30-1-3-4-1-vector-selected-element-width-vsew20)30.1.3.4.1\. Vector Selected Element Width (`vsew[2:0]`)
 
 The value in `vsew` sets the dynamic _selected_ _element_ _width_(SEW). By default, a vector register is viewed as being divided into VLEN/SEW elements.
 
@@ -150,7 +150,7 @@ The supported element width may vary with LMUL.
 | |  The current set of standard vector extensions do not vary supported element width with LMUL. Some future extensions may support larger SEWs only when bits from multiple vector registers are combined using LMUL. In this case, software that relies on large SEW should attempt to use the largest LMUL, and hence the fewest vector register groups, to increase the number of implementations on which the code will run. The vill bit in vtype should be checked after settingvtype to see if the configuration is supported, and an alternate code path should be provided if it is not. Alternatively, a profile can mandate the minimum SEW at each LMUL setting. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#vector-register-grouping)31.1.3.4.2\. Vector Register Grouping (`vlmul[2:0]`)
+##### [](#vector-register-grouping)30.1.3.4.2\. Vector Register Grouping (`vlmul[2:0]`)
 
 Multiple vector registers can be grouped together, so that a single vector instruction can operate on multiple vector registers. The term_vector_ _register_ _group_ is used herein to refer to one or more vector registers used as a single operand to a vector instruction. Vector register groups can be used to provide greater execution efficiency for longer application vectors, but the main reason for their inclusion is to allow double-width or larger elements to be operated on with the same vector length as single-width elements. The vector length multiplier, _LMUL_, when greater than 1, represents the default number of vector registers that are combined to form a vector register group. Implementations must support LMUL integer values of 1, 2, 4, and 8.
 
@@ -200,9 +200,9 @@ When LMUL=8, the vector register group contains eight vector registers, and inst
 
 Mask registers are always contained in a single vector register, regardless of LMUL.
 
-##### [](#sec-agnostic)31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic `vta` and `vma`
+##### [](#sec-agnostic)30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic `vta` and `vma`
 
-These two bits modify the behavior of destination tail elements and destination inactive masked-off elements respectively during the execution of vector instructions. The tail and inactive sets contain element positions that are not receiving new results during a vector operation, as defined in [31.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
+These two bits modify the behavior of destination tail elements and destination inactive masked-off elements respectively during the execution of vector instructions. The tail and inactive sets contain element positions that are not receiving new results during a vector operation, as defined in [30.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
 
 All systems must support all four options:
 
@@ -254,7 +254,7 @@ The assembly syntax adds two mandatory flags to the `vsetvli` instruction:
 | |  Prior to v0.9, when these flags were not specified on avsetvli, they defaulted to mask-undisturbed/tail-undisturbed. The use of vsetvli without these flags is deprecated, however, and specifying a flag setting is now mandatory. The default should perhaps be tail-agnostic/mask-agnostic, so software has to specify when it cares about the non-participating elements, but given the historical meaning of the instruction prior to introduction of these flags, it was decided to always require them in future assembly code. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#31-1-3-4-4-vector-type-illegal-vill)31.1.3.4.4\. Vector Type Illegal (`vill`)
+##### [](#30-1-3-4-4-vector-type-illegal-vill)30.1.3.4.4\. Vector Type Illegal (`vill`)
 
 The `vill` bit is used to encode that a previous `vset_i_vl_i_`instruction attempted to write an unsupported value to `vtype`.
 
@@ -268,16 +268,16 @@ If the `vill` bit is set, then any attempt to execute a vector instruction that 
 
 When the `vill` bit is set, the other XLEN-1 bits in `vtype` shall be zero.
 
-#### [](#31-1-3-5-vector-length-vl-register)31.1.3.5\. Vector Length (`vl`) Register
+#### [](#30-1-3-5-vector-length-vl-register)30.1.3.5\. Vector Length (`vl`) Register
 
 The _XLEN_\-bit-wide read-only `vl` CSR can only be updated by the`vset_i_vl_i_` instructions, and the _fault-only-first_ vector load instruction variants.
 
-The `vl` register holds an unsigned integer specifying the number of elements to be updated with results from a vector instruction, as further detailed in [31.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
+The `vl` register holds an unsigned integer specifying the number of elements to be updated with results from a vector instruction, as further detailed in [30.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
 
 | |  The number of bits implemented in vl depends on the implementation’s maximum vector length of the smallest supported type. The smallest vector implementation with VLEN=32 and supporting SEW=8 would need at least six bits in vl to hold the values 0-32 (VLEN=32, with LMUL=8 and SEW=8, yields VLMAX=32). |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-3-6-vector-byte-length-vlenb-register)31.1.3.6\. Vector Byte Length (`vlenb`) Register
+#### [](#30-1-3-6-vector-byte-length-vlenb-register)30.1.3.6\. Vector Byte Length (`vlenb`) Register
 
 The _XLEN_\-bit-wide read-only CSR `vlenb` holds the value VLEN/8, i.e., the vector register length in bytes.
 
@@ -287,9 +287,9 @@ The _XLEN_\-bit-wide read-only CSR `vlenb` holds the value VLEN/8, i.e., the vec
 | |  Without this CSR, several instructions are needed to calculate VLEN in bytes, and the code has to disturb current vl and vtypesettings which require them to be saved and restored. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-3-7-vector-start-index-vstart-register)31.1.3.7\. Vector Start Index (`vstart`) Register
+#### [](#30-1-3-7-vector-start-index-vstart-register)30.1.3.7\. Vector Start Index (`vstart`) Register
 
-The _XLEN_\-bit-wide read-write `vstart` CSR specifies the index of the first element to be executed by a vector instruction, as described in[31.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
+The _XLEN_\-bit-wide read-write `vstart` CSR specifies the index of the first element to be executed by a vector instruction, as described in[30.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions](#sec-inactive-defs).
 
 Normally, `vstart` is only written by hardware on a trap on a vector instruction, with the `vstart` value representing the element on which the trap was taken (either a synchronous exception or an asynchronous interrupt), and at which execution should resume after a resumable trap is handled.
 
@@ -323,7 +323,7 @@ Implementations are permitted to raise illegal-instruction exceptions when attem
 | |  When migrating a software thread between two harts with different microarchitectures, the vstart value might not be supported by the new hart microarchitecture. The runtime on the receiving hart might then have to emulate instruction execution up to the next supported vstart element position. Alternatively, migration events can be constrained to only occur at mutually supported vstartlocations. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-3-8-vector-fixed-point-rounding-mode-vxrm-register)31.1.3.8\. Vector Fixed-Point Rounding Mode (`vxrm`) Register
+#### [](#30-1-3-8-vector-fixed-point-rounding-mode-vxrm-register)30.1.3.8\. Vector Fixed-Point Rounding Mode (`vxrm`) Register
 
 The vector fixed-point rounding-mode register holds a two-bit read-write rounding-mode field in the least-significant bits (`vxrm[1:0]`). The upper bits, `vxrm[XLEN-1:2]`, should be written as zeros.
 
@@ -349,13 +349,13 @@ roundoff_signed(v, d) = (signed(v) >> d) + r
 
 are used to represent this operation in the instruction descriptions below.
 
-#### [](#31-1-3-9-vector-fixed-point-saturation-flag-vxsat)31.1.3.9\. Vector Fixed-Point Saturation Flag (`vxsat`)
+#### [](#30-1-3-9-vector-fixed-point-saturation-flag-vxsat)30.1.3.9\. Vector Fixed-Point Saturation Flag (`vxsat`)
 
 The `vxsat` CSR has a single read-write least-significant bit (`vxsat[0]`) that indicates if a fixed-point instruction has had to saturate an output value to fit into a destination format. Bits `vxsat[XLEN-1:1]` should be written as zeros.
 
 The `vxsat` bit is mirrored in `vcsr`.
 
-#### [](#31-1-3-10-vector-control-and-status-vcsr-register)31.1.3.10\. Vector Control and Status (`vcsr`) Register
+#### [](#30-1-3-10-vector-control-and-status-vcsr-register)30.1.3.10\. Vector Control and Status (`vcsr`) Register
 
 The `vxrm` and `vxsat` separate CSRs can also be accessed via fields in the _XLEN_\-bit-wide vector control and status CSR, `vcsr`.
 
@@ -366,7 +366,7 @@ __Table 6\. vcsr layout__
 | 2:1      | vxrm\[1:0\] | Fixed-point rounding mode           |
 | 0        | vxsat       | Fixed-point accrued saturation flag |
 
-#### [](#31-1-3-11-state-of-vector-extension-at-reset)31.1.3.11\. State of Vector Extension at Reset
+#### [](#30-1-3-11-state-of-vector-extension-at-reset)30.1.3.11\. State of Vector Extension at Reset
 
 The vector extension must have a consistent state at reset. In particular, `vtype` and `vl` must have values that can be read and then restored with a single `vsetvl` instruction.
 
@@ -380,7 +380,7 @@ The `vstart`, `vxrm`, `vxsat` CSRs can have arbitrary values at reset.
 
 The vector registers can have arbitrary values at reset.
 
-### [](#31-1-4-mapping-of-vector-elements-to-vector-register-state)31.1.4\. Mapping of Vector Elements to Vector Register State
+### [](#30-1-4-mapping-of-vector-elements-to-vector-register-state)30.1.4\. Mapping of Vector Elements to Vector Register State
 
 The following diagrams illustrate how different width elements are packed into the bytes of a vector register depending on the current SEW and LMUL settings, as well as implementation VLEN. Elements are packed into each vector register with the least-significant byte in the lowest-numbered bits.
 
@@ -389,7 +389,7 @@ The mapping was chosen to provide the simplest and most portable model for softw
 | |  For example, microarchitectures can track the EEW with which a vector register was written, and then insert additional scrambling operations to rearrange data if the register is accessed with a different EEW. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-4-1-mapping-for-lmul-1)31.1.4.1\. Mapping for LMUL = 1
+#### [](#30-1-4-1-mapping-for-lmul-1)30.1.4.1\. Mapping for LMUL = 1
 
 When LMUL=1, elements are simply packed in order from the least-significant to most-significant bits of the vector register.
 
@@ -437,7 +437,7 @@ least-significant byte of the stored element.
  SEW=32b         7       6       5       4       3       2       1       0
  SEW=64b                 3               2               1               0
 
-#### [](#31-1-4-2-mapping-for-lmul-1)31.1.4.2\. Mapping for LMUL < 1
+#### [](#30-1-4-2-mapping-for-lmul-1)30.1.4.2\. Mapping for LMUL < 1
 
 When LMUL < 1, only the first LMUL\*VLEN/SEW elements in the vector register are used. The remaining space in the vector register is treated as part of the tail, and hence must obey the vta setting.
 
@@ -449,7 +449,7 @@ When LMUL < 1, only the first LMUL\*VLEN/SEW elements in the vector register are
  SEW=16b       -   -   -   -   -   -   1   0
  SEW=32b           -       -       -       0
 
-#### [](#31-1-4-3-mapping-for-lmul-1)31.1.4.3\. Mapping for LMUL > 1
+#### [](#30-1-4-3-mapping-for-lmul-1)30.1.4.3\. Mapping for LMUL > 1
 
 When vector registers are grouped, the elements of the vector register group are packed contiguously in element order beginning with the lowest-numbered vector register and moving to the next-highest-numbered vector register in the group once each vector register is filled.
 
@@ -511,7 +511,7 @@ When vector registers are grouped, the elements of the vector register group are
  v4*n+2              B       A       9       8
  v4*n+3              F       E       D       C
 
-#### [](#sec-mapping-mixed)31.1.4.4\. Mapping across Mixed-Width Operations
+#### [](#sec-mapping-mixed)30.1.4.4\. Mapping across Mixed-Width Operations
 
 The vector ISA is designed to support mixed-width operations without requiring additional explicit rearrangement instructions. The recommended software strategy when operating on multiple vectors with different precision values is to modify `vtype` dynamically to keep SEW/LMUL constant (and hence VLMAX constant).
 
@@ -544,17 +544,17 @@ The following table shows each possible constant SEW/LMUL operating point for lo
 
 Larger LMUL settings can also used to simply increase vector length to reduce instruction fetch and dispatch overheads in cases where fewer vector register groups are needed.
 
-#### [](#sec-mask-register-layout)31.1.4.5\. Mask Register Layout
+#### [](#sec-mask-register-layout)30.1.4.5\. Mask Register Layout
 
 A vector mask occupies only one vector register regardless of SEW and LMUL.
 
 Each element is allocated a single mask bit in a mask vector register. The mask bit for element _i_ is located in bit _i_ of the mask register, independent of SEW or LMUL.
 
-### [](#31-1-5-vector-instruction-formats)31.1.5\. Vector Instruction Formats
+### [](#30-1-5-vector-instruction-formats)30.1.5\. Vector Instruction Formats
 
 The instructions in the vector extension fit under two existing major opcodes (LOAD-FP and STORE-FP) and one new major opcode (OP-V).
 
-Vector loads and stores are encoded within the scalar floating-point load and store major opcodes (LOAD-FP/STORE-FP). The vector load and store encodings repurpose a portion of the standard scalar floating-point load/store 12-bit immediate field to provide further vector instruction encoding, with bit 25 holding the standard vector mask bit (see [31.1.5.3.1\. Mask Encoding](#sec-vector-mask-encoding)).
+Vector loads and stores are encoded within the scalar floating-point load and store major opcodes (LOAD-FP/STORE-FP). The vector load and store encodings repurpose a portion of the standard scalar floating-point load/store 12-bit immediate field to provide further vector instruction encoding, with bit 25 holding the standard vector mask bit (see [30.1.5.3.1\. Mask Encoding](#sec-vector-mask-encoding)).
 
 Format for Vector Load Instructions under LOAD-FP major opcode
 
@@ -600,7 +600,7 @@ Vector instructions can have scalar or vector source operands and produce scalar
 
 Vector loads and stores move bit patterns between vector register elements and memory. Vector arithmetic instructions operate on values held in vector register elements.
 
-#### [](#31-1-5-1-scalar-operands)31.1.5.1\. Scalar Operands
+#### [](#30-1-5-1-scalar-operands)30.1.5.1\. Scalar Operands
 
 Scalar operands can be immediates, or taken from the `x` registers, the `f` registers, or element 0 of a vector register. Scalar results are written to an `x` or `f` register or to element 0 of a vector register. Any vector register can be used to hold a scalar regardless of the current LMUL setting.
 
@@ -610,7 +610,7 @@ Scalar operands can be immediates, or taken from the `x` registers, the `f` regi
 | |  We considered but did not pursue overlaying the f registers onv registers. The adopted approach reduces vector register pressure, avoids interactions with the standard calling convention, simplifies high-performance scalar floating-point design, and provides compatibility with the Zfinx ISA option. Overlaying f with vwould provide the advantage of lowering the number of state bits in some implementations, but complicates high-performance designs and would prevent compatibility with the Zfinx ISA option. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec-vec-operands)31.1.5.2\. Vector Operands
+#### [](#sec-vec-operands)30.1.5.2\. Vector Operands
 
 Each vector operand has an _effective_ _element_ _width_ (EEW) and an_effective_ LMUL (EMUL) that is used to determine the size and location of all the elements within a vector register group. By default, for most operands of most instructions, EEW=SEW and EMUL=LMUL.
 
@@ -642,9 +642,9 @@ The largest vector register group used by an instruction can not be greater than
 
 Widened scalar values, e.g., input and output to a widening reduction operation, are held in the first element of a vector register and have EMUL=1.
 
-#### [](#31-1-5-3-vector-masking)31.1.5.3\. Vector Masking
+#### [](#30-1-5-3-vector-masking)30.1.5.3\. Vector Masking
 
-Masking is supported on many vector instructions. Element operations that are masked off (inactive) never generate exceptions. The destination vector register elements corresponding to masked-off elements are handled with either a mask-undisturbed or mask-agnostic policy depending on the setting of the `vma` bit in `vtype`([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
+Masking is supported on many vector instructions. Element operations that are masked off (inactive) never generate exceptions. The destination vector register elements corresponding to masked-off elements are handled with either a mask-undisturbed or mask-agnostic policy depending on the setting of the `vma` bit in `vtype`([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
 
 The mask value used to control execution of a masked vector instruction is always supplied by vector register `v0`.
 
@@ -661,9 +661,9 @@ The destination vector register group for a masked vector instruction cannot ove
 
 Other vector registers can be used to hold working mask values, and mask vector logical operations are provided to perform predicate calculations. 
 
-As specified in [31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic), mask destination tail elements are always treated as tail-agnostic, regardless of the setting of `vta`.
+As specified in [30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic), mask destination tail elements are always treated as tail-agnostic, regardless of the setting of `vta`.
 
-##### [](#sec-vector-mask-encoding)31.1.5.3.1\. Mask Encoding
+##### [](#sec-vector-mask-encoding)30.1.5.3.1\. Mask Encoding
 
 Where available, masking is encoded in a single-bit `vm` field in the instruction (`inst[25]`).
 
@@ -683,7 +683,7 @@ Vector masking is represented in assembler code as another vector operand, with 
 | |  The .mask suffix is not part of the assembly syntax. We only append it in contexts where a mask vector is subscripted, e.g., v0.mask\[i\]. |
 | --------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec-inactive-defs)31.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions
+#### [](#sec-inactive-defs)30.1.5.4\. Prestart, Active, Inactive, Body, and Tail Element Definitions
 
 The destination element indices operated on during a vector instruction’s execution can be divided into three disjoint subsets.
 
@@ -711,9 +711,9 @@ Instructions that write an `x` register or `f` register do so even when `vstart`
 | |  Some instructions such as vslidedown and vrgather may read indices past vl or even VLMAX in source vector register groups. The general policy is to return the value 0 when the index is greater than VLMAX in the source vector register group. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#sec-vector-config)31.1.6\. Configuration-Setting Instructions (`vsetvli`/`vsetivli`/`vsetvl`)
+### [](#sec-vector-config)30.1.6\. Configuration-Setting Instructions (`vsetvli`/`vsetivli`/`vsetvl`)
 
-One of the common approaches to handling a large number of elements is "strip mining" where each iteration of a loop handles some number of elements, and the iterations continue until all elements have been processed. The RISC-V vector specification provides direct, portable support for this approach. The application specifies the total number of elements to be processed (the application vector length or AVL) as a candidate value for `vl`, and the hardware responds via a general-purpose register with the (frequently smaller) number of elements that the hardware will handle per iteration (stored in `vl`), based on the microarchitectural implementation and the `vtype` setting. A straightforward loop structure, shown in [31.1.6.4\. Example of strip mining and changes to SEW](#example-stripmine-sew), depicts the ease with which the code keeps track of the remaining number of elements and the amount per iteration handled by hardware.
+One of the common approaches to handling a large number of elements is "strip mining" where each iteration of a loop handles some number of elements, and the iterations continue until all elements have been processed. The RISC-V vector specification provides direct, portable support for this approach. The application specifies the total number of elements to be processed (the application vector length or AVL) as a candidate value for `vl`, and the hardware responds via a general-purpose register with the (frequently smaller) number of elements that the hardware will handle per iteration (stored in `vl`), based on the microarchitectural implementation and the `vtype` setting. A straightforward loop structure, shown in [30.1.6.4\. Example of strip mining and changes to SEW](#example-stripmine-sew), depicts the ease with which the code keeps track of the remaining number of elements and the amount per iteration handled by hardware.
 
 A set of instructions is provided to allow rapid configuration of the values in `vl` and `vtype` to match application needs. The`vset_i_vl_i_` instructions set the `vtype` and `vl` CSRs based on their arguments, and write the new value of `vl` into `rd`.
 
@@ -729,7 +729,7 @@ Formats for Vector Configuration Instructions under OP-V major opcode
 
 ![svg](_images/svg-c0d30e9cda23dcb00661ffa9333a2adf72634b06.svg) 
 
-#### [](#31-1-6-1-vtype-encoding)31.1.6.1\. `vtype` encoding
+#### [](#30-1-6-1-vtype-encoding)30.1.6.1\. `vtype` encoding
 
 ![svg](_images/svg-e8a84db94ab974b97caf28e1738cb4330d74acf3.svg) 
 
@@ -770,7 +770,7 @@ Examples:
 
 The `vsetvl` variant operates similarly to `vsetvli` except that it takes a `vtype` value from `rs2` and can be used for context restore.
 
-##### [](#31-1-6-1-1-unsupported-vtype-values)31.1.6.1.1\. Unsupported `vtype` Values
+##### [](#30-1-6-1-1-unsupported-vtype-values)30.1.6.1.1\. Unsupported `vtype` Values
 
 If the `vtype` value is not supported by the implementation, then the `vill` bit is set in `vtype`, the remaining bits in `vtype` are set to zero, and the `vl` register is also set to zero.
 
@@ -784,7 +784,7 @@ Implementations must consider all bits of the `vtype` value to determine if the 
 | |  In particular, all XLEN bits of the register vtype argument to the vsetvl instruction must be checked. Implementations cannot ignore fields they do not implement. All bits must be checked to ensure that new code assuming unsupported vector features in vtypetraps instead of executing incorrectly on an older implementation. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-6-2-avl-encoding)31.1.6.2\. AVL encoding
+#### [](#30-1-6-2-avl-encoding)30.1.6.2\. AVL encoding
 
 The new vector length setting is based on AVL, which for `vsetvli` and `vsetvl` is encoded in the `rs1` and `rd`fields as follows:
 
@@ -812,7 +812,7 @@ For the `vsetivli` instruction, the AVL is encoded as a 5-bit zero-extended imme
 | |  The vsetivli instruction provides more compact code when the dimensions of vectors are small and known to fit inside the vector registers, in which case there is no strip-mining overhead. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#constraints-on-setting-vl)31.1.6.3\. Constraints on Setting `vl`
+#### [](#constraints-on-setting-vl)30.1.6.3\. Constraints on Setting `vl`
 
 The `vset_i_vl_i_` instructions first set VLMAX according to their `vtype`argument, then set `vl` obeying the following constraints:
 
@@ -830,7 +830,7 @@ The `vset_i_vl_i_` instructions first set VLMAX according to their `vtype`argume
 | |  The vl setting rules are designed to be sufficiently strict to preserve vl behavior across register spills and context swaps forAVL ≤ VLMAX, yet flexible enough to enable implementations to improve vector lane utilization for AVL > VLMAX. For example, this permits an implementation to set vl = ceil(AVL / 2)for VLMAX < AVL < 2\*VLMAX in order to evenly distribute work over the last two iterations of a strip-mine loop. Requirement 2 ensures that the first strip-mine iteration of reduction loops uses the largest vector length of all iterations, even in the case of AVL < 2\*VLMAX. This allows software to avoid needing to explicitly calculate a running maximum of vector lengths observed during a strip-mined loop. Requirement 2 also allows an implementation to set vl to VLMAX for VLMAX < AVL < 2\*VLMAX |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#example-stripmine-sew)31.1.6.4\. Example of strip mining and changes to SEW
+#### [](#example-stripmine-sew)30.1.6.4\. Example of strip mining and changes to SEW
 
 The SEW and LMUL settings can be changed dynamically to provide high throughput on mixed-width operations in a single loop.
 
@@ -857,15 +857,15 @@ loop:
     sub a0, a0, a3          # Decrement count by vl
     bnez a0, loop           # Any more?
 
-### [](#sec-vector-memory)31.1.7\. Vector Loads and Stores
+### [](#sec-vector-memory)30.1.7\. Vector Loads and Stores
 
 Vector loads and stores move values between vector registers and memory. Vector loads and stores can be masked, and they only access memory or raise exceptions for active elements. Masked vector loads do not update inactive elements in the destination vector register group, unless masked agnostic is specified (`vtype.vma`\=1).
 
 All vector loads and stores may generate and accept a non-zero `vstart` value.
 
-#### [](#31-1-7-1-vector-loadstore-instruction-encoding)31.1.7.1\. Vector Load/Store Instruction Encoding
+#### [](#30-1-7-1-vector-loadstore-instruction-encoding)30.1.7.1\. Vector Load/Store Instruction Encoding
 
-Vector loads and stores are encoded within the scalar floating-point load and store major opcodes (LOAD-FP/STORE-FP). The vector load and store encodings repurpose a portion of the standard scalar floating-point load/store 12-bit immediate field to provide further vector instruction encoding, with bit 25 holding the standard vector mask bit (see [31.1.5.3.1\. Mask Encoding](#sec-vector-mask-encoding)).
+Vector loads and stores are encoded within the scalar floating-point load and store major opcodes (LOAD-FP/STORE-FP). The vector load and store encodings repurpose a portion of the standard scalar floating-point load/store 12-bit immediate field to provide further vector instruction encoding, with bit 25 holding the standard vector mask bit (see [30.1.5.3.1\. Mask Encoding](#sec-vector-mask-encoding)).
 
 Format for Vector Load Instructions under LOAD-FP major opcode
 
@@ -892,14 +892,14 @@ Format for Vector Store Instructions under STORE-FP major opcode
 | vd\[4:0\]                 | specifies v register destination of load                                                                               |
 | vm                        | specifies whether vector masking is enabled (0 = mask enabled, 1 = mask disabled)                                      |
 | width\[2:0\]              | specifies size of memory elements, and distinguishes from FP scalar                                                    |
-| mew                       | extended memory element width. See [31.1.7.3\. Vector Load/Store Width Encoding](#sec-vector-loadstore-width-encoding) |
+| mew                       | extended memory element width. See [30.1.7.3\. Vector Load/Store Width Encoding](#sec-vector-loadstore-width-encoding) |
 | mop\[1:0\]                | specifies memory addressing mode                                                                                       |
 | nf\[2:0\]                 | specifies the number of fields in each segment, for segment load/stores                                                |
 | lumop\[4:0\]/sumop\[4:0\] | are additional fields encoding variants of unit-stride instructions                                                    |
 
 Vector memory unit-stride and constant-stride operations directly encode EEW of the data to be transferred statically in the instruction to reduce the number of `vtype` changes when accessing memory in a mixed-width routine. Indexed operations use the explicit EEW encoding in the instruction to set the size of the indices used, and use SEW/LMUL to specify the data width.
 
-#### [](#31-1-7-2-vector-loadstore-addressing-modes)31.1.7.2\. Vector Load/Store Addressing Modes
+#### [](#30-1-7-2-vector-loadstore-addressing-modes)30.1.7.2\. Vector Load/Store Addressing Modes
 
 The vector extension supports unit-stride, constant-stride, and indexed (scatter/gather) addressing modes. Vector load/store base registers and strides are taken from the GPR `x` registers.
 
@@ -969,11 +969,11 @@ __Table 12\. sumop__
 | 0            | 1           | 0 | 1 | 1 | unit-stride, mask store, EEW=8    |
 | x            | x           | x | x | x | other encodings reserved          |
 
-The `nf[2:0]` field encodes the number of fields in each segment. For regular vector loads and stores, `nf`\=0, indicating that a single value is moved between a vector register group and memory at each element position. Larger values in the `nf` field are used to access multiple contiguous fields within a segment as described below in[31.1.7.8\. Vector Load/Store Segment Instructions](#sec-aos).
+The `nf[2:0]` field encodes the number of fields in each segment. For regular vector loads and stores, `nf`\=0, indicating that a single value is moved between a vector register group and memory at each element position. Larger values in the `nf` field are used to access multiple contiguous fields within a segment as described below in[30.1.7.8\. Vector Load/Store Segment Instructions](#sec-aos).
 
 The `nf[2:0]` field also encodes the number of whole vector registers to transfer for the whole vector register load/store instructions.
 
-#### [](#sec-vector-loadstore-width-encoding)31.1.7.3\. Vector Load/Store Width Encoding
+#### [](#sec-vector-loadstore-width-encoding)30.1.7.3\. Vector Load/Store Width Encoding
 
 Vector loads and stores have an EEW encoded directly in the instruction. The corresponding EMUL is calculated as EMUL = (EEW/SEW)\*LMUL. If the EMUL would be out of range (EMUL>8 or EMUL<1/8), the instruction encoding is reserved. The vector register groups must have legal register specifiers for the selected EMUL, otherwise the instruction encoding is reserved.
 
@@ -1008,7 +1008,7 @@ Index bits is the size of each index accessed in register.
 
 The `mew` bit (`inst[28]`) when set is expected to be used to encode expanded memory sizes of 128 bits and above, but these encodings are currently reserved.
 
-#### [](#31-1-7-4-vector-unit-stride-instructions)31.1.7.4\. Vector Unit-Stride Instructions
+#### [](#30-1-7-4-vector-unit-stride-instructions)30.1.7.4\. Vector Unit-Stride Instructions
 
 # Vector unit-stride loads and stores
 
@@ -1043,7 +1043,7 @@ vsm.v vs3, (rs1)  #  Store byte vector of length ceil(vl/8)
 | |  The primary motivation to provide mask load and store is to support machines that internally rearrange data to reduce cross-datapath wiring. However, these instructions also provide a convenient mechanism to use packed bit vectors in memory as mask values, and also reduce the cost of mask spill/fill by reducing need to changevl. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-7-5-vector-constant-stride-instructions)31.1.7.5\. Vector Constant-Stride Instructions
+#### [](#30-1-7-5-vector-constant-stride-instructions)30.1.7.5\. Vector Constant-Stride Instructions
 
 # Vector constant-stride loads and stores
 
@@ -1076,7 +1076,7 @@ When `rs2!=x0` and the value of `x[rs2]=0`, the implementation must perform one 
 | |  When repeating ordered vector accesses to the same memory address are required, then an ordered indexed operation can be used. |
 | --------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-7-6-vector-indexed-instructions)31.1.7.6\. Vector Indexed Instructions
+#### [](#30-1-7-6-vector-indexed-instructions)30.1.7.6\. Vector Indexed Instructions
 
 # Vector indexed loads and stores
 
@@ -1114,7 +1114,7 @@ vsoxei64.v   vs3, (rs1), vs2, vm  # ordered 64-bit indexed store of SEW data
 | |  The indexed operations mnemonics have a "U" or "O" to distinguish between unordered and ordered, while the other vector addressing modes have no character. While this is perhaps a little less consistent, this approach minimizes disruption to existing software, as VSXEI previously meant "ordered" - and the opcode can be retained as an alias during transition to help reduce software churn. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-7-7-unit-stride-fault-only-first-loads)31.1.7.7\. Unit-stride Fault-Only-First Loads
+#### [](#30-1-7-7-unit-stride-fault-only-first-loads)30.1.7.7\. Unit-stride Fault-Only-First Loads
 
 The unit-stride fault-only-first load instructions are used to vectorize loops with data-dependent exit conditions ("while" loops). These instructions execute as a regular load except that they will only take a trap caused by a synchronous exception on element 0. If element 0 raises an exception, `vl` is not modified, and the trap is taken. If an element > 0 raises an exception, the corresponding trap is not taken, and the vector length `vl` is reduced to the index of the element that would have raised an exception.
 
@@ -1160,7 +1160,7 @@ When the fault-only-first instruction takes a trap due to an interrupt, implemen
 | |  When the fault-only-first instruction would trigger a debug data-watchpoint trap on an element after the first, implementations should not reduce vl but instead should trigger the debug trap as otherwise the event might be lost. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec-aos)31.1.7.8\. Vector Load/Store Segment Instructions
+#### [](#sec-aos)30.1.7.8\. Vector Load/Store Segment Instructions
 
 The vector load/store segment instructions move multiple contiguous fields in memory to and from consecutively numbered vector registers.
 
@@ -1199,7 +1199,7 @@ For segment loads and stores, the individual memory accesses used to access fiel
 
 The `vstart` value is in units of whole segments. If a trap occurs during access to a segment, it is implementation-defined whether a subset of the faulting segment’s accesses are performed before the trap is taken.
 
-##### [](#31-1-7-8-1-vector-unit-stride-segment-loads-and-stores)31.1.7.8.1\. Vector Unit-Stride Segment Loads and Stores
+##### [](#30-1-7-8-1-vector-unit-stride-segment-loads-and-stores)30.1.7.8.1\. Vector Unit-Stride Segment Loads and Stores
 
 The vector unit-stride load and store segment instructions move packed contiguous segments into multiple destination vector register groups.
 
@@ -1246,7 +1246,7 @@ In both cases, it is implementation-defined whether a subset of the segment is l
 
 These instructions may overwrite destination vector register group elements past the point at which a trap is reported or past the point at which vector length is trimmed.
 
-##### [](#31-1-7-8-2-vector-constant-stride-segment-loads-and-stores)31.1.7.8.2\. Vector Constant-Stride Segment Loads and Stores
+##### [](#30-1-7-8-2-vector-constant-stride-segment-loads-and-stores)30.1.7.8.2\. Vector Constant-Stride Segment Loads and Stores
 
 Vector constant-stride segment loads and stores move contiguous segments where each segment is separated by the byte-stride offset given in the `rs2`GPR argument.
 
@@ -1270,7 +1270,7 @@ vssseg2e32.v v2, (x5), x6   # Store words from v2[i] to address x5+i*x6
 
 Accesses to the fields within each segment can occur in any order, including the case where the byte stride is such that segments overlap in memory.
 
-##### [](#31-1-7-8-3-vector-indexed-segment-loads-and-stores)31.1.7.8.3\. Vector Indexed Segment Loads and Stores
+##### [](#30-1-7-8-3-vector-indexed-segment-loads-and-stores)30.1.7.8.3\. Vector Indexed Segment Loads and Stores
 
 Vector indexed segment loads and stores move contiguous segments where each segment is located at an address given by adding the scalar base address in the `rs1` field to byte offsets in vector register `vs2`. Both ordered and unordered forms are provided, where the ordered forms access segments in element order. However, even for the ordered form, accesses to the fields within an individual segment are not ordered with respect to each other.
 
@@ -1300,7 +1300,7 @@ For vector indexed segment loads, the destination vector register groups cannot 
 | |  This constraint supports restart of indexed segment loads that raise exceptions partway through loading a structure. |
 | ----------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-7-9-vector-loadstore-whole-register-instructions)31.1.7.9\. Vector Load/Store Whole Register Instructions
+#### [](#30-1-7-9-vector-loadstore-whole-register-instructions)30.1.7.9\. Vector Load/Store Whole Register Instructions
 
 Format for Vector Load Whole Register Instructions under LOAD-FP major opcode
 
@@ -1375,7 +1375,7 @@ vsetvli t1, x0, e8, m8, ta, ma     # Maximum VLMAX
 vlm.v v0, (a0)                     # Load mask register
 vsetvli x0, t0, <new type>         # Restore vl (potentially already present)
 
-### [](#31-1-8-vector-memory-alignment-constraints)31.1.8\. Vector Memory Alignment Constraints
+### [](#30-1-8-vector-memory-alignment-constraints)30.1.8\. Vector Memory Alignment Constraints
 
 If an element accessed by a vector memory instruction is not naturally aligned to the size of the element, either the element is transferred successfully or an address-misaligned exception is raised on that element.
 
@@ -1386,7 +1386,7 @@ Support for misaligned vector memory accesses is independent of an implementatio
 
 Vector misaligned memory accesses follow the same rules for atomicity as scalar misaligned memory accesses.
 
-### [](#31-1-9-vector-memory-consistency-model)31.1.9\. Vector Memory Consistency Model
+### [](#30-1-9-vector-memory-consistency-model)30.1.9\. Vector Memory Consistency Model
 
 Vector memory instructions appear to execute in program order on the local hart.
 
@@ -1409,7 +1409,7 @@ Similarly, masked vector instructions have a control dependency on the source ma
 | |  Treating the vector length and mask as control rather than data typically matches the semantics of the corresponding scalar code, where branch instructions ordinarily would have been used. Treating the mask as control allows masked vector load instructions to access memory before the mask value is known, without the need for a misspeculation-recovery mechanism. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#31-1-10-vector-arithmetic-instruction-formats)31.1.10\. Vector Arithmetic Instruction Formats
+### [](#30-1-10-vector-arithmetic-instruction-formats)30.1.10\. Vector Arithmetic Instruction Formats
 
 The vector arithmetic instructions use a new major opcode (OP-V = 10101112) which neighbors OP-FP. The three-bit `funct3` field is used to define sub-categories of vector instructions.
 
@@ -1429,7 +1429,7 @@ Formats for Vector Arithmetic Instructions under OP-V major opcode
 
 ![svg](_images/svg-473cfaddc7051d77875939d6948f66d6eb63f560.svg) 
 
-#### [](#sec-arithmetic-encoding)31.1.10.1\. Vector Arithmetic Instruction encoding
+#### [](#sec-arithmetic-encoding)30.1.10.1\. Vector Arithmetic Instruction encoding
 
 The `funct3` field encodes the operand type and source locations.
 
@@ -1505,7 +1505,7 @@ vfop.vf vd, rs1, vs2, vm  # vd[i] = f[rs1] * vd[i] + vs2[i]
 | |  For ternary multiply-add operations, the assembler syntax always places the destination vector register first, followed by either rs1or vs1, then vs2. This ordering provides a more natural reading of the assembler for these ternary operations, as the multiply operands are always next to each other. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec-widening)31.1.10.2\. Widening Vector Arithmetic Instructions
+#### [](#sec-widening)30.1.10.2\. Widening Vector Arithmetic Instructions
 
 A few vector arithmetic instructions are defined to be _widening_operations where the destination vector register group has EEW=2\*SEW and EMUL=2\*LMUL. These are generally given a `vw*` prefix on the opcode, or `vfw*` for vector floating-point instructions.
 
@@ -1527,9 +1527,9 @@ vwop.wx  vd, vs2, rs1, vm  # integer vector-scalar      vd[i] = vs2[i] op x[rs1]
 | |  The floating-point widening operations were changed to vfw\*from vwf\* to be more consistent with any scalar widening floating-point operations that will be written as fw\*. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-Widening instruction encodings must follow the constraints in[31.1.5.2\. Vector Operands](#sec-vec-operands).
+Widening instruction encodings must follow the constraints in[30.1.5.2\. Vector Operands](#sec-vec-operands).
 
-#### [](#sec-narrowing)31.1.10.3\. Narrowing Vector Arithmetic Instructions
+#### [](#sec-narrowing)30.1.10.3\. Narrowing Vector Arithmetic Instructions
 
 A few instructions are provided to convert double-width source vectors into single-width destination vectors. These instructions convert a vector register group specified by `vs2` with EEW/EMUL=2\*SEW/2\*LMUL to a vector register group with the current SEW/LMUL setting. Where there is a second source vector register group (specified by `vs1`), this has the same (narrower) width as the result (i.e., EEW=SEW).
 
@@ -1548,13 +1548,13 @@ Assembly syntax pattern for vector narrowing arithmetic instructions
 vnop.wv  vd, vs2, vs1, vm  # integer vector-vector      vd[i] = vs2[i] op vs1[i]
 vnop.wx  vd, vs2, rs1, vm  # integer vector-scalar      vd[i] = vs2[i] op x[rs1]
 
-Narrowing instruction encodings must follow the constraints in[31.1.5.2\. Vector Operands](#sec-vec-operands).
+Narrowing instruction encodings must follow the constraints in[30.1.5.2\. Vector Operands](#sec-vec-operands).
 
-### [](#sec-vector-integer)31.1.11\. Vector Integer Arithmetic Instructions
+### [](#sec-vector-integer)30.1.11\. Vector Integer Arithmetic Instructions
 
 A set of vector integer arithmetic instructions is provided. Unless otherwise stated, integer operations wrap around on overflow.
 
-#### [](#31-1-11-1-vector-single-width-integer-add-and-subtract)31.1.11.1\. Vector Single-Width Integer Add and Subtract
+#### [](#30-1-11-1-vector-single-width-integer-add-and-subtract)30.1.11.1\. Vector Single-Width Integer Add and Subtract
 
 Vector integer add and subtract are provided. Reverse-subtract instructions are also provided for the vector-scalar forms.
 
@@ -1574,7 +1574,7 @@ vrsub.vi vd, vs2, imm, vm   # vd[i] = imm - vs2[i]
 | |  A vector of integer values can be negated using a reverse-subtract instruction with a scalar operand of x0. An assembly pseudoinstruction vneg.v vd,vs \= vrsub.vx vd,vs,x0 is provided. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-2-vector-widening-integer-addsubtract)31.1.11.2\. Vector Widening Integer Add/Subtract
+#### [](#30-1-11-2-vector-widening-integer-addsubtract)30.1.11.2\. Vector Widening Integer Add/Subtract
 
 The widening add/subtract instructions are provided in both signed and unsigned variants, depending on whether the narrower source operands are first sign- or zero-extended before forming the double-width sum.
 
@@ -1605,7 +1605,7 @@ vwsub.wx  vd, vs2, rs1, vm  # vector-scalar
 | |  An integer value can be doubled in width using the widening add instructions with a scalar operand of x0. Assembly pseudoinstructions vwcvt.x.x.v vd,vs,vm \= vwadd.vx vd,vs,x0,vm andvwcvtu.x.x.v vd,vs,vm \= vwaddu.vx vd,vs,x0,vm are provided. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-3-vector-integer-extension)31.1.11.3\. Vector Integer Extension
+#### [](#30-1-11-3-vector-integer-extension)30.1.11.3\. Vector Integer Extension
 
 The vector integer extension instructions zero- or sign-extend a source vector integer operand with EEW less than SEW to fill SEW-sized elements in the destination. The EEW of the source is 1/2, 1/4, or 1/8 of SEW, while EMUL of the source is (EEW/SEW)\*LMUL. The destination has EEW equal to SEW and EMUL equal to LMUL.
 
@@ -1621,11 +1621,11 @@ If the source EEW is not a supported width, or source EMUL would be below the mi
 | |  Standard vector load instructions access memory values that are the same size as the destination register elements. Some application code needs to operate on a range of operand widths in a wider element, for example, loading a byte from memory and adding to an eight-byte element. To avoid having to provide the cross-product of the number of vector load instructions by the number of data types (byte, word, halfword, and also signed/unsigned variants), we instead add explicit extension instructions that can be used if an appropriate widening arithmetic instruction is not available. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-4-vector-integer-add-with-carry-subtract-with-borrow-instructions)31.1.11.4\. Vector Integer Add-with-Carry / Subtract-with-Borrow Instructions
+#### [](#30-1-11-4-vector-integer-add-with-carry-subtract-with-borrow-instructions)30.1.11.4\. Vector Integer Add-with-Carry / Subtract-with-Borrow Instructions
 
 To support multi-word integer arithmetic, instructions that operate on a carry bit are provided. For each operation (add or subtract), two instructions are provided: one to provide the result (SEW width), and the second to generate the carry output (single bit encoded as a mask boolean).
 
-The carry inputs and outputs are represented using the mask register layout as described in [31.1.4.5\. Mask Register Layout](#sec-mask-register-layout). Due to encoding constraints, the carry input must come from the implicit `v0`register, but carry outputs can be written to any vector register that respects the source/destination overlap restrictions.
+The carry inputs and outputs are represented using the mask register layout as described in [30.1.4.5\. Mask Register Layout](#sec-mask-register-layout). Due to encoding constraints, the carry input must come from the implicit `v0`register, but carry outputs can be written to any vector register that respects the source/destination overlap restrictions.
 
 `vadc` and `vsbc` add or subtract the source operands and the carry-in or borrow-in, and write the result to vector register `vd`. These instructions are encoded as masked instructions (`vm=0`), but they operate on and write back all body elements. Encodings corresponding to the unmasked versions (`vm=1`) are reserved.
 
@@ -1700,7 +1700,7 @@ For `vadc` and `vsbc`, the instruction encoding is reserved if the destination v
 | |  This constraint corresponds to the constraint on masked vector operations that overwrite the mask register. |
 | -------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-5-vector-bitwise-logical-instructions)31.1.11.5\. Vector Bitwise Logical Instructions
+#### [](#30-1-11-5-vector-bitwise-logical-instructions)30.1.11.5\. Vector Bitwise Logical Instructions
 
 # Bitwise logical operations.
 vand.vv vd, vs2, vs1, vm   # Vector-vector
@@ -1718,7 +1718,7 @@ vxor.vi vd, vs2, imm, vm    # vector-immediate
 | |  With an immediate of -1, scalar-immediate forms of the vxorinstruction provide a bitwise NOT operation. This is provided as an assembler pseudoinstruction vnot.v vd,vs,vm \= vxor.vi vd,vs,-1,vm. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-6-vector-single-width-shift-instructions)31.1.11.6\. Vector Single-Width Shift Instructions
+#### [](#30-1-11-6-vector-single-width-shift-instructions)30.1.11.6\. Vector Single-Width Shift Instructions
 
 A full set of vector shift instructions are provided, including logical shift left (`sll`), and logical (zero-extending `srl`) and arithmetic (sign-extending `sra`) shift right. The data to be shifted is in the vector register group specified by `vs2` and the shift amount value can come from a vector register group `vs1`, a scalar integer register `rs1`, or a zero-extended 5-bit immediate. Only the low lg2(SEW) bits of the shift-amount value are used to control the shift amount.
 
@@ -1735,7 +1735,7 @@ vsra.vv vd, vs2, vs1, vm   # Vector-vector
 vsra.vx vd, vs2, rs1, vm   # vector-scalar
 vsra.vi vd, vs2, uimm, vm   # vector-immediate
 
-#### [](#31-1-11-7-vector-narrowing-integer-right-shift-instructions)31.1.11.7\. Vector Narrowing Integer Right Shift Instructions
+#### [](#30-1-11-7-vector-narrowing-integer-right-shift-instructions)30.1.11.7\. Vector Narrowing Integer Right Shift Instructions
 
 The narrowing right shifts extract a smaller field from a wider operand and have both zero-extending (`srl`) and sign-extending (`sra`) forms. The shift amount can come from a vector register group, or a scalar `x` register, or a zero-extended 5-bit immediate. The low lg2(2\*SEW) bits of the shift-amount value are used (e.g., the low 6 bits for a SEW=64-bit to SEW=32-bit narrowing operation).
 
@@ -1755,9 +1755,9 @@ The narrowing right shifts extract a smaller field from a wider operand and have
 | |  An integer value can be halved in width using the narrowing integer shift instructions with a scalar operand of x0. An assembly pseudoinstruction is provided vncvt.x.x.w vd,vs,vm \= vnsrl.wx vd,vs,x0,vm. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-8-vector-integer-compare-instructions)31.1.11.8\. Vector Integer Compare Instructions
+#### [](#30-1-11-8-vector-integer-compare-instructions)30.1.11.8\. Vector Integer Compare Instructions
 
-The following integer compare instructions write 1 to the destination mask register element if the comparison evaluates to true, and 0 otherwise. The destination mask vector is always held in a single vector register, with a layout of elements as described in[31.1.4.5\. Mask Register Layout](#sec-mask-register-layout). The destination mask vector register may be the same as the source vector mask register (`v0`).
+The following integer compare instructions write 1 to the destination mask register element if the comparison evaluates to true, and 0 otherwise. The destination mask vector is always held in a single vector register, with a layout of elements as described in[30.1.4.5\. Mask Register Layout](#sec-mask-register-layout). The destination mask vector register may be the same as the source vector mask register (`v0`).
 
 # Set if equal
 vmseq.vv vd, vs2, vs1, vm  # Vector-vector
@@ -1881,7 +1881,7 @@ vmslt.vv    v0, vb, vc, v0.t  # Only update at set mask
 
 Compares write mask registers, and so always operate under a tail-agnostic policy.
 
-#### [](#31-1-11-9-vector-integer-minmax-instructions)31.1.11.9\. Vector Integer Min/Max Instructions
+#### [](#30-1-11-9-vector-integer-minmax-instructions)30.1.11.9\. Vector Integer Min/Max Instructions
 
 Signed and unsigned integer minimum and maximum instructions are supported.
 
@@ -1901,7 +1901,7 @@ vmaxu.vx vd, vs2, rs1, vm   # vector-scalar
 vmax.vv vd, vs2, vs1, vm   # Vector-vector
 vmax.vx vd, vs2, rs1, vm   # vector-scalar
 
-#### [](#31-1-11-10-vector-single-width-integer-multiply-instructions)31.1.11.10\. Vector Single-Width Integer Multiply Instructions
+#### [](#30-1-11-10-vector-single-width-integer-multiply-instructions)30.1.11.10\. Vector Single-Width Integer Multiply Instructions
 
 The single-width multiply instructions perform a SEW-bit\*SEW-bit multiply to generate a 2\*SEW-bit product, then return one half of the product in the SEW-bit-wide destination. The `**mul**` versions write the low word of the product to the destination register, while the`**mulh**` versions write the high word of the product to the destination register.
 
@@ -1927,7 +1927,7 @@ vmulhsu.vx vd, vs2, rs1, vm   # vector-scalar
 | |  The current vmulh\* opcodes perform simple fractional multiplies, but with no option to scale, round, and/or saturate the result. A possible future extension can consider variants of vmulh,vmulhu, vmulhsu that use the vxrm rounding mode when discarding low half of product. There is no possibility of overflow in these cases. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-11-11-vector-integer-divide-instructions)31.1.11.11\. Vector Integer Divide Instructions
+#### [](#30-1-11-11-vector-integer-divide-instructions)30.1.11.11\. Vector Integer Divide Instructions
 
 The divide and remainder instructions are equivalent to the RISC-V standard scalar integer multiply/divides, with the same results for extreme inputs.
 
@@ -1953,7 +1953,7 @@ vrem.vx vd, vs2, rs1, vm   # vector-scalar
 | |  There is no instruction to perform a "scalar divide by vector" operation. |
 | ---------------------------------------------------------------------------- |
 
-#### [](#31-1-11-12-vector-widening-integer-multiply-instructions)31.1.11.12\. Vector Widening Integer Multiply Instructions
+#### [](#30-1-11-12-vector-widening-integer-multiply-instructions)30.1.11.12\. Vector Widening Integer Multiply Instructions
 
 The widening integer multiply instructions return the full 2\*SEW-bit product from an SEW-bit\*SEW-bit multiply.
 
@@ -1969,7 +1969,7 @@ vwmulu.vx vd, vs2, rs1, vm # vector-scalar
 vwmulsu.vv vd, vs2, vs1, vm # vector-vector
 vwmulsu.vx vd, vs2, rs1, vm # vector-scalar
 
-#### [](#31-1-11-13-vector-single-width-integer-multiply-add-instructions)31.1.11.13\. Vector Single-Width Integer Multiply-Add Instructions
+#### [](#30-1-11-13-vector-single-width-integer-multiply-add-instructions)30.1.11.13\. Vector Single-Width Integer Multiply-Add Instructions
 
 The integer multiply-add instructions are destructive and are provided in two forms, one that overwrites the addend or minuend (`vmacc`, `vnmsac`) and one that overwrites the first multiplicand (`vmadd`, `vnmsub`).
 
@@ -1994,7 +1994,7 @@ vmadd.vx vd, rs1, vs2, vm     # vd[i] = (x[rs1] * vd[i]) + vs2[i]
 vnmsub.vv vd, vs1, vs2, vm    # vd[i] = -(vs1[i] * vd[i]) + vs2[i]
 vnmsub.vx vd, rs1, vs2, vm    # vd[i] = -(x[rs1] * vd[i]) + vs2[i]
 
-#### [](#31-1-11-14-vector-widening-integer-multiply-add-instructions)31.1.11.14\. Vector Widening Integer Multiply-Add Instructions
+#### [](#30-1-11-14-vector-widening-integer-multiply-add-instructions)30.1.11.14\. Vector Widening Integer Multiply-Add Instructions
 
 The widening integer multiply-add instructions add the full 2\*SEW-bit product from a SEW-bit\*SEW-bit multiply to a 2\*SEW-bit value and produce a 2\*SEW-bit result. All combinations of signed and unsigned multiply operands are supported.
 
@@ -2013,7 +2013,7 @@ vwmaccsu.vx vd, rs1, vs2, vm  # vd[i] = (signed(x[rs1]) * unsigned(vs2[i])) + vd
 # Widening unsigned-signed-integer multiply-add, overwrite addend
 vwmaccus.vx vd, rs1, vs2, vm  # vd[i] = (unsigned(x[rs1]) * signed(vs2[i])) + vd[i]
 
-#### [](#31-1-11-15-vector-integer-merge-instructions)31.1.11.15\. Vector Integer Merge Instructions
+#### [](#30-1-11-15-vector-integer-merge-instructions)30.1.11.15\. Vector Integer Merge Instructions
 
 The vector integer merge instructions combine two source operands based on a mask. Unlike regular arithmetic instructions, the merge operates on all body elements (i.e., the set of elements from`vstart` up to the current vector length in `vl`).
 
@@ -2023,7 +2023,7 @@ vmerge.vvm vd, vs2, vs1, v0  # vd[i] = v0.mask[i] ? vs1[i] : vs2[i]
 vmerge.vxm vd, vs2, rs1, v0  # vd[i] = v0.mask[i] ? x[rs1] : vs2[i]
 vmerge.vim vd, vs2, imm, v0  # vd[i] = v0.mask[i] ? imm    : vs2[i]
 
-#### [](#31-1-11-16-vector-integer-move-instructions)31.1.11.16\. Vector Integer Move Instructions
+#### [](#30-1-11-16-vector-integer-move-instructions)30.1.11.16\. Vector Integer Move Instructions
 
 The vector integer move instructions copy a source operand to a vector register group. The `vmv.v.v` variant copies a vector register group, whereas the `vmv.v.x`and `vmv.v.i` variants _splat_ a scalar register or immediate to all active elements of the destination vector register group.These instructions are encoded as unmasked instructions (`vm=1`).The first operand specifier (`vs2`) must contain `v0`, and any other vector register number in `vs2` is _reserved_.
 
@@ -2045,7 +2045,7 @@ The form `vmv.v.v vd, vd`, which leaves body elements unchanged, can be used to 
 | |  The vmv.v.v vd, vd instruction is not a RISC-V HINT as a tail-agnostic setting may cause an architectural state change on some implementations. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#sec-vector-fixed-point)31.1.12\. Vector Fixed-Point Arithmetic Instructions
+### [](#sec-vector-fixed-point)30.1.12\. Vector Fixed-Point Arithmetic Instructions
 
 The preceding set of integer arithmetic instructions is extended to support fixed-point arithmetic.
 
@@ -2054,7 +2054,7 @@ A fixed-point number is a two’s-complement signed or unsigned integer interpre
 | |  The widening integer operations described above can also be used to avoid overflow. |
 | -------------------------------------------------------------------------------------- |
 
-#### [](#31-1-12-1-vector-single-width-saturating-add-and-subtract)31.1.12.1\. Vector Single-Width Saturating Add and Subtract
+#### [](#30-1-12-1-vector-single-width-saturating-add-and-subtract)30.1.12.1\. Vector Single-Width Saturating Add and Subtract
 
 Saturating forms of integer add and subtract are provided, for both signed and unsigned integers. If the result would overflow the destination, the result is replaced with the closest representable value, and the `vxsat` bit is set.
 
@@ -2076,7 +2076,7 @@ vssubu.vx vd, vs2, rs1, vm   # vector-scalar
 vssub.vv vd, vs2, vs1, vm   # Vector-vector
 vssub.vx vd, vs2, rs1, vm   # vector-scalar
 
-#### [](#31-1-12-2-vector-single-width-averaging-add-and-subtract)31.1.12.2\. Vector Single-Width Averaging Add and Subtract
+#### [](#30-1-12-2-vector-single-width-averaging-add-and-subtract)30.1.12.2\. Vector Single-Width Averaging Add and Subtract
 
 The averaging add and subtract instructions right shift the result by one bit and round off the result according to the setting in `vxrm`. Computation is performed in infinite precision before rounding and truncating.Both unsigned and signed versions are provided. For `vaaddu` and `vaadd` there can be no overflow in the result.For `vasub` and `vasubu`, overflow is ignored and the result wraps around.
 
@@ -2103,7 +2103,7 @@ vasubu.vx vd, vs2, rs1, vm   # roundoff_unsigned(vs2[i] - x[rs1], 1)
 vasub.vv vd, vs2, vs1, vm   # roundoff_signed(vs2[i] - vs1[i], 1)
 vasub.vx vd, vs2, rs1, vm   # roundoff_signed(vs2[i] - x[rs1], 1)
 
-#### [](#31-1-12-3-vector-single-width-fractional-multiply-with-rounding-and-saturation)31.1.12.3\. Vector Single-Width Fractional Multiply with Rounding and Saturation
+#### [](#30-1-12-3-vector-single-width-fractional-multiply-with-rounding-and-saturation)30.1.12.3\. Vector Single-Width Fractional Multiply with Rounding and Saturation
 
 The signed fractional multiply instruction produces a 2\*SEW product of the two SEW inputs, then shifts the result right by SEW-1 bits, rounding these bits according to `vxrm`, then saturates the result to fit into SEW bits. If the result causes saturation, the `vxsat` bit is set.
 
@@ -2118,7 +2118,7 @@ vsmul.vx vd, vs2, rs1, vm  # vd[i] = clip(roundoff_signed(vs2[i]*x[rs1], SEW-1))
 | |  We do not provide an equivalent fractional multiply where one input is unsigned, as these would retain all upper SEW bits and would not need to saturate. This operation is partly covered by thevmulhu and vmulhsu instructions, for the case where rounding is simply truncation (rdn). |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-12-4-vector-single-width-scaling-shift-instructions)31.1.12.4\. Vector Single-Width Scaling Shift Instructions
+#### [](#30-1-12-4-vector-single-width-scaling-shift-instructions)30.1.12.4\. Vector Single-Width Scaling Shift Instructions
 
 These instructions shift the input value right, and round off the shifted out bits according to `vxrm`. The scaling right shifts have both zero-extending (`vssrl`) and sign-extending (`vssra`) forms. The data to be shifted is in the vector register group specified by `vs2`and the shift amount value can come from a vector register group`vs1`, a scalar integer register `rs1`, or a zero-extended 5-bit immediate. Only the low lg2(SEW) bits of the shift-amount value are used to control the shift amount.
 
@@ -2132,7 +2132,7 @@ These instructions shift the input value right, and round off the shifted out bi
  vssra.vx vd, vs2, rs1, vm   # vd[i] = roundoff_signed(vs2[i], x[rs1])
  vssra.vi vd, vs2, uimm, vm  # vd[i] = roundoff_signed(vs2[i], uimm)
 
-#### [](#31-1-12-5-vector-narrowing-fixed-point-clip-instructions)31.1.12.5\. Vector Narrowing Fixed-Point Clip Instructions
+#### [](#30-1-12-5-vector-narrowing-fixed-point-clip-instructions)30.1.12.5\. Vector Narrowing Fixed-Point Clip Instructions
 
 The `vnclip` instructions are used to pack a fixed-point value into a narrower destination. The instructions support rounding, scaling, and saturation into the final destination format. The source data is in the vector register group specified by `vs2`. The scaling shift amount value can come from a vector register group `vs1`, a scalar integer register `rs1`, or a zero-extended 5-bit immediate. The low lg2(2\*SEW) bits of the vector or scalar shift-amount value (e.g., the low 6 bits for a SEW=64-bit to SEW=32-bit narrowing operation) are used to control the right shift amount, which provides the scaling.
 
@@ -2158,7 +2158,7 @@ For `vnclip`, the shifted rounded source value is treated as a signed integer an
 
 If any destination element is saturated, the `vxsat` bit is set in the`vxsat` register.
 
-### [](#sec-vector-float)31.1.13\. Vector Floating-Point Instructions
+### [](#sec-vector-float)30.1.13\. Vector Floating-Point Instructions
 
 The standard vector floating-point instructions treat elements as IEEE-754/2008-compatible values. If the EEW of a vector floating-point operand does not correspond to a supported IEEE floating-point type, the instruction encoding is reserved.
 
@@ -2176,13 +2176,13 @@ If the hypervisor extension is implemented and V=1, the `vsstatus.FS` field is a
 
 The vector floating-point instructions have the same behavior as the scalar floating-point instructions with regard to NaNs.
 
-Scalar values for floating-point vector-scalar operations are sourced as described in [31.1.10.1\. Vector Arithmetic Instruction encoding](#sec-arithmetic-encoding).
+Scalar values for floating-point vector-scalar operations are sourced as described in [30.1.10.1\. Vector Arithmetic Instruction encoding](#sec-arithmetic-encoding).
 
-#### [](#31-1-13-1-vector-floating-point-exception-flags)31.1.13.1\. Vector Floating-Point Exception Flags
+#### [](#30-1-13-1-vector-floating-point-exception-flags)30.1.13.1\. Vector Floating-Point Exception Flags
 
 A vector floating-point exception at any active floating-point element sets the standard FP exception flags in the `fflags` register. Inactive elements do not set FP exception flags.
 
-#### [](#31-1-13-2-vector-single-width-floating-point-addsubtract-instructions)31.1.13.2\. Vector Single-Width Floating-Point Add/Subtract Instructions
+#### [](#30-1-13-2-vector-single-width-floating-point-addsubtract-instructions)30.1.13.2\. Vector Single-Width Floating-Point Add/Subtract Instructions
 
 # Floating-point add
 vfadd.vv vd, vs2, vs1, vm   # Vector-vector
@@ -2193,7 +2193,7 @@ vfsub.vv vd, vs2, vs1, vm   # Vector-vector
 vfsub.vf vd, vs2, rs1, vm   # Vector-scalar vd[i] = vs2[i] - f[rs1]
 vfrsub.vf vd, vs2, rs1, vm  # Scalar-vector vd[i] = f[rs1] - vs2[i]
 
-#### [](#31-1-13-3-vector-widening-floating-point-addsubtract-instructions)31.1.13.3\. Vector Widening Floating-Point Add/Subtract Instructions
+#### [](#30-1-13-3-vector-widening-floating-point-addsubtract-instructions)30.1.13.3\. Vector Widening Floating-Point Add/Subtract Instructions
 
 # Widening FP add/subtract, 2*SEW = SEW +/- SEW
 vfwadd.vv vd, vs2, vs1, vm  # vector-vector
@@ -2207,7 +2207,7 @@ vfwadd.wf  vd, vs2, rs1, vm  # vector-scalar
 vfwsub.wv  vd, vs2, vs1, vm  # vector-vector
 vfwsub.wf  vd, vs2, rs1, vm  # vector-scalar
 
-#### [](#31-1-13-4-vector-single-width-floating-point-multiplydivide-instructions)31.1.13.4\. Vector Single-Width Floating-Point Multiply/Divide Instructions
+#### [](#30-1-13-4-vector-single-width-floating-point-multiplydivide-instructions)30.1.13.4\. Vector Single-Width Floating-Point Multiply/Divide Instructions
 
 # Floating-point multiply
 vfmul.vv vd, vs2, vs1, vm   # Vector-vector
@@ -2220,13 +2220,13 @@ vfdiv.vf vd, vs2, rs1, vm   # vector-scalar
 # Reverse floating-point divide vector = scalar / vector
 vfrdiv.vf vd, vs2, rs1, vm  # scalar-vector, vd[i] = f[rs1]/vs2[i]
 
-#### [](#31-1-13-5-vector-widening-floating-point-multiply)31.1.13.5\. Vector Widening Floating-Point Multiply
+#### [](#30-1-13-5-vector-widening-floating-point-multiply)30.1.13.5\. Vector Widening Floating-Point Multiply
 
 # Widening floating-point multiply
 vfwmul.vv    vd, vs2, vs1, vm # vector-vector
 vfwmul.vf    vd, vs2, rs1, vm # vector-scalar
 
-#### [](#31-1-13-6-vector-single-width-floating-point-fused-multiply-add-instructions)31.1.13.6\. Vector Single-Width Floating-Point Fused Multiply-Add Instructions
+#### [](#30-1-13-6-vector-single-width-floating-point-fused-multiply-add-instructions)30.1.13.6\. Vector Single-Width Floating-Point Fused Multiply-Add Instructions
 
 All four varieties of fused multiply-add are provided, and in two destructive forms that overwrite one of the operands, either the addend or the first multiplicand.
 
@@ -2265,7 +2265,7 @@ vfnmsub.vf vd, rs1, vs2, vm   # vd[i] = -(f[rs1] * vd[i]) + vs2[i]
 | |  While we considered using the two unused rounding modes in the scalar FP FMA encoding to provide a few non-destructive FMAs, these would complicate microarchitectures by being the only maskable operation with three inputs and separate output. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-13-7-vector-widening-floating-point-fused-multiply-add-instructions)31.1.13.7\. Vector Widening Floating-Point Fused Multiply-Add Instructions
+#### [](#30-1-13-7-vector-widening-floating-point-fused-multiply-add-instructions)30.1.13.7\. Vector Widening Floating-Point Fused Multiply-Add Instructions
 
 The widening floating-point fused multiply-add instructions all overwrite the wide addend with the result. The multiplier inputs are all SEW wide, while the addend and destination is 2\*SEW bits wide.
 
@@ -2285,14 +2285,14 @@ vfwmsac.vf vd, rs1, vs2, vm    # vd[i] = (f[rs1] * vs2[i]) - vd[i]
 vfwnmsac.vv vd, vs1, vs2, vm   # vd[i] = -(vs1[i] * vs2[i]) + vd[i]
 vfwnmsac.vf vd, rs1, vs2, vm   # vd[i] = -(f[rs1] * vs2[i]) + vd[i]
 
-#### [](#31-1-13-8-vector-floating-point-square-root-instruction)31.1.13.8\. Vector Floating-Point Square-Root Instruction
+#### [](#30-1-13-8-vector-floating-point-square-root-instruction)30.1.13.8\. Vector Floating-Point Square-Root Instruction
 
 This is a unary vector-vector instruction.
 
 # Floating-point square root
 vfsqrt.v vd, vs2, vm   # Vector-vector square root
 
-#### [](#31-1-13-9-vector-floating-point-reciprocal-square-root-estimate-instruction)31.1.13.9\. Vector Floating-Point Reciprocal Square-Root Estimate Instruction
+#### [](#30-1-13-9-vector-floating-point-reciprocal-square-root-estimate-instruction)30.1.13.9\. Vector Floating-Point Reciprocal Square-Root Estimate Instruction
 
 # Floating-point reciprocal square-root estimate to 7 bits.
 vfrsqrt7.v vd, vs2, vm
@@ -2464,7 +2464,7 @@ __Table 16\. vfrsqrt7.v common-case lookup table contents__
 | |  The 7 bit accuracy was chosen as it requires 0,1,2,3 Newton-Raphson iterations to converge to close to bfloat16, FP16, FP32, FP64 accuracy respectively. Future instructions can be defined with greater estimate accuracy. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-13-10-vector-floating-point-reciprocal-estimate-instruction)31.1.13.10\. Vector Floating-Point Reciprocal Estimate Instruction
+#### [](#30-1-13-10-vector-floating-point-reciprocal-estimate-instruction)30.1.13.10\. Vector Floating-Point Reciprocal Estimate Instruction
 
 # Floating-point reciprocal estimate to 7 bits.
 vfrec7.v vd, vs2, vm
@@ -2651,7 +2651,7 @@ If the normalized output exponent is 0 or -1, the result is subnormal: the outpu
 | |  The 7 bit accuracy was chosen as it requires 0,1,2,3 Newton-Raphson iterations to converge to close to bfloat16, FP16, FP32, FP64 accuracy respectively. Future instructions can be defined with greater estimate accuracy. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-13-11-vector-floating-point-minmax-instructions)31.1.13.11\. Vector Floating-Point MIN/MAX Instructions
+#### [](#30-1-13-11-vector-floating-point-minmax-instructions)30.1.13.11\. Vector Floating-Point MIN/MAX Instructions
 
 The vector floating-point `vfmin` and `vfmax` instructions have the same behavior as the corresponding scalar floating-point instructions in version 2.2 of the RISC-V F/D/Q extension: they perform the `minimumNumber`or `maximumNumber` operation on active elements.
 
@@ -2663,7 +2663,7 @@ vfmin.vf vd, vs2, rs1, vm   # vector-scalar
 vfmax.vv vd, vs2, vs1, vm   # Vector-vector
 vfmax.vf vd, vs2, rs1, vm   # vector-scalar
 
-#### [](#31-1-13-12-vector-floating-point-sign-injection-instructions)31.1.13.12\. Vector Floating-Point Sign-Injection Instructions
+#### [](#30-1-13-12-vector-floating-point-sign-injection-instructions)30.1.13.12\. Vector Floating-Point Sign-Injection Instructions
 
 Vector versions of the scalar sign-injection instructions. The result takes all bits except the sign bit from the vector `vs2` operands.
 
@@ -2682,9 +2682,9 @@ vfsgnjx.vf vd, vs2, rs1, vm  # vector-scalar
 | |  The absolute value of a vector of floating-point elements can be calculated using a sign-injection instruction with both source operands set to the same vector operand. An assembly pseudoinstruction is provided: vfabs.v vd,vs \= vfsgnjx.vv vd,vs,vs. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-13-13-vector-floating-point-compare-instructions)31.1.13.13\. Vector Floating-Point Compare Instructions
+#### [](#30-1-13-13-vector-floating-point-compare-instructions)30.1.13.13\. Vector Floating-Point Compare Instructions
 
-These vector FP compare instructions compare two source operands and write the comparison result to a mask register. The destination mask vector is always held in a single vector register, with a layout of elements as described in [31.1.4.5\. Mask Register Layout](#sec-mask-register-layout). The destination mask vector register may be the same as the source vector mask register (`v0`). Compares write mask registers, and so always operate under a tail-agnostic policy.
+These vector FP compare instructions compare two source operands and write the comparison result to a mask register. The destination mask vector is always held in a single vector register, with a layout of elements as described in [30.1.4.5\. Mask Register Layout](#sec-mask-register-layout). The destination mask vector register may be the same as the source vector mask register (`v0`). Compares write mask registers, and so always operate under a tail-agnostic policy.
 
 The compare instructions follow the semantics of the scalar floating-point compare instructions. `vmfeq` and `vmfne` raise the invalid operation exception only on signaling NaN inputs. `vmflt`, `vmfle`, `vmfgt`, and `vmfge` raise the invalid operation exception on both signaling and quiet NaN inputs. `vmfne` writes 1 to the destination element when either operand is NaN, whereas the other compares write 0 when either operand is NaN.
 
@@ -2740,7 +2740,7 @@ vmfgt.vv v0, va, vb, v0.t  #  so only set flags on ordered values.
 | |  In the above sequence, it is tempting to mask the second vmfeqinstruction and remove the vmand instruction, but this more efficient sequence incorrectly fails to raise the invalid exception when an element of va contains a quiet NaN and the corresponding element invb contains a signaling NaN. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-13-14-vector-floating-point-classify-instruction)31.1.13.14\. Vector Floating-Point Classify Instruction
+#### [](#30-1-13-14-vector-floating-point-classify-instruction)30.1.13.14\. Vector Floating-Point Classify Instruction
 
 This is a unary vector-vector instruction that operates in the same way as the scalar classify instruction.
 
@@ -2748,7 +2748,7 @@ vfclass.v vd, vs2, vm   # Vector-vector
 
 The 10-bit mask produced by this instruction is placed in the least-significant bits of the result elements. The upper (SEW-10) bits of the result are filled with zeros. The instruction is only defined for SEW=16b and above, so the result will always fit in the destination elements.
 
-#### [](#31-1-13-15-vector-floating-point-merge-instruction)31.1.13.15\. Vector Floating-Point Merge Instruction
+#### [](#30-1-13-15-vector-floating-point-merge-instruction)30.1.13.15\. Vector Floating-Point Merge Instruction
 
 A vector-scalar floating-point merge instruction is provided, whichoperates on all body elements from `vstart` up to the current vector length in `vl` regardless of mask value.
 
@@ -2756,7 +2756,7 @@ The `vfmerge.vfm` instruction is encoded as a masked instruction (`vm=0`).At ele
 
 vfmerge.vfm vd, vs2, rs1, v0  # vd[i] = v0.mask[i] ? f[rs1] : vs2[i]
 
-#### [](#31-1-13-16-vector-floating-point-move-instruction)31.1.13.16\. Vector Floating-Point Move Instruction
+#### [](#30-1-13-16-vector-floating-point-move-instruction)30.1.13.16\. Vector Floating-Point Move Instruction
 
 The vector floating-point move instruction _splats_ a floating-point scalar operand to a vector register group. The instruction copies a scalar `f` register value to all active elements of a vector register group. This instruction is encoded as an unmasked instruction (`vm=1`).The instruction must have the `vs2` field set to `v0`, with all other values for `vs2` reserved.
 
@@ -2765,7 +2765,7 @@ vfmv.v.f vd, rs1  # vd[i] = f[rs1]
 | |  The vfmv.v.f instruction shares the encoding with the vfmerge.vfminstruction, but with vm=1 and vs2=v0. |
 | ---------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-13-17-single-width-floating-pointinteger-type-convert-instructions)31.1.13.17\. Single-Width Floating-Point/Integer Type-Convert Instructions
+#### [](#30-1-13-17-single-width-floating-pointinteger-type-convert-instructions)30.1.13.17\. Single-Width Floating-Point/Integer Type-Convert Instructions
 
 Conversion operations are provided to convert to and from floating-point values and unsigned and signed integers, where both source and destination are SEW wide.
 
@@ -2783,7 +2783,7 @@ The conversions follow the same rules on exceptional conditions as the scalar co
 | |  The rtz variants are provided to accelerate truncating conversions from floating-point to integer, as is common in languages like C and Java. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-13-18-widening-floating-pointinteger-type-convert-instructions)31.1.13.18\. Widening Floating-Point/Integer Type-Convert Instructions
+#### [](#30-1-13-18-widening-floating-pointinteger-type-convert-instructions)30.1.13.18\. Widening Floating-Point/Integer Type-Convert Instructions
 
 A set of conversion instructions is provided to convert between narrower integer and floating-point datatypes to a type of twice the width.
 
@@ -2798,7 +2798,7 @@ vfwcvt.f.x.v  vd, vs2, vm       # Convert signed integer to double-width float.
 
 vfwcvt.f.f.v vd, vs2, vm        # Convert single-width float to double-width float.
 
-These instructions have the same constraints on vector register overlap as other widening instructions (see [31.1.10.2\. Widening Vector Arithmetic Instructions](#sec-widening)).
+These instructions have the same constraints on vector register overlap as other widening instructions (see [30.1.10.2\. Widening Vector Arithmetic Instructions](#sec-widening)).
 
 | |  A double-width IEEE floating-point value can always represent a single-width integer exactly. |
 | ------------------------------------------------------------------------------------------------ |
@@ -2809,7 +2809,7 @@ These instructions have the same constraints on vector register overlap as other
 | |  A full set of floating-point widening conversions is not supported as single instructions, but any widening conversion can be implemented as several doubling steps with equivalent results and no additional exception flags raised. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-13-19-narrowing-floating-pointinteger-type-convert-instructions)31.1.13.19\. Narrowing Floating-Point/Integer Type-Convert Instructions
+#### [](#30-1-13-19-narrowing-floating-pointinteger-type-convert-instructions)30.1.13.19\. Narrowing Floating-Point/Integer Type-Convert Instructions
 
 A set of conversion instructions is provided to convert wider integer and floating-point datatypes to a type of half the width.
 
@@ -2826,7 +2826,7 @@ vfncvt.f.f.w vd, vs2, vm        # Convert double-width float to single-width flo
 vfncvt.rod.f.f.w vd, vs2, vm    # Convert double-width float to single-width float,
                                 #  rounding towards odd.
 
-These instructions have the same constraints on vector register overlap as other narrowing instructions (see [31.1.10.3\. Narrowing Vector Arithmetic Instructions](#sec-narrowing)).
+These instructions have the same constraints on vector register overlap as other narrowing instructions (see [30.1.10.3\. Narrowing Vector Arithmetic Instructions](#sec-narrowing)).
 
 | |  A full set of floating-point narrowing conversions is not supported as single instructions. Conversions can be implemented in a sequence of halving steps. Results are equivalently rounded and the same exception flags are raised if all but the last halving step use round-towards-odd (vfncvt.rod.f.f.w). Only the final step should use the desired rounding mode. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -2834,7 +2834,7 @@ These instructions have the same constraints on vector register overlap as other
 | |  For vfncvt.rod.f.f.w, a finite value that exceeds the range of the destination format is converted to the destination format’s largest finite value with the same sign. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#31-1-14-vector-reduction-operations)31.1.14\. Vector Reduction Operations
+### [](#30-1-14-vector-reduction-operations)30.1.14\. Vector Reduction Operations
 
 Vector reduction operations take a vector register group of elements and a scalar held in element 0 of a vector register, and perform a reduction using some binary operator, to produce a scalar result in element 0 of a vector register. The scalar input and output operands are held in element 0 of a single vector register, not a vector register group, so any vector register can be the scalar source or destination of a vector reduction regardless of LMUL setting.
 
@@ -2856,7 +2856,7 @@ Traps on vector reduction instructions are always reported with a`vstart` of 0. 
 
 The assembler syntax for a reduction operation is `vredop.vs`, where the `.vs` suffix denotes the first operand is a vector register group and the second operand is a scalar stored in element 0 of a vector register.
 
-#### [](#sec-vector-integer-reduce)31.1.14.1\. Vector Single-Width Integer Reduction Instructions
+#### [](#sec-vector-integer-reduce)30.1.14.1\. Vector Single-Width Integer Reduction Instructions
 
 All operands and results of single-width reduction instructions have the same SEW width. Overflows wrap around on arithmetic sums.
 
@@ -2870,7 +2870,7 @@ vredand.vs  vd, vs2, vs1, vm   # vd[0] =  and( vs1[0] , vs2[*] )
 vredor.vs   vd, vs2, vs1, vm   # vd[0] =   or( vs1[0] , vs2[*] )
 vredxor.vs  vd, vs2, vs1, vm   # vd[0] =  xor( vs1[0] , vs2[*] )
 
-#### [](#sec-vector-integer-reduce-widen)31.1.14.2\. Vector Widening Integer Reduction Instructions
+#### [](#sec-vector-integer-reduce-widen)30.1.14.2\. Vector Widening Integer Reduction Instructions
 
 The unsigned `vwredsumu.vs` instruction zero-extends the SEW-wide vector elements before summing them, then adds the 2\*SEW-width scalar element, and stores the result in a 2\*SEW-width scalar element.
 
@@ -2884,7 +2884,7 @@ vwredsumu.vs vd, vs2, vs1, vm   # 2*SEW = 2*SEW + sum(zero-extend(SEW))
 # Signed sum reduction into double-width accumulator
 vwredsum.vs  vd, vs2, vs1, vm   # 2*SEW = 2*SEW + sum(sign-extend(SEW))
 
-#### [](#sec-vector-float-reduce)31.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions
+#### [](#sec-vector-float-reduce)30.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions
 
 # Simple reductions.
 vfredosum.vs vd, vs2, vs1, vm # Ordered sum
@@ -2895,7 +2895,7 @@ vfredmin.vs  vd, vs2, vs1, vm # Minimum value
 | |  Older assembler mnemonic vfredsum is retained as alias for vfredusum. |
 | ------------------------------------------------------------------------ |
 
-##### [](#31-1-14-3-1-vector-ordered-single-width-floating-point-sum-reduction)31.1.14.3.1\. Vector Ordered Single-Width Floating-Point Sum Reduction
+##### [](#30-1-14-3-1-vector-ordered-single-width-floating-point-sum-reduction)30.1.14.3.1\. Vector Ordered Single-Width Floating-Point Sum Reduction
 
 The `vfredosum` instruction must sum the floating-point values in element order, starting with the scalar in `vs1[0]`\--that is, it performs the computation:
 
@@ -2911,7 +2911,7 @@ When the operation is masked (`vm=0`), the masked-off elements do not affect the
 | |  If no elements are active, no additions are performed, so the scalar invs1\[0\] is simply copied to the destination register, without canonicalizing NaN values and without setting any exception flags. This behavior preserves the handling of NaNs, exceptions, and rounding when auto-vectorizing a scalar summation loop. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#31-1-14-3-2-vector-unordered-single-width-floating-point-sum-reduction)31.1.14.3.2\. Vector Unordered Single-Width Floating-Point Sum Reduction
+##### [](#30-1-14-3-2-vector-unordered-single-width-floating-point-sum-reduction)30.1.14.3.2\. Vector Unordered Single-Width Floating-Point Sum Reduction
 
 The unordered sum reduction instruction, `vfredusum`, provides an implementation more freedom in performing the reduction.
 
@@ -2927,7 +2927,7 @@ The reduction tree structure must be deterministic for a given value in `vtype` 
 | |  The vfredosum instruction is a valid implementation of thevfredusum instruction. |
 | ----------------------------------------------------------------------------------- |
 
-##### [](#31-1-14-3-3-vector-single-width-floating-point-max-and-min-reductions)31.1.14.3.3\. Vector Single-Width Floating-Point Max and Min Reductions
+##### [](#30-1-14-3-3-vector-single-width-floating-point-max-and-min-reductions)30.1.14.3.3\. Vector Single-Width Floating-Point Max and Min Reductions
 
 The `vfredmin` and `vfredmax` instructions reduce the scalar argument in`vs1[0]` and active elements in `vs2` using the `minimumNumber` and`maximumNumber` operations, respectively.
 
@@ -2937,7 +2937,7 @@ The `vfredmin` and `vfredmax` instructions reduce the scalar argument in`vs1[0]`
 | |  If no elements are active, the scalar in vs1\[0\] is simply copied to the destination register, without canonicalizing NaN values and without setting any exception flags. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec-vector-float-reduce-widen)31.1.14.4\. Vector Widening Floating-Point Reduction Instructions
+#### [](#sec-vector-float-reduce-widen)30.1.14.4\. Vector Widening Floating-Point Reduction Instructions
 
 Widening forms of the sum reductions are provided that read and write a double-width reduction result.
 
@@ -2953,11 +2953,11 @@ The reduction of the SEW-width elements is performed as in the single-width redu
 | |  vfwredosum.vs handles inactive elements and NaN payloads analogously to vfredosum.vs; vfwredusum.vs does so analogously to vfredusum.vs. |
 | ------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#sec-vector-mask)31.1.15\. Vector Mask Instructions
+### [](#sec-vector-mask)30.1.15\. Vector Mask Instructions
 
 Several instructions are provided to help operate on mask values held in a vector register.
 
-#### [](#sec-mask-register-logical)31.1.15.1\. Vector Mask-Register Logical Instructions
+#### [](#sec-mask-register-logical)30.1.15.1\. Vector Mask-Register Logical Instructions
 
 Vector mask-register logical operations operate on mask registers. Each element in a mask register is a single bit, so these instructions all operate on single vector registers regardless of the setting of the `vlmul` field in `vtype`. They do not change the value of`vlmul`. The destination vector register may be the same as either source vector register.
 
@@ -3014,14 +3014,14 @@ The set of eight mask logical instructions can generate any of the 16 possibly b
 | |  The vector mask logical instructions are designed to be easily fused with a following masked vector operation to effectively expand the number of predicate registers by moving values into v0 before use. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-15-2-vector-count-population-in-mask-vcpop-m)31.1.15.2\. Vector count population in mask `vcpop.m`
+#### [](#30-1-15-2-vector-count-population-in-mask-vcpop-m)30.1.15.2\. Vector count population in mask `vcpop.m`
 
 vcpop.m rd, vs2, vm
 
 | |  This instruction previously had the assembler mnemonic vpopc.mbut was renamed to be consistent with the scalar instruction. The assembler instruction alias vpopc.m is being retained for software compatibility. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-The source operand is a single vector register holding mask register values as described in [31.1.4.5\. Mask Register Layout](#sec-mask-register-layout).
+The source operand is a single vector register holding mask register values as described in [30.1.4.5\. Mask Register Layout](#sec-mask-register-layout).
 
 The `vcpop.m` instruction counts the number of mask elements of the active elements of the vector source mask register that have the value 1 and writes the result to a scalar `x` register.
 
@@ -3033,7 +3033,7 @@ The `vcpop.m` instruction writes `x[rd]` even if `vl`\=0 (with the value 0, sinc
 
 Traps on `vcpop.m` are always reported with a `vstart` of 0. The`vcpop.m` instruction will raise an illegal-instruction exception if`vstart` is non-zero.
 
-#### [](#31-1-15-3-vfirst-find-first-set-mask-bit)31.1.15.3\. `vfirst` find-first-set mask bit
+#### [](#30-1-15-3-vfirst-find-first-set-mask-bit)30.1.15.3\. `vfirst` find-first-set mask bit
 
 vfirst.m rd, vs2, vm
 
@@ -3046,7 +3046,7 @@ The `vfirst.m` instruction writes `x[rd]` even if `vl`\=0 (with the value -1, si
 
 Traps on `vfirst` are always reported with a `vstart` of 0. The`vfirst` instruction will raise an illegal-instruction exception if`vstart` is non-zero.
 
-#### [](#31-1-15-4-vmsbf-m-set-before-first-mask-bit)31.1.15.4\. `vmsbf.m` set-before-first mask bit
+#### [](#30-1-15-4-vmsbf-m-set-before-first-mask-bit)30.1.15.4\. `vmsbf.m` set-before-first mask bit
 
     vmsbf.m vd, vs2, vm
 
@@ -3079,7 +3079,7 @@ Traps on `vmsbf.m` are always reported with a `vstart` of 0. The`vmsbf` instruct
 
 The destination register cannot overlap the source register and, if masked, cannot overlap the mask register ('v0').
 
-#### [](#31-1-15-5-vmsif-m-set-including-first-mask-bit)31.1.15.5\. `vmsif.m` set-including-first mask bit
+#### [](#30-1-15-5-vmsif-m-set-including-first-mask-bit)30.1.15.5\. `vmsif.m` set-including-first mask bit
 
 The vector mask set-including-first instruction is similar to set-before-first, except it also includes the element with a set bit.
 
@@ -3108,7 +3108,7 @@ Traps on `vmsif.m` are always reported with a `vstart` of 0. The`vmsif` instruct
 
 The destination register cannot overlap the source register and, if masked, cannot overlap the mask register ('v0').
 
-#### [](#31-1-15-6-vmsof-m-set-only-first-mask-bit)31.1.15.6\. `vmsof.m` set-only-first mask bit
+#### [](#30-1-15-6-vmsof-m-set-only-first-mask-bit)30.1.15.6\. `vmsof.m` set-only-first mask bit
 
 The vector mask set-only-first instruction is similar to set-before-first, except it only sets the first element with a bit set, if any.
 
@@ -3137,7 +3137,7 @@ Traps on `vmsof.m` are always reported with a `vstart` of 0. The`vmsof` instruct
 
 The destination register cannot overlap the source register and, if masked, cannot overlap the mask register ('v0').
 
-#### [](#31-1-15-7-example-using-vector-mask-instructions)31.1.15.7\. Example using vector mask instructions
+#### [](#30-1-15-7-example-using-vector-mask-instructions)30.1.15.7\. Example using vector mask instructions
 
 The following is an example of vectorizing a data-dependent exit loop.
 
@@ -3193,7 +3193,7 @@ zero_loop:
 
       ret
 
-#### [](#31-1-15-8-vector-iota-instruction)31.1.15.8\. Vector Iota Instruction
+#### [](#30-1-15-8-vector-iota-instruction)30.1.15.8\. Vector Iota Instruction
 
 The `viota.m` instruction reads a source vector mask register and writes to each element of the destination vector register group the sum of all the bits of elements in the mask register whose index is less than the element, e.g., a parallel prefix sum of the mask values.
 
@@ -3265,7 +3265,7 @@ loop:
       mv a0, a6                    # Return count
       ret
 
-#### [](#31-1-15-9-vector-element-index-instruction)31.1.15.9\. Vector Element Index Instruction
+#### [](#30-1-15-9-vector-element-index-instruction)30.1.15.9\. Vector Element Index Instruction
 
 The `vid.v` instruction writes each element’s index to the destination vector register group, from 0 to `vl`\-1.
 
@@ -3280,11 +3280,11 @@ The result value is zero-extended to fill the destination element if SEW is wide
 | |  Microarchitectures can implement vid.v instruction using the same datapath as viota.m but with an implicit set mask source. |
 | ------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#sec-vector-permute)31.1.16\. Vector Permutation Instructions
+### [](#sec-vector-permute)30.1.16\. Vector Permutation Instructions
 
 A range of permutation instructions are provided to move elements around within the vector registers.
 
-#### [](#31-1-16-1-integer-scalar-move-instructions)31.1.16.1\. Integer Scalar Move Instructions
+#### [](#30-1-16-1-integer-scalar-move-instructions)30.1.16.1\. Integer Scalar Move Instructions
 
 The integer scalar read/write instructions transfer a single value between a scalar `x` register and element 0 of a vector register. The instructions ignore LMUL and vector register groups.
 
@@ -3303,7 +3303,7 @@ The `vmv.s.x` instruction copies the scalar integer register to element 0 of the
 
 The encodings corresponding to the masked versions (`vm=0`) of `vmv.x.s`and `vmv.s.x` are reserved.
 
-#### [](#sec-vector-float-move)31.1.16.2\. Floating-Point Scalar Move Instructions
+#### [](#sec-vector-float-move)30.1.16.2\. Floating-Point Scalar Move Instructions
 
 The floating-point scalar read/write instructions transfer a single value between a scalar `f` register and element 0 of a vector register. The instructions ignore LMUL and vector register groups.
 
@@ -3322,7 +3322,7 @@ The `vfmv.s.f` instruction copies the scalar floating-point register to element 
 
 The encodings corresponding to the masked versions (`vm=0`) of `vfmv.f.s`and `vfmv.s.f` are reserved.
 
-#### [](#31-1-16-3-vector-slide-instructions)31.1.16.3\. Vector Slide Instructions
+#### [](#30-1-16-3-vector-slide-instructions)30.1.16.3\. Vector Slide Instructions
 
 The slide instructions move elements up and down a vector register group.
 
@@ -3338,7 +3338,7 @@ The tail agnostic/undisturbed policy is followed for tail elements.
 
 The slide instructions may be masked, with mask element _i_controlling whether _destination_ element _i_ is written. The mask undisturbed/agnostic policy is followed for inactive elements.
 
-##### [](#31-1-16-3-1-vector-slide-up-instructions)31.1.16.3.1\. Vector Slide-up Instructions
+##### [](#30-1-16-3-1-vector-slide-up-instructions)30.1.16.3.1\. Vector Slide-up Instructions
 
 vslideup.vx vd, vs2, rs1, vm        # vd[i+x[rs1]] = vs2[i]
 vslideup.vi vd, vs2, uimm, vm       # vd[i+uimm] = vs2[i]
@@ -3358,12 +3358,12 @@ The destination vector register group for `vslideup` cannot overlap the source v
 | |  The non-overlap constraint avoids WAR hazards on the input vectors during execution, and enables restart with non-zerovstart. |
 | -------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#31-1-16-3-2-vector-slide-down-instructions)31.1.16.3.2\. Vector Slide-down Instructions
+##### [](#30-1-16-3-2-vector-slide-down-instructions)30.1.16.3.2\. Vector Slide-down Instructions
 
 vslidedown.vx vd, vs2, rs1, vm       # vd[i] = vs2[i+x[rs1]]
 vslidedown.vi vd, vs2, uimm, vm      # vd[i] = vs2[i+uimm]
 
-For `vslidedown`, the value in `vl` specifies the maximum number of destination elements that are written. The remaining elements past`vl` are handled according to the current tail policy ([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
+For `vslidedown`, the value in `vl` specifies the maximum number of destination elements that are written. The remaining elements past`vl` are handled according to the current tail policy ([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
 
 The start index (_OFFSET_) for the source can be either specified using an unsigned integer in the `x` register specified by `rs1`, or a 5-bit immediate, zero-extended to XLEN bits. If XLEN > SEW, _OFFSET_ is _not_ truncated to SEW bits.
 
@@ -3376,7 +3376,7 @@ vslidedown behavior for destination element i in slide (vstart < vl)
             vstart <= i < vl             vd[i] = src[i] if v0.mask[i] enabled
                 vl <= i < VLMAX          Follow tail policy
 
-##### [](#31-1-16-3-3-vector-slide-1-up)31.1.16.3.3\. Vector Slide-1-up
+##### [](#30-1-16-3-3-vector-slide-1-up)30.1.16.3.3\. Vector Slide-1-up
 
 Variants of slide are provided that only move by one element but which also allow a scalar integer value to be inserted at the vacated element position.
 
@@ -3386,7 +3386,7 @@ The `vslide1up` instruction places the `x` register argument at location 0 of th
 
 The remaining active `vl`\-1 elements are copied over from index _i_ in the source vector register group to index _i_+1 in the destination vector register group.
 
-The `vl` register specifies the maximum number of destination vector register elements updated with source values, and remaining elements past `vl` are handled according to the current tail policy ([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
+The `vl` register specifies the maximum number of destination vector register elements updated with source values, and remaining elements past `vl` are handled according to the current tail policy ([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
 
 vslide1up behavior when vl > 0
 
@@ -3397,17 +3397,17 @@ max(vstart, 1) <= i < vl      vd[i] = vs2[i-1] if v0.mask[i] enabled
 
 The `vslide1up` instruction requires that the destination vector register group does not overlap the source vector register group. Otherwise, the instruction encoding is reserved.
 
-##### [](#sec-vfslide1up)31.1.16.3.4\. Vector Floating-Point Slide-1-up Instruction
+##### [](#sec-vfslide1up)30.1.16.3.4\. Vector Floating-Point Slide-1-up Instruction
 
 vfslide1up.vf vd, vs2, rs1, vm        # vd[0]=f[rs1], vd[i+1] = vs2[i]
 
 The `vfslide1up` instruction is defined analogously to `vslide1up`, but sources its scalar argument from an `f` register.
 
-##### [](#31-1-16-3-5-vector-slide-1-down-instruction)31.1.16.3.5\. Vector Slide-1-down Instruction
+##### [](#30-1-16-3-5-vector-slide-1-down-instruction)30.1.16.3.5\. Vector Slide-1-down Instruction
 
 The `vslide1down` instruction copies the first `vl`\-1 active elements values from index _i_+1 in the source vector register group to index_i_ in the destination vector register group.
 
-The `vl` register specifies the maximum number of destination vector register elements written with source values, and remaining elements past `vl` are handled according to the current tail policy ([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
+The `vl` register specifies the maximum number of destination vector register elements written with source values, and remaining elements past `vl` are handled according to the current tail policy ([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
 
 vslide1down.vx  vd, vs2, rs1, vm      # vd[i] = vs2[i+1], vd[vl-1]=x[rs1]
 
@@ -3423,15 +3423,15 @@ vstart <= i = vl-1    vd[vl-1] = x[rs1] if v0.mask[i] enabled
 | |  The vslide1down instruction can be used to load values into a vector register without using memory and without disturbing other vector registers. This provides a path for debuggers to modify the contents of a vector register, albeit slowly, with multiple repeatedvslide1down invocations. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#sec-vfslide1down)31.1.16.3.6\. Vector Floating-Point Slide-1-down Instruction
+##### [](#sec-vfslide1down)30.1.16.3.6\. Vector Floating-Point Slide-1-down Instruction
 
 vfslide1down.vf vd, vs2, rs1, vm      # vd[i] = vs2[i+1], vd[vl-1]=f[rs1]
 
 The `vfslide1down` instruction is defined analogously to `vslide1down`, but sources its scalar argument from an `f` register.
 
-#### [](#31-1-16-4-vector-register-gather-instructions)31.1.16.4\. Vector Register Gather Instructions
+#### [](#30-1-16-4-vector-register-gather-instructions)30.1.16.4\. Vector Register Gather Instructions
 
-The vector register gather instructions read elements from a first source vector register group at locations given by a second source vector register group. The index values in the second vector are treated as unsigned integers. The source vector can be read at any index < VLMAX regardless of `vl`. The maximum number of elements to write to the destination register is given by `vl`, and the remaining elements past `vl` are handled according to the current tail policy ([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)). The operation can be masked, and the mask undisturbed/agnostic policy is followed for inactive elements.
+The vector register gather instructions read elements from a first source vector register group at locations given by a second source vector register group. The index values in the second vector are treated as unsigned integers. The source vector can be read at any index < VLMAX regardless of `vl`. The maximum number of elements to write to the destination register is given by `vl`, and the remaining elements past `vl` are handled according to the current tail policy ([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)). The operation can be masked, and the mask undisturbed/agnostic policy is followed for inactive elements.
 
 vrgather.vv vd, vs2, vs1, vm     # vd[i] = (vs1[i] >= VLMAX) ? 0 : vs2[vs1[i]];
 vrgatherei16.vv vd, vs2, vs1, vm # vd[i] = (vs1[i] >= VLMAX) ? 0 : vs2[vs1[i]];
@@ -3453,13 +3453,13 @@ vrgather.vi vd, vs2, uimm, vm # vd[i] =  (uimm >= VLMAX)  ? 0 : vs2[uimm]
 
 For any `vrgather` instruction, the destination vector register group cannot overlap with the source vector register groups, otherwise the instruction encoding is reserved.
 
-#### [](#31-1-16-5-vector-compress-instruction)31.1.16.5\. Vector Compress Instruction
+#### [](#30-1-16-5-vector-compress-instruction)30.1.16.5\. Vector Compress Instruction
 
 The vector compress instruction allows elements selected by a vector mask register from a source vector register group to be packed into contiguous elements at the start of the destination vector register group.
 
 vcompress.vm vd, vs2, vs1  # Compress into vd elements of vs2 where vs1 is enabled
 
-The vector mask register specified by `vs1` indicates which of the first `vl` elements of vector register group `vs2` should be extracted and packed into contiguous elements at the beginning of vector register `vd`. The remaining elements of `vd` are treated as tail elements according to the current tail policy ([31.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
+The vector mask register specified by `vs1` indicates which of the first `vl` elements of vector register group `vs2` should be extracted and packed into contiguous elements at the beginning of vector register `vd`. The remaining elements of `vd` are treated as tail elements according to the current tail policy ([30.1.3.4.3\. Vector Tail Agnostic and Vector Mask Agnostic vta and vma](#sec-agnostic)).
 
 Example use of vcompress instruction
 
@@ -3481,7 +3481,7 @@ A trap on a `vcompress` instruction is always reported with a`vstart` of 0. Exec
 | |  Although possible, vcompress is one of the more difficult instructions to restart with a non-zero vstart, so assumption is implementations will choose not do that but will instead restart from element 0\. This does mean elements in destination register aftervstart will already have been updated. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#31-1-16-5-1-synthesizing-vdecompress)31.1.16.5.1\. Synthesizing `vdecompress`
+##### [](#30-1-16-5-1-synthesizing-vdecompress)30.1.16.5.1\. Synthesizing `vdecompress`
 
 There is no inverse `vdecompress` provided, as this operation can be readily synthesized using iota and a masked vrgather:
 
@@ -3507,7 +3507,7 @@ p q r s t u v w    # v11 destination register
 4 4 4 3 2 1 1 0    # v10 result of viota.m
 e q r d c b v a    # v11 destination after vrgather using viota.m under mask
 
-#### [](#31-1-16-6-whole-vector-register-move)31.1.16.6\. Whole Vector Register Move
+#### [](#30-1-16-6-whole-vector-register-move)30.1.16.6\. Whole Vector Register Move
 
 The `vmv<nr>r.v` instructions copy whole vector registers (i.e., all VLEN bits) and can copy whole vector register groups. The `nr` value in the opcode is the number of individual vector registers, NREG, to copy. The instructions operate as if EEW=SEW, EMUL = NREG, effective length `evl`\= EMUL \* VLEN/SEW.
 
@@ -3541,14 +3541,14 @@ The source and destination vector register numbers must be aligned appropriately
 | |  A future extension may relax the vector register alignment restrictions. |
 | --------------------------------------------------------------------------- |
 
-### [](#31-1-17-exception-handling)31.1.17\. Exception Handling
+### [](#30-1-17-exception-handling)30.1.17\. Exception Handling
 
 On a trap during a vector instruction (caused by either a synchronous exception or an asynchronous interrupt), the existing `*epc` CSR is written with a pointer to the trapping vector instruction, while the`vstart` CSR contains the element index on which the trap was taken.
 
 | |  We chose to add a vstart CSR to allow resumption of a partially executed vector instruction to reduce interrupt latencies and to simplify forward-progress guarantees. This is similar to the scheme in the IBM 3090 vector facility. To ensure forward progress without the vstart CSR, implementations would have to guarantee an entire vector instruction can always complete atomically without generating a trap. This is particularly difficult to ensure in the presence of constant-stride or scatter/gather operations and demand-paged virtual memory. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-17-1-precise-vector-traps)31.1.17.1\. Precise vector traps
+#### [](#30-1-17-1-precise-vector-traps)30.1.17.1\. Precise vector traps
 
 | |  We assume most supervisor-mode environments with demand-paging will require precise vector traps. |
 | ---------------------------------------------------------------------------------------------------- |
@@ -3568,7 +3568,7 @@ Except where noted above, vector instructions are allowed to overwrite their inp
 
 Implementations must ensure forward progress can be eventually guaranteed for the element or segment reported by `vstart`.
 
-#### [](#31-1-17-2-imprecise-vector-traps)31.1.17.2\. Imprecise vector traps
+#### [](#30-1-17-2-imprecise-vector-traps)30.1.17.2\. Imprecise vector traps
 
 Imprecise vector traps are traps that are not precise. In particular, instructions newer than `*epc` may have committed results, and instructions older than `*epc` may have not completed execution. Imprecise traps are primarily intended to be used in situations where reporting an error and terminating execution is the appropriate response.
 
@@ -3579,13 +3579,13 @@ Imprecise traps shall report the faulting element in `vstart` for traps caused b
 
 There is no support for imprecise traps in the current standard extensions.
 
-#### [](#31-1-17-3-selectable-preciseimprecise-traps)31.1.17.3\. Selectable precise/imprecise traps
+#### [](#30-1-17-3-selectable-preciseimprecise-traps)30.1.17.3\. Selectable precise/imprecise traps
 
 Some profiles may choose to provide a privileged mode bit to select between precise and imprecise vector traps. Imprecise mode would run at high-performance but possibly make it difficult to discern error causes, while precise mode would run more slowly, but support debugging of errors albeit with a possibility of not experiencing the same errors as in imprecise mode.
 
 This mechanism is not defined in the current standard extensions.
 
-#### [](#31-1-17-4-swappable-traps)31.1.17.4\. Swappable traps
+#### [](#30-1-17-4-swappable-traps)30.1.17.4\. Swappable traps
 
 Another trap mode can support swappable state in the vector unit, where on a trap, special instructions can save and restore the vector unit microarchitectural state, to allow execution to continue correctly around imprecise traps.
 
@@ -3594,13 +3594,13 @@ This mechanism is not defined in the current standard extensions.
 | |  A future extension might define a standard way of saving and restoring opaque microarchitectural state from a vector unit implementation to support context switching with imprecise traps. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#sec-vector-extensions)31.1.18\. Standard Vector Extensions
+### [](#sec-vector-extensions)30.1.18\. Standard Vector Extensions
 
 This section describes the standard vector extensions. A set of smaller extensions intended for embedded use are named with a "Zve" prefix, while a larger vector extension designed for application processors is named as a single-letter V extension. A set of vector length extension names with prefix "Zvl" are also provided.
 
 The initial vector extensions are designed to act as a base for additional vector extensions in various domains, including cryptography and machine learning.
 
-#### [](#31-1-18-1-zvl-minimum-vector-length-standard-extensions)31.1.18.1\. Zvl\*: Minimum Vector Length Standard Extensions
+#### [](#30-1-18-1-zvl-minimum-vector-length-standard-extensions)30.1.18.1\. Zvl\*: Minimum Vector Length Standard Extensions
 
 All standard vector extensions have a minimum required VLEN as described below. A set of vector length extensions are provided to increase the minimum vector length of a vector extension.
 
@@ -3626,7 +3626,7 @@ __Table 18\. Vector length extensions__
 | |  Explicit use of the Zvl32b extension string is not required for any standard vector extension as they all effectively mandate at least this minimum, but the string can be useful when stating hardware capabilities. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#31-1-18-2-zve-vector-extensions-for-embedded-processors)31.1.18.2\. Zve\*: Vector Extensions for Embedded Processors
+#### [](#30-1-18-2-zve-vector-extensions-for-embedded-processors)30.1.18.2\. Zve\*: Vector Extensions for Embedded Processors
 
 The following five standard extensions are defined to provide varying degrees of vector support and are intended for use with embedded processors. Any of these extensions can be added to base ISAs with XLEN=32 or XLEN=64. The table lists the minimum VLEN and supported EEWs for each extension as well as what floating-point types are supported.
 
@@ -3648,31 +3648,31 @@ All Zve\* extensions have precise traps.
 
 All Zve\* extensions provide support for EEW of 8, 16, and 32, and Zve64\* extensions also support EEW of 64.
 
-All Zve\* extensions support the vector configuration instructions ([31.1.6\. Configuration-Setting Instructions (vsetvli/vsetivli/vsetvl)](#sec-vector-config)).
+All Zve\* extensions support the vector configuration instructions ([30.1.6\. Configuration-Setting Instructions (vsetvli/vsetivli/vsetvl)](#sec-vector-config)).
 
-All Zve\* extensions support all vector load and store instructions ([31.1.7\. Vector Loads and Stores](#sec-vector-memory)), except Zve64\* extensions do not support EEW=64 for index values when XLEN=32.
+All Zve\* extensions support all vector load and store instructions ([30.1.7\. Vector Loads and Stores](#sec-vector-memory)), except Zve64\* extensions do not support EEW=64 for index values when XLEN=32.
 
-All Zve\* extensions support all vector integer instructions ([31.1.11\. Vector Integer Arithmetic Instructions](#sec-vector-integer)), except that the `vmulh` integer multiply variants that return the high word of the product (`vmulh.vv`,`vmulh.vx`, `vmulhu.vv`, `vmulhu.vx`, `vmulhsu.vv`, `vmulhsu.vx`) are not included for EEW=64 in Zve64\*.
+All Zve\* extensions support all vector integer instructions ([30.1.11\. Vector Integer Arithmetic Instructions](#sec-vector-integer)), except that the `vmulh` integer multiply variants that return the high word of the product (`vmulh.vv`,`vmulh.vx`, `vmulhu.vv`, `vmulhu.vx`, `vmulhsu.vv`, `vmulhsu.vx`) are not included for EEW=64 in Zve64\*.
 
 | |  Producing the high-word of a product can take substantial additional gates for large EEW. |
 | -------------------------------------------------------------------------------------------- |
 
-All Zve\* extensions support all vector fixed-point arithmetic instructions ([31.1.12\. Vector Fixed-Point Arithmetic Instructions](#sec-vector-fixed-point)), except that `vsmul.vv` and`vsmul.vx` are not included in EEW=64 in Zve64\*.
+All Zve\* extensions support all vector fixed-point arithmetic instructions ([30.1.12\. Vector Fixed-Point Arithmetic Instructions](#sec-vector-fixed-point)), except that `vsmul.vv` and`vsmul.vx` are not included in EEW=64 in Zve64\*.
 
 | |  As with vmulh, vsmul requires a large amount of additional logic, and 64-bit fixed-point multiplies are relatively rare. |
 | --------------------------------------------------------------------------------------------------------------------------- |
 
-All Zve\* extensions support all vector integer single-width and widening reduction operations ([31.1.14.1\. Vector Single-Width Integer Reduction Instructions](#sec-vector-integer-reduce),[31.1.14.2\. Vector Widening Integer Reduction Instructions](#sec-vector-integer-reduce-widen)).
+All Zve\* extensions support all vector integer single-width and widening reduction operations ([30.1.14.1\. Vector Single-Width Integer Reduction Instructions](#sec-vector-integer-reduce),[30.1.14.2\. Vector Widening Integer Reduction Instructions](#sec-vector-integer-reduce-widen)).
 
-All Zve\* extensions support all vector mask instructions ([31.1.15\. Vector Mask Instructions](#sec-vector-mask)).
+All Zve\* extensions support all vector mask instructions ([30.1.15\. Vector Mask Instructions](#sec-vector-mask)).
 
-All Zve\* extensions support all vector permutation instructions ([31.1.16\. Vector Permutation Instructions](#sec-vector-permute)), except that Zve32x and Zve64x do not include those with floating-point operands, and Zve64f does not include those with EEW=64 floating-point operands.
+All Zve\* extensions support all vector permutation instructions ([30.1.16\. Vector Permutation Instructions](#sec-vector-permute)), except that Zve32x and Zve64x do not include those with floating-point operands, and Zve64f does not include those with EEW=64 floating-point operands.
 
-The Zve32x extension depends on the Zicsr extension. The Zve32f and Zve64f extensions depend upon the F extension, and implement all vector floating-point instructions ([31.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32\. Vector single-width floating-point reduction operations ([31.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 are supported.
+The Zve32x extension depends on the Zicsr extension. The Zve32f and Zve64f extensions depend upon the F extension, and implement all vector floating-point instructions ([30.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32\. Vector single-width floating-point reduction operations ([30.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 are supported.
 
-The Zve64d extension depends upon the D extension, and implements all vector floating-point instructions ([31.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32 or EEW=64 (including widening instructions and conversions between FP32 and FP64). Vector single-width floating-point reductions ([31.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 and EEW=64 are supported as well as widening reductions from FP32 to FP64.
+The Zve64d extension depends upon the D extension, and implements all vector floating-point instructions ([30.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32 or EEW=64 (including widening instructions and conversions between FP32 and FP64). Vector single-width floating-point reductions ([30.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 and EEW=64 are supported as well as widening reductions from FP32 to FP64.
 
-#### [](#31-1-18-3-v-vector-extension-for-application-processors)31.1.18.3\. V: Vector Extension for Application Processors
+#### [](#30-1-18-3-v-vector-extension-for-application-processors)30.1.18.3\. V: Vector Extension for Application Processors
 
 The single-letter V extension is intended for use in application processor profiles.
 
@@ -3687,34 +3687,34 @@ The V vector extension depends upon the Zvl128b and Zve64d extensions.
 
 The V extension supports EEW of 8, 16, and 32, and 64.
 
-The V extension supports the vector configuration instructions ([31.1.6\. Configuration-Setting Instructions (vsetvli/vsetivli/vsetvl)](#sec-vector-config)).
+The V extension supports the vector configuration instructions ([30.1.6\. Configuration-Setting Instructions (vsetvli/vsetivli/vsetvl)](#sec-vector-config)).
 
-The V extension supports all vector load and store instructions ([31.1.7\. Vector Loads and Stores](#sec-vector-memory)), except the V extension does not support EEW=64 for index values when XLEN=32.
+The V extension supports all vector load and store instructions ([30.1.7\. Vector Loads and Stores](#sec-vector-memory)), except the V extension does not support EEW=64 for index values when XLEN=32.
 
-The V extension supports all vector integer instructions ([31.1.11\. Vector Integer Arithmetic Instructions](#sec-vector-integer)).
+The V extension supports all vector integer instructions ([30.1.11\. Vector Integer Arithmetic Instructions](#sec-vector-integer)).
 
-The V extension supports all vector fixed-point arithmetic instructions ([31.1.12\. Vector Fixed-Point Arithmetic Instructions](#sec-vector-fixed-point)).
+The V extension supports all vector fixed-point arithmetic instructions ([30.1.12\. Vector Fixed-Point Arithmetic Instructions](#sec-vector-fixed-point)).
 
-The V extension supports all vector integer single-width and widening reduction operations ([31.1.14.1\. Vector Single-Width Integer Reduction Instructions](#sec-vector-integer-reduce),[31.1.14.2\. Vector Widening Integer Reduction Instructions](#sec-vector-integer-reduce-widen)).
+The V extension supports all vector integer single-width and widening reduction operations ([30.1.14.1\. Vector Single-Width Integer Reduction Instructions](#sec-vector-integer-reduce),[30.1.14.2\. Vector Widening Integer Reduction Instructions](#sec-vector-integer-reduce-widen)).
 
-The V extension supports all vector mask instructions ([31.1.15\. Vector Mask Instructions](#sec-vector-mask)).
+The V extension supports all vector mask instructions ([30.1.15\. Vector Mask Instructions](#sec-vector-mask)).
 
-The V extension supports all vector permutation instructions ([31.1.16\. Vector Permutation Instructions](#sec-vector-permute)).
+The V extension supports all vector permutation instructions ([30.1.16\. Vector Permutation Instructions](#sec-vector-permute)).
 
-The V extension depends upon the F and D extensions, and implements all vector floating-point instructions ([31.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32 or EEW=64 (including widening instructions and conversions between FP32 and FP64). Vector single-width floating-point reductions ([31.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 and EEW=64 are supported as well as widening reductions from FP32 to FP64.
+The V extension depends upon the F and D extensions, and implements all vector floating-point instructions ([30.1.13\. Vector Floating-Point Instructions](#sec-vector-float)) for floating-point operands with EEW=32 or EEW=64 (including widening instructions and conversions between FP32 and FP64). Vector single-width floating-point reductions ([30.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce)) for EEW=32 and EEW=64 are supported as well as widening reductions from FP32 to FP64.
 
 | |  As is the case with other RISC-V extensions, it is valid to include overlapping extensions in the same ISA string. For example, RV64GCV and RV64GCV\_Zve64f are both valid and equivalent ISA strings, as is RV64GCV\_Zve64f\_Zve32x\_Zvl128b. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-18-4-zvfhmin-vector-extension-for-minimal-half-precision-floating-point)31.1.18.4\. Zvfhmin: Vector Extension for Minimal Half-Precision Floating-Point
+#### [](#30-1-18-4-zvfhmin-vector-extension-for-minimal-half-precision-floating-point)30.1.18.4\. Zvfhmin: Vector Extension for Minimal Half-Precision Floating-Point
 
 The Zvfhmin extension provides minimal support for vectors of IEEE 754-2008 binary16 values, adding conversions to and from binary32\. When the Zvfhmin extension is implemented, the `vfwcvt.f.f.v` and`vfncvt.f.f.w` instructions become defined when SEW=16\. The EEW=16 floating-point operands of these instructions use the binary16 format.
 
 The Zvfhmin extension depends on the Zve32f extension.
 
-#### [](#31-1-18-5-zvfh-vector-extension-for-half-precision-floating-point)31.1.18.5\. Zvfh: Vector Extension for Half-Precision Floating-Point
+#### [](#30-1-18-5-zvfh-vector-extension-for-half-precision-floating-point)30.1.18.5\. Zvfh: Vector Extension for Half-Precision Floating-Point
 
-The Zvfh extension provides support for vectors of IEEE 754-2008 binary16 values.When the Zvfh extension is implemented, all instructions in[31.1.13\. Vector Floating-Point Instructions](#sec-vector-float), [31.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce),[31.1.14.4\. Vector Widening Floating-Point Reduction Instructions](#sec-vector-float-reduce-widen), [31.1.16.2\. Floating-Point Scalar Move Instructions](#sec-vector-float-move),[31.1.16.3.4\. Vector Floating-Point Slide-1-up Instruction](#sec-vfslide1up), and [31.1.16.3.6\. Vector Floating-Point Slide-1-down Instruction](#sec-vfslide1down)become defined when SEW=16. The EEW=16 floating-point operands of these instructions use the binary16 format.
+The Zvfh extension provides support for vectors of IEEE 754-2008 binary16 values.When the Zvfh extension is implemented, all instructions in[30.1.13\. Vector Floating-Point Instructions](#sec-vector-float), [30.1.14.3\. Vector Single-Width Floating-Point Reduction Instructions](#sec-vector-float-reduce),[30.1.14.4\. Vector Widening Floating-Point Reduction Instructions](#sec-vector-float-reduce-widen), [30.1.16.2\. Floating-Point Scalar Move Instructions](#sec-vector-float-move),[30.1.16.3.4\. Vector Floating-Point Slide-1-up Instruction](#sec-vfslide1up), and [30.1.16.3.6\. Vector Floating-Point Slide-1-down Instruction](#sec-vfslide1down)become defined when SEW=16. The EEW=16 floating-point operands of these instructions use the binary16 format.
 
 Additionally, conversions between 8-bit integers and binary16 values are provided. The floating-point-to-integer narrowing conversions (`vfncvt[.rtz].x[u].f.w`) and integer-to-floating-point widening conversions (`vfwcvt.f.x[u].v`) become defined when SEW=8.
 
@@ -3723,13 +3723,13 @@ The Zvfh extension depends on the Zve32f and Zfhmin extensions.
 | |  Requiring basic scalar half-precision support makes Zvfh’s vector-scalar instructions substantially more useful. We considered requiring more complete scalar half-precision support, but we reasoned that, for many half-precision vector workloads, performing the scalar computation in single-precision will suffice. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#vector-element-groups)31.1.19\. Vector Element Groups
+### [](#vector-element-groups)30.1.19\. Vector Element Groups
 
 Some vector instructions treat operands as a vector of one or more_element_ _groups_, where each element group is a fixed number of elements. For example, complex numbers can be viewed as a two-element group (one real element and one imaginary element). As another example, the SHA-256 cryptographic instructions in the Zvknha extension operate on 128-bit values represented as a 4-element group of 32-bit elements.
 
 This section describes recommendations and terminology for generic instruction set design for vector instructions that operate on element groups.
 
-#### [](#31-1-19-1-element-group-size)31.1.19.1\. Element Group Size
+#### [](#30-1-19-1-element-group-size)30.1.19.1\. Element Group Size
 
 The _element_ _group_ _size_ (EGS) is the number of elements in one group, and must be a power-of-two (POT).
 
@@ -3746,14 +3746,14 @@ Vector instructions with EGS > VLMAX are reserved.
 | |  Many operations only make sense with a certain number of elements per group (e.g., complex operations require a element group size of 2 and SHA-256 requires an element group size of 4). |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-19-2-setting-vl)31.1.19.2\. Setting `vl`
+#### [](#30-1-19-2-setting-vl)30.1.19.2\. Setting `vl`
 
 Each source and destination operand to a vector instruction might be defined as either a single element group or a vector of element groups. When an operand is a vector of element groups, the `vl`setting must correspond to an integer multiple of the element group size, with other values of `vl` reserved.
 
 | |  For example, a SHA-256 instruction would require that vl is a multiple of 4. |
 | ------------------------------------------------------------------------------- |
 
-When element group instructions are present, an additional constraint is placed on the setting of `vl` based on an AVL value (augmenting [31.1.6.3\. Constraints on Setting vl](#constraints-on-setting-vl)). EGSMAX is the largest EGS supported by the implementation. When AVL > VLMAX, the value of `vl` must be set to either VLMAX or a positive integer multiple of EGSMAX.
+When element group instructions are present, an additional constraint is placed on the setting of `vl` based on an AVL value (augmenting [30.1.6.3\. Constraints on Setting vl](#constraints-on-setting-vl)). EGSMAX is the largest EGS supported by the implementation. When AVL > VLMAX, the value of `vl` must be set to either VLMAX or a positive integer multiple of EGSMAX.
 
 | |  As the base vector extension only has element group size of 1, this constraint is backwards-compatible. |
 | ---------------------------------------------------------------------------------------------------------- |
@@ -3767,7 +3767,7 @@ When element group instructions are present, an additional constraint is placed 
 | |  Additional constraints may be required for some element group instructions to ensure legal length values for all operands. |
 | ----------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-19-3-determining-eew)31.1.19.3\. Determining EEW
+#### [](#30-1-19-3-determining-eew)30.1.19.3\. Determining EEW
 
 The `vtype` SEW can be used to indicate or calculate the effective element size (EEW) of one or more operands of an element group instruction. Where the operand is an element group, SEW and EEW refer to the number of bits in each individual element within a group not the number of bits in the group as a whole.
 
@@ -3776,13 +3776,13 @@ Alternatively, the opcode might encode EEW of all operands statically and ignore
 | |  Many operations are only defined for one EEW, e.g., SHA-256 requires EEW=32\. Encoding EEWs statically in the instruction removes a dynamic dependency on the SEW value and the need to check for errors in SEW values. However, ignoring SEW also prevents reuse of the static opcode with a different dynamic SEW, and in many cases, the SEW setting will be needed for regular vector instructions used to process the individual elements in the vector. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-19-4-determining-emul)31.1.19.4\. Determining EMUL
+#### [](#30-1-19-4-determining-emul)30.1.19.4\. Determining EMUL
 
 The `vtype` LMUL setting can be used to indicate or calculate the effective length multiplier (EMUL) for one or more operands. Element group instructions tend to exhibit a much wider range of relationships between various operand EEW/EMUL values. For example, an instruction might take a vector of length N of 4-element groups with EEW=8b and reduce each group to produce a vector length N of 1-element groups with EEW=32b. In this case, the input and output EMUL values are equal even though the EEW settings differ by a factor of 4.
 
 Each source and destination operand to a vector instruction may have a different element group size, different EMUL, and/or different EEW.
 
-#### [](#31-1-19-5-element-group-width)31.1.19.5\. Element Group Width
+#### [](#30-1-19-5-element-group-width)30.1.19.5\. Element Group Width
 
 The _element_ _group_ _width_ (EGW) is the number of bits in the element group as a whole. For example, the SHA-256 instructions in the Zvknha extension operate on an EGW of 128, with EGS=4 and EEW=32\. It is possible to use LMUL to concatenate multiple vector registers together to support larger EGW>VLEN.
 
@@ -3792,11 +3792,11 @@ The _element_ _group_ _width_ (EGW) is the number of bits in the element group a
 | |  Element group operations by their nature will gather data from across a wider portion of a vector datapath than regular vector instructions. Some element group instructions might allow temporal execution of individual element operations in a larger group, while others will require all EGW bits of a group to be presented to a functional unit at the same time. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#31-1-19-6-masking)31.1.19.6\. Masking
+#### [](#30-1-19-6-masking)30.1.19.6\. Masking
 
 No ratified extensions include masked element-group instructions. Future extensions might extend the element-group scheme to support element-level masking, or might define the concept of a _mask element group_(which might, e.g., update the destination element group if any mask bit in the mask element group is set).
 
-### [](#31-1-20-vector-instruction-listing)31.1.20\. Vector Instruction Listing
+### [](#30-1-20-vector-instruction-listing)30.1.20\. Vector Instruction Listing
 
 | Integer | Integer | FP     |   |       |   |
 | ------- | ------- | ------ | - | ----- | - |

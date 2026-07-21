@@ -1,6 +1,6 @@
-# Bibliography
+# 5.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#5-1-bibliography)5.1\. Bibliography
 
 \[1\] _RISC-V Supervisor Binary Interface Specification v3.0_. \[Online\]. Available: <https://github.com/riscv-non-isa/riscv-sbi-doc>
 

@@ -1,6 +1,6 @@
-# 2.1. RVA Profiles Rationale
+# 1.1. RVA Profiles Rationale
 
-## [](#2-1-rva-profiles-rationale)2.1\. RVA Profiles Rationale
+## [](#1-1-rva-profiles-rationale)1.1\. RVA Profiles Rationale
 
 RISC-V was designed to provide a highly modular and extensible instruction set and includes a large and growing set of standard extensions, where each standard extension is a bundle of instruction-set features. This is no different than other industry ISAs that continue to add new ISA features. Unlike other ISAs, however, RISC-V has a broad set of contributors and implementers, and also allows users to add their own custom extensions. For some deep embedded markets, highly customized processor configurations are desirable for efficiency, and all software is compiled, ported, and/or developed in-house by the same organization for that specific processor configuration. However, for other markets that expect a substantial fraction of software to be delivered to end-customers in binary form, compatibility across multiple implementations from different RISC-V vendors is required.
 

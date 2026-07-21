@@ -1,12 +1,12 @@
-# 11.1. Decoder
+# 10.1. Decoder
 
-## [](#Decoder)11.1\. Decoder
+## [](#Decoder)10.1\. Decoder
 
 This decoder implementation assumes there is no branch predictor or return address stack (_return\_stack\_size\_p_ and _bpred\_size\_p_ both zero).
 
 Reference Python implementations of both the encoder and decoder can be found at <https://github.com/riscv-non-isa/riscv-trace-spec>.
 
-### [](#11-1-1-decoder-pseudo-code)11.1.1\. Decoder pseudo code
+### [](#10-1-1-decoder-pseudo-code)10.1.1\. Decoder pseudo code
 
 # global variables
 global       pc                          # Reconstructed program counter

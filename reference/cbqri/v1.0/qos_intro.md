@@ -1,6 +1,6 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#intro)1.1\. Introduction
+## [](#intro)Introduction
 
 Quality of Service (QoS) is defined as the minimal end-to-end performance that is guaranteed in advance by a service level agreement (SLA) to a workload. A workload can be a single application, a group of applications, a virtual machine, a group of virtual machines, or a combination of those. The performance is measured in the form of metrics such as instructions per cycle (IPC), latency of servicing work, etc.
 

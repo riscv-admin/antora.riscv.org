@@ -1,6 +1,6 @@
-# 2.1. Encoder Control
+# 1.1. Encoder Control
 
-## [](#encoderControl)2.1\. Encoder Control
+## [](#encoderControl)1.1\. Encoder Control
 
 The fields required to control a Trace Encoder are defined in the[RISC-V Trace Control Interface Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/), which is intended to apply to any and all RISC-V trace encoders, regardless of encoding protocol. This chapter details which of those fields apply to E-Trace. To avoid replication, descriptions are not provided here; additional E-Trace specific context or clarification is provided only where required.
 
@@ -16,7 +16,7 @@ The applicability of fields for E-trace is categorized as follows:
 * MD: Mandatory if data trace is supported
 * OD: Optional for data trace
 
-### [](#sec:ctl-basic)2.1.1\. Basic Control
+### [](#sec:ctl-basic)1.1.1\. Basic Control
 
 The following fields control basic encoding behavior.
 
@@ -48,7 +48,7 @@ __Table 1\. Basic Control__
 | **trTeSrcID**               | O                 |                                                                                    |
 | **trTeSrcBits**             | O                 |                                                                                    |
 
-### [](#sec:ctl-modes)2.1.2\. Optional Modes
+### [](#sec:ctl-modes)1.1.2\. Optional Modes
 
 See [\[optional\]](#optional) for details of the modes covered in this section.
 
@@ -71,7 +71,7 @@ __Table 2\. Optional and run-time configurable modes.__
 | **trTeInstEnAllJumps**         | N                 | Hardcode to 0.               |
 | **trTeInstExtendAddrMSB**      | N                 | Hardcode to 0.               |
 
-### [](#sec:ctl-filter)2.1.3\. Filtering
+### [](#sec:ctl-filter)1.1.3\. Filtering
 
 See [\[ch:filtering\]](#ch:filtering) for details of the filtering capabilities covered in this section.
 

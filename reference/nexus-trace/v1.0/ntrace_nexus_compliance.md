@@ -1,6 +1,6 @@
-# 12.1. IEEE-5001 Nexus Standard Compliance
+# 11.1. IEEE-5001 Nexus Standard Compliance
 
-## [](#12-1-ieee-5001-nexus-standard-compliance)12.1\. IEEE-5001 Nexus Standard Compliance
+## [](#11-1-ieee-5001-nexus-standard-compliance)11.1\. IEEE-5001 Nexus Standard Compliance
 
 The IEEE-5001 Nexus Standard provides a lot of flexibility and in general N-Trace can be considered fully compatible. There is one incompatible, small change:
 

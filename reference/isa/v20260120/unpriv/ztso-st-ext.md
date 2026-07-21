@@ -1,6 +1,6 @@
-# 19.1. "Ztso" Extension for Total Store Ordering, Version 1.0
+# 18.1. "Ztso" Extension for Total Store Ordering, Version 1.0
 
-## [](#ztso)19.1\. "Ztso" Extension for Total Store Ordering, Version 1.0
+## [](#ztso)18.1\. "Ztso" Extension for Total Store Ordering, Version 1.0
 
 This chapter defines the "Ztso" extension for the RISC-V Total Store Ordering (RVTSO) memory consistency model. RVTSO is defined as a delta from RVWMO, which is defined in [RVWMO Memory Consistency Model](rvwmo.html).
 

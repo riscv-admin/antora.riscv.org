@@ -1,6 +1,6 @@
-# 6.1. Interrupts for Virtual Machines (VS Level)
+# 5.1. Interrupts for Virtual Machines (VS Level)
 
-## [](#VSLevel)6.1\. Interrupts for Virtual Machines (VS Level)
+## [](#VSLevel)5.1\. Interrupts for Virtual Machines (VS Level)
 
 When the H extension is implemented, a hart’s set of possible privilege modes includes the _virtual supervisor_ (VS) and _virtual user_ (VU) modes for hosting virtual harts. The Advanced Interrupt Architecture adds to the H extension new interrupt facilities aligned with those described earlier for supervisor-level interrupts.
 
@@ -8,7 +8,7 @@ As introduced in [Control and Status Registers (CSRs) Added to Harts](CSRs.html#
 
 To give software that runs in a virtual machine the appearance of executing on a real machine that implements the Advanced Interrupt Architecture at supervisor level, responsibility is shared between hypervisor software and the hardware facilities described in this chapter. While some behaviors can be handled directly by hardware, others require significant emulation by the hypervisor, sometimes with hardware assistance.
 
-### [](#6-1-1-vs-level-external-interrupts-with-a-guest-interrupt-file)6.1.1\. VS-level external interrupts with a guest interrupt file
+### [](#5-1-1-vs-level-external-interrupts-with-a-guest-interrupt-file)5.1.1\. VS-level external interrupts with a guest interrupt file
 
 When a hart implements the H extension, it is recommended that the hart also have an IMSIC with guest interrupt files. Assuming guest interrupt files are available, each can be assigned to a virtual hart at the physical hart to act as the supervisor-level interrupt file for that virtual hart. If there are  guest interrupt files, then  virtual harts at that physical hart may each have a physical guest interrupt file to serve as its (virtual) supervisor-level interrupt file. The guest interrupt file for the current virtual hart is always indicated by the VGEIN field of CSR `hstatus`. When VGEIN is not the valid number of a guest interrupt file, the current virtual hart has no guest interrupt file to act as its supervisor-level interrupt file.
 
@@ -23,7 +23,7 @@ When a virtual hart appears to have an IMSIC because a guest interrupt file is a
 
 In the special case that an emulated APLIC for a virtual machine has a wired interrupt source that equates to an actual interrupt source of a real APLIC, if software running in this virtual machine configures its virtual APLIC to forward interrupts from that source as MSIs to a specific virtual hart, the hypervisor can configure the real APLIC to forward the actual interrupts directly as MSIs to the virtual hart’s guest interrupt file. In this way, although the hypervisor must trap and emulate the virtual machine’s memory accesses that configure the forwarding of interrupts at the virtual APLIC, the interrupts themselves can be converted automatically into real MSIs for the guest interrupt file, without the hypervisor being invoked for each arriving interrupt.
 
-#### [](#6-1-1-1-direct-control-of-a-device-by-a-guest-os)6.1.1.1\. Direct control of a device by a guest OS
+#### [](#5-1-1-1-direct-control-of-a-device-by-a-guest-os)5.1.1.1\. Direct control of a device by a guest OS
 
 To ensure proper support for interrupts, two conditions must be met before a hypervisor may allow a guest OS running in a virtual machine to directly control a physical device that sends MSIs: First, each virtual hart must have a guest interrupt file assigned to it, giving each its own apparent IMSIC within the virtual machine. Second, interrupts from the device must be signaled by wire through an APLIC that can translate these interrupts into MSIs, or the system must have an IOMMU that can translate the addresses of MSI memory writes made by the device itself.
 
@@ -31,7 +31,7 @@ If a guest OS directly controls a device capable of sending MSIs, it will natura
 
 By design, the translation an IOMMU must do for device MSIs is fundamentally no different than the address translation the IOMMU already must perform for other memory accesses from the same device, converting guest physical addresses into true physical addresses. Because each virtual hart is assigned a dedicated, physical guest interrupt file that is indistinguishable from a true supervisor-level interrupt file, no translation is needed for the data of an MSI write, which specifies the interrupt’s identity number in the target interrupt file.
 
-#### [](#virtHartMigration)6.1.1.2\. Migrating a virtual hart to a different guest interrupt file
+#### [](#virtHartMigration)5.1.1.2\. Migrating a virtual hart to a different guest interrupt file
 
 When it is necessary to move a virtual hart from one physical hart to another, if the virtual hart uses a guest interrupt file, the specific guest interrupt file assigned to it must change from the one in use at the old physical hart to a different one at the new physical hart. Because each guest interrupt file is physically tied to a single physical hart, a virtual hart cannot bring its guest interrupt file with it when it moves.
 
@@ -49,15 +49,15 @@ Resuming execution of the virtual hart at the new physical hart is not recommend
 | |  Resuming execution of the virtual hart before the interrupt file is fully migrated could allow software running in the virtual machine to see multiple MSIs arriving from a single device in an order that should not happen. While this would rarely matter in practice, it runs the risk of wedging a device driver that depends (perhaps inadvertently) on a valid ordering of events. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#6-1-2-vs-level-external-interrupts-without-a-guest-interrupt-file)6.1.2\. VS-level external interrupts without a guest interrupt file
+### [](#5-1-2-vs-level-external-interrupts-without-a-guest-interrupt-file)5.1.2\. VS-level external interrupts without a guest interrupt file
 
 Although it is recommended that harts implementing the hypervisor extension also have IMSICs with guest interrupt files, this is not a requirement. Even assuming guest interrupt files exist, it may happen that there are more virtual harts at a physical hart than guest interrupt files, leaving some virtual harts without one. In either case, a hypervisor must emulate an external interrupt controller for a virtual hart without the benefit of a guest interrupt file allocated to the virtual hart.
 
 When emulating an external interrupt controller for a virtual hart, if configurable interrupt priority is not supported for the virtual hart other than for external interrupts, then external interrupts may be asserted to VS level simply by setting bit VSEIP in `hvip`, as defined by the H extension. However, to emulate both an external interrupt controller and priority configurability for non-external interrupts, a hypervisor must make use of CSR `hvictl` (Hypervisor Virtual Interrupt Control), described later in the next section.
 
-### [](#6-1-3-interrupts-at-vs-level)6.1.3\. Interrupts at VS level
+### [](#5-1-3-interrupts-at-vs-level)5.1.3\. Interrupts at VS level
 
-#### [](#6-1-3-1-configuring-priorities-of-major-interrupts-at-vs-level)6.1.3.1\. Configuring priorities of major interrupts at VS level
+#### [](#5-1-3-1-configuring-priorities-of-major-interrupts-at-vs-level)5.1.3.1\. Configuring priorities of major interrupts at VS level
 
 Like for supervisor level, the Advanced Interrupt Architecture optionally allows major VS-level interrupts to be configured by software to intermix in priority with VS-level external interrupts. As documented in [Interrupts at supervisor level](MSLevel.html#intrs-S), interrupt priorities for supervisor level are configured by the `iprio` array accessed indirectly through CSRs `siselect` and `sireg`. The `siselect` addresses for the `iprio` array registers are `0x30`\-`0x3F`.
 
@@ -111,7 +111,7 @@ A hypervisor can choose to employ registers `hviprio1` and `hviprio2` when emula
 
 If a hypervisor really must emulate configurability of priority for interrupts beyond the subset supported by `hviprio1` and `hviprio2`, it can do so with extra effort by setting bit VTI of CSR `hvictl`, described in the next subsection.
 
-#### [](#6-1-3-2-virtual-interrupts-for-vs-level)6.1.3.2\. Virtual interrupts for VS level
+#### [](#5-1-3-2-virtual-interrupts-for-vs-level)5.1.3.2\. Virtual interrupts for VS level
 
 Assuming a virtual hart does not need configurable priority for major interrupts beyond the subset supported in hardware by `hviprio1` and `hviprio2`, a hypervisor can assert interrupts to the virtual hart using CSRs `hvien` (Hypervisor Virtual-Interrupt-Enable) and `hvip` (Hypervisor Virtual-Interrupt-Pending bits). These CSRs affect interrupts for VS level much the same way that `mvien`and `mvip` do for supervisor level, as explained in[Interrupt filtering and virtual interrupts for supervisor level](MSLevel.html#virtIntrs-S).
 
@@ -170,7 +170,7 @@ When `hvictl`.IID = 9, DPR is ignored.
 | |  Register hvictl has no effect on any of mip, sip, hip, or vsip; it affects only vstopi and the trapping of some instructions. |
 | -------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#vstopi)6.1.3.3\. Virtual supervisor top interrupt CSR (`vstopi`)
+#### [](#vstopi)5.1.3.3\. Virtual supervisor top interrupt CSR (`vstopi`)
 
 Read-only CSR `vstopi` is VSXLEN bits wide and has the same format as `stopi`:
 
@@ -201,7 +201,7 @@ In the list above, all "supervisor" external interrupts are virtual, directed to
 
 When no interrupt candidates satisfy the conditions of the list above,`vstopi` is zero. Else, `vstopi` fields IID and IPRIO are determined by the highest-priority interrupt from among the candidates. The usual priority order for supervisor level applies, as specified by[Effect of the supervisor-level iprio array on the priorities of interrupts taken in S-mode](MSLevel.html#TableintrPrios-S), except that priority numbers are taken from the candidate list above, not from the supervisor-level `iprio` array. Ties in nominal priority are broken as usual by the default priority order from[The standard major interrupt codes, listed in default priority order](MSLevel.html#TablemajorIntrs), unless `hvictl` fields VTI = 1 and  (last item in the candidate list above), in which case default priority order is determined solely by`hvictl`.DPR. If bit IPRIOM (IPRIO Mode) of `hvictl` is zero, IPRIO in `vstopi` is 1; else, if the priority number for the highest-priority candidate is within the range 1 to 255, IPRIO is that value; else, IPRIO is set to either 0 or 255 in the manner documented for `stopi` in [Supervisor top interrupt CSR (stopi)](MSLevel.html#stopi).
 
-#### [](#6-1-3-4-interrupt-traps-to-vs-mode)6.1.3.4\. Interrupt traps to VS-mode
+#### [](#5-1-3-4-interrupt-traps-to-vs-mode)5.1.3.4\. Interrupt traps to VS-mode
 
 The Advanced Interrupt Architecture modifies the H extension such that an interrupt is pending at VS level if and only if `vstopi` is not zero. CSRs `vsip` and `vsie` do not by themselves determine whether a VS-level interrupt is pending, though they may do so indirectly through their effect on `vstopi`.
 

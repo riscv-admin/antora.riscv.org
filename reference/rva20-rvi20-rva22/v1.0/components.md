@@ -1,8 +1,8 @@
-# 4.1. Components of a Profile
+# 3.1. Components of a Profile
 
-## [](#4-1-components-of-a-profile)4.1\. Components of a Profile
+## [](#3-1-components-of-a-profile)3.1\. Components of a Profile
 
-### [](#4-1-1-profile-family)4.1.1\. Profile Family
+### [](#3-1-1-profile-family)3.1.1\. Profile Family
 
 Every profile is a member of a _profile_ _family_. A profile family is a set of profiles that share the same base ISA but which vary in highest-supported privilege mode. The initial two types of family are:
 
@@ -16,7 +16,7 @@ A profile family may be updated no more than annually, and the release calendar 
 
 Each profile family is described in more detail below.
 
-### [](#4-1-2-profile-privilege-mode)4.1.2\. Profile Privilege Mode
+### [](#3-1-2-profile-privilege-mode)3.1.2\. Profile Privilege Mode
 
 RISC-V has a layered architecture supporting multiple privilege modes, and most RISC-V platforms support more than one privilege mode. Software is usually written assuming a particular privilege mode during execution. For example, application code is written assuming it will be run in user mode, and kernel code is written assuming it will be run in supervisor mode.
 
@@ -43,7 +43,7 @@ A more-privileged profile can always support running software to implement a les
 | |  Instructions in a U-mode profile, which are all executed in user mode, have potentially different behaviors than instructions executed in user mode in an S-mode profile. For this reason, a U-mode profile cannot be considered a subset of an S-mode profile. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#4-1-3-profile-isa-features)4.1.3\. Profile ISA Features
+### [](#3-1-3-profile-isa-features)3.1.3\. Profile ISA Features
 
 An architecture profile has a mandatory ratified base instruction set (RV32I or RV64I for the current profiles). The profile also includes ratified ISA extensions placed into two categories:
 
@@ -71,7 +71,7 @@ Extensions that are not explicitly listed in the mandatory or optional categorie
 | |  Extensions that are released after a given profile is released are by definition non-profile extensions. For example, mandatory or optional profile extensions for a new profile might be prototyped as non-profile extensions on an earlier profile. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#4-1-4-profile-naming-convention)4.1.4\. Profile Naming Convention
+### [](#3-1-4-profile-naming-convention)3.1.4\. Profile Naming Convention
 
 A profile name is a string comprised of, in order:
 

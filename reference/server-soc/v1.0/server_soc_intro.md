@@ -1,6 +1,6 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#intro)1.1\. Introduction
+## [](#intro)Introduction
 
 The RISC-V server SoC specification defines a standardized set of capabilities that portable system software such as operating systems and hypervisors, can rely on being present in a RISC-V server SoC.
 
@@ -36,7 +36,7 @@ This specification groups the rules in the following broad categories:
 * Performance monitoring
 * Security
 
-### [](#1-1-1-glossary)1.1.1\. Glossary
+### [](#glossary)Glossary
 
 Most terminology has the standard RISC-V meaning. This table captures other terms used in the document. Terms in the document prefixed by 'PCIe' have the meaning defined in the PCI Express (PCIe) Base Specification \[[4](server%5Fsoc%5Fbibliography.html#bib-pci)\] (even if they are not in this table).
 

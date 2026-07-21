@@ -1,20 +1,20 @@
-# 4.1. RVA23 Profiles
+# 3.1. RVA23 Profiles
 
-## [](#4-1-rva23-profiles)4.1\. RVA23 Profiles
+## [](#3-1-rva23-profiles)3.1\. RVA23 Profiles
 
 The RVA23 profiles are intended to align implementations of RISC-V 64-bit application processors to allow binary software ecosystems to rely on a large set of guaranteed extensions and a small number of discoverable coarse-grain options. It is explicitly a non-goal of RVA23 to allow more hardware implementation flexibility by supporting only a minimal set of features and a large number of fine-grain extensions.
 
 Only user-mode (RVA23U64) and supervisor-mode (RVA23S64) profiles are specified in this family.
 
-### [](#4-1-1-rva23u64-profile)4.1.1\. RVA23U64 Profile
+### [](#3-1-1-rva23u64-profile)3.1.1\. RVA23U64 Profile
 
 The RVA23U64 profile specifies the ISA features available to user-mode execution environments in 64-bit applications processors. This is the most important profile within the application processor family in terms of the amount of software that targets this profile.
 
-#### [](#4-1-1-1-rva23u64-mandatory-base)4.1.1.1\. RVA23U64 Mandatory Base
+#### [](#3-1-1-1-rva23u64-mandatory-base)3.1.1.1\. RVA23U64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA23U64 and is little-endian. As per the unprivileged architecture specification, the `ECALL`instruction causes a requested trap to the execution environment.
 
-#### [](#4-1-1-2-rva23u64-mandatory-extensions)4.1.1.2\. RVA23U64 Mandatory Extensions
+#### [](#3-1-1-2-rva23u64-mandatory-extensions)3.1.1.2\. RVA23U64 Mandatory Extensions
 
 The following mandatory extensions were present in RVA22U64.
 
@@ -59,9 +59,9 @@ The following mandatory extensions are new in RVA23U64:
 * **Zawrs** Wait-on-reservation-set instructions.
 * **Supm** Pointer masking, with the execution environment providing a means to select PMLEN=0 and PMLEN=7 at minimum.
 
-#### [](#4-1-1-3-rva23u64-optional-extensions)4.1.1.3\. RVA23U64 Optional Extensions
+#### [](#3-1-1-3-rva23u64-optional-extensions)3.1.1.3\. RVA23U64 Optional Extensions
 
-##### [](#4-1-1-3-1-localized-options)4.1.1.3.1\. Localized Options
+##### [](#3-1-1-3-1-localized-options)3.1.1.3.1\. Localized Options
 
 The following localized options are new in RVA23U64:
 
@@ -74,7 +74,7 @@ The following localized options are new in RVA23U64:
 | |  We have included only the Zvkng/Zvksg options with GCM to standardize on a higher performance crypto alternative. Zvbc is listed as a development option for use in other algorithms, and will become mandatory. Scalar Zbc is now listed as an expansion option, i.e., it will probably not become mandatory. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#4-1-1-3-2-development-options)4.1.1.3.2\. Development Options
+##### [](#3-1-1-3-2-development-options)3.1.1.3.2\. Development Options
 
 The following are new development options intended to become mandatory in a future RVA profile.
 
@@ -91,7 +91,7 @@ The following are new development options intended to become mandatory in a futu
 | |  Zama16b is a new profile-defined extension that represents the presence of the new Misaligned Atomicity Granule feature added in Sm1p13\. The extension will be added to the PMA section of the privileged architecture manual. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#4-1-1-3-3-expansion-options)4.1.1.3.3\. Expansion Options
+##### [](#3-1-1-3-3-expansion-options)3.1.1.3.3\. Expansion Options
 
 The following expansion options were also present in RVA22U64:
 
@@ -107,26 +107,26 @@ The following are new expansion options in RVA23U64:
 * **Zvfbfmin** Vector BF16 converts.
 * **Zvfbfwma** Vector BF16 widening mul-add.
 
-##### [](#4-1-1-3-4-transitory-options)4.1.1.3.4\. Transitory Options
+##### [](#3-1-1-3-4-transitory-options)3.1.1.3.4\. Transitory Options
 
 There are no transitory options in RVA23U64.
 
 | |  Scalar crypto is no longer an option in RVA23U64, though the Zbc extension has now been exposed as an expansion option. |
 | -------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#4-1-1-4-rva23u64-recommendations)4.1.1.4\. RVA23U64 Recommendations
+#### [](#3-1-1-4-rva23u64-recommendations)3.1.1.4\. RVA23U64 Recommendations
 
 Implementations are strongly recommended to raise illegal-instruction exceptions on attempts to execute unimplemented opcodes.
 
-### [](#4-1-2-rva23s64-profile)4.1.2\. RVA23S64 Profile
+### [](#3-1-2-rva23s64-profile)3.1.2\. RVA23S64 Profile
 
 The RVA23S64 profile specifies the ISA features available to a supervisor-mode execution environment in 64-bit applications processors. RVA23S64 is based on privileged architecture version 1.13.
 
-#### [](#4-1-2-1-rva23s64-mandatory-base)4.1.2.1\. RVA23S64 Mandatory Base
+#### [](#3-1-2-1-rva23s64-mandatory-base)3.1.2.1\. RVA23S64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA23S64 and is little-endian. The `ECALL` instruction operates as per the unprivileged architecture specification. An `ECALL` in user mode causes a contained trap to supervisor mode. An `ECALL` in supervisor mode causes a requested trap to the execution environment.
 
-#### [](#4-1-2-2-rva23s64-mandatory-extensions)4.1.2.2\. RVA23S64 Mandatory Extensions
+#### [](#3-1-2-2-rva23s64-mandatory-extensions)3.1.2.2\. RVA23S64 Mandatory Extensions
 
 The following unprivileged extensions are mandatory:
 
@@ -193,17 +193,17 @@ The following are new mandatory extensions:
 | |  The augmented hypervisor extension (exactly equivalet to Sha) was optional in RVA22. |
 | --------------------------------------------------------------------------------------- |
 
-#### [](#4-1-2-3-rva23s64-optional-extensions)4.1.2.3\. RVA23S64 Optional Extensions
+#### [](#3-1-2-3-rva23s64-optional-extensions)3.1.2.3\. RVA23S64 Optional Extensions
 
-##### [](#4-1-2-3-1-localized-options)4.1.2.3.1\. Localized Options
+##### [](#3-1-2-3-1-localized-options)3.1.2.3.1\. Localized Options
 
 There are no privileged localized options in RVA23S64.
 
-##### [](#4-1-2-3-2-development-options)4.1.2.3.2\. Development Options
+##### [](#3-1-2-3-2-development-options)3.1.2.3.2\. Development Options
 
 There are no privileged development options in RVA23S64.
 
-##### [](#4-1-2-3-3-expansion-options)4.1.2.3.3\. Expansion Options
+##### [](#3-1-2-3-3-expansion-options)3.1.2.3.3\. Expansion Options
 
 The following privileged expansion options were present in RVA22S64:
 
@@ -229,10 +229,10 @@ The following are new privileged expansion options in RVA23S64
 * **Svvptc** Transitions from invalid to valid PTEs will be visible in bounded time without an explicit memory-management fence.
 * **Sspm** Supervisor-mode pointer masking, with the supervisor execution environment providing a means to select PMLEN=0 and PMLEN=7 at minimum.
 
-##### [](#4-1-2-3-4-transitory-options)4.1.2.3.4\. Transitory Options
+##### [](#3-1-2-3-4-transitory-options)3.1.2.3.4\. Transitory Options
 
 There are no privileged transitory options in RVA23S64.
 
-#### [](#4-1-2-4-rva23s64-recommendations)4.1.2.4\. RVA23S64 Recommendations
+#### [](#3-1-2-4-rva23s64-recommendations)3.1.2.4\. RVA23S64 Recommendations
 
 * Implementations are strongly recommended to raise illegal-instruction exceptions when attempting to execute unimplemented opcodes or access unimplemented CSRs.

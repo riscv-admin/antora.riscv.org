@@ -1,10 +1,10 @@
-# 2.1. RISC-V Semihosting Binary Interface
+# 1.1. RISC-V Semihosting Binary Interface
 
-## [](#2-1-risc-v-semihosting-binary-interface)2.1\. RISC-V Semihosting Binary Interface
+## [](#1-1-risc-v-semihosting-binary-interface)1.1\. RISC-V Semihosting Binary Interface
 
 The RISC-V semihosting binary interface consist of a breakpoint instruction sequence and a mechanism to pass parameters which are defined by the following sub-sections.
 
-### [](#2-1-1-semihosting-breakpoint-instruction-sequence)2.1.1\. Semihosting Breakpoint Instruction Sequence
+### [](#1-1-1-semihosting-breakpoint-instruction-sequence)1.1.1\. Semihosting Breakpoint Instruction Sequence
 
 Semihosting operations are requested using a sequence of instructions including `EBREAK`. Because the RISC-V base ISA does not provide more than one `EBREAK` instruction, RISC-V semihosting uses a special sequence of instructions to distinguish a semihosting `EBREAK` from a debugger inserted`EBREAK`. The [RISC-V Semihosting Breakpoint Sequence](#breakpoint%5Finsns) shows the instruction sequence used to invoke a semihosting operation.
 
@@ -22,6 +22,6 @@ These three instructions must be 32-bit wide instructions. This sequence is appl
 | |  The SLLI and SRAI instruction based NOPs which serve as semihosting marker have been randomly selected from the Base Integer Instruction Set since these are designated for custom use and unlikely to appear in real life code. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#2-1-2-semihosting-parameters)2.1.2\. Semihosting Parameters
+### [](#1-1-2-semihosting-parameters)1.1.2\. Semihosting Parameters
 
 The type of semihosting operation and its parameters are specified using general purpose registers. The OPERATION NUMBER is specified in the `a0`register, and the PARAMETER is specified in the `a1` register, whereas the RETURN VALUE is available in the `a0` register. All registers and data block fields are XLEN wide.

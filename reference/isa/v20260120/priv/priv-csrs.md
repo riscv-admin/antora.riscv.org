@@ -1,6 +1,6 @@
-# 2.1. Control and Status Registers (CSRs)
+# 1.1. Control and Status Registers (CSRs)
 
-## [](#priv-csrs)2.1\. Control and Status Registers (CSRs)
+## [](#priv-csrs)1.1\. Control and Status Registers (CSRs)
 
 The SYSTEM major opcode is used to encode all privileged instructions in the RISC-V ISA. These can be divided into two main classes: those that atomically read-modify-write control and status registers (CSRs), which are defined in the Zicsr extension, and all other privileged instructions. The privileged architecture requires the Zicsr extension; which other privileged instructions are required depends on the privileged-architecture feature set.
 
@@ -8,7 +8,7 @@ In addition to the unprivileged state described in Volume I of this manual, an i
 
 Standard CSRs do not have side effects on reads but may have side effects on writes.
 
-### [](#2-1-1-csr-address-mapping-conventions)2.1.1\. CSR Address Mapping Conventions
+### [](#1-1-1-csr-address-mapping-conventions)1.1.1\. CSR Address Mapping Conventions
 
 The standard RISC-V ISA sets aside a 12-bit encoding space (csr\[11:0\]) for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address (csr\[11:8\]) are used to encode the read and write accessibility of the CSRs according to privilege level as shown in [Table 1](#csrrwpriv). The top two bits (csr\[11:10\]) indicate whether the register is read/write (`00`,`01`, or `10`) or read-only (`11`). The next two bits (csr\[9:8\]) encode the lowest privilege level that can access the CSR, with the pattern `10` representing hypervisor CSRs.
 
@@ -71,11 +71,11 @@ __Table 1\. Allocation of RISC-V CSR address ranges.__
 | 11                               | 11      | 10XX                  | 0xF80-0xFBF | Standard read-only             |
 | 11                               | 11      | 11XX                  | 0xFC0-0xFFF | Custom read-only               |
 
-### [](#2-1-2-csr-listing)2.1.2\. CSR Listing
+### [](#1-1-2-csr-listing)1.1.2\. CSR Listing
 
 [Table 2](#ucsrnames)\-[Table 5](#mcsrnames) list the CSRs that have currently been allocated CSR addresses. The timers, counters, and floating-point CSRs are standard unprivileged CSRs. The other registers are used by privileged code, as described in the following chapters. Note that not all registers are required on all implementations.
 
-#### [](#2-1-2-1-currently-allocated-risc-v-unprivileged-csr-addresses)2.1.2.1\. Currently allocated RISC-V unprivileged CSR addresses
+#### [](#1-1-2-1-currently-allocated-risc-v-unprivileged-csr-addresses)1.1.2.1\. Currently allocated RISC-V unprivileged CSR addresses
 
 __Table 2\. Currently allocated RISC-V unprivileged CSR addresses.__
 | Number                                                                  | Privilege                              | Name                                                                                                                    | Description                                                                                                                                                                                                                                                                                                                                                                                                                                               |
@@ -93,7 +93,7 @@ __Table 2\. Currently allocated RISC-V unprivileged CSR addresses.__
 | Unprivileged Counter/Timers                                             |                                        |                                                                                                                         |                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | 0xC00 0xC01 0xC02 0xC03 0xC04 0xC1F 0xC80 0xC81 0xC82 0xC83 0xC84 0xC9F | UROUROUROUROURO UROUROUROUROUROURO URO | cycle time instret hpmcounter3 hpmcounter4⋮ hpmcounter31 cycleh timeh instreth hpmcounter3h hpmcounter4h⋮ hpmcounter31h | Cycle counter for RDCYCLE instruction.Timer for RDTIME instruction.Instructions-retired counter for RDINSTRET instruction.Performance-monitoring counter.Performance-monitoring counter. Performance-monitoring counter.Upper 32 bits of cycle, RV32 only.Upper 32 bits of time, RV32 only.Upper 32 bits of instret, RV32 only.Upper 32 bits of hpmcounter3, RV32 only.Upper 32 bits of hpmcounter4, RV32 only. Upper 32 bits of hpmcounter31, RV32 only. |
 
-#### [](#2-1-2-2-currently-allocated-risc-v-supervisor-level-csr-addresses)2.1.2.2\. Currently allocated RISC-V supervisor-level CSR addresses
+#### [](#1-1-2-2-currently-allocated-risc-v-supervisor-level-csr-addresses)1.1.2.2\. Currently allocated RISC-V supervisor-level CSR addresses
 
 __Table 3\. Currently allocated RISC-V supervisor-level CSR addresses.__
 | Number                                            | Privilege             | Name                                              | Description                                                                                                                                                                                                                                                      |
@@ -121,7 +121,7 @@ __Table 3\. Currently allocated RISC-V supervisor-level CSR addresses.__
 | Supervisor Control Transfer Records Configuration |                       |                                                   |                                                                                                                                                                                                                                                                  |
 | 0x14E 0x14F 0x15F                                 | SRW SRW SRW           | sctrctl sctrstatus sctrdepth                      | Supervisor Control Transfer Records Control Register. Supervisor Control Transfer Records Status Register. Supervisor Control Transfer Records Depth Register.                                                                                                   |
 
-#### [](#2-1-2-3-currently-allocated-risc-v-hypervisor-and-vs-csr-addresses)2.1.2.3\. Currently allocated RISC-V hypervisor and VS CSR addresses
+#### [](#1-1-2-3-currently-allocated-risc-v-hypervisor-and-vs-csr-addresses)1.1.2.3\. Currently allocated RISC-V hypervisor and VS CSR addresses
 
 __Table 4\. Currently allocated RISC-V hypervisor and VS CSR addresses.__
 | Number                                                    | Privilege                       | Name                                                                                | Description                                                                                                                                                                                                                                                                                                                                                                                                     |
@@ -149,7 +149,7 @@ __Table 4\. Currently allocated RISC-V hypervisor and VS CSR addresses.__
 | Virtual Supervisor Control Transfer Records Configuration |                                 |                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | 0x24E                                                     | HRW                             | vsctrctl                                                                            | Virtual Supervisor Control Transfer Records Control Register.                                                                                                                                                                                                                                                                                                                                                   |
 
-#### [](#2-1-2-4-currently-allocated-risc-v-machine-level-csr-addresses)2.1.2.4\. Currently allocated RISC-V machine-level CSR addresses
+#### [](#1-1-2-4-currently-allocated-risc-v-machine-level-csr-addresses)1.1.2.4\. Currently allocated RISC-V machine-level CSR addresses
 
 __Table 5\. Currently allocated RISC-V machine-level CSR addresses.__
 | Number                                                            | Privilege                           | Name                                                                                                                                 | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -181,7 +181,7 @@ __Table 5\. Currently allocated RISC-V machine-level CSR addresses.__
 | Debug Mode Registers                                              |                                     |                                                                                                                                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | 0x7B0 0x7B1 0x7B2 0x7B3                                           | DRWDRWDRWDRW                        | dcsr dpc dscratch0 dscratch1                                                                                                         | Debug control and status register.Debug program counter.Debug scratch register 0.Debug scratch register 1.                                                                                                                                                                                                                                                                                                                                                                    |
 
-#### [](#2-1-2-5-currently-allocated-risc-v-indirect-csr-smcsrind-mappings)2.1.2.5\. Currently allocated RISC-V indirect CSR (Smcsrind) mappings
+#### [](#1-1-2-5-currently-allocated-risc-v-indirect-csr-smcsrind-mappings)1.1.2.5\. Currently allocated RISC-V indirect CSR (Smcsrind) mappings
 
 __Table 6\. Currently allocated RISC-V indirect CSR (Smcsrind) mappings - M-mode__
 | miselect | mireg       | mireg2 | mireg3 | mireg4 | mireg5 | mireg6 |
@@ -252,18 +252,18 @@ __Table 8\. Currently allocated RISC-V indirect CSR (Smcsrind/Sscsrind) mappings
 | …​        | …​           | …​           | …​         | …​      | …​      | …​      |
 | 0x2FF     | ctrsource255 | ctrtarget255 | ctrdata255 | 0       | 0       | 0       |
 
-### [](#2-1-3-csr-field-specifications)2.1.3\. CSR Field Specifications
+### [](#1-1-3-csr-field-specifications)1.1.3\. CSR Field Specifications
 
 The following definitions and abbreviations are used in specifying the behavior of fields within the CSRs.
 
-#### [](#2-1-3-1-reserved-writes-preserve-values-reads-ignore-values-wpri)2.1.3.1\. Reserved Writes Preserve Values, Reads Ignore Values (WPRI)
+#### [](#1-1-3-1-reserved-writes-preserve-values-reads-ignore-values-wpri)1.1.3.1\. Reserved Writes Preserve Values, Reads Ignore Values (WPRI)
 
 Some whole read/write fields are reserved for future use. Software should ignore the values read from these fields, and should preserve the values held in these fields when writing values to other fields of the same register. For forward compatibility, implementations that do not furnish these fields must make them read-only zero. These fields are labeled **WPRI** in the register descriptions.
 
 | |  To simplify the software model, any backward-compatible future definition of previously reserved fields within a CSR must cope with the possibility that a non-atomic read/modify/write sequence is used to update other fields in the CSR. Alternatively, the original CSR definition must specify that subfields can only be updated atomically, which may require a two-instruction clear bit/set bit sequence in general that can be problematic if intermediate values are not legal. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#2-1-3-2-writeread-only-legal-values-wlrl)2.1.3.2\. Write/Read Only Legal Values (WLRL)
+#### [](#1-1-3-2-writeread-only-legal-values-wlrl)1.1.3.2\. Write/Read Only Legal Values (WLRL)
 
 Some read/write CSR fields specify behavior for only a subset of possible bit encodings, with other bit encodings reserved.Software should not write anything other than legal values to such a field, and should not assume a read will return a legal value unless the last write was of a legal value, or the register has not been written since another operation (e.g., reset) set the register to a legal value. These fields are labeled **WLRL** in the register descriptions.
 
@@ -272,13 +272,13 @@ Some read/write CSR fields specify behavior for only a subset of possible bit en
 
 Implementations are permitted but not required to raise an illegal-instruction exception if an instruction attempts to write a non-supported value to a **WLRL** field.Implementations can return arbitrary bit patterns on the read of a **WLRL** field when the last write was of an illegal value, but the value returned should deterministically depend on the illegal written value and the value of the field prior to the write.
 
-#### [](#2-1-3-3-write-any-values-reads-legal-values-warl)2.1.3.3\. Write Any Values, Reads Legal Values (WARL)
+#### [](#1-1-3-3-write-any-values-reads-legal-values-warl)1.1.3.3\. Write Any Values, Reads Legal Values (WARL)
 
 Some read/write CSR fields are only defined for a subset of bit encodings, but allow any value to be written while guaranteeing to return a legal value whenever read. Assuming that writing the CSR has no other side effects, the range of supported values can be determined by attempting to write a desired setting then reading to see if the value was retained. These fields are labeled **WARL** in the register descriptions.
 
 Implementations will not raise an exception on writes of unsupported values to a **WARL** field. Implementations can return any legal value on the read of a **WARL** field when the last write was of an illegal value, but the legal value returned should deterministically depend on the illegal written value and the architectural state of the hart.
 
-### [](#2-1-4-csr-field-modulation)2.1.4\. CSR Field Modulation
+### [](#1-1-4-csr-field-modulation)1.1.4\. CSR Field Modulation
 
 If a write to one CSR changes the set of legal values allowed for a field of a second CSR, then unless specified otherwise, the second CSR’s field immediately gets an `UNSPECIFIED` value from among its new legal values. This is true even if the field’s value before the write remains legal after the write; the value of the field may be changed in consequence of the write to the controlling CSR.
 
@@ -287,11 +287,11 @@ If a write to one CSR changes the set of legal values allowed for a field of a s
 
 A change to the value of a CSR for this reason is not a write to the affected CSR and thus does not trigger any side effects specified for that CSR.
 
-### [](#2-1-5-implicit-reads-of-csrs)2.1.5\. Implicit Reads of CSRs
+### [](#1-1-5-implicit-reads-of-csrs)1.1.5\. Implicit Reads of CSRs
 
 Implementations sometimes perform _implicit_ reads of CSRs. (For example, all S-mode instruction fetches implicitly read the `satp` CSR.) Unless otherwise specified, the value returned by an implicit read of a CSR is the same value that would have been returned by an explicit read of the CSR, using a CSR-access instruction in a sufficient privilege mode.
 
-### [](#csrwidthmodulation)2.1.6\. CSR Width Modulation
+### [](#csrwidthmodulation)1.1.6\. CSR Width Modulation
 
 If the width of a CSR is changed (for example, by changing SXLEN or UXLEN, as described in [Base ISA Control in mstatus Register](machine.html#xlen-control)), the values of the _writable_ fields and bits of the new-width CSR are, unless specified otherwise, determined from the previous-width CSR as though by this algorithm:
 
@@ -302,7 +302,7 @@ If the width of a CSR is changed (for example, by changing SXLEN or UXLEN, as de
 
 Changing the width of a CSR is not a read or write of the CSR and thus does not trigger any side effects.
 
-### [](#2-1-7-explicit-accesses-to-csrs-wider-than-xlen)2.1.7\. Explicit Accesses to CSRs Wider than XLEN
+### [](#1-1-7-explicit-accesses-to-csrs-wider-than-xlen)1.1.7\. Explicit Accesses to CSRs Wider than XLEN
 
 If a standard CSR is wider than XLEN bits, then an explicit read of the CSR returns the register’s least-significant XLEN bits, and an explicit write to the CSR modifies only the register’s least-significant XLEN bits, leaving the upper bits unchanged.
 

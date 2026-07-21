@@ -1,6 +1,6 @@
-# 34.1. Control-flow Integrity (CFI)
+# 33.1. Control-flow Integrity (CFI)
 
-## [](#34-1-control-flow-integrity-cfi)34.1\. Control-flow Integrity (CFI)
+## [](#33-1-control-flow-integrity-cfi)33.1\. Control-flow Integrity (CFI)
 
 Control-flow Integrity (CFI) capabilities help defend against Return-Oriented Programming (ROP) and Call/Jump-Oriented Programming (COP/JOP) style control-flow subversion attacks. These attack methodologies use code sequences in authorized modules, with at least one instruction in the sequence being a control transfer instruction that depends on attacker-controlled data either in the return stack or in memory used to obtain the target address for a call or jump. Attackers stitch these sequences together by diverting the control flow instructions (e.g., `JALR`, `C.JR`, `C.JALR`), from their original target address to a new target via modification in the return stack or in the memory used to obtain the jump/call target address.
 
@@ -18,11 +18,11 @@ The term _indirect-jump_ is used to refer to a `JALR` instruction with _rd_\=`x0
 
 The Zicfiss and Zicfilp extensions build on these conventions and hints and provide backward-edge and forward-edge control flow integrity respectively.
 
-The Unprivileged ISA for Zicfilp extension is specified in [34.1.1\. Landing Pad (Zicfilp)](#unpriv-forward)and for the Unprivileged ISA for Zicfiss extension is specified in[34.1.2\. Shadow Stack (Zicfiss)](#unpriv-backward). The Privileged ISA for these extensions is specified in the Privileged ISA specification.
+The Unprivileged ISA for Zicfilp extension is specified in [33.1.1\. Landing Pad (Zicfilp)](#unpriv-forward)and for the Unprivileged ISA for Zicfiss extension is specified in[33.1.2\. Shadow Stack (Zicfiss)](#unpriv-backward). The Privileged ISA for these extensions is specified in the Privileged ISA specification.
 
-### [](#unpriv-forward)34.1.1\. Landing Pad (Zicfilp)
+### [](#unpriv-forward)33.1.1\. Landing Pad (Zicfilp)
 
-To enforce forward-edge control-flow integrity, the Zicfilp extension introduces a landing pad (`LPAD`) instruction. The `LPAD` instruction must be placed at the program locations that are valid targets of indirect jumps or calls. The `LPAD`instruction (See [34.1.1.2\. Landing Pad Instruction](#LP%5FINST)) is encoded using the `AUIPC` major opcode with_rd_\=`x0`.
+To enforce forward-edge control-flow integrity, the Zicfilp extension introduces a landing pad (`LPAD`) instruction. The `LPAD` instruction must be placed at the program locations that are valid targets of indirect jumps or calls. The `LPAD`instruction (See [33.1.1.2\. Landing Pad Instruction](#LP%5FINST)) is encoded using the `AUIPC` major opcode with_rd_\=`x0`.
 
 Compilers emit a landing pad instruction as the first instruction of an address-taken function, as well as at any indirect jump targets. A landing pad instruction is not required in functions that are only reached using a direct call or direct jump.
 
@@ -42,7 +42,7 @@ The Zicfilp extensions may be activated for use individually and independently f
 
 The Zicfilp extension depends on the Zicsr extension.
 
-#### [](#34-1-1-1-landing-pad-enforcement)34.1.1.1\. Landing Pad Enforcement
+#### [](#33-1-1-1-landing-pad-enforcement)33.1.1.1\. Landing Pad Enforcement
 
 To enforce that the target of an indirect call or indirect jump must be a valid landing pad instruction, the hart maintains an expected landing pad (`ELP`) state to determine if a landing pad instruction is required at the target of an indirect call or an indirect jump. The `ELP` state can be one of:
 
@@ -70,7 +70,7 @@ When `ELP` is set to `LP_EXPECTED`, if the next instruction in the instruction s
 | |  The tracking of ELP and the requirement for a landing pad instruction at the target of indirect call and jump enables a processor implementation to significantly reduce or to prevent speculation to non-landing-pad instructions. Constraining speculation using this technique, greatly reduces the gadget space and increases the difficulty of using techniques such as branch-target-injection, also known as Spectre variant 2, which use speculative execution to leak data through side channels. The LPAD requires a 4-byte alignment to address the concatenation of two instructions A and B accidentally forming an unintended landing pad in the program. For example, consider a 32-bit instruction where the bytes 3 and 2 have a pattern of ?017h (for example, the immediate fields of a LUI, AUIPC, or a JAL instruction), followed by a 16-bit or a 32-bit instruction. When patterns that can accidentally form a valid landing pad are detected, the assembler or linker can force instruction A to be aligned to a 4-byte boundary to force the unintended LPAD pattern to become misaligned, and thus not a valid landing pad, or may use an alternate register allocation to prevent the accidental landing pad. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#LP%5FINST)34.1.1.2\. Landing Pad Instruction
+#### [](#LP%5FINST)33.1.1.2\. Landing Pad Instruction
 
 When Zicfilp is enabled, `LPAD` is the only instruction allowed to execute when the `ELP` state is `LP_EXPECTED`. If Zicfilp is not enabled then the instruction is a no-op. If Zicfilp is enabled, the `LPAD` instruction causes a software-check exception with `_x_tval` set to "landing pad fault (code=2)" if any of the following conditions are true:
 
@@ -100,7 +100,7 @@ endif
 
 \# <<<
 
-### [](#unpriv-backward)34.1.2\. Shadow Stack (Zicfiss)
+### [](#unpriv-backward)33.1.2\. Shadow Stack (Zicfiss)
 
 The Zicfiss extension introduces a shadow stack to enforce backward-edge control-flow integrity. A shadow stack is a second stack used to store a shadow copy of the return address in the link register if it needs to be spilled.
 
@@ -126,30 +126,30 @@ An application that has the Zicfiss extension active may request the dynamic loa
 
 The Zicfiss extension depends on the Zicsr, Zimop and Zaamo extensions. Furthermore, if the Zcmop extension is implemented, the Zicfiss extension also provides the`C.SSPUSH` and `C.SSPOPCHK` instructions. Moreover, use of Zicfiss in U-mode requires S-mode to be implemented. Use of Zicfiss in M-mode is not supported.
 
-#### [](#34-1-2-1-zicfiss-instructions-summary)34.1.2.1\. Zicfiss Instructions Summary
+#### [](#33-1-2-1-zicfiss-instructions-summary)33.1.2.1\. Zicfiss Instructions Summary
 
 The Zicfiss extension introduces the following instructions:
 
-* Push to the shadow stack (See [34.1.2.4\. Push to the Shadow Stack](#SS%5FPUSH))  
+* Push to the shadow stack (See [33.1.2.4\. Push to the Shadow Stack](#SS%5FPUSH))  
    * `SSPUSH x1` and `SSPUSH x5` \- encoded using `MOP.RR.7`  
    * `C.SSPUSH x1` \- encoded using `C.MOP.1`
-* Pop from the shadow stack (See [34.1.2.5\. Pop from the Shadow Stack](#SS%5FPOP))  
+* Pop from the shadow stack (See [33.1.2.5\. Pop from the Shadow Stack](#SS%5FPOP))  
    * `SSPOPCHK x1` and `SSPOPCHK x5` \- encoded using `MOP.R.28`  
    * `C.SSPOPCHK x5` \- encoded using `C.MOP.5`
-* Read the value of `ssp` into a register (See [34.1.2.6\. Read ssp into a Register](#SSP%5FREAD))  
+* Read the value of `ssp` into a register (See [33.1.2.6\. Read ssp into a Register](#SSP%5FREAD))  
    * `SSRDP` \- encoded using `MOP.R.28`
-* Perform an atomic swap from a shadow stack location (See [34.1.2.7\. Atomic Swap from a Shadow Stack Location](#SSAMOSWAP))  
+* Perform an atomic swap from a shadow stack location (See [33.1.2.7\. Atomic Swap from a Shadow Stack Location](#SSAMOSWAP))  
    * `SSAMOSWAP.W` and `SSAMOSWAP.D`
 
 Zicfiss does not use all encodings of `MOP.RR.7` or `MOP.R.28`. When a`MOP.RR.7` or `MOP.R.28` encoding is not used by the Zicfiss extension, the corresponding instruction adheres to its Zimop-defined behavior, unless redefined by another extension.
 
-#### [](#34-1-2-2-shadow-stack-pointer-ssp)34.1.2.2\. Shadow Stack Pointer (`ssp`)
+#### [](#33-1-2-2-shadow-stack-pointer-ssp)33.1.2.2\. Shadow Stack Pointer (`ssp`)
 
 The `ssp` CSR is an unprivileged read-write (URW) CSR that reads and writes`XLEN` low order bits of the shadow stack pointer (`ssp`). The CSR address is 0x011. There is no high CSR defined as the `ssp` is always as wide as the `XLEN`of the current privilege mode. The bits 1:0 of `ssp` are read-only zero. If the UXLEN or SXLEN may never be 32, then the bit 2 is also read-only zero.
 
-#### [](#34-1-2-3-zicfiss-instructions)34.1.2.3\. Zicfiss Instructions
+#### [](#33-1-2-3-zicfiss-instructions)33.1.2.3\. Zicfiss Instructions
 
-#### [](#SS%5FPUSH)34.1.2.4\. Push to the Shadow Stack
+#### [](#SS%5FPUSH)33.1.2.4\. Push to the Shadow Stack
 
 A shadow stack push operation is defined as decrement of the `ssp` by `XLEN/8`followed by a store of the value in the link register to memory at the new top of the shadow stack.
 
@@ -172,7 +172,7 @@ endif
 
 The `ssp` is decremented by `SSPUSH` and `C.SSPUSH` only if the store to the shadow stack completes successfully.
 
-#### [](#SS%5FPOP)34.1.2.5\. Pop from the Shadow Stack
+#### [](#SS%5FPOP)33.1.2.5\. Pop from the Shadow Stack
 
 A shadow stack pop operation is defined as an `XLEN` wide read from the current top of the shadow stack followed by an increment of the `ssp` by`XLEN/8`.
 
@@ -222,7 +222,7 @@ The `ssp` is incremented by `SSPOPCHK` and `C.SSPOPCHK` only if the load from th
 | |  Store-to-load forwarding is a common technique employed by high-performance processor implementations. Zicfiss implementations may prevent forwarding from a non-shadow-stack store to the SSPOPCHK or the C.SSPOPCHK instructions. A non-shadow-stack store causes a fault if done to a page mapped as a shadow stack. However, such determination may be delayed till the PTE has been examined and thus may be used to transiently forward the data from such stores toSSPOPCHK or to C.SSPOPCHK. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#SSP%5FREAD)34.1.2.6\. Read `ssp` into a Register
+#### [](#SSP%5FREAD)33.1.2.6\. Read `ssp` into a Register
 
 The `SSRDP` instruction is provided to move the contents of `ssp` to a destination register.
 
@@ -246,7 +246,7 @@ endif
 | |  A common operation performed on stacks is to unwind them to support constructs like setjmp/longjmp, C++ exception handling, etc. A program that uses shadow stacks must unwind the shadow stack in addition to the stack used to store data. The unwind function must verify that it does not accidentally unwind past the bounds of the shadow stack. Shadow stacks are expected to be bounded on each end using guard pages. A guard page for a stack is a page that is not accessible by the process that owns the stack. To detect if the unwind occurs past the bounds of the shadow stack, the unwind may be done in maximal increments of 4 KiB, testing whether the ssp is still pointing to a shadow stack page or has unwound into the guard page. The following examples illustrate the use of shadow stack instructions to unwind a shadow stack. This example assumes that thesetjmp function itself does not push on to the shadow stack (being a leaf function, it is not required to). setjmp() {     :     :     // read and save the shadow stack pointer to jmp\_buf     asm("ssrdp %0" : "=r"(cur\_ssp):);     jmp\_buf->saved\_ssp = cur\_ssp;     :     : } longjmp() {     :     // Read current shadow stack pointer and     // compute number of call frames to unwind     asm("ssrdp %0" : "=r"(cur\_ssp):);     // Skip the unwind if backward-edge CFI not active     asm("beqz %0, back\_cfi\_not\_active" : "=r"(cur\_ssp):);     // Unwind the frames in a loop     while ( jmp\_buf->saved\_ssp > cur\_ssp ) {         // advance by a maximum of 4K at a time to avoid         // unwinding past bounds of the shadow stack         cur\_ssp = ( (jmp\_buf->saved\_ssp - cur\_ssp) >= 4096 ) ?                   (cur\_ssp + 4096) : jmp\_buf->saved\_ssp;         asm("csrw ssp, %0" : :  "r" (cur\_ssp));         // Test if unwound past the shadow stack bounds         asm("sspush x5");         asm("sspopchk x5");     } back\_cfi\_not\_active:     : } |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#SSAMOSWAP)34.1.2.7\. Atomic Swap from a Shadow Stack Location
+#### [](#SSAMOSWAP)33.1.2.7\. Atomic Swap from a Shadow Stack Location
 
 ![svg](_images/svg-2ae67d26f273286801a52e320bebad4559dbc469.svg) 
 

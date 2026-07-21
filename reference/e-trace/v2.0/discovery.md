@@ -1,6 +1,6 @@
-# 10.1. Parameters and Discovery
+# 9.1. Parameters and Discovery
 
-## [](#10-1-parameters-and-discovery)10.1\. Parameters and Discovery
+## [](#9-1-parameters-and-discovery)9.1\. Parameters and Discovery
 
 This document defines a number of parameters for describing aspects of the encoder such as the widths of buses, the presence or absence of optional features and the size of resources, as listed in[Table 1](#tab:iparameters) and [Table 2](#tab:dparameters).
 
@@ -52,11 +52,11 @@ __Table 2\. Parameters to the encoder - data trace__
 | _ldata\_width\_p_       | Width of the **ldata** bus       |                 |
 | _sdata\_width\_p_       | Width of the **sdata** bus       |                 |
 
-### [](#sec:disco)10.1.1\. Discovery of encoder parameters
+### [](#sec:disco)9.1.1\. Discovery of encoder parameters
 
 To operate correctly, the decoder must be able to determine some of the encoder’s parameters at runtime, in the form of discoverable attributes. These parameters must be discoverable by the decoder, or else be fixed at the default value (in other words, if an encoder does not make a particular parameter discoverable, it must implement only the default value of that parameter, which the decoder will also use). [Table 3](#tab:requiredAttributes) lists the required discoverable attributes for instruction trace.
 
-To access the discoverable attributes, some external entity, for example a debugger or a supervisory hart, must request it from the encoder. The encoder will provide the discovery information in one or more different formats. The preferred format is a packet which is sent over the trace infrastructure. Another format would be allowing the external entity to read the values from some register or memory mapped space maintained by the encoder. [10.1.2\. Example ipxact description](#sec:ipxact) gives an example of how this may be accomplished.
+To access the discoverable attributes, some external entity, for example a debugger or a supervisory hart, must request it from the encoder. The encoder will provide the discovery information in one or more different formats. The preferred format is a packet which is sent over the trace infrastructure. Another format would be allowing the external entity to read the values from some register or memory mapped space maintained by the encoder. [9.1.2\. Example ipxact description](#sec:ipxact) gives an example of how this may be accomplished.
 
 __Table 3\. Required instruction trace attributes__
 | **Name**              | **Default** | **Parameter mapping**      |
@@ -115,7 +115,7 @@ __Table 6\. Data trace attributes__
 | _ldata\_width_       | 31          | _ldata\_width\_p_ \- 1       |
 | _sdata\_width_       | 31          | _sdata\_width\_p_ \- 1       |
 
-### [](#sec:ipxact)10.1.2\. Example ipxact description
+### [](#sec:ipxact)9.1.2\. Example ipxact description
 
 This section provides an example of discovery information represented in the ipxact form.
 

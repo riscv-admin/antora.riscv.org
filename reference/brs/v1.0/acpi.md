@@ -1,6 +1,6 @@
-# 6.1. BRS-I ACPI Requirements
+# 5.1. BRS-I ACPI Requirements
 
-## [](#acpi)6.1\. BRS-I ACPI Requirements
+## [](#acpi)5.1\. BRS-I ACPI Requirements
 
 The _Advanced Configuration and Power Interface Specification_ provides the OS-centric view of system configuration, various hardware resources, events and power management.
 
@@ -23,7 +23,7 @@ This section defines the BRS-I mandatory and optional ACPI requirements on top o
 | ACPI\_060                                                                                                                                                                                                                                                                                                                                               | An SPCR table, if present, MUST meet the following requirements: Revision 4 or later of SPCR. For NS16550-compatible UARTs: Use Interface Type 0x12 (16550-compatible with parameters defined in Generic Address Structure). There MUST be a matching AML device object with \_HID (Hardware ID) or \_CID (Compatible ID) RSCV0003. |
 | _See [additional guidance](#acpi-guidance-spcr)_.                                                                                                                                                                                                                                                                                                       |                                                                                                                                                                                                                                                                                                                                     |
 
-### [](#acpi-aml)6.1.1\. BRS-I ACPI Methods and Objects
+### [](#acpi-aml)5.1.1\. BRS-I ACPI Methods and Objects
 
 This section lists additional requirements for ACPI methods and objects.
 

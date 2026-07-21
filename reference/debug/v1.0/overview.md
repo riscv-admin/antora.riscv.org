@@ -1,6 +1,6 @@
-# 2.1. System Overview
+# 1.1. System Overview
 
-## [](#overview)2.1\. System Overview
+## [](#overview)1.1\. System Overview
 
 [Figure 1](#systemoverview) shows the main components of Debug Support. Blocks shown in dotted lines are optional.
 

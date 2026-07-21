@@ -1,6 +1,6 @@
-# 6.1. Interrupt Enables
+# 5.1. Interrupt Enables
 
-## [](#6-1-interrupt-enables)6.1\. Interrupt Enables
+## [](#5-1-interrupt-enables)5.1\. Interrupt Enables
 
 Each global interrupt can be enabled by setting the corresponding bit in the`enables` register. The `enables` registers are accessed as a contiguous array of 32-bit registers, packed the same way as the `pending` bits. Bit 0 of enable register 0 represents the non-existent interrupt ID 0 and is hardwired to 0\. PLIC has 15872 Interrupt Enable blocks for the contexts.  
 How PLIC organizes interrupts for the contexts (Hart and privilege mode) is out of RISC-V PLIC specification scope, however it must be spec-out in vendor’s PLIC specification.  

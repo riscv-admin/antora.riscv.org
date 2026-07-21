@@ -1,10 +1,10 @@
-# 9.1. Optimization Extensions
+# 8.1. Optimization Extensions
 
-## [](#9-1-optimization-extensions)9.1\. Optimization Extensions
+## [](#8-1-optimization-extensions)8.1\. Optimization Extensions
 
 N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table [Details\_Control\_Parameters](#Details%5FControl%5FParameters) describes all control bits to enable these optimizations.
 
-### [](#9-1-1-sequential-jump-optimization)9.1.1\. Sequential Jump Optimization
+### [](#8-1-1-sequential-jump-optimization)8.1.1\. Sequential Jump Optimization
 
 This optimization must be enabled by [trTeInstEnSequentialJump](#trTeInstEnSequentialJump) control bit.
 
@@ -20,7 +20,7 @@ Such indirect unconditional jump targets are classified as sequentially inferabl
 | |  The restriction that the instructions must be retired consecutively is necessary to minimize the additional signals needed between the hart and the encoder, and should have a minimal impact on trace efficiency as it is anticipated that consecutive execution will be the norm. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#9-1-2-implicit-return-optimization)9.1.2\. Implicit Return Optimization
+### [](#8-1-2-implicit-return-optimization)8.1.2\. Implicit Return Optimization
 
 This optimization must be enabled by the [trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode) control field different than 0.
 
@@ -45,7 +45,7 @@ Call stack maintained by encoder may not include all addresses, but only keep so
 | |  Decoder does not need to know what actual depth of the call stack is implemented by encoder but for efficiency reasons it should assume max depth. N-Trace implementation should never implement call stack deeper than 32 levels. Such deep calls will be most likely interrupted by other events/messages (like periodic SYNC). |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#9-1-3-repeated-history-optimization)9.1.3\. Repeated History Optimization
+### [](#8-1-3-repeated-history-optimization)8.1.3\. Repeated History Optimization
 
 This optimization must be enabled by the [trTeInstEnRepeatedHistory](#trTeInstEnRepeatedHistory) control bit.
 
@@ -113,7 +113,7 @@ Msg#1:
 | |  HREPEAT counter should not have too many bits as it is not desired to not generate any trace messages for longer periods of time. Bigger HREPEAT will not make compression better but will produce timestamp rarely. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#9-1-4-virtual-addresses-optimization)9.1.4\. Virtual Addresses Optimization
+### [](#8-1-4-virtual-addresses-optimization)8.1.4\. Virtual Addresses Optimization
 
 This optimization must be enabled by [trTeInstExtendAddrMSB](#trTeInstExtendAddrMSB) control bit.
 

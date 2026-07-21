@@ -1,6 +1,6 @@
-# Bibliography
+# 2.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#2-1-bibliography)2.1\. Bibliography
 
 \[1\] _RISC-V Boot and Runtime Services Specification (BRS)_, . \[Online\]. Available: <https://github.com/riscv-non-isa/riscv-brs>
 

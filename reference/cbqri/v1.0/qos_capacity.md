@@ -1,6 +1,6 @@
-# 3.1. Capacity-controller QoS Register Interface
+# 2.1. Capacity-controller QoS Register Interface
 
-## [](#CC%5FQOS)3.1\. Capacity-controller QoS Register Interface
+## [](#CC%5FQOS)2.1\. Capacity-controller QoS Register Interface
 
 Controllers, such as cache controllers, that support capacity allocation and usage monitoring provide a memory-mapped capacity-controller QoS register interface.
 
@@ -24,7 +24,7 @@ __Table 1\. Capacity-controller QoS Register Layout (size and offset are in byte
 | 32     | cc\_block\_mask   | BMW/8 | [Capacity block mask ](#CC%5FBMASK)         | Yes       |
 | N      | cc\_cunits        | 8     | [Capacity units count](#CC%5FCUNITS)        | Yes       |
 
-The size of the `cc_block_mask` register is determined by the `NCBLKS` field of the `cc_capabilities` register but is always a multiple of 8 bytes. The formula for determination of `BMW` is defined in [3.1.5\. Capacity Block Mask (cc\_block\_mask)](#CC%5FBMASK). The offset `N` is determined as `32 + BMW/8`.
+The size of the `cc_block_mask` register is determined by the `NCBLKS` field of the `cc_capabilities` register but is always a multiple of 8 bytes. The formula for determination of `BMW` is defined in [2.1.5\. Capacity Block Mask (cc\_block\_mask)](#CC%5FBMASK). The offset `N` is determined as `32 + BMW/8`.
 
 The reset value is 0 for the following register fields.
 
@@ -35,7 +35,7 @@ The reset value is `UNSPECIFIED` for all other registers fields.
 
 The capacity controllers at reset must allocate all available capacity to `RCID`value of 0\. When the capacity controller supports capacity allocation per access-type, then all available capacity is shared by all the access-type for`RCID=0`. The capacity allocation for all other `RCID` values is `UNSPECIFIED`. The capacity controller behavior for handling a request with a non-zero `RCID`value before configuring the capacity controller with capacity allocation for that `RCID` is `UNSPECIFIED`.
 
-### [](#CC%5FCAP)3.1.1\. Capacity-controller Capabilities
+### [](#CC%5FCAP)2.1.1\. Capacity-controller Capabilities
 
 The `cc_capabilities` register is a read-only register that holds the capacity-controller capabilities.
 
@@ -58,7 +58,7 @@ When the `RCID`\-prefixed mode (`RPFX`) is 1, the controller operates in `RPFX`m
 
 If `RPFX` is 0, `P` is set to 0, and the effective `MCID` is the same as the `MCID`in the request.
 
-### [](#CC%5FMCTL)3.1.2\. Capacity Usage Monitoring Control
+### [](#CC%5FMCTL)2.1.2\. Capacity Usage Monitoring Control
 
 The `cc_mon_ctl` register is used to control monitoring of capacity usage by a`MCID`. When the controller does not support capacity usage monitoring the`cc_mon_ctl` register is read-only zero.
 
@@ -111,7 +111,7 @@ __Table 4\. cc\_mon\_ctl.STATUS Field Encodings__
 
 When the `BUSY` bit is set to 1, the behavior of writes to the `cc_mon_ctl` is`UNSPECIFIED`. Some implementations ignore the second write, while others might perform the operation determined by the second write. To ensure proper operation, software must first verify that the `BUSY` bit is 0 before writing the `cc_mon_ctl` register.
 
-### [](#CC%5FMCTR)3.1.3\. Capacity Usage Monitoring Counter Value
+### [](#CC%5FMCTR)2.1.3\. Capacity Usage Monitoring Counter Value
 
 The `cc_mon_ctr_val` is a read-only register that holds a snapshot of the counter that is selected by the `READ_COUNTER` operation. When the controller does not support capacity usage monitoring, the `cc_mon_ctr_val` register always reads as zero.
 
@@ -126,7 +126,7 @@ The counter shall not decrement below zero. If an event occur that would otherwi
 | |  Following a reset of the counter to zero, a capacity de-allocation attempts to drive its value below zero. This scenario occurs when the MCID is reassigned to a new workload, yet the capacity controller continues to hold capacity that was initially allocated by the previous workload. In such cases, the counter shall not decrement below zero and shall remain at zero. After a brief period of execution for the new workload post-counter reset, the counter value is expected to stabilize to reflect the capacity usage of this new workload. Some implementations might not store the MCID of the request that caused the capacity to be allocated with every unit of capacity in the controller to optimize for the storage overheads. Such controllers, in turn, rely on statistical sampling to report the capacity usage by tagging only a subset of the capacity units. Set-sampling is a technique commonly used in caches to estimate the cache occupancy with a relatively small sample size. The basic idea behind set-sampling is to select a subset of the cache sets and monitor only those sets. By keeping track of the hits and misses in the monitored sets, it is possible to estimate the overall cache occupancy with a high degree of accuracy. The size of the subset needed to obtain accurate estimates depends on various factors, such as the size of the cache, the cache access patterns, and the desired accuracy level. Research \[[6](qos%5Fbiblio.html#bib-ssample)\] shows that set-sampling can provide statistically accurate estimates with a relatively small sample size, such as 10% or less, depending on the cache properties and sampling technique used. When the controller has not observed enough samples to provide an accurate value in the monitoring counter, it might report the counter as being INVuntil more accurate measurements are available. This state helps to prevent inaccurate or misleading data from being used in capacity planning or other decision-making processes. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#CC%5FALLOC)3.1.4\. Capacity Allocation Control
+### [](#CC%5FALLOC)2.1.4\. Capacity Allocation Control
 
 The `cc_alloc_ctl` register is used to configure allocation of capacity to an`RCID` per access type (`AT`). The `OP`, `RCID` and `AT` fields in this register are WARL. If a controller does not support capacity allocation, then this register is read-only zero. If the controller does not support capacity allocation per access type, then the `AT` field is read-only zero.
 
@@ -174,7 +174,7 @@ __Table 6\. cc\_alloc\_ctl.STATUS Field Encodings__
 
 When the `BUSY` bit is set to 1, the behavior of writes to the `cc_alloc_ctl`register, `cc_cunits` register, or to the `cc_block_mask` register is`UNSPECIFIED`. Some implementations might ignore the second write and others might perform the operation determined by the second write. To ensure proper operation, software must verify that `BUSY` bit is 0 before writing any of these registers.
 
-### [](#CC%5FBMASK)3.1.5\. Capacity Block Mask (`cc_block_mask`)
+### [](#CC%5FBMASK)2.1.5\. Capacity Block Mask (`cc_block_mask`)
 
 The `cc_block_mask` is a WARL register. If the controller does not support capacity allocation, for example, `NCBLKS` is 0, then this register is read-only 0.
 
@@ -189,7 +189,7 @@ The process of configuring capacity allocation for an `RCID` and `AT` begins by 
 
 To read the _capacity block_ allocation for an `RCID` and `AT`, the controller provides the `READ_LIMIT` operation, which can be requested by writing to the`cc_alloc_ctl` register. When the operation completes successfully, the`cc_block_mask` register holds the configured _capacity block_ allocation.
 
-### [](#CC%5FCUNITS)3.1.6\. Capacity Units
+### [](#CC%5FCUNITS)2.1.6\. Capacity Units
 
 The `cc_cunits` register is a read-write WARL register. If the controller does not support capacity allocation (for example, `NCBLKS` is set to 0), this register shall be read-only zero.
 

@@ -1,6 +1,6 @@
-# 9.1. "Zihintpause" Extension for Pause Hint, Version 2.0
+# 8.1. "Zihintpause" Extension for Pause Hint, Version 2.0
 
-## [](#zihintpause)9.1\. "Zihintpause" Extension for Pause Hint, Version 2.0
+## [](#zihintpause)8.1\. "Zihintpause" Extension for Pause Hint, Version 2.0
 
 The PAUSE instruction is a HINT that indicates the current hart’s rate of instruction retirement should be temporarily reduced or paused. The duration of its effect must be bounded and may be zero. 
 

@@ -1,8 +1,8 @@
-# 29.1. "Zc*" Extension for Code Size Reduction, Version 1.0.0
+# 28.1. "Zc*" Extension for Code Size Reduction, Version 1.0.0
 
-## [](#Zc)29.1\. "Zc\*" Extension for Code Size Reduction, Version 1.0.0
+## [](#Zc)28.1\. "Zc\*" Extension for Code Size Reduction, Version 1.0.0
 
-### [](#29-1-1-zc-overview)29.1.1\. Zc\* Overview
+### [](#28-1-1-zc-overview)28.1.1\. Zc\* Overview
 
 Zc\* is a group of extensions that define subsets of the existing C extension (Zca, Zcd, Zcf) and new extensions which only contain 16-bit encodings.
 
@@ -47,7 +47,7 @@ __Table 1\. Zc\* extension overview__
 | cm.jt                                                                                                                                     | yes  |     |     |     |      |      |
 | cm.jalt                                                                                                                                   | yes  |     |     |     |      |      |
 
-### [](#C)29.1.2\. C
+### [](#C)28.1.2\. C
 
 The C extension is the superset of the following extensions:
 
@@ -61,7 +61,7 @@ As C defines the same instructions as Zca, Zcf, and Zcd, the rule is that:
 * C+F implies Zcf (RV32 only)
 * C+D implies Zcd
 
-### [](#29-1-3-zce)29.1.3\. Zce
+### [](#28-1-3-zce)28.1.3\. Zce
 
 The Zce extension is intended to be used for microcontrollers, and includes all relevant Zc extensions.
 
@@ -75,7 +75,7 @@ Therefore common ISA strings can be updated as follows to include the relevant Z
 * RV32IMC becomes RV32IM\_Zce
 * RV32IMCF becomes RV32IMF\_Zce
 
-### [](#misaC)29.1.4\. MISA.C
+### [](#misaC)28.1.4\. MISA.C
 
 MISA.C is set if the following extensions are selected:
 
@@ -86,7 +86,7 @@ MISA.C is set if the following extensions are selected:
 * Zca, Zcd if D is specified (RV64 only)  
    * this configuration excludes Zcmp, Zcmt
 
-### [](#29-1-5-zca)29.1.5\. Zca
+### [](#28-1-5-zca)28.1.5\. Zca
 
 The Zca extension is added as way to refer to instructions in the C extension that do not include the floating-point loads and stores.
 
@@ -95,21 +95,21 @@ Therefore it _excluded_ all 16-bit floating point loads and stores: _c.flw_, _c.
 | |  the C extension only includes F/D instructions when D and F are also specified |
 | --------------------------------------------------------------------------------- |
 
-### [](#29-1-6-zcf-rv32-only)29.1.6\. Zcf (RV32 only)
+### [](#28-1-6-zcf-rv32-only)28.1.6\. Zcf (RV32 only)
 
 Zcf is the existing set of compressed single precision floating point loads and stores: _c.flw_, _c.flwsp_, _c.fsw_, _c.fswsp_.
 
 Zcf is only relevant to RV32, it cannot be specified for RV64.
 
-The Zcf extension depends on the [Zca](#29-1-5-zca) and F extensions.
+The Zcf extension depends on the [Zca](#28-1-5-zca) and F extensions.
 
-### [](#29-1-7-zcd)29.1.7\. Zcd
+### [](#28-1-7-zcd)28.1.7\. Zcd
 
 Zcd is the existing set of compressed double precision floating point loads and stores: _c.fld_, _c.fldsp_, _c.fsd_, _c.fsdsp_.
 
-The Zcd extension depends on the [Zca](#29-1-5-zca) and D extensions.
+The Zcd extension depends on the [Zca](#28-1-5-zca) and D extensions.
 
-### [](#29-1-8-zcb)29.1.8\. Zcb
+### [](#28-1-8-zcb)28.1.8\. Zcb
 
 Zcb has simple code-size saving instructions which are easy to implement on all CPUs.
 
@@ -118,7 +118,7 @@ All encodings are currently reserved for all architectures, and have no conflict
 | |  Zcb can be implemented on _any_ CPU as the instructions are 16-bit versions of existing 32-bit instructions from the application class profile. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-The Zcb extension depends on the [Zca](#29-1-5-zca) extension.
+The Zcb extension depends on the [Zca](#28-1-5-zca) extension.
 
 As shown on the individual instruction pages, many of the instructions in Zcb depend upon another extension being implemented. For example, _c.mul_ is only implemented if M or Zmmul is implemented, and _c.sext.b_ is only implemented if Zbb is implemented.
 
@@ -142,16 +142,16 @@ The _c.mul_ encoding uses the CA register format along with other instructions s
 | yes  | yes             | c.not _rsd'_                                             | [Bitwise not, 16-bit encoding](#insns-c%5Fnot)               |
 | yes  | yes             | c.mul _rsd'_, _rs2'_                                     | [Multiply, 16-bit encoding](#insns-c%5Fmul)                  |
 
-### [](#Zcmp)29.1.9\. Zcmp
+### [](#Zcmp)28.1.9\. Zcmp
 
 The Zcmp extension is a set of instructions which may be executed as a series of existing 32-bit RISC-V instructions.
 
-This extension reuses some encodings from _c.fsdsp_. Therefore it is _incompatible_ with [Zcd](#29-1-7-zcd), which is included when C and D extensions are both present.
+This extension reuses some encodings from _c.fsdsp_. Therefore it is _incompatible_ with [Zcd](#28-1-7-zcd), which is included when C and D extensions are both present.
 
 | |  Zcmp is primarily targeted at embedded class CPUs due to implementation complexity. Additionally, it is not compatible with application class profiles. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-The Zcmp extension depends on the [Zca](#29-1-5-zca) extension.
+The Zcmp extension depends on the [Zca](#28-1-5-zca) extension.
 
 The PUSH/POP assembly syntax uses several variables, the meaning of which are:
 
@@ -170,23 +170,23 @@ The PUSH/POP assembly syntax uses several variables, the meaning of which are:
 | yes  | yes  | cm.mva01s _rs1', rs2'_               | [Move two s0-s7 registers into a0-a1](#insns-cm%5Fmva01s)           |
 | yes  | yes  | cm.mvsa01 _r1s', r2s'_               | [Move a0-a1 into two different s0-s7 registers](#insns-cm%5Fmvsa01) |
 
-### [](#Zcmt)29.1.10\. Zcmt
+### [](#Zcmt)28.1.10\. Zcmt
 
 Zcmt adds the table jump instructions and also adds the jvt CSR. The jvt CSR requires a state enable if Smstateen is implemented. See [jvt CSR, table jump base vector and control register](#csrs-jvt) for details.
 
-This extension reuses some encodings from _c.fsdsp_. Therefore it is _incompatible_ with [Zcd](#29-1-7-zcd), which is included when C and D extensions are both present.
+This extension reuses some encodings from _c.fsdsp_. Therefore it is _incompatible_ with [Zcd](#28-1-7-zcd), which is included when C and D extensions are both present.
 
 | |  Zcmt is primarily targeted at embedded class CPUs due to implementation complexity. Additionally, it is not compatible with RVA profiles. |
 | -------------------------------------------------------------------------------------------------------------------------------------------- |
 
-The Zcmt extension depends on the [Zca](#29-1-5-zca) and Zicsr extensions.
+The Zcmt extension depends on the [Zca](#28-1-5-zca) and Zicsr extensions.
 
 | RV32 | RV64 | Mnemonic        | Instruction                                 |
 | ---- | ---- | --------------- | ------------------------------------------- |
 | yes  | yes  | cm.jt _index_   | [Jump via table](#insns-cm%5Fjt)            |
 | yes  | yes  | cm.jalt _index_ | [Jump and link via table](#insns-cm%5Fjalt) |
 
-### [](#Zc%5Fformats)29.1.11\. Zc instruction formats
+### [](#Zc%5Fformats)28.1.11\. Zc instruction formats
 
 Several instructions in this specification use the following new instruction formats.
 
@@ -204,9 +204,9 @@ Several instructions in this specification use the following new instruction for
 | |  c.mul uses the existing CA format. |
 | ------------------------------------- |
 
-### [](#Zcb%5Finstructions)29.1.12\. Zcb instructions
+### [](#Zcb%5Finstructions)28.1.12\. Zcb instructions
 
-#### [](#insns-c%5Flbu)29.1.12.1\. c.lbu
+#### [](#insns-c%5Flbu)28.1.12.1\. c.lbu
 
 Synopsis
 
@@ -247,7 +247,7 @@ Operation
 X(rdc) = EXTZ(mem[X(rs1c)+EXTZ(uimm)][7..0]);
 ```
 
-#### [](#insns-c%5Flhu)29.1.12.2\. c.lhu
+#### [](#insns-c%5Flhu)28.1.12.2\. c.lhu
 
 Synopsis
 
@@ -288,7 +288,7 @@ Operation
 X(rdc) = EXTZ(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);
 ```
 
-#### [](#insns-c%5Flh)29.1.12.3\. c.lh
+#### [](#insns-c%5Flh)28.1.12.3\. c.lh
 
 Synopsis
 
@@ -329,7 +329,7 @@ Operation
 X(rdc) = EXTS(load_mem[X(rs1c)+EXTZ(uimm)][15..0]);
 ```
 
-#### [](#insns-c%5Fsb)29.1.12.4\. c.sb
+#### [](#insns-c%5Fsb)28.1.12.4\. c.sb
 
 Synopsis
 
@@ -370,7 +370,7 @@ Operation
 mem[X(rs1c)+EXTZ(uimm)][7..0] = X(rs2c)
 ```
 
-#### [](#insns-c%5Fsh)29.1.12.5\. c.sh
+#### [](#insns-c%5Fsh)28.1.12.5\. c.sh
 
 Synopsis
 
@@ -411,7 +411,7 @@ Operation
 mem[X(rs1c)+EXTZ(uimm)][15..0] = X(rs2c)
 ```
 
-#### [](#insns-c%5Fzext%5Fb)29.1.12.6\. c.zext.b
+#### [](#insns-c%5Fzext%5Fb)28.1.12.6\. c.zext.b
 
 Synopsis
 
@@ -451,7 +451,7 @@ Operation
 X(rsdc) = EXTZ(X(rsdc)[7..0]);
 ```
 
-#### [](#insns-c%5Fsext%5Fb)29.1.12.7\. c.sext.b
+#### [](#insns-c%5Fsext%5Fb)28.1.12.7\. c.sext.b
 
 Synopsis
 
@@ -485,7 +485,7 @@ Operation
 X(rsdc) = EXTS(X(rsdc)[7..0]);
 ```
 
-#### [](#insns-c%5Fzext%5Fh)29.1.12.8\. c.zext.h
+#### [](#insns-c%5Fzext%5Fh)28.1.12.8\. c.zext.h
 
 Synopsis
 
@@ -519,7 +519,7 @@ Operation
 X(rsdc) = EXTZ(X(rsdc)[15..0]);
 ```
 
-#### [](#insns-c%5Fsext%5Fh)29.1.12.9\. c.sext.h
+#### [](#insns-c%5Fsext%5Fh)28.1.12.9\. c.sext.h
 
 Synopsis
 
@@ -553,7 +553,7 @@ Operation
 X(rsdc) = EXTS(X(rsdc)[15..0]);
 ```
 
-#### [](#insns-c%5Fzext%5Fw)29.1.12.10\. c.zext.w
+#### [](#insns-c%5Fzext%5Fw)28.1.12.10\. c.zext.w
 
 Synopsis
 
@@ -593,7 +593,7 @@ Operation
 X(rsdc) = EXTZ(X(rsdc)[31..0]);
 ```
 
-#### [](#insns-c%5Fnot)29.1.12.11\. c.not
+#### [](#insns-c%5Fnot)28.1.12.11\. c.not
 
 Synopsis
 
@@ -633,7 +633,7 @@ Operation
 X(rsdc) = X(rsdc) XOR -1;
 ```
 
-#### [](#insns-c%5Fmul)29.1.12.12\. c.mul
+#### [](#insns-c%5Fmul)28.1.12.12\. c.mul
 
 Synopsis
 
@@ -668,7 +668,7 @@ let result_wide = to_bits(2 * sizeof(xlen), signed(X(rsdc)) * signed(X(rs2c)));
 X(rsdc) = result_wide[(sizeof(xlen) - 1) .. 0];
 ```
 
-### [](#insns-pushpop)29.1.13\. PUSH/POP register instructions
+### [](#insns-pushpop)28.1.13\. PUSH/POP register instructions
 
 These instructions are collectively referred to as PUSH/POP:
 
@@ -685,7 +685,7 @@ The term POPRET refers to _cm.popret and cm.popretz_.
 
 Common details for these instructions are in this section.
 
-#### [](#29-1-13-1-pushpop-functional-overview)29.1.13.1\. PUSH/POP functional overview
+#### [](#28-1-13-1-pushpop-functional-overview)28.1.13.1\. PUSH/POP functional overview
 
 PUSH, POP, POPRET are used to reduce the size of function prologues and epilogues.
 
@@ -701,7 +701,7 @@ PUSH, POP, POPRET are used to reduce the size of function prologues and epilogue
    * adjust the stack pointer to destroy the stack frame  
    * execute a _ret_ instruction to return from the function
 
-#### [](#29-1-13-2-example-usage)29.1.13.2\. Example usage
+#### [](#28-1-13-2-example-usage)28.1.13.2\. Example usage
 
 This example gives an illustration of the use of PUSH and POPRET.
 
@@ -773,15 +773,15 @@ The prologue / epilogue reduce from 60-bytes in the original code, to 14-bytes w
 | |  POP is typically used in tail-calling sequences where _ret_ is not used to return to _ra_ after destroying the stack frame. |
 | ------------------------------------------------------------------------------------------------------------------------------ |
 
-##### [](#pushpop-areg-list)29.1.13.2.1\. Stack pointer adjustment handling
+##### [](#pushpop-areg-list)28.1.13.2.1\. Stack pointer adjustment handling
 
 The instructions all automatically adjust the stack pointer by enough to cover the memory required for the registers being saved or restored. Additionally the _spimm_ field in the encoding allows the stack pointer to be adjusted in additional increments of 16-bytes. There is only a small restricted range available in the encoding; if the range is insufficient then a separate _c.addi16sp_ can be used to increase the range.
 
-##### [](#29-1-13-2-2-register-list-handling)29.1.13.2.2\. Register list handling
+##### [](#28-1-13-2-2-register-list-handling)28.1.13.2.2\. Register list handling
 
 There is no support for the _\\{ra, s0-s10}_ register list without also adding _s11_. Therefore the _\\{ra, s0-s11}_ register list must be used in this case.
 
-#### [](#pushpop-idempotent-memory)29.1.13.3\. PUSH/POP Fault handling
+#### [](#pushpop-idempotent-memory)28.1.13.3\. PUSH/POP Fault handling
 
 Correct execution requires that _sp_ refers to idempotent memory (also see [Non-idempotent memory handling](#pushpop%5Fnon-idem-mem)), because the core must be able to handle traps detected during the sequence. The entire PUSH/POP sequence is re-executed after returning from the trap handler, and multiple traps are possible during the sequence.
 
@@ -790,9 +790,9 @@ If a trap occurs during the sequence then _xEPC_ is updated with the PC of the i
 | |  It is implementation defined whether interrupts can also be taken during the sequence execution. |
 | --------------------------------------------------------------------------------------------------- |
 
-#### [](#pushpop-software-view)29.1.13.4\. Software view of execution
+#### [](#pushpop-software-view)28.1.13.4\. Software view of execution
 
-##### [](#29-1-13-4-1-software-view-of-the-push-sequence)29.1.13.4.1\. Software view of the PUSH sequence
+##### [](#28-1-13-4-1-software-view-of-the-push-sequence)28.1.13.4.1\. Software view of the PUSH sequence
 
 From a software perspective the PUSH sequence appears as:
 
@@ -835,7 +835,7 @@ sw  ra,-28(sp)
 addi sp, sp, -64
 ```
 
-##### [](#29-1-13-4-2-software-view-of-the-poppopret-sequence)29.1.13.4.2\. Software view of the POP/POPRET sequence
+##### [](#28-1-13-4-2-software-view-of-the-poppopret-sequence)28.1.13.4.2\. Software view of the POP/POPRET sequence
 
 From a software perspective the POP/POPRET sequence appears as:
 
@@ -878,7 +878,7 @@ addi sp, sp, 32
 ret
 ```
 
-#### [](#pushpop%5Fnon-idem-mem)29.1.13.5\. Non-idempotent memory handling
+#### [](#pushpop%5Fnon-idem-mem)28.1.13.5\. Non-idempotent memory handling
 
 An implementation may have a requirement to issue a PUSH/POP instruction to non-idempotent memory.
 
@@ -886,11 +886,11 @@ If the core implementation does not support PUSH/POP to non-idempotent memories,
 
 Software should only use these instructions on non-idempotent memory regions when software can tolerate the required memory accesses being issued repeatedly in the case that they cause exceptions.
 
-#### [](#29-1-13-6-example-rv32i-pushpop-sequences)29.1.13.6\. Example RV32I PUSH/POP sequences
+#### [](#28-1-13-6-example-rv32i-pushpop-sequences)28.1.13.6\. Example RV32I PUSH/POP sequences
 
 The examples are included show the load/store series expansion and the stack adjustment. Examples of _cm.popret_ and _cm.popretz_ are not included, as the difference in the expanded sequence from _cm.pop_ is trivial in all cases.
 
-##### [](#29-1-13-6-1-cm-push-ra-s0-s2-64)29.1.13.6.1\. cm.push \\{ra, s0-s2}, -64
+##### [](#28-1-13-6-1-cm-push-ra-s0-s2-64)28.1.13.6.1\. cm.push \\{ra, s0-s2}, -64
 
 Encoding: _rlist_\=7, _spimm_\=3
 
@@ -904,7 +904,7 @@ sw  ra, -16(sp);
 addi sp, sp, -64;
 ```
 
-##### [](#29-1-13-6-2-cm-push-ra-s0-s11-112)29.1.13.6.2\. cm.push \\{ra, s0-s11}, -112
+##### [](#28-1-13-6-2-cm-push-ra-s0-s11-112)28.1.13.6.2\. cm.push \\{ra, s0-s11}, -112
 
 Encoding: _rlist_\=15, _spimm_\=3
 
@@ -927,7 +927,7 @@ sw  ra,  -52(sp);
 addi sp, sp, -112;
 ```
 
-##### [](#29-1-13-6-3-cm-pop-ra-16)29.1.13.6.3\. cm.pop {ra}, 16
+##### [](#28-1-13-6-3-cm-pop-ra-16)28.1.13.6.3\. cm.pop {ra}, 16
 
 Encoding: _rlist_\=4, _spimm_\=0
 
@@ -938,7 +938,7 @@ lw   ra, 12(sp);
 addi sp, sp, 16;
 ```
 
-##### [](#29-1-13-6-4-cm-pop-ra-s0-s3-48)29.1.13.6.4\. cm.pop \\{ra, s0-s3}, 48
+##### [](#28-1-13-6-4-cm-pop-ra-s0-s3-48)28.1.13.6.4\. cm.pop \\{ra, s0-s3}, 48
 
 Encoding: _rlist_\=8, _spimm_\=1
 
@@ -953,7 +953,7 @@ lw   ra, 28(sp);
 addi sp, sp, 48;
 ```
 
-##### [](#29-1-13-6-5-cm-pop-ra-s0-s4-64)29.1.13.6.5\. cm.pop \\{ra, s0-s4}, 64
+##### [](#28-1-13-6-5-cm-pop-ra-s0-s4-64)28.1.13.6.5\. cm.pop \\{ra, s0-s4}, 64
 
 Encoding: _rlist_\=9, _spimm_\=2
 
@@ -969,7 +969,7 @@ lw   ra, 40(sp);
 addi sp, sp, 64;
 ```
 
-#### [](#insns-cm%5Fpush)29.1.13.7\. cm.push
+#### [](#insns-cm%5Fpush)28.1.13.7\. cm.push
 
 Synopsis
 
@@ -1135,7 +1135,7 @@ The final section of pseudocode executes atomically, and only executes if the se
 sp-=stack_adj;
 ```
 
-#### [](#insns-cm%5Fpop)29.1.13.8\. cm.pop
+#### [](#insns-cm%5Fpop)28.1.13.8\. cm.pop
 
 Synopsis
 
@@ -1300,7 +1300,7 @@ The final section of pseudocode executes atomically, and only executes if the se
 sp+=stack_adj;
 ```
 
-#### [](#insns-cm%5Fpopretz)29.1.13.9\. cm.popretz
+#### [](#insns-cm%5Fpopretz)28.1.13.9\. cm.popretz
 
 Synopsis
 
@@ -1469,7 +1469,7 @@ sp+=stack_adj;
 asm("ret");
 ```
 
-#### [](#insns-cm%5Fpopret)29.1.13.10\. cm.popret
+#### [](#insns-cm%5Fpopret)28.1.13.10\. cm.popret
 
 Synopsis
 
@@ -1637,7 +1637,7 @@ sp+=stack_adj;
 asm("ret");
 ```
 
-#### [](#insns-cm%5Fmvsa01)29.1.13.11\. cm.mvsa01
+#### [](#insns-cm%5Fmvsa01)28.1.13.11\. cm.mvsa01
 
 Synopsis
 
@@ -1690,7 +1690,7 @@ X[xreg1] = X[10];
 X[xreg2] = X[11];
 ```
 
-#### [](#insns-cm%5Fmva01s)29.1.13.12\. cm.mva01s
+#### [](#insns-cm%5Fmva01s)28.1.13.12\. cm.mva01s
 
 Synopsis
 
@@ -1740,7 +1740,7 @@ X[10] = X[xreg1];
 X[11] = X[xreg2];
 ```
 
-### [](#insns-tablejump)29.1.14\. Table Jump Overview
+### [](#insns-tablejump)28.1.14\. Table Jump Overview
 
 _cm.jt_ ([Jump via table](#insns-cm%5Fjt)) and _cm.jalt_ ([Jump and link via table](#insns-cm%5Fjalt)) are referred to as table jump.
 
@@ -1762,13 +1762,13 @@ Table jump allows the linker to replace the following instruction sequences with
 
 If a return address stack is implemented, then as _cm.jalt_ is equivalent to _jal ra_, it pushes to the stack.
 
-#### [](#29-1-14-1-jvt)29.1.14.1\. jvt
+#### [](#28-1-14-1-jvt)28.1.14.1\. jvt
 
 The base of the table is in the jvt CSR (see [jvt CSR, table jump base vector and control register](#csrs-jvt)), each table entry is XLEN bits.
 
 If the same function is called with and without linking then it must have two entries in the table. This is typically caused by the same function being called with and without tail calling.
 
-#### [](#tablejump-fault-handling)29.1.14.2\. Table Jump Fault handling
+#### [](#tablejump-fault-handling)28.1.14.2\. Table Jump Fault handling
 
 For a table jump instruction, the table entry that the instruction selects is considered an extension of the instruction itself. Hence, the execution of a table jump instruction involves two instruction fetches, the first to read the instruction (_cm.jt_/_cm.jalt_) and the second to read from the jump vector table (JVT). Both instruction fetches are _implicit_ reads, and both require execute permission; read permission is irrelevant. It is recommended that the second fetch be ignored for hardware triggers and breakpoints.
 
@@ -1778,7 +1778,7 @@ Multiple contexts may have different jump vector tables. JVT may be switched bet
 
 If an exception occurs on either instruction fetch, xEPC is set to the PC of the table jump instruction, xCAUSE is set as expected for the type of fault and xTVAL (if not set to zero) contains the fetch address which caused the fault.
 
-#### [](#csrs-jvt)29.1.14.3\. jvt CSR
+#### [](#csrs-jvt)28.1.14.3\. jvt CSR
 
 Synopsis
 
@@ -1804,7 +1804,7 @@ Description
 
 The _jvt_ register is an XLEN-bit **WARL** read/write register that holds the jump table configuration, consisting of the jump table base address (BASE) and the jump table mode (MODE).
 
-If [29.1.10\. Zcmt](#Zcmt) is implemented then _jvt_ must also be implemented, but can contain a read-only value. If _jvt_ is writable, the set of values the register may hold can vary by implementation. The value in the BASE field must always be aligned on a 64-byte boundary. Note that the CSR contains only bits XLEN-1 through 6 of the address _base_. When computing jump-table accesses, the lower six bits of _base_ are filled with zeroes to obtain an XLEN-bit jump-table base address _jvt.base_ that is always aligned on a 64-byte boundary.
+If [28.1.10\. Zcmt](#Zcmt) is implemented then _jvt_ must also be implemented, but can contain a read-only value. If _jvt_ is writable, the set of values the register may hold can vary by implementation. The value in the BASE field must always be aligned on a 64-byte boundary. Note that the CSR contains only bits XLEN-1 through 6 of the address _base_. When computing jump-table accesses, the lower six bits of _base_ are filled with zeroes to obtain an XLEN-bit jump-table base address _jvt.base_ that is always aligned on a 64-byte boundary.
 
 _jvt.base_ is a virtual address, whenever virtual memory is enabled.
 
@@ -1825,7 +1825,7 @@ Architectural State:
 
 _jvt_ CSR adds architectural state to the system software context (such as an OS process), therefore must be saved/restored on context switches. <<<
 
-#### [](#insns-cm%5Fjt)29.1.14.4\. cm.jt
+#### [](#insns-cm%5Fjt)28.1.14.4\. cm.jt
 
 Synopsis
 
@@ -1882,7 +1882,7 @@ switch(XLEN) {
 pc = InstMemory[table_address][XLEN-1:0]&~0x1;  // Clear bit 0.
 ```
 
-#### [](#insns-cm%5Fjalt)29.1.14.5\. cm.jalt
+#### [](#insns-cm%5Fjalt)28.1.14.5\. cm.jalt
 
 Synopsis
 

@@ -1,14 +1,14 @@
-# 33.1. Cryptography Extensions: Vector Instructions, Version 1.0
+# 32.1. Cryptography Extensions: Vector Instructions, Version 1.0
 
-## [](#33-1-cryptography-extensions-vector-instructions-version-1-0)33.1\. Cryptography Extensions: Vector Instructions, Version 1.0
+## [](#32-1-cryptography-extensions-vector-instructions-version-1-0)32.1\. Cryptography Extensions: Vector Instructions, Version 1.0
 
 This document describes the Vector Cryptography extensions to the RISC-V Instruction Set Architecture.
 
-### [](#crypto%5Fvector%5Fintroduction)33.1.1\. Introduction
+### [](#crypto%5Fvector%5Fintroduction)32.1.1\. Introduction
 
 This document describes the RISC-V _vector_ cryptography extensions. All instructions described here are based on the Vector registers. The instructions are designed to be highly performant, with large application and server-class cores being the main target. A companion chapter _Volume I: Scalar & Entropy Source Instructions_, describes cryptographic instructions for smaller cores which do not implement the vector extension.
 
-#### [](#crypto%5Fvector%5Faudience)33.1.1.1\. Intended Audience
+#### [](#crypto%5Fvector%5Faudience)32.1.1.1\. Intended Audience
 
 Cryptography is a specialized subject, requiring people with many different backgrounds to cooperate in its secure and efficient implementation. Where possible, we have written this specification to be understandable by all, though we recognize that the motivations and references to algorithms or other specifications and standards may be unfamiliar to those who are not domain experts.
 
@@ -32,7 +32,7 @@ These people are responsible for ensuring the correct implementation of the exte
 
 These are by no means the only people concerned with the specification, but they are the ones we considered most while writing it.
 
-#### [](#crypto%5Fvector%5Fsail%5Fspecifications)33.1.1.2\. Sail Specifications
+#### [](#crypto%5Fvector%5Fsail%5Fspecifications)32.1.1.2\. Sail Specifications
 
 RISC-V maintains a[formal model](https://github.com/riscv/sail-riscv)of the ISA specification, implemented in the Sail ISA specification language \[[27](../biblio/bibliography.html#bib-sail)\]. Note that _Sail_ refers to the specification language itself, and that there is a _model of RISC-V_, written using Sail.
 
@@ -43,13 +43,13 @@ It was our intention to include actual Sail code in this specification. However,
 
 For the sake of brevity, our pseudocode does not include the handling of masks or tail elements. We follow the _undisturbed_ and _agnostic_ policies for masks and tails as described in the **RISC-V "V" Vector Extension**specification. Furthermore, the code does not explicitly handle overlap and SEW constraints; these are, however, explicitly stated in the text.
 
-In many cases the pseudocode includes calls to supporting functions which are too verbose to include directly in the specification. This supporting code is listed in[33.1.6\. Supporting Sail Code](#crypto%5Fvector%5Fappx%5Fsail).
+In many cases the pseudocode includes calls to supporting functions which are too verbose to include directly in the specification. This supporting code is listed in[32.1.6\. Supporting Sail Code](#crypto%5Fvector%5Fappx%5Fsail).
 
 The[Sail Manual](https://alasdair.github.io/manual.html)is recommended reading in order to best understand the code snippets. Also,[The Sail Programming Language: A Sail Cookbook](https://github.com/billmcspadden-riscv/sail/blob/cookbook%5Fbr/cookbook/doc/TheSailCookbook%5FComplete.pdf)is a good reference.
 
 For the latest RISC-V Sail model, refer to the formal model GitHub[repository](https://github.com/riscv/sail-riscv).
 
-#### [](#crypto%5Fvector%5Fpolicies)33.1.1.3\. Policies
+#### [](#crypto%5Fvector%5Fpolicies)32.1.1.3\. Policies
 
 In creating this extension, we tried to adhere to the following policies:
 
@@ -58,7 +58,7 @@ In creating this extension, we tried to adhere to the following policies:
 * Historically, there has been some discussion \[[28](../biblio/bibliography.html#bib-lsyrr:04)\] on how newly supported operations in general-purpose computing might enable new bases for cryptographic algorithms. The standard will not try to anticipate new useful low-level operations which _may_ be useful as building blocks for future cryptographic constructs.
 * Regarding side-channel countermeasures: Where relevant, proposed instructions must aim to remove the possibility of any timing side-channels. All instructions shall be implemented with data-independent timing. That is, the latency of the execution of these instructions shall not vary with different input values.
 
-#### [](#crypto-vector-element-groups)33.1.1.4\. Element Groups
+#### [](#crypto-vector-element-groups)32.1.1.4\. Element Groups
 
 Many vector crypto instructions operate on operands that are wider than elements (which are currently limited to 64 bits wide). Typically, these operands are 128- and 256-bits wide. In many cases, these operands are comprised of smaller operands that are combined (for example, each SHA-2 operand is comprised of 4 words). However, in other cases these operands are a single value (for example, in the AES round instructions, each operand is 128-bit block or round key).
 
@@ -91,9 +91,9 @@ Element groups can be formed across registers in implementations where`VLEN`< `E
 | |  Since the **vector extension for application processors** requires a minimum of VLEN of 128, at most such implementations would require LMUL=2 to form the largest element groups in this specification. However, implementations with a smaller VLEN, such as embedded designs, will requires a larger LMULto form the necessary element groups. It is important to keep in mind that this reduces the number of register groups available such that it may be difficult or impossible to write efficient code for the intended cryptographic algorithms. For example, an implementation with VLEN\=32 would need to set LMUL\=8 to create a 256-bit element group for SM3. This would mean that there would only be 4 register groups, 3 of which would be consumed by a single SM3 message-expansion instruction. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-As with all vector instructions, the number of elements processed is specified by the vector length `vl`. The number of element groups operated upon is then `vl`/`EGS`. Likewise the starting element group is `vstart`/`EGS`. See [33.1.1.5\. Instruction Constraints](#crypto-vector-instruction-constraints) for limitations on `vl` and `vstart`for vector crypto instructions.
+As with all vector instructions, the number of elements processed is specified by the vector length `vl`. The number of element groups operated upon is then `vl`/`EGS`. Likewise the starting element group is `vstart`/`EGS`. See [32.1.1.5\. Instruction Constraints](#crypto-vector-instruction-constraints) for limitations on `vl` and `vstart`for vector crypto instructions.
 
-#### [](#crypto-vector-instruction-constraints)33.1.1.5\. Instruction Constraints
+#### [](#crypto-vector-instruction-constraints)32.1.1.5\. Instruction Constraints
 
 All standard vector instruction constraints specified by RVV 1.0 apply to Vector Crypto instructions. In addition to those constraints a few additional specific constraints are introduced.
 
@@ -101,7 +101,7 @@ The following is a quick reference for the various constraints of specific Vecto
 
 vl and vstart constraints
 
-Since `vl` and `vstart` refer to elements, Vector Crypto instructions that use elements groups (See [33.1.1.4\. Element Groups](#crypto-vector-element-groups)) require that these values are an integer multiple of the Element Group Size (`EGS`).
+Since `vl` and `vstart` refer to elements, Vector Crypto instructions that use elements groups (See [32.1.1.4\. Element Groups](#crypto-vector-element-groups)) require that these values are an integer multiple of the Element Group Size (`EGS`).
 
 * Instructions that violate the `vl` or `vstart` requirements are _reserved_.
 
@@ -158,7 +158,7 @@ In the case of the `.vs` instructions defined in this specification, `vs2` holds
 | vsm3me       | vs2      | vd             |
 | vsm3c        | vs2      | vd             |
 
-#### [](#crypto-vector-scalar-instructions)33.1.1.6\. Vector-Scalar Instructions
+#### [](#crypto-vector-scalar-instructions)32.1.1.6\. Vector-Scalar Instructions
 
 The RISC-V Vector Extension defines three encodings for Vector-Scalar operations which get their scalar operand from a GPR or FP register:
 
@@ -168,7 +168,7 @@ The RISC-V Vector Extension defines three encodings for Vector-Scalar operations
 
 However, the Vector Extensions include Vector Reduction Operations which can also be considered Vector-Scalar operations because a scalar operand is provided from element 0 of vector register `vs1`. The vector operand is provided in vector register group `vs2`. These reduction operations all use the `.vs` suffix in their mnemonics. Additionally, the reduction operations all produce a scalar result in element 0 of the destination register, `vd`.
 
-The Vector Crypto Extensions define Vector-Scalar instructions that are similar to these Vector Reduction Operations in that they get a scalar operand from a vector register. However, they differ in that they get a scalar element group (see [33.1.1.4\. Element Groups](#crypto-vector-element-groups)) from `vs2` and they return _vector_ results to `vd`, which is also a source vector operand.These Vector-Scalar crypto instructions also use the `.vs` suffix in their mnemonics.
+The Vector Crypto Extensions define Vector-Scalar instructions that are similar to these Vector Reduction Operations in that they get a scalar operand from a vector register. However, they differ in that they get a scalar element group (see [32.1.1.4\. Element Groups](#crypto-vector-element-groups)) from `vs2` and they return _vector_ results to `vd`, which is also a source vector operand.These Vector-Scalar crypto instructions also use the `.vs` suffix in their mnemonics.
 
 | |  We chose to use vs2 as the scalar operand, and vd as the vector operand, so that we could use the vs1specifier as additional encoding bits for these instructions. This allows these instructions to have a much smaller encoding footprint, leaving more rooms for other instructions in the future. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -181,7 +181,7 @@ These instructions enable a single key, specified as a scalar element group in `
 | |  It is common for multiple AES encryption rounds (for example) to be performed in parallel with the same round key (e.g. in counter modes). Rather than having to first splat the common key across the whole vector group, these vector-scalar crypto instructions allow the round key to be specified as a scalar element group. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#crypto-vector-software-portability)33.1.1.7\. Software Portability
+#### [](#crypto-vector-software-portability)32.1.1.7\. Software Portability
 
 The following contains some guidelines that enable the portability of vector-crypto-based code to implementations with different values for `VLEN`
 
@@ -208,7 +208,7 @@ The `.vs` instructions require scalar element groups of `EGW`\=128\. On implemen
 
 We recommend that different code be available for `VLEN`\=32 and `VLEN`\=64, as code written for `VLEN`\=32 will likely be too burdensome for `VLEN`\=64 implementations.
 
-### [](#crypto%5Fvector%5Fextensions)33.1.2\. Extensions Overview
+### [](#crypto%5Fvector%5Fextensions)32.1.2\. Extensions Overview
 
 The section introduces all of the extensions in the Vector Cryptography Instruction Set Extension Specification.
 
@@ -227,7 +227,7 @@ Detection of individual cryptography extensions uses the unified software-based 
 | |  At the time of writing, these discovery mechanisms are still a work in progress. |
 | ----------------------------------------------------------------------------------- |
 
-#### [](#zvbb)33.1.2.1\. `Zvbb` \- Vector Basic Bit-manipulation
+#### [](#zvbb)32.1.2.1\. `Zvbb` \- Vector Basic Bit-manipulation
 
 Vector basic bit-manipulation instructions.
 
@@ -247,7 +247,7 @@ Vector basic bit-manipulation instructions.
 | vror.\[vv,vx,vi\]  | [Vector Rotate Right](#insns-vror)                 |
 | vwsll.\[vv,vx,vi\] | [Vector Widening Shift Left Logical](#insns-vwsll) |
 
-#### [](#zvbc)33.1.2.2\. `Zvbc` \- Vector Carry-less Multiplication
+#### [](#zvbc)32.1.2.2\. `Zvbc` \- Vector Carry-less Multiplication
 
 General purpose carry-less multiplication instructions which are commonly used in cryptography and hashing (e.g., Elliptic curve cryptography, GHASH, CRC).
 
@@ -258,7 +258,7 @@ These instructions are only defined for `SEW`\=64.
 | vclmul.\[vv,vx\]  | [Vector Carry-less Multiply](#insns-vclmul)                   |
 | vclmulh.\[vv,vx\] | [Vector Carry-less Multiply Return High Half](#insns-vclmulh) |
 
-#### [](#zvkb)33.1.2.3\. `Zvkb` \- Vector Cryptography Bit-manipulation
+#### [](#zvkb)32.1.2.3\. `Zvkb` \- Vector Cryptography Bit-manipulation
 
 Vector bit-manipulation instructions that are essential for implementing common cryptographic workloads securely & efficiently.
 
@@ -273,7 +273,7 @@ Vector bit-manipulation instructions that are essential for implementing common 
 | vrol.\[vv,vx\]    | [Vector Rotate Left](#insns-vrol)             |
 | vror.\[vv,vx,vi\] | [Vector Rotate Right](#insns-vror)            |
 
-#### [](#zvkg)33.1.2.4\. `Zvkg` \- Vector GCM/GMAC
+#### [](#zvkg)32.1.2.4\. `Zvkg` \- Vector GCM/GMAC
 
 Instructions to enable the efficient implementation of GHASHH which is used in Galois/Counter Mode (GCM) and Galois Message Authentication Code (GMAC).
 
@@ -294,7 +294,7 @@ Likewise, `vstart` must be a multiple of `EGS=4`.
 | 32  | 128 | vghsh.vv | [Vector GHASH Add-Multiply](#insns-vghsh) |
 | 32  | 128 | vgmul.vv | [Vector GHASH Multiply](#insns-vgmul)     |
 
-#### [](#zvkned)33.1.2.5\. `Zvkned` \- NIST Suite: Vector AES Block Cipher
+#### [](#zvkned)32.1.2.5\. `Zvkned` \- NIST Suite: Vector AES Block Cipher
 
 Instructions for accelerating encryption, decryption and key-schedule functions of the AES block cipher as defined in Federal Information Processing Standards Publication 197
 
@@ -317,7 +317,7 @@ Likewise, `vstart` must be a multiple of `EGS=4`.
 | 32  | 128 | vaeskf2.vi       | [Vector AES-256 Forward KeySchedule](#insns-vaeskf2) |
 | 32  | 128 | vaesz.vs         | [Vector AES round zero](#insns-vaesz)                |
 
-#### [](#zvknh)33.1.2.6\. `Zvknh[ab]` \- NIST Suite: Vector SHA-2 Secure Hash
+#### [](#zvknh)32.1.2.6\. `Zvknh[ab]` \- NIST Suite: Vector SHA-2 Secure Hash
 
 Instructions for accelerating SHA-2 as defined in FIPS PUB 180-4 Secure Hash Standard (SHS)
 
@@ -348,7 +348,7 @@ Likewise, `vstart` must be a multiple of `EGS=4`.
 | vsha2ms.vv      | [Vector SHA-2 Message Schedule](#insns-vsha2ms) |
 | vsha2c\[hl\].vv | [Vector SHA-2 Compression](#insns-vsha2c)       |
 
-#### [](#zvksed)33.1.2.7\. `Zvksed` \- ShangMi Suite: SM4 Block Cipher
+#### [](#zvksed)32.1.2.7\. `Zvksed` \- ShangMi Suite: SM4 Block Cipher
 
 Instructions for accelerating encryption, decryption, and key-schedule functions of the SM4 block cipher.
 
@@ -368,7 +368,7 @@ Likewise, `vstart` must be a multiple of `EGS=4`.
 | 32  | 128 | vsm4k.vi        | [Vector SM4 Key Expansion](#insns-vsm4k) |
 | 32  | 128 | vsm4r.\[vv,vs\] | [SM4 Block Cipher Rounds](#insns-vsm4r)  |
 
-#### [](#zvksh)33.1.2.8\. `Zvksh` \- ShangMi Suite: SM3 Secure Hash
+#### [](#zvksh)32.1.2.8\. `Zvksh` \- ShangMi Suite: SM3 Secure Hash
 
 Instructions for accelerating functions of the SM3 Hash Function.
 
@@ -390,7 +390,7 @@ Likewise, `vstart` must be a multiple of `EGS=8`.
 | 32  | 256 | vsm3me.vv | [SM3 Message Expansion](#insns-vsm3me) |
 | 32  | 256 | vsm3c.vi  | [SM3 Compression](#insns-vsm3c)        |
 
-#### [](#zvkn)33.1.2.9\. `Zvkn` \- NIST Algorithm Suite
+#### [](#zvkn)32.1.2.9\. `Zvkn` \- NIST Algorithm Suite
 
 This extension is shorthand for the following set of other extensions:
 
@@ -404,7 +404,7 @@ This extension is shorthand for the following set of other extensions:
 | |  While Zvkg and Zvbc are not part of this extension, it is recommended that at least one of them is implemented with this extension to enable efficient AES-GCM. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#zvknc)33.1.2.10\. `Zvknc` \- NIST Algorithm Suite with carry-less multiply
+#### [](#zvknc)32.1.2.10\. `Zvknc` \- NIST Algorithm Suite with carry-less multiply
 
 This extension is shorthand for the following set of other extensions:
 
@@ -416,7 +416,7 @@ This extension is shorthand for the following set of other extensions:
 | |  This extension combines the NIST Algorithm Suite with the vector carry-less multiply extension to enable AES-GCM. |
 | -------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zvkng)33.1.2.11\. `Zvkng` \- NIST Algorithm Suite with GCM
+#### [](#zvkng)32.1.2.11\. `Zvkng` \- NIST Algorithm Suite with GCM
 
 This extension is shorthand for the following set of other extensions:
 
@@ -428,7 +428,7 @@ This extension is shorthand for the following set of other extensions:
 | |  This extension combines the NIST Algorithm Suite with the GCM/GMAC extension to enable high-performance AES-GCM. |
 | ------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zvks)33.1.2.12\. `Zvks` \- ShangMi Algorithm Suite
+#### [](#zvks)32.1.2.12\. `Zvks` \- ShangMi Algorithm Suite
 
 This extension is shorthand for the following set of other extensions:
 
@@ -442,7 +442,7 @@ This extension is shorthand for the following set of other extensions:
 | |  While Zvkg and Zvbc are not part of this extension, it is recommended that at least one of them is implemented with this extension to enable efficient SM4-GCM. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#zvksc)33.1.2.13\. `Zvksc` \- ShangMi Algorithm Suite with carry-less multiplication
+#### [](#zvksc)32.1.2.13\. `Zvksc` \- ShangMi Algorithm Suite with carry-less multiplication
 
 This extension is shorthand for the following set of other extensions:
 
@@ -454,7 +454,7 @@ This extension is shorthand for the following set of other extensions:
 | |  This extension combines the ShangMi Algorithm Suite with the vector carry-less multiply extension to enable SM4-GCM. |
 | ----------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zvksg)33.1.2.14\. `Zvksg` \- ShangMi Algorithm Suite with GCM
+#### [](#zvksg)32.1.2.14\. `Zvksg` \- ShangMi Algorithm Suite with GCM
 
 This extension is shorthand for the following set of other extensions:
 
@@ -466,7 +466,7 @@ This extension is shorthand for the following set of other extensions:
 | |  This extension combines the ShangMi Algorithm Suite with the GCM/GMAC extension to enable high-performance SM4-GCM. |
 | ---------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#zvkt)33.1.2.15\. `Zvkt` \- Vector Data-Independent Execution Latency
+#### [](#zvkt)32.1.2.15\. `Zvkt` \- Vector Data-Independent Execution Latency
 
 The Zvkt extension requires all implemented instructions from the following list to be executed with data-independent execution latency as defined in the[RISC-V Scalar Cryptography Extensions specification](scalar-crypto.html#crypto%5Fscalar%5Finstructions).
 
@@ -477,7 +477,7 @@ In some cases --- which are explicitly specified in the lists below --- operands
 | |  DIEL helps protect against side-channel timing attacks that are used to determine data values that are intended to be kept secret. Such values include cryptographic keys, plain text, and partially encrypted text. DIEL is not intended to keep software (and cryptographic algorithms contained therein) secret as it is assumed that an adversary would already know these. This is why DIEL doesn’t apply to constants embedded in instruction encodings. It is important that the _values_ of elements that are not in the body or that are masked off do not affect the execution latency of the instruction. Sometimes such elements contain data that also needs to be kept secret. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#33-1-2-15-1-all-zvbb-instructions)33.1.2.15.1\. All [Zvbb](#zvbb) instructions
+##### [](#32-1-2-15-1-all-zvbb-instructions)32.1.2.15.1\. All [Zvbb](#zvbb) instructions
 
 * vandn.v\[vx\]
 * vclz.v
@@ -493,11 +493,11 @@ In some cases --- which are explicitly specified in the lists below --- operands
 | |  All [Zvkb](#zvkb) instructions are also covered by DIEL as they are a proper subset of [Zvbb](#zvbb) |
 | ------------------------------------------------------------------------------------------------------- |
 
-##### [](#33-1-2-15-2-all-zvbc-instructions)33.1.2.15.2\. All [Zvbc](#zvbc) instructions
+##### [](#32-1-2-15-2-all-zvbc-instructions)32.1.2.15.2\. All [Zvbc](#zvbc) instructions
 
 * vclmul\[h\].v\[vx\]
 
-##### [](#33-1-2-15-3-addsub)33.1.2.15.3\. add/sub
+##### [](#32-1-2-15-3-addsub)32.1.2.15.3\. add/sub
 
 * v\[r\]sub.v\[vx\]
 * vadd.v\[ivx\]
@@ -505,14 +505,14 @@ In some cases --- which are explicitly specified in the lists below --- operands
 * vwadd\[u\].\[vw\]\[vx\]
 * vwsub\[u\].\[vw\]\[vx\]
 
-##### [](#33-1-2-15-4-addsub-with-carry)33.1.2.15.4\. add/sub with carry
+##### [](#32-1-2-15-4-addsub-with-carry)32.1.2.15.4\. add/sub with carry
 
 * vadc.v\[ivx\]m
 * vmadc.v\[ivx\]\[m\]
 * vmsbc.v\[vx\]m
 * vsbc.v\[vx\]m
 
-##### [](#33-1-2-15-5-compare-and-set)33.1.2.15.5\. compare and set
+##### [](#32-1-2-15-5-compare-and-set)32.1.2.15.5\. compare and set
 
 * vmseq.v\[vxi\]
 * vmsgt\[u\].v\[xi\]
@@ -520,18 +520,18 @@ In some cases --- which are explicitly specified in the lists below --- operands
 * vmslt\[u\].v\[xi\]
 * vmsne.v\[ivx\]
 
-##### [](#33-1-2-15-6-copy)33.1.2.15.6\. copy
+##### [](#32-1-2-15-6-copy)32.1.2.15.6\. copy
 
 * vmv.s.x
 * vmv.v.\[ivxs\]
 * vmv\[1248\]r.v
 
-##### [](#33-1-2-15-7-extend)33.1.2.15.7\. extend
+##### [](#32-1-2-15-7-extend)32.1.2.15.7\. extend
 
 * vsext.vf\[248\]
 * vzext.vf\[248\]
 
-##### [](#33-1-2-15-8-logical)33.1.2.15.8\. logical
+##### [](#32-1-2-15-8-logical)32.1.2.15.8\. logical
 
 * vand.v\[ivx\]
 * vm\[n\]or.mm
@@ -542,14 +542,14 @@ In some cases --- which are explicitly specified in the lists below --- operands
 * vor.v\[ivx\]
 * vxor.v\[ivx\]
 
-##### [](#33-1-2-15-9-multiply)33.1.2.15.9\. multiply
+##### [](#32-1-2-15-9-multiply)32.1.2.15.9\. multiply
 
 * vmul\[h\].v\[vx\]
 * vmulh\[s\]u.v\[vx\]
 * vwmul.v\[vx\]
 * vwmul\[s\]u.v\[vx\]
 
-##### [](#33-1-2-15-10-multiply-add)33.1.2.15.10\. multiply-add
+##### [](#32-1-2-15-10-multiply-add)32.1.2.15.10\. multiply-add
 
 * vmacc.v\[vx\]
 * vmadd.v\[vx\]
@@ -559,24 +559,24 @@ In some cases --- which are explicitly specified in the lists below --- operands
 * vwmacc\[s\]u.v\[vx\]
 * vwmaccus.vx
 
-##### [](#33-1-2-15-11-integer-merge)33.1.2.15.11\. Integer Merge
+##### [](#32-1-2-15-11-integer-merge)32.1.2.15.11\. Integer Merge
 
 * vmerge.v\[ivx\]m
 
-##### [](#33-1-2-15-12-permute)33.1.2.15.12\. permute
+##### [](#32-1-2-15-12-permute)32.1.2.15.12\. permute
 
 In the `.vv` and `.xv` forms of the `vrgather[ei16]` instructions, the values in `vs1` and `rs1` are used for control and therefore are exempt from DIEL.
 
 * vrgather.v\[ivx\]
 * vrgatherei16.vv
 
-##### [](#33-1-2-15-13-shift)33.1.2.15.13\. shift
+##### [](#32-1-2-15-13-shift)32.1.2.15.13\. shift
 
 * vnsr\[al\].w\[ivx\]
 * vsll.v\[ivx\]
 * vsr\[al\].v\[ivx\]
 
-##### [](#33-1-2-15-14-slide)33.1.2.15.14\. slide
+##### [](#32-1-2-15-14-slide)32.1.2.15.14\. slide
 
 * vslide1\[up|down\].vx
 * vfslide1\[up|down\].vf
@@ -588,9 +588,9 @@ In the vslide\[up|down\].vx instructions, the value in `rs1`is used for control 
 | |  The following instructions are not affected by Zvkt: **All storage operations** **All floating-point operations** add/sub saturate vsadd\[u\].v\[ivx\] vssub\[u\].v\[vx\] clip vnclip\[u\].w\[ivx\] compress vcompress.vm divide vdiv\[u\].v\[vx\] vrem\[u\].v\[vx\] average vaadd\[u\].v\[vx\] vasub\[u\].v\[vx\] mask Op vcpop.m vfirst.m vid.v viota.m vms\[bio\]f.m min/max vmax\[u\].v\[vx\] vmin\[u\].v\[vx\] Multiply-saturate vsmul.v\[vx\] reduce vredsum.vs vwredsum\[u\].vs vred\[and\|or|xor\].vs vred\[min|max\]\[u\].vs shift round vssra.v\[ivx\] vssrl.v\[ivx\] vset vsetivli vsetvl\[i\] |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#crypto%5Fvector%5Finsns)33.1.3\. Instructions
+### [](#crypto%5Fvector%5Finsns)32.1.3\. Instructions
 
-#### [](#insns-vaesdf)33.1.3.1\. vaesdf.\[vv,vs\]
+#### [](#insns-vaesdf)32.1.3.1\. vaesdf.\[vv,vs\]
 
 Synopsis
 
@@ -660,7 +660,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaesdm)33.1.3.2\. vaesdm.\[vv,vs\]
+#### [](#insns-vaesdm)32.1.3.2\. vaesdm.\[vv,vs\]
 
 Synopsis
 
@@ -731,7 +731,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaesef)33.1.3.3\. vaesef.\[vv,vs\]
+#### [](#insns-vaesef)32.1.3.3\. vaesef.\[vv,vs\]
 
 Synopsis
 
@@ -801,7 +801,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaesem)33.1.3.4\. vaesem.\[vv,vs\]
+#### [](#insns-vaesem)32.1.3.4\. vaesem.\[vv,vs\]
 
 Synopsis
 
@@ -872,7 +872,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaeskf1)33.1.3.5\. vaeskf1.vi
+#### [](#insns-vaeskf1)32.1.3.5\. vaeskf1.vi
 
 Synopsis
 
@@ -946,7 +946,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaeskf2)33.1.3.6\. vaeskf2.vi
+#### [](#insns-vaeskf2)32.1.3.6\. vaeskf2.vi
 
 Synopsis
 
@@ -1023,7 +1023,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vaesz)33.1.3.7\. vaesz.vs
+#### [](#insns-vaesz)32.1.3.7\. vaesz.vs
 
 Synopsis
 
@@ -1088,7 +1088,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkned](#zvkned), [Zvkng](#zvkng)
 
-#### [](#insns-vandn)33.1.3.8\. vandn.\[vv,vx\]
+#### [](#insns-vandn)32.1.3.8\. vandn.\[vv,vx\]
 
 Synopsis
 
@@ -1155,7 +1155,7 @@ Included in
 
 [Zvbb](#zvbb), [Zvkb](#zvkb), [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [Zvks](#zvks) [Zvksc](#zvksc), [Zvksg](#zvksg)
 
-#### [](#insns-vbrev)33.1.3.9\. vbrev.v
+#### [](#insns-vbrev)32.1.3.9\. vbrev.v
 
 Synopsis
 
@@ -1200,7 +1200,7 @@ Included in
 
 [Zvbb](#zvbb)
 
-#### [](#insns-vbrev8)33.1.3.10\. vbrev8.v
+#### [](#insns-vbrev8)32.1.3.10\. vbrev8.v
 
 Synopsis
 
@@ -1248,7 +1248,7 @@ Included in
 
 [Zvbb](#zvbb), [Zvkb](#zvkb), [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [Zvks](#zvks) [Zvksc](#zvksc), [Zvksg](#zvksg)
 
-#### [](#insns-vclmul)33.1.3.11\. vclmul.\[vv,vx\]
+#### [](#insns-vclmul)32.1.3.11\. vclmul.\[vv,vx\]
 
 Synopsis
 
@@ -1316,7 +1316,7 @@ Included in
 
 [Zvbc](#zvbc), [Zvknc](#zvknc), [Zvksc](#zvksc)
 
-#### [](#insns-vclmulh)33.1.3.12\. vclmulh.\[vv,vx\]
+#### [](#insns-vclmulh)32.1.3.12\. vclmulh.\[vv,vx\]
 
 Synopsis
 
@@ -1381,7 +1381,7 @@ Included in
 
 [Zvbc](#zvbc), [Zvknc](#zvknc), [Zvksc](#zvksc)
 
-#### [](#insns-vclz)33.1.3.13\. vclz.v
+#### [](#insns-vclz)32.1.3.13\. vclz.v
 
 Synopsis
 
@@ -1427,7 +1427,7 @@ Included in
 
 [Zvbb](#zvbb)
 
-#### [](#insns-vcpop)33.1.3.14\. vcpop.v
+#### [](#insns-vcpop)32.1.3.14\. vcpop.v
 
 Synopsis
 
@@ -1472,7 +1472,7 @@ Included in
 
 [Zvbb](#zvbb)
 
-#### [](#insns-vctz)33.1.3.15\. vctz.v
+#### [](#insns-vctz)32.1.3.15\. vctz.v
 
 Synopsis
 
@@ -1516,7 +1516,7 @@ Included in
 
 [Zvbb](#zvbb)
 
-#### [](#insns-vghsh)33.1.3.16\. vghsh.vv
+#### [](#insns-vghsh)32.1.3.16\. vghsh.vv
 
 Synopsis
 
@@ -1607,7 +1607,7 @@ Included in
 
 [Zvkg](#zvkg), [Zvkng](#zvkng), [Zvksg](#zvksg)
 
-#### [](#insns-vgmul)33.1.3.17\. vgmul.vv
+#### [](#insns-vgmul)32.1.3.17\. vgmul.vv
 
 Synopsis
 
@@ -1695,7 +1695,7 @@ Included in
 
 [Zvkg](#zvkg), [Zvkng](#zvkng), [Zvksg](#zvksg)
 
-#### [](#insns-vrev8)33.1.3.18\. vrev8.v
+#### [](#insns-vrev8)32.1.3.18\. vrev8.v
 
 Synopsis
 
@@ -1744,7 +1744,7 @@ Included in
 
 [Zvbb](#zvbb), [Zvkb](#zvkb), [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [Zvks](#zvks) [Zvksc](#zvksc), [Zvksg](#zvksg)
 
-#### [](#insns-vrol)33.1.3.19\. vrol.\[vv,vx\]
+#### [](#insns-vrol)32.1.3.19\. vrol.\[vv,vx\]
 
 Synopsis
 
@@ -1814,7 +1814,7 @@ Included in
 
 [Zvbb](#zvbb), [Zvkb](#zvkb), [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [Zvks](#zvks) [Zvksc](#zvksc), [Zvksg](#zvksg)
 
-#### [](#insns-vror)33.1.3.20\. vror.\[vv,vx,vi\]
+#### [](#insns-vror)32.1.3.20\. vror.\[vv,vx,vi\]
 
 Synopsis
 
@@ -1895,7 +1895,7 @@ Included in
 
 [Zvbb](#zvbb), [Zvkb](#zvkb), [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [Zvks](#zvks) [Zvksc](#zvksc), [Zvksg](#zvksg)
 
-#### [](#insns-vsha2c)33.1.3.21\. vsha2c\[hl\].vv
+#### [](#insns-vsha2c)32.1.3.21\. vsha2c\[hl\].vv
 
 Synopsis
 
@@ -2017,7 +2017,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [zvknh\[ab\]](#zvknh)
 
-#### [](#insns-vsha2ms)33.1.3.22\. vsha2ms.vv
+#### [](#insns-vsha2ms)32.1.3.22\. vsha2ms.vv
 
 Synopsis
 
@@ -2117,7 +2117,7 @@ Included in
 
 [Zvkn](#zvkn), [Zvknc](#zvknc), [Zvkng](#zvkng), [zvknh\[ab\]](#zvknh)
 
-#### [](#insns-vsm3c)33.1.3.23\. vsm3c.vi
+#### [](#insns-vsm3c)32.1.3.23\. vsm3c.vi
 
 Synopsis
 
@@ -2256,7 +2256,7 @@ Included in
 
 [Zvks](#zvks), [Zvksc](#zvksc), [Zvksg](#zvksg), [Zvksh](#zvksh)
 
-#### [](#insns-vsm3me)33.1.3.24\. vsm3me.vv
+#### [](#insns-vsm3me)32.1.3.24\. vsm3me.vv
 
 Synopsis
 
@@ -2367,7 +2367,7 @@ Included in
 
 [Zvks](#zvks), [Zvksc](#zvksc), [Zvksg](#zvksg), [Zvksh](#zvksh)
 
-#### [](#insns-vsm4k)33.1.3.25\. vsm4k.vi
+#### [](#insns-vsm4k)32.1.3.25\. vsm4k.vi
 
 Synopsis
 
@@ -2482,7 +2482,7 @@ Included in
 
 [Zvks](#zvks), [Zvksc](#zvksc), [Zvksed](#zvksed), [Zvksg](#zvksg)
 
-#### [](#insns-vsm4r)33.1.3.26\. vsm4r.\[vv,vs\]
+#### [](#insns-vsm4r)32.1.3.26\. vsm4r.\[vv,vs\]
 
 Synopsis
 
@@ -2592,7 +2592,7 @@ Included in
 
 [Zvks](#zvks), [Zvksc](#zvksc), [Zvksed](#zvksed), [Zvksg](#zvksg)
 
-#### [](#insns-vwsll)33.1.3.27\. vwsll.\[vv,vx,vi\]
+#### [](#insns-vwsll)32.1.3.27\. vwsll.\[vv,vx,vi\]
 
 Synopsis
 
@@ -2673,7 +2673,7 @@ Included in
 
 [Zvbb](#zvbb)
 
-### [](#crypto%5Fvector%5Finstructions)33.1.4\. Crypto Vector Cryptographic Instructions
+### [](#crypto%5Fvector%5Finstructions)32.1.4\. Crypto Vector Cryptographic Instructions
 
 OP-VE (0x77) Crypto Vector instructions except Zvbb and Zvbc
 
@@ -2714,7 +2714,7 @@ __Table 2\. VAES.vv and VAES.vs encoding space__
 | 10000 | vsm4r  |
 | 10001 | vgmul  |
 
-### [](#crypto%5Fvector%5Finstructions%5FZvbb%5FZvbc)33.1.5\. Vector Bitmanip and Carry-less Multiply Instructions
+### [](#crypto%5Fvector%5Finstructions%5FZvbb%5FZvbc)32.1.5\. Vector Bitmanip and Carry-less Multiply Instructions
 
 OP-V (0x57)**Zvbb**, **Zvkb**, and **Zvbc** Vector instructions **in bold**
 
@@ -2821,7 +2821,7 @@ __Table 3\. VXUNARY0 encoding space__
 | 01101 | **vctz**   |
 | 01110 | **vcpop**  |
 
-### [](#crypto%5Fvector%5Fappx%5Fsail)33.1.6\. Supporting Sail Code
+### [](#crypto%5Fvector%5Fappx%5Fsail)32.1.6\. Supporting Sail Code
 
 This section contains the supporting Sail code referenced by the instruction descriptions throughout the specification. The[Sail Manual](https://alasdair.github.io/manual.html)is recommended reading in order to best understand the supporting code.
 

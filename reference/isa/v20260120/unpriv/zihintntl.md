@@ -1,6 +1,6 @@
-# 8.1. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0
+# 7.1. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0
 
-## [](#chap:zihintntl)8.1\. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0
+## [](#chap:zihintntl)7.1\. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0
 
 The NTL instructions are HINTs that indicate that the explicit memory accesses of the immediately subsequent instruction (henceforth "target instruction") exhibit poor temporal locality of reference.The NTL instructions do not change architectural state, nor do they alter the architecturally visible effects of the target instruction. Four variants are provided:
 

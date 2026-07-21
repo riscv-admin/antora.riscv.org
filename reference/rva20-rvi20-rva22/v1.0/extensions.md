@@ -1,6 +1,6 @@
-# New ISA Extensions
+# 7.1. New ISA Extensions
 
-## [](#new-isa-extensions)New ISA Extensions
+## [](#7-1-new-isa-extensions)7.1\. New ISA Extensions
 
 This profile specification introduces the following new extension names for existing features, but none require new features:
 

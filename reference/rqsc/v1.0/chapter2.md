@@ -1,6 +1,6 @@
-# 2.1. The ACPI RQSC Table
+# 1.1. The ACPI RQSC Table
 
-## [](#chapter2)2.1\. The ACPI RQSC Table
+## [](#chapter2)1.1\. The ACPI RQSC Table
 
 The Capacity and Bandwidth QoS controllers in a system are described by the ACPI RQSC table. The actual register interface is specified in the RISC-V Capacity and Bandwidth Controller QoS Register Interface specification \[[2](bibliography.html#bib-cbqri)\].
 
@@ -116,21 +116,21 @@ __Table 8\. Resource Specific Data__
 | **Resource Type \[1 - Memory\]**                                                                                                                                                                                                   |             |             |                                                                                                                                                                                   |
 | Bandwidth per Block                                                                                                                                                                                                                | 8           | 0           | Indicates the bandwidth, in bytes per second, represented by each unit of the bandwidth block for this resource. If the value is 0, then the bandwidth per block is not provided. |
 
-### [](#2-1-1-risc-v-memory-bandwidth-qos-controllers)2.1.1\. RISC-V Memory Bandwidth QoS Controllers
+### [](#1-1-1-risc-v-memory-bandwidth-qos-controllers)1.1.1\. RISC-V Memory Bandwidth QoS Controllers
 
-#### [](#2-1-1-1-bandwidth-per-block-calculation)2.1.1.1\. Bandwidth Per Block Calculation
+#### [](#1-1-1-1-bandwidth-per-block-calculation)1.1.1.1\. Bandwidth Per Block Calculation
 
 The Memory Bandwidth QoS controllers provide a generic means to control bandwidth in terms of blocks. The user may be interested in knowing exactly how much bandwidth a block entails, so that they can make informed decisions on how to size the per RCID bandwidth block configuration.
 
 Given memory bandwidth will vary based on the type of memory connected to the system, the speed at which they are configured, the number of channels, interleaving conditions, etc., System BIOS or M-mode FW calculates the amount of Bandwidth pertaining to each controller’s block unit. This is done by calculating the total bandwidth of all memory controllers within a memory region (proximity domain) and then dividing the total bandwidth by the number of bandwidth blocks that the controller governing that resource supports.
 
-### [](#2-1-2-shared-resource-configuration)2.1.2\. Shared Resource Configuration
+### [](#1-1-2-shared-resource-configuration)1.1.2\. Shared Resource Configuration
 
 In many system designs, a single logical resource may be managed by multiple QoS controllers. This occurs when the resource is physically distributed across multiple components, or when redundant controllers provide access to the same underlying resource. When multiple QoS controllers share responsibility for the same resource, they must be configured identically to ensure consistent behavior. Mismatched configurations across controllers managing the same resource can lead to unpredictable QoS enforcement and system behavior.
 
 The resource association information provided in the RQSC table enables software to identify which controllers share responsibility for a common resource and must therefore maintain synchronized configurations.
 
-#### [](#2-1-2-1-example-memory-bandwidth-controllers-in-uma-and-numa-configurations)2.1.2.1\. Example: Memory Bandwidth Controllers in UMA and NUMA Configurations
+#### [](#1-1-2-1-example-memory-bandwidth-controllers-in-uma-and-numa-configurations)1.1.2.1\. Example: Memory Bandwidth Controllers in UMA and NUMA Configurations
 
 System memory can be configured in one of two modes:
 

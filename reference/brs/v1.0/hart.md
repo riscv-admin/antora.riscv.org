@@ -1,6 +1,6 @@
-# 3.1. Hart Requirements
+# 2.1. Hart Requirements
 
-## [](#hart)3.1\. Hart Requirements
+## [](#hart)2.1\. Hart Requirements
 
 A compliant system includes a RISC-V application processor and the requirements in this section apply solely to harts in the application processors of a system.
 

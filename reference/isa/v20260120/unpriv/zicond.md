@@ -1,6 +1,6 @@
-# 11.1. "Zicond" Extension for Integer Conditional Operations, Version 1.0.0
+# 10.1. "Zicond" Extension for Integer Conditional Operations, Version 1.0.0
 
-## [](#Zicond)11.1\. "Zicond" Extension for Integer Conditional Operations, Version 1.0.0
+## [](#Zicond)10.1\. "Zicond" Extension for Integer Conditional Operations, Version 1.0.0
 
 The Zicond extension defines two R-type instructions that support branchless conditional operations.
 
@@ -9,9 +9,9 @@ The Zicond extension defines two R-type instructions that support branchless con
 | ✓    | ✓    | czero.eqz _rd_, _rs1_, _rs2_ | [Conditional zero, if condition is equal to zero](#insns-czero-eqz) |
 | ✓    | ✓    | czero.nez _rd_, _rs1_, _rs2_ | [Conditional zero, if condition is nonzero](#insns-czero-nez)       |
 
-### [](#11-1-1-instructions-in-alphabetical-order)11.1.1\. Instructions (in alphabetical order)
+### [](#10-1-1-instructions-in-alphabetical-order)10.1.1\. Instructions (in alphabetical order)
 
-#### [](#insns-czero-eqz)11.1.1.1\. czero.eqz
+#### [](#insns-czero-eqz)10.1.1.1\. czero.eqz
 
 Synopsis
 
@@ -42,7 +42,7 @@ SAIL code
   X(rd) = result;
 ```
 
-#### [](#insns-czero-nez)11.1.1.2\. czero.nez
+#### [](#insns-czero-nez)10.1.1.2\. czero.nez
 
 Synopsis
 
@@ -73,11 +73,11 @@ SAIL code
   X(rd) = result;
 ```
 
-### [](#11-1-2-usage-examples)11.1.2\. Usage examples
+### [](#10-1-2-usage-examples)10.1.2\. Usage examples
 
 The instructions from this extension can be used to construct sequences that perform conditional-arithmetic, conditional-bitwise-logical, and conditional-select operations.
 
-#### [](#11-1-2-1-instruction-sequences)11.1.2.1\. Instruction sequences
+#### [](#10-1-2-1-instruction-sequences)10.1.2.1\. Instruction sequences
 
 | Operation                                                                   | Instruction sequence                                                     | Length                        |
 | --------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ----------------------------- |

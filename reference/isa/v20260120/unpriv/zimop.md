@@ -1,6 +1,6 @@
-# 10.1. "Zimop" Extension for May-Be-Operations, Version 1.0
+# 9.1. "Zimop" Extension for May-Be-Operations, Version 1.0
 
-## [](#zimop)10.1\. "Zimop" Extension for May-Be-Operations, Version 1.0
+## [](#zimop)9.1\. "Zimop" Extension for May-Be-Operations, Version 1.0
 
 This chapter defines the "Zimop" extension, which introduces the concept of instructions that _may be operations_ (MOPs). MOPs are initially defined to simply write zero to `x[rd]`, but are designed to be redefined by later extensions to perform some other action. The Zimop extension defines an encoding space for 40 MOPs.
 
@@ -29,7 +29,7 @@ The MOPs defined in the Zimop extension do not carry a syntactic dependency from
 | |  Not carrying a syntactic dependency relieves straightforward implementations of reading x\[rs1\] and x\[rs2\]. |
 | ----------------------------------------------------------------------------------------------------------------- |
 
-### [](#10-1-1-zcmop-compressed-may-be-operations-extension-version-1-0)10.1.1\. "Zcmop" Compressed May-Be-Operations Extension, Version 1.0
+### [](#9-1-1-zcmop-compressed-may-be-operations-extension-version-1-0)9.1.1\. "Zcmop" Compressed May-Be-Operations Extension, Version 1.0
 
 This section defines the "Zcmop" extension, which defines eight 16-bit MOP instructions named C.MOP._n_, where _n_ is an odd integer between 1 and 15, inclusive. C.MOP._n_ is encoded in the reserved encoding space corresponding to C.LUI x_n_, 0, as shown in [Table 1](#norm:c-mop%5Fenc). Unlike the MOPs defined in the Zimop extension, the C.MOP._n_ instructions are defined to _not_ write any register.Their encoding allows future extensions to define them to read register`x[_n_]`.
 

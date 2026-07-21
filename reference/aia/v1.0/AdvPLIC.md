@@ -1,6 +1,6 @@
-# 4.1. Advanced Platform-Level Interrupt Controller (APLIC)
+# 3.1. Advanced Platform-Level Interrupt Controller (APLIC)
 
-## [](#AdvPLIC)4.1\. Advanced Platform-Level Interrupt Controller (APLIC)
+## [](#AdvPLIC)3.1\. Advanced Platform-Level Interrupt Controller (APLIC)
 
 In a RISC-V system, a Platform-Level Interrupt Controller (PLIC) handles external interrupts that are signaled through wires rather than by MSIs. When the RISC-V harts in a system do not have IMSICs, the harts themselves do not support MSIs, and all external interrupts to such harts must pass through a PLIC. But even in machines where harts have IMSICs and most interrupts are communicated via MSIs, it is not unusual for some device interrupts still to be signaled by dedicated wires. In particular, for devices (or device controllers) that do not otherwise need to initiate bus transactions in the system, the cost of supporting MSIs is especially high, so wired interrupts are a frugal alternative. Wired interrupts also continue to be universally supported by all current computer platforms, unlike MSIs, making another reason for many commodity devices or controllers to choose wired interrupts over MSIs, unless conforming to a standard like PCI Express that dictates MSIs.
 
@@ -21,9 +21,9 @@ RISC-V harts that employ IMSICs as their external interrupt controllers can rece
 
 When harts have IMSICs to support MSIs, a system may easily contain multiple APLICs for converting wired interrupts into MSIs, with each APLIC forwarding interrupts from a different subset of devices. Multiple APLICs are presumably more likely to arise when groups of devices are physically distant from one another, perhaps even on separate chips (including chiplets in a multi-chip module).
 
-### [](#4-1-1-interrupt-sources-and-identities)4.1.1\. Interrupt sources and identities
+### [](#3-1-1-interrupt-sources-and-identities)3.1.1\. Interrupt sources and identities
 
-An individual APLIC supports a fixed number of _interrupt sources_, corresponding exactly with the set of physical incoming interrupt wires at the APLIC. Most often, each source’s incoming wire is connected to the output interrupt wire from a single device or device controller. (For level-sensitive interrupts, the interrupt outputs of multiple devices or controllers may be combined to drive the incoming wire of a single interrupt source at an APLIC. An interrupt source’s incoming wire might also be simply tied high or low, if, for example, the source will always be configured as Detached. See[4.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg) for a description of _source modes_.)
+An individual APLIC supports a fixed number of _interrupt sources_, corresponding exactly with the set of physical incoming interrupt wires at the APLIC. Most often, each source’s incoming wire is connected to the output interrupt wire from a single device or device controller. (For level-sensitive interrupts, the interrupt outputs of multiple devices or controllers may be combined to drive the incoming wire of a single interrupt source at an APLIC. An interrupt source’s incoming wire might also be simply tied high or low, if, for example, the source will always be configured as Detached. See[3.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg) for a description of _source modes_.)
 
 Each of an APLIC’s interrupt sources has a fixed unique _identity number_ in the range 1 to , where  is the total number of sources at the APLIC. The number zero is not a valid interrupt identity number at an APLIC. The maximum number of interrupt sources an APLIC may support is 1023.
 
@@ -31,7 +31,7 @@ When an APLIC delivers interrupts directly to harts at a given privilege level (
 
 On the other hand, when an APLIC forwards interrupts by MSIs, software configures a new interrupt identity number for the outgoing MSIs of each source. Consequently, in this case, the source identity numbers at a given APLIC only distinguish the incoming interrupts at the APLIC and have no relevance outside the APLIC.
 
-### [](#4-1-2-interrupt-domains)4.1.2\. Interrupt domains
+### [](#3-1-2-interrupt-domains)3.1.2\. Interrupt domains
 
 An APLIC supports one or more _interrupt domains_, each associated with a subset of RISC-V harts at one privilege level (machine or supervisor level). The harts within an interrupt domain are those that the domain can interrupt at the corresponding privilege level. Each domain has its own memory-mapped control region in the machine’s address space that appears to control a complete, separate APLIC, though in fact all domain interfaces together access a single combined interrupt controller.
 
@@ -70,14 +70,14 @@ On the other hand, a hart that has an IMSIC for its external interrupt controlle
 
 A platform might give software a way to choose between multiple interrupt domain hierarchies for any given APLIC. Any such configurability is outside the scope of this specification, but should be available to machine level only.
 
-### [](#4-1-3-hart-index-numbers)4.1.3\. Hart index numbers
+### [](#3-1-3-hart-index-numbers)3.1.3\. Hart index numbers
 
 Within a given interrupt domain, each of the domain’s harts has a unique_index number_ in the range 0 to (= 16,383). The index number a domain associates with a hart may or may not have any relationship to the unique hart identifier ("hart ID") that the Privileged Architecture assigns to the hart. Two different interrupt domains may employ a different mapping of index numbers to the same set of harts. However, if any of an APLIC’s interrupt domains can forward interrupts by MSI, then all machine-level domains of the APLIC share a common mapping of index numbers to harts.
 
 | |  For efficiency, implementations should prefer small integers for hart index numbers. |
 | --------------------------------------------------------------------------------------- |
 
-### [](#4-1-4-overview-of-interrupt-control-for-a-single-domain)4.1.4\. Overview of interrupt control for a single domain
+### [](#3-1-4-overview-of-interrupt-control-for-a-single-domain)3.1.4\. Overview of interrupt control for a single domain
 
 Each interrupt domain implemented by an APLIC has its own separate physical control interface that is memory-mapped in the machine’s address space, allowing access to each domain to be easily regulated by both PMP (physical memory protection) and page-based address translation. The control interfaces of all interrupt domains have a common structure. In most respects, every domain appears to software as though it were a root domain, without visibility of the domains above it in the hierarchy.
 
@@ -92,7 +92,7 @@ For interrupt domains that deliver interrupts directly to harts rather than forw
 | |  Although an APLIC with multiple interrupt domains may appear to duplicate the per-source state listed above (source configuration, etc.) by a factor equal to the number of domains, in fact, APLIC implementations can exploit the fact that each source is ultimately active in only one domain. In all domains to which a specific interrupt source has not been delegated, the state associated with the source appears as read-only zeros, requiring no physical register bits. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#AdvPLIC-domainControlRegion)4.1.5\. Memory-mapped control region for an interrupt domain
+### [](#AdvPLIC-domainControlRegion)3.1.5\. Memory-mapped control region for an interrupt domain
 
 For each interrupt domain that an APLIC supports, there is a dedicated memory-mapped control region for managing interrupts in that domain. This control region is a multiple of 4 KiB in size and aligned to a 4-KiB address boundary. The smallest valid control region is 16 KiB. An interrupt domain’s control region is populated by a set of 32-bit registers. The first 16 KiB contains the registers listed in[Table 1](#TableAdvPLIC-domainControlRegion).
 
@@ -156,9 +156,9 @@ Aside from the registers in[Table 1](#TableAdvPLIC-domainControlRegion)and those
 
 Only naturally aligned 32-bit simple reads and writes are supported within an interrupt domain’s control region. Writes to read-only bytes are ignored. For other forms of accesses (other sizes, misaligned accesses, or AMOs), implementations should preferably report an access fault or bus error but must otherwise ignore the access.
 
-The registers of the first 16 KiB of an interrupt domain’s control region (all but the IDC structures) are documented individually below. IDC structures are documented later, in[4.1.8\. Interrupt delivery directly by the APLIC](#AdvPLIC-directMode), "Interrupt delivery directly by the APLIC."
+The registers of the first 16 KiB of an interrupt domain’s control region (all but the IDC structures) are documented individually below. IDC structures are documented later, in[3.1.8\. Interrupt delivery directly by the APLIC](#AdvPLIC-directMode), "Interrupt delivery directly by the APLIC."
 
-#### [](#AdvPLIC-reg-domaincfg)4.1.5.1\. Domain configuration (`domaincfg`)
+#### [](#AdvPLIC-reg-domaincfg)3.1.5.1\. Domain configuration (`domaincfg`)
 
 The `domaincfg` register has this format:
 
@@ -183,7 +183,7 @@ Field DM (Delivery Mode) is **WARL** and determines how this interrupt domain de
 
 In _direct delivery mode_, interrupts are prioritized and signaled directly to harts by the APLIC itself. In _MSI delivery mode_, interrupts are forwarded by the APLIC as MSIs to harts, presumably for further handling by IMSICs at those harts. A given APLIC implementation may support either or both of these delivery modes for each interrupt domain.
 
-If the interrupt domain’s harts have IMSICs, then unless the relevant interrupt files of those IMSICs support value `0x40000000` for register `eidelivery`, setting DM to zero (direct delivery mode) will have the same effect as setting IE to zero. See [External interrupt delivery enable register (eidelivery)](IMSIC.html#IMSIC-reg-eidelivery)and [4.1.8.2\. Interrupt delivery and handling](#AdvPLIC-directMode-intrDelivery).
+If the interrupt domain’s harts have IMSICs, then unless the relevant interrupt files of those IMSICs support value `0x40000000` for register `eidelivery`, setting DM to zero (direct delivery mode) will have the same effect as setting IE to zero. See [External interrupt delivery enable register (eidelivery)](IMSIC.html#IMSIC-reg-eidelivery)and [3.1.8.2\. Interrupt delivery and handling](#AdvPLIC-directMode-intrDelivery).
 
 BE (Big-Endian) is a **WARL** field that determines the byte order for most registers in the interrupt domain’s memory-mapped control region. If BE = 0, byte order is little-endian, and if BE = 1, it is big-endian. For RISC-V systems that support only little-endian, BE may be read-only zero, and for those that support only big-endian, BE may be read-only one. For bi-endian systems, BE is writable.
 
@@ -191,7 +191,7 @@ Field BE affects the byte order of accesses to the `domaincfg` register itself, 
 
 At system reset, all writable bits in `domaincfg` are initialized to zero, including IE. If an implementation supports additional forms of reset for the APLIC, it is implementation-defined (or possibly platform-defined) how these other resets may affect `domaincfg`.
 
-#### [](#AdvPLIC-reg-sourcecfg)4.1.5.2\. Source configurations (`sourcecfg[1]–sourcecfg[1023]`)
+#### [](#AdvPLIC-reg-sourcecfg)3.1.5.2\. Source configurations (`sourcecfg[1]–sourcecfg[1023]`)
 
 For each possible interrupt source , register `sourcecfg[ ]` controls the _source mode_ for source  in this interrupt domain as well as any delegation of the source to a child domain. When source  is not implemented, or appears in this domain not to be implemented, `sourcecfg[ ]` is read-only zero. If source  was not delegated to this domain and is then changed (at the parent domain) to become delegated to this domain, `sourcecfg[ ]` remains zero until successfully written with a nonzero value.
 
@@ -230,7 +230,7 @@ __Table 2\. Encoding of the SM (Source Mode) field of a sourcecfg register when 
 | 6     | Level1   | Active, level-sensitive; interrupt asserted when high      |
 | 7     | Level0   | Active, level-sensitive; interrupt asserted when low       |
 
-An interrupt source is inactive in the interrupt domain if either the source is delegated to a child domain (D = 1) or it is not delegated (D = 0) and SM is Inactive. Whenever interrupt source  is inactive in an interrupt domain, the corresponding interrupt-pending and interrupt-enable bits within the domain are read-only zeros, and register `target[ ]` is also read-only zero. If source  is changed from inactive to an active mode, the interrupt source’s pending and enable bits remain zeros, unless set automatically for a reason specified later in this section or in[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits), and the defined subfields of `target[ ]` obtain UNSPECIFIED values.
+An interrupt source is inactive in the interrupt domain if either the source is delegated to a child domain (D = 1) or it is not delegated (D = 0) and SM is Inactive. Whenever interrupt source  is inactive in an interrupt domain, the corresponding interrupt-pending and interrupt-enable bits within the domain are read-only zeros, and register `target[ ]` is also read-only zero. If source  is changed from inactive to an active mode, the interrupt source’s pending and enable bits remain zeros, unless set automatically for a reason specified later in this section or in[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits), and the defined subfields of `target[ ]` obtain UNSPECIFIED values.
 
 When a source is configured as Detached, its wire input is ignored; however, the interrupt-pending bit may still be set by a write to a `setip` or `setipnum` register. (This mode can be useful for receiving MSIs, for example.)
 
@@ -245,9 +245,9 @@ For an interrupt source that is configured as edge-sensitive or level-sensitive,
 
 For a source that is inactive or Detached, the _rectified input value_is zero.
 
-Any write to a `sourcecfg` register might (or might not) cause the corresponding interrupt-pending bit to be set to one if the rectified input value is high (= 1) under the new source mode. A write to a `sourcecfg` register will not by itself cause a pending bit to be cleared except when the source is made inactive. (But see [4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits).)
+Any write to a `sourcecfg` register might (or might not) cause the corresponding interrupt-pending bit to be set to one if the rectified input value is high (= 1) under the new source mode. A write to a `sourcecfg` register will not by itself cause a pending bit to be cleared except when the source is made inactive. (But see [3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits).)
 
-#### [](#AdvPLIC-reg-mmsiaddrcfg)4.1.5.3\. Machine MSI address configuration (`mmsiaddrcfg` and `mmsiaddrcfgh`)
+#### [](#AdvPLIC-reg-mmsiaddrcfg)3.1.5.3\. Machine MSI address configuration (`mmsiaddrcfg` and `mmsiaddrcfgh`)
 
 For machine-level interrupt domains, registers `mmsiaddrcfg` and `mmsiaddrcfgh` may optionally provide parameters used to determine the addresses to write outgoing MSIs.
 
@@ -272,7 +272,7 @@ and `mmsiaddrcfgh` has this format:
 
 All other bits of `mmsiaddrcfgh` are reserved and read as zeros.
 
-Fields High Base PPN from `mmsiaddrcfgh` and Low Base PPN from `mmsiaddrcfg` concatenate to form a 44-bit Base PPN (Physical Page Number). The use of this value and fields HHXS (High Hart Index Shift), LHXS (Low Hart Index Shift), HHXW (High Hart Index Width), and LHXW (Low Hart Index Width) for determining target addresses for MSIs is described later, in[4.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
+Fields High Base PPN from `mmsiaddrcfgh` and Low Base PPN from `mmsiaddrcfg` concatenate to form a 44-bit Base PPN (Physical Page Number). The use of this value and fields HHXS (High Hart Index Shift), LHXS (Low Hart Index Shift), HHXW (High Hart Index Width), and LHXW (Low Hart Index Width) for determining target addresses for MSIs is described later, in[3.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
 
 When `mmsiaddrcfg` and `mmsiaddrcfgh` are writable (root domain only), all fields other than L are **WARL**. An implementation is free to choose what values are supported. Typically, some bits are writable while others are read-only constants. In the extreme, the values of all fields may be entirely constant, fixed by the implementation.
 
@@ -280,7 +280,7 @@ If bit L in `mmsiaddrcfgh` is set to one, `mmsiaddrcfg` and `mmsiaddrcfgh` are _
 
 Setting `mmsiaddrcfgh`.L to one also locks registers `smsiaddrcfg` and `smsiaddrcfgh` described in the next subsection, if those registers are implemented as well.
 
-For the root domain, L is initialized at system reset to either zero or one, whichever is deemed appropriate for the specific APLIC implementation. If reset initializes L to one, either the other fields are hardwired by the APLIC to constants, or the APLIC has a different means, outside of this standard, for determining the addresses of outgoing MSI writes. In the latter case, the other fields in `mmsiaddrcfg` and `mmsiaddrcfgh` may all read as zeros, so registers `mmsiaddrcfg` and `mmsiaddrcfgh` have only read-only values zero and `0x80000000`respectively. Any time `mmsiaddrcfg` or `mmsiaddrcfgh` has a different value (not zero or `0x80000000`respectively), the addresses for outgoing MSI writes directed to machine level must be derivable from the visible values of these registers, as specified in [4.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
+For the root domain, L is initialized at system reset to either zero or one, whichever is deemed appropriate for the specific APLIC implementation. If reset initializes L to one, either the other fields are hardwired by the APLIC to constants, or the APLIC has a different means, outside of this standard, for determining the addresses of outgoing MSI writes. In the latter case, the other fields in `mmsiaddrcfg` and `mmsiaddrcfgh` may all read as zeros, so registers `mmsiaddrcfg` and `mmsiaddrcfgh` have only read-only values zero and `0x80000000`respectively. Any time `mmsiaddrcfg` or `mmsiaddrcfgh` has a different value (not zero or `0x80000000`respectively), the addresses for outgoing MSI writes directed to machine level must be derivable from the visible values of these registers, as specified in [3.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
 
 For machine-level domains that are not the root domain, if these registers are implemented, bit L is always one, and the other fields either are read-only copies of `mmsiaddrcfg` and `mmsiaddrcfgh` from the root domain, or are all zeros.
 
@@ -289,7 +289,7 @@ For machine-level domains that are not the root domain, if these registers are i
 
 If an APLIC supports additional forms of reset besides system reset, it is implementation-defined (or possibly platform-defined) how these other resets may affect `mmsiaddrcfg` and `mmsiaddrcfgh` (as well as `smsiaddrcfg` and `smsiaddrcfgh`) in the root domain. However, it must not be possible for insufficiently privileged software to use a localized reset to unlock these registers by changing bit L back to zero. For this reason, it is likely that only a complete system reset affects these registers, and any other resets do not.
 
-#### [](#AdvPLIC-reg-smsiaddrcfg)4.1.5.4\. Supervisor MSI address configuration (`smsiaddrcfg` and `smsiaddrcfgh`)
+#### [](#AdvPLIC-reg-smsiaddrcfg)3.1.5.4\. Supervisor MSI address configuration (`smsiaddrcfg` and `smsiaddrcfgh`)
 
 For machine-level interrupt domains, registers `smsiaddrcfg` and `smsiaddrcfgh` may optionally provide parameters used by supervisor-level domains to determine the addresses to write outgoing MSIs.
 
@@ -310,47 +310,47 @@ and `smsiaddrcfgh` has this format:
 
 All other bits of `smsiaddrcfgh` are reserved and read as zeros.
 
-Fields High Base PPN from `smsiaddrcfgh` and Low Base PPN from `smsiaddrcfg` concatenate to form a 44-bit Base PPN (Physical Page Number). The use of this value and field LHXS (Low Hart Index Shift) for determining target addresses for MSIs is described later, in [4.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
+Fields High Base PPN from `smsiaddrcfgh` and Low Base PPN from `smsiaddrcfg` concatenate to form a 44-bit Base PPN (Physical Page Number). The use of this value and field LHXS (Low Hart Index Shift) for determining target addresses for MSIs is described later, in [3.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
 
 When `smsiaddrcfg` and `smsiaddrcfgh` are writable (root domain only), all fields are **WARL**. An implementation is free to choose what values are supported, just as for `mmsiaddrcfg` and `mmsiaddrcfgh`.
 
 If register `mmsiaddrcfgh` of the domain has bit L set to one, then `smsiaddrcfg` and `smsiaddrcfgh` are _locked_ as read-only alongside `mmsiaddrcfg` and `mmsiaddrcfgh`. When `mmsiaddrcfgh.L` \= 1, if the readable values of `mmsiaddrcfg` and `mmsiaddrcfgh` are zero and `0x80000000` respectively—because their other fields are hidden—then `smsiaddrcfg` and `smsiaddrcfgh` are hidden also and read as zeros.
 
-For the root domain only, if `mmsiaddrcfgh.L` \= 1 and the MSI-address-configuration fields are hidden (so `mmsiaddrcfgh` reads as `0x80000000` and registers `mmsiaddrcfg`, `smsiaddrcfg`, and `smsiaddrcfgh` all read as zeros), then whatever values `smsiaddrcfg` and `smsiaddrcfgh` had when `mmsiaddrcfgh`.L was first set are retained internally by the APLIC, though those values are no longer visible by reading the registers. Alternatively, if system reset initializes `mmsiaddrcfgh.L` \= 1 in the root domain, and if all MSI-address-configuration fields never appear as anything other than zeros, then the APLIC implementation has some other, possibly nonstandard, means for determining the addresses of outgoing MSIs, as discussed in the previous subsection,[4.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg).
+For the root domain only, if `mmsiaddrcfgh.L` \= 1 and the MSI-address-configuration fields are hidden (so `mmsiaddrcfgh` reads as `0x80000000` and registers `mmsiaddrcfg`, `smsiaddrcfg`, and `smsiaddrcfgh` all read as zeros), then whatever values `smsiaddrcfg` and `smsiaddrcfgh` had when `mmsiaddrcfgh`.L was first set are retained internally by the APLIC, though those values are no longer visible by reading the registers. Alternatively, if system reset initializes `mmsiaddrcfgh.L` \= 1 in the root domain, and if all MSI-address-configuration fields never appear as anything other than zeros, then the APLIC implementation has some other, possibly nonstandard, means for determining the addresses of outgoing MSIs, as discussed in the previous subsection,[3.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg).
 
-Any time `mmsiaddrcfg` and `mmsiaddrcfgh` are not read-only zero and `0x80000000` respectively, the addresses for outgoing MSI writes directed to supervisor level must be derivable from the visible values of registers `mmsiaddrcfgh`, `smsiaddrcfg`, and `smsiaddrcfgh`, as specified in[4.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
+Any time `mmsiaddrcfg` and `mmsiaddrcfgh` are not read-only zero and `0x80000000` respectively, the addresses for outgoing MSI writes directed to supervisor level must be derivable from the visible values of registers `mmsiaddrcfgh`, `smsiaddrcfg`, and `smsiaddrcfgh`, as specified in[3.1.9.1\. Addresses and data for outgoing MSIs](#AdvPLIC-MSIAddrs).
 
 For machine-level domains that are not the root domain, if `smsiaddrcfg` and `smsiaddrcfgh` are implemented and are not read-only zeros, then they are read-only copies of the same registers from the root domain.
 
-#### [](#4-1-5-5-set-interrupt-pending-bits-setip0-setip31)4.1.5.5\. Set interrupt-pending bits (`setip[0]`\-`setip[31]`)
+#### [](#3-1-5-5-set-interrupt-pending-bits-setip0-setip31)3.1.5.5\. Set interrupt-pending bits (`setip[0]`\-`setip[31]`)
 
 Reading or writing `setip[ ]` register reads or potentially modifies the pending bits for interrupt sources  through . For an implemented interrupt source  within that range, the pending bit for source  corresponds with register bit ( ).
 
 A read of a `setip` register returns the pending bits of the corresponding interrupt sources. Bit positions in the result value that do not correspond to an implemented interrupt source (such as bit 0 of `setip[0]`) are zeros.
 
-On a write to a `setip` register, for each bit that is one in the 32-bit value written, if that bit position corresponds to an active interrupt source, the interrupt-pending bit for that source is set to one if possible. See[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be set by writing to a `setip` register.
+On a write to a `setip` register, for each bit that is one in the 32-bit value written, if that bit position corresponds to an active interrupt source, the interrupt-pending bit for that source is set to one if possible. See[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be set by writing to a `setip` register.
 
-#### [](#4-1-5-6-set-interrupt-pending-bit-by-number-setipnum)4.1.5.6\. Set interrupt-pending bit by number (`setipnum`)
+#### [](#3-1-5-6-set-interrupt-pending-bit-by-number-setipnum)3.1.5.6\. Set interrupt-pending bit by number (`setipnum`)
 
-If  is an active interrupt source number in the domain, writing 32-bit value  to register `setipnum` causes the pending bit for source  to be set to one if possible. See[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be set by writing to `setipnum`.
+If  is an active interrupt source number in the domain, writing 32-bit value  to register `setipnum` causes the pending bit for source  to be set to one if possible. See[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be set by writing to `setipnum`.
 
 A write to `setipnum` is ignored if the value written is not an active interrupt source number in the domain. A read of `setipnum` always returns zero.
 
-#### [](#4-1-5-7-rectified-inputs-clear-interrupt-pending-bits-in%5Fclrip0-in%5Fclrip31)4.1.5.7\. Rectified inputs, clear interrupt-pending bits (`in_clrip[0]`\-`in_clrip[31]`)
+#### [](#3-1-5-7-rectified-inputs-clear-interrupt-pending-bits-in%5Fclrip0-in%5Fclrip31)3.1.5.7\. Rectified inputs, clear interrupt-pending bits (`in_clrip[0]`\-`in_clrip[31]`)
 
-Reading register `in_clrip[ ]` returns the rectified input ([4.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg)) for interrupt sources  through , while writing `in_clrip[ ]` potentially modifies the pending bits for the same sources. For an implemented interrupt source  within the specified range, source  corresponds with register bit ( ).
+Reading register `in_clrip[ ]` returns the rectified input ([3.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg)) for interrupt sources  through , while writing `in_clrip[ ]` potentially modifies the pending bits for the same sources. For an implemented interrupt source  within the specified range, source  corresponds with register bit ( ).
 
 A read of an `in_clrip` register returns the rectified input values of the corresponding interrupt sources. Bit positions in the result value that do not correspond to an implemented interrupt source (such as bit 0 of `in_clrip[0]`) are zeros.
 
-On a write to an `in_clrip` register, for each bit that is one in the 32-bit value written, if that bit position corresponds to an active interrupt source, the interrupt-pending bit for that source is cleared if possible. See[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be cleared by writing to an `in_clrip` register.
+On a write to an `in_clrip` register, for each bit that is one in the 32-bit value written, if that bit position corresponds to an active interrupt source, the interrupt-pending bit for that source is cleared if possible. See[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be cleared by writing to an `in_clrip` register.
 
-#### [](#4-1-5-8-clear-interrupt-pending-bit-by-number-clripnum)4.1.5.8\. Clear interrupt-pending bit by number (`clripnum`)
+#### [](#3-1-5-8-clear-interrupt-pending-bit-by-number-clripnum)3.1.5.8\. Clear interrupt-pending bit by number (`clripnum`)
 
-If  is an active interrupt source number in the domain, writing 32-bit value  to register `clripnum` causes the pending bit for source  to be cleared if possible. See[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be cleared by writing to `clripnum`.
+If  is an active interrupt source number in the domain, writing 32-bit value  to register `clripnum` causes the pending bit for source  to be cleared if possible. See[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when a pending bit may be cleared by writing to `clripnum`.
 
 A write to `clripnum` is ignored if the value written is not an active interrupt source number in the domain. A read of `clripnum` always returns zero.
 
-#### [](#4-1-5-9-set-interrupt-enable-bits-setie0-setie31)4.1.5.9\. Set interrupt-enable bits (`setie[0]`\-`setie[31]`)
+#### [](#3-1-5-9-set-interrupt-enable-bits-setie0-setie31)3.1.5.9\. Set interrupt-enable bits (`setie[0]`\-`setie[31]`)
 
 Reading or writing register `setie[ ]` reads or potentially modifies the enable bits for interrupt sources  through . For an implemented interrupt source  within that range, the enable bit for source  corresponds with register bit .
 
@@ -358,13 +358,13 @@ A read of a `setie` register returns the enable bits of the corresponding interr
 
 On a write to a `setie` register, for each bit that is one in the 32-bit value written, if that bit position corresponds to an active interrupt source, the interrupt-enable bit for that source is set to one.
 
-#### [](#4-1-5-10-set-interrupt-enable-bit-by-number-setienum)4.1.5.10\. Set interrupt-enable bit by number (`setienum`)
+#### [](#3-1-5-10-set-interrupt-enable-bit-by-number-setienum)3.1.5.10\. Set interrupt-enable bit by number (`setienum`)
 
 If  is an active interrupt source number in the domain, writing 32-bit value  to register `setienum` causes the enable bit for source  to be set to one.
 
 A write to `setienum` is ignored if the value written is not an active interrupt source number in the domain. A read of `setienum` always returns zero.
 
-#### [](#4-1-5-11-clear-interrupt-enable-bits-clrie0-clrie31)4.1.5.11\. Clear interrupt-enable bits (`clrie[0]`\-`clrie[31]`)
+#### [](#3-1-5-11-clear-interrupt-enable-bits-clrie0-clrie31)3.1.5.11\. Clear interrupt-enable bits (`clrie[0]`\-`clrie[31]`)
 
 Writing register `clrie[ ]` potentially modifies the enable bits for interrupt sources  through . For an implemented interrupt source  within that range, the enable bit for source  corresponds with register bit .
 
@@ -372,13 +372,13 @@ On a write to a `clrie` register, for each bit that is one in the 32-bit value w
 
 A read of a `clrie` register always returns zero.
 
-#### [](#4-1-5-12-clear-interrupt-enable-bit-by-number-clrienum)4.1.5.12\. Clear interrupt-enable bit by number (`clrienum`)
+#### [](#3-1-5-12-clear-interrupt-enable-bit-by-number-clrienum)3.1.5.12\. Clear interrupt-enable bit by number (`clrienum`)
 
 If  is an active interrupt source number in the domain, writing 32-bit value  to register `clrienum` causes the enable bit for source  to be cleared.
 
 A write to `clrienum` is ignored if the value written is not an active interrupt source number in the domain. A read of `clrienum` always returns zero.
 
-#### [](#4-1-5-13-set-interrupt-pending-bit-by-number-little-endian-setipnum%5Fle)4.1.5.13\. Set interrupt-pending bit by number, little-endian (`setipnum_le`)
+#### [](#3-1-5-13-set-interrupt-pending-bit-by-number-little-endian-setipnum%5Fle)3.1.5.13\. Set interrupt-pending bit by number, little-endian (`setipnum_le`)
 
 Register `setipnum_le` acts identically to `setipnum` except that byte order is always little-endian, as though field BE (Big-Endian) of register `domaincfg` is zero.
 
@@ -386,7 +386,7 @@ For systems that are big-endian-only, with `domaincfg`.BE hardwired to one, `set
 
 `setipnum_le` may be used as a write port for MSIs.
 
-#### [](#4-1-5-14-set-interrupt-pending-bit-by-number-big-endian-setipnum%5Fbe)4.1.5.14\. Set interrupt-pending bit by number, big-endian (`setipnum_be`)
+#### [](#3-1-5-14-set-interrupt-pending-bit-by-number-big-endian-setipnum%5Fbe)3.1.5.14\. Set interrupt-pending bit by number, big-endian (`setipnum_be`)
 
 Register `setipnum_be` acts identically to `setipnum` except that byte order is always big-endian, as though field BE (Big-Endian) of register `domaincfg` is one.
 
@@ -394,9 +394,9 @@ For systems that are little-endian-only, with `domaincfg`.BE hardwired to zero, 
 
 For systems built mainly for big-endian byte order, `setipnum_be` may be useful as a write port for MSIs from some devices.
 
-#### [](#AdvPLIC-reg-genmsi)4.1.5.15\. Generate MSI (`genmsi`)
+#### [](#AdvPLIC-reg-genmsi)3.1.5.15\. Generate MSI (`genmsi`)
 
-When the interrupt domain is configured in MSI delivery mode (`domaincfg`.DM = 1), register `genmsi` can be used to cause an _extempore_ MSI to be sent from the APLIC to a hart. The main purpose for this function is to assist in establishing a temporary known ordering between a hart’s writes to the APLIC’s registers and the transmission of MSIs from the APLIC to the hart, as explained later in [4.1.9.3\. Synchronizing interactions between a hart and the APLIC](#AdvPLIC-MSISync).
+When the interrupt domain is configured in MSI delivery mode (`domaincfg`.DM = 1), register `genmsi` can be used to cause an _extempore_ MSI to be sent from the APLIC to a hart. The main purpose for this function is to assist in establishing a temporary known ordering between a hart’s writes to the APLIC’s registers and the transmission of MSIs from the APLIC to the hart, as explained later in [3.1.9.3\. Synchronizing interactions between a hart and the APLIC](#AdvPLIC-MSISync).
 
 | |  For other purposes, sending an MSI to a hart is usually better done by writing directly to the hart’s IMSIC, rather than employing an APLIC as an intermediary. Use of the genmsi register should be minimized to avoid it becoming a bottleneck. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -410,7 +410,7 @@ Register `genmsi` has this format:
 
 All other register bits are reserved and read as zeros.
 
-The Busy bit is ordinarily zero (false), but a write to `genmsi` causes Busy to become one (true), indicating an extempore MSI is pending. The Hart Index field specifies the destination hart, and EIID (External Interrupt Identity) specifies the data value for the MSI. Fields Hart Index and EIID have the same formats and behavior as in a `target` register, documented in the next subsection, [4.1.5.16\. Interrupt targets (target\[1\]-target\[1023\])](#AdvPLIC-reg-target). For a machine-level interrupt domain, an extempore MSI is sent to the destination hart at machine level, and for a supervisor-level interrupt domain, an extempore MSI is sent to the destination hart at supervisor level.
+The Busy bit is ordinarily zero (false), but a write to `genmsi` causes Busy to become one (true), indicating an extempore MSI is pending. The Hart Index field specifies the destination hart, and EIID (External Interrupt Identity) specifies the data value for the MSI. Fields Hart Index and EIID have the same formats and behavior as in a `target` register, documented in the next subsection, [3.1.5.16\. Interrupt targets (target\[1\]-target\[1023\])](#AdvPLIC-reg-target). For a machine-level interrupt domain, an extempore MSI is sent to the destination hart at machine level, and for a supervisor-level interrupt domain, an extempore MSI is sent to the destination hart at supervisor level.
 
 A pending extempore MSI should be sent by the APLIC with minimal delay. Once it has left the APLIC and the APLIC is able to accept a new write to `genmsi` for another extempore MSI, Busy reverts to false. All MSIs previously sent from this APLIC to the same hart must be visible at the hart’s IMSIC before the extempore MSI becomes visible at the hart’s IMSIC.
 
@@ -420,13 +420,13 @@ Extempore MSIs are not affected by the IE bit of the domain’s `domaincfg` regi
 
 When the interrupt domain is configured in direct delivery mode (`domaincfg`.DM = 0), register `genmsi` is read-only zero.
 
-#### [](#AdvPLIC-reg-target)4.1.5.16\. Interrupt targets (`target[1]-target[1023]`)
+#### [](#AdvPLIC-reg-target)3.1.5.16\. Interrupt targets (`target[1]-target[1023]`)
 
 If interrupt source  is inactive in this domain, register `target[ ]` is read-only zero. If source  is active, `target[ ]` determines the hart to which interrupts from the source are signaled or forwarded. The exact interpretation of `target[ ]` depends on the delivery mode configured by field DM of register `domaincfg`.
 
 If `domaincfg`.DM is changed, the `target` registers for all active interrupt sources within the domain obtain UNSPECIFIED values in all fields defined for the new delivery mode.
 
-##### [](#4-1-5-16-1-active-source-direct-delivery-mode)4.1.5.16.1\. Active source, direct delivery mode
+##### [](#3-1-5-16-1-active-source-direct-delivery-mode)3.1.5.16.1\. Active source, direct delivery mode
 
 For an active interrupt source , if the domain is configured in direct delivery mode (`domaincfg`.DM = 0), then register `target[ ]` has this format:
 
@@ -445,7 +445,7 @@ Smaller priority numbers convey higher priority. When interrupt sources have equ
 | |  Interrupt priorities are encoded as integers, with smaller numbers denoting higher priority, to match the encoding of priorities by IMSICs. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#4-1-5-16-2-active-source-msi-delivery-mode)4.1.5.16.2\. Active source, MSI delivery mode
+##### [](#3-1-5-16-2-active-source-msi-delivery-mode)3.1.5.16.2\. Active source, MSI delivery mode
 
 For an active interrupt source , if the domain is configured in MSI delivery mode (`domaincfg`.DM = 1), then register `target[ ]` has this format:
 
@@ -464,17 +464,17 @@ Together, fields Hart Index and Guest Index of register `target[ ]` determine th
 
 If the interrupt domain’s harts have IMSIC interrupt files that implement  distinct interrupt identities ([Interrupt files and interrupt identities](IMSIC.html#IMSIC-intrFilesAndIdents)), then EIID is a \-bit unsigned integer field, where . EIID is thus able to hold at least values 0 through . A write to a `target`register sets the  implemented bits of EIID equal to the least-significant  bits of the 32-bit value written.
 
-### [](#4-1-6-reset)4.1.6\. Reset
+### [](#3-1-6-reset)3.1.6\. Reset
 
 Upon reset of an APLIC, all its state becomes valid and consistent but otherwise UNSPECIFIED, except for:
 
-* the domaincfg register of each interrupt domain ([4.1.5.1\. Domain configuration (domaincfg)](#AdvPLIC-reg-domaincfg));
-* possibly the MSI address configuration registers of machine-level interrupt domains ([4.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg) and [4.1.5.4\. Supervisor MSI address configuration (smsiaddrcfg and smsiaddrcfgh)](#AdvPLIC-reg-smsiaddrcfg)); and
-* the Busy bit of each interrupt domain’s `genmsi` register, if it exists ([4.1.5.15\. Generate MSI (genmsi)](#AdvPLIC-reg-genmsi)).
+* the domaincfg register of each interrupt domain ([3.1.5.1\. Domain configuration (domaincfg)](#AdvPLIC-reg-domaincfg));
+* possibly the MSI address configuration registers of machine-level interrupt domains ([3.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg) and [3.1.5.4\. Supervisor MSI address configuration (smsiaddrcfg and smsiaddrcfgh)](#AdvPLIC-reg-smsiaddrcfg)); and
+* the Busy bit of each interrupt domain’s `genmsi` register, if it exists ([3.1.5.15\. Generate MSI (genmsi)](#AdvPLIC-reg-genmsi)).
 
-### [](#AdvPLIC-pendingBits)4.1.7\. Precise effects on interrupt-pending bits
+### [](#AdvPLIC-pendingBits)3.1.7\. Precise effects on interrupt-pending bits
 
-An attempt to set or clear an interrupt source’s pending bit by writing to a register in the interrupt domain’s control region may or may not be successful, depending on the corresponding source mode, the interrupt domain’s delivery mode, and the state of the source’s rectified input value (defined in [4.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg)). The following enumerates all the circumstances when a pending bit is set or cleared for a given source mode.
+An attempt to set or clear an interrupt source’s pending bit by writing to a register in the interrupt domain’s control region may or may not be successful, depending on the corresponding source mode, the interrupt domain’s delivery mode, and the state of the source’s rectified input value (defined in [3.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg)). The following enumerates all the circumstances when a pending bit is set or cleared for a given source mode.
 
 If the source mode is Detached:
 
@@ -499,13 +499,13 @@ If the source mode is Level1 or Level0 and the interrupt domain is configured in
 | |  When an interrupt domain is in direct delivery mode, the pending bit for a level-sensitive source is always just a copy of the rectified input value. Even in MSI delivery mode, the pending bit for a level-sensitive source is never set (= 1) when the rectified input value is low. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-In addition to the rules above, a write to a `sourcecfg` register can cause the source’s interrupt-pending bit to be set to one, as specified in[4.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg).
+In addition to the rules above, a write to a `sourcecfg` register can cause the source’s interrupt-pending bit to be set to one, as specified in[3.1.5.2\. Source configurations (sourcecfg\[1\]–sourcecfg\[1023\])](#AdvPLIC-reg-sourcecfg).
 
-### [](#AdvPLIC-directMode)4.1.8\. Interrupt delivery directly by the APLIC
+### [](#AdvPLIC-directMode)3.1.8\. Interrupt delivery directly by the APLIC
 
 When an interrupt domain is in direct delivery mode (`domaincfg`.DM = 0), interrupts are delivered from the APLIC to harts by a unique signal to each hart, usually a dedicated wire. In this case, the domain’s memory-mapped control region contains at the end an array of interrupt delivery control (IDC) structures, one IDC structure per potential hart index. The first IDC structure is for the domain’s hart with index 0; the second is for the hart with index 1; etc.
 
-#### [](#AdvPLIC-IDC)4.1.8.1\. Interrupt delivery control (IDC) structure
+#### [](#AdvPLIC-IDC)3.1.8.1\. Interrupt delivery control (IDC) structure
 
 Each IDC structure is 32 bytes (naturally aligned to a 32-byte address boundary) and has these defined registers:
 
@@ -522,7 +522,7 @@ If the IDC structure is for a hart index number that is not valid for any actual
 | |  A particular APLIC might be built to support up to some maximum number of harts without complete knowledge of the set of hart index numbers the system will employ in each interrupt domain. In that case, for the hart index numbers that are unused, the APLIC may have IDC structures that are functional within the APLIC (not read-only zeros) but simply left unconnected to any physical harts. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#4-1-8-1-1-interrupt-delivery-enable-idelivery)4.1.8.1.1\. Interrupt delivery enable (`idelivery`)
+##### [](#3-1-8-1-1-interrupt-delivery-enable-idelivery)3.1.8.1.1\. Interrupt delivery enable (`idelivery`)
 
 `idelivery` is a **WARL** register that controls whether interrupts that are targeted to the corresponding hart are delivered to the hart so they appear as a pending interrupt in the hart’s `mip` CSR. Only two values are currently defined for `idelivery`:
 
@@ -534,19 +534,19 @@ The `idelivery` register affects only whether interrupts are delivered to the re
 
 If an IDC structure is for a nonexistent hart (i.e., corresponding to a hart index number that is not valid for any actual hart in the interrupt domain), setting `idelivery` to 1 does not deliver interrupts to any hart.
 
-##### [](#4-1-8-1-2-interrupt-force-iforce)4.1.8.1.2\. Interrupt force (`iforce`)
+##### [](#3-1-8-1-2-interrupt-force-iforce)3.1.8.1.2\. Interrupt force (`iforce`)
 
 `iforce` is a **WARL** register useful for testing. Only values 0 and 1 are allowed. Setting `iforce` \= 1 forces an interrupt to be asserted to the corresponding hart whenever both the IE field of `domaincfg` is one and interrupt delivery is enabled to the hart by the `idelivery` register. When `topi` is zero, this creates a _spurious external interrupt_ for the hart.
 
 When a read of register `claimi` returns an interrupt identity of zero (indicating a spurious interrupt), `iforce` is automatically cleared to zero.
 
-##### [](#4-1-8-1-3-interrupt-enable-threshold-ithreshold)4.1.8.1.3\. Interrupt enable threshold (`ithreshold`)
+##### [](#3-1-8-1-3-interrupt-enable-threshold-ithreshold)3.1.8.1.3\. Interrupt enable threshold (`ithreshold`)
 
 `ithreshold` is a **WLRL** register that determines the minimum interrupt priority (maximum priority number) for an interrupt to be signaled to the corresponding hart. Register `ithreshold` implements exactly IPRIOLEN bits, and thus is capable of holding all priority numbers from 0 to .
 
 When `ithreshold` is a nonzero value , interrupt sources with priority numbers  and higher do not contribute to signaling interrupts to the hart, as though those sources were not enabled, regardless of the settings of their interrupt-enable bits. When `ithreshold` is zero, all enabled interrupt sources can contribute to signaling interrupts to the hart.
 
-##### [](#4-1-8-1-4-top-interrupt-topi)4.1.8.1.4\. Top interrupt (`topi`)
+##### [](#3-1-8-1-4-top-interrupt-topi)3.1.8.1.4\. Top interrupt (`topi`)
 
 `topi` is a read-only register whose value indicates the current highest-priority pending-and-enabled interrupt targeted to this hart that also exceeds the priority threshold specified by `ithreshold`, if not zero.
 
@@ -564,15 +564,15 @@ The value of `topi` is not affected by `domaincfg`.IE or by `idelivery`.
 
 Writes to `topi` are ignored.
 
-##### [](#4-1-8-1-5-claim-top-interrupt-claimi)4.1.8.1.5\. Claim top interrupt (`claimi`)
+##### [](#3-1-8-1-5-claim-top-interrupt-claimi)3.1.8.1.5\. Claim top interrupt (`claimi`)
 
-Register `claimi` has the same value as `topi`. When this value is not zero, reading `claimi` has the simultaneous side effect of clearing the pending bit for the reported interrupt identity, if possible. See[4.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when the pending bit is cleared by a read of `claimi`.
+Register `claimi` has the same value as `topi`. When this value is not zero, reading `claimi` has the simultaneous side effect of clearing the pending bit for the reported interrupt identity, if possible. See[3.1.7\. Precise effects on interrupt-pending bits](#AdvPLIC-pendingBits) for exactly when the pending bit is cleared by a read of `claimi`.
 
 A read from `claimi` that returns a value of zero has the simultaneous side effect of setting the `iforce` register to zero.
 
 Writes to `claimi` are ignored.
 
-#### [](#AdvPLIC-directMode-intrDelivery)4.1.8.2\. Interrupt delivery and handling
+#### [](#AdvPLIC-directMode-intrDelivery)3.1.8.2\. Interrupt delivery and handling
 
 When an interrupt domain is configured so the APLIC delivers interrupts directly to harts (field DM of `domaincfg` is zero), the APLIC supplies the_external interrupt_ signals, at the domain’s privilege level, for all harts of the domain, so long as one of the following is true: (a) the harts do not have IMSICs, or (b) the `eidelivery` registers of the relevant IMSIC interrupt files are set to `0x40000000` ([External interrupt delivery enable register (eidelivery)](IMSIC.html#IMSIC-reg-eidelivery)). For a machine-level domain, the interrupt signals from the APLIC appear as bit MEIP (Machine External Interrupt-Pending) in each hart’s `mip` CSR. For a supervisor-level domain, the interrupt signals appear as bit SEIP (Supervisor External Interrupt-Pending) in each hart’s `mip` and `sip` CSRs. Each interrupt signal may be arbitrarily delayed traveling from the APLIC to the proper hart.
 
@@ -592,15 +592,15 @@ A trap handler solely for external interrupts via an APLIC could be written roug
 
 To account for spurious interrupts, this pseudocode assumes there is an interrupt handler for "external interrupt 0" which does nothing.
 
-### [](#4-1-9-interrupt-forwarding-by-msis)4.1.9\. Interrupt forwarding by MSIs
+### [](#3-1-9-interrupt-forwarding-by-msis)3.1.9\. Interrupt forwarding by MSIs
 
 In MSI delivery mode (`domaincfg`.DM = 1), an interrupt domain forwards interrupts to target harts by MSIs.
 
 An MSI is sent for a specific source only when the source’s corresponding pending and enable bits are both one and the IE field of register `domaincfg` is also one. If and when an MSI is sent, the source’s interrupt pending bit is cleared.
 
-#### [](#AdvPLIC-MSIAddrs)4.1.9.1\. Addresses and data for outgoing MSIs
+#### [](#AdvPLIC-MSIAddrs)3.1.9.1\. Addresses and data for outgoing MSIs
 
-To forward interrupts by MSIs, an APLIC must know the MSI target address for each hart. For any given system, these addresses are fixed and should be hardwired into the APLIC if possible. However, some APLIC implementations may require that software supply the MSI target addresses. In that case, the root domain’s registers `mmsiaddrcfg`, `mmsiaddrcfgh`, `smsiaddrcfg`, and `smsiaddrcfgh` ([4.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg)and [4.1.5.4\. Supervisor MSI address configuration (smsiaddrcfg and smsiaddrcfgh)](#AdvPLIC-reg-smsiaddrcfg)) may be used to configure the MSI addresses for all interrupt domains. Alternatively MSI addresses may be configured by some custom means outside this standard. If MSI target addresses must be configured by software, this should be done only from a suitably privileged execution mode, typically just once, early after system reset.
+To forward interrupts by MSIs, an APLIC must know the MSI target address for each hart. For any given system, these addresses are fixed and should be hardwired into the APLIC if possible. However, some APLIC implementations may require that software supply the MSI target addresses. In that case, the root domain’s registers `mmsiaddrcfg`, `mmsiaddrcfgh`, `smsiaddrcfg`, and `smsiaddrcfgh` ([3.1.5.3\. Machine MSI address configuration (mmsiaddrcfg and mmsiaddrcfgh)](#AdvPLIC-reg-mmsiaddrcfg)and [3.1.5.4\. Supervisor MSI address configuration (smsiaddrcfg and smsiaddrcfgh)](#AdvPLIC-reg-smsiaddrcfg)) may be used to configure the MSI addresses for all interrupt domains. Alternatively MSI addresses may be configured by some custom means outside this standard. If MSI target addresses must be configured by software, this should be done only from a suitably privileged execution mode, typically just once, early after system reset.
 
 For a machine-level interrupt domain, if MSI target addresses are determined by `mmsiaddrcfg` and `mmsiaddrcfgh`, then the address for an outgoing MSI for interrupt source  is computed from those registers and from the Hart Index field of register `target[ ]` as follows:
 
@@ -622,7 +622,7 @@ Represented in the terms of[Arrangement of the memory regions of multiple interr
 
 The data for an outgoing MSI write is taken from the EIID field of `target[ ]`, zero-extended to 32 bits. An MSI’s 32-bit data is always written in little-endian byte order, regardless of the BE field of the domain’s `domaincfg`register.
 
-#### [](#4-1-9-2-special-consideration-for-level-sensitive-interrupt-sources)4.1.9.2\. Special consideration for level-sensitive interrupt sources
+#### [](#3-1-9-2-special-consideration-for-level-sensitive-interrupt-sources)3.1.9.2\. Special consideration for level-sensitive interrupt sources
 
 As soon as a level-sensitive interrupt is forwarded by MSI, the APLIC clears the pending bit for the interrupt source and then ignores the source until its incoming signal has been de-asserted. Clearing the pending bit when an MSI is sent is obviously necessary to avoid a constant stream of repeated MSIs from the APLIC to the target hart for the same interrupt. However, after an interrupt service routine has addressed a cause found for the interrupt, the incoming interrupt wire might remain asserted at the APLIC for another reason, despite that the interrupt’s pending bit at the APLIC was cleared and will remain so without intervention from software. If the interrupt service routine then exits without further action, a continued interrupt from this source might never receive attention.
 
@@ -632,13 +632,13 @@ The first option is to test whether the interrupt wire into the APLIC is still a
 
 A second option is for the interrupt service routine to write the APLIC’s source identity number for the interrupt to the domain’s `setipnum`register just before exiting. This will cause the interrupt’s pending bit to be set to one again if the source is still asserting an interrupt, but not if the source is not asserting an interrupt.
 
-#### [](#AdvPLIC-MSISync)4.1.9.3\. Synchronizing interactions between a hart and the APLIC
+#### [](#AdvPLIC-MSISync)3.1.9.3\. Synchronizing interactions between a hart and the APLIC
 
 When an APLIC sends an MSI to a hart, there is an unspecified travel delay before the MSI is observed at the hart’s IMSIC. Consequently, after an APLIC’s configuration is changed by writing to an APLIC register, harts may continue to see MSIs arrive from the APLIC from the time before the write, for an unspecified amount of time.
 
 It is sometimes necessary to know when no more of these late MSIs can arrive. For example, if a hart will be turned off ("powered down"), all interrupts directed to it must be redirected to other harts, which may involve reconfiguring one or more APLICs. Even after the APLICs are reconfigured, the hart still cannot be safely turned off until it is known no more MSIs are destined for it.
 
-The `genmsi` register ([4.1.5.15\. Generate MSI (genmsi)](#AdvPLIC-reg-genmsi)) exists to allow software to determine when all earlier MSIs have arrived at a hart. To use `genmsi` for this purpose, software can dedicate one external interrupt identity at each hart’s IMSIC interrupt file solely for APLIC synchronization. Assuming there are multiple harts, an APLIC’s `genmsi` register should also be protected by a standard mutual-exclusion lock. The following sequence can then be used to synchronize between an APLIC and a specific hart:
+The `genmsi` register ([3.1.5.15\. Generate MSI (genmsi)](#AdvPLIC-reg-genmsi)) exists to allow software to determine when all earlier MSIs have arrived at a hart. To use `genmsi` for this purpose, software can dedicate one external interrupt identity at each hart’s IMSIC interrupt file solely for APLIC synchronization. Assuming there are multiple harts, an APLIC’s `genmsi` register should also be protected by a standard mutual-exclusion lock. The following sequence can then be used to synchronize between an APLIC and a specific hart:
 
 1. At the hart’s IMSIC, clear the pending bit for the specific minor interrupt identity  used exclusively for APLIC synchronization.
 2. Acquire the shared lock for the APLIC’s `genmsi` register.

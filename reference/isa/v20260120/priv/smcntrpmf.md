@@ -1,8 +1,8 @@
-# 7.1. "Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0
+# 6.1. "Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0
 
-## [](#smcntrpmf)7.1\. "Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0
+## [](#smcntrpmf)6.1\. "Smcntrpmf" Cycle and Instret Privilege Mode Filtering, Version 1.0
 
-### [](#7-1-1-introduction)7.1.1\. Introduction
+### [](#6-1-1-introduction)6.1.1\. Introduction
 
 The cycle and instret counters serve to support user mode self-profiling usages, wherein a user can read the counter(s) twice and compute the delta(s) to evaluate user software performance and behavior. By default, these counters are not filtered by privilege mode, and thus they continue to increment while traps (e.g., page faults or interrupts) to more privileged code are handled. This causes two problems:
 
@@ -11,9 +11,9 @@ The cycle and instret counters serve to support user mode self-profiling usages,
 
 Smcntrpmf remedies these issues by introducing privilege mode filtering for the cycle and instret counters.
 
-### [](#7-1-2-csrs)7.1.2\. CSRs
+### [](#6-1-2-csrs)6.1.2\. CSRs
 
-#### [](#7-1-2-1-machine-counter-configuration-mcyclecfg-minstretcfg-registers)7.1.2.1\. Machine Counter Configuration (`mcyclecfg`, `minstretcfg`) Registers
+#### [](#6-1-2-1-machine-counter-configuration-mcyclecfg-minstretcfg-registers)6.1.2.1\. Machine Counter Configuration (`mcyclecfg`, `minstretcfg`) Registers
 
 mcyclecfg and minstretcfg are 64-bit registers that configure privilege mode filtering for the cycle and instret counters, respectively.
 
@@ -40,7 +40,7 @@ The content of these registers may be accessible from Supervisor level if the Sm
 | |  The more natural CSR number for mcyclecfg would be 0x320, but that was allocated to mcountinhibit. This register format matches that specified for programmable counters by Sscofpmf. The bit position for the OF bit (bit 63) is read-only 0, since these counters do not generate local-counter-overflow interrupts on overflow. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#7-1-3-counter-behavior)7.1.3\. Counter Behavior
+### [](#6-1-3-counter-behavior)6.1.3\. Counter Behavior
 
 The fundamental behavior of cycle and instret is modified in that counting does not occur while executing in an inhibited privilege mode. Further, the following defines how transitions between a non-inhibited privilege mode and an inhibited privilege mode are counted.
 

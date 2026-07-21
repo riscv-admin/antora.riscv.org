@@ -1,6 +1,6 @@
-# 2.1. Trace Ingress Port
+# 1.1. Trace Ingress Port
 
-## [](#2-1-trace-ingress-port)2.1\. Trace Ingress Port
+## [](#1-1-trace-ingress-port)1.1\. Trace Ingress Port
 
 N-Trace uses the same ingress port as specified in [E-Trace Specification](#E-Trace%5FSpecification) (chapter **4 Instruction Trace Interface**).
 

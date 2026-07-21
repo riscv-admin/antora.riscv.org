@@ -1,18 +1,18 @@
-# 4.1. RVB23 Profiles
+# 3.1. RVB23 Profiles
 
-## [](#4-1-rvb23-profiles)4.1\. RVB23 Profiles
+## [](#3-1-rvb23-profiles)3.1\. RVB23 Profiles
 
 Only user-mode (RVB23U64) and supervisor-mode (RVB23S64) profiles are specified in this family.
 
-### [](#4-1-1-rvb23u64-profile)4.1.1\. RVB23U64 Profile
+### [](#3-1-1-rvb23u64-profile)3.1.1\. RVB23U64 Profile
 
 The RVB23U64 profile specifies the ISA features available to user-mode execution environments in 64-bit RVB applications processors.
 
-#### [](#4-1-1-1-rvb23u64-mandatory-base)4.1.1.1\. RVB23U64 Mandatory Base
+#### [](#3-1-1-1-rvb23u64-mandatory-base)3.1.1.1\. RVB23U64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVB23U64 and is little-endian. As per the unprivileged architecture specification, the `ECALL`instruction causes a requested trap to the execution environment.
 
-#### [](#4-1-1-2-rvb23u64-mandatory-extensions)4.1.1.2\. RVB23U64 Mandatory Extensions
+#### [](#3-1-1-2-rvb23u64-mandatory-extensions)3.1.1.2\. RVB23U64 Mandatory Extensions
 
 The following mandatory extensions in RVB23U64 were also mandatory in RVA22U64.
 
@@ -47,11 +47,11 @@ The following mandatory extensions are also present in RVA23U64:
 * **Zfa** Additional floating-point instructions.
 * **Zawrs** Wait-on-reservation-set instructions.
 
-#### [](#4-1-1-3-rvb23u64-optional-extensions)4.1.1.3\. RVB23U64 Optional Extensions
+#### [](#3-1-1-3-rvb23u64-optional-extensions)3.1.1.3\. RVB23U64 Optional Extensions
 
 RVB23U64 has 18 profile options listed below.
 
-##### [](#4-1-1-3-1-localized-options)4.1.1.3.1\. Localized Options
+##### [](#3-1-1-3-1-localized-options)3.1.1.3.1\. Localized Options
 
 The following extensions are localized options in both RVA23U64 and RVB23U64:
 
@@ -73,7 +73,7 @@ The following extensions options are localized options in RVB23U64 but are not p
 | |  RVA23 profiles drop support for scalar crypto as an option, as the vector extension is now mandatory in RVA23\. RVB23 profiles support scalar crypto, as the vector extension is optional in RVB23. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-##### [](#4-1-1-3-2-development-options)4.1.1.3.2\. Development Options
+##### [](#3-1-1-3-2-development-options)3.1.1.3.2\. Development Options
 
 The following are new development options intended to become mandatory in a later RVB profile:
 
@@ -82,7 +82,7 @@ The following are new development options intended to become mandatory in a late
 * **Ziccamoc** Main memory regions with both the cacheability and coherence PMAs must provide `AMOCASQ` level PMA support.
 * **Zama16b** Misaligned loads, stores, and AMOs to main memory regions that do not cross a naturally aligned 16-byte boundary are atomic.
 
-##### [](#4-1-1-3-3-expansion-options)4.1.1.3.3\. Expansion Options
+##### [](#3-1-1-3-3-expansion-options)3.1.1.3.3\. Expansion Options
 
 The following are expansion options in RVB23U64, but are mandatory in RVA23U64.
 
@@ -112,26 +112,26 @@ The following are expansion options for RVB23U64 as they are not intended to be 
 
 * **Zvbc** Vector carryless multiplication.
 
-##### [](#4-1-1-3-4-transitory-options)4.1.1.3.4\. Transitory Options
+##### [](#3-1-1-3-4-transitory-options)3.1.1.3.4\. Transitory Options
 
 There are no transitory options in RVB23U64.
 
-#### [](#4-1-1-4-rvb23u64-recommendations)4.1.1.4\. RVB23U64 Recommendations
+#### [](#3-1-1-4-rvb23u64-recommendations)3.1.1.4\. RVB23U64 Recommendations
 
 Implementations are strongly recommended to raise illegal-instruction exceptions on attempts to execute unimplemented opcodes.
 
-### [](#4-1-2-rvb23s64-profile)4.1.2\. RVB23S64 Profile
+### [](#3-1-2-rvb23s64-profile)3.1.2\. RVB23S64 Profile
 
 The RVB23S64 profile specifies the ISA features available to a supervisor-mode execution environment in 64-bit applications processors. RVB23S64 is based on privileged architecture version 1.13.
 
 | |  Priv 1.13 is still being defined. |
 | ------------------------------------ |
 
-#### [](#4-1-2-1-rvb23s64-mandatory-base)4.1.2.1\. RVB23S64 Mandatory Base
+#### [](#3-1-2-1-rvb23s64-mandatory-base)3.1.2.1\. RVB23S64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVB23S64 and is little-endian. The `ECALL` instruction operates as per the unprivileged architecture specification. An `ECALL` in user mode causes a contained trap to supervisor mode. An `ECALL` in supervisor mode causes a requested trap to the execution environment.
 
-#### [](#4-1-2-2-rvb23s64-mandatory-extensions)4.1.2.2\. RVB23S64 Mandatory Extensions
+#### [](#3-1-2-2-rvb23s64-mandatory-extensions)3.1.2.2\. RVB23S64 Mandatory Extensions
 
 The following unprivileged extensions are mandatory:
 
@@ -166,21 +166,21 @@ The following privileged extensions are mandatory, and are also mandatory in RVA
 * **Sscofpmf** Count overflow and mode-based filtering.
 * **Ssu64xl** `sstatus.UXL` must be capable of holding the value 2 (i.e., UXLEN=64 must be supported).
 
-#### [](#4-1-2-3-rvb23s64-optional-extensions)4.1.2.3\. RVB23S64 Optional Extensions
+#### [](#3-1-2-3-rvb23s64-optional-extensions)3.1.2.3\. RVB23S64 Optional Extensions
 
 RVB23S64 has the same unprivileged options as RVB23U64,
 
 The privileged options in RVB23S64 are listed in the following sections.
 
-##### [](#4-1-2-3-1-localized-options)4.1.2.3.1\. Localized Options
+##### [](#3-1-2-3-1-localized-options)3.1.2.3.1\. Localized Options
 
 There are no privileged localized options in RVB23S64.
 
-##### [](#4-1-2-3-2-development-options)4.1.2.3.2\. Development Options
+##### [](#3-1-2-3-2-development-options)3.1.2.3.2\. Development Options
 
 There are no privileged development options in RVB23S64.
 
-##### [](#4-1-2-3-3-expansion-options)4.1.2.3.3\. Expansion Options
+##### [](#3-1-2-3-3-expansion-options)3.1.2.3.3\. Expansion Options
 
 The following are privileged expansion options in RVB23S64, but are mandatory in RVA23S64:
 
@@ -209,6 +209,6 @@ The following are privileged expansion options in RVB23S64 that are also privile
 * **Svvptc** Transitions from invalid to valid PTEs will be visible in bounded time without an explicit memory-management fence.
 * **Sspm** Supervisor-mode pointer masking, with the supervisor execution environment providing a means to select PMLEN=0 and PMLEN=7 at minimum.
 
-#### [](#4-1-2-4-rvb23s64-recommendations)4.1.2.4\. RVB23S64 Recommendations
+#### [](#3-1-2-4-rvb23s64-recommendations)3.1.2.4\. RVB23S64 Recommendations
 
 * Implementations are strongly recommended to raise illegal-instruction exceptions when attempting to execute unimplemented opcodes.

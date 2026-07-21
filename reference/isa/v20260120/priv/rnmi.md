@@ -1,16 +1,16 @@
-# 8.1. "Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0
+# 7.1. "Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0
 
-## [](#rnmi)8.1\. "Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0
+## [](#rnmi)7.1\. "Smrnmi" Extension for Resumable Non-Maskable Interrupts, Version 1.0
 
 The base machine-level architecture supports only unresumable non-maskable interrupts (UNMIs), where the NMI jumps to a handler in machine mode, overwriting the current `mepc` and `mcause` register values. If the hart had been executing machine-mode code in a trap handler, the previous values in `mepc` and `mcause` would not be recoverable and so execution is not generally resumable.
 
 The Smrnmi extension adds support for resumable non-maskable interrupts (RNMIs) to RISC-V. The extension adds four new CSRs (`mnepc`, `mncause`,`mnstatus`, and `mnscratch`) to hold the interrupted state, and one new instruction, MNRET, to resume from the RNMI handler.
 
-### [](#8-1-1-rnmi-interrupt-signals)8.1.1\. RNMI Interrupt Signals
+### [](#7-1-1-rnmi-interrupt-signals)7.1.1\. RNMI Interrupt Signals
 
 The `rnmi` interrupt signals are inputs to the hart. These interrupts have higher priority than any other interrupt or exception on the hart and cannot be disabled by software. Specifically, they are not disabled by clearing the `mstatus`.MIE register.
 
-### [](#8-1-2-rnmi-handler-addresses)8.1.2\. RNMI Handler Addresses
+### [](#7-1-2-rnmi-handler-addresses)7.1.2\. RNMI Handler Addresses
 
 The RNMI interrupt trap handler address is implementation-defined.
 
@@ -19,7 +19,7 @@ RNMI also has an associated exception trap handler address, which is implementat
 | |  For example, some implementations might use the address specified in mtvec as the RNMI exception trap handler. |
 | ----------------------------------------------------------------------------------------------------------------- |
 
-### [](#8-1-3-rnmi-csrs)8.1.3\. RNMI CSRs
+### [](#7-1-3-rnmi-csrs)7.1.3\. RNMI CSRs
 
 This extension adds additional M-mode CSRs to enable a resumable non-maskable interrupt (RNMI).
 
@@ -73,11 +73,11 @@ For the purposes of the WFI instruction, NMIE is a global interrupt enable, mean
 
 The other bits in `mnstatus` are _reserved_; software should write zeros and hardware implementations should return zeros.
 
-### [](#8-1-4-mnret-instruction)8.1.4\. MNRET Instruction
+### [](#7-1-4-mnret-instruction)7.1.4\. MNRET Instruction
 
 MNRET is an M-mode-only instruction that uses the values in `mnepc` and`mnstatus` to return to the program counter, privilege mode, and virtualization mode of the interrupted context. This instruction also sets `mnstatus`.NMIE. If MNRET changes the privilege mode to a mode less privileged than M, it also sets `mstatus`.MPRV to 0\. If the Zicfilp extension is implemented, then if the new privileged mode is _y_, MNRET sets `ELP` to the logical AND of _y_LPE (see [Landing-Pad-Enabled (LPE) State](priv-cfi.html#FCFIACT)) and `mnstatus`.MNPELP.
 
-### [](#8-1-5-rnmi-operation)8.1.5\. RNMI Operation
+### [](#7-1-5-rnmi-operation)7.1.5\. RNMI Operation
 
 When an RNMI interrupt is detected, the interrupted PC is written to the`mnepc` CSR, the type of RNMI to the `mncause` CSR, and the privilege mode of the interrupted context to the `mnstatus` CSR. The`mnstatus`.NMIE bit is cleared, masking all interrupts.
 

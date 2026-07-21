@@ -1,10 +1,10 @@
-# 8.1. Field Encoding and Calculation Techniques
+# 7.1. Field Encoding and Calculation Techniques
 
-## [](#8-1-field-encoding-and-calculation-techniques)8.1\. Field Encoding and Calculation Techniques
+## [](#7-1-field-encoding-and-calculation-techniques)7.1\. Field Encoding and Calculation Techniques
 
 This chapter describes in detail how key fields (I-CNT, HIST, U-ADDR/F-ADDR and TSTAMP) are calculated and encoded.
 
-### [](#8-1-1-address-compression)8.1.1\. Address Compression
+### [](#7-1-1-address-compression)7.1.1\. Address Compression
 
 Address transmissions is compliant with the IEEE-5001 Nexus Standard (most significant bit 0-s skipped) with optional extension allowing to skip identical most significant bits. See [Virtual Addresses Optimization](#Virtual Addresses Optimization) chapter below for clarifications.
 
@@ -33,7 +33,7 @@ Rules when generating addresses:
 |           | XOR =0000_0001_0010_0110_1000 | U-ADDR=1001_0011_0100=0x934          | 0x3E100 |
 ==============================================================================================
 
-### [](#8-1-2-hist-field-generation)8.1.2\. HIST Field Generation
+### [](#7-1-2-hist-field-generation)7.1.2\. HIST Field Generation
 
 When operating in HTM mode, the encoder does not generate messages for conditional branches. Instead, it maintains a HIST register or accumulator to record the outcomes of these branches, whether taken or not-taken. Each conditional branch contributes a single bit to the HIST register, as follows:
 
@@ -53,7 +53,7 @@ After transmission of the HIST field, the register is reset to its initial, empt
 
 Decoders must initiate the interpretation of the HIST field starting from the second most significant bit. The most significant bit, designated as the stop-bit, is invariably set to 1\. This second most significant bit—immediately following the stop-bit—encodes the outcome of the first conditional branch captured in the HIST register. Conversely, the least significant bit represents the outcome of the last conditional branch prior to the transmission of the HIST register.
 
-#### [](#8-1-2-1-hist-field-full)8.1.2.1\. HIST Field Full
+#### [](#7-1-2-1-hist-field-full)7.1.2.1\. HIST Field Full
 
 The transition of the most significant bit in the HIST register from 0 to 1 indicates the register is full. At this point, the entire register, including the most significant bit — which serves as the stop-bit — is transmitted using a [ResourceFull](#msg2%5FResourceFull) message with the [RCODE](#field%5FRCODE) field set to either 1 or 2.
 
@@ -62,7 +62,7 @@ When a HIST register is full and its value is the same as that of the HIST field
 | |  Trace decoders do not have to be aware about the actual size of the HIST field implemented by the encoder, however, to allow efficient implementation of trace encoders (and allowing HIST pattern detection) this N-Trace specification limits HIST field size to max 32-bits. Longer HIST fields would not provide much of a gain and would make repeated HIST field detection more costly (in terms of hardware resources). |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#8-1-3-i-cnt-details)8.1.3\. I-CNT Details
+### [](#7-1-3-i-cnt-details)7.1.3\. I-CNT Details
 
 The I-CNT field, present in most messages, transmits the value of the I-CNT counter, which counts the number of halfwords used to encode retired instructions.
 
@@ -87,7 +87,7 @@ When I-CNT counter is full (reaches its maximum value or overflow bit is set) it
 | |  Overflow bit allows efficient handling of cases, when single ingress port cycle reports bigger I-CNT (several instructions retired). Reporting maximum value (exactly) is not required and smaller or bigger value may be reported instead. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#8-1-3-1-example-of-i-cnt-handling-in-btm-mode)8.1.3.1\. Example of I-CNT Handling in BTM mode
+#### [](#7-1-3-1-example-of-i-cnt-handling-in-btm-mode)7.1.3.1\. Example of I-CNT Handling in BTM mode
 
 As an illustration, let’s consider the following piece of pseudo-code (specific operations are abstracted as "…​" as they do not matter for this example):
 
@@ -138,7 +138,7 @@ Above we analyzed some I-CNT values. Let’s consider other I-CNT values.
 | |  Values of **I-CNT=4 or 6 or 9** are **INCORRECT** as it would mean that only half of corresponding 32-bit instruction was executed/retired. Decoders must report such incorrect I-CNT values and immediately abandon the decoding as it means that either an encoder is not conforming to this specification or a trace was captured incorrectly. Decoding may resume at the next [synchronizing message](#Synchronizing Messages), but it is not mandatory for all decoders to do so. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#8-1-3-2-example-of-i-cnt-handling-in-htm-mode)8.1.3.2\. Example of I-CNT Handling in HTM mode
+#### [](#7-1-3-2-example-of-i-cnt-handling-in-htm-mode)7.1.3.2\. Example of I-CNT Handling in HTM mode
 
 When the encoder is operating in [HTM](#mode%5FHTM) mode, I-CNT should be incremented at every retired instruction the same way as for BTM mode. However direct conditional branches (from code piece above …​) will NOT generate any trace messages, but each of them will add a bit to the HIST field.
 
@@ -151,7 +151,7 @@ Example [code](#ICNT%5Fcode) (used to illustrate BTM trace) may generate message
 3. Both direct conditional branches (at 0x102 and 0x10A) are not taken.  
    * **I-CNT=10, HIST-0x4** (0b1\_00). Most significant bit=1 is stop bit, bit pattern '00' means that two direct conditional branches were not taken. Encoder should continue till an address 0x114 as I-CNT=10 describes a code in a <0x100..0x113> range.
 
-#### [](#8-1-3-3-examples-of-i-cnt-field-full-generation)8.1.3.3\. Examples of I-CNT Field Full Generation
+#### [](#7-1-3-3-examples-of-i-cnt-field-full-generation)7.1.3.3\. Examples of I-CNT Field Full Generation
 
 Let’s consider the following example code:
 
@@ -200,7 +200,7 @@ Trace with **SYNC=Sequential Instruction Counter** (BTM mode only):
    * In real life examples it will allow generation of repeated history patterns and even better trace compression.
 * Using **SYNC=Sequential Instruction Counter** generates bigger trace (as potentially long F-ADDR field is reported).
 
-### [](#8-1-4-synchronizing-messages)8.1.4\. Synchronizing Messages
+### [](#7-1-4-synchronizing-messages)7.1.4\. Synchronizing Messages
 
 Synchronizing messages are messages with a [SYNC](#field%5FSYNC) field. That field identifies the reason for synchronization and such messages include the [F-ADDR](#field%5FF-ADDR) (full address) field to synchronize the PC with the PC observed by the encoder.
 
@@ -238,7 +238,7 @@ Periodic Synchronization are generated to allow easier decoding (not necessarily
 | |  Periodic Synchronization (SYNC=2) messages may not be precise and may be delayed if any other SYNC message (for example Sequential Instruction Counter, SYNC=4) is sent. In such a case, Periodic Synchronization may be even skipped as decoding may start from any Synchronizing Message. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#8-1-4-1-examples-of-synchronizing-messages)8.1.4.1\. Examples of Synchronizing Messages
+#### [](#7-1-4-1-examples-of-synchronizing-messages)7.1.4.1\. Examples of Synchronizing Messages
 
 The following cases are created to help illustrate the type of N-trace [synchronizing message](#Synchronizing Messages) generated for different scenarios. Events which may occur while a hart is running or halted:
 
@@ -277,7 +277,7 @@ The following cases are created to help illustrate the type of N-trace [synchron
 2. ProgramTraceSync message may be generated for a SYNC event, however, HIST information will not be reported. For HTM mode, the IndirectBranchHistSync or IndirectBranchSync message with SYNC=6 (Trace Event) should be used to ensure no trace data is lost.
 3. Next available **…​Branch…​** message upgraded to **…​Branch…​Sync** counterpart, so SYNC code is reported.
 
-### [](#8-1-5-timestamp-reporting)8.1.5\. Timestamp Reporting
+### [](#7-1-5-timestamp-reporting)7.1.5\. Timestamp Reporting
 
 Timestamp reporting must be enabled by [trTsEnable](#trTsEnable) trace control bit.
 
@@ -300,7 +300,7 @@ The following rules must be observed:
 | |  If the above is not feasible, timestamps should be at least reported consistently, ensuring that the time distance between distant events (for example, a periodic timer interrupt) can be reliably calculated. It is necessary to assure that the time reported at exceptions/interrupt handlers reflects the moment when exception or interrupt was observed. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#8-1-6-corner-cases-and-sequences)8.1.6\. Corner Cases and Sequences
+### [](#7-1-6-corner-cases-and-sequences)7.1.6\. Corner Cases and Sequences
 
 Normal program flow generates a sequence of messages with I-CNT>0 (reporting at least 1 instruction retired), some HIST fields (to report direct conditional branches) and F-ADDR/U-ADDR fields (to report uninferable unconditional flow changes).
 

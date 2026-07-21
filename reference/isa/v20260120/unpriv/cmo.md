@@ -1,12 +1,12 @@
-# 20.1. "CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0
+# 19.1. "CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0
 
-## [](#cmo)20.1\. "CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0
+## [](#cmo)19.1\. "CMO" Extensions for Base Cache Management Operation ISA, Version 1.0.0
 
-### [](#20-1-1-pseudocode-for-instruction-semantics)20.1.1\. Pseudocode for instruction semantics
+### [](#19-1-1-pseudocode-for-instruction-semantics)19.1.1\. Pseudocode for instruction semantics
 
 The semantics of each instruction in the [Instructions](#insns) chapter is expressed in a SAIL-like syntax.
 
-### [](#intro-cmo)20.1.2\. Introduction
+### [](#intro-cmo)19.1.2\. Introduction
 
 _Cache-management operation_ (or _CMO_) instructions perform operations on copies of data in the memory hierarchy. In general, CMO instructions operate on cached copies of data, but in some cases, a CMO instruction may operate on memory locations directly. Furthermore, CMO instructions are grouped by operation into the following classes:
 
@@ -27,11 +27,11 @@ The remainder of this document provides general background information on CMO in
 | |  _The term CMO encompasses all operations on caches or resources related to caches. The term CBO represents a subset of CMOs that operate only on cache blocks. The first CMO extensions only define CBOs._ |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#background)20.1.3\. Background
+### [](#background)19.1.3\. Background
 
 This chapter provides information common to all CMO extensions.
 
-#### [](#memory-caches)20.1.3.1\. Memory and Caches
+#### [](#memory-caches)19.1.3.1\. Memory and Caches
 
 A _memory location_ is a physical resource in a system uniquely identified by a_physical address_. An _agent_ is a logic block, such as a RISC-V hart, accelerator, I/O device, etc., that can access a given memory location.
 
@@ -52,7 +52,7 @@ Caches organize copies of data into _cache blocks_, each of which represents a c
 
 Implementation techniques such as speculative execution or hardware prefetching may cause a given cache to allocate or deallocate a copy of a cache block at any time, provided the corresponding physical addresses are accessible according to the supported access type PMA and are cacheable according to the cacheability PMA. Allocating a copy of a cache block results in a read transfer from another cache or from memory, while deallocating a copy of a cache block may result in a write transfer to another cache or to memory depending on whether the data in the copy were modified by a store operation. Additional details are discussed in[Coherent Agents and Caches](#coherent-agents-caches).
 
-#### [](#20-1-3-2-cache-block-operations)20.1.3.2\. Cache-Block Operations
+#### [](#19-1-3-2-cache-block-operations)19.1.3.2\. Cache-Block Operations
 
 A CBO instruction causes one or more operations to be performed on the cache blocks identified by the instruction. In general, a CBO instruction may identify one or more cache blocks; however, in the initial set of CMO extensions, CBO instructions identify a single cache block only.
 
@@ -68,7 +68,7 @@ A cache-block zero instruction performs a set of store operations that write zer
 
 A cache-block prefetch instruction is a HINT to the hardware that software expects to perform a particular type of memory access in the near future. Additional details are described in [Cache-Block Prefetch Instructions](#Zicbop).
 
-### [](#coherent-agents-caches)20.1.4\. Coherent Agents and Caches
+### [](#coherent-agents-caches)19.1.4\. Coherent Agents and Caches
 
 For a given memory location, a _set of coherent agents_ consists of the agents for which all of the following hold:
 
@@ -97,9 +97,9 @@ The set of caches subject to the above mechanism form a _set of coherent caches_
 
 A non-coherent agent may initiate a cache-block operation that operates on the set of coherent caches accessed by a set of coherent agents. The mechanism to perform such an operation is _implementation-specific_.
 
-#### [](#20-1-4-1-memory-ordering)20.1.4.1\. Memory Ordering
+#### [](#19-1-4-1-memory-ordering)19.1.4.1\. Memory Ordering
 
-##### [](#20-1-4-1-1-preserved-program-order)20.1.4.1.1\. Preserved Program Order
+##### [](#19-1-4-1-1-preserved-program-order)19.1.4.1.1\. Preserved Program Order
 
 The preserved program order (abbreviated _PPO_) rules are defined by the RVWMO memory ordering model. How the operations resulting from CMO instructions fit into these rules is described below.
 
@@ -116,7 +116,7 @@ For cache-block zero instructions, the resulting store operations behave as stor
 
 Finally, for cache-block prefetch instructions, the resulting operations are_not_ ordered by the PPO rules nor are they ordered by any other ordering instructions.
 
-##### [](#20-1-4-1-2-load-values)20.1.4.1.2\. Load Values
+##### [](#19-1-4-1-2-load-values)19.1.4.1.2\. Load Values
 
 An invalidate operation may change the set of values that can be returned by a load. In particular, an additional condition is added to the Load Value Axiom:
 
@@ -129,17 +129,17 @@ An invalidate operation may change the set of values that can be returned by a l
 | |  _The first three bullets describe the possible load values at different points in the global memory order relative to clean or flush operations. The final bullet implies that the load value may be produced by a non-coherent agent at any time._ |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#20-1-4-2-traps)20.1.4.2\. Traps
+#### [](#19-1-4-2-traps)19.1.4.2\. Traps
 
 Execution of certain CMO instructions may result in traps due to CSR state, described in the [Control and Status Register State](#csr%5Fstate) section, or due to the address translation and protection mechanisms. The trapping behavior of CMO instructions is described in the following sections.
 
-##### [](#20-1-4-2-1-illegal-instruction-and-virtual-instruction-exceptions)20.1.4.2.1\. Illegal-Instruction and Virtual-Instruction Exceptions
+##### [](#19-1-4-2-1-illegal-instruction-and-virtual-instruction-exceptions)19.1.4.2.1\. Illegal-Instruction and Virtual-Instruction Exceptions
 
 Cache-block management instructions and cache-block zero instructions may raise illegal-instruction exceptions or virtual-instruction exceptions depending on the current privilege mode and the state of the CMO control registers described in the [Control and Status Register State](#csr%5Fstate) section.
 
 Cache-block prefetch instructions raise neither illegal-instruction exceptions nor virtual-instruction exceptions.
 
-##### [](#20-1-4-2-2-page-fault-guest-page-fault-and-access-fault-exceptions)20.1.4.2.2\. Page-Fault, Guest-Page-Fault, and Access-Fault Exceptions
+##### [](#19-1-4-2-2-page-fault-guest-page-fault-and-access-fault-exceptions)19.1.4.2.2\. Page-Fault, Guest-Page-Fault, and Access-Fault Exceptions
 
 Similar to load and store instructions, CMO instructions are explicit memory access instructions that compute an effective address. The effective address is ultimately translated into a physical address based on the privilege mode and the enabled translation mechanisms, and the CMO extensions impose the following constraints on the physical addresses in a given cache block:
 
@@ -170,18 +170,18 @@ When a page-fault, guest-page-fault, or access-fault exception is taken, the rel
 | |  _Like a load or store instruction, a CMO instruction may or may not be permitted to access a cache block based on the states of the MPRV, MPV, and MPP bits in mstatus and the SUM and MXR bits in mstatus, sstatus, andvsstatus._ _This specification expects that implementations will process cache-block management instructions like store/AMO instructions, so store/AMO exceptions are appropriate for these instructions, regardless of the permissions required._ |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#20-1-4-2-3-address-misaligned-exceptions)20.1.4.2.3\. Address-Misaligned Exceptions
+##### [](#19-1-4-2-3-address-misaligned-exceptions)19.1.4.2.3\. Address-Misaligned Exceptions
 
 CMO instructions do _not_ generate address-misaligned exceptions.
 
-##### [](#20-1-4-2-4-breakpoint-exceptions-and-debug-mode-entry)20.1.4.2.4\. Breakpoint Exceptions and Debug Mode Entry
+##### [](#19-1-4-2-4-breakpoint-exceptions-and-debug-mode-entry)19.1.4.2.4\. Breakpoint Exceptions and Debug Mode Entry
 
 Unless otherwise defined by the debug architecture specification, the behavior of trigger modules with respect to CMO instructions is UNSPECIFIED.
 
 | |  _For the Zicbom, Zicboz, and Zicbop extensions, this specification recommends the following common trigger module behaviors:_ Type 6 address match triggers, i.e. tdata1.type=6 and mcontrol6.select=0, should be supported Type 2 address/data match triggers, i.e. tdata1.type=2, should be unsupported The size of a memory access equals the size of the cache block accessed, and the compare values follow from the addresses of the NAPOT memory region corresponding to the cache block containing the effective address Unless an encoding for a cache block is added to the mcontrol6.size field, an address trigger should only match a memory access from a CBO instruction ifmcontrol6.size=0 _If the Zicbom extension is implemented, this specification recommends the following additional trigger module behaviors:_ Implementing address match triggers should be optional Type 6 data match triggers, i.e. tdata1.type=6 and mcontrol6.select=1, should be unsupported Memory accesses are considered to be stores, i.e. an address trigger matches only if mcontrol6.store=1 _If the Zicboz extension is implemented, this specification recommends the following additional trigger module behaviors:_ Implementing address match triggers should be mandatory Type 6 data match triggers, i.e. tdata1.type=6 and mcontrol6.select=1, should be supported, and implementing these triggers should be optional Memory accesses are considered to be stores, i.e. an address trigger matches only if mcontrol6.store=1 _If the Zicbop extension is implemented, this specification recommends the following additional trigger module behaviors:_ Implementing address match triggers should be optional Type 6 data match triggers, i.e. tdata1.type=6 and mcontrol6.select=1, should be unsupported Memory accesses may be considered to be loads or stores depending on the implementation, i.e. whether an address trigger matches on these instructions when mcontrol6.load=1 or mcontrol6.store=1 is _implementation-specific_ _This specification also recommends that the behavior of trigger modules with respect to the Zicboz extension should be defined in version 1.0 of the debug architecture specification. The behavior of trigger modules with respect to the Zicbom and Zicbop extensions is expected to be defined in future extensions._ |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-##### [](#20-1-4-2-5-hypervisor-extension)20.1.4.2.5\. Hypervisor Extension
+##### [](#19-1-4-2-5-hypervisor-extension)19.1.4.2.5\. Hypervisor Extension
 
 For the purposes of writing the `mtinst` or `htinst` register on a trap, the following standard transformation is defined for cache-block management instructions and cache-block zero instructions:
 
@@ -192,7 +192,7 @@ The `operation` field corresponds to the 12 most significant bits of the trappin
 | |  _As described in the hypervisor extension, a zero may be written into mtinstor htinst instead of the standard transformation defined above._ |
 | ----------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#20-1-4-3-effects-on-constrained-lrsc-loops)20.1.4.3\. Effects on Constrained LR/SC Loops
+#### [](#19-1-4-3-effects-on-constrained-lrsc-loops)19.1.4.3\. Effects on Constrained LR/SC Loops
 
 The following event is added to the list of events that satisfy the eventuality guarantee provided by constrained LR/SC loops, as defined in the A extension:
 
@@ -201,7 +201,7 @@ The following event is added to the list of events that satisfy the eventuality 
 | |  _The above event has been added to accommodate cache coherence protocols that cannot distinguish between invalidations for stores and invalidations for cache-block management operations._ _Aside from the above event, CMO instructions neither change the properties of constrained LR/SC loops nor modify the eventuality guarantee provided by them. For example, executing a CMO instruction may cause a constrained LR/SC loop on any hart to fail periodically or may cause a unconstrained LR/SC sequence on the same hart to fail always. Additionally, executing a cache-block prefetch instruction does not impact the eventuality guarantee provided by constrained LR/SC loops executed on any hart._ |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#20-1-4-4-software-discovery)20.1.4.4\. Software Discovery
+#### [](#19-1-4-4-software-discovery)19.1.4.4\. Software Discovery
 
 The initial set of CMO extensions requires the following information to be discovered by software:
 
@@ -211,7 +211,7 @@ The initial set of CMO extensions requires the following information to be disco
 
 Other general cache characteristics may also be specified in the discovery mechanism.
 
-### [](#csr%5Fstate)20.1.5\. CSR controls for CMO instructions
+### [](#csr%5Fstate)19.1.5\. CSR controls for CMO instructions
 
 The xenvcfg registers control CBO instruction execution based on the current privilege mode and the state of the appropriate CSRs, as detailed below.
 
@@ -298,7 +298,7 @@ The CBIE/CBCFE/CBZE fields in each `xenvcfg` register do not affect the read and
 
 Each `xenvcfg` register is WARL; however, software should determine the legal values from the execution environment discovery mechanism.
 
-### [](#extensions)20.1.6\. Extensions
+### [](#extensions)19.1.6\. Extensions
 
 CMO instructions are defined in the following extensions:
 
@@ -306,7 +306,7 @@ CMO instructions are defined in the following extensions:
 * [Cache-Block Zero Instructions](#Zicboz)
 * [Cache-Block Prefetch Instructions](#Zicbop)
 
-#### [](#Zicbom)20.1.6.1\. Cache-Block Management Instructions
+#### [](#Zicbom)19.1.6.1\. Cache-Block Management Instructions
 
 Cache-block management instructions enable software running on a set of coherent agents to communicate with a set of non-coherent agents by performing one of the following operations:
 
@@ -332,7 +332,7 @@ The following instructions comprise the Zicbom extension:
 | |  _Cache-block management instructions ignore cacheability attributes and operate on the cache block irrespective of the PMA cacheable attribute and any Page-Based Memory Type (PBMT) downgrade from cacheable to non-cacheable._ |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#Zicboz)20.1.6.2\. Cache-Block Zero Instructions
+#### [](#Zicboz)19.1.6.2\. Cache-Block Zero Instructions
 
 Cache-block zero instructions store zeros to the set of bytes corresponding to a cache block. An implementation may update the bytes in any order and with any granularity and atomicity, including individual bytes.
 
@@ -347,7 +347,7 @@ The following instructions comprise the Zicboz extension:
 | ---- | ---- | --------------- | ------------------------------------- |
 | ✓    | ✓    | cbo.zero _base_ | [Cache Block Zero](#insns-cbo%5Fzero) |
 
-#### [](#Zicbop)20.1.6.3\. Cache-Block Prefetch Instructions
+#### [](#Zicbop)19.1.6.3\. Cache-Block Prefetch Instructions
 
 Cache-block prefetch instructions are HINTs to the hardware to indicate that software intends to perform a particular type of memory access in the near future. The types of memory accesses are instruction fetch, data read (i.e. load), and data write (i.e. store).
 
@@ -364,9 +364,9 @@ The following instructions comprise the Zicbop extension:
 | ✓    | ✓    | prefetch.r _offset_(_base_) | [Cache Block Prefetch for Data Read](#insns-prefetch%5Fr)         |
 | ✓    | ✓    | prefetch.w _offset_(_base_) | [Cache Block Prefetch for Data Write](#insns-prefetch%5Fw)        |
 
-### [](#insns)20.1.7\. Instructions
+### [](#insns)19.1.7\. Instructions
 
-#### [](#insns-cbo%5Fclean)20.1.7.1\. cbo.clean
+#### [](#insns-cbo%5Fclean)19.1.7.1\. cbo.clean
 
 Synopsis
 
@@ -387,7 +387,7 @@ A **cbo.clean** instruction performs a clean operation on the cache block whose 
 | |  _When executing a **cbo.clean** instruction, an implementation may instead perform a flush operation, since the result of that operation is indistinguishable from the sequence of performing a clean operation just before deallocating all cached copies in the set of coherent caches._ |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#insns-cbo%5Fflush)20.1.7.2\. cbo.flush
+#### [](#insns-cbo%5Fflush)19.1.7.2\. cbo.flush
 
 Synopsis
 
@@ -407,7 +407,7 @@ A **cbo.flush** instruction performs a flush operation on the cache block whose 
 
 The assembly _offset_ operand may be omitted. If it isn’t then any expression that computes the offset shall evaluate to zero.
 
-#### [](#insns-cbo%5Finval)20.1.7.3\. cbo.inval
+#### [](#insns-cbo%5Finval)19.1.7.3\. cbo.inval
 
 Synopsis
 
@@ -432,7 +432,7 @@ The assembly _offset_ operand may be omitted. If it isn’t then any expression 
 | |  _When executing a **cbo.inval** instruction, an implementation may instead perform a flush operation, since the result of that operation is indistinguishable from the sequence of performing a write transfer to memory just before performing an invalidate operation._ |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#insns-cbo%5Fzero)20.1.7.4\. cbo.zero
+#### [](#insns-cbo%5Fzero)19.1.7.4\. cbo.zero
 
 Synopsis
 
@@ -452,7 +452,7 @@ A **cbo.zero** instruction performs stores of zeros to the full set of bytes cor
 
 The assembly _offset_ operand may be omitted. If it isn’t then any expression that computes the offset shall evaluate to zero.
 
-#### [](#insns-prefetch%5Fi)20.1.7.5\. prefetch.i
+#### [](#insns-prefetch%5Fi)19.1.7.5\. prefetch.i
 
 Synopsis
 
@@ -473,7 +473,7 @@ A **prefetch.i** instruction indicates to hardware that the cache block whose ef
 | |  _An implementation may opt to cache a copy of the cache block in a cache accessed by an instruction fetch in order to improve memory access latency, but this behavior is not required._ |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#insns-prefetch%5Fr)20.1.7.6\. prefetch.r
+#### [](#insns-prefetch%5Fr)19.1.7.6\. prefetch.r
 
 Synopsis
 
@@ -494,7 +494,7 @@ A **prefetch.r** instruction indicates to hardware that the cache block whose ef
 | |  _An implementation may opt to cache a copy of the cache block in a cache accessed by a data read in order to improve memory access latency, but this behavior is not required._ |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#insns-prefetch%5Fw)20.1.7.7\. prefetch.w
+#### [](#insns-prefetch%5Fw)19.1.7.7\. prefetch.w
 
 Synopsis
 

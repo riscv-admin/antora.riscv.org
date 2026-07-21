@@ -1,6 +1,6 @@
-# 8.1. Data Trace Encoder Output Packets
+# 7.1. Data Trace Encoder Output Packets
 
-## [](#dataTracePackets)8.1\. Data Trace Encoder Output Packets
+## [](#dataTracePackets)7.1\. Data Trace Encoder Output Packets
 
 Data trace packets must be differentiated from instruction trace packets, and the means by which this is accomplished is dependent on the trace transport infrastructure. Several possibilities exist: One option is for instruction and data trace to be issued using different IDs (for example, if using ATB transport, different **ATID** values). Alternatively, an additional field as part of the packet encapsulation can be used (Siemens uses a 2-bit **msg\_type** field to differentiate different trace types from the same source).
 
@@ -11,9 +11,9 @@ As outlined in [\[sec:DataInterfaceRequirements\]](#sec:DataInterfaceRequirement
 | |  In the following tables, "clog2" is an abbreviation for "ceiling of log2". |
 | ----------------------------------------------------------------------------- |
 
-### [](#sec:data-loadstore)8.1.1\. Load and Store
+### [](#sec:data-loadstore)7.1.1\. Load and Store
 
-#### [](#sec:loadstore-format)8.1.1.1\. format field
+#### [](#sec:loadstore-format)7.1.1.1\. format field
 
 Types of data trace packets are differentiated by the **format** field. This field is 2 bits wide if only unified loads and stores are supported, or 3 bits otherwise.
 
@@ -65,11 +65,11 @@ __Table 5\. Packet format for Split load - Data only__
 | **resp**       | 2                                             | 00: Error (no data)01: XOR-compressed data10: Full data11: Differential data  |
 | **data**       | _data\_width\_p_                              | Data                                                                          |
 
-#### [](#sec:loadstore-size)8.1.1.2\. size field
+#### [](#sec:loadstore-size)7.1.1.2\. size field
 
 The width of this field is 2 bits if max size is 64-bits (_data\_width\_p_< 128), 3 bits if wider.
 
-#### [](#sec:loadstore-diff)8.1.1.3\. diff field
+#### [](#sec:loadstore-diff)7.1.1.3\. diff field
 
 Unlike instruction trace, compression options for data trace are somewhat limited. Following a synchronization instruction trace packet, the first data trace packet for a given access size must include the full (unencoded) data access address. Thereafter, the address may be reported differentially (i.e. address of this data access, minus the address of the previous data access of the same size).
 
@@ -77,13 +77,13 @@ Similarly, following a synchronization instruction trace packet, the first data 
 
 If only one data compression type is offered, the **diff** field can be 1 bit wide rather than 2 for [Table 3](#tab:te%5Fdatadx0y2).
 
-#### [](#sec:loadstore-datalen)8.1.1.4\. data\_len field
+#### [](#sec:loadstore-datalen)7.1.1.4\. data\_len field
 
 However the data is compressed, upper bytes that are all the same value do not need to be included in the packet; the decoder can recreate the full-width value by sign extending from the most significant received bit. In cases where **data** is not the final field in the packet, the width of **data** is indicated by this field.
 
-### [](#sec:data-atomic)8.1.2\. Atomic
+### [](#sec:data-atomic)7.1.2\. Atomic
 
-#### [](#sec:atomic-size)8.1.2.1\. size field
+#### [](#sec:atomic-size)7.1.2.1\. size field
 
 Strictly, **size** could be just one bit as atomics are currently either 32 or 64 bits. Defining as per regular loads and stores provisions for future extensions (proprietary or otherwise) that support smaller atomics.
 
@@ -120,17 +120,17 @@ __Table 8\. Packet format for Unified atomic with data only__
 | **operand**    | 8 \* (**op\_len** \+ 1)                       | Operand. Value from rs2 before operator applied                                               |
 | **data**       | _data\_width\_p_                              | Data                                                                                          |
 
-#### [](#sec:atomic-diff)8.1.2.2\. diff field
+#### [](#sec:atomic-diff)7.1.2.2\. diff field
 
-See [8.1.1.3\. diff field](#sec:loadstore-diff).
+See [7.1.1.3\. diff field](#sec:loadstore-diff).
 
-#### [](#sec:atomic-operand)8.1.2.3\. operand field
+#### [](#sec:atomic-operand)7.1.2.3\. operand field
 
-The operand value for the atomic operation. Uncompressed, although upper bytes that are all the same value do not need to be included in the packet; the decoder can recreate the full-width value by sign extending from the most significant received bit; see [8.1.2.4\. data\_len and op\_len fields](#sec:atomic-datalen).
+The operand value for the atomic operation. Uncompressed, although upper bytes that are all the same value do not need to be included in the packet; the decoder can recreate the full-width value by sign extending from the most significant received bit; see [7.1.2.4\. data\_len and op\_len fields](#sec:atomic-datalen).
 
-#### [](#sec:atomic-datalen)8.1.2.4\. data\_len and op\_len fields
+#### [](#sec:atomic-datalen)7.1.2.4\. data\_len and op\_len fields
 
-Width of **data and \*operand** fields respectively. See **[8.1.1.4\. data\_len field](#sec:loadstore-datalen).**
+Width of **data and \*operand** fields respectively. See **[7.1.1.4\. data\_len field](#sec:loadstore-datalen).**
 
 __Table 9\. Packet format for Split atomic with operand only__
 | **Field name** | **Bits**                                      | **Description**                                                                                                                                             |
@@ -153,7 +153,7 @@ __Table 10\. Packet format for Split atomic load data only__
 | **data\_len**  | **size**                  | Number of bytes of operand is _data\_len + 1_. Not included if resp indicates an error (sign-extend **resp** MSB) |
 | **data**       | 8 \* (**data\_len** \+ 1) | Data. Not included if resp indicates an error (sign-extend **resp** MSB)                                          |
 
-### [](#sec:data-csr)8.1.3\. CSR
+### [](#sec:data-csr)7.1.3\. CSR
 
 __Table 11\. Packet format for Unified CSR, with address, data and operand__
 | **Field name** | **Bits**                | **Description**                                                                           |
@@ -168,19 +168,19 @@ __Table 11\. Packet format for Unified CSR, with address, data and operand__
 | **operand**    | 8 \* (**op\_len** \+ 1) | Operand. Value from rs1 before operator applied                                           |
 | **addr\_lsbs** | 6                       | Address\[5:0\]                                                                            |
 
-#### [](#sec:csr-diff)8.1.3.1\. diff field
+#### [](#sec:csr-diff)7.1.3.1\. diff field
 
-See [8.1.1.3\. diff field](#sec:loadstore-diff).
+See [7.1.1.3\. diff field](#sec:loadstore-diff).
 
-#### [](#sec:csr-operand)8.1.3.2\. operand field
+#### [](#sec:csr-operand)7.1.3.2\. operand field
 
-See [8.1.2.3\. operand field](#sec:atomic-operand).
+See [7.1.2.3\. operand field](#sec:atomic-operand).
 
-#### [](#sec:csr-datalen)8.1.3.3\. data\_len and op\_len fields
+#### [](#sec:csr-datalen)7.1.3.3\. data\_len and op\_len fields
 
-2 bits wide if hart has 32-bit CSRs, 3 bits if 64-bit. Width of **data**and **operand** fields respectively. See [8.1.1.4\. data\_len field](#sec:loadstore-datalen).
+2 bits wide if hart has 32-bit CSRs, 3 bits if 64-bit. Width of **data**and **operand** fields respectively. See [7.1.1.4\. data\_len field](#sec:loadstore-datalen).
 
-#### [](#sec:csr-addr)8.1.3.4\. addr fields
+#### [](#sec:csr-addr)7.1.3.4\. addr fields
 
 The address is split into two parts, with the 6 LSBs output last as these are more likely to compress away.
 

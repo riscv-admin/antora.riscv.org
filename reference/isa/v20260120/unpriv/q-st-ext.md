@@ -1,10 +1,10 @@
-# 23.1. "Q" Extension for Quad-Precision Floating-Point, Version 2.2
+# 22.1. "Q" Extension for Quad-Precision Floating-Point, Version 2.2
 
-## [](#23-1-q-extension-for-quad-precision-floating-point-version-2-2)23.1\. "Q" Extension for Quad-Precision Floating-Point, Version 2.2
+## [](#22-1-q-extension-for-quad-precision-floating-point-version-2-2)22.1\. "Q" Extension for Quad-Precision Floating-Point, Version 2.2
 
 This chapter describes the Q standard extension for 128-bit quad-precision binary floating-point instructions compliant with the IEEE 754-2008 arithmetic standard. The quad-precision binary floating-point instruction-set extension is named "Q"; it depends on the double-precision floating-point extension D. The floating-point registers are now extended to hold either a single, double, or quad-precision floating-point value (FLEN=128). The NaN-boxing scheme described in [NaN Boxing of Narrower Values](d-st-ext.html#nanboxing) is now extended recursively to allow a single-precision value to be NaN-boxed inside a double-precision value which is itself NaN-boxed inside a quad-precision value.
 
-### [](#23-1-1-quad-precision-load-and-store-instructions)23.1.1\. Quad-Precision Load and Store Instructions
+### [](#22-1-1-quad-precision-load-and-store-instructions)22.1.1\. Quad-Precision Load and Store Instructions
 
 New 128-bit variants of LOAD-FP and STORE-FP instructions are added, encoded with a new value for the funct3 width field.
 
@@ -16,7 +16,7 @@ FLQ and FSQ are only guaranteed to execute atomically if the effective address i
 
 FLQ and FSQ do not modify the bits being transferred; in particular, the payloads of non-canonical NaNs are preserved.
 
-### [](#23-1-2-quad-precision-computational-instructions)23.1.2\. Quad-Precision Computational Instructions
+### [](#22-1-2-quad-precision-computational-instructions)22.1.2\. Quad-Precision Computational Instructions
 
 A new supported format is added to the format field of most instructions, as shown in [Table 1](#fpextfmt)
 
@@ -34,7 +34,7 @@ The quad-precision floating-point computational instructions are defined analogo
 
 ![svg](_images/svg-eaca638bb8b9f77d2f3d6ef3e1b39c19dc76c841.svg) 
 
-### [](#quad-compute)23.1.3\. Quad-Precision Convert and Move Instructions
+### [](#quad-compute)22.1.3\. Quad-Precision Convert and Move Instructions
 
 New floating-point-to-integer and integer-to-floating-point conversion instructions are added. These instructions are defined analogously to the double-precision-to-integer and integer-to-double-precision conversion instructions. FCVT.W.Q or FCVT.L.Q converts a quad-precision floating-point number to a signed 32-bit or 64-bit integer, respectively. FCVT.Q.W or FCVT.Q.L converts a 32-bit or 64-bit signed integer, respectively, into a quad-precision floating-point number.FCVT.WU.Q, FCVT.LU.Q, FCVT.Q.WU, and FCVT.Q.LU variants convert to or from unsigned integer values. FCVT.L\[U\].Q and FCVT.Q.L\[U\] are RV64-only instructions. Note FCVT.Q.L\[U\] always produces an exact result and is unaffected by rounding mode.
 
@@ -50,13 +50,13 @@ Floating-point to floating-point sign-injection instructions, FSGNJ.Q, FSGNJN.Q,
 
 FMV.X.Q and FMV.Q.X instructions are not provided in RV32 or RV64, so quad-precision bit patterns must be moved to the integer registers via memory.
 
-### [](#23-1-4-quad-precision-floating-point-compare-instructions)23.1.4\. Quad-Precision Floating-Point Compare Instructions
+### [](#22-1-4-quad-precision-floating-point-compare-instructions)22.1.4\. Quad-Precision Floating-Point Compare Instructions
 
 The quad-precision floating-point compare instructions are defined analogously to their double-precision counterparts, but operate on quad-precision operands.
 
 ![svg](_images/svg-a4cc3c2f3b5bb151c91158a3df3a779fa63bdbdb.svg) 
 
-### [](#quad-float-compare)23.1.5\. Quad-Precision Floating-Point Classify Instruction
+### [](#quad-float-compare)22.1.5\. Quad-Precision Floating-Point Classify Instruction
 
 The quad-precision floating-point classify instruction, FCLASS.Q, is defined analogously to its double-precision counterpart, but operates on quad-precision operands.
 

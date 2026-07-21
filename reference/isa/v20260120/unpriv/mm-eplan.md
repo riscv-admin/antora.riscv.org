@@ -1,10 +1,10 @@
-# RVWMO Explanatory Material, Version 0.1
+# 37.1. RVWMO Explanatory Material, Version 0.1
 
-## [](#rvwmo-explanatory-material-version-0-1)Appendix A: RVWMO Explanatory Material, Version 0.1
+## [](#37-1-rvwmo-explanatory-material-version-0-1)Appendix A: 37.1\. RVWMO Explanatory Material, Version 0.1
 
-This section provides more explanation for RVWMO[RVWMO Memory Consistency Model](rvwmo.html), using more informal language and concrete examples. These are intended to clarify the meaning and intent of the axioms and preserved program order rules. This appendix should be treated as commentary; all normative material is provided in [RVWMO Memory Consistency Model](rvwmo.html) and in the rest of the main body of the ISA specification. All currently known discrepancies are listed in [Known Issues](#discrepancies). Any other discrepancies are unintentional.
+This section provides more explanation for RVWMO[RVWMO Memory Consistency Model](rvwmo.html), using more informal language and concrete examples. These are intended to clarify the meaning and intent of the axioms and preserved program order rules. This appendix should be treated as commentary; all normative material is provided in [RVWMO Memory Consistency Model](rvwmo.html) and in the rest of the main body of the ISA specification. All currently known discrepancies are listed in [37.1.7\. Known Issues](#discrepancies). Any other discrepancies are unintentional.
 
-### [](#whyrvwmo)Why RVWMO?
+### [](#whyrvwmo)37.1.1\. Why RVWMO?
 
 Memory consistency models fall along a loose spectrum from weak to strong. Weak memory models allow more hardware implementation flexibility and deliver arguably better performance, performance per watt, power, scalability, and hardware verification overheads than strong models, at the expense of a more complex programming model. Strong models provide simpler programming models, but at the cost of imposing more restrictions on the kinds of (non-speculative) hardware optimizations that can be performed in the pipeline and in the memory system, and in turn imposing some cost in terms of power, area overhead, and verification burden.
 
@@ -14,7 +14,7 @@ To facilitate the porting of code from other architectures, some hardware implem
 
 Some fences and/or memory ordering annotations in code written for RVWMO may become redundant under RVTSO; the cost that the default of RVWMO imposes on Ztso implementations is the incremental overhead of fetching those fences (e.g., FENCE R,RW and FENCE RW,W) which become no-ops on that implementation. However, these fences must remain present in the code if compatibility with non-Ztso implementations is desired.
 
-### [](#litmustests)Litmus Tests
+### [](#litmustests)37.1.2\. Litmus Tests
 
 The explanations in this chapter make use of _litmus tests_, or small programs designed to test or highlight one particular aspect of a memory model. [Litmus sample](#litmus-sample) shows an example of a litmus test with two harts. As a convention for this figure and for all figures that follow in this chapter, we assume that `s0-s2` are pre-set to the same value in all harts and that `s0` holds the address labeled `x`, `s1` holds `y`, and `s2` holds `z`, where `x`, `y`, and `z`are disjoint memory locations aligned to 8 byte boundaries. All other registers and all referenced memory locations are presumed to be initialized to zero. Each figure shows the litmus test code on the left, and a visualization of one particular valid or invalid execution on the right.
 
@@ -50,11 +50,11 @@ Beyond what is described in this appendix, a suite of more than seven thousand l
 | |  The litmus tests repository also provides instructions on how to run the litmus tests on RISC-V hardware and how to compare the results with the operational and axiomatic models. In the future, we expect to adapt these memory model litmus tests for use as part of the RISC-V compliance test suite as well. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#explaining-the-rvwmo-rules)Explaining the RVWMO Rules
+### [](#37-1-3-explaining-the-rvwmo-rules)37.1.3\. Explaining the RVWMO Rules
 
 In this section, we provide explanation and examples for all of the RVWMO rules and axioms.
 
-#### [](#preserved-program-order-and-global-memory-order)Preserved Program Order and Global Memory Order
+#### [](#37-1-3-1-preserved-program-order-and-global-memory-order)37.1.3.1\. Preserved Program Order and Global Memory Order
 
 Preserved program order represents the subset of program order that must be respected within the global memory order. Conceptually, events from the same hart that are ordered by preserved program order must appear in that order from the perspective of other harts and/or observers. Events from the same hart that are not ordered by preserved program order, on the other hand, may appear reordered from the perspective of other harts and/or observers.
 
@@ -62,7 +62,7 @@ Informally, the global memory order represents the order in which loads and stor
 
 The order in which loads perform does not always directly correspond to the relative age of the values those two loads return. In particular, a load _b_ may perform before another load _a_ to the same address (i.e., _b_ may execute before_a_, and _b_ may appear before _a_in the global memory order), but _a_ may nevertheless return an older value than _b_. This discrepancy captures (among other things) the reordering effects of buffering placed between the core and memory. For example, _b_ may have returned a value from a store in the store buffer, while _a_ may have ignored that younger store and read an older value from memory instead. To account for this, at the time each load performs, the value it returns is determined by the load value axiom, not just strictly by determining the most recent store to the same address in the global memory order, as described below.
 
-#### [](#loadvalueaxiom)Load value axiom
+#### [](#loadvalueaxiom)37.1.3.2\. Load value axiom
 
 | |  [Load Value Axiom](rvwmo.html#ax-load): Each byte of each load _i_ returns the value written to that byte by the store that is the latest in global memory order among the following stores: Stores that write that byte and that precede i in the global memory order Stores that write that byte and that precede i in program order |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -117,7 +117,7 @@ Another test that highlights the behavior of store buffers is shown in[Table 4](
 * (e), (f), and (g) commit, since the speculation turned out to be correct
 * (e) drains from the store buffer to memory
 
-#### [](#atomicityaxiom)Atomicity axiom
+#### [](#atomicityaxiom)37.1.3.3\. Atomicity axiom
 
 | |  [Atomicity Axiom](rvwmo.html#ax-atom) (for Aligned Atomics): If r and w are paired load and store operations generated by aligned LR and SC instructions in a hart h, s is a store to byte x, and r returns a value written by s, then s must precede w in the global memory order, and there can be no store from a hart other than h to byte x following s and preceding w in the global memory order. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -137,7 +137,7 @@ The atomicity axiom forbids stores from other harts from being interleaved in gl
 
 The atomicity axiom also technically supports cases in which the LR and SC touch different addresses and/or use different access sizes; however, use cases for such behaviors are expected to be rare in practice. Likewise, scenarios in which stores from the same hart between an LR/SC pair actually overlap the memory location(s) referenced by the LR or SC are expected to be rare compared to scenarios where the intervening store may simply fall onto the same cache line.
 
-#### [](#mm-progress)Progress axiom
+#### [](#mm-progress)37.1.3.4\. Progress axiom
 
 | |  [Progress Axiom](rvwmo.html#ax-prog): No memory operation may be preceded in the global memory order by an infinite sequence of other memory operations. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -148,7 +148,7 @@ The progress axiom is intended not to impose any other notion of fairness, laten
 
 The forward progress axiom will in almost all cases be naturally satisfied by any standard cache coherence protocol. Implementations with non-coherent caches may have to provide some other mechanism to ensure the eventual visibility of all stores (or successors thereof) to all harts.
 
-#### [](#mm-overlap)Overlapping-Address Orderings ([Rules 1-3](rvwmo.html#overlapping-ordering))
+#### [](#mm-overlap)37.1.3.5\. Overlapping-Address Orderings ([Rules 1-3](rvwmo.html#overlapping-ordering))
 
 | |  [Rule 1](rvwmo.html#overlapping-ordering): b is a store, and a and b access overlapping memory addresses [Rule 2](rvwmo.html#overlapping-ordering): a and b are loads, x is a byte read by both a and b, there is no store to x between a and b in program order, and a and b return values for x written by different memory operations [Rule 3](rvwmo.html#overlapping-ordering): a is generated by an AMO or SC instruction, b is a load, and b returns a value written by a |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -189,7 +189,7 @@ There is one more overlapping-address rule: [rule 3](rvwmo.html#overlapping-orde
 
 The three PPO rules above also apply when the memory accesses in question only overlap partially. This can occur, for example, when accesses of different sizes are used to access the same object. Note also that the base addresses of two overlapping memory operations need not necessarily be the same for two memory accesses to overlap. When misaligned memory accesses are being used, the overlapping-address PPO rules apply to each of the component memory accesses independently.
 
-#### [](#mm-fence)Fences ([Rule 4](rvwmo.html#overlapping-ordering))
+#### [](#mm-fence)37.1.3.6\. Fences ([Rule 4](rvwmo.html#overlapping-ordering))
 
 | |  Rule [4](rvwmo.html#overlapping-ordering): There is a FENCE instruction that orders a before b |
 | ------------------------------------------------------------------------------------------------- |
@@ -209,7 +209,7 @@ FENCE instructions using other combinations of PR, PW, SR, and SW are not normal
 
 Finally, we note that since RISC-V uses a multi-copy atomic memory model, programmers can reason about fences bits in a thread-local manner. Fences in RISC-V are not cumulative, as they are in some non-multi-copy-atomic memory models.
 
-#### [](#sec:memory:acqrel)Explicit Synchronization ([Rules 5-8](rvwmo.html#overlapping-ordering))
+#### [](#sec:memory:acqrel)37.1.3.7\. Explicit Synchronization ([Rules 5-8](rvwmo.html#overlapping-ordering))
 
 | |  [Rule 5](rvwmo.html#overlapping-ordering): a has an acquire annotation [Rule 6](rvwmo.html#overlapping-ordering): b has a release annotation [Rule 7](rvwmo.html#overlapping-ordering): a and b both have RCsc annotations [Rule 8](rvwmo.html#overlapping-ordering): a is paired with b |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -264,7 +264,7 @@ PPO rule 8 indicates that an SC must appear after its paired LR in the global me
 
 Lastly, we note that, as with fences, ordering annotations are not cumulative.
 
-#### [](#sec:memory:dependencies)Syntactic Dependencies ([Rules 9-11](rvwmo.html#overlapping-ordering))
+#### [](#sec:memory:dependencies)37.1.3.8\. Syntactic Dependencies ([Rules 9-11](rvwmo.html#overlapping-ordering))
 
 | |  [Rule 9](rvwmo.html#overlapping-ordering): b has a syntactic address dependency on a [Rule 10](rvwmo.html#overlapping-ordering): b has a syntactic data dependency on a [Rule 11](rvwmo.html#overlapping-ordering): b is a store, and b has a syntactic control dependency on a |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -329,7 +329,7 @@ In addition, the choice to respect dependencies originating at store-conditional
 
 We also note that syntactic dependencies between instructions only have any force when they take the form of a syntactic address, control, and/or data dependency. For example: a syntactic dependency between two`F` instructions via one of the `accumulating CSRs` in[Source and Destination Register Listings](rvwmo.html#source-dest-regs) does _not_ imply that the two `F` instructions must be executed in order. Such a dependency would only serve to ultimately set up later a dependency from both `F` instructions to a later CSR instruction accessing the CSR flag in question.
 
-#### [](#memory-ppopipeline)Pipeline Dependencies ([Rules 12-13](rvwmo.html#overlapping-ordering))
+#### [](#memory-ppopipeline)37.1.3.9\. Pipeline Dependencies ([Rules 12-13](rvwmo.html#overlapping-ordering))
 
 | |  [Rule 12](rvwmo.html#overlapping-ordering): b is a load, and there exists some store m between a and b in program order such that m has an address or data dependency on a, and b returns a value written by m [Rule 13](rvwmo.html#overlapping-ordering): b is a store, and there exists some instruction m between a and b in program order such that m has an address dependency on a |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -354,11 +354,11 @@ __Table 11\. Because of the address dependency from (d) to (e), (d) also precede
 
 Consider [Table 11](#litmus:addrdatarfi%5Fno) (f) cannot be executed until the address for (e) is resolved, because it may turn out that the addresses match; i.e., that `a1=s0`. Therefore, (f) cannot be sent to memory before (d) has executed and confirmed whether the addresses do indeed overlap.
 
-### [](#beyond-main-memory)Beyond Main Memory
+### [](#37-1-4-beyond-main-memory)37.1.4\. Beyond Main Memory
 
 RVWMO does not currently attempt to formally describe how FENCE.I, SFENCE.VMA, I/O fences, and PMAs behave. All of these behaviors will be described by future formalizations. In the meantime, the behavior of FENCE.I is described in ["Zifencei" Extension for Instruction-Fetch Fence](zifencei.html), the behavior of SFENCE.VMA is described in the RISC-V Instruction Set Privileged Architecture Manual, and the behavior of I/O fences and the effects of PMAs are described below.
 
-#### [](#coherence-and-cacheability)Coherence and Cacheability
+#### [](#37-1-4-1-coherence-and-cacheability)37.1.4.1\. Coherence and Cacheability
 
 The RISC-V Privileged ISA defines Physical Memory Attributes (PMAs) which specify, among other things, whether portions of the address space are coherent and/or cacheable. See the RISC-V Privileged ISA Specification for the complete details. Here, we simply discuss how the various details in each PMA relate to the memory model:
 
@@ -368,7 +368,7 @@ The RISC-V Privileged ISA defines Physical Memory Attributes (PMAs) which specif
 * Coherence PMAs: The memory consistency model for memory regions marked as non-coherent in PMAs is currently platform-specific and/or device-specific: the load-value axiom, the atomicity axiom, and the progress axiom all may be violated with non-coherent memory. Note however that coherent memory does not require a hardware cache coherence protocol. The RISC-V Privileged ISA Specification suggests that hardware-incoherent regions of main memory are discouraged, but the memory model is compatible with hardware coherence, software coherence, implicit coherence due to read-only memory, implicit coherence due to only one agent having access, or otherwise.
 * Idempotency PMAs: Idempotency PMAs are used to specify memory regions for which loads and/or stores may have side effects, and this in turn is used by the microarchitecture to determine, e.g., whether prefetches are legal. This distinction does not affect the memory model.
 
-#### [](#io-ordering)I/O Ordering
+#### [](#37-1-4-2-io-ordering)37.1.4.2\. I/O Ordering
 
 For I/O, the load value axiom and atomicity axiom in general do not apply, as both reads and writes might have device-specific side effects and may return values other than the value "written" by the most recent store to the same address. Nevertheless, the following preserved program order rules still generally apply for accesses to I/O memory: memory access _a_ precedes memory access _b_ in global memory order if _a_ precedes _b_ in program order and one or more of the following holds:
 
@@ -398,7 +398,7 @@ I/O regions in the address space should be considered non-cacheable regions in t
 
 The ordering guarantees in this section may not apply beyond a platform-specific boundary between the RISC-V cores and the device. In particular, I/O accesses sent across an external bus (e.g., PCIe) may be reordered before they reach their ultimate destination. Ordering must be enforced in such situations according to the platform-specific rules of those external devices and buses.
 
-### [](#memory%5Fporting)Code Porting and Mapping Guidelines
+### [](#memory%5Fporting)37.1.5\. Code Porting and Mapping Guidelines
 
 __Table 12\. Mappings from TSO operations to RISC-V operations__
 | x86/TSO Operation | RVWMO Mapping                                                           |
@@ -581,7 +581,7 @@ These C11/C++11 mappings require the platform to provide the following Physical 
 
 Platforms with different attributes may require different mappings, or require platform-specific SW (e.g., memory-mapped I/O).
 
-### [](#implementation-guidelines)Implementation Guidelines
+### [](#37-1-6-implementation-guidelines)37.1.6\. Implementation Guidelines
 
 The RVWMO and RVTSO memory models by no means preclude microarchitectures from employing sophisticated speculation techniques or other forms of optimization in order to deliver higher performance. The models also do not impose any requirement to use any one particular cache hierarchy, nor even to use a cache coherence protocol at all. Instead, these models only specify the behaviors that can be exposed to software. Microarchitectures are free to use any pipeline design, any coherent or non-coherent cache hierarchy, any on-chip interconnect, etc., as long as the design only admits executions that satisfy the memory model rules. That said, to help people understand the actual implementations of the memory model, in this section we provide some guidelines on how architects and programmers should interpret the models' rules.
 
@@ -606,7 +606,7 @@ Architectures are free to implement any of the memory model rules as conservativ
 
 * interpret all fences as if they were FENCE RW,RW (or FENCE IORW,IORW, if I/O is involved), regardless of the bits actually set
 * implement all fences with PW and SR as if they were FENCE RW,RW (or FENCE IORW,IORW, if I/O is involved), as PW with SR is the most expensive of the four possible main memory ordering components anyway
-* emulate _aq_ and _rl_ as described in [Code Porting and Mapping Guidelines](#memory%5Fporting)
+* emulate _aq_ and _rl_ as described in [37.1.5\. Code Porting and Mapping Guidelines](#memory%5Fporting)
 * enforcing all same-address load-load ordering, even in the presence of patterns such as `fri-rfi` and `RSW`
 * forbid any forwarding of a value from a store in the store buffer to a subsequent AMO or LR to the same address
 * forbid any forwarding of a value from an AMO or SC in the store buffer to a subsequent load to the same address
@@ -620,7 +620,7 @@ Architectures that implement RVTSO can safely do the following:
 
 Other general notes:
 
-* Silent stores (i.e., stores that write the same value that already exists at a memory location) behave like any other store from a memory model point of view. Likewise, AMOs which do not actually change the value in memory (e.g., an AMOMAX for which the value in _rs2_ is smaller than the value currently in memory) are still semantically considered store operations. Microarchitectures that attempt to implement silent stores must take care to ensure that the memory model is still obeyed, particularly in cases such as RSW [Overlapping-Address Orderings (Rules 1-3)](#mm-overlap)which tend to be incompatible with silent stores.
+* Silent stores (i.e., stores that write the same value that already exists at a memory location) behave like any other store from a memory model point of view. Likewise, AMOs which do not actually change the value in memory (e.g., an AMOMAX for which the value in _rs2_ is smaller than the value currently in memory) are still semantically considered store operations. Microarchitectures that attempt to implement silent stores must take care to ensure that the memory model is still obeyed, particularly in cases such as RSW [37.1.3.5\. Overlapping-Address Orderings (Rules 1-3)](#mm-overlap)which tend to be incompatible with silent stores.
 * Writes may be merged (i.e., two consecutive writes to the same address may be merged) or subsumed (i.e., the earlier of two back-to-back writes to the same address may be elided) as long as the resulting behavior does not otherwise violate the memory model semantics.
 
 The question of write subsumption can be understood from the following example:
@@ -640,7 +640,7 @@ In other words the final value of the memory location whose address is in `s0` m
 
 A very aggressive microarchitecture might erroneously decide to discard (e), as (f) supersedes it, and this may in turn lead the microarchitecture to break the now-eliminated dependency between (d) and (f) (and hence also between (a) and (f)). This would violate the memory model rules, and hence it is forbidden. Write subsumption may in other cases be legal, if for example there were no data dependency between (d) and (e).
 
-#### [](#possible-future-extensions)Possible Future Extensions
+#### [](#37-1-6-1-possible-future-extensions)37.1.6.1\. Possible Future Extensions
 
 We expect that any or all of the following possible future extensions would be compatible with the RVWMO memory model:
 
@@ -650,9 +650,9 @@ We expect that any or all of the following possible future extensions would be c
 * Fences limited to certain addresses
 * Cache write-back/flush/invalidate/etc.instructions
 
-### [](#discrepancies)Known Issues
+### [](#discrepancies)37.1.7\. Known Issues
 
-#### [](#mixedrsw)Mixed-size RSW
+#### [](#mixedrsw)37.1.7.1\. Mixed-size RSW
 
 __Table 19\. Mixed-size discrepancy (permitted by axiomatic models, forbidden by operational model)__
 | Hart 0                                | Hart 1      |     |                          |

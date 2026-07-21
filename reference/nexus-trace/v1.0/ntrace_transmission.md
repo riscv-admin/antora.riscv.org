@@ -1,6 +1,6 @@
-# 3.1. N-Trace Transmission Protocol
+# 2.1. N-Trace Transmission Protocol
 
-## [](#3-1-n-trace-transmission-protocol)3.1\. N-Trace Transmission Protocol
+## [](#2-1-n-trace-transmission-protocol)2.1\. N-Trace Transmission Protocol
 
 The IEEE-5001 Nexus Standard defines a trace messaging protocol using several **MDO** (Message Data Out) signals and one or two flag signals known as **MSEO** (Message Start/End Out). A Nexus message is sent or stored in a record composed of **MDO** and **MSEO**.
 
@@ -29,7 +29,7 @@ While decoding software may be designed to avoid dynamic memory allocation, it m
 
 Custom messages and fields may carry different payloads and may be larger than 64 bits and 38 bytes.
 
-### [](#3-1-1-mseo-sequences)3.1.1\. MSEO Sequences
+### [](#2-1-1-mseo-sequences)2.1.1\. MSEO Sequences
 
 **MSEO\[1:0\]** bits (located in the least significant bits of each byte) are defined by the follow rules:
 
@@ -59,7 +59,7 @@ __Table 2\. Transitions of MSEO Bits__
 | |  Original IEEE-5001 Nexus Standard defines the MSEO protocol as follows: Two 1\-s followed by one 0 indicates the start of a message. 0 followed by two or more 1\-s indicates the end of a message. 0 followed by 1 followed by 0 indicates the end of a variable-length field. 0\-s at all other clocks during transmission of a message. 1\-s at all clocks during no message transmission (idle). Dual MSEO protocol (utilized by this N-Trace specification) is a two-pin mode of this general (single and dual) MSEO protocol definition. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#3-1-2-unified-n-trace-message-structure)3.1.2\. Unified N-Trace Message Structure
+### [](#2-1-2-unified-n-trace-message-structure)2.1.2\. Unified N-Trace Message Structure
 
 Each N-Trace message has identical structure (100% compatible with IEEE-5001 Nexus Standard):
 
@@ -72,7 +72,7 @@ Each N-Trace message has identical structure (100% compatible with IEEE-5001 Nex
 * Very last field is (optional) variable-length **TSTAMP** (Timestamp) field.  
    * It may be possible to generate and analyze timestamps in a unified (simpler) way.
 
-### [](#3-1-3-order-of-bits-and-bytes)3.1.3\. Order of bits and bytes
+### [](#2-1-3-order-of-bits-and-bytes)2.1.3\. Order of bits and bytes
 
 Order of bits and bytes:
 
@@ -84,7 +84,7 @@ Order of bits and bytes:
 | |  Above rules allow receiving trace probes to skip idle messages. |
 | ------------------------------------------------------------------ |
 
-### [](#3-1-4-pib-idle-cycles-explained)3.1.4\. PIB Idle Cycles Explained
+### [](#2-1-4-pib-idle-cycles-explained)2.1.4\. PIB Idle Cycles Explained
 
 This chapter describes N-Trace specific details about the transmission via a Pin Interface Block (PIB), as it is described in the [RISC-V Trace Control Interface](#RISC-V%5FTrace%5FControl%5FInterface) Specification.
 
@@ -113,7 +113,7 @@ Some implementations may always send idle sequences using even (or even multiple
 | |  The trace probe needs to be able to synchronize with the trace stream and to detect trace message boundaries. This procedure is sometimes referred to as "message alignment synchronization" or "alignment-sync". For 8-bit or 16-bit trace idle cycles are not required (to detect an alignment) as MSEO bits are in well-defined positions and trace probes will know where is a start of a message. For 1-bit, 2-bit and 4-bit trace modes PIB must generate at least one idle byte to allow trace probes to detect which bit is the first MSEO bit of a message. How it is done is not defined in this specification. Here are two possible implementations: Generate at least one idle byte periodically in a trace stream anywhere between messages (PIB is aware about message boundaries as end of message has MSEO=11 bits). Always add an extra idle byte before sending synchronizing messages. It will guarantee that boundaries of every synchronizing message are always detectable and decoding may start from it. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#3-1-5-n-trace-message-example)3.1.5\. N-Trace Message Example
+### [](#2-1-5-n-trace-message-example)2.1.5\. N-Trace Message Example
 
 Table below shows one N-Trace message with several fields. It is an output from N-Trace dump tool (part of N-Trace reference C code) with an added **Explanation** column.
 

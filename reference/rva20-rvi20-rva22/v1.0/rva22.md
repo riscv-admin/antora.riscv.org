@@ -1,14 +1,14 @@
-# 7.1. RVA22 Profiles
+# 6.1. RVA22 Profiles
 
-## [](#7-1-rva22-profiles)7.1\. RVA22 Profiles
+## [](#6-1-rva22-profiles)6.1\. RVA22 Profiles
 
 The RVA22 profiles are intended to be used for 64-bit application processors running rich OS stacks. Only user-mode (RVA22U64) and supervisor-mode (RVA22S64) profiles are specified in this family.
 
-### [](#7-1-1-rva22u64-profile)7.1.1\. RVA22U64 Profile
+### [](#6-1-1-rva22u64-profile)6.1.1\. RVA22U64 Profile
 
 The RVA22U64 profile specifies the ISA features available to user-mode execution environments in 64-bit applications processors. This is the most important profile within the application processor family in terms of the amount of software that targets this profile.
 
-#### [](#7-1-1-1-rva22u64-mandatory-base)7.1.1.1\. RVA22U64 Mandatory Base
+#### [](#6-1-1-1-rva22u64-mandatory-base)6.1.1.1\. RVA22U64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA22U64, including mandatory `fence.tso`, and is little-endian.
 
@@ -17,7 +17,7 @@ RV64I is the mandatory base ISA for RVA22U64, including mandatory `fence.tso`, a
 
 As per the unprivileged architecture specification, the `ecall`instruction causes a requested trap to the execution environment.
 
-#### [](#7-1-1-2-rva22u64-mandatory-extensions)7.1.1.2\. RVA22U64 Mandatory Extensions
+#### [](#6-1-1-2-rva22u64-mandatory-extensions)6.1.1.2\. RVA22U64 Mandatory Extensions
 
 The following mandatory extensions were present in RVA20U64.
 
@@ -84,7 +84,7 @@ The following mandatory extensions are new for RVA22U64.
 | |  Zkt requires a certain subset of integer instructions execute with data-independent latency. Mandating this feature enables portable libraries for safe basic cryptographic operations. It is expected that application processors will naturally have this property and so implementation cost is low, if not zero, in most systems that would support RVA22. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#7-1-1-3-rva22u64-optional-extensions)7.1.1.3\. RVA22U64 Optional Extensions
+#### [](#6-1-1-3-rva22u64-optional-extensions)6.1.1.3\. RVA22U64 Optional Extensions
 
 RVA22U64 has four profile options (Zfh, V, Zkn, Zks):
 
@@ -116,17 +116,17 @@ RVA22U64 has four profile options (Zfh, V, Zkn, Zks):
 | |  The Zfinx, Zdinx, Zhinx, Zhinxmin extensions are incompatible with the profile mandates to support the F and D extensions. |
 | ----------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#7-1-1-4-rva22u64-recommendations)7.1.1.4\. RVA22U64 Recommendations
+#### [](#6-1-1-4-rva22u64-recommendations)6.1.1.4\. RVA22U64 Recommendations
 
 Recommendations are not strictly mandated but are included to guide implementers making design choices.
 
 Implementations are strongly recommended to raise illegal-instruction exceptions on attempts to execute unimplemented opcodes.
 
-### [](#7-1-2-rva22s64-profile)7.1.2\. RVA22S64 Profile
+### [](#6-1-2-rva22s64-profile)6.1.2\. RVA22S64 Profile
 
 The RVA22S64 profile specifies the ISA features available to a supervisor-mode execution environment in 64-bit applications processors. RVA22S64 is based on privileged architecture version 1.12.
 
-#### [](#7-1-2-1-rva22s64-mandatory-base)7.1.2.1\. RVA22S64 Mandatory Base
+#### [](#6-1-2-1-rva22s64-mandatory-base)6.1.2.1\. RVA22S64 Mandatory Base
 
 RV64I is the mandatory base ISA for RVA22S64, including mandatory`fence.tso`, and is little-endian.
 
@@ -135,7 +135,7 @@ RV64I is the mandatory base ISA for RVA22S64, including mandatory`fence.tso`, an
 
 The `ecall` instruction operates as per the unprivileged architecture specification. An `ecall` in user mode causes a contained trap to supervisor mode. An `ecall` in supervisor mode causes a requested trap to the execution environment.
 
-#### [](#7-1-2-2-rva22s64-mandatory-extensions)7.1.2.2\. RVA22S64 Mandatory Extensions
+#### [](#6-1-2-2-rva22s64-mandatory-extensions)6.1.2.2\. RVA22S64 Mandatory Extensions
 
 The following unprivileged extensions are mandatory:
 
@@ -170,7 +170,7 @@ The following privileged extensions are mandatory:
 * **Svpbmt** Page-Based Memory Types
 * **Svinval** Fine-Grained Address-Translation Cache Invalidation
 
-#### [](#7-1-2-3-rva22s64-optional-extensions)7.1.2.3\. RVA22S64 Optional Extensions
+#### [](#6-1-2-3-rva22s64-optional-extensions)6.1.2.3\. RVA22S64 Optional Extensions
 
 RVA22S64 has four unprivileged options (Zfh, V, Zkn, Zks) from RVA22U64, and eight privileged options (Sv48, Sv57, Svnapot, Ssu64xl, Sstc, Sscofpmf, Zkr, H).
 
@@ -242,6 +242,6 @@ When the hypervisor extension is implemented, the following are also mandatory:
 | |  This is a new extension name for this feature. |
 | ------------------------------------------------- |
 
-#### [](#7-1-2-4-rva22s64-recommendations)7.1.2.4\. RVA22S64 Recommendations
+#### [](#6-1-2-4-rva22s64-recommendations)6.1.2.4\. RVA22S64 Recommendations
 
 * Implementations are strongly recommended to raise illegal-instruction exceptions when attempting to execute unimplemented opcodes.

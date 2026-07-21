@@ -1,6 +1,6 @@
-# Bibliography
+# 3.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#3-1-bibliography)3.1\. Bibliography
 
 \[1\] _RISC-V IOMMU Specification 1.0.0_. \[Online\]. Available: <https://github.com/riscv-non-isa/riscv-iommu/releases/download/v1.0.0/riscv-iommu.pdf>
 

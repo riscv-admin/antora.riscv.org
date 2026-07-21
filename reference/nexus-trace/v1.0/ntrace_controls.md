@@ -1,6 +1,6 @@
-# 4.1. N-Trace Specific Trace Controls
+# 3.1. N-Trace Specific Trace Controls
 
-## [](#4-1-n-trace-specific-trace-controls)4.1\. N-Trace Specific Trace Controls
+## [](#3-1-n-trace-specific-trace-controls)3.1\. N-Trace Specific Trace Controls
 
 This chapter describes how fields and bits from Trace Encoder control registers (named using **trTe…​** pattern) are influencing N-Trace encoder and N-Trace protocol messages. N-Trace specific clarifications, in addition to description in [RISC-V Trace Control Interface](#RISC-V%5FTrace%5FControl%5FInterface) specification are provided.
 

@@ -1,6 +1,6 @@
-# 3.1. Debug Module (DM) (non-ISA extension)
+# 2.1. Debug Module (DM) (non-ISA extension)
 
-## [](#dm)3.1\. Debug Module (DM) (non-ISA extension)
+## [](#dm)2.1\. Debug Module (DM) (non-ISA extension)
 
 The Debug Module implements a translation interface between abstract debug operations and their specific implementation. It might support the following operations:
 
@@ -30,7 +30,7 @@ In order to be compatible with this specification an implementation must:
 
 A single DM can debug up to  harts.
 
-### [](#dmi)3.1.1\. Debug Module Interface (DMI)
+### [](#dmi)2.1.1\. Debug Module Interface (DMI)
 
 Debug Modules are subordinates on a bus called the Debug Module Interface (DMI). The bus manager is the Debug Transport Module(s). The Debug Module Interface can be a trivial bus with one manager and one subordinate (see [implementations.adoc#tab:dmi\_signals](implementations.html#tab:dmi%5Fsignals)), or use a more full-featured bus like TileLink or the AMBA Advanced Peripheral Bus. The details are left to the system designer.
 
@@ -38,7 +38,7 @@ The DMI uses between 7 and 32 address bits. Each address points at a single 32-b
 
 The Debug Module is controlled via register accesses to its DMI address space.
 
-### [](#reset)3.1.2\. Reset Control
+### [](#reset)2.1.2\. Reset Control
 
 There are two methods that allow a debugger to reset harts. [ndmreset](#dmcontrol-ndmreset) resets all the harts in the hardware platform, as well as all other parts of the hardware platform except for the Debug Modules, Debug Transport Modules, and Debug Module Interface. Exactly what is affected by this reset is implementation dependent, but it must be possible to debug programs from the first instruction executed. [hartreset](#dmcontrol-hartreset) resets all the currently selected harts. In this case an implementation may reset more harts than just the ones that are selected. The debugger can discover which other harts are reset (if any) by selecting them and checking [anyhavereset](#dmstatus-anyhavereset) and [allhavereset](#dmstatus-allhavereset).
 
@@ -53,7 +53,7 @@ Due to clock and power domain crossing issues, it might not be possible to perfo
 
 When harts have been reset, they must set a sticky `havereset` state bit. The conceptual `havereset` state bits can be read for selected harts in [anyhavereset](#dmstatus-anyhavereset) and [allhavereset](#dmstatus-allhavereset) in [dmstatus](#dm-dmstatus). These bits must be set regardless of the cause of the reset. The `havereset` bits for the selected harts can be cleared by writing 1 to [ackhavereset](#dmcontrol-ackhavereset) in [dmcontrol](#dm-dmcontrol). The `havereset` bits might or might not be cleared when [dmactive](#dmcontrol-dmactive) is low.
 
-### [](#selectingharts)3.1.3\. Selecting Harts
+### [](#selectingharts)2.1.3\. Selecting Harts
 
 Up to  harts can be connected to a single DM. Commands issued to the DM only apply to the currently selected harts.
 
@@ -61,11 +61,11 @@ To enumerate all the harts, a debugger must first determine `HARTSELLEN`by writi
 
 The debugger can discover the mapping between hart indices and `mhartid` by using the interface to read `mhartid`, or by reading the hardware platform’s configuration structure.
 
-#### [](#3-1-3-1-selecting-a-single-hart)3.1.3.1\. Selecting a Single Hart
+#### [](#2-1-3-1-selecting-a-single-hart)2.1.3.1\. Selecting a Single Hart
 
 All debug modules must support selecting a single hart. The debugger can select a hart by writing its index to \`hartsel\`. Hart indexes start at 0 and are contiguous until the final index.
 
-#### [](#hartarraymask)3.1.3.2\. Selecting Multiple Harts
+#### [](#hartarraymask)2.1.3.2\. Selecting Multiple Harts
 
 Debug Modules may implement a Hart Array Mask register to allow selecting multiple harts at once. The th bit in the Hart Array Mask register applies to the hart with index . If the bit is 1 then the hart is selected. Usually a DM will have a Hart Array Mask register exactly wide enough to select all the harts it supports, but it’s allowed to tie any of these bits to 0.
 
@@ -73,7 +73,7 @@ The debugger can set bits in the hart array mask register using [hawindowsel](#d
 
 Execution of Abstract Commands ignores this mechanism and only applies to the hart selected by \`hartsel\`.
 
-### [](#3-1-4-hart-dm-states)3.1.4\. Hart DM States
+### [](#2-1-4-hart-dm-states)2.1.4\. Hart DM States
 
 Every hart that can be selected is in exactly one of the following four DM states: non-existent, unavailable, running, or halted. Which state the selected harts are in is reflected by [allnonexistent](#dmstatus-allnonexistent), [anynonexistent](#dmstatus-anynonexistent), [allunavail](#dmstatus-allunavail), [anyunavail](#dmstatus-anyunavail), [allrunning](#dmstatus-allrunning), [anyrunning](#dmstatus-anyrunning), [allhalted](#dmstatus-allhalted), and [anyhalted](#dmstatus-anyhalted).
 
@@ -89,7 +89,7 @@ Harts are halted when they are in Debug Mode, only performing tasks on behalf of
 
 Which states a hart that is reset goes through is implementation dependent. Harts may be unavailable while reset is asserted, and some time after reset is deasserted. They might transition to running for some time after reset is deasserted. Finally they end up either running or halted, depending on [haltreq](#dmcontrol-haltreq) and `resethaltreq`.
 
-### [](#runcontrol)3.1.5\. Run Control
+### [](#runcontrol)2.1.5\. Run Control
 
 For every hart, the Debug Module tracks 4 conceptual bits of state: halt request, resume ack, halt-on-reset request, and hart reset. (The hart reset and halt-on-reset request bits are optional.) These 4 bits reset to 0, except for resume ack, which may reset to either 0 or 1\. The DM receives halted, running, and havereset signals from each hart. The debugger can observe the state of resume ack in [allresumeack](#dmstatus-allresumeack) and [anyresumeack](#dmstatus-anyresumeack), and the state of halted, running, and havereset signals in [allhalted](#dmstatus-allhalted), [anyhalted](#dmstatus-anyhalted), [allrunning](#dmstatus-allrunning), [anyrunning](#dmstatus-anyrunning), [allhavereset](#dmstatus-allhavereset), and [anyhavereset](#dmstatus-anyhavereset). The state of the other bits cannot be observed directly.
 
@@ -103,7 +103,7 @@ The DM can implement optional halt-on-reset bits for each hart, which it indicat
 
 If the DM is reset while a hart is halted, it is UNSPECIFIED whether that hart resumes. Debuggers should use [resumereq](#dmcontrol-resumereq) to explicitly resume harts before clearing [dmactive](#dmcontrol-dmactive) and disconnecting.
 
-### [](#hrgroups)3.1.6\. Halt Groups, Resume Groups, and External Triggers
+### [](#hrgroups)2.1.6\. Halt Groups, Resume Groups, and External Triggers
 
 An optional feature allows a debugger to place harts into two kinds of groups: halt groups and resume groups. It is also possible to add external triggers to a halt and resume groups. At any given time, each hart and each trigger is a member of exactly one halt group and exactly one resume group.
 
@@ -141,7 +141,7 @@ When the DM is reset, all harts must be placed in the lowest-numbered halt and r
 
 Some designs may choose to hardcode hart groups to a group other than group 0, meaning it is never possible to halt or resume just a single hart. This is explicitly allowed. In that case it must be possible to discover the groups by using [dmcs2](#dm-dmcs2) even if it’s not possible to change the configuration.
 
-### [](#abstractcommands)3.1.7\. Abstract Commands
+### [](#abstractcommands)2.1.7\. Abstract Commands
 
 The DM supports a set of abstract commands, most of which are optional. Depending on the implementation, the debugger may be able to perform some abstract commands even when the selected hart is not halted. Debuggers can only determine which abstract commands are supported by a given hart in a given state (running, halted, or held in reset) by attempting them and then looking at [cmderr](#abstractcs-cmderr) in [abstractcs](#dm-abstractcs) to see if they were successful. Commands may be supported with some options set, but not with other options set. If a command has unsupported options set or if bits that are defined as 0 aren’t 0, then the DM must set [cmderr](#abstractcs-cmderr) to 2 (not supported).
 
@@ -168,7 +168,7 @@ If an abstract command does not complete in the expected time and appears to be 
 
 If an abstract command is started while the selected hart is unavailable or if a hart becomes unavailable while executing an abstract command, then the Debug Module may terminate the abstract command, setting [busy](#abstractcs-busy) low, and [cmderr](#abstractcs-cmderr) to 4 (halt/resume). Alternatively, the command could just appear to be hung ([busy](#abstractcs-busy) never goes low).
 
-#### [](#3-1-7-1-abstract-command-listing)3.1.7.1\. Abstract Command Listing
+#### [](#2-1-7-1-abstract-command-listing)2.1.7.1\. Abstract Command Listing
 
 This section describes each of the different abstract commands and how their fields should be interpreted when they are written to [command](#dm-command).
 
@@ -268,7 +268,7 @@ This command modifies `arg0` only when memory is read. It modifies`arg1` only if
 | write            | 0 (arg0): Copy data from the memory location specified in arg1 into the low bits of arg0. The value of the remaining bits ofarg0 are UNSPECIFIED. 1 (memory): Copy data from the low bits of arg0 into the memory location specified in arg1.                                                                                                                                                                                                                                                                                                                                                                |
 | target-specific  | These bits are reserved for target-specific uses.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
-### [](#programbuffer)3.1.8\. Program Buffer
+### [](#programbuffer)2.1.8\. Program Buffer
 
 To support executing arbitrary instructions on a halted hart, a Debug Module can include a Program Buffer that a debugger can write small programs to. DMs that support all necessary functionality using abstract commands only may choose to omit the Program Buffer.
 
@@ -286,7 +286,7 @@ If [progbufsize](#abstractcs-progbufsize) is 1 then the following apply:
 
 The Program Buffer may be implemented as RAM which is accessible to the hart. A debugger can determine if this is the case by executing small programs that attempt to write and read back relative to `pc` while executing from the Program Buffer. If so, the debugger has more flexibility in what it can do with the program buffer.
 
-### [](#3-1-9-overview-of-hart-debug-states)3.1.9\. Overview of Hart Debug States
+### [](#2-1-9-overview-of-hart-debug-states)2.1.9\. Overview of Hart Debug States
 
 [Figure 1](#abstract%5Fsm) shows a conceptual view of the states passed through by a hart during run/halt debugging as influenced by the different fields of [dmcontrol](#dm-dmcontrol), [abstractcs](#dm-abstractcs), [abstractauto](#dm-abstractauto), and [command](#dm-command).
 
@@ -294,7 +294,7 @@ The Program Buffer may be implemented as RAM which is accessible to the hart. A 
 
 Figure 1\. Run/Halt Debug State Machine for single-hart hardware platforms. As only a small amount of state is visible to the debugger, the states and transitions are conceptual.
 
-### [](#systembusaccess)3.1.10\. System Bus Access
+### [](#systembusaccess)2.1.10\. System Bus Access
 
 A debugger can access memory from a hart’s point of view using a Program Buffer or the Abstract Access Memory command. (Both these features are optional.) A Debug Module may also include a System Bus Access block to provide memory access without involving a hart, regardless of whether Program Buffer is implemented. The System Bus Access block uses physical addresses.
 
@@ -314,7 +314,7 @@ Depending on the microarchitecture, data accessed through System Bus Access migh
 | |  Implementing a System Bus Access block has several benefits even when a Debug Module also implements a Program Buffer. First, it is possible to access memory in a running system with minimal impact. Second, it may improve performance when accessing memory. Third, it may provide access to devices that a hart does not have access to. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#3-1-11-minimally-intrusive-debugging)3.1.11\. Minimally Intrusive Debugging
+### [](#2-1-11-minimally-intrusive-debugging)2.1.11\. Minimally Intrusive Debugging
 
 Depending on the task it is performing, some harts can only be halted very briefly. There are several mechanisms that allow accessing resources in such a running system with a minimal impact on the running hart.
 
@@ -324,7 +324,7 @@ Second, the Quick Access abstract command can be used to halt a hart, quickly ex
 
 Third, if the System Bus Access block is implemented, it can be used while a hart is running to access system memory.
 
-### [](#3-1-12-security)3.1.12\. Security
+### [](#2-1-12-security)2.1.12\. Security
 
 To protect intellectual property it may be desirable to lock access to the Debug Module. To allow access during a manufacturing process and not afterwards, a reasonable solution could be to add a fuse bit to the Debug Module that can be used to permanently disable it. Since this is technology specific, it is not further addressed in this spec.
 
@@ -338,7 +338,7 @@ Another option is to allow the DM to be unlocked only by users who have an acces
 
 Implementations where it’s not possible to unlock the DM by using [authdata](#dm-authdata) should not implement that register.
 
-### [](#3-1-13-version-detection)3.1.13\. Version Detection
+### [](#2-1-13-version-detection)2.1.13\. Version Detection
 
 To detect the version of the Debug Module with a minimum of side effects, use the following procedure:
 
@@ -357,7 +357,7 @@ If it was necessary to clear [ndmreset](#dmcontrol-ndmreset), this might have th
 
 This procedure is guaranteed to work in future versions of this spec. The meaning of the [dmcontrol](#dm-dmcontrol) bits where [hartreset](#dmcontrol-hartreset), [hasel](#dmcontrol-hasel), [hartsello](#dmcontrol-hartsello), and [hartselhi](#dmcontrol-hartselhi) currently reside might change, but preserving them will have no side effects. Clearing the bits of [dmcontrol](#dm-dmcontrol) not explicitly mentioned here will have no side effects beyond the ones mentioned above.
 
-### [](#debbus)3.1.14\. Debug Module Registers
+### [](#debbus)2.1.14\. Debug Module Registers
 
 The registers described in this section are accessed over the DMI bus. Each DM has a base address (which is 0 for the first DM). The register addresses below are offsets from this base address.
 
@@ -534,7 +534,7 @@ This entire register is read-only.
 
 #### [](#dm-hawindowsel)Hart Array Window Select (hawindowsel, at 0x14)
 
-This register selects which of the 32-bit portion of the hart array mask register (see [3.1.3.2\. Selecting Multiple Harts](#hartarraymask)) is accessible in [hawindow](#dm-hawindow).
+This register selects which of the 32-bit portion of the hart array mask register (see [2.1.3.2\. Selecting Multiple Harts](#hartarraymask)) is accessible in [hawindow](#dm-hawindow).
 
 ![Diagram](_images/diag-a3fc8c64266edd9dd5fd2a77c79e7e104edb29da.svg) 
 
@@ -544,7 +544,7 @@ This register selects which of the 32-bit portion of the hart array mask registe
 
 #### [](#dm-hawindow)Hart Array Window (hawindow, at 0x15)
 
-This register provides R/W access to a 32-bit portion of the hart array mask register (see [3.1.3.2\. Selecting Multiple Harts](#hartarraymask)). The position of the window is determined by [hawindowsel](#dm-hawindowsel). I.e. bit 0 refers to hart [hawindowsel](#dm-hawindowsel) , while bit 31 refers to hart[hawindowsel](#dm-hawindowsel) .
+This register provides R/W access to a 32-bit portion of the hart array mask register (see [2.1.3.2\. Selecting Multiple Harts](#hartarraymask)). The position of the window is determined by [hawindowsel](#dm-hawindowsel). I.e. bit 0 refers to hart [hawindowsel](#dm-hawindowsel) , while bit 31 refers to hart[hawindowsel](#dm-hawindowsel) .
 
 Since some bits in the hart array mask register may be constant 0, some bits in this register may be constant 0, depending on the current value of [hawindowsel](#dm-hawindowsel).
 

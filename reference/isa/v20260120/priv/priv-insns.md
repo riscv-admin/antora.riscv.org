@@ -1,6 +1,6 @@
-# 19.1. RISC-V Privileged Instruction Set Listings
+# 18.1. RISC-V Privileged Instruction Set Listings
 
-## [](#19-1-risc-v-privileged-instruction-set-listings)19.1\. RISC-V Privileged Instruction Set Listings
+## [](#18-1-risc-v-privileged-instruction-set-listings)18.1\. RISC-V Privileged Instruction Set Listings
 
 This chapter presents instruction-set listings for all instructions defined in the RISC-V Privileged Architecture.
 

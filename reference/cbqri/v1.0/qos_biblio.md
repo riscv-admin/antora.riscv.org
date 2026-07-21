@@ -1,6 +1,6 @@
-# Bibliography
+# 7.1. Bibliography
 
-## [](#bibliography)Bibliography
+## [](#7-1-bibliography)7.1\. Bibliography
 
 \[1\] D. B. Kristof and E. Stijn and E. Lieven, "Per-Thread Cycle Accounting in Multicore Processors", _ACM Trans. Archit. Code Optim._, vol. 9, no. 4, jan 2013\. \[Online\]. Available: <https://doi.org/10.1145/2400682.2400688>.
 

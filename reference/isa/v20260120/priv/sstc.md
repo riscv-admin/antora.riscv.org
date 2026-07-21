@@ -1,6 +1,6 @@
-# 13.1. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
+# 12.1. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
 
-## [](#Sstc)13.1\. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
+## [](#Sstc)12.1\. "Sstc" Extension for Supervisor-mode Timer Interrupts, Version 1.0
 
 The current Privileged arch specification only defines a hardware mechanism for generating machine-mode timer interrupts (based on the mtime and mtimecmp registers). With the resultant requirement that timer services for S-mode/HS-mode (and for VS-mode) have to all be provided by M-mode - via SBI calls from S/HS-mode up to M-mode (or VS-mode calls to HS-mode and then to M-mode). M-mode software then multiplexes these multiple logical timers onto its one physical M-mode timer facility, and the M-mode timer interrupt handler passes timer interrupts back down to the appropriate lower privilege mode.
 

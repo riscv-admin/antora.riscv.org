@@ -1,10 +1,10 @@
-# 7.1. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0
+# 6.1. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0
 
-## [](#counters)7.1\. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0
+## [](#counters)6.1\. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0
 
 RISC-V ISAs provide a set of up to thirty-two 64-bit performance counters and timers that are accessible via unprivileged XLEN-bit read-only CSR registers `0xC00`–`0xC1F` (when XLEN=32, the upper 32 bits are accessed via CSR registers `0xC80`–`0xC9F`). These counters are divided between the "Zicntr" and "Zihpm" extensions.
 
-### [](#7-1-1-zicntr-extension-for-base-counters-and-timers)7.1.1\. "Zicntr" Extension for Base Counters and Timers
+### [](#6-1-1-zicntr-extension-for-base-counters-and-timers)6.1.1\. "Zicntr" Extension for Base Counters and Timers
 
 The Zicntr standard extension comprises the first three of these counters (CYCLE, TIME, and INSTRET), which have dedicated functions (cycle count, real-time clock, and instructions retired, respectively). The Zicntr extension depends on the Zicsr extension.
 
@@ -55,7 +55,7 @@ Sample code for reading the 64-bit cycle counter when XLEN=32.
         bne          x3, x4, again
 ```
 
-### [](#7-1-2-zihpm-extension-for-hardware-performance-counters)7.1.2\. "Zihpm" Extension for Hardware Performance Counters
+### [](#6-1-2-zihpm-extension-for-hardware-performance-counters)6.1.2\. "Zihpm" Extension for Hardware Performance Counters
 
 The Zihpm extension comprises up to 29 additional unprivileged 64-bit hardware performance counters, `hpmcounter3-hpmcounter31`. When XLEN=32, the upper 32 bits of these performance counters are accessible via additional CSRs `hpmcounter3h- hpmcounter31h`. The Zihpm extension depends on the Zicsr extension.
 

@@ -1,10 +1,10 @@
-# 15.1. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0
+# 14.1. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0
 
-## [](#15-1-zacas-extension-for-atomic-compare-and-swap-cas-instructions-version-1-0-0)15.1\. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0
+## [](#14-1-zacas-extension-for-atomic-compare-and-swap-cas-instructions-version-1-0-0)14.1\. "Zacas" Extension for Atomic Compare-and-Swap (CAS) Instructions, Version 1.0.0
 
 Compare-and-Swap (CAS) provides an easy and typically faster way to perform thread synchronization operations when supported as a hardware instruction. CAS is typically used by lock-free and wait-free algorithms. This extension defines CAS instructions to operate on 32-bit, 64-bit, and 128-bit (RV64 only) data values. The Zacas extension depends upon the Zaamo extension.
 
-### [](#15-1-1-worddoublewordquadword-cas-amocas-wdq-instructions)15.1.1\. Word/Doubleword/Quadword CAS (AMOCAS.W/D/Q) Instructions
+### [](#14-1-1-worddoublewordquadword-cas-amocas-wdq-instructions)14.1.1\. Word/Doubleword/Quadword CAS (AMOCAS.W/D/Q) Instructions
 
 ![svg](_images/svg-01fe6c8647c106825955b54f1d9f8f7883e13011.svg) 
 

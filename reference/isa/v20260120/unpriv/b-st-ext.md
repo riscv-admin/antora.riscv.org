@@ -1,6 +1,6 @@
-# 30.1. Bit Manipulation Extensions
+# 29.1. Bit Manipulation Extensions
 
-## [](#bits)30.1\. Bit Manipulation Extensions
+## [](#bits)29.1\. Bit Manipulation Extensions
 
 The bit-manipulation (bitmanip) extension collection is comprised of several component extensions to the base RISC-V architecture that are intended to provide some combination of code-size reduction, performance improvement, and energy reduction. While the instructions are intended for general use, some instructions are more useful in certain domains than in others. Hence, several smaller bitmanip extensions are provided. Each of these smaller extensions is grouped by common function and use case, and each has its own Zb\*-extension name.
 
@@ -81,11 +81,11 @@ Below is a list of all of the instructions that are included in these extensions
 | ✓    | sh3add.uw _rd_, _rs1_, _rs2_ | [Shift unsigned word left by 3 and add](#insns-sh3add%5Fuw) | ✓                                              |     |     |
 | ✓    | slli.uw _rd_, _rs1_, _imm_   | [Shift-left unsigned word (Immediate)](#insns-slli%5Fuw)    | ✓                                              |     |     |
 
-### [](#30-1-1-b-extension-for-bit-manipulation-version-1-0-0)30.1.1\. "B" Extension for Bit Manipulation, Version 1.0.0
+### [](#29-1-1-b-extension-for-bit-manipulation-version-1-0-0)29.1.1\. "B" Extension for Bit Manipulation, Version 1.0.0
 
 The B standard extension comprises instructions provided by the Zba, Zbb, and Zbs extensions.
 
-### [](#zba)30.1.2\. Zba: Extension for Address generation, Version 1.0.0
+### [](#zba)29.1.2\. Zba: Extension for Address generation, Version 1.0.0
 
 The Zba instructions can be used to accelerate the generation of addresses that index into arrays of basic types (halfword, word, doubleword) using both unsigned word-sized and XLEN-sized indices: a shifted index is added to a base address.
 
@@ -106,9 +106,9 @@ The following instructions comprise the Zba extension:
 | ✓    | sh3add.uw _rd_, _rs1_, _rs2_ | [Shift unsigned word left by 3 and add](#insns-sh3add%5Fuw) |                                          |
 | ✓    | slli.uw _rd_, _rs1_, _imm_   | [Shift-left unsigned word (Immediate)](#insns-slli%5Fuw)    |                                          |
 
-### [](#zbb)30.1.3\. Zbb: Extension for Basic bit-manipulation, Version 1.0.0
+### [](#zbb)29.1.3\. Zbb: Extension for Basic bit-manipulation, Version 1.0.0
 
-#### [](#30-1-3-1-logical-with-negate)30.1.3.1\. Logical with negate
+#### [](#29-1-3-1-logical-with-negate)29.1.3.1\. Logical with negate
 
 | RV32 | RV64 | Mnemonic                | Instruction                              |
 | ---- | ---- | ----------------------- | ---------------------------------------- |
@@ -119,7 +119,7 @@ The following instructions comprise the Zba extension:
 | |  Implementation Hint The Logical with Negate instructions can be implemented by inverting the _rs2_ inputs to the base-required AND, OR, and XOR logic instructions. In some implementations, the inverter on rs2 used for subtraction can be reused for this purpose. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#30-1-3-2-count-leadingtrailing-zero-bits)30.1.3.2\. Count leading/trailing zero bits
+#### [](#29-1-3-2-count-leadingtrailing-zero-bits)29.1.3.2\. Count leading/trailing zero bits
 
 | RV32 | RV64            | Mnemonic                                        | Instruction                            |
 | ---- | --------------- | ----------------------------------------------- | -------------------------------------- |
@@ -128,7 +128,7 @@ The following instructions comprise the Zba extension:
 | ✓    | ✓               | ctz _rd_, _rs_                                  | [Count trailing zero bits](#insns-ctz) |
 | ✓    | ctzw _rd_, _rs_ | [Count trailing zero bits in word](#insns-ctzw) |                                        |
 
-#### [](#30-1-3-3-count-population)30.1.3.3\. Count population
+#### [](#29-1-3-3-count-population)29.1.3.3\. Count population
 
 These instructions count the number of set bits (1-bits). This is also commonly referred to as population count.
 
@@ -137,7 +137,7 @@ These instructions count the number of set bits (1-bits). This is also commonly 
 | ✓    | ✓                | cpop _rd_, _rs_                        | [Count set bits](#insns-cpop) |
 | ✓    | cpopw _rd_, _rs_ | [Count set bits in word](#insns-cpopw) |                               |
 
-#### [](#30-1-3-4-integer-minimummaximum)30.1.3.4\. Integer minimum/maximum
+#### [](#29-1-3-4-integer-minimummaximum)29.1.3.4\. Integer minimum/maximum
 
 The integer minimum/maximum instructions are arithmetic R-type instructions that return the smaller/larger of two operands.
 
@@ -148,7 +148,7 @@ The integer minimum/maximum instructions are arithmetic R-type instructions that
 | ✓    | ✓    | min _rd_, _rs1_, _rs2_  | [Minimum](#insns-min)           |
 | ✓    | ✓    | minu _rd_, _rs1_, _rs2_ | [Unsigned minimum](#insns-minu) |
 
-#### [](#30-1-3-5-sign-extension-and-zero-extension)30.1.3.5\. Sign extension and zero extension
+#### [](#29-1-3-5-sign-extension-and-zero-extension)29.1.3.5\. Sign extension and zero extension
 
 These instructions perform the sign extension or zero extension of the least-significant 8 bits or 16 bits of the source register.
 
@@ -160,7 +160,7 @@ These instructions replace the generalized idioms `slli rd,rs,(XLEN-<size>) + sr
 | ✓    | ✓    | sext.h _rd_, _rs_ | [Sign-extend halfword](#insns-sext%5Fh) |
 | ✓    | ✓    | zext.h _rd_, _rs_ | [Zero-extend halfword](#insns-zext%5Fh) |
 
-#### [](#30-1-3-6-bitwise-rotation)30.1.3.6\. Bitwise rotation
+#### [](#29-1-3-6-bitwise-rotation)29.1.3.6\. Bitwise rotation
 
 Bitwise rotation instructions are similar to the shift-logical operations from the base spec. However, where the shift-logical instructions shift in zeros, the rotate instructions shift in the bits that were shifted out of the other side of the value.Such operations are also referred to as ‘circular shifts’.
 
@@ -176,7 +176,7 @@ Bitwise rotation instructions are similar to the shift-logical operations from t
 | |  Architecture Explanation The rotate instructions were included to replace a common four-instruction sequence to achieve the same effect (neg; sll/srl; srl/sll; or) |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#30-1-3-7-or-combine)30.1.3.7\. OR Combine
+#### [](#29-1-3-7-or-combine)29.1.3.7\. OR Combine
 
 **orc.b** sets the bits of each byte in the result _rd_ to all zeros if no bit within the respective byte of _rs_ is set, or to all ones if any bit within the respective byte of _rs_ is set.
 
@@ -186,7 +186,7 @@ One use-case is string-processing functions, such as **strlen** and **strcpy**, 
 | ---- | ---- | ---------------- | -------------------------------------------------- |
 | ✓    | ✓    | orc.b _rd_, _rs_ | [Bitwise OR-Combine, byte granule](#insns-orc%5Fb) |
 
-#### [](#30-1-3-8-byte-reverse)30.1.3.8\. Byte-reverse
+#### [](#29-1-3-8-byte-reverse)29.1.3.8\. Byte-reverse
 
 **rev8** reverses the byte-ordering of _rs_.
 
@@ -194,7 +194,7 @@ One use-case is string-processing functions, such as **strlen** and **strcpy**, 
 | ---- | ---- | --------------- | ------------------------------------ |
 | ✓    | ✓    | rev8 _rd_, _rs_ | [Byte-reverse register](#insns-rev8) |
 
-### [](#zbc)30.1.4\. Zbc: Extension for Carry-less multiplication, Version 1.0.0
+### [](#zbc)29.1.4\. Zbc: Extension for Carry-less multiplication, Version 1.0.0
 
 Carry-less multiplication is the multiplication in the polynomial ring over GF(2).
 
@@ -208,7 +208,7 @@ Carry-less multiplication is the multiplication in the polynomial ring over GF(2
 | ✓    | ✓    | clmulh _rd_, _rs1_, _rs2_ | [Carry-less multiply (high-part)](#insns-clmulh) |
 | ✓    | ✓    | clmulr _rd_, _rs1_, _rs2_ | [Carry-less multiply (reversed)](#insns-clmulr)  |
 
-### [](#zbs)30.1.5\. Zbs: Extension for Single-bit instructions, Version 1.0.0
+### [](#zbs)29.1.5\. Zbs: Extension for Single-bit instructions, Version 1.0.0
 
 The single-bit instructions provide a mechanism to set, clear, invert, or extract a single bit in a register. The bit is specified by its index.
 
@@ -223,7 +223,7 @@ The single-bit instructions provide a mechanism to set, clear, invert, or extrac
 | ✓    | ✓    | bset _rd_, _rs1_, _rs2_  | [Single-Bit Set (Register)](#insns-bset)       |
 | ✓    | ✓    | bseti _rd_, _rs1_, _imm_ | [Single-Bit Set (Immediate)](#insns-bseti)     |
 
-### [](#zbkb)30.1.6\. Zbkb: Extension for Bit-manipulation for Cryptography, Version 1.0.0
+### [](#zbkb)29.1.6\. Zbkb: Extension for Bit-manipulation for Cryptography, Version 1.0.0
 
 This extension contains instructions essential for implementing common operations in cryptographic workloads.
 
@@ -246,7 +246,7 @@ This extension contains instructions essential for implementing common operation
 | ✓    | zip   | [Bit interleave](#insns-zip)                         |                                             |
 | ✓    | unzip | [Bit deinterleave](#insns-unzip)                     |                                             |
 
-### [](#zbkc)30.1.7\. Zbkc: Extension for Carry-less multiplication for Cryptography, Version 1.0.0
+### [](#zbkc)29.1.7\. Zbkc: Extension for Carry-less multiplication for Cryptography, Version 1.0.0
 
 Carry-less multiplication is the multiplication in the polynomial ring over GF(2). This is a critical operation in some cryptographic workloads, particularly the AES-GCM authenticated encryption scheme. This extension provides only the instructions needed to efficiently implement the GHASH operation, which is part of this workload.
 
@@ -255,7 +255,7 @@ Carry-less multiplication is the multiplication in the polynomial ring over GF(2
 | ✓    | ✓    | clmul _rd_, _rs1_, _rs2_  | [Carry-less multiply (low-part)](#insns-clmul)   |
 | ✓    | ✓    | clmulh _rd_, _rs1_, _rs2_ | [Carry-less multiply (high-part)](#insns-clmulh) |
 
-### [](#zbkx)30.1.8\. Zbkx: Extension for Crossbar permutations, Version 1.0.0
+### [](#zbkx)29.1.8\. Zbkx: Extension for Crossbar permutations, Version 1.0.0
 
 These instructions implement a "lookup table" for 4 and 8 bit elements inside the general purpose registers. _rs1_ is used as a vector of N-bit words, and _rs2_ as a vector of N-bit indices into _rs1_.Elements in _rs1_ are replaced by the indexed element in _rs2_, or zero if the index into _rs2_ is out of bounds.
 
@@ -266,11 +266,11 @@ These instructions are useful for expressing N-bit to N-bit boolean operations, 
 | ✓    | ✓    | xperm4 _rd_, _rs1_, _rs2_ | [Crossbar permutation (nibbles)](#insns-xperm4) |
 | ✓    | ✓    | xperm8 _rd_, _rs1_, _rs2_ | [Crossbar permutation (bytes)](#insns-xperm8)   |
 
-### [](#insns-b)30.1.9\. Instructions (in alphabetical order)
+### [](#insns-b)29.1.9\. Instructions (in alphabetical order)
 
 The semantics of each instruction is expressed in a SAIL-like syntax.
 
-#### [](#insns-add%5Fuw)30.1.9.1\. add.uw
+#### [](#insns-add%5Fuw)29.1.9.1\. add.uw
 
 Synopsis
 
@@ -307,7 +307,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-andn)30.1.9.2\. andn
+#### [](#insns-andn)29.1.9.2\. andn
 
 Synopsis
 
@@ -338,7 +338,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | v1.0            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-bclr)30.1.9.3\. bclr
+#### [](#insns-bclr)29.1.9.3\. bclr
 
 Synopsis
 
@@ -369,7 +369,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-bclri)30.1.9.4\. bclri
+#### [](#insns-bclri)29.1.9.4\. bclri
 
 Synopsis
 
@@ -404,7 +404,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-bext)30.1.9.5\. bext
+#### [](#insns-bext)29.1.9.5\. bext
 
 Synopsis
 
@@ -435,7 +435,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-bexti)30.1.9.6\. bexti
+#### [](#insns-bexti)29.1.9.6\. bexti
 
 Synopsis
 
@@ -470,7 +470,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-binv)30.1.9.7\. binv
+#### [](#insns-binv)29.1.9.7\. binv
 
 Synopsis
 
@@ -501,7 +501,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-binvi)30.1.9.8\. binvi
+#### [](#insns-binvi)29.1.9.8\. binvi
 
 Synopsis
 
@@ -536,7 +536,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-bset)30.1.9.9\. bset
+#### [](#insns-bset)29.1.9.9\. bset
 
 Synopsis
 
@@ -567,7 +567,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-bseti)30.1.9.10\. bseti
+#### [](#insns-bseti)29.1.9.10\. bseti
 
 Synopsis
 
@@ -602,7 +602,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbs ([Single-bit instructions](#zbs)) | v1.0            | Ratified        |
 
-#### [](#insns-clmul)30.1.9.11\. clmul
+#### [](#insns-clmul)29.1.9.11\. clmul
 
 Synopsis
 
@@ -643,7 +643,7 @@ Included in
 | Zbc ([Carry-less multiplication](#zbc))                    | v1.0            | Ratified        |
 | Zbkc ([Carry-less multiplication for Cryptography](#zbkc)) | v1.0            | Ratified        |
 
-#### [](#insns-clmulh)30.1.9.12\. clmulh
+#### [](#insns-clmulh)29.1.9.12\. clmulh
 
 Synopsis
 
@@ -684,7 +684,7 @@ Included in
 | Zbc ([Carry-less multiplication](#zbc))                    | v1.0            | Ratified        |
 | Zbkc ([Carry-less multiplication for Cryptography](#zbkc)) | v1.0            | Ratified        |
 
-#### [](#insns-clmulr)30.1.9.13\. clmulr
+#### [](#insns-clmulr)29.1.9.13\. clmulr
 
 Synopsis
 
@@ -727,7 +727,7 @@ Included in
 | --------------------------------------- | --------------- | --------------- |
 | Zbc ([Carry-less multiplication](#zbc)) | v1.0            | Ratified        |
 
-#### [](#insns-clz)30.1.9.14\. clz
+#### [](#insns-clz)29.1.9.14\. clz
 
 Synopsis
 
@@ -766,7 +766,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-clzw)30.1.9.15\. clzw
+#### [](#insns-clzw)29.1.9.15\. clzw
 
 Synopsis
 
@@ -805,7 +805,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-cpop)30.1.9.16\. cpop
+#### [](#insns-cpop)29.1.9.16\. cpop
 
 Synopsis
 
@@ -844,7 +844,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-cpopw)30.1.9.17\. cpopw
+#### [](#insns-cpopw)29.1.9.17\. cpopw
 
 Synopsis
 
@@ -880,7 +880,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-ctz)30.1.9.18\. ctz
+#### [](#insns-ctz)29.1.9.18\. ctz
 
 Synopsis
 
@@ -919,7 +919,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-ctzw)30.1.9.19\. ctzw
+#### [](#insns-ctzw)29.1.9.19\. ctzw
 
 Synopsis
 
@@ -958,7 +958,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-max)30.1.9.20\. max
+#### [](#insns-max)29.1.9.20\. max
 
 Synopsis
 
@@ -998,7 +998,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-maxu)30.1.9.21\. maxu
+#### [](#insns-maxu)29.1.9.21\. maxu
 
 Synopsis
 
@@ -1035,7 +1035,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-min)30.1.9.22\. min
+#### [](#insns-min)29.1.9.22\. min
 
 Synopsis
 
@@ -1072,7 +1072,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-minu)30.1.9.23\. minu
+#### [](#insns-minu)29.1.9.23\. minu
 
 Synopsis
 
@@ -1109,7 +1109,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-orc%5Fb)30.1.9.24\. orc.b
+#### [](#insns-orc%5Fb)29.1.9.24\. orc.b
 
 Synopsis
 
@@ -1148,7 +1148,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | v1.0            | Ratified        |
 
-#### [](#insns-orn)30.1.9.25\. orn
+#### [](#insns-orn)29.1.9.25\. orn
 
 Synopsis
 
@@ -1179,7 +1179,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | v1.0            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-pack)30.1.9.26\. pack
+#### [](#insns-pack)29.1.9.26\. pack
 
 Synopsis
 
@@ -1214,7 +1214,7 @@ Included in
 | |  For RV32, the pack instruction with _rs2_\=x0 is the zext.hinstruction. Hence, for RV32, any extension that contains the pack instruction also contains the zext.h instruction (but not necessarily the c.zext.hinstruction, which is only guaranteed to exist if both the Zcb and Zbb extensions are implemented). |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#insns-packh)30.1.9.27\. packh
+#### [](#insns-packh)29.1.9.27\. packh
 
 Synopsis
 
@@ -1246,7 +1246,7 @@ Included in
 | ------------------------------------------------- | --------------- | --------------- |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-packw)30.1.9.28\. packw
+#### [](#insns-packw)29.1.9.28\. packw
 
 Synopsis
 
@@ -1281,7 +1281,7 @@ Included in
 | |  For RV64, the packw instruction with _rs2_\=x0 is the zext.hinstruction. Hence, for RV64, any extension that contains the packw instruction also contains the zext.h instruction (but not necessarily the c.zext.hinstruction, which is only guaranteed to exist if both the Zcb and Zbb extensions are implemented). |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#insns-rev8)30.1.9.29\. rev8
+#### [](#insns-rev8)29.1.9.29\. rev8
 
 Synopsis
 
@@ -1331,7 +1331,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | v1.0            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-brev8)30.1.9.30\. brev8
+#### [](#insns-brev8)29.1.9.30\. brev8
 
 Synopsis
 
@@ -1365,7 +1365,7 @@ Included in
 | ------------------------------------------------- | --------------- | --------------- |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-rol)30.1.9.31\. rol
+#### [](#insns-rol)29.1.9.31\. rol
 
 Synopsis
 
@@ -1401,7 +1401,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-rolw)30.1.9.32\. rolw
+#### [](#insns-rolw)29.1.9.32\. rolw
 
 Synopsis
 
@@ -1435,7 +1435,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-ror)30.1.9.33\. ror
+#### [](#insns-ror)29.1.9.33\. ror
 
 Synopsis
 
@@ -1471,7 +1471,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-rori)30.1.9.34\. rori
+#### [](#insns-rori)29.1.9.34\. rori
 
 Synopsis
 
@@ -1511,7 +1511,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-roriw)30.1.9.35\. roriw
+#### [](#insns-roriw)29.1.9.35\. roriw
 
 Synopsis
 
@@ -1544,7 +1544,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-rorw)30.1.9.36\. rorw
+#### [](#insns-rorw)29.1.9.36\. rorw
 
 Synopsis
 
@@ -1578,7 +1578,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-sext%5Fb)30.1.9.37\. sext.b
+#### [](#insns-sext%5Fb)29.1.9.37\. sext.b
 
 Synopsis
 
@@ -1608,7 +1608,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | 0.93            | Ratified        |
 
-#### [](#insns-sext%5Fh)30.1.9.38\. sext.h
+#### [](#insns-sext%5Fh)29.1.9.38\. sext.h
 
 Synopsis
 
@@ -1638,7 +1638,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | 0.93            | Ratified        |
 
-#### [](#insns-sh1add)30.1.9.39\. sh1add
+#### [](#insns-sh1add)29.1.9.39\. sh1add
 
 Synopsis
 
@@ -1668,7 +1668,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-sh1add%5Fuw)30.1.9.40\. sh1add.uw
+#### [](#insns-sh1add%5Fuw)29.1.9.40\. sh1add.uw
 
 Synopsis
 
@@ -1701,7 +1701,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-sh2add)30.1.9.41\. sh2add
+#### [](#insns-sh2add)29.1.9.41\. sh2add
 
 Synopsis
 
@@ -1731,7 +1731,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-sh2add%5Fuw)30.1.9.42\. sh2add.uw
+#### [](#insns-sh2add%5Fuw)29.1.9.42\. sh2add.uw
 
 Synopsis
 
@@ -1764,7 +1764,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-sh3add)30.1.9.43\. sh3add
+#### [](#insns-sh3add)29.1.9.43\. sh3add
 
 Synopsis
 
@@ -1794,7 +1794,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-sh3add%5Fuw)30.1.9.44\. sh3add.uw
+#### [](#insns-sh3add%5Fuw)29.1.9.44\. sh3add.uw
 
 Synopsis
 
@@ -1827,7 +1827,7 @@ Included in
 | --------------------------------------------- | --------------- | --------------- |
 | Zba ([Address generation instructions](#zba)) | 0.93            | Ratified        |
 
-#### [](#insns-slli%5Fuw)30.1.9.45\. slli.uw
+#### [](#insns-slli%5Fuw)29.1.9.45\. slli.uw
 
 Synopsis
 
@@ -1860,7 +1860,7 @@ Included in
 | |  Architecture Explanation This instruction is the same as **slli** with **zext.w** performed on _rs1_ before shifting. |
 | ------------------------------------------------------------------------------------------------------------------------ |
 
-#### [](#insns-unzip)30.1.9.46\. unzip
+#### [](#insns-unzip)29.1.9.46\. unzip
 
 Synopsis
 
@@ -1896,7 +1896,7 @@ Included in
 | -------------------------------------------------------- | --------------- | --------------- |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) (RV32) | v1.0            | Ratified        |
 
-#### [](#insns-xnor)30.1.9.47\. xnor
+#### [](#insns-xnor)29.1.9.47\. xnor
 
 Synopsis
 
@@ -1927,7 +1927,7 @@ Included in
 | Zbb ([Basic bit-manipulation](#zbb))              | 0.93            | Ratified        |
 | Zbkb ([Bit-manipulation for Cryptography](#zbkb)) | v1.0            | Ratified        |
 
-#### [](#insns-xperm8)30.1.9.48\. xperm8
+#### [](#insns-xperm8)29.1.9.48\. xperm8
 
 Synopsis
 
@@ -1969,7 +1969,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbkx ([Crossbar permutations](#zbkx)) | v1.0            | Ratified        |
 
-#### [](#insns-xperm4)30.1.9.49\. xperm4
+#### [](#insns-xperm4)29.1.9.49\. xperm4
 
 Synopsis
 
@@ -2011,7 +2011,7 @@ Included in
 | ------------------------------------- | --------------- | --------------- |
 | Zbkx ([Crossbar permutations](#zbkx)) | v1.0            | Ratified        |
 
-#### [](#insns-zext%5Fh)30.1.9.50\. zext.h
+#### [](#insns-zext%5Fh)29.1.9.50\. zext.h
 
 Synopsis
 
@@ -2048,7 +2048,7 @@ Included in
 | ------------------------------------ | --------------- | --------------- |
 | Zbb ([Basic bit-manipulation](#zbb)) | 0.93            | Ratified        |
 
-#### [](#insns-zip)30.1.9.51\. zip
+#### [](#insns-zip)29.1.9.51\. zip
 
 Synopsis
 

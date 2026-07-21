@@ -1,21 +1,21 @@
-# 37.1. ISA Extension Naming Conventions
+# 36.1. ISA Extension Naming Conventions
 
-## [](#naming)37.1\. ISA Extension Naming Conventions
+## [](#naming)36.1\. ISA Extension Naming Conventions
 
 This chapter describes the RISC-V ISA extension naming scheme that is used to concisely describe the set of instructions present in a hardware implementation, or the set of instructions used by an application binary interface (ABI).
 
 | |  The RISC-V ISA is designed to support a wide variety of implementations with various experimental instruction-set extensions. We have found that an organized naming scheme simplifies software tools and documentation. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#37-1-1-case-sensitivity)37.1.1\. Case Sensitivity
+### [](#36-1-1-case-sensitivity)36.1.1\. Case Sensitivity
 
 The ISA naming strings are case insensitive.
 
-### [](#37-1-2-base-integer-isa)37.1.2\. Base Integer ISA
+### [](#36-1-2-base-integer-isa)36.1.2\. Base Integer ISA
 
 RISC-V ISA strings begin with either RV32I, RV32E, RV64I, or RV64E, indicating the supported address space size in bits for the base integer ISA.
 
-### [](#37-1-3-instruction-set-extension-names)37.1.3\. Instruction-Set Extension Names
+### [](#36-1-3-instruction-set-extension-names)36.1.3\. Instruction-Set Extension Names
 
 Standard ISA extensions are given a name consisting of a single letter. For example, the first four standard extensions to the integer bases are: "M" for integer multiplication and division, "A" for atomic memory instructions, "F" for single-precision floating-point instructions, and "D" for double-precision floating-point instructions. Any RISC-V instruction-set variant can be succinctly described by concatenating the base integer prefix with the names of the included extensions, e.g., "RV64IMAFD".
 
@@ -25,11 +25,11 @@ Standard extensions to the RISC-V ISA are given other reserved letters, e.g., "Q
 
 Some ISA extensions depend on the presence of other extensions, e.g., "D" depends on "F" and "F" depends on "Zicsr". These dependencies may be implicit in the ISA name: for example, RV32IF is equivalent to RV32IFZicsr, and RV32ID is equivalent to RV32IFD and RV32IFDZicsr.
 
-### [](#37-1-4-underscores)37.1.4\. Underscores
+### [](#36-1-4-underscores)36.1.4\. Underscores
 
 Underscores "\_" may be used to separate ISA extensions to improve readability and to provide disambiguation, e.g., "RV32I2\_M2\_A2".
 
-### [](#37-1-5-additional-standard-unprivileged-extension-names)37.1.5\. Additional Standard Unprivileged Extension Names
+### [](#36-1-5-additional-standard-unprivileged-extension-names)36.1.5\. Additional Standard Unprivileged Extension Names
 
 Standard unprivileged extensions can also be named by using a single "Z" followed by an alphanumeric name. The name must end with an alphabetical character. The second letter from the end cannot be numeric if the last letter is "p". For example, "Zifencei" names the instruction-fetch fence extension described in["Zifencei" Extension for Instruction-Fetch Fence](zifencei.html); "Zifencei2" and "Zifencei2p0" name version 2.0 of same.
 
@@ -37,7 +37,7 @@ The first letter following the "Z" conventionally indicates the most closely rel
 
 All multi-letter extensions, including those with the "Z" prefix, must be separated from other multi-letter extensions by an underscore, e.g., "RV32IMACZicsr\_Zifencei".
 
-### [](#37-1-6-supervisor-level-instruction-set-extension-names)37.1.6\. Supervisor-level Instruction-Set Extension Names
+### [](#36-1-6-supervisor-level-instruction-set-extension-names)36.1.6\. Supervisor-level Instruction-Set Extension Names
 
 Standard extensions that extend the supervisor-level virtual-memory architecture are prefixed with the letters "Sv", followed by an alphanumeric name. Other standard extensions that extend the supervisor-level architecture are prefixed with the letters "Ss", followed by an alphanumeric name. The name must end with an alphabetical character. The second letter from the end cannot be numeric if the last letter is "p". These extensions are further defined in Volume II.
 
@@ -45,20 +45,20 @@ The extensions "sv32", "sv39", "sv48", and "sv59" were defined before the rule a
 
 Standard supervisor-level extensions should be listed after standard unprivileged extensions, and like other multi-letter extensions, must be separated from other multi-letter extensions by an underscore. If multiple supervisor-level extensions are listed, they should be ordered alphabetically.
 
-### [](#37-1-7-hypervisor-level-instruction-set-extension-names)37.1.7\. Hypervisor-level Instruction-Set Extension Names
+### [](#36-1-7-hypervisor-level-instruction-set-extension-names)36.1.7\. Hypervisor-level Instruction-Set Extension Names
 
 Standard extensions that extend the hypervisor-level architecture are prefixed with the letters "Sh". If multiple hypervisor-level extensions are listed, they should be ordered alphabetically.
 
 | |  Many augmentations to the hypervisor-level architecture are more naturally defined as supervisor-level extensions, following the scheme described in the previous section. The "Sh" prefix is used by the few hypervisor-level extensions that have no supervisor-visible effects. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#37-1-8-machine-level-instruction-set-extension-names)37.1.8\. Machine-level Instruction-Set Extension Names
+### [](#36-1-8-machine-level-instruction-set-extension-names)36.1.8\. Machine-level Instruction-Set Extension Names
 
 Standard machine-level instruction-set extensions are prefixed with the letters "Sm".
 
 Standard machine-level extensions should be listed after standard lesser-privileged extensions, and like other multi-letter extensions, must be separated from other multi-letter extensions by an underscore. If multiple machine-level extensions are listed, they should be ordered alphabetically.
 
-### [](#37-1-9-non-standard-extension-names)37.1.9\. Non-Standard Extension Names
+### [](#36-1-9-non-standard-extension-names)36.1.9\. Non-Standard Extension Names
 
 Non-standard extensions are named by using a single "X" followed by the alphanumeric name. The name must end with an alphabetic character. The second letter from the end cannot be numeric if the last letter is "p". For example, "Xhwacha" names the Hwacha vector-fetch ISA extension.
 
@@ -66,7 +66,7 @@ Non-standard extensions must be listed after all standard extensions, and, like 
 
 If multiple non-standard extensions are listed, they should be ordered alphabetically. Like other multi-letter extensions, they should be separated from other multi-letter extensions by an underscore.
 
-### [](#37-1-10-version-numbers)37.1.10\. Version Numbers
+### [](#36-1-10-version-numbers)36.1.10\. Version Numbers
 
 Recognizing that instruction sets may expand or alter over time, we encode extension version numbers following the extension name. Version numbers are divided into major and minor version numbers, separated by a "p". If the minor version is "0", then "p0" can be omitted from the version string. To avoid ambiguity, no extension name may end with a number or a "p" preceded by a number.
 
@@ -76,7 +76,7 @@ Changes in major version numbers imply a loss of backwards compatibility, wherea
 
 We introduced the version numbering scheme with the second release. Hence, we define the default version of a standard extension to be the version present at that time, e.g., "RV32I" is equivalent to "RV32I2".
 
-### [](#37-1-11-subset-naming-convention)37.1.11\. Subset Naming Convention
+### [](#36-1-11-subset-naming-convention)36.1.11\. Subset Naming Convention
 
 [Table 1](#isanametable) summarizes the standardized extension names. The table also defines the canonical order in which extension names must appear in the name string, with top-to-bottom in table indicating first-to-last in the name string, e.g., RV32IMACV is legal, whereas RV32IMAVC is not.
 

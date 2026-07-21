@@ -1,6 +1,6 @@
-# 7.1. Instruction Trace Encoder Output Packets
+# 6.1. Instruction Trace Encoder Output Packets
 
-## [](#packets)7.1\. Instruction Trace Encoder Output Packets
+## [](#packets)6.1\. Instruction Trace Encoder Output Packets
 
 The bulk of this section describes the payload of packets output from the Instruction Trace Encoder. The infrastructure used to transport these packets is outside the scope of this document, and as such the manner in which packets are encapsulated for transport is not mandated, but the [Unformatted Trace & Diagnostic Data Packet Encapsulation for RISC-V Specification](https://github.com/riscv-non-isa/e-trace-encap/releases/latest/) is recommended. Chapter 3 of that document specifically addresses the encapsulation requirements for E-Trace.
 
@@ -25,13 +25,13 @@ Whilst offering maximum encoding efficiency, variable length packets can present
 * If the maximum packet payload length is 2N\-1 (for example, if N is 5, then the maximum length is 31 bytes), and the minimum packet payload length is 1, then a sequence of at least 2N zero bytes cannot occur within a packet payload, and therefore the first non-zero byte seen after a sequence of at least 2N zero bytes must be the first byte of a packet. This approach can be used for alignment in either memory or a data stream;
 * An alternative approach suitable for packets written to memory is to divide memory into blocks of M bytes (e.g. 1kbyte blocks), and write packets to memory such that the first byte in every block is always the first byte of a packet. This means packets cannot span block boundaries, and so zero bytes must be used to pad between the end of the last message in a block and the block boundary.
 
-### [](#sec:format3)7.1.1\. Format 3 packets
+### [](#sec:format3)6.1.1\. Format 3 packets
 
 Format 3 packets are used for synchronization, traps, reporting context and supporting information. There are 4 sub-formats.
 
 Throughout this document, the term "synchronization packet" is used. This refers specifically to format 3, subformat 0 and subformat 1 packets.
 
-### [](#sec:format30)7.1.2\. Format 3 subformat 0 - Synchronisation
+### [](#sec:format30)6.1.2\. Format 3 subformat 0 - Synchronisation
 
 This packet contains all the information the decoder needs to fully identify an instruction. It is sent for the first traced instruction (unless that instruction also happens to be the first in a trap handler), and when resynchronization has been scheduled by expiry of the resynchronisation timer.
 
@@ -46,16 +46,16 @@ __Table 1\. Packet format 3, subformat 0__
 | **context**    | _context\_width\_p_, or 0 if _nocontext\_p_ is 1 | The instruction context.                                                                                                                                                           |
 | **address**    | _iaddress\_width\_p - iaddress\_lsb\_p_          | Full instruction address. Address alignment is determined by _iaddress\_lsb\_p_: **address**must be left shifted by _iaddress\_lsb\_p_ in order to recreate original byte address. |
 
-#### [](#7-1-2-1-format-3-branch-field)7.1.2.1\. Format 3 **branch** field
+#### [](#6-1-2-1-format-3-branch-field)6.1.2.1\. Format 3 **branch** field
 
 This bit indicates the taken/not taken status in the case where the reported address points to a branch instruction. Overall efficiency would be slightly improved if this bit was removed, and the branch status was instead "carried over" and reported in the next _te\_inst_packet. This was considered, but there are several pathological cases where this approach fails. Consider for example the situation where the first traced instruction is a branch, and this is then followed immediately by an exception. This results in format 3 packets being generated on two consecutive instructions. The second packet does not contain a branch map, so there is no way to report the branch status of the 1st branch, apart from by inserting a format 1 packet in between. There are two issues with this:
 
 * It would require the generation of 2 packets on the same cycle, which adds significant additional complexity to the encoder;
 * It would complicate the algorithm shown in[\[fig:algo\]](#fig:algo).
 
-### [](#sec:format31)7.1.3\. Format 3 subformat 1 - Trap
+### [](#sec:format31)6.1.3\. Format 3 subformat 1 - Trap
 
-This packet also contains all the information the decoder needs to fully identify an instruction. It is sent following an exception or interrupt, and includes the cause, the 'trap value' (for exceptions), and the address of the trap handler, or of the exception itself - [7.1.3.1\. Format 3 **thaddr**, **address** and **privilege** fields](#sec:thaddr).
+This packet also contains all the information the decoder needs to fully identify an instruction. It is sent following an exception or interrupt, and includes the cause, the 'trap value' (for exceptions), and the address of the trap handler, or of the exception itself - [6.1.3.1\. Format 3 **thaddr**, **address** and **privilege** fields](#sec:thaddr).
 
 If the implicit exception mode is enabled (see[\[sec:implicit-exception\]](#sec:implicit-exception)), the trap handler address is omitted if **thaddr** is 1.
 
@@ -74,7 +74,7 @@ __Table 2\. Packet format 3, subformat 1__
 | **address**    | _iaddress\_width\_p - iaddress\_lsb\_p_          | Full instruction address. Address alignment is determined by _iaddress\_lsb\_p_: **address**must be left shifted by\_iaddress-lsb\_p\_ in order to recreate original byte address.                               |
 | **tval**       | _iaddress\_width\_p_                             | Value from appropriate**utval/stval/vstval/mtval** CSR. Field omitted for interrupts                                                                                                                             |
 
-#### [](#sec:thaddr)7.1.3.1\. Format 3 **thaddr**, **address** and **privilege** fields
+#### [](#sec:thaddr)6.1.3.1\. Format 3 **thaddr**, **address** and **privilege** fields
 
 If an exception occurs at the target of an uninferable PC discontinuity, the value of the EPC cannot be infered from the program binary, and so**address** contains the EPC and **thaddr** is set to 0\. In this case, the trap handler address will be reported via a subsequent format 3, subformat 0 packet. An exception occuring on the 1st traced instruction is treated in the same way.
 
@@ -84,11 +84,11 @@ Note: The reason for not reporting the EPC for all exceptions when **thaddr**is 
 
 Where an interrupt or exception causes a privilege change, this change comes into force from the start of the trap handler. As such, the privilege value reported when **thaddr** is 0 will be the privilege level prior to any change.
 
-#### [](#7-1-3-2-format-3-tval-field)7.1.3.2\. Format 3 **tval** field
+#### [](#6-1-3-2-format-3-tval-field)6.1.3.2\. Format 3 **tval** field
 
 This field reports the "trap value" from the appropriate**utval/stval/vstval/mtval** CSR, the meaning of which is dependent on the nature of the exception. It is omitted from the packet for interrupts.
 
-### [](#sec:format32)7.1.4\. Format 3 subformat 2 - Context
+### [](#sec:format32)6.1.4\. Format 3 subformat 2 - Context
 
 This packet contains only the context and/or the timestamp, and is output when the context value changes and can be reported imprecisely (see [\[tab:context-type\]](#tab:context-type)).
 
@@ -101,7 +101,7 @@ __Table 3\. Packet format 3, subformat 2__
 | **time**       | _time\_width\_p_ or 0 if _notime\_p_ is 1        | The time value                          |
 | **context**    | _context\_width\_p_, or 0 if _nocontext\_p_ is 1 | The instruction context.                |
 
-### [](#sec:format33)7.1.5\. Format 3 subformat 3 - Support
+### [](#sec:format33)6.1.5\. Format 3 subformat 3 - Support
 
 This packet provides supporting information to aid the decoder. It must be issued:
 
@@ -125,16 +125,16 @@ __Table 4\. Packet format 3, subformat 3__
 | **dloss**         | 1        | One of more data trace packets lost (if supported)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | **doptions**      | M        | Values of all data trace run-time configuration bits Number of bits and definitions implementation dependent. Examples might be\- 'no data' Exclude data (just report addresses)\- 'no addr' Exclude address (just report data)                                                                                                                                                                                                                                                                                                                                                              |
 
-#### [](#sec:qual-status)7.1.5.1\. Format 3 subformat 3 **qual\_status** field
+#### [](#sec:qual-status)6.1.5.1\. Format 3 subformat 3 **qual\_status** field
 
-When tracing ends, the encoder reports the address of the final traced instruction, and follows this with a format 3, subformat 3 (supporting information) packet. Two codes are provided for indicating that tracing has ended: **ended\_rep** and **ended\_ntr**. This relates to exactly the same ambiguous case described in detail in [7.1.6.2\. Format 2 **notify** and **updiscon** fields](#sec:updiscon), and in principle, the mechanism described in that section can be used to disambiguate when the final traced instruction is at looplabel. However, that mechanism relies on knowing when creating the format 1/2 packet, that a format 3 packet will be generated from the next instruction. This is possible because the encoding algorithm uses a 3-stage pipe with access to the previous, current and next instructions. However, decoding that the next instruction is a privilege change or exception is straightforward, but determining whether the next instruction meets the filtering criteria is much more involved, and this information won’t typically be available, at least not without adding an additional pipeline stage, which is expensive. This means a different mechanism is required, and that is provided by having two codes to indicate that tracing has ended:
+When tracing ends, the encoder reports the address of the final traced instruction, and follows this with a format 3, subformat 3 (supporting information) packet. Two codes are provided for indicating that tracing has ended: **ended\_rep** and **ended\_ntr**. This relates to exactly the same ambiguous case described in detail in [6.1.6.2\. Format 2 **notify** and **updiscon** fields](#sec:updiscon), and in principle, the mechanism described in that section can be used to disambiguate when the final traced instruction is at looplabel. However, that mechanism relies on knowing when creating the format 1/2 packet, that a format 3 packet will be generated from the next instruction. This is possible because the encoding algorithm uses a 3-stage pipe with access to the previous, current and next instructions. However, decoding that the next instruction is a privilege change or exception is straightforward, but determining whether the next instruction meets the filtering criteria is much more involved, and this information won’t typically be available, at least not without adding an additional pipeline stage, which is expensive. This means a different mechanism is required, and that is provided by having two codes to indicate that tracing has ended:
 
 * **ended\_rep** indicates that the preceding packet would not have been issued if tracing hadn’t ended, which means that tracing stopped after executing looplabel in the 1st loop iteration;
 * **ended\_ntr** indicates that the preceding packet would have been issued anyway because of an uninferable PC discontinuity, which means that tracing stopped after executing looplabel in the 2nd loop iteration;
 
 If the encoder implementation does have early access to the filtering results, and the designer chooses to use the **updiscon** bit when the last qualified instruction is also the instruction following an uninferable PC discontinuity, loss of qualification should always be indicated using **ended\_rep**.
 
-### [](#sec:format2)7.1.6\. Format 2 packets
+### [](#sec:format2)6.1.6\. Format 2 packets
 
 This packet contains only an instruction address, and is used when the address of an instruction must be reported, and there is no unreported branch information. The address is in differential format unless full address mode is enabled (see [\[sec:full-address\]](#sec:full-address)).
 
@@ -148,11 +148,11 @@ __Table 5\. Packet format 2__
 | **irreport**   | 1                                                                                        | If the value of this bit is different from **updiscon**, it indicates that this packet is reporting an instruction that is either: following a return because its address differs from the predicted return address at the top of the implicit\_return return address stack, or the last retired before an exception, interrupt, privilege change or resync because it is necessary to report the current address stack depth or nested call count. |
 | **irdepth**    | _return\_stack\_size\_p + (return\_stack\_size\_p > 0 ? 1 : 0) + call\_counter\_size\_p_ | If the value of **irreport** is different from**updiscon**, this field indicates the number of entries on the return address stack (i.e. the entry number of the return that failed) or nested call count. If **irreport** is the same value as **updiscon**, all bits in this field will also be the same value as **updiscon**.                                                                                                                   |
 
-#### [](#sec:notify)7.1.6.1\. Format 2 **notify** field
+#### [](#sec:notify)6.1.6.1\. Format 2 **notify** field
 
 This bit is encoded so that most of the time it will take the same value as the MSB of the **address** field, and will therefore compress away, having no impact on the encoding efficiency. It is required in order to cover the case where an address is reported as a result of a notification request, signalled by setting the **trigger\[2\]** input to 1.
 
-#### [](#sec:updiscon)7.1.6.2\. Format 2 **notify** and **updiscon** fields
+#### [](#sec:updiscon)6.1.6.2\. Format 2 **notify** and **updiscon** fields
 
 These bits are encoded so that most of the time they will compress away, having no impact on efficiency, by taking on the same value as the preceding bit in the packet (**notify** is normally the same value as the MSB of the **address** field, and **updiscon** is normally the same value as**notify**). They are required in order to cover a pathological case where otherwise the decoding software would not be able to reconstruct the program execution unambiguously. Consider the following code fragment:
 
@@ -166,7 +166,7 @@ This is a loop with an indirect jump back to the next iteration. This is an unin
 
 There are four scenarios to consider:
 
-1. Code executes through to the end of the 1st loop iteration, and the encoder reports looplabel using format 1/2 following the **_JALR_**, then carries on executing the 2nd pass of the loop. In this case **updiscon**\== 7.2\. **notify**. The next packet will be a format 1/2;
+1. Code executes through to the end of the 1st loop iteration, and the encoder reports looplabel using format 1/2 following the **_JALR_**, then carries on executing the 2nd pass of the loop. In this case **updiscon**\== 6.2\. **notify**. The next packet will be a format 1/2;
 2. Code executes through to the end of the 1st loop iteration and jumps back to looplabel, but there is then an exception, privilege change or resync in the second iteration at looplabel + 4\. In this case, the encoder reports looplabel using format 1/2 following the **_JALR_**, with**updiscon** \== !**notify**, and the next packet is a format 3;
 3. An exception occurs immediately after the 1st execution of looplabel. In this case, the encoder reports looplabel using format 0/1/2 with**updiscon** \== **notify**, and the next packet is a format 3;
 4. The hart requests the encoder to notify retirement of the instruction at looplabel. In this case, the encoder reports the 1st execution of looplabel with **notify** \== !**address\[MSB\]**, and subsequent executions with **notify** \== **address\[MSB\]** (because they would have been reported anyway as a result of the **_JALR_**).
@@ -179,12 +179,12 @@ Looking at this from the perspective of the decoder, the decoder receives a form
    * If the next packet is a format 1/2, this is case 1\. The decoder must continue until it encounters looplabel a 2nd time.
 * If **notify** \== !**address\[MSB\]**, this indicates case 4, 1st iteration. The decoder has reached the correct instruction.
 
-This example uses an exception at looplabel + 4, but anything that could cause a format 3 for looplabel + 4 would result in the same behavior: a privilege change, or the expiry of the resync timer. It could also occur if looplabel was the final traced instruction (because tracing was disabled for some reason). See [7.1.5.1\. Format 3 subformat 3 **qual\_status** field](#sec:qual-status) for further discussion of this point.
+This example uses an exception at looplabel + 4, but anything that could cause a format 3 for looplabel + 4 would result in the same behavior: a privilege change, or the expiry of the resync timer. It could also occur if looplabel was the final traced instruction (because tracing was disabled for some reason). See [6.1.5.1\. Format 3 subformat 3 **qual\_status** field](#sec:qual-status) for further discussion of this point.
 
 | |  Correct decoder behavior could have been achieved by implementing the **notify** bit only, setting it to the inverse of**address\[MSB\]** whenever an address is reported and it is not the instruction following an uninferable discontinuity. However, this would have been much less efficient, as this would have required **notify** to be different from **address\[MSB\]** the majority of the time when outputting a format 1/2 before an exception, interrupt or resync (as the probability of this instruction being the target of an uninferable jump is low). Using 2 separate bits results in superior compression. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#sec:irxx)7.2.1\. Format 2 **irreport** and **irdepth**
+#### [](#sec:irxx)6.2.1\. Format 2 **irreport** and **irdepth**
 
 These bits are encoded so that most of the time they will take the same value as the **updiscon** field, and will therefore compress away, having no impact on the encoding efficiency. If implicit\_return mode is enabled, the encoder keeps track of the number of traced nested calls, either as a simple count (_call\_counter\_size\_p_ non-zero) or a stack of predicted return addresses (_return\_stack\_size\_p_ non-zero).
 
@@ -198,7 +198,7 @@ In some cases it is also necessary to report the current stack depth or call cou
    * There has been at least one branch since the previous return (in which case the decoder will correctly stop in the call where there are no unprocessed branches).  
    Without this, the decoder would follow the execution path until it encountered the reported address, and in most cases this would be the correct point. However, this cannot be guaranteed for recursive functions, as the reported address will occur multiple times in the execution path.
 
-### [](#sec:format1)7.2.1\. Format 1 packets
+### [](#sec:format1)6.2.1\. Format 1 packets
 
 This packet includes branch information, and is used when either the branch information must be reported (for example because the branch map is full), or when the address of an instruction must be reported, and there has been at least one branch since the previous packet. If included, the address is in differential format unless full address mode is enabled (see [\[sec:full-address\]](#sec:full-address)).
 
@@ -221,21 +221,21 @@ __Table 7\. Packet format 1 - no address, branch map__
 | **branches**    | 5        | Number of valid bits in **branch\_map**. The length of**branch\_map** is determined as follows:0: 31 bits, no **address** in packet1-31: (cannot occur for this format) |
 | **branch\_map** | 31       | An array of bits indicating whether branches are taken or not. Bit 0 represents the oldest branch instruction executed. For each bit: : branch taken : branch not taken |
 
-#### [](#7-2-1-1-format-1-updiscon-field)7.2.1.1\. Format 1 **updiscon** field
+#### [](#6-2-1-1-format-1-updiscon-field)6.2.1.1\. Format 1 **updiscon** field
 
-See [7.1.6.2\. Format 2 **notify** and **updiscon** fields](#sec:updiscon).
+See [6.1.6.2\. Format 2 **notify** and **updiscon** fields](#sec:updiscon).
 
-#### [](#7-2-1-2-format-1-branch%5Fmap-field)7.2.1.2\. Format 1 **branch\_map** field
+#### [](#6-2-1-2-format-1-branch%5Fmap-field)6.2.1.2\. Format 1 **branch\_map** field
 
 When the branch map becomes full it must be reported, but in most cases there is no need to report an address. This is indicated by setting**branches** to 0\. If the address does need to be reported for any reason (for example because the instruction immediately prior to the final branch causes an uninferable discontinuity) **branches** is set to 31.
 
 The choice of sizes (1, 3, 7, 15, 31) is designed to minimize efficiency loss. On average there will be some 'wasted' bits because the number of branches to report is less than the selected size of the **branch\_map**field. Using a tapered set of sizes means that the number of wasted bits will on average be less for shorter packets. If the number of branches between updiscons is randomly distributed then the probability of generating packets with large branch counts will be lower, in which case increased waste for longer packets will have less overall impact. Furthermore, the rate at which packets are generated can be higher for lower branch counts, and so reducing waste for this case will improve overall bandwidth at times where it is most important.
 
-#### [](#7-2-1-3-format-1-irreport-and-irdepth-fields)7.2.1.3\. Format 1 **irreport** and **irdepth** fields
+#### [](#6-2-1-3-format-1-irreport-and-irdepth-fields)6.2.1.3\. Format 1 **irreport** and **irdepth** fields
 
-See [7.2.1\. Format 2 **irreport** and **irdepth**](#sec:irxx).
+See [6.2.1\. Format 2 **irreport** and **irdepth**](#sec:irxx).
 
-### [](#sec:format0)7.2.2\. Format 0 packets
+### [](#sec:format0)6.2.2\. Format 0 packets
 
 This format is intended for optional efficiency extensions. Currently two extensions are defined, for reporting counts of correctly predicted branches, and for reporting the jump target cache index.
 
@@ -251,7 +251,7 @@ __Table 8\. Packet format 0, subformat 0 - no address, branch count__
 | **Field name**    | **Bits**                                           | **Description**                                                                                                                                               |
 | ----------------- | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **format**        | 2                                                  | 00 (opt-ext): formats for optional efficiency extensions                                                                                                      |
-| **subformat**     | See [7.2.2.1\. Format 0 subformat field](#sec:f0s) | 0 (correctly predicted branches)                                                                                                                              |
+| **subformat**     | See [6.2.2.1\. Format 0 subformat field](#sec:f0s) | 0 (correctly predicted branches)                                                                                                                              |
 | **branch\_count** | 32                                                 | Count of the number of correctly predicted branches, minus 31.                                                                                                |
 | **branch\_fmt**   | 2                                                  | 00 (no-addr): Packet does not contain an **address**, and the branch following the previous correct prediction failed.01 - 11: (cannot occur for this format) |
 
@@ -259,7 +259,7 @@ __Table 9\. Packet format 0, subformat 0 - address, branch count__
 | **Field name**    | **Bits**                                                                                 | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | ----------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **format**        | 2                                                                                        | 00 (opt-ext): formats for optional efficiency extensions                                                                                                                                                                                                                                                                                                                                                                                            |
-| **subformat**     | See [7.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 0 (correctly predicted branches)                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| **subformat**     | See [6.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 0 (correctly predicted branches)                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | **branch\_count** | 32                                                                                       | Count of the number of correctly predicted branches, minus 31.                                                                                                                                                                                                                                                                                                                                                                                      |
 | **branch\_fmt**   | 2                                                                                        | 10 (addr): Packet contains an **address**. If this points to a branch instruction, then the branch was predicted correctly.11 (addr-fail): Packet contains an **address** that points to a branch which failed the prediction.00, 01: (cannot occur for this format)                                                                                                                                                                                |
 | **address**       | _iaddress\_width\_p - iaddress\_lsb\_p_                                                  | Differential instruction address.                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -272,7 +272,7 @@ __Table 10\. Packet format 0, subformat 1 - jump target index, branch map__
 | **Field name**  | **Bits**                                                                                 | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                              |
 | --------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **format**      | 2                                                                                        | 00 (opt-ext): formats for optional efficiency extensions                                                                                                                                                                                                                                                                                                                                                                                                     |
-| **subformat**   | See [7.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 1 (jump target cache)                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| **subformat**   | See [6.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 1 (jump target cache)                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | **index**       | _cache\_size\_p_                                                                         | Jump target cache index of entry containing target address.                                                                                                                                                                                                                                                                                                                                                                                                  |
 | **branches**    | 5                                                                                        | Number of valid bits in **branch\_map**. The length of**branch\_map** is determined as follows:+ 0: (cannot occur for this format)1: 1 bit2-3: 3 bits4-7: 7 bits8-15: 15 bits16-31: 31 bitsFor example if branches = 12, **branch\_map** is 15 bits long, and the 12 LSBs are valid.                                                                                                                                                                         |
 | **branch\_map** | Determined by **branches** field.                                                        | An array of bits indicating whether branches are taken or not. Bit 0 represents the oldest branch instruction executed. For each bit: : branch taken : branch not taken                                                                                                                                                                                                                                                                                      |
@@ -283,24 +283,24 @@ __Table 11\. Packet format 0, subformat 1 - jump target index, no branch map__
 | **Field name** | **Bits**                                                                                 | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                           |
 | -------------- | ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **format**     | 2                                                                                        | 00 (opt-ext): formats for optional efficiency extensions                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **subformat**  | See [7.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 1 (jump target cache)                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| **subformat**  | See [6.2.2.1\. Format 0 subformat field](#sec:f0s)                                       | 1 (jump target cache)                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | **index**      | _cache\_size\_p_                                                                         | Jump target cache index of entry containing target address.                                                                                                                                                                                                                                                                                                                                                                                               |
 | **branches**   | 5                                                                                        | Number of valid bits in **branch\_map**. The length of**branch\_map** is determined as follows: : no **branch\_map** in packet -31: (cannot occur for this format)                                                                                                                                                                                                                                                                                        |
 | **irreport**   | 1                                                                                        | If the value of this bit is different from**branches\[MSB\]**, it indicates that this packet is reporting an instruction that is either: following a return because its address differs from the predicted return address at the top of the implicit\_return return address stack, or the last retired before an exception, interrupt, privilege change or resync because it is necessary to report the current address stack depth or nested call count. |
 | **irdepth**    | _return\_stack\_size\_p + (return\_stack\_size\_p > 0 ? 1 : 0) + call\_counter\_size\_p_ | If the value of **irreport** is different from**branches\[MSB\]**, this field indicates the number of entries on the return address stack (i.e. the entry number of the return that failed) or nested call count. If **irreport** is the same value as**branches\[MSB\]**, all bits in this field will also be the same value as**branches\[MSB\]**.                                                                                                      |
 
-#### [](#sec:f0s)7.2.2.1\. Format 0 subformat field
+#### [](#sec:f0s)6.2.2.1\. Format 0 subformat field
 
-The width of this field depends on the number of optional formats supported. Currently, two optional formats are defined (correctly predicted branches and jump target cache). The width is specified by the_f0s\_width_ discovery field (see [\[sec:disco\]](#sec:disco)). If multiple optional formats are supported, the field width must be non-zero. However, if only one optional format is supported, the field can be omitted, and the value of the field inferred from the **options**field in the support packet (see [7.1.5\. Format 3 subformat 3 - Support](#sec:format33). This provision allows additional formats to be added in future without reducing the efficiency of the existing formats.
+The width of this field depends on the number of optional formats supported. Currently, two optional formats are defined (correctly predicted branches and jump target cache). The width is specified by the_f0s\_width_ discovery field (see [\[sec:disco\]](#sec:disco)). If multiple optional formats are supported, the field width must be non-zero. However, if only one optional format is supported, the field can be omitted, and the value of the field inferred from the **options**field in the support packet (see [6.1.5\. Format 3 subformat 3 - Support](#sec:format33). This provision allows additional formats to be added in future without reducing the efficiency of the existing formats.
 
-#### [](#7-2-2-2-format-0-branch%5Ffmt-field)7.2.2.2\. Format 0 **branch\_fmt** field
+#### [](#6-2-2-2-format-0-branch%5Ffmt-field)6.2.2.2\. Format 0 **branch\_fmt** field
 
 This is encoded so that when no address is required it will be zero, allowing the upper bits of the **branch\_count** field to be compressed away.
 
 When a branch count is reported without an address it is because a branch has failed the prediction. However, when an address is reported along with a branch count, it will be because the packet was initiated by an uninferable discontinuity, an exception, or because a branch has been encountered that increments **branch\_count** to 0xffff\_ffff. For the latter case, the reported address will always be for a branch, and in the former cases it may be. If it is a branch, it is necessary to be explicit about whether or not the prediction was met or not. If it is met, then the reported address is that of the last correctly predicted branch.
 
-#### [](#7-2-2-3-format-0-irreport-and-irdepth-fields)7.2.2.3\. Format 0 **irreport** and **irdepth** fields
+#### [](#6-2-2-3-format-0-irreport-and-irdepth-fields)6.2.2.3\. Format 0 **irreport** and **irdepth** fields
 
-These bits are encoded so that most of the time they will take the same value as the immediately preceding bit (**updiscon**, **branch\_map\[MSB\]** or**branches\[MSB\]** depending on the specific packet format). Purpose and behavior is as described in [7.2.1\. Format 2 **irreport** and **irdepth**](#sec:irxx).
+These bits are encoded so that most of the time they will take the same value as the immediately preceding bit (**updiscon**, **branch\_map\[MSB\]** or**branches\[MSB\]** depending on the specific packet format). Purpose and behavior is as described in [6.2.1\. Format 2 **irreport** and **irdepth**](#sec:irxx).
 
 For the jump target cache (subformat 1), they are included to allow return addresses that fail the implicit return prediction but which reside in the jump target cache to be reported using this format. An implementation could omit these if all implicit return failures are reported using format 1.

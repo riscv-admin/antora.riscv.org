@@ -2,7 +2,7 @@
 
 ## [](#change-log)Change Log
 
-PDF generated on: 2026-07-17 19:42:42 UTC
+PDF generated on: 2026-07-21 22:26:07 UTC
 
 ### [](#version-1-0-ratified)Version 1.0 (Ratified)
 

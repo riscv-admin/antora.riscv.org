@@ -1,6 +1,6 @@
-# 15.1. "H" Extension for Hypervisor Support, Version 1.0
+# 14.1. "H" Extension for Hypervisor Support, Version 1.0
 
-## [](#hypervisor)15.1\. "H" Extension for Hypervisor Support, Version 1.0
+## [](#hypervisor)14.1\. "H" Extension for Hypervisor Support, Version 1.0
 
 This chapter describes the RISC-V hypervisor extension, which virtualizes the supervisor-level architecture to support the efficient hosting of guest operating systems atop a type-1 or type-2 hypervisor. The hypervisor extension changes supervisor mode into_hypervisor-extended supervisor mode_ (HS-mode, or _hypervisor mode_ for short), where a hypervisor or a hosting-capable operating system runs. The hypervisor extension also adds another stage of address translation, from _guest physical addresses_ to supervisor physical addresses, to virtualize the memory and memory-mapped I/O subsystems for a guest operating system. HS-mode acts the same as S-mode, but with additional instructions and CSRs that control the new stage of address translation and support hosting a guest OS in virtual S-mode (VS-mode). Regular S-mode operating systems can execute without modification either in HS-mode or as VS-mode guests.
 
@@ -13,7 +13,7 @@ The hypervisor extension is enabled by setting bit 7 in the `misa` CSR, which co
 | |  The baseline privileged architecture is designed to simplify the use of classic virtualization techniques, where a guest OS is run at user-level, as the few privileged instructions can be easily detected and trapped. The hypervisor extension improves virtualization performance by reducing the frequency of these traps. The hypervisor extension has been designed to be efficiently emulable on platforms that do not implement the extension, by running the hypervisor in S-mode and trapping into M-mode for hypervisor CSR accesses and to maintain shadow page tables. The majority of CSR accesses for type-2 hypervisors are valid S-mode accesses so need not be trapped. Hypervisors can support nested virtualization analogously. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#15-1-1-privilege-modes)15.1.1\. Privilege Modes
+### [](#14-1-1-privilege-modes)14.1.1\. Privilege Modes
 
 The current _virtualization mode_, denoted V, indicates whether the hart is currently executing in a guest. When V=1, the hart is either in virtual S-mode (VS-mode), or in virtual U-mode (VU-mode) atop a guest OS running in VS-mode. When V=0, the hart is either in M-mode, in HS-mode, or in U-mode atop an OS running in HS-mode. The virtualization mode also indicates whether two-stage address translation is active (V=1) or inactive (V=0). [Table 1](#HPrivModes) lists the possible privilege modes of a RISC-V hart with the hypervisor extension.
 
@@ -30,7 +30,7 @@ HS-mode is more privileged than VS-mode, and VS-mode is more privileged than VU-
 | |  This description does not consider the possibility of U-mode or VU-mode interrupts and will be revised if an extension for user-level interrupts is adopted. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#15-1-2-hypervisor-and-virtual-supervisor-csrs)15.1.2\. Hypervisor and Virtual Supervisor CSRs
+### [](#14-1-2-hypervisor-and-virtual-supervisor-csrs)14.1.2\. Hypervisor and Virtual Supervisor CSRs
 
 An OS or hypervisor running in HS-mode uses the supervisor CSRs to interact with the exception, interrupt, and address-translation subsystems. Additional CSRs are provided to HS-mode, but not to VS-mode, to manage two-stage address translation and to control the behavior of a VS-mode guest: `hstatus`, `hedeleg`, `hideleg`, `hvip`, `hip`, `hie`,`hgeip`, `hgeie`, `henvcfg`, `henvcfgh`, `hcounteren`, `htimedelta`,`htimedeltah`, `htval`, `htinst`, and `hgatp`.
 
@@ -47,7 +47,7 @@ Some standard supervisor CSRs (`senvcfg`, `scounteren`, and `scontext`, possibly
 
 In this chapter, we use the term _HSXLEN_ to refer to the effective XLEN when executing in HS-mode, and _VSXLEN_ to refer to the effective XLEN when executing in VS-mode.
 
-#### [](#sec:hstatus)15.1.2.1\. Hypervisor Status (`hstatus`) Register
+#### [](#sec:hstatus)14.1.2.1\. Hypervisor Status (`hstatus`) Register
 
 The `hstatus` register is an HSXLEN-bit read/write register formatted as shown in [Figure 1](#hstatusreg-rv32) when HSXLEN=32 and [Figure 2](#hstatusreg) when HSXLEN=64\. The `hstatus`register provides facilities analogous to the `mstatus` register for tracking and controlling the exception behavior of a VS-mode guest.
 
@@ -65,7 +65,7 @@ If HSXLEN is changed from 32 to a wider width, and if field VSXL is not restrict
 
 The `hstatus` fields VTSR, VTW, and VTVM are defined analogously to the`mstatus` fields TSR, TW, and TVM, but affect execution only in VS-mode, and cause virtual-instruction exceptions instead of illegal-instruction exceptions.When VTSR=1, an attempt in VS-mode to execute SRET raises a virtual-instruction exception. When VTW=1 (and assuming `mstatus`.TW=0), an attempt in VS-mode to execute WFI raises a virtual-instruction exception if the WFI does not complete within an implementation-specific, bounded time limit. An implementation may have WFI always raise a virtual-instruction exception in VS-mode when VTW=1 (and `mstatus`.TW=0), even if there are pending globally-disabled interrupts when the instruction is executed. When VTVM=1, an attempt in VS-mode to execute SFENCE.VMA or SINVAL.VMA or to access CSR `satp`raises a virtual-instruction exception.
 
-The VGEIN (Virtual Guest External Interrupt Number) field selects a guest external interrupt source for VS-level external interrupts. VGEIN is a **WLRL** field that must be able to hold values between zero and the maximum guest external interrupt number (known as GEILEN), inclusive. When VGEIN=0, no guest external interrupt source is selected for VS-level external interrupts. GEILEN may be zero, in which case VGEIN may be read-only zero. Guest external interrupts are explained in[15.1.2.4\. Hypervisor Guest External Interrupt Registers (hgeip and hgeie)](#hgeinterruptregs), and the use of VGEIN is covered further in [15.1.2.3\. Hypervisor Interrupt (hvip, hip, and hie) Registers](#hinterruptregs).
+The VGEIN (Virtual Guest External Interrupt Number) field selects a guest external interrupt source for VS-level external interrupts. VGEIN is a **WLRL** field that must be able to hold values between zero and the maximum guest external interrupt number (known as GEILEN), inclusive. When VGEIN=0, no guest external interrupt source is selected for VS-level external interrupts. GEILEN may be zero, in which case VGEIN may be read-only zero. Guest external interrupts are explained in[14.1.2.4\. Hypervisor Guest External Interrupt Registers (hgeip and hgeie)](#hgeinterruptregs), and the use of VGEIN is covered further in [14.1.2.3\. Hypervisor Interrupt (hvip, hip, and hie) Registers](#hinterruptregs).
 
 Field HU (Hypervisor in U-mode) controls whether the virtual-machine load/store instructions, HLV, HLVX, and HSV, can be used also in U-mode. When HU=1, these instructions can be executed in U-mode the same as in HS-mode. When HU=0, all hypervisor instructions cause an illegal-instruction exception in U-mode.
 
@@ -91,7 +91,7 @@ Field GVA (Guest Virtual Address) is written by the implementation whenever a tr
 
 The VSBE bit is a **WARL** field that controls the endianness of explicit memory accesses made from VS-mode. If VSBE=0, explicit load and store memory accesses made from VS-mode are little-endian, and if VSBE=1, they are big-endian. VSBE also controls the endianness of all implicit accesses to VS-level memory management data structures, such as page tables. An implementation may make VSBE a read-only field that always specifies the same endianness as HS-mode.
 
-#### [](#15-1-2-2-hypervisor-trap-delegation-hedeleg-and-hideleg-registers)15.1.2.2\. Hypervisor Trap Delegation (`hedeleg` and `hideleg`) Registers
+#### [](#14-1-2-2-hypervisor-trap-delegation-hedeleg-and-hideleg-registers)14.1.2.2\. Hypervisor Trap Delegation (`hedeleg` and `hideleg`) Registers
 
 Register `hedeleg` is a 64-bit read/write register, formatted as shown in[Figure 3](#hedelegreg). Register `hideleg` is an HSXLEN-bit read/write register, formatted as shown in[Figure 4](#hidelegreg).By default, all traps at any privilege level are handled in M-mode, though M-mode usually uses the `medeleg` and `mideleg` CSRs to delegate some traps to HS-mode. The`hedeleg` and `hideleg` CSRs allow these traps to be further delegated to a VS-mode guest; their layout is the same as `medeleg` and `mideleg`.
 
@@ -119,7 +119,7 @@ __Table 2\. Bits of hedeleg that must be writable or must be read-only zero.__
 | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0123456789101112131516181920212223 | (See text)WritableWritableWritableWritableWritableWritableWritableWritableRead-only 0Read-only 0Read-only 0WritableWritableWritableRead-only 0WritableWritableRead-only 0Read-only 0Read-only 0Read-only 0 | Instruction address misalignedInstruction access faultIllegal instructionBreakpointLoad address misalignedLoad access faultStore/AMO address misalignedStore/AMO access faultEnvironment call from U-mode or VU-modeEnvironment call from HS-modeEnvironment call from VS-modeEnvironment call from M-modeInstruction page faultLoad page faultStore/AMO page faultDouble trapSoftware checkHardware errorInstruction guest-page faultLoad guest-page faultVirtual instructionStore/AMO guest-page fault |
 
-#### [](#hinterruptregs)15.1.2.3\. Hypervisor Interrupt (`hvip`, `hip`, and `hie`) Registers
+#### [](#hinterruptregs)14.1.2.3\. Hypervisor Interrupt (`hvip`, `hip`, and `hie`) Registers
 
 Register `hvip` is an HSXLEN-bit read/write register that a hypervisor can write to indicate virtual interrupts intended for VS-mode. Bits of`hvip` that are not writable are read-only zeros.
 
@@ -164,7 +164,7 @@ Figure 9\. Standard portion (bits 15:0) of `hip`.
 
 Figure 10\. Standard portion (bits 15:0) of `hie`.
 
-Bits `hip`.SGEIP and `hie`.SGEIE are the interrupt-pending and interrupt-enable bits for guest external interrupts at supervisor level (HS-level). SGEIP is read-only in `hip`, and is 1 if and only if the bitwise logical-AND of CSRs `hgeip` and `hgeie` is nonzero in any bit. (See [15.1.2.4\. Hypervisor Guest External Interrupt Registers (hgeip and hgeie)](#hgeinterruptregs).)
+Bits `hip`.SGEIP and `hie`.SGEIE are the interrupt-pending and interrupt-enable bits for guest external interrupts at supervisor level (HS-level). SGEIP is read-only in `hip`, and is 1 if and only if the bitwise logical-AND of CSRs `hgeip` and `hgeie` is nonzero in any bit. (See [14.1.2.4\. Hypervisor Guest External Interrupt Registers (hgeip and hgeie)](#hgeinterruptregs).)
 
 Bits `hip`.VSEIP and `hie`.VSEIE are the interrupt-pending and interrupt-enable bits for VS-level external interrupts. VSEIP is read-only in `hip`, and is the logical-OR of these interrupt sources:
 
@@ -178,7 +178,7 @@ Bits `hip`.VSSIP and `hie`.VSSIE are the interrupt-pending and interrupt-enable 
 
 Multiple simultaneous interrupts destined for HS-mode are handled in the following decreasing priority order: SEI, SSI, STI, SGEI, VSEI, VSSI, VSTI, LCOFI.
 
-#### [](#hgeinterruptregs)15.1.2.4\. Hypervisor Guest External Interrupt Registers (`hgeip` and `hgeie`)
+#### [](#hgeinterruptregs)14.1.2.4\. Hypervisor Guest External Interrupt Registers (`hgeip` and `hgeie`)
 
 The `hgeip` register is an HSXLEN-bit read-only register, formatted as shown in [Figure 11](#hgeipreg), that indicates pending guest external interrupts for this hart. The `hgeie` register is an HSXLEN-bit read/write register, formatted as shown in[Figure 12](#hgeiereg), that contains enable bits for the guest external interrupts at this hart. Guest external interrupt number_i_ corresponds with bit _i_ in both `hgeip` and `hgeie`.
 
@@ -202,7 +202,7 @@ The number of bits implemented in `hgeip` and `hgeie` for guest external interru
 
 Register `hgeie` selects the subset of guest external interrupts that cause a supervisor-level (HS-level) guest external interrupt. The enable bits in `hgeie` do not affect the VS-level external interrupt signal selected from `hgeip` by `hstatus`.VGEIN.
 
-#### [](#sec:henvcfg)15.1.2.5\. Hypervisor Environment Configuration Register (`henvcfg`)
+#### [](#sec:henvcfg)14.1.2.5\. Hypervisor Environment Configuration Register (`henvcfg`)
 
 The `henvcfg` CSR is a 64-bit read/write register, formatted as shown in [Figure 13](#henvcfg), that controls certain characteristics of the execution environment when virtualization mode V=1.
 
@@ -266,7 +266,7 @@ The Ssdbltrp extension adds the double-trap-enable (`DTE`) field in `henvcfg`. W
 
 When XLEN=32, `henvcfgh` is a 32-bit read/write register that aliases bits 63:32 of `henvcfg`. Register `henvcfgh` does not exist when XLEN=64.
 
-#### [](#15-1-2-6-hypervisor-counter-enable-hcounteren-register)15.1.2.6\. Hypervisor Counter-Enable (`hcounteren`) Register
+#### [](#14-1-2-6-hypervisor-counter-enable-hcounteren-register)14.1.2.6\. Hypervisor Counter-Enable (`hcounteren`) Register
 
 The counter-enable register `hcounteren` is a 32-bit register that controls the availability of the hardware performance monitoring counters to the guest virtual machine.
 
@@ -280,7 +280,7 @@ In addition, when the TM bit in the `hcounteren` register is clear, attempts to 
 
 `hcounteren` must be implemented. However, any of the bits may be read-only zero, indicating reads to the corresponding counter will cause an exception when V=1\. Hence, they are effectively **WARL** fields.
 
-#### [](#15-1-2-7-hypervisor-time-delta-htimedelta-register)15.1.2.7\. Hypervisor Time Delta (`htimedelta`) Register
+#### [](#14-1-2-7-hypervisor-time-delta-htimedelta-register)14.1.2.7\. Hypervisor Time Delta (`htimedelta`) Register
 
 The `htimedelta` CSR is a 64-bit read/write register that contains the delta between the value of the `time` CSR and the value returned in VS-mode or VU-mode. That is, reading the `time` CSR in VS or VU mode returns the sum of the contents of `htimedelta` and the actual value of `time`.
 
@@ -295,7 +295,7 @@ When XLEN=32, `htimedeltah` is a 32-bit read/write register that aliases bits 63
 
 If the `time` CSR is implemented, `htimedelta` (and `htimedeltah` for XLEN=32) must be implemented.
 
-#### [](#15-1-2-8-hypervisor-trap-value-htval-register)15.1.2.8\. Hypervisor Trap Value (`htval`) Register
+#### [](#14-1-2-8-hypervisor-trap-value-htval-register)14.1.2.8\. Hypervisor Trap Value (`htval`) Register
 
 The `htval` register is an HSXLEN-bit read/write register formatted as shown in [Figure 16](#htvalreg). When a trap is taken into HS-mode, `htval` is written with additional exception-specific information, alongside `stval`, to assist software in handling the trap.
 
@@ -317,9 +317,9 @@ Otherwise, for misaligned loads and stores that cause guest-page faults, a nonze
 | |  Unless it has reason to assume otherwise (such as a platform standard), software that writes a value to htval should read back from htval to confirm the stored value. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#15-1-2-9-hypervisor-trap-instruction-htinst-register)15.1.2.9\. Hypervisor Trap Instruction (`htinst`) Register
+#### [](#14-1-2-9-hypervisor-trap-instruction-htinst-register)14.1.2.9\. Hypervisor Trap Instruction (`htinst`) Register
 
-The `htinst` register is an HSXLEN-bit read/write register formatted as shown in [Figure 17](#htinstreg). When a trap is taken into HS-mode, `htinst` is written with a value that, if nonzero, provides information about the instruction that trapped, to assist software in handling the trap. The values that may be written to `htinst` on a trap are documented in [15.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
+The `htinst` register is an HSXLEN-bit read/write register formatted as shown in [Figure 17](#htinstreg). When a trap is taken into HS-mode, `htinst` is written with a value that, if nonzero, provides information about the instruction that trapped, to assist software in handling the trap. The values that may be written to `htinst` on a trap are documented in [14.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
 
 ![Hypervisor trap instruction (`htinst`) register.](_images/diag-88556cab04dcc9a8872c722d170d6a807e792be0.svg) 
 
@@ -327,9 +327,9 @@ Figure 17\. Hypervisor trap instruction (`htinst`) register.
 
 `htinst` is a **WARL** register that need only be able to hold the values that the implementation may automatically write to it on a trap.
 
-#### [](#hgatp)15.1.2.10\. Hypervisor Guest Address Translation and Protection (`hgatp`) Register
+#### [](#hgatp)14.1.2.10\. Hypervisor Guest Address Translation and Protection (`hgatp`) Register
 
-The `hgatp` register is an HSXLEN-bit read/write register, formatted as shown in [Figure 18](#rv32hgatp) for HSXLEN=32 and[Figure 19](#rv64hgatp) for HSXLEN=64, which controls G-stage address translation and protection, the second stage of two-stage translation for guest virtual addresses (see[15.1.5\. Two-Stage Address Translation](#two-stage-translation)). Similar to CSR `satp`, this register holds the physical page number (PPN) of the guest-physical root page table; a virtual machine identifier (VMID), which facilitates address-translation fences on a per-virtual-machine basis; and the MODE field, which selects the address-translation scheme for guest physical addresses. When `mstatus`.TVM=1, attempts to read or write `hgatp` while executing in HS-mode will raise an illegal-instruction exception.
+The `hgatp` register is an HSXLEN-bit read/write register, formatted as shown in [Figure 18](#rv32hgatp) for HSXLEN=32 and[Figure 19](#rv64hgatp) for HSXLEN=64, which controls G-stage address translation and protection, the second stage of two-stage translation for guest virtual addresses (see[14.1.5\. Two-Stage Address Translation](#two-stage-translation)). Similar to CSR `satp`, this register holds the physical page number (PPN) of the guest-physical root page table; a virtual machine identifier (VMID), which facilitates address-translation fences on a per-virtual-machine basis; and the MODE field, which selects the address-translation scheme for guest physical addresses. When `mstatus`.TVM=1, attempts to read or write `hgatp` while executing in HS-mode will raise an illegal-instruction exception.
 
 ![Hypervisor guest address translation and protection register `hgatp` when HSXLEN=32.](_images/diag-05a282c2790c56f3693eb70780f67ba18be1f408.svg) 
 
@@ -341,7 +341,7 @@ Figure 19\. Hypervisor guest address translation and protection register `hgatp`
 
 [Table 5](#hgatp-mode) shows the encodings of the MODE field when HSXLEN=32 and HSXLEN=64\. When MODE=Bare, guest physical addresses are equal to supervisor physical addresses, and there is no further memory protection for a guest virtual machine beyond the physical memory protection scheme described in [Physical Memory Protection](machine.html#pmp). In this case, software must write zero to the remaining fields in `hgatp`.Attempting to select MODE=Bare with a nonzero pattern in the remaining fields has an UNSPECIFIED effect on the value that the remaining fields assume and an UNSPECIFIED effect on G-stage address translation and protection behavior.
 
-When HSXLEN=32, the only other valid setting for MODE is Sv32x4, which is a modification of the usual Sv32 paged virtual-memory scheme, extended to support 34-bit guest physical addresses. When HSXLEN=64, modes Sv39x4, Sv48x4, and Sv57x4 are defined as modifications of the Sv39, Sv48, and Sv57 paged virtual-memory schemes. All of these paged virtual-memory schemes are described in[15.1.5.1\. Guest Physical Address Translation](#guest-addr-translation).
+When HSXLEN=32, the only other valid setting for MODE is Sv32x4, which is a modification of the usual Sv32 paged virtual-memory scheme, extended to support 34-bit guest physical addresses. When HSXLEN=64, modes Sv39x4, Sv48x4, and Sv57x4 are defined as modifications of the Sv39, Sv48, and Sv57 paged virtual-memory schemes. All of these paged virtual-memory schemes are described in[14.1.5.1\. Guest Physical Address Translation](#guest-addr-translation).
 
 The remaining MODE settings when HSXLEN=64 are reserved for future use and may define different interpretations of the other fields in `hgatp`.
 
@@ -358,7 +358,7 @@ Implementations are not required to support all defined MODE settings when HSXLE
 
 A write to `hgatp` with an unsupported MODE value is not ignored as it is for `satp`. Instead, the fields of `hgatp` are **WARL** in the normal way, when so indicated.
 
-As explained in [15.1.5.1\. Guest Physical Address Translation](#guest-addr-translation), for the paged virtual-memory schemes (Sv32x4, Sv39x4, Sv48x4, and Sv57x4), the root page table is 16 KiB and must be aligned to a 16-KiB boundary. In these modes, the lowest two bits of the physical page number (PPN) in`hgatp` always read as zeros. An implementation that supports only the defined paged virtual-memory schemes and/or Bare may make PPN\[1:0\] read-only zero.
+As explained in [14.1.5.1\. Guest Physical Address Translation](#guest-addr-translation), for the paged virtual-memory schemes (Sv32x4, Sv39x4, Sv48x4, and Sv57x4), the root page table is 16 KiB and must be aligned to a 16-KiB boundary. In these modes, the lowest two bits of the physical page number (PPN) in`hgatp` always read as zeros. An implementation that supports only the defined paged virtual-memory schemes and/or Bare may make PPN\[1:0\] read-only zero.
 
 The number of VMID bits is UNSPECIFIED and may be zero. The number of implemented VMID bits, termed _VMIDLEN_, may be determined by writing one to every bit position in the VMID field, then reading back the value in `hgatp`to see which bit positions in the VMID field hold a one. The least-significant bits of VMID are implemented first: that is, if VMIDLEN > 0, VMID\[VMIDLEN-1:0\] is writable. The maximal value of VMIDLEN, termed VMIDMAX, is 7 for Sv32x4 or 14 for Sv39x4, Sv48x4, and Sv57x4.
 
@@ -367,9 +367,9 @@ The `hgatp` register is considered _active_ for the purposes of the address-tran
 | |  This definition simplifies the implementation of speculative execution of HLV, HLVX, and HSV instructions. |
 | ------------------------------------------------------------------------------------------------------------- |
 
-Note that writing `hgatp` does not imply any ordering constraints between page-table updates and subsequent G-stage address translations. If the new virtual machine’s guest physical page tables have been modified, or if a VMID is reused, it may be necessary to execute an HFENCE.GVMA instruction (see [15.1.3.2\. Hypervisor Memory-Management Fence Instructions](#hfence.vma)) before or after writing `hgatp`.
+Note that writing `hgatp` does not imply any ordering constraints between page-table updates and subsequent G-stage address translations. If the new virtual machine’s guest physical page tables have been modified, or if a VMID is reused, it may be necessary to execute an HFENCE.GVMA instruction (see [14.1.3.2\. Hypervisor Memory-Management Fence Instructions](#hfence.vma)) before or after writing `hgatp`.
 
-#### [](#vsstatus)15.1.2.11\. Virtual Supervisor Status (`vsstatus`) Register
+#### [](#vsstatus)14.1.2.11\. Virtual Supervisor Status (`vsstatus`) Register
 
 The `vsstatus` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `sstatus`, formatted as shown in [Figure 20](#vsstatusreg-rv32) when VSXLEN=32 and[Figure 21](#vsstatusreg) when VSXLEN=64\. When V=1,`vsstatus` substitutes for the usual `sstatus`, so instructions that normally read or modify `sstatus` actually access `vsstatus` instead.
 
@@ -405,7 +405,7 @@ The Zicfilp extension adds the `SPELP` field that holds the previous `ELP`, and 
 
 The Ssdbltrp adds an S-mode-disable-trap (`SDT`) field extension to address double trap (See [Double Trap Control in sstatus Register](supervisor.html#supv-double-trap)) in VS-mode.
 
-#### [](#15-1-2-12-virtual-supervisor-interrupt-vsip-and-vsie-registers)15.1.2.12\. Virtual Supervisor Interrupt (`vsip` and `vsie`) Registers
+#### [](#14-1-2-12-virtual-supervisor-interrupt-vsip-and-vsie-registers)14.1.2.12\. Virtual Supervisor Interrupt (`vsip` and `vsie`) Registers
 
 The `vsip` and `vsie` registers are VSXLEN-bit read/write registers that are VS-mode’s versions of supervisor CSRs `sip` and `sie`, formatted as shown in [Figure 22](#vsipreg) and [Figure 23](#vsiereg)respectively. When V=1, `vsip` and `vsie` substitute for the usual `sip`and `sie`, so instructions that normally read or modify `sip`/`sie`actually access `vsip`/`vsie` instead. However, interrupts directed to HS-level continue to be indicated in the HS-level `sip` register, not in`vsip`, when V=1.
 
@@ -435,7 +435,7 @@ When bit 6 of `hideleg` is zero, `vsip`.STIP and `vsie`.STIE are read-only zeros
 
 When bit 2 of `hideleg` is zero, `vsip`.SSIP and `vsie`.SSIE are read-only zeros. Else, `vsip`.SSIP and `vsie`.SSIE are aliases of`hip`.VSSIP and `hie`.VSSIE.
 
-#### [](#15-1-2-13-virtual-supervisor-trap-vector-base-address-vstvec-register)15.1.2.13\. Virtual Supervisor Trap Vector Base Address (`vstvec`) Register
+#### [](#14-1-2-13-virtual-supervisor-trap-vector-base-address-vstvec-register)14.1.2.13\. Virtual Supervisor Trap Vector Base Address (`vstvec`) Register
 
 The `vstvec` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `stvec`, formatted as shown in[Figure 26](#vstvecreg). When V=1, `vstvec` substitutes for the usual `stvec`, so instructions that normally read or modify `stvec`actually access `vstvec` instead. When V=0, `vstvec` does not directly affect the behavior of the machine.
 
@@ -443,7 +443,7 @@ The `vstvec` register is a VSXLEN-bit read/write register that is VS-mode’s ve
 
 Figure 26\. Virtual supervisor trap vector base address register `vstvec`.
 
-#### [](#15-1-2-14-virtual-supervisor-scratch-vsscratch-register)15.1.2.14\. Virtual Supervisor Scratch (`vsscratch`) Register
+#### [](#14-1-2-14-virtual-supervisor-scratch-vsscratch-register)14.1.2.14\. Virtual Supervisor Scratch (`vsscratch`) Register
 
 The `vsscratch` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `sscratch`, formatted as shown in [Figure 27](#vsscratchreg). When V=1, `vsscratch`substitutes for the usual `sscratch`, so instructions that normally read or modify `sscratch` actually access `vsscratch` instead. The contents of `vsscratch` never directly affect the behavior of the machine.
 
@@ -451,7 +451,7 @@ The `vsscratch` register is a VSXLEN-bit read/write register that is VS-mode’s
 
 Figure 27\. Virtual supervisor scratch register `vsscratch`.
 
-#### [](#15-1-2-15-virtual-supervisor-exception-program-counter-vsepc-register)15.1.2.15\. Virtual Supervisor Exception Program Counter (`vsepc`) Register
+#### [](#14-1-2-15-virtual-supervisor-exception-program-counter-vsepc-register)14.1.2.15\. Virtual Supervisor Exception Program Counter (`vsepc`) Register
 
 The `vsepc` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `sepc`, formatted as shown in[Figure 28](#vsepcreg). When V=1, `vsepc` substitutes for the usual `sepc`, so instructions that normally read or modify `sepc`actually access `vsepc` instead. When V=0, `vsepc` does not directly affect the behavior of the machine.
 
@@ -461,7 +461,7 @@ The `vsepc` register is a VSXLEN-bit read/write register that is VS-mode’s ver
 
 Figure 28\. Virtual supervisor exception program counter (`vsepc`).
 
-#### [](#15-1-2-16-virtual-supervisor-cause-vscause-register)15.1.2.16\. Virtual Supervisor Cause (`vscause`) Register
+#### [](#14-1-2-16-virtual-supervisor-cause-vscause-register)14.1.2.16\. Virtual Supervisor Cause (`vscause`) Register
 
 The `vscause` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `scause`, formatted as shown in[Figure 29](#vscausereg). When V=1, `vscause` substitutes for the usual `scause`, so instructions that normally read or modify`scause` actually access `vscause` instead. When V=0, `vscause` does not directly affect the behavior of the machine.
 
@@ -471,7 +471,7 @@ The `vscause` register is a VSXLEN-bit read/write register that is VS-mode’s v
 
 Figure 29\. Virtual supervisor cause register (`vscause`).
 
-#### [](#15-1-2-17-virtual-supervisor-trap-value-vstval-register)15.1.2.17\. Virtual Supervisor Trap Value (`vstval`) Register
+#### [](#14-1-2-17-virtual-supervisor-trap-value-vstval-register)14.1.2.17\. Virtual Supervisor Trap Value (`vstval`) Register
 
 The `vstval` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `stval`, formatted as shown in[Figure 30](#vstvalreg). When V=1, `vstval` substitutes for the usual `stval`, so instructions that normally read or modify `stval`actually access `vstval` instead. When V=0, `vstval` does not directly affect the behavior of the machine.
 
@@ -481,9 +481,9 @@ The `vstval` register is a VSXLEN-bit read/write register that is VS-mode’s ve
 
 Figure 30\. Virtual supervisor trap value register (`vstval`).
 
-#### [](#15-1-2-18-virtual-supervisor-address-translation-and-protection-vsatp-register)15.1.2.18\. Virtual Supervisor Address Translation and Protection (`vsatp`) Register
+#### [](#14-1-2-18-virtual-supervisor-address-translation-and-protection-vsatp-register)14.1.2.18\. Virtual Supervisor Address Translation and Protection (`vsatp`) Register
 
-The `vsatp` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `satp`, formatted as shown in[Figure 31](#rv32vsatpreg) for VSXLEN=32 and [Figure 32](#rv64vsatpreg) for VSXLEN=64\. When V=1,`vsatp` substitutes for the usual `satp`, so instructions that normally read or modify `satp` actually access `vsatp` instead. `vsatp` controls VS-stage address translation, the first stage of two-stage translation for guest virtual addresses (see[15.1.5\. Two-Stage Address Translation](#two-stage-translation)).
+The `vsatp` register is a VSXLEN-bit read/write register that is VS-mode’s version of supervisor register `satp`, formatted as shown in[Figure 31](#rv32vsatpreg) for VSXLEN=32 and [Figure 32](#rv64vsatpreg) for VSXLEN=64\. When V=1,`vsatp` substitutes for the usual `satp`, so instructions that normally read or modify `satp` actually access `vsatp` instead. `vsatp` controls VS-stage address translation, the first stage of two-stage translation for guest virtual addresses (see[14.1.5\. Two-Stage Address Translation](#two-stage-translation)).
 
 ![Virtual supervisor address translation and protection `vsatp` register when VSXLEN=32.](_images/diag-3e32007a34cf997898a5e47dd1321277556b7a71.svg) 
 
@@ -502,7 +502,7 @@ When V=0, a write to `vsatp` with an unsupported MODE value is either ignored as
 
 When V=0, `vsatp` does not directly affect the behavior of the machine, unless a virtual-machine load/store (HLV, HLVX, or HSV) or the MPRV feature in the `mstatus` register is used to execute a load or store _as though_ V=1.
 
-#### [](#vstimecmp)15.1.2.19\. Virtual Supervisor Timer (`vstimecmp`) Register
+#### [](#vstimecmp)14.1.2.19\. Virtual Supervisor Timer (`vstimecmp`) Register
 
 The `vstimecmp` CSR is a 64-bit register and has 64-bit precision on all RV32 and RV64 systems. In RV32 only, accesses to the `vstimecmp` CSR access the low 32 bits, while accesses to the `vstimecmph` CSR access the high 32 bits of`vstimecmp`.
 
@@ -511,11 +511,11 @@ A virtual supervisor timer interrupt becomes pending, as reflected in the VSTIP 
 | |  In systems in which a supervisor execution environment (SEE) implemented by an HS-mode hypervisor provides timer facilities via an SBI function call, this SBI call will continue to support requests to schedule a timer interrupt. The SEE will simply make use of vstimecmp, changing its value as appropriate. This ensures compatibility with existing guest VS-mode software that uses this SEE facility, while new VS-mode software takes advantage of vstimecmp directly.) |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#15-1-3-hypervisor-instructions)15.1.3\. Hypervisor Instructions
+### [](#14-1-3-hypervisor-instructions)14.1.3\. Hypervisor Instructions
 
 The hypervisor extension adds virtual-machine load and store instructions and two privileged fence instructions.
 
-#### [](#15-1-3-1-hypervisor-virtual-machine-load-and-store-instructions)15.1.3.1\. Hypervisor Virtual-Machine Load and Store Instructions
+#### [](#14-1-3-1-hypervisor-virtual-machine-load-and-store-instructions)14.1.3.1\. Hypervisor Virtual-Machine Load and Store Instructions
 
 ![svg](_images/svg-7ee5c36eedcec558e882f8ea3274cf450cfd841a.svg) 
 
@@ -537,7 +537,7 @@ The memory accesses performed by the `HLVX.*` instructions are not subject to po
 
 Attempts to execute a virtual-machine load/store instruction (HLV, HLVX, or HSV) when V=1 cause a virtual-instruction exception. Attempts to execute one of these same instructions from U-mode when `hstatus`.HU=0 cause an illegal-instruction exception.
 
-#### [](#hfence.vma)15.1.3.2\. Hypervisor Memory-Management Fence Instructions
+#### [](#hfence.vma)14.1.3.2\. Hypervisor Memory-Management Fence Instructions
 
 ![svg](_images/svg-18753613efe684d2f90b312d0abb8044757cc6e8.svg) 
 
@@ -574,11 +574,11 @@ If `hgatp`.MODE is changed for a given VMID, an HFENCE.GVMA with_rs1_\=`x0` (and
 
 Attempts to execute HFENCE.VVMA or HFENCE.GVMA when V=1 cause a virtual-instruction exception, while attempts to do the same in U-mode cause an illegal-instruction exception. Attempting to execute HFENCE.GVMA in HS-mode when `mstatus`.TVM=1 also causes an illegal-instruction exception.
 
-### [](#15-1-4-machine-level-csrs)15.1.4\. Machine-Level CSRs
+### [](#14-1-4-machine-level-csrs)14.1.4\. Machine-Level CSRs
 
 The hypervisor extension augments or modifies machine CSRs `mstatus`,`mstatush`, `mideleg`, `mip`, and `mie`, and adds CSRs `mtval2` and`mtinst`.
 
-#### [](#15-1-4-1-machine-status-mstatus-and-mstatush-registers)15.1.4.1\. Machine Status (`mstatus` and `mstatush`) Registers
+#### [](#14-1-4-1-machine-status-mstatus-and-mstatush-registers)14.1.4.1\. Machine Status (`mstatus` and `mstatush`) Registers
 
 The hypervisor extension adds two fields, MPV and GVA, to the machine-level `mstatus` or `mstatush` CSR, and modifies the behavior of several existing `mstatus` fields.[Figure 33](#hypervisor-mstatus) shows the modified`mstatus` register when the hypervisor extension is implemented and MXLEN=64\. When MXLEN=32, the hypervisor extension adds MPV and GVA not to `mstatus` but to `mstatush`.[Figure 34](#hypervisor-mstatush) shows the`mstatush` register when the hypervisor extension is implemented and MXLEN=32.
 
@@ -617,13 +617,13 @@ MPRV does not affect the virtual-machine load/store instructions, HLV, HLVX, and
 
 The `mstatus` register is a superset of the HS-level `sstatus` register but is not a superset of `vsstatus`.
 
-#### [](#15-1-4-2-machine-interrupt-delegation-mideleg-register)15.1.4.2\. Machine Interrupt Delegation (`mideleg`) Register
+#### [](#14-1-4-2-machine-interrupt-delegation-mideleg-register)14.1.4.2\. Machine Interrupt Delegation (`mideleg`) Register
 
 When the hypervisor extension is implemented, bits 10, 6, and 2 of`mideleg` (corresponding to the standard VS-level interrupts) are each read-only one. Furthermore, if any guest external interrupts are implemented (GEILEN is nonzero), bit 12 of `mideleg` (corresponding to supervisor-level guest external interrupts) is also read-only one. VS-level interrupts and guest external interrupts are always delegated past M-mode to HS-mode.
 
 For bits of `mideleg` that are zero, the corresponding bits in`hideleg`, `hip`, and `hie` are read-only zeros.
 
-#### [](#15-1-4-3-machine-interrupt-mip-and-mie-registers)15.1.4.3\. Machine Interrupt (`mip` and `mie`) Registers
+#### [](#14-1-4-3-machine-interrupt-mip-and-mie-registers)14.1.4.3\. Machine Interrupt (`mip` and `mie`) Registers
 
 The hypervisor extension gives registers `mip` and `mie` additional active bits for the hypervisor-added interrupts. [Figure 35](#hypervisor-mipreg-standard) and [Figure 36](#hypervisor-miereg-standard) show the standard portions (bits 15:0) of registers `mip` and `mie` when the hypervisor extension is implemented.
 
@@ -637,7 +637,7 @@ Figure 36\. Standard portion (bits 15:0) of `mie`.
 
 Bits SGEIP, VSEIP, VSTIP, and VSSIP in `mip` are aliases for the same bits in hypervisor CSR `hip`, while SGEIE, VSEIE, VSTIE, and VSSIE in`mie` are aliases for the same bits in `hie`.
 
-#### [](#15-1-4-4-machine-second-trap-value-mtval2-register)15.1.4.4\. Machine Second Trap Value (`mtval2`) Register
+#### [](#14-1-4-4-machine-second-trap-value-mtval2-register)14.1.4.4\. Machine Second Trap Value (`mtval2`) Register
 
 The `mtval2` register is an MXLEN-bit read/write register formatted as shown in [Figure 37](#mtval2reg). When a trap is taken into M-mode, `mtval2` is written with additional exception-specific information, alongside `mtval`, to assist software in handling the trap.
 
@@ -655,9 +655,9 @@ Otherwise, for misaligned loads and stores that cause guest-page faults, a nonze
 
 The Ssdbltrap extension (See ["Ssdbltrp" Double Trap Extension](ssdbltrp.html#ssdbltrp)) requires the implementation of the `mtval2` CSR.
 
-#### [](#15-1-4-5-machine-trap-instruction-mtinst-register)15.1.4.5\. Machine Trap Instruction (`mtinst`) Register
+#### [](#14-1-4-5-machine-trap-instruction-mtinst-register)14.1.4.5\. Machine Trap Instruction (`mtinst`) Register
 
-The `mtinst` register is an MXLEN-bit read/write register formatted as shown in [Figure 38](#mtinstreg). When a trap is taken into M-mode, `mtinst` is written with a value that, if nonzero, provides information about the instruction that trapped, to assist software in handling the trap. The values that may be written to `mtinst` on a trap are documented in [15.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
+The `mtinst` register is an MXLEN-bit read/write register formatted as shown in [Figure 38](#mtinstreg). When a trap is taken into M-mode, `mtinst` is written with a value that, if nonzero, provides information about the instruction that trapped, to assist software in handling the trap. The values that may be written to `mtinst` on a trap are documented in [14.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
 
 ![Machine trap instruction (`mtinst`) register.](_images/diag-b102d8b6a52595dc6d0dcb538762ae933ee465f5.svg) 
 
@@ -665,7 +665,7 @@ Figure 38\. Machine trap instruction (`mtinst`) register.
 
 `mtinst` is a **WARL** register that need only be able to hold the values that the implementation may automatically write to it on a trap.
 
-### [](#two-stage-translation)15.1.5\. Two-Stage Address Translation
+### [](#two-stage-translation)14.1.5\. Two-Stage Address Translation
 
 Whenever the current virtualization mode V is 1, two-stage address translation and protection is in effect. For any virtual memory access, the original virtual address is converted in the first stage by VS-level address translation, as controlled by the `vsatp` register, into a_guest physical address_. The guest physical address is then converted in the second stage by guest physical address translation, as controlled by the `hgatp` register, into a supervisor physical address. The two stages are known also as VS-stage and G-stage translation. Although there is no option to disable two-stage address translation when V=1, either stage of translation can be effectively disabled by zeroing the corresponding `vsatp` or `hgatp` register.
 
@@ -675,9 +675,9 @@ When V=1, memory accesses that would normally bypass address translation are sub
 
 Machine-level physical memory protection applies to supervisor physical addresses and is in effect regardless of virtualization mode.
 
-#### [](#guest-addr-translation)15.1.5.1\. Guest Physical Address Translation
+#### [](#guest-addr-translation)14.1.5.1\. Guest Physical Address Translation
 
-The mapping of guest physical addresses to supervisor physical addresses is controlled by CSR `hgatp` ([15.1.2.10\. Hypervisor Guest Address Translation and Protection (hgatp) Register](#hgatp)).
+The mapping of guest physical addresses to supervisor physical addresses is controlled by CSR `hgatp` ([14.1.2.10\. Hypervisor Guest Address Translation and Protection (hgatp) Register](#hgatp)).
 
 When the address translation scheme selected by the MODE field of`hgatp` is Bare, guest physical addresses are equal to supervisor physical addresses without modification, and no memory protection applies in the trivial translation of guest physical addresses to supervisor physical addresses.
 
@@ -724,21 +724,21 @@ The G bit in all G-stage PTEs is currently not used. Until its use is defined by
 | |  G-stage address translation uses the identical format for PTEs as regular address translation, even including the U bit, due to the possibility of sharing some (or all) page tables between G-stage translation and regular HS-level address translation. Regardless of whether this usage will ever become common, we chose not to preclude it. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#15-1-5-2-guest-page-faults)15.1.5.2\. Guest-Page Faults
+#### [](#14-1-5-2-guest-page-faults)14.1.5.2\. Guest-Page Faults
 
-Guest-page-fault traps may be delegated from M-mode to HS-mode under the control of CSR `medeleg`, but cannot be delegated to other privilege modes. On a guest-page fault, CSR `mtval` or `stval` is written with the faulting guest virtual address as usual, and `mtval2` or `htval` is written either with zero or with the faulting guest physical address, shifted right by 2 bits. CSR `mtinst` or `htinst` may also be written with information about the faulting instruction or other reason for the access, as explained in [15.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
+Guest-page-fault traps may be delegated from M-mode to HS-mode under the control of CSR `medeleg`, but cannot be delegated to other privilege modes. On a guest-page fault, CSR `mtval` or `stval` is written with the faulting guest virtual address as usual, and `mtval2` or `htval` is written either with zero or with the faulting guest physical address, shifted right by 2 bits. CSR `mtinst` or `htinst` may also be written with information about the faulting instruction or other reason for the access, as explained in [14.1.6.3\. Transformed Instruction or Pseudoinstruction for mtinst or htinst](#tinst-vals).
 
 When an instruction fetch or a misaligned memory access straddles a page boundary, two different address translations are involved. When a guest-page fault occurs in such a circumstance, the faulting virtual address written to `mtval`/`stval` is the same as would be required for a regular page fault. Thus, the faulting virtual address may be a page-boundary address that is higher than the instruction’s original virtual address, if the byte at that page boundary is among the accessed bytes.
 
 When a guest-page fault is not due to an implicit memory access for VS-stage address translation, a nonzero guest physical address written to `mtval2`/`htval` shall correspond to the exact virtual address written to `mtval`/`stval`.
 
-#### [](#hyp-mm-fences)15.1.5.3\. Memory-Management Fences
+#### [](#hyp-mm-fences)14.1.5.3\. Memory-Management Fences
 
 The behavior of the SFENCE.VMA instruction is affected by the current virtualization mode V. When V=0, the virtual-address argument is an HS-level virtual address, and the ASID argument is an HS-level ASID. The instruction orders stores only to HS-level address-translation structures with subsequent HS-level address translations.
 
 When V=1, the virtual-address argument to SFENCE.VMA is a guest virtual address within the current virtual machine, and the ASID argument is a VS-level ASID within the current virtual machine. The current virtual machine is identified by the VMID field of CSR `hgatp`, and the effective ASID can be considered to be the combination of this VMID with the VS-level ASID. The SFENCE.VMA instruction orders stores only to the VS-level address-translation structures with subsequent VS-stage address translations for the same virtual machine, i.e., only when `hgatp`.VMID is the same as when the SFENCE.VMA executed.
 
-Hypervisor instructions HFENCE.VVMA and HFENCE.GVMA provide additional memory-management fences to complement SFENCE.VMA. These instructions are described in [15.1.3.2\. Hypervisor Memory-Management Fence Instructions](#hfence.vma).
+Hypervisor instructions HFENCE.VVMA and HFENCE.GVMA provide additional memory-management fences to complement SFENCE.VMA. These instructions are described in [14.1.3.2\. Hypervisor Memory-Management Fence Instructions](#hfence.vma).
 
 [Physical Memory Protection and Paging](machine.html#pmp-vmem) discusses the intersection between physical memory protection (PMP) and page-based address translation. It is noted there that, when PMP settings are modified in a manner that affects either the physical memory that holds page tables or the physical memory to which page tables point, M-mode software must synchronize the PMP settings with the virtual memory system. For HS-level address translation, this is accomplished by executing in M-mode an SFENCE.VMA instruction with _rs1_\=`x0` and _rs2_\=`x0`, after the PMP CSRs are written. Synchronization with G-stage and VS-stage data structures is also needed. Executing an HFENCE.GVMA instruction with_rs1_\=`x0` and _rs2_\=`x0` suffices to flush all G-stage or VS-stage address-translation cache entries that have cached PMP settings corresponding to the final translated supervisor physical address. An HFENCE.VVMA instruction is not required.
 
@@ -749,7 +749,7 @@ By contrast, if the PBMTE or ADUE bits in `henvcfg` are changed, executing an HF
 | |  No mechanism is provided to atomically change vsatp and hgatptogether. Hence, to prevent speculative execution causing one guest’s VS-stage translations to be cached under another guest’s VMID, world-switch code should zero vsatp, then swap hgatp, then finally write the newvsatp value. Similarly, if henvcfg.PBMTE/ADUE need be world-switched, they should be switched after zeroing vsatp but before writing the new vsatpvalue, obviating the need to execute an HFENCE.VVMA instruction. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#pm-two-stage)15.1.5.4\. Interaction with Pointer Masking
+#### [](#pm-two-stage)14.1.5.4\. Interaction with Pointer Masking
 
 Guest physical addresses (GPAs) are 2 bits wider than the corresponding virtual address translation modes, resulting in additional address translation schemes Sv32x4, Sv39x4, Sv48x4, and Sv57x4 for translating guest physical addresses to supervisor physical addresses. When running with virtualization in VS/VU mode with `vsatp.MODE` \= Bare, this means that those two bits may be subject to pointer masking, depending on `hgatp.MODE` and `senvcfg.PMM`/`henvcfg.PMM` (for VU/VS mode). If `vsatp.MODE` != BARE, this issue does **not** apply.
 
@@ -764,9 +764,9 @@ To support implementations where (XLEN-PMLEN) can be less than the GPA width sup
 
 Implementation of an address-specific `HFENCE.GVMA` should either ignore the address argument, or should ignore the top masked GPA bits of entries when comparing for an address match.
 
-### [](#15-1-6-traps)15.1.6\. Traps
+### [](#14-1-6-traps)14.1.6\. Traps
 
-#### [](#sec:hcauses)15.1.6.1\. Trap Cause Codes
+#### [](#sec:hcauses)14.1.6.1\. Trap Cause Codes
 
 The hypervisor extension augments the trap cause encoding.[Table 7](#hcauses) lists the possible M-mode and HS-mode trap cause codes when the hypervisor extension is implemented. Codes are added for VS-level interrupts (interrupts 2, 6, 10), for supervisor-level guest external interrupts (interrupt 12), for virtual-instruction exceptions (exception 22), and for guest-page faults (exceptions 20, 21, 23). Furthermore, environment calls from VS-mode are assigned cause 10, whereas those from HS-mode or S-mode use cause 9 as usual.
 
@@ -830,7 +830,7 @@ __Table 8\. Synchronous exception priority when the hypervisor extension is impl
 
 If an instruction may raise multiple synchronous exceptions, the decreasing priority order of [Table 8](#HSyncExcPrio)indicates which exception is taken and reported in `mcause` or `scause`.
 
-#### [](#15-1-6-2-trap-entry)15.1.6.2\. Trap Entry
+#### [](#14-1-6-2-trap-entry)14.1.6.2\. Trap Entry
 
 When a trap occurs in HS-mode or U-mode, it goes to M-mode, unless delegated by `medeleg` or `mideleg`, in which case it goes to HS-mode. When a trap occurs in VS-mode or VU-mode, it goes to M-mode, unless delegated by `medeleg` or `mideleg`, in which case it goes to HS-mode, unless further delegated by `hedeleg` or `hideleg`, in which case it goes to VS-mode.
 
@@ -857,7 +857,7 @@ __Table 11\. Value of vsstatus field SPP after a trap into VS-mode.__
 | -------------- | --- |
 | VU-modeVS-mode | 01  |
 
-#### [](#tinst-vals)15.1.6.3\. Transformed Instruction or Pseudoinstruction for `mtinst` or `htinst`
+#### [](#tinst-vals)14.1.6.3\. Transformed Instruction or Pseudoinstruction for `mtinst` or `htinst`
 
 On any trap into M-mode or HS-mode, one of these values is written automatically into the appropriate trap instruction CSR, `mtinst` or`htinst`:
 
@@ -956,7 +956,7 @@ A _write_ pseudoinstruction (`0x00002020` or `0x00003020`) is used for the case 
 | |  If the conditions that necessitate a pseudoinstruction value can ever occur for M-mode, then mtinst cannot be entirely read-only zero; and likewise for HS-mode and htinst. However, in that case, the trap instruction registers may minimally support only values 0 and0x00002000 or 0x00003000, and possibly 0x00002020 or 0x00003020, requiring as few as one or two flip-flops in hardware, per register. There is no harm here in ignoring the atomicity requirement for page table updates, because a hypervisor is not expected in these circumstances to emulate an implicit memory access that fails. Rather, the hypervisor is given enough information about the faulting access to be able to make the memory accessible (e.g. by restoring a missing page of virtual memory) before resuming execution by retrying the faulting instruction. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#15-1-6-4-trap-return)15.1.6.4\. Trap Return
+#### [](#14-1-6-4-trap-return)14.1.6.4\. Trap Return
 
 The MRET instruction is used to return from a trap taken into M-mode. MRET first determines what the new privilege mode will be according to the values of MPP and MPV in `mstatus` or `mstatush`, as encoded in[Table 9](#h-mpp). MRET then in `mstatus`/`mstatush` sets MPV=0, MPP=0, MIE=MPIE, and MPIE=1\. Lastly, MRET sets the privilege mode as previously determined, and sets `pc`\=`mepc`.
 

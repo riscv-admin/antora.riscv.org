@@ -1,6 +1,6 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#intro)1.1\. Introduction
+## [](#intro)Introduction
 
 The RAS Error Record Register Interface (RERI) specification augments Reliability, Availability, and Serviceability (RAS) features in the SoC with a standard mechanism for reporting errors by means of a memory-mapped register interface to enable error reporting, provide the facility to log the detected errors (including their severity, nature, and location), and configuring means to signal the error to a RAS handler component. The RAS handler may use this information to determine suitable recovery actions that may include terminating the computation (e.g., terminating a process), restarting parts or all of the system, etc. to recover from the errors. Additionally, this specification shall support software-initiated error logging, reporting, and testing of RAS handlers. Lastly, this specification shall provide maximal flexibility to implement error handling and coexists with RAS frameworks defined by other standards such as PCIe \[[1](reri%5Fbibliography.html#bib-pci)\] and CXL \[[2](reri%5Fbibliography.html#bib-cxl)\].
 
@@ -18,7 +18,7 @@ Availability of a system as a function of time is the probability that the syste
 
 Serviceability is a measure of time to restore the service to correct operation with minimal disruption to the consumers of the service. These may be achieved by means such as identifying and reporting failures and supporting mechanisms to repair and bring the system back online.
 
-### [](#1-1-1-faults-and-errors)1.1.1\. Faults and Errors
+### [](#faults-and-errors)Faults and Errors
 
 A fault is an incorrect state resulting from failures of components or due to interference from the environment in which the system operates. A fault is permanent if it reflects an irreversible change to the observable system state and is transient otherwise. A permanent fault may occur due to a physical defect or due to a flaw in the design of the functions implementing the service itself. A transient fault may occur due to temporary environmental conditions (cosmic rays, voltage glitches, etc.) or due to instability (e.g. marginal hardware).
 
@@ -34,13 +34,13 @@ A reliable system deals with errors through one or more of the following techniq
 * Error detection and correction
 * Error prediction
 
-### [](#1-1-2-fault-prevention)1.1.2\. Fault Prevention
+### [](#fault-prevention)Fault Prevention
 
 Fault prevention involves use of techniques that reduce or prevent errors that may occur after the product has been shipped. These may be accomplished through the use of high quality in product design, technology selection, materials selection, and manufacturing time screening for defects. Through the use of systematic design, technology selection, and manufacturing tests many errors such as those induced by electric fields, temperature stress, switching/coupling noise (e.g. DRAM RowHammer \[[5](reri%5Fbibliography.html#bib-rham)\] effect), incorrect V/F operating points, insufficient guard bands, meta-stability, etc. can be prevented.
 
 Faults that are not prevented may manifest as errors during operation of the system. Errors that are not detected may still lead to a service failure. For example, an undetected error in an adder used to produce the address of a load may produce a bad address which causes the load to incur an exception and lead to a service failure. Some undetected errors however may not manifest as exceptions and cause a service failure due to silent data corruption. For example, a circuit performing encryption of a database may silently cause an error in the ciphertext produced leading to the entire database being left in a state where it cannot be decrypted. Such undetected errors that do not lead to a service failure are called Silent Data Errors (SDE). The impact of SDE is generally much higher than errors that lead to a service failure. A resilient system attempts to minimize the probability of SDE to the largest extent possible by implementing error detection capabilities.
 
-### [](#1-1-3-error-detection-and-correction)1.1.3\. Error Detection and Correction
+### [](#error-detection-and-correction)Error Detection and Correction
 
 Error detection involves the use of coding and protocols to detect errors \[[6](reri%5Fbibliography.html#bib-eu%5Fhpc)\] \[[7](reri%5Fbibliography.html#bib-exa%5F2014)\]. For example, caches with error correcting codes, TLB entries with parity protection, buses with parity protection on transaction fields, circuitry to detect unexpected and/or illegal encodings, gray codes, voltage sensors, clock/PLL monitors, timing margin sensors, etc. Some components such as memory controllers may actively attempt to detect errors using techniques such as periodic background scrubbing or on-demand scrubbing.
 
@@ -56,7 +56,7 @@ Some components act as an intermediary through which the data passes through. Fo
 
 An error detected by a component may lead to a failure mode where the component may not be able to service requests anymore (e.g. colloquially called jammed, wedged, etc.). For example, an error in the hart pipeline may cause the hart to stop committing instructions, a fabric may be in a state where it cannot process any further requests, the link connecting the memory module to the host may have failed, etc. In such cases invoking a RAS handler may not be useful as the RAS handler itself may need to generate requests to the failed component to perform the recovery actions. Components in such failed states may use an implementation-defined signal to a system recovery controller (e.g., a Baseboard Management Controller (BMC), an on-chip service controller, etc.) to initiate a RAS-handling reset to restart the component, sub-system, or the system itself to restore correct service operations.
 
-### [](#1-1-4-error-prediction)1.1.4\. Error Prediction
+### [](#error-prediction)Error Prediction
 
 Error prediction involves the use of corrected errors as a predictor of future uncorrectable permanent failures or other systemic issues, such as marginality due to aging. Monitoring corrected errors may facilitate the avoidance of future service failures.
 
@@ -66,7 +66,7 @@ Reporting of detected and corrected hardware errors is requisite for any quantit
 
 Components of a resilient system may also include corrected error counters to count the corrections performed. Such components may additionally include a fixed or programmable threshold to notify a RAS handler when the number of corrected errors surpasses the threshold.
 
-### [](#1-1-5-reri-features)1.1.5\. RERI Features
+### [](#reri-features)RERI Features
 
 Version 1.0 of the RISC-V RERI specification supports the following features:
 
@@ -78,7 +78,7 @@ Version 1.0 of the RISC-V RERI specification supports the following features:
 
 This specification is intended to accommodate a wide variety of systems designs and needs - from high-end server-class systems to low-end embedded systems. This is accomplished through providing implementation flexibility and options - both within the registers of an error record and the number of error records in an error bank, and with respect to the association between hardware components and error errors/banks.
 
-### [](#1-1-6-glossary)1.1.6\. Glossary
+### [](#glossary)Glossary
 
 __Table 1\. Terms and definitions__
 | Term            | Definition                                                                                                                                                                                                                                                                                                                            |

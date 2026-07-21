@@ -1,10 +1,10 @@
-# 28.1. "C" Extension for Compressed Instructions, Version 2.0
+# 27.1. "C" Extension for Compressed Instructions, Version 2.0
 
-## [](#compressed)28.1\. "C" Extension for Compressed Instructions, Version 2.0
+## [](#compressed)27.1\. "C" Extension for Compressed Instructions, Version 2.0
 
 This chapter describes the RISC-V standard compressed instruction-set extension, named "C", which reduces static and dynamic code size by adding short 16-bit instruction encodings for common operations. The C extension can be added to any of the base ISAs (RV32I, RV32E, RV64I, RV64E), and we use the generic term "RVC" to cover any of these. Typically, 50%-60% of the RISC-V instructions in a program can be replaced with RVC instructions, resulting in a 25%-30% code-size reduction.
 
-### [](#28-1-1-overview)28.1.1\. Overview
+### [](#27-1-1-overview)27.1.1\. Overview
 
 RVC uses a simple compression scheme that offers shorter 16-bit versions of common 32-bit RISC-V instructions when:
 
@@ -36,7 +36,7 @@ It is important to note that the C extension is not designed to be a stand-alone
 | |  Variable-length instruction sets have long been used to improve code density. For example, the IBM Stretch \[[22](../biblio/bibliography.html#bib-stretch)\], developed in the late 1950s, had an ISA with 32-bit and 64-bit instructions, where some of the 32-bit instructions were compressed versions of the full 64-bit instructions. Stretch also employed the concept of limiting the set of registers that were addressable in some of the shorter instruction formats, with short branch instructions that could only refer to one of the index registers. The later IBM 360 architecture \[[23](../biblio/bibliography.html#bib-ibm360)\] supported a simple variable-length instruction encoding with 16-bit, 32-bit, or 48-bit instruction formats. In 1963, CDC introduced the Cray-designed CDC 6600 \[[24](../biblio/bibliography.html#bib-cdc6600)\], a precursor to RISC architectures, that introduced a register-rich load-store architecture with instructions of two lengths, 15-bits and 30-bits. The later Cray-1 design used a very similar instruction format, with 16-bit and 32-bit instruction lengths. The initial RISC ISAs from the 1980s all picked performance over code size, which was reasonable for a workstation environment, but not for embedded systems. Hence, both ARM and MIPS subsequently made versions of the ISAs that offered smaller code size by offering an alternative 16-bit wide instruction set instead of the standard 32-bit wide instructions. The compressed RISC ISAs reduced code size relative to their starting points by about 25-30%, yielding code that was significantly smaller than 80x86\. This result surprised some, as their intuition was that the variable-length CISC ISA should be smaller than RISC ISAs that offered only 16-bit and 32-bit formats. Since the original RISC ISAs did not leave sufficient opcode space free to include these unplanned compressed instructions, they were instead developed as complete new ISAs. This meant compilers needed different code generators for the separate compressed ISAs. The first compressed RISC ISA extensions (e.g., ARM Thumb and MIPS16) used only a fixed 16-bit instruction size, which gave good reductions in static code size but caused an increase in dynamic instruction count, which led to lower performance compared to the original fixed-width 32-bit instruction size. This led to the development of a second generation of compressed RISC ISA designs with mixed 16-bit and 32-bit instruction lengths (e.g., ARM Thumb2, microMIPS, PowerPC VLE), so that performance was similar to pure 32-bit instructions but with significant code size savings. Unfortunately, these different generations of compressed ISAs are incompatible with each other and with the original uncompressed ISA, leading to significant complexity in documentation, implementations, and software tools support. Of the commonly used 64-bit ISAs, only PowerPC and microMIPS currently supports a compressed instruction format. It is surprising that the most popular 64-bit ISA for mobile platforms (ARM v8) does not include a compressed instruction format given that static code size and dynamic instruction fetch bandwidth are important metrics. Although static code size is not a major concern in larger systems, instruction fetch bandwidth can be a major bottleneck in servers running commercial workloads, which often have a large instruction working set. Benefiting from 25 years of hindsight, RISC-V was designed to support compressed instructions from the outset, leaving enough opcode space for RVC to be added as a simple extension on top of the base ISA (along with many other extensions). The philosophy of RVC is to reduce code size for embedded applications _and_ to improve performance and energy-efficiency for all applications due to fewer misses in the instruction cache. Waterman shows that RVC fetches 25%-30% fewer instruction bits, which reduces instruction cache misses by 20%-25%, or roughly the same performance impact as doubling the instruction cache size. \[[25](../biblio/bibliography.html#bib-waterman-ms)\] |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#28-1-2-compressed-instruction-formats)28.1.2\. Compressed Instruction Formats
+### [](#27-1-2-compressed-instruction-formats)27.1.2\. Compressed Instruction Formats
 
 [Table 1](#rvc-form) shows the nine compressed instruction formats. CR, CI, and CSS can use any of the 32 RVI registers, but CIW, CL, CS, CA, and CB are limited to just 8 of them.[Table 2](#registers) lists these popular registers, which correspond to registers `x8` to `x15`. Note that there is a separate version of load and store instructions that use the stack pointer as the base address register, since saving to and restoring from the stack are so prevalent, and that they use the CI and CSS formats to allow access to all 32 data registers. CIW supplies an 8-bit immediate for the ADDI4SPN instruction.
 
@@ -63,13 +63,13 @@ __Table 2\. Registers specified by the three-bit _rs1_′, _rs2_′, and _rd_′
 | RVC Register Number Integer Register Number Integer Register ABI Name Floating-Point Register Number Floating-Point Register ABI Name | 000 001 010 011 100 101 110 111 x8 x9 x10 x11 x12 x13 x14 x15 s0 s1 a0 a1 a2 a3 a4 a5 f8 f9 f10 f11 f12 f13 f14 f15 fs0 fs1 fa0 fa1 fa2 fa3 fa4 fa5 |
 | ------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#28-1-3-load-and-store-instructions)28.1.3\. Load and Store Instructions
+### [](#27-1-3-load-and-store-instructions)27.1.3\. Load and Store Instructions
 
 To increase the reach of 16-bit instructions, data-transfer instructions use zero-extended immediates that are scaled by the size of the data in bytes: ×4 for words, ×8 for double words, and ×16 for quad words.
 
 RVC provides two variants of loads and stores. One uses the ABI stack pointer, `x2`, as the base address and can target any data register. The other can reference one of 8 base address registers and one of 8 data registers.
 
-#### [](#28-1-3-1-stack-pointer-based-loads-and-stores)28.1.3.1\. Stack-Pointer-Based Loads and Stores
+#### [](#27-1-3-1-stack-pointer-based-loads-and-stores)27.1.3.1\. Stack-Pointer-Based Loads and Stores
 
 ![svg](_images/svg-e18f1e1e5092d13a44025b07aad9b6da08b9b32f.svg) 
 
@@ -98,7 +98,7 @@ C.FSDSP is an RV32DC/RV64DC-only instruction that stores a double-precision floa
 | |  Register save/restore code at function entry/exit represents a significant portion of static code size. The stack-pointer-based compressed loads and stores in RVC are effective at reducing the save/restore static code size by a factor of 2 while improving performance by reducing dynamic instruction bandwidth. A common mechanism used in other ISAs to further reduce save/restore code size is load-multiple and store-multiple instructions. We considered adopting these for RISC-V but noted the following drawbacks to these instructions: These instructions complicate processor implementations. For virtual memory systems, some data accesses could be resident in physical memory and some could not, which requires a new restart mechanism for partially executed instructions. Unlike the rest of the RVC instructions, there is no IFD equivalent to Load Multiple and Store Multiple. Unlike the rest of the RVC instructions, the compiler would have to be aware of these load-multiple and store-multiple instructions to both allocate registers in the expected order and also to schedule the loads and stores contiguously and in the proper order, to maximize the chances of them being detected and replaced by an assembler or linker with the equivalent load-multiple or store-multiple compressed instruction. Simple microarchitectural implementations will constrain how other instructions can be scheduled around the load and store multiple instructions, leading to a potential performance loss. The desire for sequential register allocation might conflict with the featured registers selected for the CIW, CL, CS, CA, and CB formats. Furthermore, much of the gains can be realized in software by replacing prologue and epilogue code with subroutine calls to common prologue and epilogue code, a technique described in Section 5.6 of \[[26](../biblio/bibliography.html#bib-waterman-phd)\]. While reasonable architects might come to different conclusions, we decided to omit load and store multiple and instead use the software-only approach of calling save/restore millicode routines to attain the greatest code size reduction. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#28-1-3-2-register-based-loads-and-stores)28.1.3.2\. Register-Based Loads and Stores
+#### [](#27-1-3-2-register-based-loads-and-stores)27.1.3.2\. Register-Based Loads and Stores
 
 ![svg](_images/svg-a6c6023cddbfc673ff34f9d8b654c3fd6e2449a0.svg) 
 
@@ -124,7 +124,7 @@ C.FSW is an RV32FC-only instruction that stores a single-precision floating-poin
 
 C.FSD is an RV32DC/RV64DC-only instruction that stores a double-precision floating-point value in floating-point register`_rs2′_` to memory. It computes an effective address by adding the _zero_\-extended offset, scaled by 8, to the base address in register `_rs1′_`. It expands to`fsd rs2′, offset(rs1′)`.
 
-### [](#28-1-4-control-transfer-instructions)28.1.4\. Control Transfer Instructions
+### [](#27-1-4-control-transfer-instructions)27.1.4\. Control Transfer Instructions
 
 RVC provides unconditional jump instructions and conditional branch instructions. As with base RVI instructions, the offsets of all RVC control transfer instructions are in multiples of 2 bytes.
 
@@ -155,11 +155,11 @@ C.BEQZ performs conditional control transfers. The offset is sign-extended and a
 
 C.BNEZ is defined analogously, but it takes the branch if_rs1′_ contains a nonzero value. It expands to`bne rs1′, x0, offset`.
 
-### [](#28-1-5-integer-computational-instructions)28.1.5\. Integer Computational Instructions
+### [](#27-1-5-integer-computational-instructions)27.1.5\. Integer Computational Instructions
 
 RVC provides several instructions for integer arithmetic and constant generation.
 
-#### [](#28-1-5-1-integer-constant-generation-instructions)28.1.5.1\. Integer Constant-Generation Instructions
+#### [](#27-1-5-1-integer-constant-generation-instructions)27.1.5.1\. Integer Constant-Generation Instructions
 
 The two constant-generation instructions both use the CI instruction format and can target any integer register.
 
@@ -169,7 +169,7 @@ C.LI loads the sign-extended 6-bit immediate, _imm_, into register _rd_. C.LI ex
 
 C.LUI loads the non-zero 6-bit immediate field into bits 17–12 of the destination register, clears the bottom 12 bits, and sign-extends bit 17 into all higher bits of the destination. C.LUI expands into`lui rd, imm`. C.LUI is valid only when_rd_≠`x2`, and when the immediate is not equal to zero. The code points with_imm_\=0 are reserved. The code points with _rd_\=`x2` and _imm_≠0 correspond to the C.ADDI16SP instruction. The code points with _rd_\=`x0` and _imm_≠0 are HINTs.
 
-#### [](#28-1-5-2-integer-register-immediate-operations)28.1.5.2\. Integer Register-Immediate Operations
+#### [](#27-1-5-2-integer-register-immediate-operations)27.1.5.2\. Integer Register-Immediate Operations
 
 These integer register-immediate operations are encoded in the CI format and perform operations on an integer register and a 6-bit immediate.
 
@@ -213,7 +213,7 @@ C.SRAI is defined analogously to C.SRLI, but instead performs an arithmetic righ
 
 C.ANDI is a CB-format instruction that computes the bitwise AND of the value in register _rd′_ and the sign-extended 6-bit immediate, then writes the result to _rd′_. C.ANDI expands to `andi rd′, rd′, imm`.
 
-#### [](#28-1-5-3-integer-register-register-operations)28.1.5.3\. Integer Register-Register Operations
+#### [](#27-1-5-3-integer-register-register-operations)27.1.5.3\. Integer Register-Register Operations
 
 ![svg](_images/svg-0522b2220c99b36c1e028b418dc079fa0b55d25c.svg) 
 
@@ -245,7 +245,7 @@ These instructions use the CA format.
 | |  This group of six instructions do not provide large savings individually, but do not occupy much encoding space and are straightforward to implement, and as a group provide a worthwhile improvement in static and dynamic compression. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#28-1-5-4-defined-illegal-instruction)28.1.5.4\. Defined Illegal Instruction
+#### [](#27-1-5-4-defined-illegal-instruction)27.1.5.4\. Defined Illegal Instruction
 
 ![svg](_images/svg-9cde54c08660055fa18c338b2e96302b49cb7a98.svg) 
 
@@ -254,26 +254,26 @@ A 16-bit instruction with all bits zero is permanently reserved as an illegal in
 | |  We reserve all-zero instructions to be illegal instructions to help trap attempts to execute zero-ed or non-existent portions of the memory space. The all-zero value should not be redefined in any non-standard extension. Similarly, we reserve instructions with all bits set to 1 (corresponding to very long instructions in the RISC-V variable-length encoding scheme) as illegal to capture another common value seen in non-existent memory regions. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#28-1-5-5-nop-instruction)28.1.5.5\. NOP Instruction
+#### [](#27-1-5-5-nop-instruction)27.1.5.5\. NOP Instruction
 
 ![svg](_images/svg-434d6eda5829ad04680d0622689ab6b207218d23.svg) 
 
 `C.NOP` is a CI-format instruction that does not change any user-visible state, except for advancing the `pc` and incrementing any applicable performance counters. `C.NOP` expands to `nop`. The `C.NOP` code points with _imm_≠0 encode HINTs.
 
-#### [](#28-1-5-6-breakpoint-instruction)28.1.5.6\. Breakpoint Instruction
+#### [](#27-1-5-6-breakpoint-instruction)27.1.5.6\. Breakpoint Instruction
 
 ![svg](_images/svg-27922b9dac22e8a5762388dc50030c283177d2db.svg) 
 
 Debuggers can use the `C.EBREAK` instruction, which expands to `ebreak`, to cause control to be transferred back to the debugging environment.`C.EBREAK` shares the opcode with the `C.ADD` instruction, but with _rd_ and_rs2_ both zero, thus can also use the `CR` format.
 
-### [](#28-1-6-usage-of-c-instructions-in-lrsc-sequences)28.1.6\. Usage of C Instructions in LR/SC Sequences
+### [](#27-1-6-usage-of-c-instructions-in-lrsc-sequences)27.1.6\. Usage of C Instructions in LR/SC Sequences
 
 On implementations that support the C extension, compressed forms of the I instructions permitted inside constrained LR/SC sequences, as described in [HINT Instructions](rv32.html#rv32i-hints), are also permitted inside constrained LR/SC sequences.
 
 | |  The implication is that any implementation that claims to support both the A and C extensions must ensure that LR/SC sequences containing valid C instructions will eventually complete. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#rvc-hints)28.1.7\. HINT Instructions
+### [](#rvc-hints)27.1.7\. HINT Instructions
 
 A portion of the RVC encoding space is reserved for microarchitectural HINTs. Like the HINTs in the RV32I base ISA (see[HINT Instructions](rv32.html#rv32i-hints)), these instructions do not modify any architectural state, except for advancing the `pc` and any applicable performance counters. HINTs are executed as no-ops on implementations that ignore them.
 
@@ -303,9 +303,9 @@ __Table 3\. RVC HINT instructions.__
 | C.SRLI      | _imm_\=0                        | 8                    |                                                                            |
 | C.SRAI      | _imm_\=0                        | 8                    |                                                                            |
 
-### [](#28-1-8-rvc-instruction-set-listings)28.1.8\. RVC Instruction Set Listings
+### [](#27-1-8-rvc-instruction-set-listings)27.1.8\. RVC Instruction Set Listings
 
-[Table 4](#rvcopcodemap) shows a map of the major opcodes for RVC. Each row of the table corresponds to one quadrant of the encoding space. The last quadrant, which has the two least-significant bits set, corresponds to instructions wider than 16 bits, including those in the base ISAs. Several instructions are only valid for certain operands; when invalid, they are marked either _RES_to indicate that the opcode is reserved for future standard extensions;_Custom_ to indicate that the opcode is designated for custom extensions; or _HINT_ to indicate that the opcode is reserved for microarchitectural hints (see [28.1.7\. HINT Instructions](#rvc-hints)).
+[Table 4](#rvcopcodemap) shows a map of the major opcodes for RVC. Each row of the table corresponds to one quadrant of the encoding space. The last quadrant, which has the two least-significant bits set, corresponds to instructions wider than 16 bits, including those in the base ISAs. Several instructions are only valid for certain operands; when invalid, they are marked either _RES_to indicate that the opcode is reserved for future standard extensions;_Custom_ to indicate that the opcode is designated for custom extensions; or _HINT_ to indicate that the opcode is reserved for microarchitectural hints (see [27.1.7\. HINT Instructions](#rvc-hints)).
 
 __Table 4\. RVC opcode map instructions.__
 | inst\[15:13\]inst\[1:0\] | **000**  | **001**    | **010** | **011**      | **100**         | **101**    | **110** | **111**   |          |

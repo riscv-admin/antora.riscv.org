@@ -1,6 +1,6 @@
-# 1.1. Debug and Trace Connectors
+# Debug and Trace Connectors
 
-## [](#1-1-debug-and-trace-connectors)1.1\. Debug and Trace Connectors
+## [](#debug-and-trace-connectors)Debug and Trace Connectors
 
 This specification provides a small, optional extension to connectors described in [MIPI Debug & Trace Connectors Recommendations White Paper, Version 1.20, 2 July 2021](https://resources.mipi.org/download-mipi-whitepaper-debug-trace-connector).
 

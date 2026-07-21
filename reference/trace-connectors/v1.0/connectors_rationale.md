@@ -1,6 +1,6 @@
-# 5.1. Rationale (looking at Nexus standard)
+# 4.1. Rationale (looking at Nexus standard)
 
-## [](#5-1-rationale-looking-at-nexus-standard)5.1\. Rationale (looking at Nexus standard)
+## [](#4-1-rationale-looking-at-nexus-standard)4.1\. Rationale (looking at Nexus standard)
 
 Nexus standard does NOT define any small connectors with focus on trace as Nexus defines message-based debug interface and it requires more pins than JTAG. Namely:
 

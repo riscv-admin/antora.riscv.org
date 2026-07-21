@@ -1,6 +1,6 @@
-# 9.1. "Smcdeleg/Ssccfg" Counter Delegation Extensions, Version 1.0
+# 8.1. "Smcdeleg/Ssccfg" Counter Delegation Extensions, Version 1.0
 
-## [](#smcdeleg)9.1\. "Smcdeleg/Ssccfg" Counter Delegation Extensions, Version 1.0
+## [](#smcdeleg)8.1\. "Smcdeleg/Ssccfg" Counter Delegation Extensions, Version 1.0
 
 In modern “Rich OS” environments, hardware performance monitoring resources are managed by the kernel, kernel driver, and/or hypervisor. Counters may be configured with differing scopes, in some cases counting events system-wide, while in others counting events on behalf of a single virtual machine or application. In such environments, the latency of counter writes has a direct impact on overall profiling overhead as a result of frequent counter writes during:
 
@@ -11,7 +11,7 @@ These extensions provide a means for M-mode to allow writing select counters and
 
 For a Machine-level environment, extension **Smcdeleg** (‘Sm’ for Privileged architecture and Machine-level extension, ‘cdeleg’ for Counter Delegation) encompasses all added CSRs and all behavior modifications for a hart, over all privilege levels. For a Supervisor-level environment, extension **Ssccfg** (‘Ss’ for Privileged architecture and Supervisor-level extension, ‘ccfg’ for Counter Configuration) provides access to delegated counters, and to new supervisor-level state.For a RISC-V hardware platform, Smcdeleg and Ssccfg must always be implemented in tandem.
 
-### [](#9-1-1-counter-delegation)9.1.1\. Counter Delegation
+### [](#8-1-1-counter-delegation)8.1.1\. Counter Delegation
 
 The `mcounteren` register allows M-mode to provide the next-lower privilege mode with read access to select counters.When the Smcdeleg/Ssccfg extensions are enabled (`menvcfg`.CDE=1), it further allows M-mode to delegate select counters to S-mode.
 
@@ -109,17 +109,17 @@ If the hypervisor (H) extension is also implemented, then as specified by extens
 
 \* An attempt to access any `vsireg*` from M or S mode raises an illegal-instruction exception. \* An attempt from VS-mode to access any `sireg*` (really `vsireg*`) raises an illegal-instruction exception if `menvcfg`.CDE = 0, or a virtual-instruction exception if `menvcfg`.CDE = 1.
 
-### [](#9-1-2-supervisor-counter-inhibit-scountinhibit-register)9.1.2\. Supervisor Counter Inhibit (`scountinhibit`) Register
+### [](#8-1-2-supervisor-counter-inhibit-scountinhibit-register)8.1.2\. Supervisor Counter Inhibit (`scountinhibit`) Register
 
 Smcdeleg/Ssccfg defines a new `scountinhibit` register, a masked alias of `mcountinhibit`. For counters delegated to S-mode, the associated `mcountinhibit` bits can be accessed via `scountinhibit`.For counters not delegated to S-mode, the associated bits in `scountinhibit` are read-only zero.
 
 When `menvcfg`.CDE=0, attempts to access `scountinhibit` raise an illegal-instruction exception. When Supervisor Counter Delegation is enabled, attempts to access `scountinhibit` from VS-mode or VU-mode raise a virtual-instruction exception.
 
-### [](#9-1-3-virtualizing-scountovf)9.1.3\. Virtualizing `scountovf`
+### [](#8-1-3-virtualizing-scountovf)8.1.3\. Virtualizing `scountovf`
 
 For implementations that support Smcdeleg/Ssccfg, Sscofpmf, and the H extension, when `menvcfg`.CDE=1, attempts to read `scountovf` from VS-mode or VU-mode raise a virtual-instruction exception.
 
-### [](#9-1-4-virtualizing-local-counter-overflow-interrupts)9.1.4\. Virtualizing Local-Counter-Overflow Interrupts
+### [](#8-1-4-virtualizing-local-counter-overflow-interrupts)8.1.4\. Virtualizing Local-Counter-Overflow Interrupts
 
 For implementations that support Smcdeleg, Sscofpmf, and Smaia, the local-counter-overflow interrupt (LCOFI) bit (bit 13) in each of CSRs`mvip` and `mvien` is implemented and writable.
 

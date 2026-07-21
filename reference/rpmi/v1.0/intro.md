@@ -1,6 +1,6 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#intro)1.1\. Introduction
+## [](#intro)Introduction
 
 Today’s platforms pose challenges in terms of manageability and controllability, where the operating system (OS) needs to support a variety of hardware with a variety of connected devices. The extra complexity and demand to manage and control the platform along with executing sophisticated workloads is a challenge for the application processors (APs) running a general purpose OS. To address this challenge, platforms today contain one or more microcontrollers which can offload various platform management and control tasks.
 
@@ -10,7 +10,7 @@ The RPMI defines a message based communication between multiple application proc
 
 All RPMI capabilities and services provided by platform microcontroller are discoverable at runtime which allows adding new capabilities and services in the future.
 
-### [](#1-1-1-rpmi-abstractions)1.1.1\. RPMI Abstractions
+### [](#rpmi-abstractions)RPMI Abstractions
 
 **RPMI Transport**: An RPMI transport represents the mechanism by which the messages are exchanged between the application processor and the platform microcontroller. An RPMI transport instance is associated to a particular RISC-V privilege level of the application processors and it must be accessed only by that RISC-V privilege level.
 

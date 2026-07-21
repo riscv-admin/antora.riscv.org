@@ -1,6 +1,6 @@
-# 3.1. Memory Map
+# 2.1. Memory Map
 
-## [](#3-1-memory-map)3.1\. Memory Map
+## [](#2-1-memory-map)2.1\. Memory Map
 
 The `base address of PLIC Memory Map` is platform implementation-specific. The memory-mapped registers specified in this chapter have a width of 32-bits. The bits are accessed atomically with LW and SW instructions.
 

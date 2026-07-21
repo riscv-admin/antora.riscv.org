@@ -1,6 +1,6 @@
-# 4.1. Interrupt Priorities
+# 3.1. Interrupt Priorities
 
-## [](#4-1-interrupt-priorities)4.1\. Interrupt Priorities
+## [](#3-1-interrupt-priorities)3.1\. Interrupt Priorities
 
 Interrupt priorities are small unsigned integers, with a platform-specific maximum number of supported levels. The priority value 0 is reserved to mean "never interrupt", and interrupt priority increases with increasing integer values. Each global interrupt source has an associated interrupt priority held in a memory-mapped register. Different interrupt sources need not support the same set of priority values. A valid implementation can hardwire all input priority levels. Interrupt source priority registers should be WARL fields to allow software to determine the number and position of read-write bits in each priority specification, if any. To simplify discovery of supported priority values, each priority register must support any combination of values in the bits that are variable within the register, i.e., if there are two variable bits in the register, all four combinations of values in those bits must operate as valid priority levels.
 

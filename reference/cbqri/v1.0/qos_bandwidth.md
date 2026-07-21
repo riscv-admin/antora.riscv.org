@@ -1,6 +1,6 @@
-# 4.1. Bandwidth-controller QoS Register Interface
+# 3.1. Bandwidth-controller QoS Register Interface
 
-## [](#BC%5FQOS)4.1\. Bandwidth-controller QoS Register Interface
+## [](#BC%5FQOS)3.1\. Bandwidth-controller QoS Register Interface
 
 Controllers, such as memory controllers, that support bandwidth allocation and bandwidth usage monitoring provide a memory-mapped bandwidth-controller QoS register interface.
 
@@ -22,7 +22,7 @@ The reset value is `UNSPECIFIED` for all other register fields.
 
 The bandwidth controllers at reset must allocate all available bandwidth to`RCID` value of 0\. When the bandwidth controller supports bandwidth allocation per access-type, the access-type value of 0 of `RCID=0` is allocated all available bandwidth, while all other access-types associated with that `RCID`share the bandwidth allocation with `AT=0`. The bandwidth allocation for all other `RCID` values is `UNSPECIFIED`. The bandwidth controller behavior in handling a request with a non-zero `RCID` value before configuring the bandwidth controller with bandwidth allocation for that `RCID` is also `UNSPECIFIED`.
 
-### [](#BC%5FCAP)4.1.1\. Bandwidth-controller Capabilities
+### [](#BC%5FCAP)3.1.1\. Bandwidth-controller Capabilities
 
 The `bc_capabilities` register is a read-only register that holds the bandwidth-controller capabilities.
 
@@ -43,7 +43,7 @@ When the `RCID`\-prefixed mode (`RPFX`) is 1, the controller operates in `RPFX`m
 
 If `RPFX` is 0, `P` is set to 0, and the effective `MCID` is the same as the `MCID`in the request.
 
-### [](#BC%5FMCTL)4.1.2\. Bandwidth Usage Monitoring Control
+### [](#BC%5FMCTL)3.1.2\. Bandwidth Usage Monitoring Control
 
 The `bc_mon_ctl` register controls the monitoring of bandwidth usage by a`MCID`. When the controller does not support bandwidth usage monitoring, the`bc_mon_ctl` register is read-only zero.
 
@@ -98,7 +98,7 @@ __Table 4\. bc\_mon\_ctl.STATUS Field Encodings__
 
 When the `BUSY` bit is set to 1, the behavior of writes to the `bc_mon_ctl` is`UNSPECIFIED`. Some implementations may ignore the second write, while others may perform the operation determined by the second write. To ensure proper operation, software must first verify that the `BUSY` bit is 0 before writing the `bc_mon_ctl` register.
 
-### [](#BC%5FMCTR)4.1.3\. Bandwidth Monitoring Counter Value
+### [](#BC%5FMCTR)3.1.3\. Bandwidth Monitoring Counter Value
 
 The `bc_mon_ctr_val` is a read-only register that holds a snapshot of the counter selected by a `READ_COUNTER` operation. When the controller does not support bandwidth usage monitoring, the `bc_mon_ctr_val` register always reads as zero.
 
@@ -118,7 +118,7 @@ The width of the counter is `UNSPECIFIED` but the unimplemented bits must be rea
 | |  While the width of the counter is UNSPECIFIED, it is recommended to be wide enough to prevent more than one overflow per sample when the sampling frequency is 1 Hz. If an overflow was detected then software may discard that sample and reset the counter and overflow indication by reprogramming the event using CONFIG\_EVENToperation. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#BC%5FALLOC)4.1.4\. Bandwidth Allocation Control
+### [](#BC%5FALLOC)3.1.4\. Bandwidth Allocation Control
 
 The `bc_alloc_ctl` register is used to control the allocation of bandwidth to an`RCID` per `AT`. If a controller does not support bandwidth allocation, then the register is read-only zero. If the controller does not support bandwidth allocation per access-type, then the `AT` field is read-only zero.
 
@@ -153,7 +153,7 @@ __Table 6\. bc\_alloc\_ctl.STATUS Field Encodings__
 | 6-63   | Reserved for future standard use.                                 |
 | 64-127 | Designated for custom use.                                        |
 
-### [](#BC%5FBMASK)4.1.5\. Bandwidth Allocation Configuration
+### [](#BC%5FBMASK)3.1.5\. Bandwidth Allocation Configuration
 
 The `bc_bw_alloc` is used to program reserved bandwidth blocks (`Rbwb`) for an`RCID` for requests of access-type `AT` using the `CONFIG_LIMIT` operation. If a controller does not support bandwidth allocation, then the `bc_bw_alloc` register is read-only zero.
 

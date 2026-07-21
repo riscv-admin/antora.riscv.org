@@ -1,6 +1,6 @@
-# 7.1. Priority Thresholds
+# 6.1. Priority Thresholds
 
-## [](#7-1-priority-thresholds)7.1\. Priority Thresholds
+## [](#6-1-priority-thresholds)6.1\. Priority Thresholds
 
 PLIC provides context based `threshold register` for the settings of a interrupt priority threshold of each context. The `threshold register` is a WARL field. The PLIC will mask all PLIC interrupts of a priority less than or equal to `threshold`. For example, a `threshold` value of zero permits all interrupts with non-zero priority.  
   

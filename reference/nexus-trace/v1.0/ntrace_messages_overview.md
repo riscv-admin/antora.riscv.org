@@ -1,11 +1,11 @@
-# 6.1. N-Trace Messages (Overview)
+# 5.1. N-Trace Messages (Overview)
 
-## [](#6-1-n-trace-messages-overview)6.1\. N-Trace Messages (Overview)
+## [](#5-1-n-trace-messages-overview)5.1\. N-Trace Messages (Overview)
 
 | |  The terminology Indirect Branch as used by the IEEE-5001 Nexus Standard may lead to confusion, given that the RISC-V ISA exclusively permits direct conditional branches, which are always relative. Furthermore, the RISC-V ISA makes a distinction between 'jump' (unconditional flow change) and 'branch' (conditional flow change), a differentiation not observed in Nexus terminology, where any flow change, including exceptions and interrupts, is uniformly referred to as a 'branch'. This specification employs the terms 'branch' and 'jump' as defined by RISC-V ISA. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#6-1-1-fields-in-messages)6.1.1\. Fields in Messages
+### [](#5-1-1-fields-in-messages)5.1.1\. Fields in Messages
 
 The table presented below enumerates all message types that can be generated, with each row comprehensively defining the fields associated with a particular message type. Fields that are present in different messages are consistently ordered.
 
@@ -78,7 +78,7 @@ Reference code header [NexRvMsg.h](https://github.com/riscv-non-isa/tg-nexus-tra
 | |  Reference code is using plain C-style identifiers, so the field name as **B-TYPE** will become **BTYPE**. |
 | ------------------------------------------------------------------------------------------------------------ |
 
-### [](#6-1-2-common-fields)6.1.2\. Common Fields
+### [](#5-1-2-common-fields)5.1.2\. Common Fields
 
 The table below provides details for fields which are used in more than one message type. Fields which are present in only one message are described with each message.
 

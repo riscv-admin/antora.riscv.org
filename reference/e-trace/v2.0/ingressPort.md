@@ -1,8 +1,8 @@
-# 4.1. Hart to encoder interface
+# 3.1. Hart to encoder interface
 
-## [](#Interface)4.1\. Hart to encoder interface
+## [](#Interface)3.1\. Hart to encoder interface
 
-### [](#sec:InstructionInterfaceRequirements)4.1.1\. Instruction Trace Interface requirements
+### [](#sec:InstructionInterfaceRequirements)3.1.1\. Instruction Trace Interface requirements
 
 This section describes in general terms the information which must be passed from the RISC-V hart to the trace encoder for the purposes of Instruction Trace, and distinguishes between what is mandatory, and what is optional.
 
@@ -52,7 +52,7 @@ The mandatory information is the bare-minimum required to implement the branch t
 * Branch prediction techniques can be used to further improve the encoder efficiency, particularly for loops (see[\[sec:branch-prediction\]](#sec:branch-prediction)). This requires the encoder to be aware of the address of all branches, whether they are taken or not.
 * Uninferable jumps can be treated as inferable (which don’t need to be reported in the trace output) if both the jump and the preceding instruction which loads the target into a register have been traced.
 
-#### [](#JumpClasses)4.1.1.1\. Jump classification and target inference
+#### [](#JumpClasses)3.1.1.1\. Jump classification and target inference
 
 Jumps are classified as _inferable_, or _uninferable_. An _inferable_jump has a target which can be deduced from the binary executable or representation thereof (e.g. ELF). For the purposes of this specification, the following strict definition applies:
 
@@ -90,7 +90,7 @@ Jumps may optionally be further classified according to the recommended calling 
    * **_jal_** rd where rd != x0 and rd != x1 and rd != x5;  
    * **_jalr_** rd, rs where rs != x1 and rs != x5 and rd != x0 and rd != x1 and rd != x5.
 
-#### [](#sec:relationship)4.1.1.2\. Relationship between RISC-V core and the encoder
+#### [](#sec:relationship)3.1.1.2\. Relationship between RISC-V core and the encoder
 
 The encoder is intended to encode the instructions executed on a single hart.
 
@@ -101,23 +101,23 @@ It is however commonplace for a RISC-V core to contain multiple harts. This can 
 
 (Whilst it is technically feasible to use a single encoder with multiple harts operating in a fine-grained multi-threaded configuration, the frequent context changes that would occur as a result of thread-switching would result in extremely poor encoding efficiency, and so this configuration is not recommended.)
 
-### [](#sec:InstructionTraceInterface)4.1.2\. Instruction Trace Interface
+### [](#sec:InstructionTraceInterface)3.1.2\. Instruction Trace Interface
 
-This section describes the interface between a RISC-V hart and the trace encoder that conveys the information described in the section[4.1.1\. Instruction Trace Interface requirements](#sec:InstructionInterfaceRequirements). Signals are assigned to one of the following groups:
+This section describes the interface between a RISC-V hart and the trace encoder that conveys the information described in the section[3.1.1\. Instruction Trace Interface requirements](#sec:InstructionInterfaceRequirements). Signals are assigned to one of the following groups:
 
 * M: Mandatory. The interface must include an instance of this signal.
 * O: Optional. The interface may include an instance of this signal.
 * MR: Mandatory, may be replicated. For harts that can retire a maximum of N "special" instructions per clock cycle, the interface must include N instances of this signal.
 * OR: Optional, may be replicated. For harts that can retire a maximum of N "special" instructions per clock cycle, the interface must include zero or N instances of this signal.
 * BR: Block, may be replicated. Mandatory for harts that can retire multiple instructions in a block. Replication as per OR. If omitted, the interface must include SR group signals instead.
-* SR: Single, may be replicated. Mandatory for harts that can only retire one instruction in a block. Replication as per OR (see[4.1.2.2\. Alternative multiple-retirement interface configurations](#sec:alt-multi)). If omitted, the interface must include BR group signals instead.
+* SR: Single, may be replicated. Mandatory for harts that can only retire one instruction in a block. Replication as per OR (see[3.1.2.2\. Alternative multiple-retirement interface configurations](#sec:alt-multi)). If omitted, the interface must include BR group signals instead.
 
 "Special" instructions are those that require **itype** to be non-zero.
 
 __Table 1\. Instruction interface signals__
 | **Signal**                              | **Group** | **Function**                                                                                                                                                                                                                                                                                                                          |
 | --------------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **itype**\[_itype\_width\_p_\-1:0\]     | MR        | Termination type of the instruction block. Encoding given in [Table 4](#tab:itype) (see [4.1.1.1\. Jump classification and target inference](#JumpClasses) for definitions of codes 6 - 15).                                                                                                                                          |
+| **itype**\[_itype\_width\_p_\-1:0\]     | MR        | Termination type of the instruction block. Encoding given in [Table 4](#tab:itype) (see [3.1.1.1\. Jump classification and target inference](#JumpClasses) for definitions of codes 6 - 15).                                                                                                                                          |
 | **cause**\[_ecause\_width\_p_\-1:0\]    | M         | Exception or interrupt cause (**_scause/ vscause/mcause_**). Ignored unless **itype**\=1 or 2.                                                                                                                                                                                                                                        |
 | **tval**\[_iaddress\_width\_p_\-1:0\]   | M         | The associated trap value, e.g. the faulting virtual address for address exceptions, as would be written to the **stval/vstval/mtval** CSR. Future optional extensions may define **tval** to provide ancillary information in cases where it currently supplies zero. Ignored unless **itype**\=1.                                   |
 | **priv**\[_privilege\_width\_p_\-1:0\]  | M         | Privilege level for all instructions retired on this cycle. Encoding given in[Table 5](#tab:priv). Codes 4-7 optional.                                                                                                                                                                                                                |
@@ -127,7 +127,7 @@ __Table 1\. Instruction interface signals__
 | **ctype**\[_ctype\_width\_p_\-1:0\]     | O         | Reporting behavior for **context**. Encoding given in Table [Table 6](#tab:context-type). Codes 2-3 optional.                                                                                                                                                                                                                         |
 | **sijump**                              | OR        | If **itype** indicates that this block ends with an uninferable discontinuity, setting this signal to 1 indicates that it is sequentially inferable and may be treated as inferable by the encoder if the preceding **_auipc_**, **_lui_** or **_c.lui_** has been traced. Ignored for **itype** codes other than 6, 8, 10, 12 or 14. |
 
-[Table 1](#tab:common-ingress) and [Table 2](#tab:multi-ingress) list the signals in the interface designed to efficiently support retirement of multiple instructions per cycle. The following discussion describes the multiple-retirement behavior. However, for harts that can only retire one instruction at a time, the signalling can be simplified, and this is discussed subsequently in [4.1.2.1\. Simplifications for single-retirement](#sec:single-retire).
+[Table 1](#tab:common-ingress) and [Table 2](#tab:multi-ingress) list the signals in the interface designed to efficiently support retirement of multiple instructions per cycle. The following discussion describes the multiple-retirement behavior. However, for harts that can only retire one instruction at a time, the signalling can be simplified, and this is discussed subsequently in [3.1.2.1\. Simplifications for single-retirement](#sec:single-retire).
 
 __Table 2\. Instruction interface signals - multiple retirement per block__
 | **Signal**                                  | **Group** | **Function**                                                           |
@@ -191,7 +191,7 @@ The **context** and/or the **time** field can be used to convey any additional i
 * The software thread ID;
 * The process ID from an operating system;
 * It could be used to convey the values of CSRs to the decoder by setting **context** to the CSR number and value when a CSR is written;
-* In cases where a single encoder is being shared amongst multiple harts (see [4.1.1.2\. Relationship between RISC-V core and the encoder](#sec:relationship)), it could also be used to indicate the hart ID, in cases where the hart ID can be changed dynamically.
+* In cases where a single encoder is being shared amongst multiple harts (see [3.1.1.2\. Relationship between RISC-V core and the encoder](#sec:relationship)), it could also be used to indicate the hart ID, in cases where the hart ID can be changed dynamically.
 * Time from within the hart
 
 [Table 6](#tab:context-type) specifies the actions for the various **ctype** values. A typical behavior would be for this signal to remain zero except on the 1st retirement after a context change or when a time value should be reported. _ctype\_width\_p_ may be 1 or 2\. The reduced width option only provides support for reporting context changes imprecisely.
@@ -204,7 +204,7 @@ __Table 6\. Context type **ctype** values and corresponding actions__
 | Report context precisely                        | 2         | Report the address of the 1st instruction retired in this block, and the new context. If there were unreported branches beforehand, these need to be reported first. Treated the same as a privilege change.                                                                                                    |
 | Report context as an asynchronous discontinuity | 3         | An example would be a change of hart. Need to report the last instruction retired on the previous context, as well as the 1st on the new context. Treated the same as an exception.                                                                                                                             |
 
-#### [](#sec:single-retire)4.1.2.1\. Simplifications for single-retirement
+#### [](#sec:single-retire)3.1.2.1\. Simplifications for single-retirement
 
 For harts that can only retire one instruction at a time, the interface can be simplified to the signals listed in[Table 1](#tab:common-ingress) and [Table 3](#tab:single-ingress). The simplifications can be summarized as follows:
 
@@ -214,13 +214,13 @@ For harts that can only retire one instruction at a time, the interface can be s
 
 The parameter _retires\_p_ which indicates to the encoder the maximum number of instructions that can be retired per cycle can be used by an encoder capable of supporting single or multiple retirement to select the appropriate interpretation of **iretire**.
 
-#### [](#sec:alt-multi)4.1.2.2\. Alternative multiple-retirement interface configurations
+#### [](#sec:alt-multi)3.1.2.2\. Alternative multiple-retirement interface configurations
 
 For a hart that can retire multiple instructions per cycle, but no more than one branch, the preferred solution is to use one instance of signals from groups BR, MR and OR. However, if the hart can retire N branches in a cycle, N instances of signals from groups MR, OR and either SR or BR must be used (each instance can be either a single instruction or a block).
 
 If the hart can retire N instructions per cycle, but only one branch, it is allowed (though not recommended) to provide explicit details of every instruction retired by using N instances of signals from groups SR, MR and OR.
 
-#### [](#4-1-2-3-optional-sideband-signals)4.1.2.3\. Optional sideband signals
+#### [](#3-1-2-3-optional-sideband-signals)3.1.2.3\. Optional sideband signals
 
 Optional sideband signals may be included to provide additional functionality, as described in[Table 7](#tab:ingress-side-band) and[Table 8](#tab:egress-side-band).
 
@@ -230,7 +230,7 @@ __Table 7\. Optional sideband encoder input signals__
 | **Signal**                            | **Group**            | **Function**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------------------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **impdef**\[_impdef\_width\_p_\-1:0\] | O                    | Implementation defined sideband signals. A typical use for these would be for filtering (see[\[ch:filtering\]](#ch:filtering).                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **trigger**\[2+:0\]                   | \[1:0\]: O\[2+\]: OR | A pulse on bit 0 will cause the encoder to start tracing, and continue until further notice, subject to other filtering criteria also being met. A pulse on bit 1 will cause the encoder to stop tracing until further notice. See [4.1.2.4\. Using trigger outputs from the Debug Module](#sec:trigger)).                                                                                                                                                                                                                                          |
+| **trigger**\[2+:0\]                   | \[1:0\]: O\[2+\]: OR | A pulse on bit 0 will cause the encoder to start tracing, and continue until further notice, subject to other filtering criteria also being met. A pulse on bit 1 will cause the encoder to stop tracing until further notice. See [3.1.2.4\. Using trigger outputs from the Debug Module](#sec:trigger)).                                                                                                                                                                                                                                          |
 | **halted**                            | O                    | Hart is halted. Upon assertion, the encoder will output a packet to report the address of the last instruction retired before halting, followed by a support packet to indicate that tracing has stopped. Upon deassertion, the encoder will start tracing again, commencing with a synchronization packet. **Note:** If this signal is not provided, it is strongly recommended that Debug mode can be signalled via a 3-bit **privilege** signal. This will allow tracing in Debug mode to be controlled via the optional filtering capabilities. |
 | **reset**                             | O                    | Hart is in reset. Provided the encoder is in a different reset domain to the hart, this allows the encoder to indicate that tracing has ended on entry to reset, and restarted on exit. Behavior is as described above for halt.                                                                                                                                                                                                                                                                                                                    |
 
@@ -239,7 +239,7 @@ __Table 8\. Optional sideband encoder output signals__
 | ---------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **stall**  | O         | Stall request to hart. Some applications may require lossless trace, which can be achieved by using this signal to stall the hart if the trace encoder is unable to output a trace packet (for example due to back-pressure from the packet transport infrastructure). |
 
-#### [](#sec:trigger)4.1.2.4\. Using trigger outputs from the Debug Module
+#### [](#sec:trigger)3.1.2.4\. Using trigger outputs from the Debug Module
 
 The debug module of the RISC-V hart may have a trigger unit. This defines a match control register (**_mcontrol_**) containing a 4-bit**action** field, and reserves codes 2 - 5 of this field for trace use. These action codes are hereby defined as shown in table[Table 9](#tab:debugModuleTriggerSupport). If implemented, each action must generate a pulse on an output from the hart, on the same cycle as the instruction which caused the trigger is retired.
 
@@ -259,7 +259,7 @@ It follows from this that:
 
 Trace-notify provides means to ensure that a specified instruction is explicitly reported (subject to any optional filtering). This capability is sometimes known as a watchpoint.
 
-#### [](#4-1-2-5-example-retirement-sequences)4.1.2.5\. Example retirement sequences
+#### [](#3-1-2-5-example-retirement-sequences)3.1.2.5\. Example retirement sequences
 
 __Table 10\. Example 1 : 9 Instructions retired over four cycles, 2 branches__
 | **Retired**                                                      | **Instruction Trace Block**                     |
@@ -269,11 +269,11 @@ __Table 10\. Example 1 : 9 Instructions retired over four cycles, 2 branches__
 | 0946: **_c.bnez_**                                               | **iretire**\=1, **iaddr**\=0x0946, **itype**\=5 |
 | 0988: **_lbu_**098C: **_csrrw_**                                 | **iretire**\=4, **iaddr**\=0x0988, **itype**\=0 |
 
-### [](#sec:DataInterfaceRequirements)4.1.3\. Data Trace Interface requirements
+### [](#sec:DataInterfaceRequirements)3.1.3\. Data Trace Interface requirements
 
 This section describes in general terms the information which must be passed from the RISC-V hart to the trace encoder for the purposes of Data Trace, and distinguishes between what is mandatory, and what is optional.
 
-If Data Trace is not needed in a system then there is no requirement for the RISC-V hart to supply any of the signals in [4.1.4\. Data Trace Interface](#sec:DataTraceInterface).
+If Data Trace is not needed in a system then there is no requirement for the RISC-V hart to supply any of the signals in [3.1.4\. Data Trace Interface](#sec:DataTraceInterface).
 
 Data trace supports up to four data access types: load, store, atomic and CSR. Support for both atomic and CSR accesses are independently optional.
 
@@ -290,7 +290,7 @@ The two parts of a split load are associated by use of a transaction ID.
 
 The Zc (code-size reduction) extension introduced push and pop instructions (_cm.push_, _cm.pop_, _cm.popret_ and _cm.popretz_) that each result in multiple loads or stores. To allow the resulting loads or stores to be associated with the correct instruction, these multi-memory-access instructions (and any other future instructions with similar characteristics) must be reported on the instruction trace interface multiple times (once for each individual load or store) using**itype** 0 except for the final load or store, which must retire using the natural **itype** for the instruction (for example, a _cm.popret_instruction must use **itype** 13 for the final load to signal the return). The instruction address reported will be the same for each occurrence.
 
-The following illustrations show the retirement sequences when a single_cm.push_ or _cm.popret_ is used to push or pop 4 registers from the stack. They assume a RISC-V to encoder interface that can report a block of 1 or more retired instructions and one load or store per cycle. Each comprises 4 elements, and shows the instruction information reported for each load and store. As detailed in section[4.1.2\. Instruction Trace Interface](#sec:InstructionTraceInterface), this takes the form of the address of an instruction, the length of the block (1 for a single instruction) and the type of the last instruction in the block. In each element, ’Block’ indicates a block of 1 or more instructions (i.e. could also be a single instruction), whereas ’Single’ indicates a single instruction (i.e. a block with a length of 1).
+The following illustrations show the retirement sequences when a single_cm.push_ or _cm.popret_ is used to push or pop 4 registers from the stack. They assume a RISC-V to encoder interface that can report a block of 1 or more retired instructions and one load or store per cycle. Each comprises 4 elements, and shows the instruction information reported for each load and store. As detailed in section[3.1.2\. Instruction Trace Interface](#sec:InstructionTraceInterface), this takes the form of the address of an instruction, the length of the block (1 for a single instruction) and the type of the last instruction in the block. In each element, ’Block’ indicates a block of 1 or more instructions (i.e. could also be a single instruction), whereas ’Single’ indicates a single instruction (i.e. a block with a length of 1).
 
 A _cm.push_ is equivalent to 4 store instructions:
 
@@ -311,9 +311,9 @@ If an exception occurs part way through the sequence of loads or stores initiate
 | |  This is required for data trace only. If data trace is not implemented, the push or pop may instead be reported just once in the normal way when all associated loads or stores complete successfully. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#sec:DataTraceInterface)4.1.4\. Data Trace Interface
+### [](#sec:DataTraceInterface)3.1.4\. Data Trace Interface
 
-This section describes the interface between a RISC-V hart and the trace encoder that conveys the information described in the[4.1.3\. Data Trace Interface requirements](#sec:DataInterfaceRequirements). Signals are assigned to one of the following groups:
+This section describes the interface between a RISC-V hart and the trace encoder that conveys the information described in the[3.1.3\. Data Trace Interface requirements](#sec:DataInterfaceRequirements). Signals are assigned to one of the following groups:
 
 * M: Mandatory. The interface must include an instance of this signal;
 * U: Unified. Mandatory for unified signalling;

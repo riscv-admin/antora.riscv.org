@@ -1,6 +1,6 @@
-# 4.1. Adapters, multiple connectors and on-board debug considerations
+# 3.1. Adapters, multiple connectors and on-board debug considerations
 
-## [](#4-1-adapters-multiple-connectors-and-on-board-debug-considerations)4.1\. Adapters, multiple connectors and on-board debug considerations
+## [](#3-1-adapters-multiple-connectors-and-on-board-debug-considerations)3.1\. Adapters, multiple connectors and on-board debug considerations
 
 It is often seen that some evaluation boards provide more than one standard connector. This is not only costly, but also not necessary as most trace and debug probe vendors provide passive adapters or cables to adapt different pinouts as part of standard offering.
 

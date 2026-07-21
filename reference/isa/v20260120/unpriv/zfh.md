@@ -1,13 +1,13 @@
-# 24.1. "Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0
+# 23.1. "Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0
 
-## [](#chap:zfh)24.1\. "Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0
+## [](#chap:zfh)23.1\. "Zfh" and "Zfhmin" Extensions for Half-Precision Floating-Point, Version 1.0
 
 This chapter describes the Zfh standard extension for 16-bit half-precision binary floating-point instructions compliant with the IEEE 754-2008 arithmetic standard. The Zfh extension depends on the single-precision floating-point extension, F. The NaN-boxing scheme described in [NaN Boxing of Narrower Values](d-st-ext.html#nanboxing) is extended to allow a half-precision value to be NaN-boxed inside a single-precision value (which may be recursively NaN-boxed inside a double- or quad-precision value when the D or Q extension is present).
 
 | |  This extension primarily provides instructions that consume half-precision operands and produce half-precision results. However, it is also common to compute on half-precision data using higher intermediate precision. Although this extension provides explicit conversion instructions that suffice to implement that pattern, future extensions might further accelerate such computation with additional instructions that implicitly widen their operands—e.g., half×half+single→single—or implicitly narrow their results—e.g., half+single→half. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#24-1-1-half-precision-load-and-store-instructions)24.1.1\. Half-Precision Load and Store Instructions
+### [](#23-1-1-half-precision-load-and-store-instructions)23.1.1\. Half-Precision Load and Store Instructions
 
 New 16-bit variants of LOAD-FP and STORE-FP instructions are added, encoded with a new value for the funct3 width field.
 
@@ -19,7 +19,7 @@ FLH and FSH are only guaranteed to execute atomically if the effective address i
 
 FLH and FSH do not modify the bits being transferred; in particular, the payloads of non-canonical NaNs are preserved. FLH NaN-boxes the result written to _rd_, whereas FSH ignores all but the lower 16 bits in _rs2_.
 
-### [](#24-1-2-half-precision-computational-instructions)24.1.2\. Half-Precision Computational Instructions
+### [](#23-1-2-half-precision-computational-instructions)23.1.2\. Half-Precision Computational Instructions
 
 A new supported format is added to the format field of most instructions, as shown in [Table 1](#tab:fpextfmth).
 
@@ -37,7 +37,7 @@ The half-precision floating-point computational instructions are defined analogo
 
 ![svg](_images/svg-99b93bf80c94c94f0ec817b44bdb5a7165378a42.svg) 
 
-### [](#24-1-3-half-precision-conversion-and-move-instructions)24.1.3\. Half-Precision Conversion and Move Instructions
+### [](#23-1-3-half-precision-conversion-and-move-instructions)23.1.3\. Half-Precision Conversion and Move Instructions
 
 New floating-point-to-integer and integer-to-floating-point conversion instructions are added. These instructions are defined analogously to the single-precision-to-integer and integer-to-single-precision conversion instructions. FCVT.W.H or FCVT.L.H converts a half-precision floating-point number to a signed 32-bit or 64-bit integer, respectively. FCVT.H.W or FCVT.H.L converts a 32-bit or 64-bit signed integer, respectively, into a half-precision floating-point number.FCVT.WU.H, FCVT.LU.H, FCVT.H.WU, and FCVT.H.LU variants convert to or from unsigned integer values. FCVT.L\[U\].H and FCVT.H.L\[U\] are RV64-only instructions.
 
@@ -59,19 +59,19 @@ FMV.X.H and FMV.H.X do not modify the bits being transferred; in particular, the
 
 ![svg](_images/svg-86412cb7a6df56627d86059a8dbc406ee8faf887.svg) 
 
-### [](#flt-pt-to-int-move)24.1.4\. Half-Precision Floating-Point Compare Instructions
+### [](#flt-pt-to-int-move)23.1.4\. Half-Precision Floating-Point Compare Instructions
 
 The half-precision floating-point compare instructions are defined analogously to their single-precision counterparts, but operate on half-precision operands.
 
 ![svg](_images/svg-97b3530202d91cc76da0d43426f7bd7ff5cc0883.svg) 
 
-### [](#half-pr-flt-pt-compare)24.1.5\. Half-Precision Floating-Point Classify Instruction
+### [](#half-pr-flt-pt-compare)23.1.5\. Half-Precision Floating-Point Classify Instruction
 
 The half-precision floating-point classify instruction, FCLASS.H, is defined analogously to its single-precision counterpart, but operates on half-precision operands.
 
 ![svg](_images/svg-ce65c8430d703053d0c5f1b1bccb74e9706e2300.svg) 
 
-### [](#half-pr-flt-class)24.1.6\. "Zfhmin" Standard Extension for Minimal Half-Precision Floating-Point
+### [](#half-pr-flt-class)23.1.6\. "Zfhmin" Standard Extension for Minimal Half-Precision Floating-Point
 
 This section describes the Zfhmin standard extension, which provides minimal support for 16-bit half-precision binary floating-point instructions. The Zfhmin extension is a subset of the Zfh extension, consisting only of data transfer and conversion instructions. Like Zfh, the Zfhmin extension depends on the single-precision floating-point extension, F. The expectation is that Zfhmin software primarily uses the half-precision format for storage, performing most computation in higher precision.
 

@@ -1,12 +1,12 @@
-# 3.1. Incoming MSI Controller (IMSIC)
+# 2.1. Incoming MSI Controller (IMSIC)
 
-## [](#IMSIC)3.1\. Incoming MSI Controller (IMSIC)
+## [](#IMSIC)2.1\. Incoming MSI Controller (IMSIC)
 
 An Incoming MSI Controller (IMSIC) is an optional RISC-V hardware component that is closely coupled with a hart, one IMSIC per hart. An IMSIC receives and records incoming message-signaled interrupts (MSIs) for a hart, and signals to the hart when there are pending and enabled interrupts to be serviced.
 
 An IMSIC has one or more memory-mapped registers in the machine’s address space for receiving MSIs. Aside from those memory-mapped registers, software interacts with an IMSIC primarily through several RISC-V CSRs at the attached hart.
 
-### [](#IMSIC-intrFilesAndIdents)3.1.1\. Interrupt files and interrupt identities
+### [](#IMSIC-intrFilesAndIdents)2.1.1\. Interrupt files and interrupt identities
 
 In a RISC-V system, MSIs are directed not just to a specific hart but to a specific privilege level of a specific hart, such as machine or supervisor level. Furthermore, when a hart implements the H extension, an IMSIC may optionally allow MSIs to be directed to a specific virtual hart at virtual supervisor level (VS level).
 
@@ -27,7 +27,7 @@ It is not necessarily the case that all interrupt files in a system are the same
 
 A platform might provide a means for software to configure the number of interrupt files in an IMSIC and/or their sizes, such as by allowing a smaller interrupt file at machine level to be traded for a larger one at supervisor level, or vice versa, for example. Any such configurability is outside the scope of this specification. It is recommended, however, that only machine level be given the power to change the number and sizes of interrupt files in an IMSIC.
 
-### [](#MSIEncoding)3.1.2\. MSI encoding
+### [](#MSIEncoding)2.1.2\. MSI encoding
 
 Established standards (in particular, for PCI and PCI Express) dictate that an individual message-signaled interrupt (MSI) from a device takes the form of a naturally aligned 32-bit write by the device, with the address and value both configured at the device (or device controller) by software. Depending on the versions of the standards to which a device or controller conforms, the address might be restricted to the lower 4-GiB (32-bit) range, and the value written might be limited to a 16-bit range, with the upper 16 bits always being zeros.
 
@@ -40,7 +40,7 @@ By configuring an MSI’s address and data at a device, system software fully co
 
 When the H extension is implemented and a device is being managed directly by a guest operating system, MSI addresses from the device are initially guest physical addresses, as they are configured at the device by the guest OS. These guest addresses must be translated by an IOMMU, which gets configured by the hypervisor to redirect those MSIs to the interrupt files for the correct guest external interrupts. For more on this topic, see [IOMMU Support for MSIs to Virtual Machines](IOMMU.html#IOMMU).
 
-### [](#3-1-3-interrupt-priorities)3.1.3\. Interrupt priorities
+### [](#2-1-3-interrupt-priorities)2.1.3\. Interrupt priorities
 
 Within a single interrupt file, interrupt priorities are determined directly from interrupt identity numbers. Lower identity numbers have higher priority.
 
@@ -50,13 +50,13 @@ Within a single interrupt file, interrupt priorities are determined directly fro
 | |  An interrupt file’s lowest identity numbers have been given the highest priorities, not the reverse order, because it is only for the highest-priority interrupts that priority order may need to be carefully managed, yet it is the low-numbered identities, 1 through 63 (or perhaps 1 through 127), that are guaranteed to exist across all systems. Consider, for example, that an interrupt file’s highest-priority interrupt—presumably the most time-critical—is always identity number 1\. If priority order were reversed, the highest-priority interrupt would have different identity numbers on different machines, depending on how many identities are implemented by interrupt files. The ability for software to assign fixed identity numbers to the highest-priority interrupts is considered worth any discomfort that may be felt from interrupt priorities being the reverse of the natural number order. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#3-1-4-reset-and-revealed-state)3.1.4\. Reset and revealed state
+### [](#2-1-4-reset-and-revealed-state)2.1.4\. Reset and revealed state
 
-Upon reset of an IMSIC, all the state of its interrupt files becomes valid and consistent but otherwise UNSPECIFIED, except possibly for the `eidelivery` register of machine-level and supervisor-level interrupt files, as specified in[3.1.8.1\. External interrupt delivery enable register (eidelivery)](#IMSIC-reg-eidelivery).
+Upon reset of an IMSIC, all the state of its interrupt files becomes valid and consistent but otherwise UNSPECIFIED, except possibly for the `eidelivery` register of machine-level and supervisor-level interrupt files, as specified in[2.1.8.1\. External interrupt delivery enable register (eidelivery)](#IMSIC-reg-eidelivery).
 
 If an IMSIC contains a supervisor-level interrupt file and software at the attached hart enables S-mode that was previously disabled (e.g. by changing bit S of CSR `misa` from zero to one), all state of the supervisor-level interrupt file is valid and consistent but otherwise UNSPECIFIED. Likewise, if an IMSIC contains guest interrupt files and software at the attached hart enables the H extension that was previously disabled (e.g. by changing bit H of `misa` from zero to one), all state of the IMSIC’s guest interrupt files is valid and consistent but otherwise UNSPECIFIED.
 
-### [](#IMSIC-memRegion)3.1.5\. Memory region for an interrupt file
+### [](#IMSIC-memRegion)2.1.5\. Memory region for an interrupt file
 
 Each interrupt file in an IMSIC has one or two memory-mapped 32-bit registers for receiving MSI writes. These memory-mapped registers are located within a naturally aligned 4-KiB region (a page) of physical address space that exists for the interrupt file, i.e., one page per interrupt file.
 
@@ -84,7 +84,7 @@ When not ignored, writes to an interrupt file’s memory region are guaranteed t
 | |  In most circumstances, any delay between the completion of a write to an interrupt file’s memory region and the effect of the write on the interrupt file is indistinguishable from other delays in the memory system. However, if a hart writes to a seteipnum\_le or seteipnum\_be register of its own IMSIC, then a delay between the completion of the store instruction and the consequent setting of an interrupt-pending bit in the interrupt file may be visible to the hart. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#IMSIC-systemMemRegions)3.1.6\. Arrangement of the memory regions of multiple interrupt files
+### [](#IMSIC-systemMemRegions)2.1.6\. Arrangement of the memory regions of multiple interrupt files
 
 Each interrupt file that an IMSIC implements has its own memory region as described in the previous section, occupying exactly one 4-KiB page of machine address space. When practical, the memory pages of the machine-level interrupt files of all IMSICs should be located together in one part of the address space, and the memory pages of all supervisor-level and guest interrupt files should similarly be located together in another part of the address space, according to the rules below.
 
@@ -128,7 +128,7 @@ pages not occupied by an interrupt file should be read-only zeros.
 
 See also [Addresses and data for outgoing MSIs](AdvPLIC.html#AdvPLIC-MSIAddrs) for the default algorithms an Advanced PLIC may use to determine the destination addresses of outgoing MSIs, which should be the addresses of IMSIC interrupt files.
 
-### [](#3-1-7-csrs-for-external-interrupts-via-an-imsic)3.1.7\. CSRs for external interrupts via an IMSIC
+### [](#2-1-7-csrs-for-external-interrupts-via-an-imsic)2.1.7\. CSRs for external interrupts via an IMSIC
 
 Software accesses a hart’s IMSIC primarily through the CSRs introduced in [Control and Status Registers (CSRs) Added to Harts](CSRs.html#CSRs). There is a separate set of CSRs for each implemented privilege level that can receive interrupts. The machine-level CSRs interact with the IMSIC’s machine-level interrupt file, while, if supervisor mode is implemented, the supervisor-level CSRs interact with the IMSIC’s supervisor-level interrupt file. When an IMSIC has guest interrupt files, the VS CSRs interact with a single guest interrupt file, selected by the VGEIN field of CSR `hstatus`.
 
@@ -156,11 +156,11 @@ Registers `eip0` through `eip63` contain the pending bits for all implemented in
 
 The indirectly accessed interrupt-file registers and CSRs `mtopei`, `stopei`, and `vstopei` are all documented in more detail in the next two sections.
 
-### [](#3-1-8-indirectly-accessed-interrupt-file-registers)3.1.8\. Indirectly accessed interrupt-file registers
+### [](#2-1-8-indirectly-accessed-interrupt-file-registers)2.1.8\. Indirectly accessed interrupt-file registers
 
 This section describes the registers of an interrupt file that are accessed indirectly through a `_*iselect_` _CSR_ (`miselect`, `siselect`, or `vsiselect`) and its partner `_*ireg_` _CSR_ (`mireg`, `sireg`, or `vsireg`). The width of these indirect accesses is always the current XLEN, 32 bits for RV32 code, or 64 bits for RV64 code.
 
-#### [](#IMSIC-reg-eidelivery)3.1.8.1\. External interrupt delivery enable register (`eidelivery`)
+#### [](#IMSIC-reg-eidelivery)2.1.8.1\. External interrupt delivery enable register (`eidelivery`)
 
 `eidelivery` is a **WARL** register that controls whether interrupts from this interrupt file are delivered from the IMSIC to the attached hart so they appear as a pending external interrupt in the hart’s `mip` or `hgeip` CSR. Register `eidelivery` may optionally also support the direct delivery of interrupts from a PLIC (Platform-Level Interrupt Controller) or APLIC (Advanced PLIC) to the attached hart. Three possible values are currently defined for `eidelivery`:
 
@@ -180,13 +180,13 @@ Reset initializes `eidelivery` to 0x40000000 if that value is supported; otherwi
 
 The `eidelivery` register affects only whether an external interrupt appears in a hart’s `*ip` register (MEI or SEI in `mip` or `sip`, or a bit in `hgeip`) and what the source of such an interrupt may be (either the interrupt file or a separate external interrupt controller such as an APLIC). It has no effect on other state within the interrupt file, or on any `*topei` CSR (`mtopei`, `stopei`, or `vstopei`).
 
-#### [](#3-1-8-2-external-interrupt-enable-threshold-register-eithreshold)3.1.8.2\. External interrupt enable threshold register (`eithreshold`)
+#### [](#2-1-8-2-external-interrupt-enable-threshold-register-eithreshold)2.1.8.2\. External interrupt enable threshold register (`eithreshold`)
 
 `eithreshold` is a **WLRL** register that determines the minimum interrupt priority (maximum interrupt identity number) allowing an interrupt to be signaled from this interrupt file to the attached hart. If  is the maximum implemented interrupt identity number for this interrupt file,`eithreshold` must be capable of holding all values between 0 and , inclusive.
 
 When `eithreshold` is a nonzero value , interrupt identities  and higher do not contribute to signaling interrupts, as though those identities were not enabled, regardless of the settings of their corresponding interrupt-enable bits in the `eie` array. When `eithreshold` is zero, all enabled interrupt identities contribute to signaling interrupts from the interrupt file.
 
-#### [](#3-1-8-3-external-interrupt-pending-registers-eip0-eip63)3.1.8.3\. External interrupt-pending registers (`eip0`\-`eip63`)
+#### [](#2-1-8-3-external-interrupt-pending-registers-eip0-eip63)2.1.8.3\. External interrupt-pending registers (`eip0`\-`eip63`)
 
 When the current XLEN = 32, register `eip`  contains the pending bits for interrupts with identity numbers  through . For an implemented interrupt identity  within that range, the pending bit for interrupt  is bit  of `eip` .
 
@@ -194,7 +194,7 @@ When the current XLEN = 64, the odd-numbered registers `eip1`, `eip3`, … `eip6
 
 Bit positions in a valid `eip`  register that don’t correspond to a supported interrupt identity (such as bit 0 of `eip0`) are read-only zeros.
 
-#### [](#3-1-8-4-external-interrupt-enable-registers-eie0-eie63)3.1.8.4\. External interrupt-enable registers (`eie0`\-`eie63`)
+#### [](#2-1-8-4-external-interrupt-enable-registers-eie0-eie63)2.1.8.4\. External interrupt-enable registers (`eie0`\-`eie63`)
 
 When the current XLEN = 32, register `eie`  contains the enable bits for interrupts with identity numbers through . For an implemented interrupt identity  within that range, the enable bit for interrupt  is bit ( ) of `eie` .
 
@@ -202,7 +202,7 @@ When the current XLEN = 64, the odd-numbered registers `eie1`, `eie3`, … `eie6
 
 Bit positions in a valid `eie`  register that don’t correspond to a supported interrupt identity (such as bit 0 of `eie0`) are read-only zeros.
 
-### [](#3-1-9-top-external-interrupt-csrs-mtopei-stopei-vstopei)3.1.9\. Top external interrupt CSRs (`mtopei`, `stopei`, `vstopei`)
+### [](#2-1-9-top-external-interrupt-csrs-mtopei-stopei-vstopei)2.1.9\. Top external interrupt CSRs (`mtopei`, `stopei`, `vstopei`)
 
 CSR `mtopei` interacts directly with an IMSIC’s machine-level interrupt file. If supervisor mode is implemented, CSR `stopei` interacts directly with the supervisor-level interrupt file. And if the H extension is implemented and field VGEIN of `hstatus` is the number of an implemented guest interrupt file, `vstopei` interacts with the chosen guest interrupt file.
 
@@ -230,7 +230,7 @@ If a read and write of a `*topei` CSR are done together by a single CSR instruct
 | |  It is almost always a mistake to write to a \*topei CSR without a simultaneous read to learn which interrupt was claimed. Note especially, if a read of a \*topei register and a subsequent write to the register are done by two separate CSR instructions, then a higher-priority interrupt may become newly pending-and-enabled in the interrupt file between the two instructions, causing the write to clear the pending bit of the new interrupt and not the one reported by the read. Once the pending bit of the new interrupt is cleared, the interrupt is lost. If it is necessary first to read a \*topei CSR and then subsequently claim the interrupt as a separate step, the claim can be safely done by clearing the pending bit in the eip array via \*siselect and \*sireg, instead of writing to \*topei. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#3-1-10-interrupt-delivery-and-handling)3.1.10\. Interrupt delivery and handling
+### [](#2-1-10-interrupt-delivery-and-handling)2.1.10\. Interrupt delivery and handling
 
 An IMSIC’s interrupt files supply _external interrupt_ signals to the attached hart, one interrupt signal per interrupt file. The interrupt signal from a machine-level interrupt file appears as bit MEIP in CSR `mip`, and the interrupt signal from a supervisor-level interrupt file appears as bit SEIP in `mip` and `sip`. Interrupt signals from any guest interrupt files appear as the active bits in hypervisor CSR `hgeip`.
 

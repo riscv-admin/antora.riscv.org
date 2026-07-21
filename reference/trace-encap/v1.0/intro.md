@@ -1,6 +1,6 @@
-# 2.1. Introduction
+# 1.1. Introduction
 
-## [](#intro)2.1\. Introduction
+## [](#intro)1.1\. Introduction
 
 The [Efficient Trace for RISC-V](https://github.com/riscv-non-isa/riscv-trace-spec/releases/download/v2.0rc2/riscv-trace-spec.pdf) (E-trace) standard defines packet payloads for instruction and data trace but does not fully define how this should be encapsulated into fully formed packets for transport, nor how instruction and data trace should be differentiated. Chapter 7 gives some illustrative examples but this is insufficiently detailed and informative only.
 
@@ -12,7 +12,7 @@ This specification defines an encapsulation format suitable for use with a varie
 
 Examples of how trace packets can be routed for transport is given in the 'Trace Components' subsection of the [RISC-V Trace Control Interface Specification](https://github.com/riscv-non-isa/tg-nexus-trace/blob/master/docs/RISC-V-Trace-Control-Interface.adoc).
 
-### [](#2-1-1-glossary)2.1.1\. Glossary
+### [](#1-1-1-glossary)1.1.1\. Glossary
 
 * **ATB** \- Advanced Trace Bus, a protocol described in ARM document IHI0032B;
 * **E-Trace** \- Abbreviation for [Efficient Trace for RISC-V](https://github.com/riscv-non-isa/riscv-trace-spec/releases/download/v2.0rc2/riscv-trace-spec.pdf);

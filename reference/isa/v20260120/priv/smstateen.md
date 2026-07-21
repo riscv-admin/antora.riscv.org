@@ -1,6 +1,6 @@
-# 4.1. "Smstateen/Ssstateen" Extensions, Version 1.0
+# 3.1. "Smstateen/Ssstateen" Extensions, Version 1.0
 
-## [](#smstateen)4.1\. "Smstateen/Ssstateen" Extensions, Version 1.0
+## [](#smstateen)3.1\. "Smstateen/Ssstateen" Extensions, Version 1.0
 
 The implementation of optional RISC-V extensions has the potential to open covert channels between separate user threads, or between separate guest OSes running under a hypervisor. The problem occurs when an extension adds processor state — usually explicit registers, but possibly other forms of state — that the main OS or hypervisor is unaware of (and hence won’t context-switch) but that can be modified/written by one user thread or guest OS and perceived/examined/read by another.
 
@@ -10,7 +10,7 @@ The `f` registers of the RISC-V floating-point extensions and the `v` registers 
 
 Obviously, one way to prevent the use of new user-level CSRs as covert channels would be to add to `mstatus` or `sstatus` an "XS" field for each relevant extension, paralleling the V extension’s VS field. However, this is not considered a general solution to the problem due to the number of potential future extensions that may add small amounts of state. Even with a 64-bit`sstatus` (necessitating adding `sstatush` for RV32), it is not certain there are enough remaining bits in `sstatus` to accommodate all future user-level extensions. In any event, there is no need to strain `sstatus` (and add `sstatush`) for this purpose. The "enable" flags that are needed to plug covert channels are not generally expected to require swapping on context switches of user threads, making them a less-than-compelling candidate for inclusion in `sstatus`. Hence, a new place is provided for them instead.
 
-### [](#4-1-1-state-enable-extensions)4.1.1\. State Enable Extensions
+### [](#3-1-1-state-enable-extensions)3.1.1\. State Enable Extensions
 
 The Smstateen and Ssstateen extensions collectively specify machine-mode and supervisor-mode features. The Smstateen extension specification comprises the mstateen\*, sstateen\*, and hstateen\* CSRs and their functionality. The Ssstateen extension specification comprises only the sstateen\* and hstateen\* CSRs and their functionality.
 
@@ -56,7 +56,7 @@ Machine-level software needs identical control to be able to emulate the hypervi
 
 Bit 63 of each `mstateen` CSR may be read-only zero only if the hypervisor extension is not implemented and the matching supervisor-level `sstateen` CSR is all read-only zeros. In that case, machine-level software should emulate attempts to access the affected `sstateen` CSR from S-mode, ignoring writes and returning zero for reads. Bit 63 of each `hstateen` CSR is always writable (not read-only).
 
-### [](#4-1-2-state-enable-0-registers)4.1.2\. State Enable 0 Registers
+### [](#3-1-2-state-enable-0-registers)3.1.2\. State Enable 0 Registers
 
 ![Machine State Enable 0 Register (`mstateen0`)](_images/svg-0b49af3729b0a7f2f020a30ba8c85c396cbb4e88.svg) 
 
@@ -98,7 +98,7 @@ The P1P13 bit in `mstateen0` controls access to the `hedelegh` introduced by Pri
 
 The SRMCFG bit in `mstateen0` controls access to the `srmcfg` CSR introduced by the [Ssqosid](supervisor.html#ssqosid) extension.
 
-### [](#4-1-3-usage)4.1.3\. Usage
+### [](#3-1-3-usage)3.1.3\. Usage
 
 After the writable bits of the machine-level `mstateen` CSRs are initialized to zeros on reset, machine-level software can set bits in these registers to enable less-privileged access to the controlled state. This may be either because machine-level software knows how to swap the state or, more likely, because machine-level software isn’t swapping supervisor-level environments. (Recall that the main reason the `mstateen` CSRs must exist is so machine level can emulate the hypervisor extension. When machine level isn’t emulating the hypervisor extension, it is likely there will be no need to keep any implemented `mstateen` bits zero.)
 

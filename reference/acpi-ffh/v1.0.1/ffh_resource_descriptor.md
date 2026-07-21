@@ -1,6 +1,6 @@
-# 2.1. RISC-V FFH Resource Descriptor Encoding
+# 1.1. RISC-V FFH Resource Descriptor Encoding
 
-## [](#2-1-risc-v-ffh-resource-descriptor-encoding)2.1\. RISC-V FFH Resource Descriptor Encoding
+## [](#1-1-risc-v-ffh-resource-descriptor-encoding)1.1\. RISC-V FFH Resource Descriptor Encoding
 
 Resource descriptors, which are formatted per the “Generic Register Descriptor” definition (\[ACPI 6.5\] section 6.4.3.7, also see ASL Register in section 19.6.114), are used by ACPI tables to provide the OSPM read and/or write access to platform-specific “registers”. A resource descriptor may be a fixed value, hardware address, function or function parameter identifier, or any other encoding of its bits. While encodings are specific to their applications, RISC-V uses a common top-level encoding whenever possible. That encoding is:
 

@@ -1,6 +1,6 @@
-# 5.1. Main N-Trace Trace Modes
+# 4.1. Main N-Trace Trace Modes
 
-## [](#5-1-main-n-trace-trace-modes)5.1\. Main N-Trace Trace Modes
+## [](#4-1-main-n-trace-trace-modes)4.1\. Main N-Trace Trace Modes
 
 RISC-V N-Trace defines two instruction trace modes:
 

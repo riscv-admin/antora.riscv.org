@@ -1,8 +1,8 @@
-# 25.1. "BF16" Extensions for BFloat16-precision Floating-Point, Version 1.0
+# 24.1. "BF16" Extensions for BFloat16-precision Floating-Point, Version 1.0
 
-## [](#bf16)25.1\. "BF16" Extensions for BFloat16-precision Floating-Point, Version 1.0
+## [](#bf16)24.1\. "BF16" Extensions for BFloat16-precision Floating-Point, Version 1.0
 
-### [](#BF16%5Fintroduction)25.1.1\. Introduction
+### [](#BF16%5Fintroduction)24.1.1\. Introduction
 
 When FP16 (officially called binary16) was first introduced by the IEEE-754 standard, it was just an interchange format. It was intended as a space/bandwidth efficient encoding that would be used to transfer information. This is in line with the Zfhmin extension.
 
@@ -14,7 +14,7 @@ Experts working in machine learning noticed that FP16 was a much more compact wa
 
 Experts working in machine learning at Google who continued to work with FP32 values noted that the least significant 16 bits of their mantissas were not always needed for good results, even in training. They proposed a truncated version of FP32, which was the 16 most significant bits of the FP32 encoding. This format was named BFloat16 (or BF16). The B in BF16, stands for Brain since it was initially introduced by the Google Brain team. Not only did they find that the number of significant bits in BF16 tended to be sufficient for their work (despite being fewer than in FP16), but it was very easy for them to reuse their existing data; FP32 numbers could be readily rounded to BF16 with a minimal amount of work. Furthermore, the even smaller number of the BF16 significant bits enabled even smaller multiplication blocks to be built. Similar to FP16, BF16 multiply-accumulate widening and dot-product instructions started to proliferate.
 
-### [](#BF16%5Faudience)25.1.2\. Intended Audience
+### [](#BF16%5Faudience)24.1.2\. Intended Audience
 
 Floating-point arithmetic is a specialized subject, requiring people with many different backgrounds to cooperate in its correct and efficient implementation. Where possible, we have written this specification to be understandable by all, though we recognize that the motivations and references to algorithms or other specifications and standards may be unfamiliar to those who are not domain experts.
 
@@ -38,9 +38,9 @@ Responsible for ensuring the correct implementation of the extension in hardware
 
 These are by no means the only people concerned with the specification, but they are the ones we considered most while writing it.
 
-### [](#BF16%5Fformat)25.1.3\. Number Format
+### [](#BF16%5Fformat)24.1.3\. Number Format
 
-#### [](#25-1-3-1-bf16-operand-format)25.1.3.1\. BF16 Operand Format
+#### [](#24-1-3-1-bf16-operand-format)24.1.3.1\. BF16 Operand Format
 
 BF16 bits
 
@@ -65,11 +65,11 @@ __Table 2\. Obligatory Floating Point Format Table__
 | FP64   | 1         | 11        | 52            | 0         | 64            | 1023          | \-1022   |
 | FP128  | 1         | 15        | 112           | 0         | 128           | 16,383        | \-16,382 |
 
-#### [](#25-1-3-2-bf16-behavior)25.1.3.2\. BF16 Behavior
+#### [](#24-1-3-2-bf16-behavior)24.1.3.2\. BF16 Behavior
 
 For these BF16 extensions, instruction behavior on BF16 operands is the same as for other floating-point instructions in the RISC-V ISA. For easy reference, some of this behavior is repeated here.
 
-##### [](#25-1-3-2-1-subnormal-numbers)25.1.3.2.1\. Subnormal Numbers:
+##### [](#24-1-3-2-1-subnormal-numbers)24.1.3.2.1\. Subnormal Numbers:
 
 Floating-point values that are too small to be represented as normal numbers, but can still be expressed by the format’s smallest exponent value with a "0" integer bit and at least one "1" bit in the trailing fractional bits are called subnormal numbers. Basically, the idea is there is a trade off of precision to support _gradual underflow_.
 
@@ -78,13 +78,13 @@ All of the BF16 instructions in the extensions defined in this specification (i.
 | |  Future floating-point extensions, including those that operate on BF16 values, may chose not to support subnormal numbers. The comments about supporting subnormal BF16 values are limited to those instructions defined in this specification. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-##### [](#25-1-3-2-2-infinities)25.1.3.2.2\. Infinities:
+##### [](#24-1-3-2-2-infinities)24.1.3.2.2\. Infinities:
 
 Infinities are used to represent values that are too large to be represented by the target format. These are usually produced as a result of overflows (depending on the rounding mode), but can also be provided as inputs. Infinities have a sign associated with them: there are positive infinities and negative infinities.
 
 Infinities are important for keeping meaningless results from being operated upon.
 
-##### [](#25-1-3-2-3-nans)25.1.3.2.3\. NaNs
+##### [](#24-1-3-2-3-nans)24.1.3.2.3\. NaNs
 
 NaN stands for Not a Number.
 
@@ -98,7 +98,7 @@ NaNs are important for keeping meaningless results from being operated upon.
 
 Except where otherwise explicitly stated, when the result of a floating-point operation is a qNaN, it is the RISC-V canonical NaN. For BF16, the RISC-V canonical NaN corresponds to the pattern of _0x7fc0_ which is the most significant 16 bits of the RISC-V single-precision canonical NaN.
 
-##### [](#25-1-3-2-4-scalar-nan-boxing)25.1.3.2.4\. Scalar NaN Boxing
+##### [](#24-1-3-2-4-scalar-nan-boxing)24.1.3.2.4\. Scalar NaN Boxing
 
 RISC-V applies NaN boxing to scalar results and checks for NaN boxing when a floating-point operation --- even a vector-scalar operation --- consumes a value from a scalar floating-point register. If the value is properly NaN-boxed, its least significant bits are used as the operand, otherwise it is treated as if it were the canonical QNaN.
 
@@ -106,7 +106,7 @@ NaN boxing is nothing more than putting the smaller encoding in the least signif
 
 Nan-boxing never affects the value of the operand itself, it just changes the bits of the register that are more significant than the operand’s most significant bit.
 
-##### [](#25-1-3-2-5-rounding-modes)25.1.3.2.5\. Rounding Modes:
+##### [](#24-1-3-2-5-rounding-modes)24.1.3.2.5\. Rounding Modes:
 
 As is the case with other floating-point instructions, the BF16 instructions support all 5 RISC-V Floating-point rounding modes. These modes can be specified in the `rm` field of scalar instructions as well as in the `frm` CSR
 
@@ -128,13 +128,13 @@ __Table 4\. Additional encoding for the rm field of scalar instructions__
 
 In practice, the default IEEE rounding mode (round to nearest, ties to even) is generally used for arithmetic.
 
-##### [](#25-1-3-2-6-handling-exceptions)25.1.3.2.6\. Handling exceptions
+##### [](#24-1-3-2-6-handling-exceptions)24.1.3.2.6\. Handling exceptions
 
 RISC-V supports IEEE-defined default exception handling. BF16 is no exception.
 
 Default exception handling, as defined by IEEE, is a simple and effective approach to producing results in exceptional cases. For the coder to be able to see what has happened, and take further action if needed, BF16 instructions set floating-point exception flags the same way as all other floating-point instructions in RISC-V.
 
-###### [](#25-1-3-2-6-1-underflow)25.1.3.2.6.1\. Underflow
+###### [](#24-1-3-2-6-1-underflow)24.1.3.2.6.1\. Underflow
 
 The IEEE-defined underflow exception requires that a result be inexact and tiny, where tininess can be detected before or after rounding. In RISC-V, tininess is detected after rounding.
 
@@ -142,7 +142,7 @@ It is important to note that the detection of tininess after rounding requires i
 
 As is defined in '754, under default exception handling, underflow is only signalled when the result is tiny and inexact. In such a case, both the underflow and inexact flags are raised.
 
-### [](#BF16%5Fextensions)25.1.4\. Extensions
+### [](#BF16%5Fextensions)24.1.4\. Extensions
 
 The group of extensions introduced by the BF16 Instruction Set Extensions is listed here.
 
@@ -157,7 +157,7 @@ As stated later in this specification, there exists a dependency between the new
 
 This initial set of BF16 extensions provides very basic functionality including scalar and vector conversion between BF16 and single-precision values, and vector widening multiply-accumulate instructions.
 
-#### [](#zfbfmin)25.1.4.1\. `Zfbfmin` \- Scalar BF16 Converts
+#### [](#zfbfmin)24.1.4.1\. `Zfbfmin` \- Scalar BF16 Converts
 
 This extension provides the minimal set of instructions needed to enable scalar support of the BF16 format. It enables BF16 as an interchange format as it provides conversion between BF16 values and FP32 values.
 
@@ -180,7 +180,7 @@ This extension includes six instructions: the `FCVT.BF16.S` and `FCVT.S.BF16`ins
 | FMV.H.X     |                                            |
 | FMV.X.H     |                                            |
 
-#### [](#zvfbfmin)25.1.4.2\. `Zvfbfmin` \- Vector BF16 Converts
+#### [](#zvfbfmin)24.1.4.2\. `Zvfbfmin` \- Vector BF16 Converts
 
 This extension provides the minimal set of instructions needed to enable vector support of the BF16 format. It enables BF16 as an interchange format as it provides conversion between BF16 values and FP32 values.
 
@@ -197,7 +197,7 @@ This extension depends upon `Zve32f` vector extension.
 | vfncvtbf16.f.f.w | [Vector convert FP32 to BF16](#insns-vfncvtbf16.f.f.w) |
 | vfwcvtbf16.f.f.v | [Vector convert BF16 to FP32](#insns-vfwcvtbf16.f.f.v) |
 
-#### [](#zvfbfwma)25.1.4.3\. `Zvfbfwma` \- Vector BF16 widening mul-add
+#### [](#zvfbfwma)24.1.4.3\. `Zvfbfwma` \- Vector BF16 widening mul-add
 
 This extension provides a vector widening BF16 mul-add instruction that accumulates into FP32.
 
@@ -207,9 +207,9 @@ This extension depends upon the `Zvfbfmin` extension and the `Zfbfmin` extension
 | ----------- | -------------------------------------------------------------- |
 | VFWMACCBF16 | [Vector BF16 widening multiply-accumulate](#insns-vfwmaccbf16) |
 
-### [](#BF16%5Finsns)25.1.5\. Instructions
+### [](#BF16%5Finsns)24.1.5\. Instructions
 
-#### [](#insns-fcvt.bf16.s)25.1.5.1\. fcvt.bf16.s
+#### [](#insns-fcvt.bf16.s)24.1.5.1\. fcvt.bf16.s
 
 Synopsis
 
@@ -236,7 +236,7 @@ Exceptions: Overflow, Underflow, Inexact, Invalid
 
 Included in: [Zfbfmin](#zfbfmin)
 
-#### [](#insns-fcvt.s.bf16)25.1.5.2\. fcvt.s.bf16
+#### [](#insns-fcvt.s.bf16)24.1.5.2\. fcvt.s.bf16
 
 Synopsis
 
@@ -266,7 +266,7 @@ Exceptions: Invalid
 
 Included in: [Zfbfmin](#zfbfmin)
 
-#### [](#insns-vfncvtbf16.f.f.w)25.1.5.3\. vfncvtbf16.f.f.w
+#### [](#insns-vfncvtbf16.f.f.w)24.1.5.3\. vfncvtbf16.f.f.w
 
 Synopsis
 
@@ -301,7 +301,7 @@ Exceptions: Overflow, Underflow, Inexact, Invalid
 
 Included in: [Zvfbfmin](#zvfbfmin)
 
-#### [](#insns-vfwcvtbf16.f.f.v)25.1.5.4\. vfwcvtbf16.f.f.v
+#### [](#insns-vfwcvtbf16.f.f.v)24.1.5.4\. vfwcvtbf16.f.f.v
 
 Synopsis
 
@@ -339,7 +339,7 @@ Exceptions: Invalid
 
 Included in: [Zvfbfmin](#zvfbfmin)
 
-#### [](#insns-vfwmaccbf16)25.1.5.5\. vfwmaccbf16
+#### [](#insns-vfwmaccbf16)24.1.5.5\. vfwmaccbf16
 
 Synopsis
 
@@ -401,7 +401,7 @@ vfmacc.vf        vd, T1, T2, vm
 
 Included in: [Zvfbfwma](#zvfbfwma)
 
-### [](#25-1-6-bibliography)25.1.6\. Bibliography
+### [](#24-1-6-bibliography)24.1.6\. Bibliography
 
 [754-2019 - IEEE Standard for Floating-Point Arithmetic](https://ieeexplore.ieee.org/document/8766229)  
 [754-2008 - IEEE Standard for Floating-Point Arithmetic](https://ieeexplore.ieee.org/document/4610935)

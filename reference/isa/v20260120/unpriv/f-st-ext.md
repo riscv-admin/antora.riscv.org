@@ -1,10 +1,10 @@
-# 21.1. "F" Extension for Single-Precision Floating-Point, Version 2.2
+# 20.1. "F" Extension for Single-Precision Floating-Point, Version 2.2
 
-## [](#single-float)21.1\. "F" Extension for Single-Precision Floating-Point, Version 2.2
+## [](#single-float)20.1\. "F" Extension for Single-Precision Floating-Point, Version 2.2
 
 This chapter describes the standard instruction-set extension for single-precision floating-point, which is named "F" and addssingle-precision floating-point computational instructions compliant with the IEEE 754-2008 arithmetic standard \[[4](../biblio/bibliography.html#bib-ieee754-2008)\]. The F extension depends on the "Zicsr" extension for control and status register access.
 
-### [](#21-1-1-f-register-state)21.1.1\. F Register State
+### [](#20-1-1-f-register-state)20.1.1\. F Register State
 
 The F extension adds 32 floating-point registers, `f0-f31`, each 32 bits wide, and a floating-point control and status register `fcsr`, which contains the operating mode and exception status of the floating-point unit. This additional state is shown in[Table 1](#fprs). We use the term FLEN to describe the width of the floating-point registers in the RISC-V ISA, and FLEN=32 for the F single-precision floating-point extension. Most floating-point instructions operate on values in the floating-point register file. Floating-point load and store instructions transfer floating-point values between registers and memory. Instructions to transfer values to and from the integer register file are also provided.
 
@@ -51,7 +51,7 @@ __Table 1\. RISC-V standard F extension single-precision floating-point state__
 | fcsr   |   |
 | 32     |   |
 
-### [](#21-1-2-floating-point-control-and-status-register)21.1.2\. Floating-Point Control and Status Register
+### [](#20-1-2-floating-point-control-and-status-register)20.1.2\. Floating-Point Control and Status Register
 
 The floating-point control and status register, `fcsr`, is a RISC-V control and status register (CSR). It is a 32-bit read/write register that selects the dynamic rounding mode for floating-point arithmetic operations and holds the accrued exception flags, as shown in [Floating-Point Control and Status Register](#fcsr).
 
@@ -96,7 +96,7 @@ __Table 3\. Accrued exception flag encoding.__
 | |  As allowed by the standard, we do not support traps on floating-point exceptions in the F extension, but instead require explicit checks of the flags in software. We considered adding branches controlled directly by the contents of the floating-point accrued exception flags, but ultimately chose to omit these instructions to keep the ISA simple. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#21-1-3-nan-generation-and-propagation)21.1.3\. NaN Generation and Propagation
+### [](#20-1-3-nan-generation-and-propagation)20.1.3\. NaN Generation and Propagation
 
 Except when otherwise stated, if the result of a floating-point operation is NaN, it is the canonical NaN. The canonical NaN has a positive sign and all significand bits clear except the MSB, a.k.a. the quiet bit. For single-precision floating-point, this corresponds to the pattern `0x7fc00000`.
 
@@ -108,7 +108,7 @@ Except when otherwise stated, if the result of a floating-point operation is NaN
 | |  We require implementations to return the standard-mandated default values in the case of exceptional conditions, without any further intervention on the part of user-level software (unlike the Alpha ISA floating-point trap barriers). We believe full hardware handling of exceptional cases will become more common, and so wish to avoid complicating the user-level ISA to optimize other approaches. Implementations can always trap to machine-mode software handlers to provide exceptional default values. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#21-1-4-subnormal-arithmetic)21.1.4\. Subnormal Arithmetic
+### [](#20-1-4-subnormal-arithmetic)20.1.4\. Subnormal Arithmetic
 
 Operations on subnormal numbers are handled in accordance with the IEEE 754-2008 standard.
 
@@ -117,7 +117,7 @@ In the parlance of the IEEE standard, tininess is detected after rounding.
 | |  Detecting tininess after rounding results in fewer spurious underflow signals. |
 | --------------------------------------------------------------------------------- |
 
-### [](#21-1-5-single-precision-load-and-store-instructions)21.1.5\. Single-Precision Load and Store Instructions
+### [](#20-1-5-single-precision-load-and-store-instructions)20.1.5\. Single-Precision Load and Store Instructions
 
 Floating-point loads and stores use the same base+offset addressing mode as the integer base ISAs, with a base address in register _rs1_ and a 12-bit signed byte offset. The FLW instruction loads a single-precision floating-point value from memory into floating-point register _rd_. FSW stores a single-precision value from floating-point register _rs2_ to memory.
 
@@ -131,7 +131,7 @@ FLW and FSW do not modify the bits being transferred; in particular, the payload
 
 As described in [Single-Precision Load and Store Instructions](rv32.html#ldst), the execution environment defines whether misaligned floating-point loads and stores are handled invisibly or raise a contained or fatal trap.
 
-### [](#single-float-compute)21.1.6\. Single-Precision Floating-Point Computational Instructions
+### [](#single-float-compute)20.1.6\. Single-Precision Floating-Point Computational Instructions
 
 Floating-point arithmetic instructions with one or two source operands use the R-type format with the OP-FP major opcode. FADD.S and FMUL.S perform single-precision floating-point addition and multiplication respectively, between _rs1_ and _rs2_. FSUB.S performs the single-precision floating-point subtraction of _rs2_ from _rs1_. FDIV.S performs the single-precision floating-point division of _rs1_ by _rs2_. FSQRT.S computes the square root of _rs1_. In each case, the result is written to _rd_.
 
@@ -177,7 +177,7 @@ The fused multiply-add instructions must set the invalid operation exception fla
 | |  The IEEE 754-2008 standard permits, but does not require, raising the invalid exception for the operation ∞×0 + qNaN. |
 | ------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#21-1-7-single-precision-floating-point-conversion-and-move-instructions)21.1.7\. Single-Precision Floating-Point Conversion and Move Instructions
+### [](#20-1-7-single-precision-floating-point-conversion-and-move-instructions)20.1.7\. Single-Precision Floating-Point Conversion and Move Instructions
 
 Floating-point-to-integer and integer-to-floating-point conversion instructions are encoded in the OP-FP major opcode space. FCVT.W.S or FCVT.L.S converts a floating-point number in floating-point register_rs1_ to a signed 32-bit or 64-bit integer, respectively, in integer register _rd_. FCVT.S.W or FCVT.S.L converts a 32-bit or 64-bit signed integer, respectively, in integer register _rs1_ into a floating-point number in floating-point register _rd_. FCVT.WU.S, FCVT.LU.S, FCVT.S.WU, and FCVT.S.LU variants convert to or from unsigned integer values. For XLEN>32, FCVT.W\[U\].S sign-extends the 32-bit result to the destination register width.FCVT.L\[U\].S and FCVT.S.L\[U\] are RV64-only instructions.If the rounded result is not representable in the destination format, it is clipped to the nearest value and the invalid flag is set. [Table 5](#int%5Fconv) gives the range of valid inputs for FCVT._int_.S and the behavior for invalid inputs.
 
@@ -216,7 +216,7 @@ FMV.W.X moves the single-precision value encoded in IEEE 754-2008 standard encod
 | |  The base floating-point ISA was defined so as to allow implementations to employ an internal recoding of the floating-point format in registers to simplify handling of subnormal values and possibly to reduce functional unit latency. To this end, the F extension avoids representing integer values in the floating-point registers by defining conversion and comparison operations that read and write the integer register file directly. This also removes many of the common cases where explicit moves between integer and floating-point registers are required, reducing instruction count and critical paths for common mixed-format code sequences. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#21-1-8-single-precision-floating-point-compare-instructions)21.1.8\. Single-Precision Floating-Point Compare Instructions
+### [](#20-1-8-single-precision-floating-point-compare-instructions)20.1.8\. Single-Precision Floating-Point Compare Instructions
 
 Floating-point compare instructions (FEQ.S, FLT.S, FLE.S) perform the specified comparison between floating-point registers (_rs1_ \= _rs2_, _rs1_ < _rs2_,_rs1_ ≤ _rs2_) writing 1 to the integer register _rd_ if the condition holds, and 0 otherwise.
 
@@ -227,7 +227,7 @@ FLT.S and FLE.S perform what the IEEE 754-2008 standard refers to as_signaling_ 
 | |  The F extension provides a ≤ comparison, whereas the base ISAs provide a ≥ branch comparison. Because ≤ can be synthesized from ≥ and vice-versa, there is no performance implication to this inconsistency, but it is nevertheless an unfortunate incongruity in the ISA. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#21-1-9-single-precision-floating-point-classify-instruction)21.1.9\. Single-Precision Floating-Point Classify Instruction
+### [](#20-1-9-single-precision-floating-point-classify-instruction)20.1.9\. Single-Precision Floating-Point Classify Instruction
 
 The FCLASS.S instruction examines the value in floating-point register_rs1_ and writes to integer register _rd_ a 10-bit mask that indicates the class of the floating-point number. The format of the mask is described in [Table 6](#fclass). The corresponding bit in _rd_ will be set if the property is true and clear otherwise. All other bits in_rd_ are cleared. Note that exactly one bit in _rd_ will be set. FCLASS.S does not set the floating-point exception flags.
 

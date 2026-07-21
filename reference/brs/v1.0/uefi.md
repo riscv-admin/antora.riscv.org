@@ -1,6 +1,6 @@
-# 5.1. BRS-I UEFI Requirements
+# 4.1. BRS-I UEFI Requirements
 
-## [](#uefi)5.1\. BRS-I UEFI Requirements
+## [](#uefi)4.1\. BRS-I UEFI Requirements
 
 The _Unified Extensible Firmware Interface Specification_ (UEFI) describes the interface between the OS and the supervisor-mode firmware.
 
@@ -25,7 +25,7 @@ This section defines the BRS-I mandatory and optional UEFI rules on top of exist
 | UEFI\_080                                                                                                                                                                                                                                               | A Device Tree MUST only be exposed to the OS if no actual hardware description is included in the DT.                                                                                                                                                                                                                                    |
 | _Such a "dummy" DT could be installed by firmware, as a UEFI configuration table entry of type EFI\_DTB\_TABLE\_GUID, to provide necessary hand-off info to an OS, for example, to provide RAM disk information (e.g. via /chosen/linux,initrd-start)._ |                                                                                                                                                                                                                                                                                                                                          |
 
-### [](#5-1-1-brs-i-io-specific-requirements)5.1.1\. BRS-I I/O-specific Requirements
+### [](#4-1-1-brs-i-io-specific-requirements)4.1.1\. BRS-I I/O-specific Requirements
 
 | ID#                                                                                                                                                                                                         | Rule                                                                                                                                                                                                                                 |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -34,7 +34,7 @@ This section defines the BRS-I mandatory and optional UEFI rules on top of exist
 | UIO\_020                                                                                                                                                                                                    | Systems implementing EFI\_GRAPHICS\_OUTPUT\_PROTOCOL SHOULD configure the frame buffer to be directly accessible.                                                                                                                    |
 | _That is, EFI\_GRAPHICS\_PIXEL\_FORMAT is not PixelBltOnly and FrameBufferBase is reported as a valid hart memory-mapped I/O address._                                                                      |                                                                                                                                                                                                                                      |
 
-### [](#uefi-rt)5.1.2\. BRS-I UEFI Runtime Services
+### [](#uefi-rt)4.1.2\. BRS-I UEFI Runtime Services
 
 | ID#                                                                                                                                                                                                                                                                                                                             | Rule                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -48,7 +48,7 @@ This section defines the BRS-I mandatory and optional UEFI rules on top of exist
 | URT\_050                                                                                                                                                                                                                                                                                                                        | UEFI runtime services MUST be able to update the UEFI variables directly without the aid of an OS.                                                                                                                                                                                                                                                                                                                                                                                          |
 | _UEFI variables are normally saved in a dedicated storage which is not directly accessible by the operating system._                                                                                                                                                                                                            |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 
-### [](#5-1-3-brs-i-security-requirements)5.1.3\. BRS-I Security Requirements
+### [](#4-1-3-brs-i-security-requirements)4.1.3\. BRS-I Security Requirements
 
 | ID#       | Rule                                                                                                                                                                                                                 |
 | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -60,7 +60,7 @@ This section defines the BRS-I mandatory and optional UEFI rules on top of exist
 
 See additional [requirements for UEFI runtime services](#uefi-rt).
 
-### [](#5-1-4-brs-i-firmware-update)5.1.4\. BRS-I Firmware Update
+### [](#4-1-4-brs-i-firmware-update)4.1.4\. BRS-I Firmware Update
 
 | ID#                                                            | Rule                                                                                                                                                                                                                                                                                                    |
 | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

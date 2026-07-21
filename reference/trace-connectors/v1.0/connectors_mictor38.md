@@ -1,6 +1,6 @@
-# 3.1. Mictor 38-bit Debug and Trace Connector
+# 2.1. Mictor 38-bit Debug and Trace Connector
 
-## [](#3-1-mictor-38-bit-debug-and-trace-connector)3.1\. Mictor 38-bit Debug and Trace Connector
+## [](#2-1-mictor-38-bit-debug-and-trace-connector)2.1\. Mictor 38-bit Debug and Trace Connector
 
 Mictor-38 connector as defined by MIPI Alliance has all signals from MIPI20 connector and adds up to 16 bits of parallel trace and defines more trigger pins. Mictor-38 connector is also designed for high-speed trace (it is rated for 400MHz double edge captures).
 
@@ -32,7 +32,7 @@ __Table 1\. Mictor-38 Connector Layout__
 | |  Above table is using names compatible with MIPI specification (however MIPI specification shows rows of pins starting from 38 down to 1). |
 | -------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#3-1-1-explanation-for-additional-pins-comparing-to-mipi20)3.1.1\. Explanation for additional pins (comparing to MIPI20)
+### [](#2-1-1-explanation-for-additional-pins-comparing-to-mipi20)2.1.1\. Explanation for additional pins (comparing to MIPI20)
 
 All debug signals share alternate functions as defined for the MIPI20 connector.
 
@@ -45,7 +45,7 @@ __Table 2\. Micror-38 additional pins (comparing to MIPI20 defined above)__
 | 21   | nTRST                  | Same as MIPI20 #16 alternative pin function but not shared with trace.                                                      |
 | 36   | **EXT** / **TRC\_CTL** | Not applicable (should be 0). May be also used to denote valid/idle state, but it may not be supported by all trace probes. |
 
-### [](#3-1-2-dual-voltage-different-for-debug-and-different-for-trace-configurations)3.1.2\. Dual voltage (different for debug and different for trace) configurations
+### [](#2-1-2-dual-voltage-different-for-debug-and-different-for-trace-configurations)2.1.2\. Dual voltage (different for debug and different for trace) configurations
 
 Sometimes (due to speed reasons) it may be beneficial to drive SoC trace pins with different (usually lower) voltage then the debug signals. Such a configuration may be supported using a single Mictor connector or two connectors (Mictor for trace only and MIPI for debug only). Be aware that two different voltages may not be supported by simpler trace probes.
 
@@ -103,7 +103,7 @@ Sometimes (due to speed reasons) it may be beneficial to drive SoC trace pins wi
    * It is very hard to properly handle fast switching of bidirectional signals, so cJTAG and SWD debug protocols may never reliably work.  
    * It makes PCB more complicated without good reason.
 
-### [](#3-1-3-explanation-for-mictor-38-pins-30323436)3.1.3\. Explanation for Mictor-38 pins #30/32/34/36
+### [](#2-1-3-explanation-for-mictor-38-pins-30323436)2.1.3\. Explanation for Mictor-38 pins #30/32/34/36
 
 It may be hard to understand why `**TRC_DATA[0]**` is not together with other `**TRC_DATA[1..15]**` signals and why pins #30/32/34 have specific fixed values (Logic '0' or Logic '1').
 

@@ -1,13 +1,13 @@
-# 1.1. Introduction
+# Introduction
 
-## [](#ch:intro)1.1\. Introduction
+## [](#ch:intro)Introduction
 
 This document specifies the Advanced Interrupt Architecture for RISC-V, consisting of: (a) an extension to the standard RISC-V Privileged Architecture; (b) two standard interrupt controllers for RISC-V systems, an Advanced Platform-Level Interrupt Controller (APLIC) and an Incoming Message-Signaled Interrupt Controller (IMSIC); and (c) requirements on other system components concerning interrupts.
 
 | |  Commentary on our design decisions, implementation options, and application is formatted as in this paragraph, and can be skipped if the reader is only interested in the specification itself. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#1-1-1-goals)1.1.1\. Goals
+### [](#goals)Goals
 
 The RISC-V Advanced Interrupt Architecture has these goals:
 
@@ -29,7 +29,7 @@ This initial version of the Advanced Interrupt Architecture is focused primarily
 
 It is intended that such features optimizing for smaller and/or real-time systems can be developed as a follow-on extension, either separately or as part of a future version of the interrupt architecture of this document.
 
-### [](#1-1-2-limits)1.1.2\. Limits
+### [](#limits)Limits
 
 In its current version, the RISC-V Advanced Interrupt Architecture can support RISC-V symmetric multiprocessing (SMP) systems with up to 16,384 harts. If the harts are 64-bit (RV64) and implement the H extension, and if all features of the Advanced Interrupt Architecture are fully implemented as well, then for each physical hart there may be up to 63 active virtual harts and potentially thousands of additional idle (swapped-out) virtual harts, where each virtual hart has direct control of one or more physical devices.
 
@@ -47,11 +47,11 @@ __Table 1\. Absolute limits on the numbers of harts and interrupt identities in 
 | Wired interrupts at a single APLIC                                                    | 1023                     |                                                                     |
 | Distinct identities usable for MSIs at each hart (physical or virtual)                | 2047                     | IMSICs                                                              |
 
-### [](#1-1-3-overview-of-main-components)1.1.3\. Overview of main components
+### [](#overview-of-main-components)Overview of main components
 
 A RISC-V system’s overall architecture for signaling interrupts depends on whether it is built mainly for message-signaled interrupts (MSIs) or for more traditional wired interrupts. In systems with full support for MSIs, every hart has an _Incoming MSI Controller_ (IMSIC) that serves as the hart’s own private interrupt controller for external interrupts. Conversely, in systems based primarily on traditional wired interrupts, harts do not have IMSICs. Larger systems, and especially those with PCI devices, are expected to fully support MSIs by giving harts IMSICs, whereas many smaller systems may continue to be best served with wired interrupts and simpler harts without IMSICs.
 
-#### [](#1-1-3-1-external-interrupts-without-imsics)1.1.3.1\. External interrupts without IMSICs
+#### [](#external-interrupts-without-imsics)External interrupts without IMSICs
 
 When RISC-V harts do not have Incoming MSI Controllers, external interrupts are signaled to harts through dedicated wires. In that case, an _Advanced Platform-Level Interrupt Controller_ (APLIC) acts as a traditional central hub for interrupts, routing and prioritizing external interrupts for each hart as illustrated in [Figure 1](#intrsWithoutIMSICs). Interrupts may be selectively routed either to machine level or to supervisor level at each hart. The APLIC is specified in[Advanced Platform-Level Interrupt Controller (APLIC)](AdvPLIC.html#AdvPLIC).
 
@@ -65,7 +65,7 @@ Figure 1\. Traditional delivery of wired interrupts to harts without support for
 
 Figure 2\. Interrupt delivery by MSIs when harts have IMSICs for receiving them.
 
-#### [](#1-1-3-2-external-interrupts-with-imsics)1.1.3.2\. External interrupts with IMSICs
+#### [](#external-interrupts-with-imsics)External interrupts with IMSICs
 
 To be able to receive message-signaled interrupts (MSIs), each RISC-V hart must have an Incoming MSI Controller (IMSIC) as shown in [Figure 2](#intrsWithIMSICs). Fundamentally, a message-signaled interrupt is simply a memory write to a specific address that hardware accepts as indicating an interrupt. To that end, every IMSIC is assigned one or more distinct addresses in the machine’s address space, and when a write is made to one of those addresses in the expected format, the receiving IMSIC interprets the write as an external interrupt for the respective hart.
 
@@ -77,13 +77,13 @@ When the harts in a RISC-V system have IMSICs, the system will normally still co
 
 If RISC-V harts implement the H extension, IMSICs may have additional _guest interrupt files_ for delivering interrupts to virtual machines. Besides [Incoming MSI Controller (IMSIC)](IMSIC.html#IMSIC) on the IMSIC, see [Interrupts for Virtual Machines (VS Level)](VSLevel.html#VSLevel) which specifically covers interrupts to virtual machines. If the system also contains an IOMMU to perform address translation of memory accesses made by I/O devices, then MSIs from those same devices may require special handling. This topic is addressed in [IOMMU Support for MSIs to Virtual Machines](IOMMU.html#IOMMU).
 
-#### [](#1-1-3-3-other-interrupts)1.1.3.3\. Other interrupts
+#### [](#other-interrupts)Other interrupts
 
 In addition to external interrupts from I/O devices, the RISC-V Privileged Architecture specifies a few other major classes of interrupts for harts. The Privileged Architecture’s timer interrupts remain supported in full, and software interrupts remain at least partly supported, although neither appears in [Figure 1](#intrsWithoutIMSICs)and [Figure 2](#intrsWithIMSICs). For the specifics on software interrupts, refer to [Interprocessor Interrupts (IPIs)](IPIs.html#IPIs).
 
 The Advanced Interrupt Architecture adds considerable support for _local interrupts_ at a hart, whereby a hart essentially interrupts itself in response to asynchronous events, usually errors. Local interrupts remain contained within a hart (or close to it), so like standard RISC-V timer and software interrupts, they do not pass through an APLIC or IMSIC.
 
-### [](#1-1-4-interrupt-identities-at-a-hart)1.1.4\. Interrupt identities at a hart
+### [](#interrupt-identities-at-a-hart)Interrupt identities at a hart
 
 The RISC-V Privileged Architecture gives every interrupt cause at a hart a distinct _major identity number_, which is the Exception Code automatically written to CSR `mcause` or `scause` on an interrupt trap. Interrupt causes that are standardized by the base Privileged Architecture have major identities in the range 0-15, while numbers 16 and higher are officially available for platform standards or for custom use. The Advanced Interrupt Architecture claims further authority over identity numbers in the ranges 16-23 and 32-47, leaving numbers in the range 24-31 and all major identities 48 and higher still free for custom use.[Table 2](#interruptIdents) characterizes all major interrupt identities with this extension.
 
@@ -108,7 +108,7 @@ Other interrupt causes besides external interrupts might also have their own min
 
 The local interrupts defined by the Advanced Interrupt Architecture and their handling are covered mainly in [Interrupts for Machine and Supervisor Levels](MSLevel.html#MSLevel), "Interrupts for Machine and Supervisor Levels."
 
-### [](#1-1-5-selection-of-harts-to-receive-an-interrupt)1.1.5\. Selection of harts to receive an interrupt
+### [](#selection-of-harts-to-receive-an-interrupt)Selection of harts to receive an interrupt
 
 Each signaled interrupt is delivered to only one hart at one privilege level, usually determined by software in one way or another. Unlike some other architectures, the RISC-V Advanced Interrupt Architecture provides no standard hardware mechanism for the broadcast or multicast of interrupts to multiple harts.
 
@@ -124,7 +124,7 @@ In the rare event that a single interrupt from an I/O device needs to be communi
 | |  We contend that the need to communicate an I/O interrupt to multiple harts is sufficiently rare that standardizing hardware support for multicast cannot be justified in this case. Along with multicast delivery, other architectures support an option for "1-of- " delivery of interrupts, whereby the hardware chooses a single destination hart from among a configured set of  harts, with the goal of automatic load balancing of interrupt handling among the harts. Experiments in the 2010s called into question the utility of 1-of-  modes in practice, showing that software could often do a better job of load balancing than the hardware algorithms implemented in actual chips. Linux was consequently modified to discontinue using 1-of-  interrupt delivery even on systems that have it. We remain open to the argument that hardware load balancing of interrupt handling may be beneficial for certain specialized markets, such as networking. However, the claims made so far in this regard do not justify requiring support for 1-of-  delivery in all RISC-V servers. With more evidence, some mechanism for 1-of- delivery might become a future option. The original Platform-Level Interrupt Controller (PLIC) for RISC-V is configurable so each interrupt source signals external interrupts to any subset of the harts, potentially all harts. When multiple harts receive an external interrupt from a single cause at the PLIC, the first hart to_claim_ the interrupt at the PLIC is the one responsible for servicing it. Usually this sets up a race, where the subset of harts configured to receive the multicast interrupt all take an external interrupt trap simultaneously and compete to be the first to claim the interrupt at the PLIC. The intention is to provide a form of 1-of- interrupt delivery. However, for all the harts that fail to win the claim, the interrupt trap becomes wasted effort. For the reasons already given, the Advanced PLIC supports sending each signaled interrupt to only a single hart chosen by software, not to multiple harts. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#1-1-6-isa-extensions-smaia-and-ssaia)1.1.6\. ISA extensions Smaia and Ssaia
+### [](#isa-extensions-smaia-and-ssaia)ISA extensions Smaia and Ssaia
 
 The Advanced Interrupt Architecture (AIA) defines two names for extensions to the RISC-V instruction set architecture (ISA), one for machine-level execution environments, and another for supervisor-level environments. For a machine-level environment, extension **Smaia**encompasses all added CSRs and all modifications to interrupt response behavior that the AIA specifies for a hart, over all privilege levels. For a supervisor-level environment, extension **Ssaia** is essentially the same as Smaia except excluding the machine-level CSRs and behavior not directly visible to supervisor level.
 

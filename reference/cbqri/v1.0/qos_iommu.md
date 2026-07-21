@@ -1,6 +1,6 @@
-# 5.1. IOMMU Extension for QoS ID
+# 4.1. IOMMU Extension for QoS ID
 
-## [](#QOS%5FIOMMU)5.1\. IOMMU Extension for QoS ID
+## [](#QOS%5FIOMMU)4.1\. IOMMU Extension for QoS ID
 
 A method to associate QoS IDs with requests to access resources by the Input-Output Memory Management Unit (IOMMU), as well as with devices governed by it, is required for effective monitoring and allocation. This section specifies a RISC-V I OMMU \[[5](qos%5Fbiblio.html#bib-iommu)\] extension for the following goals:
 
@@ -9,7 +9,7 @@ A method to associate QoS IDs with requests to access resources by the Input-Out
 
 The size (or width) of `RCID` and `MCID`, as fields in registers or in data structures, supported by the IOMMU must be at least as large as that supported by any RISC-V application processor hart in the system.
 
-### [](#5-1-1-iommu-registers)5.1.1\. IOMMU Registers
+### [](#4-1-1-iommu-registers)4.1.1\. IOMMU Registers
 
 The specified memory-mapped register layout defines a new IOMMU register named`iommu_qosid`. This register is used to configure the Quality of Service (QoS) IDs associated with IOMMU-originated requests. The register is 4 bytes in size and is located at an offset of 624 from the beginning of the memory-mapped region.
 
@@ -19,14 +19,14 @@ __Table 1\. IOMMU Memory-mapped Register Layout__
 | 624    | iommu\_qosid | 4    | QoS IDs for IOMMU requests.    | Yes          |
 | 628    | Reserved     | 60   | Reserved for future use (WPRI) |              |
 
-#### [](#5-1-1-1-reset-behavior)5.1.1.1\. Reset Behavior
+#### [](#4-1-1-1-reset-behavior)4.1.1.1\. Reset Behavior
 
 If the reset value for `ddtp.iommu_mode` field is `Bare`, then the`iommu_qosid.RCID` field must have a reset value of 0.
 
 | |  At reset, it is required that the RCID field of iommu\_qosid is set to 0 if the IOMMU is in Bare mode, as typically the resource controllers in the SoC default to a reset behavior of associating all capacity or bandwidth to theRCID value of 0\. When the reset value of the ddtp.iommu\_mode is not Bare, the iommu\_qosid register should be initialized by software before changing the mode to allow DMA. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-#### [](#5-1-1-2-iommu-capabilities)5.1.1.2\. IOMMU Capabilities
+#### [](#4-1-1-2-iommu-capabilities)4.1.1.2\. IOMMU Capabilities
 
 The IOMMU `capabilities` register is extended with a new field, `QOSID`, which enumerates support for associating QoS IDs with requests made through the IOMMU.
 
@@ -38,7 +38,7 @@ Figure 1\. IOMMU Capabilities Register
 | ---- | ----- | --------- | ----------------------------------------------- |
 | 41   | QOSID | RO        | Associating QoS IDs with requests is supported. |
 
-#### [](#5-1-1-3-iommu-qos-id)5.1.1.3\. IOMMU QoS ID
+#### [](#4-1-1-3-iommu-qos-id)4.1.1.3\. IOMMU QoS ID
 
 The `iommu_qosid` register fields are defined as follows:
 
@@ -63,7 +63,7 @@ IOMMU-initiated requests for accessing the following data structures use the val
 
 When `ddtp.iommu_mode == Bare`, all device-originated requests are associated with the QoS IDs configured in the `iommu_qosid` register.
 
-### [](#5-1-2-device-context-fields)5.1.2\. Device-context Fields
+### [](#4-1-2-device-context-fields)4.1.2\. Device-context Fields
 
 The `ta` field of the device context is extended with two new fields, `RCID`and `MCID`, to configure the QoS IDs to associate with requests originated by the devices.
 
@@ -83,7 +83,7 @@ The `RCID` and `MCID` configured in `DC.ta` are provided to the IO bridge on suc
 
 If `capabilities.QOSID` is 1 and `DC.ta.RCID` or `DC.ta.MCID` is wider than that supported by the IOMMU, a `DC` with `DC.tc.V=1` is considered misconfigured. In this case, the IOMMU should stop and report "DDT entry misconfigured" (cause = 259).
 
-### [](#5-1-3-iommu-atc-capacity-allocation-and-monitoring)5.1.3\. IOMMU ATC Capacity Allocation and Monitoring
+### [](#4-1-3-iommu-atc-capacity-allocation-and-monitoring)4.1.3\. IOMMU ATC Capacity Allocation and Monitoring
 
 Some IOMMUs might support capacity allocation and usage monitoring in the IOMMU address translation cache (IOATC) by implementing the capacity controller register interface.
 

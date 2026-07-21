@@ -1,6 +1,6 @@
-# 2.1. MIPI20 Debug and Trace Connector
+# 1.1. MIPI20 Debug and Trace Connector
 
-## [](#2-1-mipi20-debug-and-trace-connector)2.1\. MIPI20 Debug and Trace Connector
+## [](#1-1-mipi20-debug-and-trace-connector)1.1\. MIPI20 Debug and Trace Connector
 
 This connector is an extension of a MIPI10 and MIPI20 connectors as defined by ratified**RISC-V External Debug Support, Version 0.13.2, Mar 22 2019** or newer.
 
@@ -49,11 +49,11 @@ __Table 2\. Details of MIPI20 Signals__
 | 18   | **TRC\_DATA\[2\]** / TRIGIN          | Either parallel trace signal (from target to probe) or input debug trigger (from probe to target) or application UART (from probe to target).                                                     |
 | 20   | **TRC\_DATA\[3\]** / TRIGOUT         | Either parallel trace signal (from target to probe) or output debug trigger (from target to probe) or application UART (from target to probe).                                                    |
 
-### [](#2-1-1-possible-use-of-trigintrigout-or-tditdo-for-an-application-uart)2.1.1\. Possible use of TRIGIN/TRIGOUT or TDI/TDO for an application UART
+### [](#1-1-1-possible-use-of-trigintrigout-or-tditdo-for-an-application-uart)1.1.1\. Possible use of TRIGIN/TRIGOUT or TDI/TDO for an application UART
 
 Some debug probes may allow definition of pin functions and provide a virtual UART port/terminal for the target. UART is often needed for testing and production and having both debug and UART on a single connector is desired. Supporting UART over TRIGIN/TRIGOUT pins will limit parallel trace to 1-bit or 2-bit options. Supporting UART over TDI/TDO pins will require 2-pin cJTAG to be used as a debug interface.
 
-### [](#2-1-2-explanation-of-tgtpwrcap-option-for-pins1113)2.1.2\. Explanation of TgtPwr+Cap option for pins#11/#13
+### [](#1-1-2-explanation-of-tgtpwrcap-option-for-pins1113)1.1.2\. Explanation of TgtPwr+Cap option for pins#11/#13
 
 | |  This chapter explains optional use of MIPI20 pins #11/#13 to power-up small evaluations boards. This optional functionality is already provided by several debug and trace probe vendors. If you are not interested in such a functionality, you may skip reading this chapter and simply connect these pins to GND on the target PCB. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
