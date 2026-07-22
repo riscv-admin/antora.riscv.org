@@ -38,7 +38,9 @@ module.exports.register = function ({ config, playbook }) {
   // Local PDF archive mirror settings.
   // Mirrors antora/pdfs into the site output so PDF-only legacy versions are
   // published even when their docs are not rebuilt by Antora.
-  const pdfMirrorEnabled = config?.pdf_mirror !== false
+  //const pdfMirrorEnabled = config?.pdf_mirror !== false
+  //const pdfsSourceDir = config?.pdfs_source_dir || './pdfs'
+  const pdfMirrorEnabled = false  // Disabled for debugging
   const pdfsSourceDir = config?.pdfs_source_dir || './pdfs'
   
   console.log('[File Copy] Target sources configuration:', JSON.stringify(targetSources, null, 2))
@@ -349,10 +351,10 @@ module.exports.register = function ({ config, playbook }) {
       await copyLegacyFilesToOutput({ legacyFiles, outputDir })
     }
 
-    if (pdfMirrorEnabled) {
-      const sourceRoot = resolveRelativeToPlaybook(playbook, pdfsSourceDir)
-      mirrorPdfArchive({ sourceRoot, outputDir })
-    }
+    //if (pdfMirrorEnabled) {
+    //  const sourceRoot = resolveRelativeToPlaybook(playbook, pdfsSourceDir)
+    //  mirrorPdfArchive({ sourceRoot, outputDir })
+    //}
   })
 }
 
@@ -402,6 +404,7 @@ async function copyLegacyFilesToOutput ({ legacyFiles, outputDir }) {
   console.log(`[File Copy] Legacy copy summary: copied=${copied}, skipped=${skipped}, failed=${failed}`)
 }
 
+/*
 function mirrorPdfArchive ({ sourceRoot, outputDir }) {
   if (!fs.existsSync(sourceRoot) || !fs.statSync(sourceRoot).isDirectory()) {
     console.log(`[File Copy] PDF mirror skipped (source missing): ${sourceRoot}`)
@@ -437,6 +440,7 @@ function copyDirectoryRecursive (sourceDir, destinationDir, onFileCopied) {
     onFileCopied()
   })
 }
+*/
 
 function resolveOutputDir(playbook) {
   const configuredOutputDir = playbook?.output?.dir || './build/site'
