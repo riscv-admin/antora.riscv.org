@@ -64,11 +64,11 @@ jobs:
     - name: Copy root redirect index
       run: cp antora/site-root/index.html antora/build/index.html
 
-    # - name: Manually Migrate Standalone PDFs
-    #   continue-on-error: true
-    #   run: |
-    #     cd antora
-    #     cp -a ./pdfs/. ./build/reference/
+    - name: Manually Migrate Standalone PDFs
+      continue-on-error: true
+      run: |
+        cd antora
+        cp -a ./pdfs/. ./build/reference/
     - name: Deploy to GitHub Pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
