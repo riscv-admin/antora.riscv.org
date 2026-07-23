@@ -99,7 +99,7 @@ module.exports.register = function () {
 function buildSpecsContainer(specs) {
   const searchHtml = `<div class="dev-specs-search"><input type="text" placeholder="Search specifications..."></div>`
 
-  const statusOrder = ['planning', 'under development', 'stabilization', 'freeze', 'ratification-ready']
+  const statusOrder = ['stabilization', 'freeze', 'ratification-ready']
   const uniqueStatuses = [...new Set(specs.map(s => s.status))].sort((a, b) => statusOrder.indexOf(a) - statusOrder.indexOf(b))
   const allStatusBtn = '<button class="filter-btn filter-all-status active" data-type="status-all">All States</button>'
   const statusBtns = allStatusBtn + uniqueStatuses
