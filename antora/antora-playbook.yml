@@ -31,10 +31,11 @@ content:
     branches: HEAD
     start_path: antora/site-home
 
-  # Shared assets - component: common
-  - url: ..
-    branches: HEAD
-    start_path: antora/common-assets
+  # Shared assets - component: common (from external docs-resources repo)
+  - url: https://github.com/riscv/docs-resources.git
+    branches: main
+    start_path: /
+    name: common
 
 # ================= OVERVIEW LANDING PAGES (GITHUB) =================
   # Hardware Overview
@@ -492,7 +493,7 @@ antora:
       - component: aia
         module: ROOT
         branches: ['v20250312-antora']
-        chapters: {start: 6, end: 13}
+        chapters: {start: 5, end: 13}
 
       # --- IOMMU -------------------------------------------------------------
       - component: iommu
