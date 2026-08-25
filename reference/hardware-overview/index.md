@@ -1,4 +1,4 @@
-# Hardware
+# System Architecture
 
 ##### Advanced Interrupt Architecture
 

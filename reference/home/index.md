@@ -86,7 +86,7 @@ Hardware and sofware capabilities that portable system software can rely on bein
 
 [More](https://riscv.atlassian.net/wiki/external/YjgzMGRlYmQzZTEzNGQwZjhjZjBiZjUyMzlhODBiNDQ)
 
-Hardware 
+System Architecture 
 
 ##### Advanced Interrupt Architecture
 
