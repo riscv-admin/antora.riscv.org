@@ -1,6 +1,6 @@
-# 3.1. _LPI Object Examples
+# _LPI Object Examples
 
-## [](#3-1-%5Flpi-object-examples)3.1\. \_LPI Object Examples
+## [](#%5Flpi-object-examples)\_LPI Object Examples
 
 ```C
 Device (C000) {              // HART0
