@@ -1,6 +1,6 @@
-# Introduction
+# 1.1. Introduction
 
-## [](#intro)Introduction
+## [](#intro)1.1\. Introduction
 
 When a design progresses from simulation to hardware implementation, a user’s control and understanding of the system’s current state drops dramatically. To help bring up and debug low level software and hardware, it is critical to have good debugging support built into the hardware. When a robust OS is running on a core, software can handle many debugging tasks. However, in many scenarios, hardware support is essential.
 
@@ -8,7 +8,7 @@ This document outlines a standard architecture for debug support on RISC-V hardw
 
 System designers may choose to add additional hardware debug support, but this specification defines a standard interface for common functionality.
 
-### [](#terminology)Terminology
+### [](#1-1-1-terminology)1.1.1\. Terminology
 
 **advanced feature**
 
@@ -130,7 +130,7 @@ An address as a hart sees it. If the hart is using address translation this may 
 
 The exception program counter CSR (e.g. `mepc`) that is appropriate for the mode being trapped to.
 
-### [](#context)Context
+### [](#1-1-2-context)1.1.2\. Context
 
 This specification attempts to support all RISC-V ISA extensions that have, roughly, been ratified through the first half of 2023\. In particular, though, this specification specifically addresses features in the following extensions:
 
@@ -150,7 +150,7 @@ This specification attempts to support all RISC-V ISA extensions that have, roug
 14. Zicboz
 15. Zicsr
 
-#### [](#versions)Versions
+#### [](#1-1-2-1-versions)1.1.2.1\. Versions
 
 Version 0.13 of this document was ratified by the RISC-V Foundation’s board. Versions 0.13.  are bug fix releases to that ratified specification.
 
@@ -158,7 +158,7 @@ Version 0.14 was a working version that was never officially ratified.
 
 Version 1.0 is almost entirely forwards and backwards compatible with Version 0.13.
 
-##### [](#bugfixes-from-0-13-to-1-0)Bugfixes from 0.13 to 1.0
+##### [](#1-1-2-1-1-bugfixes-from-0-13-to-1-0)1.1.2.1.1\. Bugfixes from 0.13 to 1.0
 
 Changes that fix a bug in the spec:
 
@@ -169,7 +169,7 @@ Changes that fix a bug in the spec:
 5. [aamsize](debug%5Fmodule.html#accessmemory-aamsize) does not affect Argument Width.[#420](https://github.com/riscv/riscv-debug-spec/pull/420)
 6. Clarify that harts halt out of reset if [haltreq](debug%5Fmodule.html#dmcontrol-haltreq) \=1.[#419](https://github.com/riscv/riscv-debug-spec/pull/419)
 
-##### [](#incompatible-changes-from-0-13-to-1-0)Incompatible Changes from 0.13 to 1.0
+##### [](#1-1-2-1-2-incompatible-changes-from-0-13-to-1-0)1.1.2.1.2\. Incompatible Changes from 0.13 to 1.0
 
 Changes that are not backwards-compatible. Debuggers or hardware implementations that implement 0.13 will have to change something in order to implement 1.0:
 
@@ -184,7 +184,7 @@ Changes that are not backwards-compatible. Debuggers or hardware implementations
 9. If [version](Sdtrig.html#tinfo-version) is greater than 0, then bit 20 of [mcontrol6](Sdtrig.html#csr-mcontrol6) is no longer used for timing information. (Previously the bit was called [mcontrol6](Sdtrig.html#csr-mcontrol6).`timing`.)[#807](https://github.com/riscv/riscv-debug-spec/pull/807)
 10. If [version](Sdtrig.html#tinfo-version) is greater than 0, then the encodings of [size](Sdtrig.html#mcontrol6-size) for sizes greater than 64 bit have changed.[#807](https://github.com/riscv/riscv-debug-spec/pull/807)
 
-##### [](#minor-changes-from-0-13-to-1-0)Minor Changes from 0.13 to 1.0
+##### [](#1-1-2-1-3-minor-changes-from-0-13-to-1-0)1.1.2.1.3\. Minor Changes from 0.13 to 1.0
 
 Changes that slightly modify defined behavior. Technically backwards incompatible, but unlikely to be noticeable:
 
@@ -206,7 +206,7 @@ Changes that slightly modify defined behavior. Technically backwards incompatibl
 16. Solutions to deal with reentrancy in [Sdtrig.adoc#nativetrigger](Sdtrig.html#nativetrigger) prevent triggers from_matching_, not merely _firing_. This primarily affects [icount](Sdtrig.html#csr-icount) behavior.[#722](https://github.com/riscv/riscv-debug-spec/pull/722)
 17. Attempts to access an unimplemented CSR raise an illegal instruction exception. [#791](https://github.com/riscv/riscv-debug-spec/pull/791)
 
-##### [](#new-features-from-0-13-to-1-0)New Features from 0.13 to 1.0
+##### [](#1-1-2-1-4-new-features-from-0-13-to-1-0)1.1.2.1.4\. New Features from 0.13 to 1.0
 
 New backwards-compatible feature that did not exist before:
 
@@ -229,7 +229,7 @@ New backwards-compatible feature that did not exist before:
 17. Add [ndmresetpending](debug%5Fmodule.html#dmstatus-ndmresetpending) to allow a debugger to determine when ndmreset is complete.[#594](https://github.com/riscv/riscv-debug-spec/pull/594)
 18. Add [intctl](Sdtrig.html#tmexttrigger-intctl) to support triggers from an interrupt controller.[#599](https://github.com/riscv/riscv-debug-spec/pull/599)
 
-##### [](#incompatible-changes-during-1-0-stable)Incompatible Changes During 1.0 Stable
+##### [](#1-1-2-1-5-incompatible-changes-during-1-0-stable)1.1.2.1.5\. Incompatible Changes During 1.0 Stable
 
 Backwards-incompatible changes between two versions that are both called 1.0 stable.
 
@@ -238,23 +238,23 @@ Backwards-incompatible changes between two versions that are both called 1.0 sta
 3. It may not be possible to read the contents of the Program Buffer using the `progbuf` registers.[#731](https://github.com/riscv/riscv-debug-spec/pull/731)
 4. [tcontrol](Sdtrig.html#csr-tcontrol) fields apply to all traps, not just breakpoint traps. This reverts[#723](https://github.com/riscv/riscv-debug-spec/pull/723).[#880](https://github.com/riscv/riscv-debug-spec/pull/880)
 
-##### [](#incompatible-changes-between-1-0-0-rc1-and-1-0-0-rc2)Incompatible Changes Between 1.0.0-rc1 and 1.0.0-rc2
+##### [](#1-1-2-1-6-incompatible-changes-between-1-0-0-rc1-and-1-0-0-rc2)1.1.2.1.6\. Incompatible Changes Between 1.0.0-rc1 and 1.0.0-rc2
 
 Backwards-incompatible changes between 1.0.0-rc1 and 1.0.0-rc2.
 
 1. [#981](https://github.com/riscv/riscv-debug-spec/pull/981) made[scontext](Sdtrig.html#csr-scontext).[data](Sdtrig.html#scontext-data), [mcontext](Sdtrig.html#csr-mcontext).[hcontext](Sdtrig.html#mcontext-hcontext),[sbytemask](Sdtrig.html#textra64-sbytemask), and [textra64](Sdtrig.html#csr-textra64).`svalue` narrower. This avoids confusion about the contents of [scontext](Sdtrig.html#csr-scontext) and [mcontext](Sdtrig.html#csr-mcontext) when XLEN is reduced and increased again.
 
-### [](#about-this-document)About This Document
+### [](#1-1-3-about-this-document)1.1.3\. About This Document
 
-#### [](#structure)Structure
+#### [](#1-1-3-1-structure)1.1.3.1\. Structure
 
 This document contains two parts. The main part of the document is the specification, which is given in the numbered chapters. The second part of the document is a set of appendices. The information in the appendices is intended to clarify and provide examples, but is not part of the actual specification.
 
-#### [](#isa-vs-non-isa)ISA vs. non-ISA
+#### [](#1-1-3-2-isa-vs-non-isa)1.1.3.2\. ISA vs. non-ISA
 
 This specification contains both ISA and non-ISA parts. The ISA parts define self-contained ISA extensions. The other parts of the document describe the non-ISA external debug extension. Chapters whose contents are solely one or the other are labeled as such in their title. Chapters without such a label apply to both ISA and non-ISA.
 
-#### [](#register-definition-format)Register Definition Format
+#### [](#1-1-3-3-register-definition-format)1.1.3.3\. Register Definition Format
 
 All register definitions in this document follow the format shown below. A simple graphic shows which fields are in the register. The upper and lower bit indices are shown to the top left and top right of each field. The total number of bits in the field are shown below it.
 
@@ -284,7 +284,7 @@ __Table 1\. Register Access Abbreviations__
 | W1    | Write-only. Only writing 1 has an effect. When read the returned value should be 0.                                                               |
 | WARL  | Write any, read legal. A debugger may write any value. If a value is unsupported, the implementation converts the value to one that is supported. |
 
-### [](#background)Background
+### [](#1-1-4-background)1.1.4\. Background
 
 There are several use cases for dedicated debugging hardware, both in native debug and external debug. Native debug (sometimes called self-hosted debug) refers to debug software running on a RISC-V platform which debugs the same platform. The optional Trigger Module provides features that are useful for native debug. External debug refers to debug software running somewhere else, debugging the RISC-V platform via a debug transport like JTAG. The entire document provides features that are useful for external debug.
 
@@ -296,7 +296,7 @@ This specification addresses the use cases listed below. Implementations can cho
 * Debugging issues in the OS itself. (External or native debug.)
 * Debugging processes running on an OS. (Native or external debug.)
 
-### [](#supported-features)Supported Features
+### [](#1-1-5-supported-features)1.1.5\. Supported Features
 
 The debug interface described in this specification supports the following features:
 

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>3.1. Sdext (ISA Extension) :: RISC-V Ratified Specifications Library</title>
+    <title>4.1. Sdext (ISA Extension) :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/debug/v1.0/Sdext.html">
     <link rel="prev" href="debug_module.html">
     <link rel="next" href="Sdtrig.html">
@@ -124,33 +124,35 @@
               <div data-component="debug" data-version="v1.0" class="nav-version-group">
                 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link"  href="index.html">Debug</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="introduction.html">Introduction</a>
+    <a class="nav-link"  href="index.html">Title Page</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="overview.html">Chapter 1. Overview</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 1. Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="debug_module.html">Chapter 2. Debug Module</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="overview.html">Chapter 2. Overview</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="Sdext.html">Chapter 3. Sdext (ISA Extension)</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debug_module.html">Chapter 3. Debug Module</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="Sdtrig.html">Chapter 4. Sdtrig (ISA Extension)</a>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="dtm.html">Chapter 5. Debug Transport Module (DTM)</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="implementations.html">Chapter 6. Hardware Implementations</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
   </li>
-</ul>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debugger_implementation.html">Debugger Implementation</a>
   </li>
 </ul>
   </li>
@@ -600,7 +602,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="3.1. Sdext (ISA Extension)"
+      data-title="4.1. Sdext (ISA Extension)"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -664,15 +666,12 @@
 
         <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
               <li><a href="index.html">Debug Specification</a></li>
-                      <li>
-            <a href="index.html">Debug</a>
-          </li>
-    </ul>
+                </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">3.1. Sdext (ISA Extension)</h1>
+<h1 id="page-title" class="page">4.1. Sdext (ISA Extension)</h1>
 <div class="sect1">
-<h2 id="core_debug"><a class="anchor" href="#core_debug"></a>3.1. Sdext (ISA Extension)</h2>
+<h2 id="core_debug"><a class="anchor" href="#core_debug"></a>4.1. Sdext (ISA Extension)</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This chapter describes the Sdext ISA extension. It must be implemented
@@ -694,7 +693,7 @@ listed as optional.</p>
 any of the Sdtrig CSRs must raise an illegal instruction exception.</p>
 </div>
 <div class="sect2">
-<h3 id="debugmode"><a class="anchor" href="#debugmode"></a>3.1.1. Debug Mode</h3>
+<h3 id="debugmode"><a class="anchor" href="#debugmode"></a>4.1.1. Debug Mode</h3>
 <div class="paragraph">
 <p>Debug Mode is a special processor mode used only when a hart is halted
 for external debugging. Because the hart is halted, there is no forward
@@ -800,7 +799,7 @@ reasons it is recommended to tie <a href="#dcsr-mprven">mprven</a> to 1.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-2-load-reservedstore-conditional-instructions"><a class="anchor" href="#3-1-2-load-reservedstore-conditional-instructions"></a>3.1.2. Load-Reserved/Store-Conditional Instructions</h3>
+<h3 id="4-1-2-load-reservedstore-conditional-instructions"><a class="anchor" href="#4-1-2-load-reservedstore-conditional-instructions"></a>4.1.2. Load-Reserved/Store-Conditional Instructions</h3>
 <div class="paragraph">
 <p>The reservation registered by an <code>lr</code> instruction on a memory address
 may be lost when entering Debug Mode or while in Debug Mode. This means
@@ -830,7 +829,7 @@ automate this.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-3-wait-for-interrupt-instruction"><a class="anchor" href="#3-1-3-wait-for-interrupt-instruction"></a>3.1.3. Wait for Interrupt Instruction</h3>
+<h3 id="4-1-3-wait-for-interrupt-instruction"><a class="anchor" href="#4-1-3-wait-for-interrupt-instruction"></a>4.1.3. Wait for Interrupt Instruction</h3>
 <div class="paragraph">
 <p>If halt is requested while <code>wfi</code> is executing, then the hart must leave
 the stalled state, completing this instruction&#8217;s execution, and then
@@ -838,7 +837,7 @@ enter Debug Mode.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-4-wait-on-reservation-set-instructions"><a class="anchor" href="#3-1-4-wait-on-reservation-set-instructions"></a>3.1.4. Wait-on-Reservation-Set Instructions</h3>
+<h3 id="4-1-4-wait-on-reservation-set-instructions"><a class="anchor" href="#4-1-4-wait-on-reservation-set-instructions"></a>4.1.4. Wait-on-Reservation-Set Instructions</h3>
 <div class="paragraph">
 <p>If halt is requested while <code>wrs.sto</code> or <code>wrs.nto</code> is executing, then the
 hart must leave the stalled state, completing this instruction&#8217;s
@@ -846,9 +845,9 @@ execution, and then enter Debug Mode.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-5-single-step"><a class="anchor" href="#3-1-5-single-step"></a>3.1.5. Single Step</h3>
+<h3 id="4-1-5-single-step"><a class="anchor" href="#4-1-5-single-step"></a>4.1.5. Single Step</h3>
 <div class="sect3">
-<h4 id="stepbit"><a class="anchor" href="#stepbit"></a>3.1.5.1. Step Bit In Dcsr</h4>
+<h4 id="stepbit"><a class="anchor" href="#stepbit"></a>4.1.5.1. Step Bit In Dcsr</h4>
 <div class="paragraph">
 <p>This method is only available to external debuggers, and is the
 preferred way to single step.</p>
@@ -888,7 +887,7 @@ then instead the instruction is treated as a <code>nop</code>. This includes <co
 </div>
 </div>
 <div class="sect3">
-<h4 id="stepicount"><a class="anchor" href="#stepicount"></a>3.1.5.2. Icount Trigger</h4>
+<h4 id="stepicount"><a class="anchor" href="#stepicount"></a>4.1.5.2. Icount Trigger</h4>
 <div class="paragraph">
 <p>Native debuggers won&#8217;t have access to <a href="#csr-dcsr">dcsr</a>, but can use the <a href="Sdtrig.html#csr-icount" class="xref page">icount</a> trigger by setting <a href="Sdtrig.html#icount-count" class="xref page">count</a> to 1.</p>
 </div>
@@ -919,7 +918,7 @@ several instructions (depending on the software implementation). See
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-6-reset"><a class="anchor" href="#3-1-6-reset"></a>3.1.6. Reset</h3>
+<h3 id="4-1-6-reset"><a class="anchor" href="#4-1-6-reset"></a>4.1.6. Reset</h3>
 <div class="paragraph">
 <p>If the halt signal (driven by the hart&#8217;s halt request bit in the Debug
 Module) or <a href="debug_module.html#dmstatus-hasresethaltreq" class="xref page">hasresethaltreq</a> are asserted when a hart comes out of reset, the hart must
@@ -929,7 +928,7 @@ instruction is executed.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-7-halt"><a class="anchor" href="#3-1-7-halt"></a>3.1.7. Halt</h3>
+<h3 id="4-1-7-halt"><a class="anchor" href="#4-1-7-halt"></a>4.1.7. Halt</h3>
 <div class="paragraph">
 <p>When a hart halts:</p>
 </div>
@@ -962,7 +961,7 @@ executed instruction. This is analogous to how vector instructions behave for ex
 </div>
 </div>
 <div class="sect2">
-<h3 id="3-1-8-resume"><a class="anchor" href="#3-1-8-resume"></a>3.1.8. Resume</h3>
+<h3 id="4-1-8-resume"><a class="anchor" href="#4-1-8-resume"></a>4.1.8. Resume</h3>
 <div class="paragraph">
 <p>When a hart resumes:</p>
 </div>
@@ -999,7 +998,7 @@ or VU, then <code>sstatus.SDT</code> is set to 0. Additionally, if it is VU, the
 </div>
 </div>
 <div class="sect2">
-<h3 id="debreg"><a class="anchor" href="#debreg"></a>3.1.9. Core Debug Registers</h3>
+<h3 id="debreg"><a class="anchor" href="#debreg"></a>4.1.9. Core Debug Registers</h3>
 <div class="paragraph">
 <p>The supported Core Debug Registers must be implemented for each hart
 that can be debugged. They are CSRs, accessible using the RISC-V <code>csr</code>
@@ -1535,7 +1534,7 @@ This is implementation-dependent.</p>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a id="dcsr-step"></a> <code>step</code></p></td>
 <td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
 <p>When set and not in Debug Mode, the hart will only execute a single
-instruction and then enter Debug Mode. See <a href="#stepbit">3.1.5.1. Step Bit In Dcsr</a>
+instruction and then enter Debug Mode. See <a href="#stepbit">4.1.5.1. Step Bit In Dcsr</a>
 for details.</p>
 </div>
 <div class="paragraph">
@@ -1699,7 +1698,7 @@ explicitly mentions it (the Debug Module may use this register internally).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="virtreg"><a class="anchor" href="#virtreg"></a>3.1.10. Virtual Debug Registers</h3>
+<h3 id="virtreg"><a class="anchor" href="#virtreg"></a>4.1.10. Virtual Debug Registers</h3>
 <div class="paragraph">
 <p>A virtual register is one that doesn&#8217;t exist directly in the hardware, but
 that the debugger exposes as if it does. Debug software should implement
@@ -1879,8 +1878,8 @@ value to change the hart&#8217;s privilege mode when exiting Debug Mode.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="debug_module.html">Chapter 2. Debug Module</a></span>
-  <span class="next"><a href="Sdtrig.html">Chapter 4. Sdtrig (ISA Extension)</a></span>
+  <span class="prev"><a href="debug_module.html">Chapter 3. Debug Module</a></span>
+  <span class="next"><a href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a></span>
 </nav>
 </article>  </div>
 </main>

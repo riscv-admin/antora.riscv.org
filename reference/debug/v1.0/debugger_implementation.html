@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Debugger Implementation :: RISC-V Ratified Specifications Library</title>
+    <link rel="canonical" href="https://docs.riscv.org/reference/debug/v1.0/debugger_implementation.html">
+    <link rel="prev" href="implementations.html">
+    <meta name="generator" content="Antora 3.1.15">
+    <script>
+!function (theme, navWidth) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+  if (navWidth) document.documentElement.style.setProperty('--nav-width', `${navWidth}px`)
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'),
+  localStorage && localStorage.getItem('nav-width'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciidoctor-tabs.css">
+
+    <meta name="antora-ui-version" content="57412d8f62e8b823d107e30c06311870c8acc4e8"> 
+    <meta name="version" content="v1.0">
+    <meta name="component" content="debug">
+    <meta name="latest-version" content="false">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-NXLCGZF4"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','GTM-NXLCGZF4')</script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var title = document.querySelector('h2');
+      if (title && document.title.startsWith('Untitled')) {
+        document.title = title.textContent.trim() + ' :: RISC-V Ratified Specifications Library';
+      }
+    });
+    </script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../../_/img/favicon.ico">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://riscv.org">
+        <img class="riscvlogo riscvlogo--light" src="../../_/img/risc-v_logo.svg" alt="RISCV" />
+        <img class="riscvlogo riscvlogo--dark" src="../../_/img/risc-v_logo_white.svg" alt="RISCV" />
+      </a>
+      <div class="navbar-item home">
+        <a class="navbar-link"
+          href="../../home/index.html"
+          aria-label="home"
+          title="home">
+          <img class="home-icon riscvlogo--light" src="../../_/img/library-icon.png" alt="Home" />
+          <img class="home-icon riscvlogo--dark" src="../../_/img/library-icon_white.png" alt="Home" />
+        </a>
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+      </div>
+      </div>
+      <div class="navbar-item search hide-for-print search-position" style="padding-left: 0;">
+        <div id="search-field" class="field">
+          <input id="search-input" type="text" placeholder="Search the docs" >
+        </div>
+        <div class="navbar-item" style="padding-left: 0;">
+          <label class="theme-toggler">
+            <input type="checkbox" type="checkbox" id="switch-theme-checkbox" name="switch-theme-checkbox" />
+            <span class="icon"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="moon"
+                class="svg-inline--fa fa-moon moon" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+                <path fill="currentColor"
+                  d="M223.5 32C100 32 0 132.3 0 256S100 480 223.5 480c60.6 0 115.5-24.2 155.8-63.4c5-4.9 6.3-12.5 3.1-18.7s-10.1-9.7-17-8.5c-9.8 1.7-19.8 2.6-30.1 2.6c-96.9 0-175.5-78.8-175.5-176c0-65.8 36-123.1 89.3-153.3c6.1-3.5 9.2-10.5 7.7-17.3s-7.3-11.9-14.3-12.5c-6.3-.5-12.6-.8-19-.8z">
+                </path>
+              </svg>
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sun"
+                class="svg-inline--fa fa-sun sun" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M361.5 1.2c5 2.1 8.6 6.6 9.6 11.9L391 121l107.9 19.8c5.3 1 9.8 4.6 11.9 9.6s1.5 10.7-1.6 15.2L446.9 256l62.3 90.3c3.1 4.5 3.7 10.2 1.6 15.2s-6.6 8.6-11.9 9.6L391 391 371.1 498.9c-1 5.3-4.6 9.8-9.6 11.9s-10.7 1.5-15.2-1.6L256 446.9l-90.3 62.3c-4.5 3.1-10.2 3.7-15.2 1.6s-8.6-6.6-9.6-11.9L121 391 13.1 371.1c-5.3-1-9.8-4.6-11.9-9.6s-1.5-10.7 1.6-15.2L65.1 256 2.8 165.7c-3.1-4.5-3.7-10.2-1.6-15.2s6.6-8.6 11.9-9.6L121 121 140.9 13.1c1-5.3 4.6-9.8 9.6-11.9s10.7-1.5 15.2 1.6L256 65.1 346.3 2.8c4.5-3.1 10.2-3.7 15.2-1.6zM160 256a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zm224 0a128 128 0 1 0 -256 0 128 128 0 1 0 256 0z">
+                </path>
+              </svg></span>
+            <span class="text">light</span>
+          </label>
+        </div>
+      </div>
+  </nav>
+</header>
+<script>
+  !function (theme) {
+    if (theme === 'dark') {
+      document.getElementById('switch-theme-checkbox').parentElement.classList.add('active')
+    }
+  }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)')?.matches && 'dark'))
+</script>
+<div class="body">
+<div class="nav-container" data-component="debug" data-version="v1.0"
+  >
+  <aside class="nav">
+    <div class="panels">
+      <div class="nav-panel-menu is-active" data-panel="menu">
+        <nav class="nav-menu">
+          <ul class="nav-list" style="padding-left: 0; margin: 0;">
+            <li class="nav-item" style="padding-left: 0;">
+              <a class="nav-link" href="../../home/index.html">RISC-V Specifications</a>
+            </li>
+          </ul>
+<div class="context">
+    <a class="nav-link" href="../../trace-debug-ras-overview/index.html">Debug, Trace, and RAS</a>
+</div>
+        <div class="nav-trees" data-component="debug">
+          <div class="version-box">
+            <select data-component="debug" class="select-version">
+                <option
+                  value="index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="debug" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="index.html">Title Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="overview.html">Chapter 2. Overview</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debug_module.html">Chapter 3. Debug Module</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="debugger_implementation.html">Debugger Implementation</a>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="e-trace">
+          <div class="version-box">
+            <select data-component="e-trace" class="select-version">
+                <option
+                  value="../../e-trace/v2.0/index.html"
+                  data-version="v2.0"
+                  
+                  selected>
+                  v2.0
+                </option>
+            </select>
+          </div>
+              <div data-component="e-trace" data-version="v2.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../e-trace/v2.0/index.html">Efficient Trace for RISC-V</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/preface.html">Preface</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/control.html">Chapter 1. Control</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/branchTrace.html">Chapter 2. Branch Trace</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/ingressPort.html">Chapter 3. Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/filtering.html">Chapter 4. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/timestamping.html">Chapter 5. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/payload.html">Chapter 6. Payload</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/dataTracePayload.html">Chapter 7. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleAlgorithm.html">Chapter 8. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/discovery.html">Chapter 9. Discovery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/decoder.html">Chapter 10. Decoder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/exampleCodeSnippets.html">Chapter 11. Example Code Snippets</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/fragmentCodeAndTransport.html">Chapter 12. Fragment Code and Transport</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../e-trace/v2.0/future.html">Chapter 13. Future</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="nexus-trace">
+          <div class="version-box">
+            <select data-component="nexus-trace" class="select-version">
+                <option
+                  value="../../nexus-trace/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="nexus-trace" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../nexus-trace/v1.0/index.html">N-Trace</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_introduction.html">Introduction to N-Trace</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_ingress_port.html">Chapter 1. Trace Ingress Port</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_transmission.html">Chapter 2. Transmission Protocol</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_controls.html">Chapter 3. Trace Controls</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_modes.html">Chapter 4. Trace Modes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_overview.html">Chapter 5. Messages Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_messages_details.html">Chapter 6. Messages Details</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_field_encoding.html">Chapter 7. Field Encoding</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_optimizations.html">Chapter 8. Optimization Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_generation_rules.html">Chapter 9. Message Generation Rules</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_decoding.html">Chapter 10. Decoding Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_nexus_compliance.html">Chapter 11. Nexus Compliance</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../nexus-trace/v1.0/ntrace_additional.html">Chapter 12. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="cbqri">
+          <div class="version-box">
+            <select data-component="cbqri" class="select-version">
+                <option
+                  value="../../cbqri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="cbqri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../cbqri/v1.0/index.html">QoS Register Interface</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_preamble.html">Copyright and license information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_identifiers.html">Chapter 1. QoS Identifiers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_capacity.html">Chapter 2. Capacity-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_bandwidth.html">Chapter 3. Bandwidth-controller QoS Register Interface</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_iommu.html">Chapter 4. IOMMU Extension for QoS ID</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_hw_guidelines.html">Chapter 5. Hardware Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_sw_guidelines.html">Chapter 6. Software Guidelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../cbqri/v1.0/qos_biblio.html">Chapter 7. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="ras-eri">
+          <div class="version-box">
+            <select data-component="ras-eri" class="select-version">
+                <option
+                  value="../../ras-eri/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="ras-eri" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../ras-eri/v1.0/index.html">RERI Architecture</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_copyright.html">Copyright and License Information</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_intro.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_err_reporting.html">Chapter 1. Error Reporting</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../ras-eri/v1.0/reri_bibliography.html">Chapter 2. Bibliography</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-connectors">
+          <div class="version-box">
+            <select data-component="trace-connectors" class="select-version">
+                <option
+                  value="../../trace-connectors/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-connectors" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../trace-connectors/v1.0/index.html">Trace Connectors</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_debug_trace.html">Debug and Trace Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mipi20.html">Chapter 1. MIPI20 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_mictor38.html">Chapter 2. Mictor-38 Connector</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_adapters.html">Chapter 3. Adapters and On-Board Debug</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-connectors/v1.0/connectors_rationale.html">Chapter 4. Rationale and Standards</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-control-interface">
+          <div class="version-box">
+            <select data-component="trace-control-interface" class="select-version">
+                <option
+                  value="../../trace-control-interface/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-control-interface" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/index.html">Trace Control Interface</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_copyright.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_introduction.html">Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_protocols.html">Chapter 1. Trace Protocols and Control</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_system_overview.html">Chapter 2. Trace System Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_control_interface.html">Chapter 3. Trace Control Interface Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_versioning.html">Chapter 4. Versioning of Components</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_encoder_control.html">Chapter 5. Trace Encoder Control Interface</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_ram_sink.html">Chapter 6. Trace RAM Sink</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_funnel.html">Chapter 7. Trace Funnel</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_pib_sink.html">Chapter 8. Trace PIB Sink</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_atb_bridge.html">Chapter 9. Trace ATB Bridge</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-control-interface/v1.0/tci_additional.html">Chapter 10. Additional Material</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+        <div class="nav-trees" data-component="trace-encap">
+          <div class="version-box">
+            <select data-component="trace-encap" class="select-version">
+                <option
+                  value="../../trace-encap/v1.0/index.html"
+                  data-version="v1.0"
+                  
+                  selected>
+                  v1.0
+                </option>
+            </select>
+          </div>
+              <div data-component="trace-encap" data-version="v1.0" class="nav-version-group">
+                <ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link"  href="../../trace-encap/v1.0/index.html">Unformatted Trace &amp; Data Encapsulation</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/changelog.html">Change Log</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/copyright.html">Copyright</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/contributors.html">Contributors</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/intro.html">Chapter 1. Introduction</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/encapsulation.html">Chapter 2. Encapsulation Format</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="../../trace-encap/v1.0/e-trace-specifics.html">Chapter 3. E-Trace Specifics</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+              </div>
+        </div>
+          <div class="toggle-sm">
+            <button id="nav-toggle-2" class="nav-toggle"></button>
+          </div>
+        </nav>
+      </div>
+      <div class="nav-collapse">
+        <button id="nav-collapse-toggle"><span></span></button>
+      </div>
+    </div>
+    <div class="nav-resize"></div>
+  </aside>
+</div>
+<script>
+!function (sidebar) {
+  var isHome = window.location.pathname.includes('/home/') || window.location.pathname === '/'
+  if (isHome || sidebar) {
+    document.body.classList.add('nav-sm')
+  }
+}(localStorage && localStorage.getItem('sidebar') === 'close')
+</script>
+<main class="article">
+<div class="toolbar" role="navigation">
+  <button id="nav-toggle-1" class="nav-toggle"></button>
+</div>
+  <div class="content">
+<aside class="sidebar">
+  <div class="content">
+    <div
+      class="toc"
+      data-title="Debugger Implementation"
+      data-levels="5"
+    >
+      <div class="toc-menu"></div>
+    </div>
+    <div class="sidebar-links">
+        <a href="https://github.com/riscv/riscv-debug-spec/issues/new" target="_blank" title="Issues">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+          ><path
+              d="m16 2.012 3 3L16.713 7.3l-3-3zM4 14v3h3l8.299-8.287-3-3zm0 6h16v2H4z"
+            ></path></svg>
+          Report a Problem
+        </a>
+        <a href="https://github.com/riscv/riscv-debug-spec" target="_blank" title="GitHub">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="512px"
+            id="Layer_1"
+            version="1.1"
+            viewBox="0 0 512 512"
+            width="512px"
+          ><style type="text/css">< .st0{fill-rule:evenodd;clip-rule:evenodd;}
+              ]]></style><g><path
+                class="st0"
+                d="M256,32C132.3,32,32,134.8,32,261.7c0,101.5,64.2,187.5,153.2,217.9c11.2,2.1,15.3-5,15.3-11.1   c0-5.5-0.2-19.9-0.3-39.1c-62.3,13.9-75.5-30.8-75.5-30.8c-10.2-26.5-24.9-33.6-24.9-33.6c-20.3-14.3,1.5-14,1.5-14   c22.5,1.6,34.3,23.7,34.3,23.7c20,35.1,52.4,25,65.2,19.1c2-14.8,7.8-25,14.2-30.7c-49.7-5.8-102-25.5-102-113.5   c0-25.1,8.7-45.6,23-61.6c-2.3-5.8-10-29.2,2.2-60.8c0,0,18.8-6.2,61.6,23.5c17.9-5.1,37-7.6,56.1-7.7c19,0.1,38.2,2.6,56.1,7.7   c42.8-29.7,61.5-23.5,61.5-23.5c12.2,31.6,4.5,55,2.2,60.8c14.3,16.1,23,36.6,23,61.6c0,88.2-52.4,107.6-102.3,113.3   c8,7.1,15.2,21.1,15.2,42.5c0,30.7-0.3,55.5-0.3,63c0,6.1,4,13.3,15.4,11C415.9,449.1,480,363.1,480,261.7   C480,134.8,379.7,32,256,32z"
+              ></path></g></svg>
+          GitHub Project
+        </a>
+
+
+        <a href="https://riscv.atlassian.net/wiki/external/YTljNWI1NDgxMzE2NDIzOGEyYjMzMWRmZmRjOGEwNmE" target="_blank" rel="noopener noreferrer" class="sidebar-link">
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg"><circle cx="250" cy="250" r="193" fill="none" stroke="currentColor" stroke-width="23" stroke-miterlimit="10"/><circle cx="148.5" cy="250" r="31.5" fill="currentColor"/><circle cx="250" cy="250" r="31.5" fill="currentColor"/><circle cx="351.5" cy="250" r="31.5" fill="currentColor"/></svg>
+          More Details
+        </a>
+      
+
+          <a href="/reference/debug/v1.0/_attachments/riscv-debug-specification.pdf" title="PDF" class="sidebar-link" download>
+            <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+            <span>Download PDF</span>
+          </a>
+            
+      <hr class="sidebar-divider">
+      <a href="../../glossary/index.html" class="sidebar-link" title="Glossary">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+          <path d="M19 2H5a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3zm-3 14H8v-2h8v2zm0-4H8v-2h8v2zm0-4H8V6h8v2z"/>
+        </svg>
+        Glossary
+      </a>
+    </div>
+  </div>
+</aside>
+<article class="doc">
+<div class="breadcrumbs-container">
+  <nav class="breadcrumbs" aria-label="breadcrumbs">
+    <ul>
+
+      <li><a href="../../home/index.html">RISC-V Specifications</a></li>
+
+        <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
+              <li><a href="index.html">Debug Specification</a></li>
+                </ul>
+  </nav>
+</div>
+<h1 id="page-title" class="page">Debugger Implementation</h1>
+<div class="sect1">
+<h2 id="debugger-implementation"><a class="anchor" href="#debugger-implementation"></a>Appendix A: Debugger Implementation</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="c-header-file"><a class="anchor" href="#c-header-file"></a>C Header File</h3>
+<div class="paragraph">
+<p><a href="https://github.com/riscv/riscv-debug-spec" class="bare">https://github.com/riscv/riscv-debug-spec</a> contains instructions for
+generating a C header file that defines macros for every field in every
+register/abstract command mentioned in this document.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="external-debugger-implementation"><a class="anchor" href="#external-debugger-implementation"></a>External Debugger Implementation</h3>
+<div class="paragraph">
+<p>This section details how an external debugger might use the described
+debug interface to perform some common operations on RISC-V cores using
+the JTAG DTM described in <a href="#sec:jtagdtm">[sec:jtagdtm]</a>. All these
+examples assume a 32-bit core but it should be easy to adapt the
+examples to 64- or 128-bit cores.</p>
+</div>
+<div class="paragraph">
+<p>To keep the examples readable, they all assume that everything succeeds,
+and that they complete faster than the debugger can perform the next
+access. This will be the case in a typical JTAG setup. However, the
+debugger must always check the sticky error status bits after performing
+a sequence of actions. If it sees any that are set, then it should
+attempt the same actions again, possibly while adding in some delay, or
+explicit checks for status bits.</p>
+</div>
+<div class="sect3">
+<h4 id="dmiaccess"><a class="anchor" href="#dmiaccess"></a>Debug Module Interface Access</h4>
+<div class="paragraph">
+<p>To read an arbitrary Debug Module register, select {dtm-dmi}, and scan in a value
+with {dmi-op} set to 1, and {dmi-address} set to the desired register address. In Update-DR the
+operation will start, and in Capture-DR its results will be captured
+into {dmi-data}. If the operation didn&#8217;t complete in time, {dmi-op} will be 3 and the value
+in {dmi-data} must be ignored. The busy condition must be cleared by writing {dtmcs-dmireset} in {dtm-dtmcs},
+and then the second scan scan must be performed again. This process must
+be repeated until {dmi-op} returns 0. In later operations the debugger should
+allow for more time between Update-DR and Capture-DR.</p>
+</div>
+<div class="paragraph">
+<p>To write an arbitrary Debug Bus register, select {dtm-dmi}, and scan in a value
+with {dmi-op} set to 2, and {dmi-address} and {dmi-data} set to the desired register address and data
+respectively. From then on everything happens exactly as with a read,
+except that a write is performed instead of the read.</p>
+</div>
+<div class="paragraph">
+<p>It should almost never be necessary to scan IR, avoiding a big part of
+the inefficiency in typical JTAG use.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="checking-for-halted-harts"><a class="anchor" href="#checking-for-halted-harts"></a>Checking for Halted Harts</h4>
+<div class="paragraph">
+<p>A user will want to know as quickly as possible when a hart is halted
+(e.g. due to a breakpoint). To efficiently determine which harts are
+halted when there are many harts, the debugger uses the <code>haltsum</code>
+registers. Assuming the maximum number of harts exist, first it checks {dm-haltsum3} .
+For each bit set there, it writes <a href="#dm-dmcontrol">hartsel</a>, and checks {dm-haltsum2}. This process repeats
+through {dm-haltsum1} and {dm-haltsum0}. Depending on how many harts exist, the process should
+start at one of the lower <code>haltsum</code> registers.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="deb:halt"><a class="anchor" href="#deb:halt"></a>Halting</h4>
+<div class="paragraph">
+<p>To halt one or more harts, the debugger selects them, sets {dmcontrol-haltreq}, and then
+waits for {dmstatus-allhalted} to indicate the harts are halted. Then it can clear {dmcontrol-haltreq} to 0, or
+leave it high to catch a hart that resets while halted.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="running"><a class="anchor" href="#running"></a>Running</h4>
+<div class="paragraph">
+<p>First, the debugger should restore any registers that it has
+overwritten. Then it can let the selected harts run by setting {dmcontrol-resumereq}. Once {dmstatus-allresumeack} is
+set, the debugger knows the selected harts have resumed. Harts might
+halt very quickly after resuming (e.g. by hitting a software breakpoint)
+so the debugger cannot use {dmstatus-allhalted}/{dmstatus-anyhalted} to check whether the hart resumed.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="single-step"><a class="anchor" href="#single-step"></a>Single Step</h4>
+<div class="paragraph">
+<p>Using the hardware single step feature is almost the same as regular
+running. The debugger just sets in before letting the hart run. The hart
+behaves exactly as in the running case, except that interrupts may be
+disabled (depending on {dcsr-stepie}) and it only fetches and executes a single
+instruction before re-entering Debug Mode.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="accessing-registers"><a class="anchor" href="#accessing-registers"></a>Accessing Registers</h4>
+<div class="sect4">
+<h5 id="deb:abstractreg"><a class="anchor" href="#deb:abstractreg"></a>Using Abstract Command</h5>
+<div class="paragraph">
+<p>Read <code>s0</code> using abstract command:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-transfer}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns value that was in <code>s0</code></p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Write <code>mstatus</code> using abstract command:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">new value</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x300</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>mstatus</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="deb:regprogbuf"><a class="anchor" href="#deb:regprogbuf"></a>Using Program Buffer</h5>
+<div class="paragraph">
+<p>Abstract commands are only required to support GPR access. To access non-GPR
+registers, the debugger can use the Program Buffer to move values to/from a GPR,
+and then access the GPR value using an abstract command.</p>
+</div>
+<div class="paragraph">
+<p>Write <code>mstatus</code> using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>csrw s0, MSTATUS</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">new value</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-postexec}, {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Read <code>f1</code> using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{<code>fmv.x.s s0, f1</code>}</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-postexec}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">read <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Returns the value that was in <code>f1</code></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="reading-memory"><a class="anchor" href="#reading-memory"></a>Reading Memory</h4>
+<div class="sect4">
+<h5 id="deb:mrsysbus"><a class="anchor" href="#deb:mrsysbus"></a>Using System Bus Access</h5>
+<div class="paragraph">
+<p>With system bus access, addresses are physical system bus addresses.</p>
+</div>
+<div class="paragraph">
+<p>Read a word from memory using system bus access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbreadonaddr}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Setup</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Read block of memory using system bus access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbreadonaddr}, {sbcs-sbreadondata}, {sbcs-sbautoincrement}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Turn on autoread and autoincrement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Writing address triggers read and increment</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Next value read from memory</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disable autoread</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="deb:mrprogbuf"><a class="anchor" href="#deb:mrprogbuf"></a>Using Program Buffer</h5>
+<div class="paragraph">
+<p>Memory can be accessed through the Program Buffer by having the hart
+perform loads/stores. Whether the addresses are physical or virtual
+depends on the system configuration.</p>
+</div>
+<div class="paragraph">
+<p>Read a word from memory using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>lw s0, 0(s0)</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Read block of memory using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>lw s1, 0(s0)</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>addi s0, s1, 4</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf2</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s1</code>, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set {abstractauto-autoexecdata}[0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get value read from memory, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get next value read from memory, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear {abstractauto-autoexecdata}[0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="deb:mrabstract"><a class="anchor" href="#deb:mrabstract"></a>Using Abstract Memory Access</h5>
+<div class="paragraph">
+<p>Abstract memory accesses act as if they are performed by the hart,
+although the actual implementation may differ.</p>
+</div>
+<div class="paragraph">
+<p>Read a word from memory using abstract memory access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>data1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Read block of memory using abstract memory access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when {dm-data0} is accessed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>data1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessmemory-aampostincrement}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read value, and trigger reading of next address</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disable auto-exec</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="writemem"><a class="anchor" href="#writemem"></a>Writing Memory</h4>
+<div class="sect4">
+<h5 id="deb:mrsysbuswrite"><a class="anchor" href="#deb:mrsysbuswrite"></a>Using System Bus Access</h5>
+<div class="paragraph">
+<p>With system bus access, addresses are physical system bus addresses.</p>
+</div>
+<div class="paragraph">
+<p>Write a word to memory using system bus access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Configure access size</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Write a block of memory using system bus access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbautoincrement}</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Turn on autoincrement</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="deb:mrprogbufwrite"><a class="anchor" href="#deb:mrprogbufwrite"></a>Using Program Buffer</h5>
+<div class="paragraph">
+<p>Through the Program Buffer, the hart performs the memory accesses.
+Addresses are physical or virtual (depending on and other system
+configuration).</p>
+</div>
+<div class="paragraph">
+<p>Write a word to memory using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>sw s1, 0(s0)</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s1</code>, then execute program buffer</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Write block of memory using program buffer:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>sw s1, 0(s0)</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>addi s0, s1, 4</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf2</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s1</code>, then execute program buffer</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set {abstractauto-autoexecdata}[0]</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear {abstractauto-autoexecdata}[0]</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="deb:mwabstract"><a class="anchor" href="#deb:mwabstract"></a>Using Abstract Memory Access</h5>
+<div class="paragraph">
+<p>Abstract memory accesses act as if they are performed by the hart,
+although the actual implementation may differ.</p>
+</div>
+<div class="paragraph">
+<p>Write a word to memory using abstract memory access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>data1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}=2, write=1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Write a block of memory using abstract memory access:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>data1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, write<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span>, {accessmemory-aampostincrement}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when {dm-data0} is accessed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">value2</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">&#8230;&#8203;</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Disable auto-exec</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="triggers"><a class="anchor" href="#triggers"></a>Triggers</h4>
+<div class="paragraph">
+<p>A debugger can use hardware triggers to halt a hart when a certain event
+occurs. Below are some examples, but as there is no requirement on the
+number of features of the triggers implemented by a hart, these examples
+might not be applicable to all implementations. When a debugger wants to
+set a trigger, it writes the desired configuration, and then reads back
+to see if that configuration is supported. All examples assume XLEN=32.</p>
+</div>
+<div class="paragraph">
+<p>Enter Debug Mode when the instruction at 0x80001234 is executed, to be
+used as an instruction breakpoint in ROM:</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x6980105c</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, vs=1, vu=1, execute=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x80001234</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Enter Debug Mode when performing a load at address 0x80007f80 in M-mode
+or S-mode or U-mode:</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x68001059</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, load=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x80007f80</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Enter Debug Mode when storing to an address between 0x80007c80 and
+0x80007cef (inclusive) in VS-mode or VU-mode when hgatp.VMID=1:</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x69801902</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, chain=1, select=0, match=2, vs=1, vu=1, store=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x80007c80</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">start address (inclusive)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-textra32} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x03000000</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">mhselect=6, mhvalue=0</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x69801182</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=3, vs=1, vu=1, store=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x80007cf0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">end address (exclusive)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-textra32} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x03000000</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">mhselect=6, mhvalue=0</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Enter Debug Mode when storing to an address between 0x81230000 and
+0x8123ffff (inclusive):</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x698010da</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=1, m=1, s=1, u=1, vs=1, vu=1, store=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x81237fff</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">16 upper bits to match exactly, then 0, then all ones.</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>Enter Debug Mode when loading from an address between 0x86753090 and
+0x8675309f or between 0x96753090 and 0x9675309f (inclusive):</p>
+</div>
+<table class="tableblock frame-all grid-all fit-content center">
+<colgroup>
+<col>
+<col>
+<col>
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x69801a59</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, chain=1, match=4, m=1, s=1, u=1, vs=1, vu=1, load=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0xfff03090</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Mask for low half, then match for low half</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x698012d9</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, match=5, m=1, s=1, u=1, vs=1, vu=1, load=1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0xefff8675</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Mask for high half, then match for high half</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="handling-exceptions"><a class="anchor" href="#handling-exceptions"></a>Handling Exceptions</h4>
+<div class="paragraph">
+<p>Generally the debugger can avoid exceptions by being careful with the
+programs it writes. Sometimes they are unavoidable though, e.g. if the
+user asks to access memory or a CSR that is not implemented. A typical
+debugger will not know enough about the hardware platform to know what&#8217;s
+going to happen, and must attempt the access to determine the outcome.</p>
+</div>
+<div class="paragraph">
+<p>When an exception occurs while executing the Program Buffer, {dm-command} becomes
+set. The debugger can check this field to see whether a program
+encountered an exception. If there was an exception, it&#8217;s left to the
+debugger to know what must have caused it.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="quickaccess"><a class="anchor" href="#quickaccess"></a>Quick Access</h4>
+<div class="paragraph">
+<p>There are a variety of instructions to transfer data between GPRs and
+the <code>data</code> registers. They are either loads/stores or CSR reads/writes.
+The specific addresses also vary. This is all specified in {dm-hartinfo}. The
+examples here use the pseudo-op <code>transfer dest, src</code> to represent all
+these options.</p>
+</div>
+<div class="paragraph">
+<p>Halt the hart for a minimum amount of time to perform a single memory
+write:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer arg2, s0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer s0, arg0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read first argument (address)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf2</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer arg0, s1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save <code>s1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf3</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer s1, arg1</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Read second argument (data)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf4</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>sw s1, 0(s0)</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf5</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer s1, arg0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restore <code>s1</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf6</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer s0, arg2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restore <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf7</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>data1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">data</p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x10000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Perform quick access</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>This shows an example of setting the {mcontrol-m} bit in to enable a hardware
+breakpoint in M-mode. Similar quick access instructions could have been
+used previously to configure the trigger that is being enabled here:</p>
+</div>
+<table class="tableblock frame-all grid-all stretch center">
+<colgroup>
+<col style="width: 11.5384%;">
+<col style="width: 11.5384%;">
+<col style="width: 38.4615%;">
+<col style="width: 38.4617%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top">Op</th>
+<th class="tableblock halign-center valign-top">Address</th>
+<th class="tableblock halign-center valign-top">Value</th>
+<th class="tableblock halign-left valign-top">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer arg0, s0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Save <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>li s0, (1 &lt;&lt; 6)</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Form the mask for {mcontrol-m} bit</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf2</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>csrrs x0, {csr-tdata1}, s0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the mask to {csr-mcontrol}</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf3</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer s0, arg2</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restore <code>s0</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf4</code></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>ebreak</code></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">0x10000000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Perform quick access</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="native-debugger-implementation"><a class="anchor" href="#native-debugger-implementation"></a>Native Debugger Implementation</h3>
+<div class="paragraph">
+<p>The spec contains a few features to aid in writing a native debugger.
+This section describes how some common tasks might be achieved.</p>
+</div>
+<div class="sect3">
+<h4 id="nativestep"><a class="anchor" href="#nativestep"></a>Single Step</h4>
+<div class="paragraph">
+<p>Single step is straightforward if the OS or a debug stub runs in M-Mode while the
+program being debugged runs in a less privileged mode. When a step is required,
+the OS or debug stub writes {icount-count}=1, {icount-action}=0,
+{icount-m}=0 before returning control to the lower user program with an
+<code>mret</code> instruction.</p>
+</div>
+<div class="paragraph">
+<p>Stepping code running in the same privilege mode as the debugger is more
+complicated, depending on what other debug features are implemented.</p>
+</div>
+<div class="paragraph">
+<p>If hardware implements {tcontrol-mpte} and {tcontrol-mte}, then stepping
+through non-trap code which doesn&#8217;t allow for nested interrupts is also
+straightforward.</p>
+</div>
+<div class="paragraph">
+<p>If hardware automatically prevents {mcontrol6-action}=0 triggers from
+matching when entering a trap handler as described in
+<a href="#nativetrigger">[nativetrigger]</a>, then a carefully written trap handler can
+ensure that interrupts are disabled whenever the icount trigger must not match.</p>
+</div>
+<div class="paragraph">
+<p>If neither of these features exist, then single step is doable, but
+tricky to get right. To single step, the debug stub would execute
+something like:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    li    t0, count=4, action=0, m=1
+    csrw  tdata1, t0    /* Write the trigger. */
+    lw    t0, 8(sp)     /* Restore t0, count decrements to 3 */
+    lw    sp, 0(sp)     /* Restore sp, count decrements to 2 */
+    mret                /* Return to program being debugged. count decrements to 1 */</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There is an additional problem with using {csr-icount} to single step. An instruction
+may cause an exception into a more privileged mode where the trigger is
+not enabled. The exception handler might address the cause of the
+exception, and then restart the instruction. Examples of this include
+page faults, FPU instructions when the FPU is not yet enabled, and
+interrupts. When a user is single stepping through such code, they will
+have to step twice to get past the restarted instruction. The first time
+the exception handler runs, and the second time the instruction actually
+executes. That is confusing and usually undesirable.</p>
+</div>
+<div class="paragraph">
+<p>To help users out, debuggers should detect when a single step restarted
+an instruction, and then step again. This way the users see the expected
+behavior of stepping over the instruction. Ideally the debugger would
+notify the user that an exception handler executed the first time.</p>
+</div>
+<div class="paragraph">
+<p>The debugger should perform this extra step when the PC doesn&#8217;t change
+during a regular step.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>It is safe to perform an extra step when the PC changes, because every
+RISC-V instruction either changes the PC or has side effects when
+repeated, but never both.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>To avoid an infinite loop if the exception handler does not address the
+cause of the exception, the debugger must execute no more than a single
+extra step.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="implementations.html">Appendix A. Hardware Implementations</a></span>
+</nav>
+</article>  </div>
+</main>
+</div>
+<footer class="footer flex">
+    <div id="footer-buttons" class="footer-buttons">
+        <a href="https://riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">riscv.org</a>
+        <a href="https://tech.riscv.org/" target="_blank" rel="noopener noreferrer" class="footer-btn">Technical Hub</a>
+        <a href="https://riscv.org/code-of-conduct/" target="_blank" rel="noopener noreferrer" class="footer-btn">Code of Conduct</a>
+        <a href="https://riscv.org/privacy-policy/" target="_blank" rel="noopener noreferrer" class="footer-btn">Privacy Policy</a>
+        <a href="https://riscv.org/members/" target="_blank" rel="noopener noreferrer" class="footer-btn">Join RISC-V</a>
+    </div>
+
+    <div id="RISC-V footer">
+     <p class="smallest antialiased">Copyright © RISC-V International®. All rights reserved. RISC-V, RISC-V International, and the RISC-V logos are trademarks of RISC-V International.</p>
+    </div>
+
+</footer>
+<script src="../../_/js/vendor/import.js"></script>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script async
+    src="../../_/js/vendor/asciidoctor-tabs.js"
+    data-sync-storage-key="docs:preferred-tab"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>

@@ -1,6 +1,6 @@
-# 3.1. Sdext (ISA Extension)
+# 4.1. Sdext (ISA Extension)
 
-## [](#core%5Fdebug)3.1\. Sdext (ISA Extension)
+## [](#core%5Fdebug)4.1\. Sdext (ISA Extension)
 
 This chapter describes the Sdext ISA extension. It must be implemented to make external debug work, and is only useful in conjunction with external debug.
 
@@ -10,7 +10,7 @@ In order to be compatible with this specification an implementation must impleme
 
 If Sdext is implemented and Sdtrig is not implemented, then accessing any of the Sdtrig CSRs must raise an illegal instruction exception.
 
-### [](#debugmode)3.1.1\. Debug Mode
+### [](#debugmode)4.1.1\. Debug Mode
 
 Debug Mode is a special processor mode used only when a hart is halted for external debugging. Because the hart is halted, there is no forward progress in the normal instruction stream. How Debug Mode is implemented is not specified here.
 
@@ -35,24 +35,24 @@ When executing code due to an abstract command, the hart stays in Debug Mode and
 | |  When [mprven](#dcsr-mprven), the external debugger can set MPRV and MPP appropriately to have hardware perform memory accesses with the appropriate endianness, address translation, permission checks, and PMP/PMA checks (subject to [relaxedpriv](debug%5Fmodule.html#abstractcs-relaxedpriv)). This is also the only way to access all of physical memory when 34-bit physical addresses are supported on a Sv32 hart. If hardware ties [mprven](#dcsr-mprven) to 0 then the external debugger is expected to simulate all the effects of MPRV, including any extensions that affect memory accesses. For these reasons it is recommended to tie [mprven](#dcsr-mprven) to 1. |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#3-1-2-load-reservedstore-conditional-instructions)3.1.2\. Load-Reserved/Store-Conditional Instructions
+### [](#4-1-2-load-reservedstore-conditional-instructions)4.1.2\. Load-Reserved/Store-Conditional Instructions
 
 The reservation registered by an `lr` instruction on a memory address may be lost when entering Debug Mode or while in Debug Mode. This means that there may be no forward progress if Debug Mode is entered between`lr` and `sc` pairs.
 
 | |  This is a behavior that debug users must be aware of. If they have a breakpoint set between a lr and sc pair, or are stepping through such code, the sc may never succeed. Fortunately in general use there will be very few instructions in such a sequence, and anybody debugging it will quickly notice that the reservation is not occurring. The solution in that case is to set a breakpoint on the first instruction after the sc and run to it. A higher level debugger may choose to automate this. |
 | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#3-1-3-wait-for-interrupt-instruction)3.1.3\. Wait for Interrupt Instruction
+### [](#4-1-3-wait-for-interrupt-instruction)4.1.3\. Wait for Interrupt Instruction
 
 If halt is requested while `wfi` is executing, then the hart must leave the stalled state, completing this instruction’s execution, and then enter Debug Mode.
 
-### [](#3-1-4-wait-on-reservation-set-instructions)3.1.4\. Wait-on-Reservation-Set Instructions
+### [](#4-1-4-wait-on-reservation-set-instructions)4.1.4\. Wait-on-Reservation-Set Instructions
 
 If halt is requested while `wrs.sto` or `wrs.nto` is executing, then the hart must leave the stalled state, completing this instruction’s execution, and then enter Debug Mode.
 
-### [](#3-1-5-single-step)3.1.5\. Single Step
+### [](#4-1-5-single-step)4.1.5\. Single Step
 
-#### [](#stepbit)3.1.5.1\. Step Bit In Dcsr
+#### [](#stepbit)4.1.5.1\. Step Bit In Dcsr
 
 This method is only available to external debuggers, and is the preferred way to single step.
 
@@ -66,7 +66,7 @@ If the instruction that is executed causes the PC to change to an address where 
 
 If the instruction being stepped over would normally stall the hart, then instead the instruction is treated as a `nop`. This includes `wfi`,`wrs.sto`, and `wrs.nto`.
 
-#### [](#stepicount)3.1.5.2\. Icount Trigger
+#### [](#stepicount)4.1.5.2\. Icount Trigger
 
 Native debuggers won’t have access to [dcsr](#csr-dcsr), but can use the [icount](Sdtrig.html#csr-icount) trigger by setting [count](Sdtrig.html#icount-count) to 1.
 
@@ -77,11 +77,11 @@ This approach does have some limitations:
 
 This mechanism cleanly supports a system which supports multiple privilege levels, where the OS or a debug stub runs in M-Mode while the program being debugged runs in a less privileged mode. Systems that only support M-Mode can use [icount](Sdtrig.html#csr-icount) as well, but [count](Sdtrig.html#icount-count) must be able to count several instructions (depending on the software implementation). See[\[nativestep\]](#nativestep).
 
-### [](#3-1-6-reset)3.1.6\. Reset
+### [](#4-1-6-reset)4.1.6\. Reset
 
 If the halt signal (driven by the hart’s halt request bit in the Debug Module) or [hasresethaltreq](debug%5Fmodule.html#dmstatus-hasresethaltreq) are asserted when a hart comes out of reset, the hart must enter Debug Mode before executing any instructions, but after performing any initialization that would usually happen before the first instruction is executed.
 
-### [](#3-1-7-halt)3.1.7\. Halt
+### [](#4-1-7-halt)4.1.7\. Halt
 
 When a hart halts:
 
@@ -92,7 +92,7 @@ When a hart halts:
 5. If the current instruction can be partially executed and should be restarted to complete, then the relevant state for that is updated. E.g. if a halt occurs during a partially executed vector instruction, then`vstart` is updated, and [dpc](#csr-dpc) is updated to the address of the partially executed instruction. This is analogous to how vector instructions behave for exceptions.
 6. The hart enters Debug Mode.
 
-### [](#3-1-8-resume)3.1.8\. Resume
+### [](#4-1-8-resume)4.1.8\. Resume
 
 When a hart resumes:
 
@@ -104,7 +104,7 @@ When a hart resumes:
 6. If the Ssdbltrp extension is implemented and the new privilege mode is U, VS, or VU, then `sstatus.SDT` is set to 0\. Additionally, if it is VU, then`vsstatus.SDT` is also set to 0.
 7. The hart is no longer in debug mode.
 
-### [](#debreg)3.1.9\. Core Debug Registers
+### [](#debreg)4.1.9\. Core Debug Registers
 
 The supported Core Debug Registers must be implemented for each hart that can be debugged. They are CSRs, accessible using the RISC-V `csr`opcodes and optionally also using abstract debug commands.
 
@@ -166,7 +166,7 @@ This CSR is read/write.
 | v         | Extends the prv field with the virtualization mode the hart was operating in when Debug Mode was entered. The encoding is described in [Table 5](#tab:privmode). A debugger can change this value to change the hart’s virtualization mode when exiting Debug Mode. This bit is hardwired to 0 on harts that do not support virtualization mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | **WARL** | 0      |
 | mprven    | 0 (disabled): mprv in mstatus is ignored in Debug Mode. 1 (enabled): mprv in mstatus takes effect in Debug Mode. Implementing this bit is optional. It may be tied to either 0 or 1.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               | **WARL** | Preset |
 | nmip      | When set, there is a Non-Maskable-Interrupt (NMI) pending for the hart. Since an NMI can indicate a hardware error condition, reliable debugging may no longer be possible once this bit becomes set. This is implementation-dependent.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **R**    | 0      |
-| step      | When set and not in Debug Mode, the hart will only execute a single instruction and then enter Debug Mode. See [3.1.5.1\. Step Bit In Dcsr](#stepbit)for details. The debugger must not change the value of this bit while the hart is running.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | **R/W**  | 0      |
+| step      | When set and not in Debug Mode, the hart will only execute a single instruction and then enter Debug Mode. See [4.1.5.1\. Step Bit In Dcsr](#stepbit)for details. The debugger must not change the value of this bit while the hart is running.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | **R/W**  | 0      |
 | prv       | Contains the privilege mode the hart was operating in when Debug Mode was entered. The encoding is described in [Table 5](#tab:privmode). A debugger can change this value to change the hart’s privilege mode when exiting Debug Mode. Not all privilege modes are supported on all harts. If the encoding written is not supported or the debugger is not allowed to change to it, the hart may change to any supported privilege mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | **WARL** | 3      |
 
 #### [](#csr-dpc)Debug PC (dpc, at 0x7b1)
@@ -214,7 +214,7 @@ This CSR is read/write.
 
 ![Diagram](_images/diag-dce304802bfb65ef5cfccd27ab0431dad6cde921.svg) 
 
-### [](#virtreg)3.1.10\. Virtual Debug Registers
+### [](#virtreg)4.1.10\. Virtual Debug Registers
 
 A virtual register is one that doesn’t exist directly in the hardware, but that the debugger exposes as if it does. Debug software should implement them, but hardware can skip this section. Virtual registers exist to give users access to functionality that’s not part of standard debuggers without requiring them to carefully modify debug registers while the debugger is also accessing those same registers.
 

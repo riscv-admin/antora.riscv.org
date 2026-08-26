@@ -1,10 +1,10 @@
-# 6.1. Hardware Implementations
+# Hardware Implementations
 
-## [](#sec:implementations)Appendix A: 6.1\. Hardware Implementations
+## [](#sec:implementations)Appendix A: Hardware Implementations
 
 Below are two possible implementations. A designer could choose one, mix and match, or come up with their own design.
 
-### [](#6-1-1-abstract-command-based)6.1.1\. Abstract Command Based
+### [](#abstract-command-based)Abstract Command Based
 
 Halting happens by stalling the hart execution pipeline.
 
@@ -14,7 +14,7 @@ Memory is accessed using the Abstract Access Memory command or through System Bu
 
 This implementation could allow a debugger to collect information from the hart even when that hart is unable to execute instructions.
 
-### [](#execution%5Fbased)6.1.2\. Execution Based
+### [](#execution%5Fbased)Execution Based
 
 This implementation only implements the Access Register abstract command for GPRs on a halted hart, and relies on the Program Buffer for all other operations. It uses the hart’s existing pipeline and ability to execute from arbitrary memory locations to avoid modifications to a hart’s datapath.
 
@@ -34,7 +34,7 @@ For additional flexibility, [progbuf0](debug%5Fmodule.html#dm-progbuf0), etc. ar
 
 The PMP must not disallow fetches, loads, or stores in the address range associated with the Debug Module when the hart is in Debug Mode, regardless of how the PMP is configured. The same is true of PMA. Without this guarantee, the park loop would enter an infinite loop of traps and debug would not be possible.
 
-### [](#dmi%5Fsignals)6.1.3\. Debug Module Interface Signals
+### [](#dmi%5Fsignals)Debug Module Interface Signals
 
 As stated in section [debug\_module.adoc#dmi](debug%5Fmodule.html#dmi) the details of the DMI are left to the system designer. It is quite often the case that only one DTM and one DM is implemented. In this case it might be useful to comply with the signals suggested in [Table 1](#tab:dmi%5Fsignals), which is the implementation used in the open-source[rocket-chip](https://github.com/chipsalliance/rocket-chip/blob/375045a7db1bdc7b4f7851f1a59b3f10a2b922ff/src/main/scala/devices/debug/Debug.scala#L170)RISC-V core.
 

@@ -3,9 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>6.1. Hardware Implementations :: RISC-V Ratified Specifications Library</title>
+    <title>Hardware Implementations :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/debug/v1.0/implementations.html">
     <link rel="prev" href="dtm.html">
+    <link rel="next" href="debugger_implementation.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -123,33 +124,35 @@
               <div data-component="debug" data-version="v1.0" class="nav-version-group">
                 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Debug Specification</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link"  href="index.html">Debug</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="introduction.html">Introduction</a>
+    <a class="nav-link"  href="index.html">Title Page</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="overview.html">Chapter 1. Overview</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="introduction.html">Chapter 1. Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="debug_module.html">Chapter 2. Debug Module</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="overview.html">Chapter 2. Overview</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="Sdext.html">Chapter 3. Sdext (ISA Extension)</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debug_module.html">Chapter 3. Debug Module</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="Sdtrig.html">Chapter 4. Sdtrig (ISA Extension)</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdext.html">Chapter 4. Sdext (ISA Extension)</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="dtm.html">Chapter 5. Debug Transport Module (DTM)</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="Sdtrig.html">Chapter 5. Sdtrig (ISA Extension)</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="implementations.html">Chapter 6. Hardware Implementations</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="dtm.html">Chapter 6. Debug Transport Module (DTM)</a>
   </li>
-</ul>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link"  href="implementations.html">Appendix A. Hardware Implementations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link"  href="debugger_implementation.html">Debugger Implementation</a>
   </li>
 </ul>
   </li>
@@ -599,7 +602,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="6.1. Hardware Implementations"
+      data-title="Hardware Implementations"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -663,22 +666,19 @@
 
         <li><a href="../../trace-debug-ras-overview/index.html">Debug, Trace, RAS Overview</a></li>
               <li><a href="index.html">Debug Specification</a></li>
-                      <li>
-            <a href="index.html">Debug</a>
-          </li>
-    </ul>
+                </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">6.1. Hardware Implementations</h1>
+<h1 id="page-title" class="page">Hardware Implementations</h1>
 <div class="sect1">
-<h2 id="sec:implementations"><a class="anchor" href="#sec:implementations"></a>Appendix A: 6.1. Hardware Implementations</h2>
+<h2 id="sec:implementations"><a class="anchor" href="#sec:implementations"></a>Appendix A: Hardware Implementations</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Below are two possible implementations. A designer could choose one, mix
 and match, or come up with their own design.</p>
 </div>
 <div class="sect2">
-<h3 id="6-1-1-abstract-command-based"><a class="anchor" href="#6-1-1-abstract-command-based"></a>6.1.1. Abstract Command Based</h3>
+<h3 id="abstract-command-based"><a class="anchor" href="#abstract-command-based"></a>Abstract Command Based</h3>
 <div class="paragraph">
 <p>Halting happens by stalling the hart execution pipeline.</p>
 </div>
@@ -696,7 +696,7 @@ the hart even when that hart is unable to execute instructions.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="execution_based"><a class="anchor" href="#execution_based"></a>6.1.2. Execution Based</h3>
+<h3 id="execution_based"><a class="anchor" href="#execution_based"></a>Execution Based</h3>
 <div class="paragraph">
 <p>This implementation only implements the Access Register abstract command
 for GPRs on a halted hart, and relies on the Program Buffer for all
@@ -770,7 +770,7 @@ traps and debug would not be possible.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="dmi_signals"><a class="anchor" href="#dmi_signals"></a>6.1.3. Debug Module Interface Signals</h3>
+<h3 id="dmi_signals"><a class="anchor" href="#dmi_signals"></a>Debug Module Interface Signals</h3>
 <div class="paragraph">
 <p>As stated in section <a href="debug_module.html#dmi" class="xref page">debug_module.adoc#dmi</a> the details of the DMI are left to
 the system designer. It is quite often the case that only one DTM and
@@ -870,7 +870,8 @@ signalled by setting RSP_VALID.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="dtm.html">Chapter 5. Debug Transport Module (DTM)</a></span>
+  <span class="prev"><a href="dtm.html">Chapter 6. Debug Transport Module (DTM)</a></span>
+  <span class="next"><a href="debugger_implementation.html">Debugger Implementation</a></span>
 </nav>
 </article>  </div>
 </main>
