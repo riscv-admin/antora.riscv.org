@@ -191,7 +191,7 @@ Changes that slightly modify defined behavior. Technically backwards incompatibl
 1. [stopcount](Sdext.html#dcsr-stopcount) only applies to hart-local counters.[#405](https://github.com/riscv/riscv-debug-spec/pull/405)
 2. [version](debug%5Fmodule.html#dmstatus-version) may be invalid when [dmactive](debug%5Fmodule.html#dmcontrol-dmactive)\=0.[#414](https://github.com/riscv/riscv-debug-spec/pull/414)
 3. Address triggers ([mcontrol](Sdtrig.html#csr-mcontrol)) may fire on any accessed address.[#421](https://github.com/riscv/riscv-debug-spec/pull/421)
-4. All Trigger Module registers ([\[tab:trigger\]](#tab:trigger)) are optional. [#431](https://github.com/riscv/riscv-debug-spec/pull/431)
+4. All Trigger Module registers ([Sdtrig.adoc#tab:trigger](Sdtrig.html#tab:trigger)) are optional. [#431](https://github.com/riscv/riscv-debug-spec/pull/431)
 5. When extending IR, [bypass](dtm.html#dtm-bypass) still is all ones.[#437](https://github.com/riscv/riscv-debug-spec/pull/437)
 6. [ebreaks](Sdext.html#dcsr-ebreaks) and [ebreaku](Sdext.html#dcsr-ebreaku) are WARL. [#458](https://github.com/riscv/riscv-debug-spec/pull/458)
 7. NMIs are disabled by [stepie](Sdext.html#dcsr-stepie).[#465](https://github.com/riscv/riscv-debug-spec/pull/465)
@@ -201,7 +201,7 @@ Changes that slightly modify defined behavior. Technically backwards incompatibl
 11. Clear MPRV when resuming into lower privilege mode.[#503](https://github.com/riscv/riscv-debug-spec/pull/503)
 12. Halt state may not be preserved across reset.[#504](https://github.com/riscv/riscv-debug-spec/pull/504)
 13. Hardware should clear trigger action when [dmode](Sdtrig.html#tdata1-dmode) is cleared and action is 1.[#501](https://github.com/riscv/riscv-debug-spec/pull/501)
-14. Change quick access exceptions to halt the target in [\[ac-quickaccess\]](#ac-quickaccess).[#585](https://github.com/riscv/riscv-debug-spec/pull/585)
+14. Change quick access exceptions to halt the target in [debug\_module.adoc#ac-quickaccess](debug%5Fmodule.html#ac-quickaccess).[#585](https://github.com/riscv/riscv-debug-spec/pull/585)
 15. Writing 0 to [tdata1](Sdtrig.html#csr-tdata1) forces a state where [tdata2](Sdtrig.html#csr-tdata2) and [tdata3](Sdtrig.html#csr-tdata3) are writable.[#598](https://github.com/riscv/riscv-debug-spec/pull/598)
 16. Solutions to deal with reentrancy in [Sdtrig.adoc#nativetrigger](Sdtrig.html#nativetrigger) prevent triggers from_matching_, not merely _firing_. This primarily affects [icount](Sdtrig.html#csr-icount) behavior.[#722](https://github.com/riscv/riscv-debug-spec/pull/722)
 17. Attempts to access an unimplemented CSR raise an illegal instruction exception. [#791](https://github.com/riscv/riscv-debug-spec/pull/791)
@@ -265,7 +265,7 @@ Parts of the register which are currently unused are labeled with the number 0\.
 | |  This behavior enables us to use those fields later without having to increase the values in the version fields. |
 | ------------------------------------------------------------------------------------------------------------------ |
 
-Names of registers and their fields are hyperlinks to their definition, and are also listed in the [\[index\]](#index).
+Names of registers and their fields are hyperlinks to their definition.
 
 ##### [](#shortname)Long Name (shortname, at 0x123)
 

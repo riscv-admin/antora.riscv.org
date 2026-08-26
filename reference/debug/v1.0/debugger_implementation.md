@@ -8,7 +8,7 @@
 
 ### [](#external-debugger-implementation)External Debugger Implementation
 
-This section details how an external debugger might use the described debug interface to perform some common operations on RISC-V cores using the JTAG DTM described in [\[sec:jtagdtm\]](#sec:jtagdtm). All these examples assume a 32-bit core but it should be easy to adapt the examples to 64- or 128-bit cores.
+This section details how an external debugger might use the described debug interface to perform some common operations on RISC-V cores using the JTAG DTM described in [dtm.adoc#sec:jtagdtm](dtm.html#sec:jtagdtm). All these examples assume a 32-bit core but it should be easy to adapt the examples to 64- or 128-bit cores.
 
 To keep the examples readable, they all assume that everything succeeds, and that they complete faster than the debugger can perform the next access. This will be the case in a typical JTAG setup. However, the debugger must always check the sticky error status bits after performing a sequence of actions. If it sees any that are set, then it should attempt the same actions again, possibly while adding in some delay, or explicit checks for status bits.
 
@@ -22,7 +22,7 @@ It should almost never be necessary to scan IR, avoiding a big part of the ineff
 
 #### [](#checking-for-halted-harts)Checking for Halted Harts
 
-A user will want to know as quickly as possible when a hart is halted (e.g. due to a breakpoint). To efficiently determine which harts are halted when there are many harts, the debugger uses the `haltsum`registers. Assuming the maximum number of harts exist, first it checks [haltsum3](debug%5Fmodule.html#dm-haltsum3) . For each bit set there, it writes [hartsel](#dm-dmcontrol), and checks [haltsum2](debug%5Fmodule.html#dm-haltsum2). This process repeats through [haltsum1](debug%5Fmodule.html#dm-haltsum1) and [haltsum0](debug%5Fmodule.html#dm-haltsum0). Depending on how many harts exist, the process should start at one of the lower `haltsum` registers.
+A user will want to know as quickly as possible when a hart is halted (e.g. due to a breakpoint). To efficiently determine which harts are halted when there are many harts, the debugger uses the `haltsum`registers. Assuming the maximum number of harts exist, first it checks [haltsum3](debug%5Fmodule.html#dm-haltsum3) . For each bit set there, it writes [hartsel](debug%5Fmodule.html#dm-dmcontrol), and checks [haltsum2](debug%5Fmodule.html#dm-haltsum2). This process repeats through [haltsum1](debug%5Fmodule.html#dm-haltsum1) and [haltsum0](debug%5Fmodule.html#dm-haltsum0). Depending on how many harts exist, the process should start at one of the lower `haltsum` registers.
 
 #### [](#deb:halt)Halting
 
@@ -331,7 +331,7 @@ Stepping code running in the same privilege mode as the debugger is more complic
 
 If hardware implements [mpte](Sdtrig.html#tcontrol-mpte) and [mte](Sdtrig.html#tcontrol-mte), then stepping through non-trap code which doesn’t allow for nested interrupts is also straightforward.
 
-If hardware automatically prevents [action](Sdtrig.html#mcontrol6-action)\=0 triggers from matching when entering a trap handler as described in[\[nativetrigger\]](#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
+If hardware automatically prevents [action](Sdtrig.html#mcontrol6-action)\=0 triggers from matching when entering a trap handler as described in[Sdtrig.adoc#nativetrigger](Sdtrig.html#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
 
 If neither of these features exist, then single step is doable, but tricky to get right. To single step, the debug stub would execute something like:
 
