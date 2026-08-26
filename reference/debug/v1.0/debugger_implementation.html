@@ -701,18 +701,18 @@ explicit checks for status bits.</p>
 <div class="sect3">
 <h4 id="dmiaccess"><a class="anchor" href="#dmiaccess"></a>Debug Module Interface Access</h4>
 <div class="paragraph">
-<p>To read an arbitrary Debug Module register, select {dtm-dmi}, and scan in a value
-with {dmi-op} set to 1, and {dmi-address} set to the desired register address. In Update-DR the
+<p>To read an arbitrary Debug Module register, select <a href="dtm.html#dtm-dmi" class="xref page">dmi</a>, and scan in a value
+with <a href="dtm.html#dmi-op" class="xref page">op</a> set to 1, and <a href="dtm.html#dmi-address" class="xref page">address</a> set to the desired register address. In Update-DR the
 operation will start, and in Capture-DR its results will be captured
-into {dmi-data}. If the operation didn&#8217;t complete in time, {dmi-op} will be 3 and the value
-in {dmi-data} must be ignored. The busy condition must be cleared by writing {dtmcs-dmireset} in {dtm-dtmcs},
+into <a href="dtm.html#dmi-data" class="xref page">data</a>. If the operation didn&#8217;t complete in time, <a href="dtm.html#dmi-op" class="xref page">op</a> will be 3 and the value
+in <a href="dtm.html#dmi-data" class="xref page">data</a> must be ignored. The busy condition must be cleared by writing <a href="dtm.html#dtmcs-dmireset" class="xref page">dmireset</a> in <a href="dtm.html#dtm-dtmcs" class="xref page">dtmcs</a>,
 and then the second scan scan must be performed again. This process must
-be repeated until {dmi-op} returns 0. In later operations the debugger should
+be repeated until <a href="dtm.html#dmi-op" class="xref page">op</a> returns 0. In later operations the debugger should
 allow for more time between Update-DR and Capture-DR.</p>
 </div>
 <div class="paragraph">
-<p>To write an arbitrary Debug Bus register, select {dtm-dmi}, and scan in a value
-with {dmi-op} set to 2, and {dmi-address} and {dmi-data} set to the desired register address and data
+<p>To write an arbitrary Debug Bus register, select <a href="dtm.html#dtm-dmi" class="xref page">dmi</a>, and scan in a value
+with <a href="dtm.html#dmi-op" class="xref page">op</a> set to 2, and <a href="dtm.html#dmi-address" class="xref page">address</a> and <a href="dtm.html#dmi-data" class="xref page">data</a> set to the desired register address and data
 respectively. From then on everything happens exactly as with a read,
 except that a write is performed instead of the read.</p>
 </div>
@@ -727,17 +727,17 @@ the inefficiency in typical JTAG use.</p>
 <p>A user will want to know as quickly as possible when a hart is halted
 (e.g. due to a breakpoint). To efficiently determine which harts are
 halted when there are many harts, the debugger uses the <code>haltsum</code>
-registers. Assuming the maximum number of harts exist, first it checks {dm-haltsum3} .
-For each bit set there, it writes <a href="#dm-dmcontrol">hartsel</a>, and checks {dm-haltsum2}. This process repeats
-through {dm-haltsum1} and {dm-haltsum0}. Depending on how many harts exist, the process should
+registers. Assuming the maximum number of harts exist, first it checks <a href="debug_module.html#dm-haltsum3" class="xref page">haltsum3</a> .
+For each bit set there, it writes <a href="#dm-dmcontrol">hartsel</a>, and checks <a href="debug_module.html#dm-haltsum2" class="xref page">haltsum2</a>. This process repeats
+through <a href="debug_module.html#dm-haltsum1" class="xref page">haltsum1</a> and <a href="debug_module.html#dm-haltsum0" class="xref page">haltsum0</a>. Depending on how many harts exist, the process should
 start at one of the lower <code>haltsum</code> registers.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="deb:halt"><a class="anchor" href="#deb:halt"></a>Halting</h4>
 <div class="paragraph">
-<p>To halt one or more harts, the debugger selects them, sets {dmcontrol-haltreq}, and then
-waits for {dmstatus-allhalted} to indicate the harts are halted. Then it can clear {dmcontrol-haltreq} to 0, or
+<p>To halt one or more harts, the debugger selects them, sets <a href="debug_module.html#dmcontrol-haltreq" class="xref page">haltreq</a>, and then
+waits for <a href="debug_module.html#dmstatus-allhalted" class="xref page">allhalted</a> to indicate the harts are halted. Then it can clear <a href="debug_module.html#dmcontrol-haltreq" class="xref page">haltreq</a> to 0, or
 leave it high to catch a hart that resets while halted.</p>
 </div>
 </div>
@@ -745,10 +745,10 @@ leave it high to catch a hart that resets while halted.</p>
 <h4 id="running"><a class="anchor" href="#running"></a>Running</h4>
 <div class="paragraph">
 <p>First, the debugger should restore any registers that it has
-overwritten. Then it can let the selected harts run by setting {dmcontrol-resumereq}. Once {dmstatus-allresumeack} is
+overwritten. Then it can let the selected harts run by setting <a href="debug_module.html#dmcontrol-resumereq" class="xref page">resumereq</a>. Once <a href="debug_module.html#dmstatus-allresumeack" class="xref page">allresumeack</a> is
 set, the debugger knows the selected harts have resumed. Harts might
 halt very quickly after resuming (e.g. by hitting a software breakpoint)
-so the debugger cannot use {dmstatus-allhalted}/{dmstatus-anyhalted} to check whether the hart resumed.</p>
+so the debugger cannot use <a href="debug_module.html#dmstatus-allhalted" class="xref page">allhalted</a>/<a href="debug_module.html#dmstatus-anyhalted" class="xref page">anyhalted</a> to check whether the hart resumed.</p>
 </div>
 </div>
 <div class="sect3">
@@ -757,7 +757,7 @@ so the debugger cannot use {dmstatus-allhalted}/{dmstatus-anyhalted} to check wh
 <p>Using the hardware single step feature is almost the same as regular
 running. The debugger just sets in before letting the hart run. The hart
 behaves exactly as in the running case, except that interrupts may be
-disabled (depending on {dcsr-stepie}) and it only fetches and executes a single
+disabled (depending on <a href="Sdext.html#dcsr-stepie" class="xref page">stepie</a>) and it only fetches and executes a single
 instruction before re-entering Debug Mode.</p>
 </div>
 </div>
@@ -786,13 +786,13 @@ instruction before re-entering Debug Mode.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-transfer}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-aarsize" class="xref page">aarsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns value that was in <code>s0</code></p></td>
 </tr>
@@ -819,14 +819,14 @@ instruction before re-entering Debug Mode.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">new value</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x300</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-aarsize" class="xref page">aarsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x300</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>mstatus</code></p></td>
 </tr>
 </tbody>
@@ -860,7 +860,7 @@ and then access the GPR value using an abstract command.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>csrw s0, MSTATUS</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -872,14 +872,14 @@ and then access the GPR value using an abstract command.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">new value</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-aarsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessregister-postexec}, {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-aarsize" class="xref page">aarsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
 </tr>
 </tbody>
@@ -905,7 +905,7 @@ and then access the GPR value using an abstract command.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">{<code>fmv.x.s s0, f1</code>}</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -917,19 +917,19 @@ and then access the GPR value using an abstract command.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-postexec}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">read <code>s0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Returns the value that was in <code>f1</code></p></td>
 </tr>
@@ -965,19 +965,19 @@ and then access the GPR value using an abstract command.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbreadonaddr}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbcs" class="xref page">sbcs</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#sbcs-sbaccess" class="xref page">sbaccess</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#sbcs-sbreadonaddr" class="xref page">sbreadonaddr</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Setup</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbaddress0" class="xref page">sbaddress0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
 </tr>
@@ -1004,25 +1004,25 @@ and then access the GPR value using an abstract command.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbreadonaddr}, {sbcs-sbreadondata}, {sbcs-sbautoincrement}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbcs" class="xref page">sbcs</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#sbcs-sbaccess" class="xref page">sbaccess</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#sbcs-sbreadonaddr" class="xref page">sbreadonaddr</a>, <a href="debug_module.html#sbcs-sbreadondata" class="xref page">sbreadondata</a>, <a href="debug_module.html#sbcs-sbautoincrement" class="xref page">sbautoincrement</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Turn on autoread and autoincrement</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbaddress0" class="xref page">sbaddress0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Writing address triggers read and increment</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Next value read from memory</p></td>
 </tr>
@@ -1034,13 +1034,13 @@ and then access the GPR value using an abstract command.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbcs" class="xref page">sbcs</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Disable autoread</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
 </tr>
@@ -1075,7 +1075,7 @@ depends on the system configuration.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>lw s0, 0(s0)</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1087,25 +1087,25 @@ depends on the system configuration.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
 </tr>
@@ -1132,7 +1132,7 @@ depends on the system configuration.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>lw s1, 0(s0)</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1150,37 +1150,37 @@ depends on the system configuration.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code>, then execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1009</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read <code>s1</code>, then execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{abstractauto-autoexecdata}[0]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set {abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set <a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Get value read from memory, then execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Get next value read from memory, then execute program buffer</p></td>
 </tr>
@@ -1192,13 +1192,13 @@ depends on the system configuration.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Clear {abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear <a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
 </tr>
@@ -1238,13 +1238,13 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, <a href="debug_module.html#accessmemory-aamsize" class="xref page">aamsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Value read from memory</p></td>
 </tr>
@@ -1271,9 +1271,9 @@ although the actual implementation may differ.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when {dm-data0} is accessed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when <a href="debug_module.html#dm-data0" class="xref page">data0</a> is accessed</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
@@ -1283,13 +1283,13 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {accessmemory-aampostincrement}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, <a href="debug_module.html#accessmemory-aamsize" class="xref page">aamsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#accessmemory-aampostincrement" class="xref page">aampostincrement</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read value, and trigger reading of next address</p></td>
 </tr>
@@ -1301,13 +1301,13 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Disable auto-exec</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Read</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">-</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Get last value read from memory.</p></td>
 </tr>
@@ -1343,19 +1343,19 @@ although the actual implementation may differ.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbcs" class="xref page">sbcs</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#sbcs-sbaccess" class="xref page">sbaccess</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Configure access size</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbaddress0" class="xref page">sbaddress0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1382,25 +1382,25 @@ although the actual implementation may differ.</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbcs}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{sbcs-sbaccess}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, {sbcs-sbautoincrement}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbcs" class="xref page">sbcs</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#sbcs-sbaccess" class="xref page">sbaccess</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#sbcs-sbautoincrement" class="xref page">sbautoincrement</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Turn on autoincrement</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbaddress0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbaddress0" class="xref page">sbaddress0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1412,7 +1412,7 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-sbdata0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-sbdata0" class="xref page">sbdata0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1447,7 +1447,7 @@ configuration).</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>sw s1, 0(s0)</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1459,26 +1459,26 @@ configuration).</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1009</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s1</code>, then execute program buffer</p></td>
 </tr>
 </tbody>
@@ -1504,7 +1504,7 @@ configuration).</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>sw s1, 0(s0)</code></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1522,37 +1522,37 @@ configuration).</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1008</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s0</code></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#accessregister-transfer" class="xref page">transfer</a>, <a href="debug_module.html#accessregister-write" class="xref page">write</a>, <a href="debug_module.html#accessregister-postexec" class="xref page">postexec</a>, <a href="debug_module.html#accessregister-regno" class="xref page">regno</a> = 0x1009</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Write <code>s1</code>, then execute program buffer</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{abstractauto-autoexecdata}[0]</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Set {abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Set <a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1564,15 +1564,15 @@ configuration).</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Clear {abstractauto-autoexecdata}[0]</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Clear <a href="debug_module.html#abstractauto-autoexecdata" class="xref page">autoexecdata</a>[0]</p></td>
 </tr>
 </tbody>
 </table>
@@ -1610,14 +1610,14 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}=2, write=1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, <a href="debug_module.html#accessmemory-aamsize" class="xref page">aamsize</a>=2, write=1</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 </tbody>
@@ -1649,31 +1649,31 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value0</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, {accessmemory-aamsize}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, write<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span>, {accessmemory-aampostincrement}<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">cmdtype=2, <a href="debug_module.html#accessmemory-aamsize" class="xref page">aamsize</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path></g></g></g></svg> </span>, write<span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span>, <a href="debug_module.html#accessmemory-aampostincrement" class="xref page">aampostincrement</a><span class="steminline"> <svg style="vertical-align: -0.186ex; overflow: visible;" xmlns="http://www.w3.org/2000/svg" width="3.52ex" height="1.692ex" role="img" focusable="false" viewBox="0 -666 1555.8 748"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mo"><path data-c="3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path></g><g data-mml-node="mn" transform="translate(1055.8,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path></g></g></g></svg> </span></p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when {dm-data0} is accessed</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Re-execute the command when <a href="debug_module.html#dm-data0" class="xref page">data0</a> is accessed</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value1</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">value2</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1685,13 +1685,13 @@ although the actual implementation may differ.</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">valueN</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-abstractauto}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-abstractauto" class="xref page">abstractauto</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Disable auto-exec</p></td>
 </tr>
@@ -1721,12 +1721,12 @@ used as an instruction breakpoint in ROM:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x6980105c</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, vs=1, vu=1, execute=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x80001234</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 </tr>
@@ -1744,12 +1744,12 @@ or S-mode or U-mode:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x68001059</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, load=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x80007f80</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 </tr>
@@ -1767,32 +1767,32 @@ or S-mode or U-mode:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a> 0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x69801902</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, chain=1, select=0, match=2, vs=1, vu=1, store=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a> 0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x80007c80</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">start address (inclusive)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-textra32} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-textra32" class="xref page">textra32</a> 0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x03000000</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">mhselect=6, mhvalue=0</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a> 1</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x69801182</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=3, vs=1, vu=1, store=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a> 1</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x80007cf0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">end address (exclusive)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-textra32} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-textra32" class="xref page">textra32</a> 1</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x03000000</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">mhselect=6, mhvalue=0</p></td>
 </tr>
@@ -1810,12 +1810,12 @@ or S-mode or U-mode:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x698010da</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, select=0, match=1, m=1, s=1, u=1, vs=1, vu=1, store=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x81237fff</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">16 upper bits to match exactly, then 0, then all ones.</p></td>
 </tr>
@@ -1833,22 +1833,22 @@ or S-mode or U-mode:</p>
 </colgroup>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a> 0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x69801a59</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, chain=1, match=4, m=1, s=1, u=1, vs=1, vu=1, load=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 0</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a> 0</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0xfff03090</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Mask for low half, then match for low half</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata1} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a> 1</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x698012d9</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">type=6, dmode=1, action=1, match=5, m=1, s=1, u=1, vs=1, vu=1, load=1</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{csr-tdata2} 1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="Sdtrig.html#csr-tdata2" class="xref page">tdata2</a> 1</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0xefff8675</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Mask for high half, then match for high half</p></td>
 </tr>
@@ -1865,7 +1865,7 @@ debugger will not know enough about the hardware platform to know what&#8217;s
 going to happen, and must attempt the access to determine the outcome.</p>
 </div>
 <div class="paragraph">
-<p>When an exception occurs while executing the Program Buffer, {dm-command} becomes
+<p>When an exception occurs while executing the Program Buffer, <a href="debug_module.html#dm-command" class="xref page">command</a> becomes
 set. The debugger can check this field to see whether a program
 encountered an exception. If there was an exception, it&#8217;s left to the
 debugger to know what must have caused it.</p>
@@ -1876,7 +1876,7 @@ debugger to know what must have caused it.</p>
 <div class="paragraph">
 <p>There are a variety of instructions to transfer data between GPRs and
 the <code>data</code> registers. They are either loads/stores or CSR reads/writes.
-The specific addresses also vary. This is all specified in {dm-hartinfo}. The
+The specific addresses also vary. This is all specified in <a href="debug_module.html#dm-hartinfo" class="xref page">hartinfo</a>. The
 examples here use the pseudo-op <code>transfer dest, src</code> to represent all
 these options.</p>
 </div>
@@ -1902,7 +1902,7 @@ write:</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer arg2, s0</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Save <code>s0</code></p></td>
 </tr>
@@ -1950,7 +1950,7 @@ write:</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-data0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-data0" class="xref page">data0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">address</p></td>
 <td class="tableblock halign-left valign-top"></td>
 </tr>
@@ -1962,14 +1962,14 @@ write:</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x10000000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Perform quick access</p></td>
 </tr>
 </tbody>
 </table>
 <div class="paragraph">
-<p>This shows an example of setting the {mcontrol-m} bit in to enable a hardware
+<p>This shows an example of setting the <a href="Sdtrig.html#mcontrol-m" class="xref page">m</a> bit in to enable a hardware
 breakpoint in M-mode. Similar quick access instructions could have been
 used previously to configure the trigger that is being enabled here:</p>
 </div>
@@ -1991,7 +1991,7 @@ used previously to configure the trigger that is being enabled here:</p>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-progbuf0}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-progbuf0" class="xref page">progbuf0</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>transfer arg0, s0</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Save <code>s0</code></p></td>
 </tr>
@@ -1999,13 +1999,13 @@ used previously to configure the trigger that is being enabled here:</p>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf1</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>li s0, (1 &lt;&lt; 6)</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Form the mask for {mcontrol-m} bit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Form the mask for <a href="Sdtrig.html#mcontrol-m" class="xref page">m</a> bit</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><code>progbuf2</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>csrrs x0, {csr-tdata1}, s0</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the mask to {csr-mcontrol}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><code>csrrs x0, <a href="Sdtrig.html#csr-tdata1" class="xref page">tdata1</a>, s0</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apply the mask to <a href="Sdtrig.html#csr-mcontrol" class="xref page">mcontrol</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
@@ -2021,7 +2021,7 @@ used previously to configure the trigger that is being enabled here:</p>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Write</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">{dm-command}</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="debug_module.html#dm-command" class="xref page">command</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">0x10000000</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Perform quick access</p></td>
 </tr>
@@ -2040,8 +2040,8 @@ This section describes how some common tasks might be achieved.</p>
 <div class="paragraph">
 <p>Single step is straightforward if the OS or a debug stub runs in M-Mode while the
 program being debugged runs in a less privileged mode. When a step is required,
-the OS or debug stub writes {icount-count}=1, {icount-action}=0,
-{icount-m}=0 before returning control to the lower user program with an
+the OS or debug stub writes <a href="Sdtrig.html#icount-count" class="xref page">count</a>=1, <a href="Sdtrig.html#icount-action" class="xref page">action</a>=0,
+<a href="Sdtrig.html#icount-m" class="xref page">m</a>=0 before returning control to the lower user program with an
 <code>mret</code> instruction.</p>
 </div>
 <div class="paragraph">
@@ -2049,12 +2049,12 @@ the OS or debug stub writes {icount-count}=1, {icount-action}=0,
 complicated, depending on what other debug features are implemented.</p>
 </div>
 <div class="paragraph">
-<p>If hardware implements {tcontrol-mpte} and {tcontrol-mte}, then stepping
+<p>If hardware implements <a href="Sdtrig.html#tcontrol-mpte" class="xref page">mpte</a> and <a href="Sdtrig.html#tcontrol-mte" class="xref page">mte</a>, then stepping
 through non-trap code which doesn&#8217;t allow for nested interrupts is also
 straightforward.</p>
 </div>
 <div class="paragraph">
-<p>If hardware automatically prevents {mcontrol6-action}=0 triggers from
+<p>If hardware automatically prevents <a href="Sdtrig.html#mcontrol6-action" class="xref page">action</a>=0 triggers from
 matching when entering a trap handler as described in
 <a href="#nativetrigger">[nativetrigger]</a>, then a carefully written trap handler can
 ensure that interrupts are disabled whenever the icount trigger must not match.</p>
@@ -2074,7 +2074,7 @@ something like:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There is an additional problem with using {csr-icount} to single step. An instruction
+<p>There is an additional problem with using <a href="Sdtrig.html#csr-icount" class="xref page">icount</a> to single step. An instruction
 may cause an exception into a more privileged mode where the trigger is
 not enabled. The exception handler might address the cause of the
 exception, and then restart the instruction. Examples of this include

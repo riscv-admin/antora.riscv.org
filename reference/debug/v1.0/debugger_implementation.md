@@ -14,27 +14,27 @@ To keep the examples readable, they all assume that everything succeeds, and tha
 
 #### [](#dmiaccess)Debug Module Interface Access
 
-To read an arbitrary Debug Module register, select {dtm-dmi}, and scan in a value with {dmi-op} set to 1, and {dmi-address} set to the desired register address. In Update-DR the operation will start, and in Capture-DR its results will be captured into {dmi-data}. If the operation didn’t complete in time, {dmi-op} will be 3 and the value in {dmi-data} must be ignored. The busy condition must be cleared by writing {dtmcs-dmireset} in {dtm-dtmcs}, and then the second scan scan must be performed again. This process must be repeated until {dmi-op} returns 0\. In later operations the debugger should allow for more time between Update-DR and Capture-DR.
+To read an arbitrary Debug Module register, select [dmi](dtm.html#dtm-dmi), and scan in a value with [op](dtm.html#dmi-op) set to 1, and [address](dtm.html#dmi-address) set to the desired register address. In Update-DR the operation will start, and in Capture-DR its results will be captured into [data](dtm.html#dmi-data). If the operation didn’t complete in time, [op](dtm.html#dmi-op) will be 3 and the value in [data](dtm.html#dmi-data) must be ignored. The busy condition must be cleared by writing [dmireset](dtm.html#dtmcs-dmireset) in [dtmcs](dtm.html#dtm-dtmcs), and then the second scan scan must be performed again. This process must be repeated until [op](dtm.html#dmi-op) returns 0\. In later operations the debugger should allow for more time between Update-DR and Capture-DR.
 
-To write an arbitrary Debug Bus register, select {dtm-dmi}, and scan in a value with {dmi-op} set to 2, and {dmi-address} and {dmi-data} set to the desired register address and data respectively. From then on everything happens exactly as with a read, except that a write is performed instead of the read.
+To write an arbitrary Debug Bus register, select [dmi](dtm.html#dtm-dmi), and scan in a value with [op](dtm.html#dmi-op) set to 2, and [address](dtm.html#dmi-address) and [data](dtm.html#dmi-data) set to the desired register address and data respectively. From then on everything happens exactly as with a read, except that a write is performed instead of the read.
 
 It should almost never be necessary to scan IR, avoiding a big part of the inefficiency in typical JTAG use.
 
 #### [](#checking-for-halted-harts)Checking for Halted Harts
 
-A user will want to know as quickly as possible when a hart is halted (e.g. due to a breakpoint). To efficiently determine which harts are halted when there are many harts, the debugger uses the `haltsum`registers. Assuming the maximum number of harts exist, first it checks {dm-haltsum3} . For each bit set there, it writes [hartsel](#dm-dmcontrol), and checks {dm-haltsum2}. This process repeats through {dm-haltsum1} and {dm-haltsum0}. Depending on how many harts exist, the process should start at one of the lower `haltsum` registers.
+A user will want to know as quickly as possible when a hart is halted (e.g. due to a breakpoint). To efficiently determine which harts are halted when there are many harts, the debugger uses the `haltsum`registers. Assuming the maximum number of harts exist, first it checks [haltsum3](debug%5Fmodule.html#dm-haltsum3) . For each bit set there, it writes [hartsel](#dm-dmcontrol), and checks [haltsum2](debug%5Fmodule.html#dm-haltsum2). This process repeats through [haltsum1](debug%5Fmodule.html#dm-haltsum1) and [haltsum0](debug%5Fmodule.html#dm-haltsum0). Depending on how many harts exist, the process should start at one of the lower `haltsum` registers.
 
 #### [](#deb:halt)Halting
 
-To halt one or more harts, the debugger selects them, sets {dmcontrol-haltreq}, and then waits for {dmstatus-allhalted} to indicate the harts are halted. Then it can clear {dmcontrol-haltreq} to 0, or leave it high to catch a hart that resets while halted.
+To halt one or more harts, the debugger selects them, sets [haltreq](debug%5Fmodule.html#dmcontrol-haltreq), and then waits for [allhalted](debug%5Fmodule.html#dmstatus-allhalted) to indicate the harts are halted. Then it can clear [haltreq](debug%5Fmodule.html#dmcontrol-haltreq) to 0, or leave it high to catch a hart that resets while halted.
 
 #### [](#running)Running
 
-First, the debugger should restore any registers that it has overwritten. Then it can let the selected harts run by setting {dmcontrol-resumereq}. Once {dmstatus-allresumeack} is set, the debugger knows the selected harts have resumed. Harts might halt very quickly after resuming (e.g. by hitting a software breakpoint) so the debugger cannot use {dmstatus-allhalted}/{dmstatus-anyhalted} to check whether the hart resumed.
+First, the debugger should restore any registers that it has overwritten. Then it can let the selected harts run by setting [resumereq](debug%5Fmodule.html#dmcontrol-resumereq). Once [allresumeack](debug%5Fmodule.html#dmstatus-allresumeack) is set, the debugger knows the selected harts have resumed. Harts might halt very quickly after resuming (e.g. by hitting a software breakpoint) so the debugger cannot use [allhalted](debug%5Fmodule.html#dmstatus-allhalted)/[anyhalted](debug%5Fmodule.html#dmstatus-anyhalted) to check whether the hart resumed.
 
 #### [](#single-step)Single Step
 
-Using the hardware single step feature is almost the same as regular running. The debugger just sets in before letting the hart run. The hart behaves exactly as in the running case, except that interrupts may be disabled (depending on {dcsr-stepie}) and it only fetches and executes a single instruction before re-entering Debug Mode.
+Using the hardware single step feature is almost the same as regular running. The debugger just sets in before letting the hart run. The hart behaves exactly as in the running case, except that interrupts may be disabled (depending on [stepie](Sdext.html#dcsr-stepie)) and it only fetches and executes a single instruction before re-entering Debug Mode.
 
 #### [](#accessing-registers)Accessing Registers
 
@@ -42,17 +42,17 @@ Using the hardware single step feature is almost the same as regular running. Th
 
 Read `s0` using abstract command:
 
-| Op    | Address      | Value                                                                                 | Comment                      |
-| ----- | ------------ | ------------------------------------------------------------------------------------- | ---------------------------- |
-| Write | {dm-command} | {accessregister-aarsize} , {accessregister-transfer}, {accessregister-regno} = 0x1008 | Read s0                      |
-| Read  | {dm-data0}   | \-                                                                                    | Returns value that was in s0 |
+| Op    | Address                                   | Value                                                                                                                                                                        | Comment                      |
+| ----- | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| Write | [command](debug%5Fmodule.html#dm-command) | [aarsize](debug%5Fmodule.html#accessregister-aarsize) , [transfer](debug%5Fmodule.html#accessregister-transfer), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008 | Read s0                      |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)     | \-                                                                                                                                                                           | Returns value that was in s0 |
 
 Write `mstatus` using abstract command:
 
-| Op    | Address      | Value                                                                                                        | Comment       |
-| ----- | ------------ | ------------------------------------------------------------------------------------------------------------ | ------------- |
-| Write | {dm-data0}   | new value                                                                                                    |               |
-| Write | {dm-command} | {accessregister-aarsize} , {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x300 | Write mstatus |
+| Op    | Address                                   | Value                                                                                                                                                                                                                          | Comment       |
+| ----- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------- |
+| Write | [data0](debug%5Fmodule.html#dm-data0)     | new value                                                                                                                                                                                                                      |               |
+| Write | [command](debug%5Fmodule.html#dm-command) | [aarsize](debug%5Fmodule.html#accessregister-aarsize) , [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x300 | Write mstatus |
 
 ##### [](#deb:regprogbuf)Using Program Buffer
 
@@ -60,22 +60,22 @@ Abstract commands are only required to support GPR access. To access non-GPR reg
 
 Write `mstatus` using program buffer:
 
-| Op    | Address       | Value                                                                                                                                    | Comment                               |
-| ----- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| Write | {dm-progbuf0} | csrw s0, MSTATUS                                                                                                                         |                                       |
-| Write | progbuf1      | ebreak                                                                                                                                   |                                       |
-| Write | {dm-data0}    | new value                                                                                                                                |                                       |
-| Write | {dm-command}  | {accessregister-aarsize} , {accessregister-postexec}, {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008 | Write s0, then execute program buffer |
+| Op    | Address                                     | Value                                                                                                                                                                                                                                                                                    | Comment                               |
+| ----- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | csrw s0, MSTATUS                                                                                                                                                                                                                                                                         |                                       |
+| Write | progbuf1                                    | ebreak                                                                                                                                                                                                                                                                                   |                                       |
+| Write | [data0](debug%5Fmodule.html#dm-data0)       | new value                                                                                                                                                                                                                                                                                |                                       |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [aarsize](debug%5Fmodule.html#accessregister-aarsize) , [postexec](debug%5Fmodule.html#accessregister-postexec), [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008 | Write s0, then execute program buffer |
 
 Read `f1` using program buffer:
 
-| Op    | Address       | Value                                                      | Comment                          |
-| ----- | ------------- | ---------------------------------------------------------- | -------------------------------- |
-| Write | {dm-progbuf0} | {fmv.x.s s0, f1}                                           |                                  |
-| Write | progbuf1      | ebreak                                                     |                                  |
-| Write | {dm-command}  | {accessregister-postexec}                                  | Execute program buffer           |
-| Write | {dm-command}  | {accessregister-transfer}, {accessregister-regno} = 0x1008 | read s0                          |
-| Read  | {dm-data0}    | \-                                                         | Returns the value that was in f1 |
+| Op    | Address                                     | Value                                                                                                                | Comment                          |
+| ----- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | {fmv.x.s s0, f1}                                                                                                     |                                  |
+| Write | progbuf1                                    | ebreak                                                                                                               |                                  |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [postexec](debug%5Fmodule.html#accessregister-postexec)                                                              | Execute program buffer           |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [transfer](debug%5Fmodule.html#accessregister-transfer), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008 | read s0                          |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)       | \-                                                                                                                   | Returns the value that was in f1 |
 
 #### [](#reading-memory)Reading Memory
 
@@ -85,23 +85,23 @@ With system bus access, addresses are physical system bus addresses.
 
 Read a word from memory using system bus access:
 
-| Op    | Address         | Value                                 | Comment                |
-| ----- | --------------- | ------------------------------------- | ---------------------- |
-| Write | {dm-sbcs}       | {sbcs-sbaccess} , {sbcs-sbreadonaddr} | Setup                  |
-| Write | {dm-sbaddress0} | address                               |                        |
-| Read  | {dm-sbdata0}    | \-                                    | Value read from memory |
+| Op    | Address                                         | Value                                                                                                 | Comment                |
+| ----- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------- |
+| Write | [sbcs](debug%5Fmodule.html#dm-sbcs)             | [sbaccess](debug%5Fmodule.html#sbcs-sbaccess) , [sbreadonaddr](debug%5Fmodule.html#sbcs-sbreadonaddr) | Setup                  |
+| Write | [sbaddress0](debug%5Fmodule.html#dm-sbaddress0) | address                                                                                               |                        |
+| Read  | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | \-                                                                                                    | Value read from memory |
 
 Read block of memory using system bus access:
 
-| Op    | Address         | Value                                                                              | Comment                                     |
-| ----- | --------------- | ---------------------------------------------------------------------------------- | ------------------------------------------- |
-| Write | {dm-sbcs}       | {sbcs-sbaccess} , {sbcs-sbreadonaddr}, {sbcs-sbreadondata}, {sbcs-sbautoincrement} | Turn on autoread and autoincrement          |
-| Write | {dm-sbaddress0} | address                                                                            | Writing address triggers read and increment |
-| Read  | {dm-sbdata0}    | \-                                                                                 | Value read from memory                      |
-| Read  | {dm-sbdata0}    | \-                                                                                 | Next value read from memory                 |
-| …​    | …​              | …​                                                                                 | …​                                          |
-| Write | {dm-sbcs}       | 0                                                                                  | Disable autoread                            |
-| Read  | {dm-sbdata0}    | \-                                                                                 | Get last value read from memory.            |
+| Op    | Address                                         | Value                                                                                                                                                                                                                     | Comment                                     |
+| ----- | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------- |
+| Write | [sbcs](debug%5Fmodule.html#dm-sbcs)             | [sbaccess](debug%5Fmodule.html#sbcs-sbaccess) , [sbreadonaddr](debug%5Fmodule.html#sbcs-sbreadonaddr), [sbreadondata](debug%5Fmodule.html#sbcs-sbreadondata), [sbautoincrement](debug%5Fmodule.html#sbcs-sbautoincrement) | Turn on autoread and autoincrement          |
+| Write | [sbaddress0](debug%5Fmodule.html#dm-sbaddress0) | address                                                                                                                                                                                                                   | Writing address triggers read and increment |
+| Read  | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | \-                                                                                                                                                                                                                        | Value read from memory                      |
+| Read  | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | \-                                                                                                                                                                                                                        | Next value read from memory                 |
+| …​    | …​                                              | …​                                                                                                                                                                                                                        | …​                                          |
+| Write | [sbcs](debug%5Fmodule.html#dm-sbcs)             | 0                                                                                                                                                                                                                         | Disable autoread                            |
+| Read  | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | \-                                                                                                                                                                                                                        | Get last value read from memory.            |
 
 ##### [](#deb:mrprogbuf)Using Program Buffer
 
@@ -109,31 +109,31 @@ Memory can be accessed through the Program Buffer by having the hart perform loa
 
 Read a word from memory using program buffer:
 
-| Op    | Address       | Value                                                                                                         | Comment                               |
-| ----- | ------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| Write | {dm-progbuf0} | lw s0, 0(s0)                                                                                                  |                                       |
-| Write | progbuf1      | ebreak                                                                                                        |                                       |
-| Write | {dm-data0}    | address                                                                                                       |                                       |
-| Write | {dm-command}  | {accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008 | Write s0, then execute program buffer |
-| Write | {dm-command}  | {accessregister-regno} = 0x1008                                                                               | Read s0                               |
-| Read  | {dm-data0}    | \-                                                                                                            | Value read from memory                |
+| Op    | Address                                     | Value                                                                                                                                                                                                                            | Comment                               |
+| ----- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | lw s0, 0(s0)                                                                                                                                                                                                                     |                                       |
+| Write | progbuf1                                    | ebreak                                                                                                                                                                                                                           |                                       |
+| Write | [data0](debug%5Fmodule.html#dm-data0)       | address                                                                                                                                                                                                                          |                                       |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [postexec](debug%5Fmodule.html#accessregister-postexec), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008 | Write s0, then execute program buffer |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008                                                                                                                                                                      | Read s0                               |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)       | \-                                                                                                                                                                                                                               | Value read from memory                |
 
 Read block of memory using program buffer:
 
-| Op    | Address           | Value                                                                                                         | Comment                                                      |
-| ----- | ----------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------ |
-| Write | {dm-progbuf0}     | lw s1, 0(s0)                                                                                                  |                                                              |
-| Write | progbuf1          | addi s0, s1, 4                                                                                                |                                                              |
-| Write | progbuf2          | ebreak                                                                                                        |                                                              |
-| Write | {dm-data0}        | address                                                                                                       |                                                              |
-| Write | {dm-command}      | {accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1008 | Write s0, then execute program buffer                        |
-| Write | {dm-command}      | {accessregister-postexec}, {accessregister-regno} = 0x1009                                                    | Read s1, then execute program buffer                         |
-| Write | {dm-abstractauto} | {abstractauto-autoexecdata}\[0\]                                                                              | Set {abstractauto-autoexecdata}\[0\]                         |
-| Read  | {dm-data0}        | \-                                                                                                            | Get value read from memory, then execute program buffer      |
-| Read  | {dm-data0}        | \-                                                                                                            | Get next value read from memory, then execute program buffer |
-| …​    | …​                | …​                                                                                                            | …​                                                           |
-| Write | {dm-abstractauto} | 0                                                                                                             | Clear {abstractauto-autoexecdata}\[0\]                       |
-| Read  | {dm-data0}        | \-                                                                                                            | Get last value read from memory.                             |
+| Op    | Address                                             | Value                                                                                                                                                                                                                            | Comment                                                                  |
+| ----- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0)         | lw s1, 0(s0)                                                                                                                                                                                                                     |                                                                          |
+| Write | progbuf1                                            | addi s0, s1, 4                                                                                                                                                                                                                   |                                                                          |
+| Write | progbuf2                                            | ebreak                                                                                                                                                                                                                           |                                                                          |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | address                                                                                                                                                                                                                          |                                                                          |
+| Write | [command](debug%5Fmodule.html#dm-command)           | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [postexec](debug%5Fmodule.html#accessregister-postexec), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008 | Write s0, then execute program buffer                                    |
+| Write | [command](debug%5Fmodule.html#dm-command)           | [postexec](debug%5Fmodule.html#accessregister-postexec), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1009                                                                                                             | Read s1, then execute program buffer                                     |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\]                                                                                                                                                               | Set [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\]   |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)               | \-                                                                                                                                                                                                                               | Get value read from memory, then execute program buffer                  |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)               | \-                                                                                                                                                                                                                               | Get next value read from memory, then execute program buffer             |
+| …​    | …​                                                  | …​                                                                                                                                                                                                                               | …​                                                                       |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 0                                                                                                                                                                                                                                | Clear [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\] |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)               | \-                                                                                                                                                                                                                               | Get last value read from memory.                                         |
 
 ##### [](#deb:mrabstract)Using Abstract Memory Access
 
@@ -141,23 +141,23 @@ Abstract memory accesses act as if they are performed by the hart, although the 
 
 Read a word from memory using abstract memory access:
 
-| Op    | Address      | Value                             | Comment                |
-| ----- | ------------ | --------------------------------- | ---------------------- |
-| Write | data1        | address                           |                        |
-| Write | {dm-command} | cmdtype=2, {accessmemory-aamsize} |                        |
-| Read  | {dm-data0}   | \-                                | Value read from memory |
+| Op    | Address                                   | Value                                                          | Comment                |
+| ----- | ----------------------------------------- | -------------------------------------------------------------- | ---------------------- |
+| Write | data1                                     | address                                                        |                        |
+| Write | [command](debug%5Fmodule.html#dm-command) | cmdtype=2, [aamsize](debug%5Fmodule.html#accessmemory-aamsize) |                        |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)     | \-                                                             | Value read from memory |
 
 Read block of memory using abstract memory access:
 
-| Op    | Address           | Value                                                               | Comment                                            |
-| ----- | ----------------- | ------------------------------------------------------------------- | -------------------------------------------------- |
-| Write | {dm-abstractauto} | 1                                                                   | Re-execute the command when {dm-data0} is accessed |
-| Write | data1             | address                                                             |                                                    |
-| Write | {dm-command}      | cmdtype=2, {accessmemory-aamsize} , {accessmemory-aampostincrement} |                                                    |
-| Read  | {dm-data0}        | \-                                                                  | Read value, and trigger reading of next address    |
-| …​    | …​                | …​                                                                  | …​                                                 |
-| Write | {dm-abstractauto} | 0                                                                   | Disable auto-exec                                  |
-| Read  | {dm-data0}        | \-                                                                  | Get last value read from memory.                   |
+| Op    | Address                                             | Value                                                                                                                                  | Comment                                                                       |
+| ----- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 1                                                                                                                                      | Re-execute the command when [data0](debug%5Fmodule.html#dm-data0) is accessed |
+| Write | data1                                               | address                                                                                                                                |                                                                               |
+| Write | [command](debug%5Fmodule.html#dm-command)           | cmdtype=2, [aamsize](debug%5Fmodule.html#accessmemory-aamsize) , [aampostincrement](debug%5Fmodule.html#accessmemory-aampostincrement) |                                                                               |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)               | \-                                                                                                                                     | Read value, and trigger reading of next address                               |
+| …​    | …​                                                  | …​                                                                                                                                     | …​                                                                            |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 0                                                                                                                                      | Disable auto-exec                                                             |
+| Read  | [data0](debug%5Fmodule.html#dm-data0)               | \-                                                                                                                                     | Get last value read from memory.                                              |
 
 #### [](#writemem)Writing Memory
 
@@ -167,22 +167,22 @@ With system bus access, addresses are physical system bus addresses.
 
 Write a word to memory using system bus access:
 
-| Op    | Address         | Value           | Comment               |
-| ----- | --------------- | --------------- | --------------------- |
-| Write | {dm-sbcs}       | {sbcs-sbaccess} | Configure access size |
-| Write | {dm-sbaddress0} | address         |                       |
-| Write | {dm-sbdata0}    | value           |                       |
+| Op    | Address                                         | Value                                         | Comment               |
+| ----- | ----------------------------------------------- | --------------------------------------------- | --------------------- |
+| Write | [sbcs](debug%5Fmodule.html#dm-sbcs)             | [sbaccess](debug%5Fmodule.html#sbcs-sbaccess) | Configure access size |
+| Write | [sbaddress0](debug%5Fmodule.html#dm-sbaddress0) | address                                       |                       |
+| Write | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | value                                         |                       |
 
 Write a block of memory using system bus access:
 
-| Op    | Address         | Value                                    | Comment               |
-| ----- | --------------- | ---------------------------------------- | --------------------- |
-| Write | {dm-sbcs}       | {sbcs-sbaccess} , {sbcs-sbautoincrement} | Turn on autoincrement |
-| Write | {dm-sbaddress0} | address                                  |                       |
-| Write | {dm-sbdata0}    | value0                                   |                       |
-| Write | {dm-sbdata0}    | value1                                   |                       |
-| …​    | …​              | …​                                       | …​                    |
-| Write | {dm-sbdata0}    | valueN                                   |                       |
+| Op    | Address                                         | Value                                                                                                       | Comment               |
+| ----- | ----------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | --------------------- |
+| Write | [sbcs](debug%5Fmodule.html#dm-sbcs)             | [sbaccess](debug%5Fmodule.html#sbcs-sbaccess) , [sbautoincrement](debug%5Fmodule.html#sbcs-sbautoincrement) | Turn on autoincrement |
+| Write | [sbaddress0](debug%5Fmodule.html#dm-sbaddress0) | address                                                                                                     |                       |
+| Write | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | value0                                                                                                      |                       |
+| Write | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | value1                                                                                                      |                       |
+| …​    | …​                                              | …​                                                                                                          | …​                    |
+| Write | [sbdata0](debug%5Fmodule.html#dm-sbdata0)       | valueN                                                                                                      |                       |
 
 ##### [](#deb:mrprogbufwrite)Using Program Buffer
 
@@ -190,31 +190,31 @@ Through the Program Buffer, the hart performs the memory accesses. Addresses are
 
 Write a word to memory using program buffer:
 
-| Op    | Address       | Value                                                                                                         | Comment                               |
-| ----- | ------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| Write | {dm-progbuf0} | sw s1, 0(s0)                                                                                                  |                                       |
-| Write | progbuf1      | ebreak                                                                                                        |                                       |
-| Write | {dm-data0}    | address                                                                                                       |                                       |
-| Write | {dm-command}  | {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008                            | Write s0                              |
-| Write | {dm-data0}    | value                                                                                                         |                                       |
-| Write | {dm-command}  | {accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009 | Write s1, then execute program buffer |
+| Op    | Address                                     | Value                                                                                                                                                                                                                            | Comment                               |
+| ----- | ------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | sw s1, 0(s0)                                                                                                                                                                                                                     |                                       |
+| Write | progbuf1                                    | ebreak                                                                                                                                                                                                                           |                                       |
+| Write | [data0](debug%5Fmodule.html#dm-data0)       | address                                                                                                                                                                                                                          |                                       |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008                                                          | Write s0                              |
+| Write | [data0](debug%5Fmodule.html#dm-data0)       | value                                                                                                                                                                                                                            |                                       |
+| Write | [command](debug%5Fmodule.html#dm-command)   | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [postexec](debug%5Fmodule.html#accessregister-postexec), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1009 | Write s1, then execute program buffer |
 
 Write block of memory using program buffer:
 
-| Op    | Address           | Value                                                                                                         | Comment                                |
-| ----- | ----------------- | ------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| Write | {dm-progbuf0}     | sw s1, 0(s0)                                                                                                  |                                        |
-| Write | progbuf1          | addi s0, s1, 4                                                                                                |                                        |
-| Write | progbuf2          | ebreak                                                                                                        |                                        |
-| Write | {dm-data0}        | address                                                                                                       |                                        |
-| Write | {dm-command}      | {accessregister-transfer}, {accessregister-write}, {accessregister-regno} = 0x1008                            | Write s0                               |
-| Write | {dm-data0}        | value0                                                                                                        |                                        |
-| Write | {dm-command}      | {accessregister-transfer}, {accessregister-write}, {accessregister-postexec}, {accessregister-regno} = 0x1009 | Write s1, then execute program buffer  |
-| Write | {dm-abstractauto} | {abstractauto-autoexecdata}\[0\]                                                                              | Set {abstractauto-autoexecdata}\[0\]   |
-| Write | {dm-data0}        | value1                                                                                                        |                                        |
-| …​    | …​                | …​                                                                                                            | …​                                     |
-| Write | {dm-data0}        | valueN                                                                                                        |                                        |
-| Write | {dm-abstractauto} | 0                                                                                                             | Clear {abstractauto-autoexecdata}\[0\] |
+| Op    | Address                                             | Value                                                                                                                                                                                                                            | Comment                                                                  |
+| ----- | --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0)         | sw s1, 0(s0)                                                                                                                                                                                                                     |                                                                          |
+| Write | progbuf1                                            | addi s0, s1, 4                                                                                                                                                                                                                   |                                                                          |
+| Write | progbuf2                                            | ebreak                                                                                                                                                                                                                           |                                                                          |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | address                                                                                                                                                                                                                          |                                                                          |
+| Write | [command](debug%5Fmodule.html#dm-command)           | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1008                                                          | Write s0                                                                 |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | value0                                                                                                                                                                                                                           |                                                                          |
+| Write | [command](debug%5Fmodule.html#dm-command)           | [transfer](debug%5Fmodule.html#accessregister-transfer), [write](debug%5Fmodule.html#accessregister-write), [postexec](debug%5Fmodule.html#accessregister-postexec), [regno](debug%5Fmodule.html#accessregister-regno) \= 0x1009 | Write s1, then execute program buffer                                    |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\]                                                                                                                                                               | Set [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\]   |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | value1                                                                                                                                                                                                                           |                                                                          |
+| …​    | …​                                                  | …​                                                                                                                                                                                                                               | …​                                                                       |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | valueN                                                                                                                                                                                                                           |                                                                          |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 0                                                                                                                                                                                                                                | Clear [autoexecdata](debug%5Fmodule.html#abstractauto-autoexecdata)\[0\] |
 
 ##### [](#deb:mwabstract)Using Abstract Memory Access
 
@@ -222,25 +222,25 @@ Abstract memory accesses act as if they are performed by the hart, although the 
 
 Write a word to memory using abstract memory access:
 
-| Op    | Address      | Value                                        | Comment |
-| ----- | ------------ | -------------------------------------------- | ------- |
-| Write | data1        | address                                      |         |
-| Write | {dm-data0}   | value                                        |         |
-| Write | {dm-command} | cmdtype=2, {accessmemory-aamsize}=2, write=1 |         |
+| Op    | Address                                   | Value                                                                      | Comment |
+| ----- | ----------------------------------------- | -------------------------------------------------------------------------- | ------- |
+| Write | data1                                     | address                                                                    |         |
+| Write | [data0](debug%5Fmodule.html#dm-data0)     | value                                                                      |         |
+| Write | [command](debug%5Fmodule.html#dm-command) | cmdtype=2, [aamsize](debug%5Fmodule.html#accessmemory-aamsize)\=2, write=1 |         |
 
 Write a block of memory using abstract memory access:
 
-| Op    | Address           | Value                                                                       | Comment                                            |
-| ----- | ----------------- | --------------------------------------------------------------------------- | -------------------------------------------------- |
-| Write | data1             | address                                                                     |                                                    |
-| Write | {dm-data0}        | value0                                                                      |                                                    |
-| Write | {dm-command}      | cmdtype=2, {accessmemory-aamsize} , write , {accessmemory-aampostincrement} |                                                    |
-| Write | {dm-abstractauto} | 1                                                                           | Re-execute the command when {dm-data0} is accessed |
-| Write | {dm-data0}        | value1                                                                      |                                                    |
-| Write | {dm-data0}        | value2                                                                      |                                                    |
-| …​    | …​                | …​                                                                          | …​                                                 |
-| Write | {dm-data0}        | valueN                                                                      |                                                    |
-| Write | {dm-abstractauto} | 0                                                                           | Disable auto-exec                                  |
+| Op    | Address                                             | Value                                                                                                                                          | Comment                                                                       |
+| ----- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| Write | data1                                               | address                                                                                                                                        |                                                                               |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | value0                                                                                                                                         |                                                                               |
+| Write | [command](debug%5Fmodule.html#dm-command)           | cmdtype=2, [aamsize](debug%5Fmodule.html#accessmemory-aamsize) , write , [aampostincrement](debug%5Fmodule.html#accessmemory-aampostincrement) |                                                                               |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 1                                                                                                                                              | Re-execute the command when [data0](debug%5Fmodule.html#dm-data0) is accessed |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | value1                                                                                                                                         |                                                                               |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | value2                                                                                                                                         |                                                                               |
+| …​    | …​                                                  | …​                                                                                                                                             | …​                                                                            |
+| Write | [data0](debug%5Fmodule.html#dm-data0)               | valueN                                                                                                                                         |                                                                               |
+| Write | [abstractauto](debug%5Fmodule.html#dm-abstractauto) | 0                                                                                                                                              | Disable auto-exec                                                             |
 
 #### [](#triggers)Triggers
 
@@ -248,76 +248,76 @@ A debugger can use hardware triggers to halt a hart when a certain event occurs.
 
 Enter Debug Mode when the instruction at 0x80001234 is executed, to be used as an instruction breakpoint in ROM:
 
-| {csr-tdata1} | 0x6980105c | type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, vs=1, vu=1, execute=1 |
-| ------------ | ---------- | ---------------------------------------------------------------------------------- |
-| {csr-tdata2} | 0x80001234 | address                                                                            |
+| [tdata1](Sdtrig.html#csr-tdata1) | 0x6980105c | type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, vs=1, vu=1, execute=1 |
+| -------------------------------- | ---------- | ---------------------------------------------------------------------------------- |
+| [tdata2](Sdtrig.html#csr-tdata2) | 0x80001234 | address                                                                            |
 
 Enter Debug Mode when performing a load at address 0x80007f80 in M-mode or S-mode or U-mode:
 
-| {csr-tdata1} | 0x68001059 | type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, load=1 |
-| ------------ | ---------- | ------------------------------------------------------------------- |
-| {csr-tdata2} | 0x80007f80 | address                                                             |
+| [tdata1](Sdtrig.html#csr-tdata1) | 0x68001059 | type=6, dmode=1, action=1, select=0, match=0, m=1, s=1, u=1, load=1 |
+| -------------------------------- | ---------- | ------------------------------------------------------------------- |
+| [tdata2](Sdtrig.html#csr-tdata2) | 0x80007f80 | address                                                             |
 
 Enter Debug Mode when storing to an address between 0x80007c80 and 0x80007cef (inclusive) in VS-mode or VU-mode when hgatp.VMID=1:
 
-| {csr-tdata1} 0   | 0x69801902 | type=6, dmode=1, action=1, chain=1, select=0, match=2, vs=1, vu=1, store=1 |
-| ---------------- | ---------- | -------------------------------------------------------------------------- |
-| {csr-tdata2} 0   | 0x80007c80 | start address (inclusive)                                                  |
-| {csr-textra32} 0 | 0x03000000 | mhselect=6, mhvalue=0                                                      |
-| {csr-tdata1} 1   | 0x69801182 | type=6, dmode=1, action=1, select=0, match=3, vs=1, vu=1, store=1          |
-| {csr-tdata2} 1   | 0x80007cf0 | end address (exclusive)                                                    |
-| {csr-textra32} 1 | 0x03000000 | mhselect=6, mhvalue=0                                                      |
+| [tdata1](Sdtrig.html#csr-tdata1) 0     | 0x69801902 | type=6, dmode=1, action=1, chain=1, select=0, match=2, vs=1, vu=1, store=1 |
+| -------------------------------------- | ---------- | -------------------------------------------------------------------------- |
+| [tdata2](Sdtrig.html#csr-tdata2) 0     | 0x80007c80 | start address (inclusive)                                                  |
+| [textra32](Sdtrig.html#csr-textra32) 0 | 0x03000000 | mhselect=6, mhvalue=0                                                      |
+| [tdata1](Sdtrig.html#csr-tdata1) 1     | 0x69801182 | type=6, dmode=1, action=1, select=0, match=3, vs=1, vu=1, store=1          |
+| [tdata2](Sdtrig.html#csr-tdata2) 1     | 0x80007cf0 | end address (exclusive)                                                    |
+| [textra32](Sdtrig.html#csr-textra32) 1 | 0x03000000 | mhselect=6, mhvalue=0                                                      |
 
 Enter Debug Mode when storing to an address between 0x81230000 and 0x8123ffff (inclusive):
 
-| {csr-tdata1} | 0x698010da | type=6, dmode=1, action=1, select=0, match=1, m=1, s=1, u=1, vs=1, vu=1, store=1 |
-| ------------ | ---------- | -------------------------------------------------------------------------------- |
-| {csr-tdata2} | 0x81237fff | 16 upper bits to match exactly, then 0, then all ones.                           |
+| [tdata1](Sdtrig.html#csr-tdata1) | 0x698010da | type=6, dmode=1, action=1, select=0, match=1, m=1, s=1, u=1, vs=1, vu=1, store=1 |
+| -------------------------------- | ---------- | -------------------------------------------------------------------------------- |
+| [tdata2](Sdtrig.html#csr-tdata2) | 0x81237fff | 16 upper bits to match exactly, then 0, then all ones.                           |
 
 Enter Debug Mode when loading from an address between 0x86753090 and 0x8675309f or between 0x96753090 and 0x9675309f (inclusive):
 
-| {csr-tdata1} 0 | 0x69801a59 | type=6, dmode=1, action=1, chain=1, match=4, m=1, s=1, u=1, vs=1, vu=1, load=1 |
-| -------------- | ---------- | ------------------------------------------------------------------------------ |
-| {csr-tdata2} 0 | 0xfff03090 | Mask for low half, then match for low half                                     |
-| {csr-tdata1} 1 | 0x698012d9 | type=6, dmode=1, action=1, match=5, m=1, s=1, u=1, vs=1, vu=1, load=1          |
-| {csr-tdata2} 1 | 0xefff8675 | Mask for high half, then match for high half                                   |
+| [tdata1](Sdtrig.html#csr-tdata1) 0 | 0x69801a59 | type=6, dmode=1, action=1, chain=1, match=4, m=1, s=1, u=1, vs=1, vu=1, load=1 |
+| ---------------------------------- | ---------- | ------------------------------------------------------------------------------ |
+| [tdata2](Sdtrig.html#csr-tdata2) 0 | 0xfff03090 | Mask for low half, then match for low half                                     |
+| [tdata1](Sdtrig.html#csr-tdata1) 1 | 0x698012d9 | type=6, dmode=1, action=1, match=5, m=1, s=1, u=1, vs=1, vu=1, load=1          |
+| [tdata2](Sdtrig.html#csr-tdata2) 1 | 0xefff8675 | Mask for high half, then match for high half                                   |
 
 #### [](#handling-exceptions)Handling Exceptions
 
 Generally the debugger can avoid exceptions by being careful with the programs it writes. Sometimes they are unavoidable though, e.g. if the user asks to access memory or a CSR that is not implemented. A typical debugger will not know enough about the hardware platform to know what’s going to happen, and must attempt the access to determine the outcome.
 
-When an exception occurs while executing the Program Buffer, {dm-command} becomes set. The debugger can check this field to see whether a program encountered an exception. If there was an exception, it’s left to the debugger to know what must have caused it.
+When an exception occurs while executing the Program Buffer, [command](debug%5Fmodule.html#dm-command) becomes set. The debugger can check this field to see whether a program encountered an exception. If there was an exception, it’s left to the debugger to know what must have caused it.
 
 #### [](#quickaccess)Quick Access
 
-There are a variety of instructions to transfer data between GPRs and the `data` registers. They are either loads/stores or CSR reads/writes. The specific addresses also vary. This is all specified in {dm-hartinfo}. The examples here use the pseudo-op `transfer dest, src` to represent all these options.
+There are a variety of instructions to transfer data between GPRs and the `data` registers. They are either loads/stores or CSR reads/writes. The specific addresses also vary. This is all specified in [hartinfo](debug%5Fmodule.html#dm-hartinfo). The examples here use the pseudo-op `transfer dest, src` to represent all these options.
 
 Halt the hart for a minimum amount of time to perform a single memory write:
 
-| Op    | Address       | Value             | Comment                       |
-| ----- | ------------- | ----------------- | ----------------------------- |
-| Write | {dm-progbuf0} | transfer arg2, s0 | Save s0                       |
-| Write | progbuf1      | transfer s0, arg0 | Read first argument (address) |
-| Write | progbuf2      | transfer arg0, s1 | Save s1                       |
-| Write | progbuf3      | transfer s1, arg1 | Read second argument (data)   |
-| Write | progbuf4      | sw s1, 0(s0)      |                               |
-| Write | progbuf5      | transfer s1, arg0 | Restore s1                    |
-| Write | progbuf6      | transfer s0, arg2 | Restore s0                    |
-| Write | progbuf7      | ebreak            |                               |
-| Write | {dm-data0}    | address           |                               |
-| Write | data1         | data              |                               |
-| Write | {dm-command}  | 0x10000000        | Perform quick access          |
+| Op    | Address                                     | Value             | Comment                       |
+| ----- | ------------------------------------------- | ----------------- | ----------------------------- |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | transfer arg2, s0 | Save s0                       |
+| Write | progbuf1                                    | transfer s0, arg0 | Read first argument (address) |
+| Write | progbuf2                                    | transfer arg0, s1 | Save s1                       |
+| Write | progbuf3                                    | transfer s1, arg1 | Read second argument (data)   |
+| Write | progbuf4                                    | sw s1, 0(s0)      |                               |
+| Write | progbuf5                                    | transfer s1, arg0 | Restore s1                    |
+| Write | progbuf6                                    | transfer s0, arg2 | Restore s0                    |
+| Write | progbuf7                                    | ebreak            |                               |
+| Write | [data0](debug%5Fmodule.html#dm-data0)       | address           |                               |
+| Write | data1                                       | data              |                               |
+| Write | [command](debug%5Fmodule.html#dm-command)   | 0x10000000        | Perform quick access          |
 
-This shows an example of setting the {mcontrol-m} bit in to enable a hardware breakpoint in M-mode. Similar quick access instructions could have been used previously to configure the trigger that is being enabled here:
+This shows an example of setting the [m](Sdtrig.html#mcontrol-m) bit in to enable a hardware breakpoint in M-mode. Similar quick access instructions could have been used previously to configure the trigger that is being enabled here:
 
-| Op    | Address       | Value                      | Comment                            |
-| ----- | ------------- | -------------------------- | ---------------------------------- |
-| Write | {dm-progbuf0} | transfer arg0, s0          | Save s0                            |
-| Write | progbuf1      | li s0, (1 << 6)            | Form the mask for {mcontrol-m} bit |
-| Write | progbuf2      | csrrs x0, {csr-tdata1}, s0 | Apply the mask to {csr-mcontrol}   |
-| Write | progbuf3      | transfer s0, arg2          | Restore s0                         |
-| Write | progbuf4      | ebreak                     |                                    |
-| Write | {dm-command}  | 0x10000000                 | Perform quick access               |
+| Op    | Address                                     | Value                                          | Comment                                                |
+| ----- | ------------------------------------------- | ---------------------------------------------- | ------------------------------------------------------ |
+| Write | [progbuf0](debug%5Fmodule.html#dm-progbuf0) | transfer arg0, s0                              | Save s0                                                |
+| Write | progbuf1                                    | li s0, (1 << 6)                                | Form the mask for [m](Sdtrig.html#mcontrol-m) bit      |
+| Write | progbuf2                                    | csrrs x0, [tdata1](Sdtrig.html#csr-tdata1), s0 | Apply the mask to [mcontrol](Sdtrig.html#csr-mcontrol) |
+| Write | progbuf3                                    | transfer s0, arg2                              | Restore s0                                             |
+| Write | progbuf4                                    | ebreak                                         |                                                        |
+| Write | [command](debug%5Fmodule.html#dm-command)   | 0x10000000                                     | Perform quick access                                   |
 
 ### [](#native-debugger-implementation)Native Debugger Implementation
 
@@ -325,13 +325,13 @@ The spec contains a few features to aid in writing a native debugger. This secti
 
 #### [](#nativestep)Single Step
 
-Single step is straightforward if the OS or a debug stub runs in M-Mode while the program being debugged runs in a less privileged mode. When a step is required, the OS or debug stub writes {icount-count}=1, {icount-action}=0, {icount-m}=0 before returning control to the lower user program with an`mret` instruction.
+Single step is straightforward if the OS or a debug stub runs in M-Mode while the program being debugged runs in a less privileged mode. When a step is required, the OS or debug stub writes [count](Sdtrig.html#icount-count)\=1, [action](Sdtrig.html#icount-action)\=0,[m](Sdtrig.html#icount-m)\=0 before returning control to the lower user program with an`mret` instruction.
 
 Stepping code running in the same privilege mode as the debugger is more complicated, depending on what other debug features are implemented.
 
-If hardware implements {tcontrol-mpte} and {tcontrol-mte}, then stepping through non-trap code which doesn’t allow for nested interrupts is also straightforward.
+If hardware implements [mpte](Sdtrig.html#tcontrol-mpte) and [mte](Sdtrig.html#tcontrol-mte), then stepping through non-trap code which doesn’t allow for nested interrupts is also straightforward.
 
-If hardware automatically prevents {mcontrol6-action}=0 triggers from matching when entering a trap handler as described in[\[nativetrigger\]](#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
+If hardware automatically prevents [action](Sdtrig.html#mcontrol6-action)\=0 triggers from matching when entering a trap handler as described in[\[nativetrigger\]](#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
 
 If neither of these features exist, then single step is doable, but tricky to get right. To single step, the debug stub would execute something like:
 
@@ -341,7 +341,7 @@ If neither of these features exist, then single step is doable, but tricky to ge
     lw    sp, 0(sp)     /* Restore sp, count decrements to 2 */
     mret                /* Return to program being debugged. count decrements to 1 */
 
-There is an additional problem with using {csr-icount} to single step. An instruction may cause an exception into a more privileged mode where the trigger is not enabled. The exception handler might address the cause of the exception, and then restart the instruction. Examples of this include page faults, FPU instructions when the FPU is not yet enabled, and interrupts. When a user is single stepping through such code, they will have to step twice to get past the restarted instruction. The first time the exception handler runs, and the second time the instruction actually executes. That is confusing and usually undesirable.
+There is an additional problem with using [icount](Sdtrig.html#csr-icount) to single step. An instruction may cause an exception into a more privileged mode where the trigger is not enabled. The exception handler might address the cause of the exception, and then restart the instruction. Examples of this include page faults, FPU instructions when the FPU is not yet enabled, and interrupts. When a user is single stepping through such code, they will have to step twice to get past the restarted instruction. The first time the exception handler runs, and the second time the instruction actually executes. That is confusing and usually undesirable.
 
 To help users out, debuggers should detect when a single step restarted an instruction, and then step again. This way the users see the expected behavior of stepping over the instruction. Ideally the debugger would notify the user that an exception handler executed the first time.
 
