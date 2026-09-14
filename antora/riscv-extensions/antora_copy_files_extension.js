@@ -2,6 +2,8 @@
 // Save this as: riscv-extensions/copy-files-extension.js
 
 const fs = require('fs')
+const http = require('http')
+const https = require('https')
 const path = require('path')
 
 module.exports.register = function ({ config, playbook }) {
@@ -23,9 +25,28 @@ module.exports.register = function ({ config, playbook }) {
     { source: 'src/images', target: 'partials' },
     { source: 'src', target: 'partials', extensions: ['.adoc'] }  // Only copy .adoc files from src/
   ]
+
+  // Optional build-output copy rules for legacy artifacts (such as PDFs) that
+  // are not part of current Antora content sources.
+  //
+  // Example:
+  // legacy_files:
+  //   - versions: [v20250508, v20240411]
+  //     source_url: 'https://docs.riscv.org/reference/isa/{version}/_attachments/riscv-unprivileged.pdf'
+  //     target_path: 'isa/{version}/_attachments/riscv-unprivileged.pdf'
+  const legacyFiles = config?.legacy_files || []
+  // Local PDF archive mirror settings.
+  // Mirrors antora/pdfs into the site output so PDF-only legacy versions are
+  // published even when their docs are not rebuilt by Antora.
+  const pdfMirrorEnabled = config?.pdf_mirror !== false
+  const pdfsSourceDir = config?.pdfs_source_dir || './pdfs'
   
   console.log('[File Copy] Target sources configuration:', JSON.stringify(targetSources, null, 2))
   console.log('[File Copy] Source directories:', JSON.stringify(sourceDirs, null, 2))
+  console.log(`[File Copy] PDF mirror: ${pdfMirrorEnabled ? 'enabled' : 'disabled'} (${pdfsSourceDir})`)
+  if (legacyFiles.length) {
+    console.log('[File Copy] Legacy file copy rules:', JSON.stringify(legacyFiles, null, 2))
+  }
   
   this.on('contentClassified', ({ contentCatalog }) => {
     console.log('[File Copy] contentClassified event triggered')
@@ -320,5 +341,163 @@ module.exports.register = function ({ config, playbook }) {
     })
     
     console.log('[File Copy] Processing complete')
+  })
+
+  this.on('sitePublished', async () => {
+    const outputDir = resolveOutputDir(playbook)
+    if (legacyFiles.length) {
+      await copyLegacyFilesToOutput({ legacyFiles, outputDir })
+    }
+
+    if (pdfMirrorEnabled) {
+      const sourceRoot = resolveRelativeToPlaybook(playbook, pdfsSourceDir)
+      mirrorPdfArchive({ sourceRoot, outputDir })
+    }
+  })
+}
+
+async function copyLegacyFilesToOutput ({ legacyFiles, outputDir }) {
+  console.log(`[File Copy] Copying legacy files into output: ${outputDir}`)
+
+  let copied = 0
+  let skipped = 0
+  let failed = 0
+
+  for (const rule of legacyFiles) {
+    const versions = Array.isArray(rule.versions) && rule.versions.length ? rule.versions : [null]
+
+    for (const version of versions) {
+      const context = { version }
+      const sourceUrl = applyTemplate(rule.source_url || rule.sourceUrl, context)
+      const targetPath = applyTemplate(rule.target_path || rule.targetPath, context)
+
+      if (!sourceUrl || !targetPath) {
+        console.warn('[File Copy] Skipping invalid legacy rule entry (missing source_url/target_path)')
+        skipped++
+        continue
+      }
+
+      const destination = path.join(outputDir, targetPath)
+      const shouldOverwrite = rule.overwrite === true
+
+      if (!shouldOverwrite && fs.existsSync(destination)) {
+        console.log(`[File Copy] Legacy file already exists (skipping): ${destination}`)
+        skipped++
+        continue
+      }
+
+      try {
+        const buffer = await downloadUrlToBuffer(sourceUrl)
+        fs.mkdirSync(path.dirname(destination), { recursive: true })
+        fs.writeFileSync(destination, buffer)
+        console.log(`[File Copy] ✓ Copied legacy file: ${sourceUrl} -> ${destination}`)
+        copied++
+      } catch (err) {
+        console.warn(`[File Copy] Failed to copy legacy file from ${sourceUrl}: ${err.message}`)
+        failed++
+      }
+    }
+  }
+
+  console.log(`[File Copy] Legacy copy summary: copied=${copied}, skipped=${skipped}, failed=${failed}`)
+}
+
+function mirrorPdfArchive ({ sourceRoot, outputDir }) {
+  if (!fs.existsSync(sourceRoot) || !fs.statSync(sourceRoot).isDirectory()) {
+    console.log(`[File Copy] PDF mirror skipped (source missing): ${sourceRoot}`)
+    return
+  }
+
+  console.log(`[File Copy] Mirroring PDF archive: ${sourceRoot} -> ${outputDir}`)
+  let copied = 0
+
+  copyDirectoryRecursive(sourceRoot, outputDir, () => {
+    copied++
+  })
+  console.log(`[File Copy] PDF mirror complete, files copied: ${copied}`)
+}
+
+function copyDirectoryRecursive (sourceDir, destinationDir, onFileCopied) {
+  fs.mkdirSync(destinationDir, { recursive: true })
+  const entries = fs.readdirSync(sourceDir, { withFileTypes: true })
+
+  entries.forEach((entry) => {
+    const from = path.join(sourceDir, entry.name)
+    const to = path.join(destinationDir, entry.name)
+
+    if (entry.isDirectory()) {
+      copyDirectoryRecursive(from, to, onFileCopied)
+      return
+    }
+
+    if (!entry.isFile()) return
+
+    fs.mkdirSync(path.dirname(to), { recursive: true })
+    fs.copyFileSync(from, to)
+    onFileCopied()
+  })
+}
+
+function resolveOutputDir(playbook) {
+  const configuredOutputDir = playbook?.output?.dir || './build/site'
+  const baseDir = playbook?.dir || process.cwd()
+  return path.isAbsolute(configuredOutputDir)
+    ? configuredOutputDir
+    : path.resolve(baseDir, configuredOutputDir)
+}
+
+function resolveRelativeToPlaybook (playbook, relativePath) {
+  const baseDir = playbook?.dir || process.cwd()
+  return path.isAbsolute(relativePath)
+    ? relativePath
+    : path.resolve(baseDir, relativePath)
+}
+
+function applyTemplate(template, context = {}) {
+  if (!template) return null
+
+  return String(template).replace(/\{(\w+)\}/g, (_, key) => {
+    const value = context[key]
+    return value === undefined || value === null ? '' : String(value)
+  })
+}
+
+function downloadUrlToBuffer(url, redirectCount = 0) {
+  const MAX_REDIRECTS = 5
+  const client = url.startsWith('https:') ? https : http
+
+  return new Promise((resolve, reject) => {
+    const req = client.get(url, {
+      headers: {
+        'User-Agent': 'antora-copy-files-extension'
+      }
+    }, (res) => {
+      const statusCode = res.statusCode || 0
+
+      if (statusCode >= 300 && statusCode < 400 && res.headers.location) {
+        if (redirectCount >= MAX_REDIRECTS) {
+          reject(new Error(`too many redirects while fetching ${url}`))
+          return
+        }
+
+        const redirectUrl = new URL(res.headers.location, url).toString()
+        res.resume()
+        resolve(downloadUrlToBuffer(redirectUrl, redirectCount + 1))
+        return
+      }
+
+      if (statusCode < 200 || statusCode >= 300) {
+        res.resume()
+        reject(new Error(`HTTP ${statusCode}`))
+        return
+      }
+
+      const chunks = []
+      res.on('data', (chunk) => chunks.push(chunk))
+      res.on('end', () => resolve(Buffer.concat(chunks)))
+    })
+
+    req.on('error', reject)
+    req.setTimeout(30000, () => req.destroy(new Error(`request timeout for ${url}`)))
   })
 }
