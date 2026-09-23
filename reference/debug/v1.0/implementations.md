@@ -36,7 +36,7 @@ The PMP must not disallow fetches, loads, or stores in the address range associa
 
 ### [](#dmi%5Fsignals)Debug Module Interface Signals
 
-As stated in section [debug\_module.adoc#dmi](debug%5Fmodule.html#dmi) the details of the DMI are left to the system designer. It is quite often the case that only one DTM and one DM is implemented. In this case it might be useful to comply with the signals suggested in [Table 1](#tab:dmi%5Fsignals), which is the implementation used in the open-source[rocket-chip](https://github.com/chipsalliance/rocket-chip/blob/375045a7db1bdc7b4f7851f1a59b3f10a2b922ff/src/main/scala/devices/debug/Debug.scala#L170)RISC-V core.
+As stated in section [Section 3.1.1](debug%5Fmodule.html#dmi) the details of the DMI are left to the system designer. It is quite often the case that only one DTM and one DM is implemented. In this case it might be useful to comply with the signals suggested in [Table 1](#tab:dmi%5Fsignals), which is the implementation used in the open-source[rocket-chip](https://github.com/chipsalliance/rocket-chip/blob/375045a7db1bdc7b4f7851f1a59b3f10a2b922ff/src/main/scala/devices/debug/Debug.scala#L170)RISC-V core.
 
 The DTM can start a request when the DM sets REQ\_READY to 1\. When this is the case REQ\_OP can be set to 1 for a read or 2 for a write request. The desired address is driven with the REQ\_ADDRESS signal. Finally REQ\_VALID is set high, indicating to the DM that a valid request is pending.
 

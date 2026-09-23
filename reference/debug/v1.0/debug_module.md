@@ -32,7 +32,7 @@ A single DM can debug up to  harts.
 
 ### [](#dmi)3.1.1\. Debug Module Interface (DMI)
 
-Debug Modules are subordinates on a bus called the Debug Module Interface (DMI). The bus manager is the Debug Transport Module(s). The Debug Module Interface can be a trivial bus with one manager and one subordinate (see [implementations.adoc#tab:dmi\_signals](implementations.html#tab:dmi%5Fsignals)), or use a more full-featured bus like TileLink or the AMBA Advanced Peripheral Bus. The details are left to the system designer.
+Debug Modules are subordinates on a bus called the Debug Module Interface (DMI). The bus manager is the Debug Transport Module(s). The Debug Module Interface can be a trivial bus with one manager and one subordinate (see [Signals for the suggested DMI between one DTM and one DM](implementations.html#tab:dmi%5Fsignals)), or use a more full-featured bus like TileLink or the AMBA Advanced Peripheral Bus. The details are left to the system designer.
 
 The DMI uses between 7 and 32 address bits. Each address points at a single 32-bit register that can be read or written. The bottom of the address space is used for the first (and usually only) DM. Extra space can be used for custom debug devices, other cores, additional DMs, etc. If there are additional DMs on this DMI, the base address of the next DM in the DMI address space is given in [nextdm](#dm-nextdm).
 
@@ -274,7 +274,7 @@ To support executing arbitrary instructions on a halted hart, a Debug Module can
 
 A debugger can write a small program to the Program Buffer, and then execute it exactly once with the Access Register Abstract Command, setting the [postexec](#accessregister-postexec) bit in [command](#dm-command). The debugger can write whatever program it likes (including jumps out of the Program Buffer), but the program must end with `ebreak` or `c.ebreak`. An implementation may support an implicit`ebreak` that is executed when a hart runs off the end of the Program Buffer. This is indicated by [impebreak](#dmstatus-impebreak). With this feature, a Program Buffer of just 2 32-bit words can offer efficient debugging.
 
-While these programs are executed, the hart does not leave Debug Mode (see [Sdext.adoc#debugmode](Sdext.html#debugmode)). If an exception is encountered during execution of the Program Buffer, no more instructions are executed, the hart remains in Debug Mode, and [cmderr](#abstractcs-cmderr) is set to 3 (`exception error`). If the debugger executes a program that doesn’t terminate with an `ebreak` instruction, the hart will remain in Debug Mode and the debugger will lose control of the hart.
+While these programs are executed, the hart does not leave Debug Mode (see [Section 4.1.1](Sdext.html#debugmode)). If an exception is encountered during execution of the Program Buffer, no more instructions are executed, the hart remains in Debug Mode, and [cmderr](#abstractcs-cmderr) is set to 3 (`exception error`). If the debugger executes a program that doesn’t terminate with an `ebreak` instruction, the hart will remain in Debug Mode and the debugger will lose control of the hart.
 
 If [progbufsize](#abstractcs-progbufsize) is 1 then the following apply:
 

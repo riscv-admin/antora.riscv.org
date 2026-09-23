@@ -8,7 +8,7 @@
 
 ### [](#external-debugger-implementation)External Debugger Implementation
 
-This section details how an external debugger might use the described debug interface to perform some common operations on RISC-V cores using the JTAG DTM described in [dtm.adoc#sec:jtagdtm](dtm.html#sec:jtagdtm). All these examples assume a 32-bit core but it should be easy to adapt the examples to 64- or 128-bit cores.
+This section details how an external debugger might use the described debug interface to perform some common operations on RISC-V cores using the JTAG DTM described in [Section 6.1.1](dtm.html#sec:jtagdtm). All these examples assume a 32-bit core but it should be easy to adapt the examples to 64- or 128-bit cores.
 
 To keep the examples readable, they all assume that everything succeeds, and that they complete faster than the debugger can perform the next access. This will be the case in a typical JTAG setup. However, the debugger must always check the sticky error status bits after performing a sequence of actions. If it sees any that are set, then it should attempt the same actions again, possibly while adding in some delay, or explicit checks for status bits.
 
@@ -331,7 +331,7 @@ Stepping code running in the same privilege mode as the debugger is more complic
 
 If hardware implements [mpte](Sdtrig.html#tcontrol-mpte) and [mte](Sdtrig.html#tcontrol-mte), then stepping through non-trap code which doesn’t allow for nested interrupts is also straightforward.
 
-If hardware automatically prevents [action](Sdtrig.html#mcontrol6-action)\=0 triggers from matching when entering a trap handler as described in[Sdtrig.adoc#nativetrigger](Sdtrig.html#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
+If hardware automatically prevents [action](Sdtrig.html#mcontrol6-action)\=0 triggers from matching when entering a trap handler as described in[Section 5.1.4](Sdtrig.html#nativetrigger), then a carefully written trap handler can ensure that interrupts are disabled whenever the icount trigger must not match.
 
 If neither of these features exist, then single step is doable, but tricky to get right. To single step, the debug stub would execute something like:
 

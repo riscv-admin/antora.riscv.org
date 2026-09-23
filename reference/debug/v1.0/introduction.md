@@ -32,11 +32,11 @@ Control and Status Register.
 
 **DM**
 
-Debug Module (see [debug\_module.adoc#dm](debug%5Fmodule.html#dm)).
+Debug Module (see [Section 3.1](debug%5Fmodule.html#dm)).
 
 **DMI**
 
-Debug Module Interface (see [debug\_module.adoc#dmi](debug%5Fmodule.html#dmi)).
+Debug Module Interface (see [Section 3.1.1](debug%5Fmodule.html#dmi)).
 
 **DR**
 
@@ -44,7 +44,7 @@ JTAG Data Register.
 
 **DTM**
 
-Debug Transport Module (see [dtm.adoc#dtm](dtm.html#dtm)).
+Debug Transport Module (see [Section 6.1](dtm.html#dtm)).
 
 **DXLEN**
 
@@ -88,7 +88,7 @@ A legacy feature should only be implemented to support legacy hardware that is p
 
 **Minimal RISC-V Debug Specification**
 
-A subset of the full Debug Specification that allows for very small implementations. See [debug\_module.adoc#dm](debug%5Fmodule.html#dm).
+A subset of the full Debug Specification that allows for very small implementations. See [Section 3.1](debug%5Fmodule.html#dm).
 
 **NAPOT**
 
@@ -108,7 +108,7 @@ A recommended feature is not required for debug to work correctly, but it is so 
 
 **SBA**
 
-System Bus Access (see [debug\_module.adoc#systembusaccess](debug%5Fmodule.html#systembusaccess)).
+System Bus Access (see [Section 3.1.10](debug%5Fmodule.html#systembusaccess)).
 
 **specialized feature**
 
@@ -120,7 +120,7 @@ Test Access Port, defined in IEEE 1149.1.
 
 **TM**
 
-Trigger Module (see [Sdtrig.adoc#trigger](Sdtrig.html#trigger)).
+Trigger Module (see [Section 5.1](Sdtrig.html#trigger)).
 
 **virtual address**
 
@@ -163,7 +163,7 @@ Version 1.0 is almost entirely forwards and backwards compatible with Version 0.
 Changes that fix a bug in the spec:
 
 1. Fix order of operations described in [sbdata0](debug%5Fmodule.html#dm-sbdata0).[#392](https://github.com/riscv/riscv-debug-spec/pull/392)
-2. Resume ack is set after resume, in [debug\_module.adoc#runcontrol](debug%5Fmodule.html#runcontrol).[#400](https://github.com/riscv/riscv-debug-spec/pull/400)
+2. Resume ack is set after resume, in [Section 3.1.5](debug%5Fmodule.html#runcontrol).[#400](https://github.com/riscv/riscv-debug-spec/pull/400)
 3. [sselect](Sdtrig.html#textra32-sselect) applies to [svalue](Sdtrig.html#textra32-svalue) . [#402](https://github.com/riscv/riscv-debug-spec/pull/402)
 4. [mte](Sdtrig.html#tcontrol-mte) only applies when action=0.[#411](https://github.com/riscv/riscv-debug-spec/pull/411)
 5. [aamsize](debug%5Fmodule.html#accessmemory-aamsize) does not affect Argument Width.[#420](https://github.com/riscv/riscv-debug-spec/pull/420)
@@ -191,31 +191,31 @@ Changes that slightly modify defined behavior. Technically backwards incompatibl
 1. [stopcount](Sdext.html#dcsr-stopcount) only applies to hart-local counters.[#405](https://github.com/riscv/riscv-debug-spec/pull/405)
 2. [version](debug%5Fmodule.html#dmstatus-version) may be invalid when [dmactive](debug%5Fmodule.html#dmcontrol-dmactive)\=0.[#414](https://github.com/riscv/riscv-debug-spec/pull/414)
 3. Address triggers ([mcontrol](Sdtrig.html#csr-mcontrol)) may fire on any accessed address.[#421](https://github.com/riscv/riscv-debug-spec/pull/421)
-4. All Trigger Module registers ([Sdtrig.adoc#tab:trigger](Sdtrig.html#tab:trigger)) are optional. [#431](https://github.com/riscv/riscv-debug-spec/pull/431)
+4. All Trigger Module registers ([Trigger Module Registers](Sdtrig.html#tab:trigger)) are optional. [#431](https://github.com/riscv/riscv-debug-spec/pull/431)
 5. When extending IR, [bypass](dtm.html#dtm-bypass) still is all ones.[#437](https://github.com/riscv/riscv-debug-spec/pull/437)
 6. [ebreaks](Sdext.html#dcsr-ebreaks) and [ebreaku](Sdext.html#dcsr-ebreaku) are WARL. [#458](https://github.com/riscv/riscv-debug-spec/pull/458)
 7. NMIs are disabled by [stepie](Sdext.html#dcsr-stepie).[#465](https://github.com/riscv/riscv-debug-spec/pull/465)
 8. R/W1C fields should be cleared by writing every bit high.[#472](https://github.com/riscv/riscv-debug-spec/pull/472)
-9. Specify trigger priorities in [Sdtrig.adoc#tab:priority](Sdtrig.html#tab:priority) relative to exceptions.[#478](https://github.com/riscv/riscv-debug-spec/pull/478)
+9. Specify trigger priorities in [Synchronous exception priority in decreasing priority order.](Sdtrig.html#tab:priority) relative to exceptions.[#478](https://github.com/riscv/riscv-debug-spec/pull/478)
 10. Time may pass before [dmactive](debug%5Fmodule.html#dmcontrol-dmactive) becomes high.[#500](https://github.com/riscv/riscv-debug-spec/pull/500)
 11. Clear MPRV when resuming into lower privilege mode.[#503](https://github.com/riscv/riscv-debug-spec/pull/503)
 12. Halt state may not be preserved across reset.[#504](https://github.com/riscv/riscv-debug-spec/pull/504)
 13. Hardware should clear trigger action when [dmode](Sdtrig.html#tdata1-dmode) is cleared and action is 1.[#501](https://github.com/riscv/riscv-debug-spec/pull/501)
-14. Change quick access exceptions to halt the target in [debug\_module.adoc#ac-quickaccess](debug%5Fmodule.html#ac-quickaccess).[#585](https://github.com/riscv/riscv-debug-spec/pull/585)
+14. Change quick access exceptions to halt the target in [Quick Access](debug%5Fmodule.html#ac-quickaccess).[#585](https://github.com/riscv/riscv-debug-spec/pull/585)
 15. Writing 0 to [tdata1](Sdtrig.html#csr-tdata1) forces a state where [tdata2](Sdtrig.html#csr-tdata2) and [tdata3](Sdtrig.html#csr-tdata3) are writable.[#598](https://github.com/riscv/riscv-debug-spec/pull/598)
-16. Solutions to deal with reentrancy in [Sdtrig.adoc#nativetrigger](Sdtrig.html#nativetrigger) prevent triggers from_matching_, not merely _firing_. This primarily affects [icount](Sdtrig.html#csr-icount) behavior.[#722](https://github.com/riscv/riscv-debug-spec/pull/722)
+16. Solutions to deal with reentrancy in [Section 5.1.4](Sdtrig.html#nativetrigger) prevent triggers from_matching_, not merely _firing_. This primarily affects [icount](Sdtrig.html#csr-icount) behavior.[#722](https://github.com/riscv/riscv-debug-spec/pull/722)
 17. Attempts to access an unimplemented CSR raise an illegal instruction exception. [#791](https://github.com/riscv/riscv-debug-spec/pull/791)
 
 ##### [](#1-1-2-1-4-new-features-from-0-13-to-1-0)1.1.2.1.4\. New Features from 0.13 to 1.0
 
 New backwards-compatible feature that did not exist before:
 
-1. Add halt groups and external triggers in [debug\_module.adoc#hrgroups](debug%5Fmodule.html#hrgroups).[#404](https://github.com/riscv/riscv-debug-spec/pull/404)
+1. Add halt groups and external triggers in [Section 3.1.6](debug%5Fmodule.html#hrgroups).[#404](https://github.com/riscv/riscv-debug-spec/pull/404)
 2. Reserve some DMI space for non-standard use. See [custom](debug%5Fmodule.html#dm-custom), and [custom0](debug%5Fmodule.html#dm-custom0) through `custom15`.[#406](https://github.com/riscv/riscv-debug-spec/pull/406)
 3. Reserve trigger [type](Sdtrig.html#tdata1-type) values for non-standard use.[#417](https://github.com/riscv/riscv-debug-spec/pull/417)
 4. Add [nmi](Sdtrig.html#itrigger-nmi) bit to [itrigger](Sdtrig.html#csr-itrigger). [#408](https://github.com/riscv/riscv-debug-spec/pull/408)and [#709](https://github.com/riscv/riscv-debug-spec/pull/709)
 5. Recommend matching on every accessed address.[#449](https://github.com/riscv/riscv-debug-spec/pull/449)
-6. Add resume groups in [debug\_module.adoc#hrgroups](debug%5Fmodule.html#hrgroups).[#506](https://github.com/riscv/riscv-debug-spec/pull/506)
+6. Add resume groups in [Section 3.1.6](debug%5Fmodule.html#hrgroups).[#506](https://github.com/riscv/riscv-debug-spec/pull/506)
 7. Add [relaxedpriv](debug%5Fmodule.html#abstractcs-relaxedpriv) . [#536](https://github.com/riscv/riscv-debug-spec/pull/536)
 8. Move [scontext](Sdtrig.html#csr-scontext), renaming original to [mscontext](Sdtrig.html#csr-mscontext), and create [hcontext](Sdtrig.html#csr-hcontext).[#535](https://github.com/riscv/riscv-debug-spec/pull/535)
 9. Add [mcontrol6](Sdtrig.html#csr-mcontrol6), deprecating [mcontrol](Sdtrig.html#csr-mcontrol).[#538](https://github.com/riscv/riscv-debug-spec/pull/538)
