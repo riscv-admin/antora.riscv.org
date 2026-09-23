@@ -667,6 +667,14 @@ antora:
   # Add section numbering — reuses the anchor defined above
   - require: ./riscv-extensions/section_numbering_extension.js
     numbering_rules: *numbering_rules
+
+  # Fill in link text for cross-page xrefs written without it, e.g.
+  # <<chapter.adoc#some-id>> or xref:chapter.adoc#some-id[]. Antora shows the
+  # raw target for these; this writes the target's reftext, or its section /
+  # table title ("Section 2.3" for numbered sections with style: short). Must
+  # come after section_numbering_extension so it sees the numbered titles.
+  - require: ./riscv-extensions/xref_text_extension.js
+    style: short
   - require: ./riscv-extensions/page_title_fallback_extension.js
   - require: "@cerbos/antora-llm-generator"
     skippaths:
