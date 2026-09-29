@@ -234,6 +234,18 @@ Control and configuration interface for trace features.
 
 [More](https://riscv.atlassian.net/wiki/external/ZmZkYWMzYmU5NzZjNDk0M2FkNmJmOWFhOWVjODk4MzE)
 
+##### HART Trace Interface
+
+**Version:** v1.0
+
+September 2026
+
+RISC-V Hart Trace Interface specification for instruction trace encoder communication.
+
+[HTML](../hti/index.html)[PDF](../hti/%5Fattachments/riscv-hart-trace-interface.pdf)
+
+[More](https://riscv.atlassian.net/wiki/external/ZTYxZWJiYWI0MTcwNDIxZWE4ZGRjZWQyMWRiODM3ODk)
+
 Platform Software 
 
 ##### Semihosting
