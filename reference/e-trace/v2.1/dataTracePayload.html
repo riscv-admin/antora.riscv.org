@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>5.1. Data Trace Encoder Output Packets :: RISC-V Ratified Specifications Library</title>
+    <title>7.1. Data Trace Encoder Output Packets :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/e-trace/v2.1/dataTracePayload.html">
-    <link rel="prev" href="branchTrace.html">
-    <link rel="next" href="ingressPort.html">
+    <link rel="prev" href="payload.html">
+    <link rel="next" href="exampleAlgorithm.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -197,46 +197,49 @@
     <a class="nav-link"  href="introduction.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="discovery.html">Chapter 1. Trace Discovery</a>
+    <a class="nav-link"  href="control.html">Chapter 1. Trace Control</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="control.html">Chapter 2. Trace Control</a>
+    <a class="nav-link"  href="branchTrace.html">Chapter 2. Branch Trace</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="payload.html">Chapter 3. Trace Payload Encoding</a>
+    <a class="nav-link"  href="ingressPort.html">Chapter 3. Ingress Port Interface</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="branchTrace.html">Chapter 4. Branch Trace</a>
+    <a class="nav-link"  href="filtering.html">Chapter 4. Filtering</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="timestamping.html">Chapter 5. Timestamping</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="payload.html">Chapter 6. Trace Payload Encoding</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="dataTracePayload.html">Chapter 5. Data Trace Payload</a>
+    <a class="nav-link"  href="dataTracePayload.html">Chapter 7. Data Trace Payload</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Interface</a>
+    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 8. Example Algorithm</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="timestamping.html">Chapter 7. Timestamping</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="filtering.html">Chapter 8. Filtering</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 9. Fragment Code and Transport</a>
+    <a class="nav-link"  href="discovery.html">Chapter 9. Trace Discovery</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="decoder.html">Chapter 10. Decoder</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 11. Example Algorithm</a>
+    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 11. Example Code Snippets</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 12. Fragment Code and Transport</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="extensions.html">Chapter 13. Extensions</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-support">Chapter 13. Standard Support Packet v1.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="future.html">Chapter 14. Future Enhancements</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-impret">Chapter 14. Implicit Return v1.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="extensions.html#sec:ext-mmacas">Data Trace of Multiple-Memory Access and Compare and Swap v1.0</a>
   </li>
 </ul>
   </li>
@@ -655,7 +658,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="5.1. Data Trace Encoder Output Packets"
+      data-title="7.1. Data Trace Encoder Output Packets"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -716,9 +719,9 @@
                 </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">5.1. Data Trace Encoder Output Packets</h1>
+<h1 id="page-title" class="page">7.1. Data Trace Encoder Output Packets</h1>
 <div class="sect1">
-<h2 id="dataTracePackets"><a class="anchor" href="#dataTracePackets"></a>5.1. Data Trace Encoder Output Packets</h2>
+<h2 id="dataTracePackets"><a class="anchor" href="#dataTracePackets"></a>7.1. Data Trace Encoder Output Packets</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Data trace packets must be differentiated from instruction trace
@@ -776,9 +779,9 @@ of log2".</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="sec:data-loadstore"><a class="anchor" href="#sec:data-loadstore"></a>5.1.1. Load and Store</h3>
+<h3 id="sec:data-loadstore"><a class="anchor" href="#sec:data-loadstore"></a>7.1.1. Load and Store</h3>
 <div class="sect3">
-<h4 id="sec:loadstore-format"><a class="anchor" href="#sec:loadstore-format"></a>5.1.1.1. format field</h4>
+<h4 id="sec:loadstore-format"><a class="anchor" href="#sec:loadstore-format"></a>7.1.1.1. format field</h4>
 <div class="paragraph">
 <p>Types of data trace packets are differentiated by the <strong>format</strong> field.
 This field is 2 bits wide if only unified loads and stores are
@@ -1109,14 +1112,14 @@ otherwise shift left by <strong>size</strong> to recover byte address</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sec:loadstore-size"><a class="anchor" href="#sec:loadstore-size"></a>5.1.1.2. size field</h4>
+<h4 id="sec:loadstore-size"><a class="anchor" href="#sec:loadstore-size"></a>7.1.1.2. size field</h4>
 <div class="paragraph">
 <p>The width of this field is 2 bits if max size is 64-bits (<em>data_width_p</em>
 &lt; 128), 3 bits if wider.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:loadstore-diff"><a class="anchor" href="#sec:loadstore-diff"></a>5.1.1.3. diff field</h4>
+<h4 id="sec:loadstore-diff"><a class="anchor" href="#sec:loadstore-diff"></a>7.1.1.3. diff field</h4>
 <div class="paragraph">
 <p>Unlike instruction trace, compression options for data trace are
 somewhat limited. Following a synchronization instruction trace packet,
@@ -1140,7 +1143,7 @@ bit wide rather than 2 for <a href="#tab:te_datadx0y2">Table 3</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:loadstore-datalen"><a class="anchor" href="#sec:loadstore-datalen"></a>5.1.1.4. data_len field</h4>
+<h4 id="sec:loadstore-datalen"><a class="anchor" href="#sec:loadstore-datalen"></a>7.1.1.4. data_len field</h4>
 <div class="paragraph">
 <p>However the data is compressed, upper bytes that are all the same value
 do not need to be included in the packet; the decoder can recreate the
@@ -1151,9 +1154,9 @@ width of <strong>data</strong> is indicated by this field.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:data-atomic"><a class="anchor" href="#sec:data-atomic"></a>5.1.2. Atomic</h3>
+<h3 id="sec:data-atomic"><a class="anchor" href="#sec:data-atomic"></a>7.1.2. Atomic</h3>
 <div class="sect3">
-<h4 id="sec:atomic-size"><a class="anchor" href="#sec:atomic-size"></a>5.1.2.1. size field</h4>
+<h4 id="sec:atomic-size"><a class="anchor" href="#sec:atomic-size"></a>7.1.2.1. size field</h4>
 <div class="paragraph">
 <p>Strictly, <strong>size</strong> could be just one bit as atomics are currently either
 32 or 64 bits. Defining as per regular loads and stores provisions for
@@ -1410,24 +1413,24 @@ applied</p></td>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:atomic-diff"><a class="anchor" href="#sec:atomic-diff"></a>5.1.2.2. diff field</h4>
+<h4 id="sec:atomic-diff"><a class="anchor" href="#sec:atomic-diff"></a>7.1.2.2. diff field</h4>
 <div class="paragraph">
-<p>See <a href="#sec:loadstore-diff">5.1.1.3. diff field</a>.</p>
+<p>See <a href="#sec:loadstore-diff">7.1.1.3. diff field</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:atomic-operand"><a class="anchor" href="#sec:atomic-operand"></a>5.1.2.3. operand field</h4>
+<h4 id="sec:atomic-operand"><a class="anchor" href="#sec:atomic-operand"></a>7.1.2.3. operand field</h4>
 <div class="paragraph">
 <p>The operand value for the atomic operation. Uncompressed, although upper
 bytes that are all the same value do not need to be included in the
 packet; the decoder can recreate the full-width value by sign extending
-from the most significant received bit; see <a href="#sec:atomic-datalen">5.1.2.4. data_len and op_len fields</a>.</p>
+from the most significant received bit; see <a href="#sec:atomic-datalen">7.1.2.4. data_len and op_len fields</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:atomic-datalen"><a class="anchor" href="#sec:atomic-datalen"></a>5.1.2.4. data_len and op_len fields</h4>
+<h4 id="sec:atomic-datalen"><a class="anchor" href="#sec:atomic-datalen"></a>7.1.2.4. data_len and op_len fields</h4>
 <div class="paragraph">
-<p>Width of <strong>data and *operand</strong> fields respectively. See  <strong><a href="#sec:loadstore-datalen">5.1.1.4. data_len field</a>.</strong></p>
+<p>Width of <strong>data and *operand</strong> fields respectively. See  <strong><a href="#sec:loadstore-datalen">7.1.1.4. data_len field</a>.</strong></p>
 </div>
 <div class="paragraph">
 <p>The following packet is used for the request phase of a split atomic:</p>
@@ -1664,7 +1667,7 @@ error (sign-extend <strong>resp</strong> MSB)</p></td>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:data-csr"><a class="anchor" href="#sec:data-csr"></a>5.1.3. CSR</h3>
+<h3 id="sec:data-csr"><a class="anchor" href="#sec:data-csr"></a>7.1.3. CSR</h3>
 <table class="tableblock frame-all grid-all fit-content center">
 <caption class="title">Table 12. Packet format for Unified CSR, with address, data and operand</caption>
 <colgroup>
@@ -1752,26 +1755,26 @@ applied</p></td>
 </table>
 </div>
 <div class="sect3">
-<h4 id="sec:csr-diff"><a class="anchor" href="#sec:csr-diff"></a>5.1.3.1. diff field</h4>
+<h4 id="sec:csr-diff"><a class="anchor" href="#sec:csr-diff"></a>7.1.3.1. diff field</h4>
 <div class="paragraph">
-<p>See <a href="#sec:loadstore-diff">5.1.1.3. diff field</a>.</p>
+<p>See <a href="#sec:loadstore-diff">7.1.1.3. diff field</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:csr-operand"><a class="anchor" href="#sec:csr-operand"></a>5.1.3.2. operand field</h4>
+<h4 id="sec:csr-operand"><a class="anchor" href="#sec:csr-operand"></a>7.1.3.2. operand field</h4>
 <div class="paragraph">
-<p>See <a href="#sec:atomic-operand">5.1.2.3. operand field</a>.</p>
+<p>See <a href="#sec:atomic-operand">7.1.2.3. operand field</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:csr-datalen"><a class="anchor" href="#sec:csr-datalen"></a>5.1.3.3. data_len and op_len fields</h4>
+<h4 id="sec:csr-datalen"><a class="anchor" href="#sec:csr-datalen"></a>7.1.3.3. data_len and op_len fields</h4>
 <div class="paragraph">
 <p>2 bits wide if hart has 32-bit CSRs, 3 bits if 64-bit. Width of <strong>data</strong>
-and <strong>operand</strong> fields respectively. See <a href="#sec:loadstore-datalen">5.1.1.4. data_len field</a>.</p>
+and <strong>operand</strong> fields respectively. See <a href="#sec:loadstore-datalen">7.1.1.4. data_len field</a>.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:csr-addr"><a class="anchor" href="#sec:csr-addr"></a>5.1.3.4. addr fields</h4>
+<h4 id="sec:csr-addr"><a class="anchor" href="#sec:csr-addr"></a>7.1.3.4. addr fields</h4>
 <div class="paragraph">
 <p>The address is split into two parts, with the 6 LSBs output last as
 these are more likely to compress away.</p>
@@ -1922,8 +1925,8 @@ other codes other packet formats</p></td>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="branchTrace.html">Chapter 4. Branch Trace</a></span>
-  <span class="next"><a href="ingressPort.html">Chapter 6. Ingress Port Interface</a></span>
+  <span class="prev"><a href="payload.html">Chapter 6. Trace Payload Encoding</a></span>
+  <span class="next"><a href="exampleAlgorithm.html">Chapter 8. Example Algorithm</a></span>
 </nav>
 </article>  </div>
 </main>

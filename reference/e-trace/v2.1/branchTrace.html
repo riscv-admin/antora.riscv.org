@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>4.1. Branch Trace :: RISC-V Ratified Specifications Library</title>
+    <title>2.1. Branch Trace :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/e-trace/v2.1/branchTrace.html">
-    <link rel="prev" href="payload.html">
-    <link rel="next" href="dataTracePayload.html">
+    <link rel="prev" href="control.html">
+    <link rel="next" href="ingressPort.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -197,46 +197,49 @@
     <a class="nav-link"  href="introduction.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="discovery.html">Chapter 1. Trace Discovery</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="control.html">Chapter 2. Trace Control</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="payload.html">Chapter 3. Trace Payload Encoding</a>
+    <a class="nav-link"  href="control.html">Chapter 1. Trace Control</a>
   </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="branchTrace.html">Chapter 4. Branch Trace</a>
+    <a class="nav-link"  href="branchTrace.html">Chapter 2. Branch Trace</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="dataTracePayload.html">Chapter 5. Data Trace Payload</a>
+    <a class="nav-link"  href="ingressPort.html">Chapter 3. Ingress Port Interface</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Interface</a>
+    <a class="nav-link"  href="filtering.html">Chapter 4. Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="timestamping.html">Chapter 7. Timestamping</a>
+    <a class="nav-link"  href="timestamping.html">Chapter 5. Timestamping</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="filtering.html">Chapter 8. Filtering</a>
+    <a class="nav-link"  href="payload.html">Chapter 6. Trace Payload Encoding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 9. Fragment Code and Transport</a>
+    <a class="nav-link"  href="dataTracePayload.html">Chapter 7. Data Trace Payload</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 8. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="discovery.html">Chapter 9. Trace Discovery</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="decoder.html">Chapter 10. Decoder</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 11. Example Algorithm</a>
+    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 11. Example Code Snippets</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 12. Fragment Code and Transport</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="extensions.html">Chapter 13. Extensions</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-support">Chapter 13. Standard Support Packet v1.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="future.html">Chapter 14. Future Enhancements</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-impret">Chapter 14. Implicit Return v1.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="extensions.html#sec:ext-mmacas">Data Trace of Multiple-Memory Access and Compare and Swap v1.0</a>
   </li>
 </ul>
   </li>
@@ -655,7 +658,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="4.1. Branch Trace"
+      data-title="2.1. Branch Trace"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -716,9 +719,9 @@
                 </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">4.1. Branch Trace</h1>
+<h1 id="page-title" class="page">2.1. Branch Trace</h1>
 <div class="sect1">
-<h2 id="BranchTrace"><a class="anchor" href="#BranchTrace"></a>4.1. Branch Trace</h2>
+<h2 id="BranchTrace"><a class="anchor" href="#BranchTrace"></a>2.1. Branch Trace</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Instruction delta tracing, also known as branch tracing, works by
@@ -760,9 +763,9 @@ require the debugger to keep track of memory allocation operations using
 either trace or stop-mode debugging.</p>
 </div>
 <div class="sect2">
-<h3 id="TraceConcepts"><a class="anchor" href="#TraceConcepts"></a>4.1.1. Instruction delta trace concepts</h3>
+<h3 id="TraceConcepts"><a class="anchor" href="#TraceConcepts"></a>2.1.1. Instruction delta trace concepts</h3>
 <div class="sect3">
-<h4 id="SequentialInstructions"><a class="anchor" href="#SequentialInstructions"></a>4.1.1.1. Sequential instructions</h4>
+<h4 id="SequentialInstructions"><a class="anchor" href="#SequentialInstructions"></a>2.1.1.1. Sequential instructions</h4>
 <div class="paragraph">
 <p>For instruction set architectures such as RISC-V where all instructions
 are executed unconditionally or at least their execution can be
@@ -774,7 +777,7 @@ jumps, or other program counter discontinuities.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="uninfpc"><a class="anchor" href="#uninfpc"></a>4.1.1.2. Uninferable PC discontinuities</h4>
+<h4 id="uninfpc"><a class="anchor" href="#uninfpc"></a>2.1.1.2. Uninferable PC discontinuities</h4>
 <div class="paragraph">
 <p>An uninferable program counter discontinuity is a program counter change
 that can not be inferred from the program binary alone. For these cases,
@@ -794,7 +797,7 @@ discontinuity; these are discussed in detail below.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="4-1-1-3-branches"><a class="anchor" href="#4-1-1-3-branches"></a>4.1.1.3. Branches</h4>
+<h4 id="2-1-1-3-branches"><a class="anchor" href="#2-1-1-3-branches"></a>2.1.1.3. Branches</h4>
 <div class="paragraph">
 <p>A branch is an instruction where a jump is conditional on the value of a
 register or a flag. For a decoder to able to follow program flow, the
@@ -808,7 +811,7 @@ are the only type of branch that is supported by the RISC-V ISA.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="interruptsexceptions"><a class="anchor" href="#interruptsexceptions"></a>4.1.1.4. Interrupts and exceptions</h4>
+<h4 id="interruptsexceptions"><a class="anchor" href="#interruptsexceptions"></a>2.1.1.4. Interrupts and exceptions</h4>
 <div class="paragraph">
 <p>Interrupts are a different type of delta that generally occur
 asynchronously to the program&#8217;s execution rather than intentionally as a
@@ -836,7 +839,7 @@ they cause traps to be taken.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:synchronization"><a class="anchor" href="#sec:synchronization"></a>4.1.1.5. Synchronization</h4>
+<h4 id="sec:synchronization"><a class="anchor" href="#sec:synchronization"></a>2.1.1.5. Synchronization</h4>
 <div class="paragraph">
 <p>In order to make the trace robust there must be regular synchronization
 points within the trace. Synchronization is accomplished by sending a
@@ -871,7 +874,7 @@ exception handler;</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:endoftrace"><a class="anchor" href="#sec:endoftrace"></a>4.1.1.6. End of trace</h4>
+<h4 id="sec:endoftrace"><a class="anchor" href="#sec:endoftrace"></a>2.1.1.6. End of trace</h4>
 <div class="paragraph">
 <p>If tracing stops for any reason, the address of the final traced
 instruction must be output.</p>
@@ -903,7 +906,7 @@ the encoder may no longer be met;</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="optional"><a class="anchor" href="#optional"></a>4.1.2. Optional and run-time configurable modes</h3>
+<h3 id="optional"><a class="anchor" href="#optional"></a>2.1.2. Optional and run-time configurable modes</h3>
 <div class="paragraph">
 <p>An instruction trace encoder may support multiple tracing modes. To
 ensure that the decoder treats the incoming packets correctly, it needs
@@ -957,7 +960,7 @@ jump targets, and reporting the cache entry index instead.</p>
 supported.</p>
 </div>
 <div class="sect3">
-<h4 id="sec:delta-address"><a class="anchor" href="#sec:delta-address"></a>4.1.2.1. Delta address mode</h4>
+<h4 id="sec:delta-address"><a class="anchor" href="#sec:delta-address"></a>2.1.2.1. Delta address mode</h4>
 <div class="paragraph">
 <p>Related parameters: None</p>
 </div>
@@ -970,7 +973,7 @@ address, and thus results in more efficient trace compression.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:full-address"><a class="anchor" href="#sec:full-address"></a>4.1.2.2. Full address mode</h4>
+<h4 id="sec:full-address"><a class="anchor" href="#sec:full-address"></a>2.1.2.2. Full address mode</h4>
 <div class="paragraph">
 <p>Related parameters: None</p>
 </div>
@@ -982,7 +985,7 @@ decoder developers.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:implicit-exception"><a class="anchor" href="#sec:implicit-exception"></a>4.1.2.3. Implicit exception mode</h4>
+<h4 id="sec:implicit-exception"><a class="anchor" href="#sec:implicit-exception"></a>2.1.2.3. Implicit exception mode</h4>
 <div class="paragraph">
 <p>Related parameters: None</p>
 </div>
@@ -1006,7 +1009,7 @@ trap handler from just the exception cause.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:si-jump"><a class="anchor" href="#sec:si-jump"></a>4.1.2.4. Sequentially inferable jump mode</h4>
+<h4 id="sec:si-jump"><a class="anchor" href="#sec:si-jump"></a>2.1.2.4. Sequentially inferable jump mode</h4>
 <div class="paragraph">
 <p>Related parameters: <em>sijump_p</em>.</p>
 </div>
@@ -1024,7 +1027,7 @@ of what constitutes a sequentially inferable jump.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:implicit-return"><a class="anchor" href="#sec:implicit-return"></a>4.1.2.5. Implicit return mode</h4>
+<h4 id="sec:implicit-return"><a class="anchor" href="#sec:implicit-return"></a>2.1.2.5. Implicit return mode</h4>
 <div class="paragraph">
 <p>Related parameters: <em>call_counter_size_p</em>, <em>return_stack_size_p</em>,
 <em>itype_width_p</em>.</p>
@@ -1069,7 +1072,7 @@ reported.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:branch-prediction"><a class="anchor" href="#sec:branch-prediction"></a>4.1.2.6. Branch prediction mode</h4>
+<h4 id="sec:branch-prediction"><a class="anchor" href="#sec:branch-prediction"></a>2.1.2.6. Branch prediction mode</h4>
 <div class="paragraph">
 <p>Related parameters: <em>bpred_size_p</em>.</p>
 </div>
@@ -1138,7 +1141,7 @@ packet is sent.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="sec:jump-cache"><a class="anchor" href="#sec:jump-cache"></a>4.1.2.7. Jump target cache mode</h4>
+<h4 id="sec:jump-cache"><a class="anchor" href="#sec:jump-cache"></a>2.1.2.7. Jump target cache mode</h4>
 <div class="paragraph">
 <p>Related parameters: <em>cache_size_p</em>.</p>
 </div>
@@ -1179,8 +1182,8 @@ sent.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="payload.html">Chapter 3. Trace Payload Encoding</a></span>
-  <span class="next"><a href="dataTracePayload.html">Chapter 5. Data Trace Payload</a></span>
+  <span class="prev"><a href="control.html">Chapter 1. Trace Control</a></span>
+  <span class="next"><a href="ingressPort.html">Chapter 3. Ingress Port Interface</a></span>
 </nav>
 </article>  </div>
 </main>

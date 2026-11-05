@@ -1,6 +1,6 @@
-# 7.1. Timestamping
+# 5.1. Timestamping
 
-## [](#ch:timestamping)7.1\. Timestamping
+## [](#ch:timestamping)5.1\. Timestamping
 
 The support for Timestamps is optional and so the contents of this chapter are informative only.
 

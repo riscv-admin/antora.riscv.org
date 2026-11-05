@@ -1,6 +1,6 @@
-# 13.1. Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0
+# Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0
 
-## [](#sec:ext-support)13.1\. Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0
+## [](#sec:ext-support)Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0
 
 | |  This chapter is in the [Ratified state](http://riscv.org/spec-state). No changes are allowed. Any desired or needed changes can be the subject of a follow-on new extension. Ratified extensions are never revised. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -16,10 +16,10 @@ If this extension is implemented, the protocol version must be 2.1 or higher; if
 This extension is required by the following extensions:
 
 * Smstrce\* and Ssstrce\* (Self-Hosted Trace)
-* Implicit Return extension to Efficient Trace for RISC-V v2.0 (see [_13.2\. Implicit Return v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-impret))
-* Data Trace of Multiple-Memory Access and Compare and Swap extension to Efficient Trace for RISC-V v2.0 (see [_13.3\. Data Trace of Multiple-Memory Access and Compare and Swap v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-mmacas))
+* Implicit Return extension to Efficient Trace for RISC-V v2.0 (see [_Implicit Return v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-impret))
+* Data Trace of Multiple-Memory Access and Compare and Swap extension to Efficient Trace for RISC-V v2.0 (see [_Data Trace of Multiple-Memory Access and Compare and Swap v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-mmacas))
 
-### [](#13-1-1-standard-support-packet-format)13.1.1\. Standard Support Packet format
+### [](#standard-support-packet-format)Standard Support Packet format
 
 __Table 1\. Packet format 3, subformat 3 suitable for self-hosted applications__
 | **Field name**          | **Bits** | **Description**                                                                                                                                                                                                                                                                                                                                                                                       |
@@ -52,16 +52,16 @@ __Table 1\. Packet format 3, subformat 3 suitable for self-hosted applications__
 | **full\_data**          | 1        | When 1, data values in **te\_data** packets are always full (i.e non-differential).                                                                                                                                                                                                                                                                                                                   |
 | other                   | \>=0     | Any other implementation specific information                                                                                                                                                                                                                                                                                                                                                         |
 
-## [](#sec:ext-impret)13.2\. Implicit Return v1.0 extension to Efficient Trace for RISC-V v2.0
+## [](#sec:ext-impret)Implicit Return v1.0 extension to Efficient Trace for RISC-V v2.0
 
 | |  This chapter is in the [Ratified state](http://riscv.org/spec-state). No changes are allowed. Any desired or needed changes can be the subject of a follow-on new extension. Ratified extensions are never revised. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 The Implicit Return mode information in the format 0, 1 and 2 packets defined in the Efficient Trace for RISC-V 2.0 specification does not produce correct trace decoding in some cases. This extension corrects this by replacing the **irdepth** field with **irets**.
 
-If this extension is implemented, the Standard Support Packet extention to Efficient Trace for RISC-V v2.0 (see [_13.1\. Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-support)) must also be implemented.
+If this extension is implemented, the Standard Support Packet extention to Efficient Trace for RISC-V v2.0 (see [_Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-support)) must also be implemented.
 
-### [](#13-2-1-background)13.2.1\. Background
+### [](#background)Background
 
 As described in [Implicit Return](branchTrace.html#sec:implicit-return), when Implict Return mode is enabled, the target address of function returns is not usually reported. When it _is_ reported (for example because it’s the last instruction retired before a trap), there are some circumstances where the decoder cannot determine precisely which return target it is without some additional information from the encoder.
 
@@ -73,7 +73,7 @@ Had there been any branches between the two functions or inside the 2nd function
 
 So in summary, the decoder needs additional information to correctly determine which return target has been reported when there have been multiple returns without any branches or uninferrable calls/jumps between them. This is true for all cases, including recursive functions.
 
-### [](#13-2-2-revised-packet-formats)13.2.2\. Revised packet formats
+### [](#revised-packet-formats)Revised packet formats
 
 The following packet definitions replace those detailed in [Packet Formats](payload.html#packets). All formats and fields are the same, except **irdepth** is replaced by **irets** throughout.
 
@@ -87,7 +87,7 @@ __Table 2\. Packet format 2__
 | **irreport**   | 1                                       | If the value of this bit is different from **updiscon**, it indicates that this packet is reporting an instruction that is either: following a return because its address differs from the predicted return address at the top of the implicit return address stack, or the last retired before an exception, interrupt, privilege change or resync because it is necessary to report the implicit return count. |
 | **irets**      | 8                                       | If the value of **irreport** is different from**updiscon**, this field indicates the number of implicit returns that have occurred since the last branch, or _te\_inst_ packet if there have been no branches since then. If **irreport** is the same value as **updiscon**, all bits in this field will also be the same value as **updiscon**.                                                                 |
 
-#### [](#sec:irets)13.2.2.1\. Format 2 **irreport** and **irets**
+#### [](#sec:irets)Format 2 **irreport** and **irets**
 
 These bits are encoded so that most of the time they will take the same value as the **updiscon** field, and will therefore compress away, having no impact on the encoding efficiency. If Implicit Return mode is enabled, the encoder keeps track of function calls and returns, and does not generate _te\_inst_ packets for return target addresses that can be inferred by the decoder, as described in [Implicit Return](branchTrace.html#sec:implicit-return).
 
@@ -121,9 +121,9 @@ __Table 4\. Packet format 1 - no address, branch map__
 | **branches**    | 5        | Number of valid bits in **branch\_map**. The length of**branch\_map** is determined as follows:0: 31 bits, no **address** in packet1-31: (cannot occur for this format)    |
 | **branch\_map** | 31       | An array of bits indicating whether branches are taken or not. Bit 0 represents the oldest branch instruction executed. For each bit: 0 : branch taken1 : branch not taken |
 
-#### [](#13-2-2-2-format-1-irreport-and-irets-fields)13.2.2.2\. Format 1 **irreport** and **irets** fields
+#### [](#format-1-irreport-and-irets-fields)Format 1 **irreport** and **irets** fields
 
-See [13.2.2.1\. Format 2 **irreport** and **irets**](#sec:irets).
+See [Format 2 **irreport** and **irets**](#sec:irets).
 
 __Table 5\. Packet format 0, subformat 0 - address, branch count__
 | **Field name**    | **Bits**                                       | **Description**                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -159,26 +159,26 @@ __Table 7\. Packet format 0, subformat 1 - jump target index, no branch map__
 | **irreport**   | 1                                              | If the value of this bit is different from**branches\[MSB\]**, it indicates that this packet is reporting an instruction that is either: following a return because its address differs from the predicted return address at the top of the implicit\_return return address stack, or the last retired before an exception, interrupt, privilege change or resync because it is necessary to report the implicit return count. |
 | **irets**      | 8                                              | If the value of **irreport** is different from**branches\[MSB\]**, this field indicates the number of implicit returns that have occurred since the last branch, or _te\_inst_ packet if there have been no branches since then. If **irreport** is the same value as**branches\[MSB\]**, all bits in this field will also be the same value as**branches\[MSB\]**.                                                            |
 
-#### [](#13-2-2-3-format-0-irreport-and-irets-fields)13.2.2.3\. Format 0 **irreport** and **irets** fields
+#### [](#format-0-irreport-and-irets-fields)Format 0 **irreport** and **irets** fields
 
-These bits are encoded so that most of the time they will take the same value as the immediately preceding bit (**updiscon**, **branch\_map\[MSB\]** or**branches\[MSB\]** depending on the specific packet format). Purpose and behavior is as described in [13.2.2.1\. Format 2 **irreport** and **irets**](#sec:irets).
+These bits are encoded so that most of the time they will take the same value as the immediately preceding bit (**updiscon**, **branch\_map\[MSB\]** or**branches\[MSB\]** depending on the specific packet format). Purpose and behavior is as described in [Format 2 **irreport** and **irets**](#sec:irets).
 
 For the jump target cache (subformat 1), they are included to allow return addresses that fail the implicit return prediction but which reside in the jump target cache to be reported using this format. An implementation could omit these if all implicit return failures are reported using format 1.
 
-## [](#sec:ext-mmacas)13.3\. Data Trace of Multiple-Memory Access and Compare and Swap v1.0 extension to Efficient Trace for RISC-V v2.0
+## [](#sec:ext-mmacas)Data Trace of Multiple-Memory Access and Compare and Swap v1.0 extension to Efficient Trace for RISC-V v2.0
 
 | |  This chapter is in the [Ratified state](http://riscv.org/spec-state). No changes are allowed. Any desired or needed changes can be the subject of a follow-on new extension. Ratified extensions are never revised. |
 | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 The [RISC-V Hart to Trace Interface (RHTI) Specification](https://docs.riscv.org/reference/hti/v1.0/%5Fattachments/riscv-hart-trace-interface.pdf) is based on chapter 4 of the Efficient Trace for RISC-V v2.0 specification. It adds **dtype** encodings to support data trace of multi-memory access instructions as defined by the Zcmp and Vector extensions, as well as Compare and Swap as defined by the Zacas extension. This information also needs to be included in _te\_data_ packets generated by the Trace Encoder, but there are no available unused encodings in the existing packets defined by the Efficient Trace for RISC-V v2.0 specification. This extension defines revised packet formats that address this.
 
-If this extension is implemented, the Standard Support Packet extention to Efficient Trace for RISC-V v2.0 (see [_13.1\. Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-support)) must also be implemented.
+If this extension is implemented, the Standard Support Packet extention to Efficient Trace for RISC-V v2.0 (see [_Standard Support Packet v1.0 extension to Efficient Trace for RISC-V v2.0_](#sec:ext-support)) must also be implemented.
 
-### [](#13-3-1-revised-packet-formats)13.3.1\. Revised packet formats
+### [](#revised-packet-formats-2)Revised packet formats
 
 The following packet definitions replace those defined in [Data Trace Packets](dataTracePayload.html#dataTracePackets). The **format** and **subtype** fields have been restructured but all other fields are the same.
 
-#### [](#sec:dtrace-format)13.3.1.1\. format field
+#### [](#sec:dtrace-format)format field
 
 Data trace packets are classified by the **format** field. This field is a maximum of 2 bits wide, but may be omitted completely if only unified loads and stores are supported, or reduced to 1 bit if unified multi-memory access load and stores are also supported. 2 bits are only required when tracing of atomics or CSRs is required, or if loads are split.
 

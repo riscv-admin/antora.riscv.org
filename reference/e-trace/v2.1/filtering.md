@@ -1,6 +1,6 @@
-# 8.1. Filtering
+# 4.1. Filtering
 
-## [](#ch:filtering)8.1\. Filtering
+## [](#ch:filtering)4.1\. Filtering
 
 The contents of this chapter are informative only.
 

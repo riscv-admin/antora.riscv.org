@@ -1,6 +1,6 @@
-# 11.1. Reference Compressed Branch Trace Algorithm
+# 8.1. Reference Compressed Branch Trace Algorithm
 
-## [](#Algorithm)11.1\. Reference Compressed Branch Trace Algorithm
+## [](#Algorithm)8.1\. Reference Compressed Branch Trace Algorithm
 
 The contents of this chapter are informative only.
 
@@ -41,7 +41,7 @@ Note: if the **halted** or **reset** sideband signals are asserted (see "Optiona
 
 Figure 1\. Instruction delta trace algorithm
 
-### [](#11-1-1-format-selection)11.1.1\. Format selection
+### [](#8-1-1-format-selection)8.1.1\. Format selection
 
 In all cases but two, the packet format is determined only by a 'yes' outcome from the associated decision.
 
@@ -55,7 +55,7 @@ The choice between formats for the "format 0/1/2" case in the middle of the diag
 
 Packet formats 0, 1 and 2 are organized so that the address is usually the final field. Minimizing the number of bits required to represent the address reduces the total packet size and significantly improves efficiency. See [Packet Formats](payload.html#packets).
 
-### [](#sec:resync)11.1.2\. Resynchronisation
+### [](#sec:resync)8.1.2\. Resynchronisation
 
 Per [Synchronization](branchTrace.html#sec:synchronization), a format 3 synchronisation packet must be output after "a prolonged period of time". The exact mechanism for determining this is not specified, but options might be to count the number of _te\_inst_ packets emitted, or the number of clock cycles elapsed, since the previous synchronization message was sent.
 
@@ -67,7 +67,7 @@ When the resync is required, the primary objective is to output a format 3 packe
 
 The format 3 will be sent if the resync timer has been exceeded. On the cycle before this (when the resync timer value has been exactly reached), a format 1 will be generated if the branch map is not empty.
 
-### [](#rec:multiretcon)11.1.3\. Multiple retirement considerations
+### [](#rec:multiretcon)8.1.3\. Multiple retirement considerations
 
 As noted earlier in this section, for a single-retirement system the reference algorithm is applied to each retired instruction. When instructions are retired in blocks, only the first and last instruction in a block need be considered, as all those in between are "uninteresting", and will have no effect on the encoder’s state (their route through [Algorithm](#fig:algo) does not pass through any of the rectangular boxes).
 

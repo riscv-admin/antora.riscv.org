@@ -6,7 +6,7 @@
     <title>RV32I Base Integer Instruction Set, Version 2.1 :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/isa/v20260120/unpriv/rv32.html">
     <link rel="prev" href="intro.html">
-    <link rel="next" href="rv32e.html#sec:rv32e">
+    <link rel="next" href="rv32e.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -153,11 +153,11 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="intro.html">Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="#sec:rv32">Chapter 1. RV32I Base Integer Instruction Set, Version 2.1</a>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link"  href="rv32.html">Chapter 1. RV32I Base Integer Instruction Set, Version 2.1</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="rv32e.html#sec:rv32e">Chapter 2. RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
+    <a class="nav-link"  href="rv32e.html">Chapter 2. RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="rv64.html">Chapter 3. RV64I Base Integer Instruction Set, Version 2.1</a>
@@ -169,10 +169,10 @@
     <a class="nav-link"  href="zifencei.html">Chapter 5. "Zifencei" Extension for Instruction-Fetch Fence, Version 2.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="zicsr.html#zicsr">Chapter 6. "Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
+    <a class="nav-link"  href="zicsr.html">Chapter 6. "Zicsr", Extension for Control and Status Register (CSR) Instructions, Version 2.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="counters.html#sec:counters">Chapter 7. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
+    <a class="nav-link"  href="counters.html">Chapter 7. "Zicntr" and "Zihpm" Extensions for Counters, Version 2.0</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="zihintntl.html">Chapter 8. "Zihintntl" Extension for Non-Temporal Locality Hints, Version 1.0</a>
@@ -454,9 +454,6 @@
           <li>
             <a href="unpriv-index.html">Unprivileged Architecture</a>
           </li>
-          <li>
-            <a href="#sec:rv32">Chapter 1. RV32I Base Integer Instruction Set, Version 2.1</a>
-          </li>
     </ul>
   </nav>
 </div>
@@ -545,7 +542,7 @@ Assembly Programmer&#8217;s Manual [<a href="../biblio/bibliography.html#bib-ris
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:rv32i-model"><a class="anchor" href="#sec:rv32i-model"></a>Programmers' Model for Base Integer ISA</h2>
+<h2 id="sec:rv32i-model"><a class="anchor" href="#sec:rv32i-model"></a>1.1. Programmers' Model for Base Integer ISA</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="#gprs">Table 1</a> shows the unprivileged state for the base
@@ -748,7 +745,7 @@ RV32E subset, which only has 16 registers
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:instr"><a class="anchor" href="#sec:instr"></a>Base Instruction Formats</h2>
+<h2 id="sec:instr"><a class="anchor" href="#sec:instr"></a>1.2. Base Instruction Formats</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>In the base RV32I ISA, there are four core instruction formats
@@ -805,7 +802,7 @@ opcode space be used for non-conforming extensions.</p>
 <p>The RISC-V ISA keeps the source (<em>rs1</em> and <em>rs2</em>) and destination (<em>rd</em>)
 registers at the same position in all formats to simplify decoding.
 Except for the 5-bit immediates used in CSR instructions
-(<a href="zicsr.html#sec:csrinsts" class="xref page">CSR Instructions</a>),  immediates are always
+(<a href="zicsr.html" class="xref page">CSR Instructions</a>),  immediates are always
 sign-extended, and are generally packed towards the leftmost available
 bits in the instruction and have been allocated to reduce hardware
 complexity. In particular, the sign bit for all immediates is always in
@@ -866,7 +863,7 @@ to keep the ISA as simple as possible.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:imm-variants"><a class="anchor" href="#sec:imm-variants"></a>Immediate Encoding Variants</h2>
+<h2 id="sec:imm-variants"><a class="anchor" href="#sec:imm-variants"></a>1.3. Immediate Encoding Variants</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are a further two variants of the instruction formats (B/J) based
@@ -984,7 +981,7 @@ common short forward branches have straightforward immediate encodings.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:int-comp"><a class="anchor" href="#sec:int-comp"></a>Integer Computational Instructions</h2>
+<h2 id="sec:int-comp"><a class="anchor" href="#sec:int-comp"></a>1.4. Integer Computational Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Most integer computational instructions operate on <code>XLEN</code> bits of values
@@ -1039,7 +1036,7 @@ comparing the results of ADD and ADDW on the operands.</p>
 </table>
 </div>
 <div class="sect2">
-<h3 id="sec:int-reg-imm"><a class="anchor" href="#sec:int-reg-imm"></a>Integer Register-Immediate Instructions</h3>
+<h3 id="sec:int-reg-imm"><a class="anchor" href="#sec:int-reg-imm"></a>1.4.1. Integer Register-Immediate Instructions</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="_images/svg-517093b9b20c6c79b7777fe6c22fbbd3de4e146d.svg" alt="svg">
@@ -1129,7 +1126,7 @@ microarchitectures.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:reg-reg"><a class="anchor" href="#sec:reg-reg"></a>Integer Register-Register Operations</h3>
+<h3 id="sec:reg-reg"><a class="anchor" href="#sec:reg-reg"></a>1.4.2. Integer Register-Register Operations</h3>
 <div class="paragraph">
 <p>RV32I defines several arithmetic R-type operations. All operations read
 the <em>rs1</em> and <em>rs2</em> registers as source operands and write the result
@@ -1158,7 +1155,7 @@ the lower 5 bits of register <em>rs2</em>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:nop"><a class="anchor" href="#sec:nop"></a>NOP Instruction</h3>
+<h3 id="sec:nop"><a class="anchor" href="#sec:nop"></a>1.4.3. NOP Instruction</h3>
 <div class="imageblock kroki">
 <div class="content">
 <img src="_images/svg-48b541768cf9dad7a29a9c4d58608978def6ac9e.svg" alt="svg">
@@ -1203,7 +1200,7 @@ hardware.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:ct-instructions"><a class="anchor" href="#sec:ct-instructions"></a>Control Transfer Instructions</h2>
+<h2 id="sec:ct-instructions"><a class="anchor" href="#sec:ct-instructions"></a>1.5. Control Transfer Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>RV32I provides two types of control transfer instructions: unconditional
@@ -1217,7 +1214,7 @@ reported on the target instruction, not on the jump or branch
 instruction.</p>
 </div>
 <div class="sect2">
-<h3 id="sec:ct-branches"><a class="anchor" href="#sec:ct-branches"></a>Unconditional Jumps</h3>
+<h3 id="sec:ct-branches"><a class="anchor" href="#sec:ct-branches"></a>1.5.1. Unconditional Jumps</h3>
 <div class="paragraph">
 <p>The jump and link (JAL) instruction uses the J-type format, where the
 J-immediate encodes a signed offset in multiples of 2 bytes. The offset
@@ -1418,7 +1415,7 @@ is only pushed to enable macro-op fusion of the sequences:
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:ct-cond-branches"><a class="anchor" href="#sec:ct-cond-branches"></a>Conditional Branches</h3>
+<h3 id="sec:ct-cond-branches"><a class="anchor" href="#sec:ct-cond-branches"></a>1.5.2. Conditional Branches</h3>
 <div class="paragraph">
 <p>All branch instructions use the B-type instruction format. The 12-bit
 B-immediate encodes signed offsets in multiples of 2 bytes. The offset
@@ -1567,7 +1564,7 @@ compressed instruction-set extension, C.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:rv32i-load-store"><a class="anchor" href="#sec:rv32i-load-store"></a>Load and Store Instructions</h2>
+<h2 id="sec:rv32i-load-store"><a class="anchor" href="#sec:rv32i-load-store"></a>1.6. Load and Store Instructions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>RV32I is a load-store architecture, where only load and store
@@ -1733,7 +1730,7 @@ are aligned.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:mem-order"><a class="anchor" href="#sec:mem-order"></a>Memory Ordering Instructions</h2>
+<h2 id="sec:mem-order"><a class="anchor" href="#sec:mem-order"></a>1.7. Memory Ordering Instructions</h2>
 <div class="sectionbody">
 <div class="imageblock kroki">
 <div class="content">
@@ -1883,7 +1880,7 @@ conservative fence on all operations.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:env-call-breakpoints"><a class="anchor" href="#sec:env-call-breakpoints"></a>Environment Call and Breakpoints</h2>
+<h2 id="sec:env-call-breakpoints"><a class="anchor" href="#sec:env-call-breakpoints"></a>1.8. Environment Call and Breakpoints</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><code>SYSTEM</code> instructions are used to access system functionality that might
@@ -1891,7 +1888,7 @@ require privileged access and are encoded using the I-type instruction
 format. These can be divided into two main classes: those that
 atomically read-modify-write control and status registers (CSRs), and
 all other potentially privileged instructions. CSR instructions are
-described in <a href="zicsr.html#sec:csrinsts" class="xref page">CSR Instructions</a>, and the base
+described in <a href="zicsr.html" class="xref page">CSR Instructions</a>, and the base
 unprivileged instructions are described in the following section.</p>
 </div>
 <div class="admonitionblock tip">
@@ -2003,7 +2000,7 @@ for semihosting calls in newer designs.</p>
 </div>
 </div>
 <div class="sect1">
-<h2 id="sec:rv32i-hints"><a class="anchor" href="#sec:rv32i-hints"></a>HINT Instructions</h2>
+<h2 id="sec:rv32i-hints"><a class="anchor" href="#sec:rv32i-hints"></a>1.9. HINT Instructions</h2>
 <div class="sectionbody">
 <div id="rv32i-hints" class="paragraph">
 <p>RV32I reserves a large encoding space for HINT instructions, which are
@@ -2244,7 +2241,7 @@ hints, security tags, and instrumentation flags for simulation/emulation.</p>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="intro.html">Introduction</a></span>
-  <span class="next"><a href="rv32e.html#sec:rv32e">Chapter 2. RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a></span>
+  <span class="next"><a href="rv32e.html">Chapter 2. RV32E and RV64E Base Integer Instruction Sets, Version 2.0</a></span>
 </nav>
 </article>  </div>
 </main>

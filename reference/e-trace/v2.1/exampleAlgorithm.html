@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>11.1. Reference Compressed Branch Trace Algorithm :: RISC-V Ratified Specifications Library</title>
+    <title>8.1. Reference Compressed Branch Trace Algorithm :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/e-trace/v2.1/exampleAlgorithm.html">
-    <link rel="prev" href="decoder.html">
-    <link rel="next" href="exampleCodeSnippets.html">
+    <link rel="prev" href="dataTracePayload.html">
+    <link rel="next" href="discovery.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -197,46 +197,49 @@
     <a class="nav-link"  href="introduction.html">Introduction</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="discovery.html">Chapter 1. Trace Discovery</a>
+    <a class="nav-link"  href="control.html">Chapter 1. Trace Control</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="control.html">Chapter 2. Trace Control</a>
+    <a class="nav-link"  href="branchTrace.html">Chapter 2. Branch Trace</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="payload.html">Chapter 3. Trace Payload Encoding</a>
+    <a class="nav-link"  href="ingressPort.html">Chapter 3. Ingress Port Interface</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="branchTrace.html">Chapter 4. Branch Trace</a>
+    <a class="nav-link"  href="filtering.html">Chapter 4. Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="dataTracePayload.html">Chapter 5. Data Trace Payload</a>
+    <a class="nav-link"  href="timestamping.html">Chapter 5. Timestamping</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Interface</a>
+    <a class="nav-link"  href="payload.html">Chapter 6. Trace Payload Encoding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="timestamping.html">Chapter 7. Timestamping</a>
+    <a class="nav-link"  href="dataTracePayload.html">Chapter 7. Data Trace Payload</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 8. Example Algorithm</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="filtering.html">Chapter 8. Filtering</a>
-  </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 9. Fragment Code and Transport</a>
+    <a class="nav-link"  href="discovery.html">Chapter 9. Trace Discovery</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="decoder.html">Chapter 10. Decoder</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 11. Example Algorithm</a>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 11. Example Code Snippets</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 12. Fragment Code and Transport</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="extensions.html">Chapter 13. Extensions</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-support">Chapter 13. Standard Support Packet v1.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="future.html">Chapter 14. Future Enhancements</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-impret">Chapter 14. Implicit Return v1.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="extensions.html#sec:ext-mmacas">Data Trace of Multiple-Memory Access and Compare and Swap v1.0</a>
   </li>
 </ul>
   </li>
@@ -655,7 +658,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="11.1. Reference Compressed Branch Trace Algorithm"
+      data-title="8.1. Reference Compressed Branch Trace Algorithm"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -716,9 +719,9 @@
                 </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">11.1. Reference Compressed Branch Trace Algorithm</h1>
+<h1 id="page-title" class="page">8.1. Reference Compressed Branch Trace Algorithm</h1>
 <div class="sect1">
-<h2 id="Algorithm"><a class="anchor" href="#Algorithm"></a>11.1. Reference Compressed Branch Trace Algorithm</h2>
+<h2 id="Algorithm"><a class="anchor" href="#Algorithm"></a>8.1. Reference Compressed Branch Trace Algorithm</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The contents of this chapter are informative only.</p>
@@ -851,7 +854,7 @@ packet.</p>
 <div class="title">Figure 1. Instruction delta trace algorithm</div>
 </div>
 <div class="sect2">
-<h3 id="11-1-1-format-selection"><a class="anchor" href="#11-1-1-format-selection"></a>11.1.1. Format selection</h3>
+<h3 id="8-1-1-format-selection"><a class="anchor" href="#8-1-1-format-selection"></a>8.1.1. Format selection</h3>
 <div class="paragraph">
 <p>In all cases but two, the packet format is determined only by a 'yes'
 outcome from the associated decision.</p>
@@ -903,7 +906,7 @@ efficiency. See <a href="payload.html#packets" class="xref page">Packet Formats<
 </div>
 </div>
 <div class="sect2">
-<h3 id="sec:resync"><a class="anchor" href="#sec:resync"></a>11.1.2. Resynchronisation</h3>
+<h3 id="sec:resync"><a class="anchor" href="#sec:resync"></a>8.1.2. Resynchronisation</h3>
 <div class="paragraph">
 <p>Per <a href="branchTrace.html#sec:synchronization" class="xref page">Synchronization</a>, a format 3
 synchronisation packet must be output after "a prolonged period of
@@ -943,7 +946,7 @@ will be generated if the branch map is not empty.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="rec:multiretcon"><a class="anchor" href="#rec:multiretcon"></a>11.1.3. Multiple retirement considerations</h3>
+<h3 id="rec:multiretcon"><a class="anchor" href="#rec:multiretcon"></a>8.1.3. Multiple retirement considerations</h3>
 <div class="paragraph">
 <p>As noted earlier in this section, for a single-retirement system the
 reference algorithm is applied to each retired instruction. When
@@ -1019,8 +1022,8 @@ overflows, it should issue a support packet indicating trace lost.</p>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="decoder.html">Chapter 10. Decoder</a></span>
-  <span class="next"><a href="exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a></span>
+  <span class="prev"><a href="dataTracePayload.html">Chapter 7. Data Trace Payload</a></span>
+  <span class="next"><a href="discovery.html">Chapter 9. Trace Discovery</a></span>
 </nav>
 </article>  </div>
 </main>

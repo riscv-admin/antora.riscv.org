@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>2.1. Encoder Control :: RISC-V Ratified Specifications Library</title>
+    <title>1.1. Encoder Control :: RISC-V Ratified Specifications Library</title>
     <link rel="canonical" href="https://docs.riscv.org/reference/e-trace/v2.1/control.html">
-    <link rel="prev" href="discovery.html">
-    <link rel="next" href="payload.html">
+    <link rel="prev" href="introduction.html">
+    <link rel="next" href="branchTrace.html">
     <meta name="generator" content="Antora 3.1.15">
     <script>
 !function (theme, navWidth) {
@@ -196,47 +196,50 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="introduction.html">Introduction</a>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="discovery.html">Chapter 1. Trace Discovery</a>
-  </li>
   <li class="nav-item is-current-page" data-depth="2">
-    <a class="nav-link"  href="control.html">Chapter 2. Trace Control</a>
+    <a class="nav-link"  href="control.html">Chapter 1. Trace Control</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="payload.html">Chapter 3. Trace Payload Encoding</a>
+    <a class="nav-link"  href="branchTrace.html">Chapter 2. Branch Trace</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="branchTrace.html">Chapter 4. Branch Trace</a>
+    <a class="nav-link"  href="ingressPort.html">Chapter 3. Ingress Port Interface</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="dataTracePayload.html">Chapter 5. Data Trace Payload</a>
+    <a class="nav-link"  href="filtering.html">Chapter 4. Filtering</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="ingressPort.html">Chapter 6. Ingress Port Interface</a>
+    <a class="nav-link"  href="timestamping.html">Chapter 5. Timestamping</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="timestamping.html">Chapter 7. Timestamping</a>
+    <a class="nav-link"  href="payload.html">Chapter 6. Trace Payload Encoding</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="filtering.html">Chapter 8. Filtering</a>
+    <a class="nav-link"  href="dataTracePayload.html">Chapter 7. Data Trace Payload</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 9. Fragment Code and Transport</a>
+    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 8. Example Algorithm</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="discovery.html">Chapter 9. Trace Discovery</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link"  href="decoder.html">Chapter 10. Decoder</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleAlgorithm.html">Chapter 11. Example Algorithm</a>
+    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 11. Example Code Snippets</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="exampleCodeSnippets.html">Chapter 12. Example Code Snippets</a>
+    <a class="nav-link"  href="fragmentCodeAndTransport.html">Chapter 12. Fragment Code and Transport</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="extensions.html">Chapter 13. Extensions</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-support">Chapter 13. Standard Support Packet v1.0</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link"  href="future.html">Chapter 14. Future Enhancements</a>
+    <a class="nav-link"  href="extensions.html#sec:ext-impret">Chapter 14. Implicit Return v1.0</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link"  href="extensions.html#sec:ext-mmacas">Data Trace of Multiple-Memory Access and Compare and Swap v1.0</a>
   </li>
 </ul>
   </li>
@@ -655,7 +658,7 @@
   <div class="content">
     <div
       class="toc"
-      data-title="2.1. Encoder Control"
+      data-title="1.1. Encoder Control"
       data-levels="5"
     >
       <div class="toc-menu"></div>
@@ -716,9 +719,9 @@
                 </ul>
   </nav>
 </div>
-<h1 id="page-title" class="page">2.1. Encoder Control</h1>
+<h1 id="page-title" class="page">1.1. Encoder Control</h1>
 <div class="sect1">
-<h2 id="encoderControl"><a class="anchor" href="#encoderControl"></a>2.1. Encoder Control</h2>
+<h2 id="encoderControl"><a class="anchor" href="#encoderControl"></a>1.1. Encoder Control</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>The fields required to control a Trace Encoder are defined in the
@@ -763,7 +766,7 @@ been necessary to change the field names in the process.</p>
 </ul>
 </div>
 <div class="sect2">
-<h3 id="sec:ctl-basic"><a class="anchor" href="#sec:ctl-basic"></a>2.1.1. Basic Control</h3>
+<h3 id="sec:ctl-basic"><a class="anchor" href="#sec:ctl-basic"></a>1.1.1. Basic Control</h3>
 <div class="paragraph">
 <p>The following fields control basic encoding behavior.</p>
 </div>
@@ -908,7 +911,7 @@ the E-Trace protocol.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="sec:ctl-modes"><a class="anchor" href="#sec:ctl-modes"></a>2.1.2. Optional Modes</h3>
+<h3 id="sec:ctl-modes"><a class="anchor" href="#sec:ctl-modes"></a>1.1.2. Optional Modes</h3>
 <div class="paragraph">
 <p>See <a href="branchTrace.html#optional" class="xref page">Optional Modes</a> for details of the modes covered in this section.</p>
 </div>
@@ -1006,7 +1009,7 @@ the E-Trace protocol.</p></td>
 </table>
 </div>
 <div class="sect2">
-<h3 id="sec:ctl-filter"><a class="anchor" href="#sec:ctl-filter"></a>2.1.3. Filtering</h3>
+<h3 id="sec:ctl-filter"><a class="anchor" href="#sec:ctl-filter"></a>1.1.3. Filtering</h3>
 <div class="paragraph">
 <p>See <a href="filtering.html#ch:filtering" class="xref page">Filtering</a> for details of the filtering capabilities covered in this section.</p>
 </div>
@@ -1054,8 +1057,8 @@ the E-Trace protocol.</p></td>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="discovery.html">Chapter 1. Trace Discovery</a></span>
-  <span class="next"><a href="payload.html">Chapter 3. Trace Payload Encoding</a></span>
+  <span class="prev"><a href="introduction.html">Introduction</a></span>
+  <span class="next"><a href="branchTrace.html">Chapter 2. Branch Trace</a></span>
 </nav>
 </article>  </div>
 </main>

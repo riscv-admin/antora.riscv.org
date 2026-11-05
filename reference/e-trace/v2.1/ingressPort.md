@@ -1,6 +1,6 @@
-# 6.1. Hart to encoder interface
+# 3.1. Hart to encoder interface
 
-## [](#Interface)6.1\. Hart to encoder interface
+## [](#Interface)3.1\. Hart to encoder interface
 
 This interface is now defined in the [RISC-V Hart to Trace Interface (RHTI) Specification](https://docs.riscv.org/reference/hti/v1.0/%5Fattachments/riscv-hart-trace-interface.pdf), V1.0\. Originally developed as part of this specification, it has been separated into a standalone specification as it is not inherently E-Trace specific, and intended for use with any instruction and data trace encoding protocol.
 
