@@ -721,7 +721,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p><strong>Compressed</strong>: All instructions mapping to any of the above, and C.LWSP, C.LDSP, C.LQSP, C.FLWSP, C.FLDSP, C.SWSP, C.SDSP, C.SQSP, C.FSWSP, C.FSDSP.</p>
 </li>
 <li>
-<p><strong>Hypervisor Extension</strong>: HLV.*, HSV.* (in some cases; see <a href="#ssnpm">[ssnpm]</a>).</p>
+<p><strong>Hypervisor Extension</strong>: HLV.*, HSV.* (in some cases; see <a href="#ssnpm">17.3.1. Ssnpm</a>).</p>
 </li>
 <li>
 <p><strong>Cache Management Operations</strong>: All instructions in Zicbom, Zicbop and Zicboz.</p>
@@ -875,7 +875,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </ul>
 </div>
 <div class="paragraph">
-<p>See <a href="#isa-extensions">[isa-extensions]</a> for details on how each of these extensions is configured.</p>
+<p>See <a href="#isa-extensions"><em>17.3. ISA Extensions</em></a> for details on how each of these extensions is configured.</p>
 </div>
 <div class="paragraph">
 <p>In addition, the pointer masking standard defines two extensions that describe an execution environment but have no bearing on hardware implementations. These extensions are intended to be used in profile specifications where a User profile or a Supervisor profile can only reference User level or Supervisor level pointer masking functionality, and not the associated CSR controls that exist at a higher privilege level (i.e., in the execution environment).</p>
@@ -894,7 +894,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>The precise nature of these facilities is left to the respective execution environment.</p>
 </div>
 <div class="paragraph">
-<p>Pointer masking only applies to RV64. In RV32, trying to enable pointer masking will result in an illegal WARL write and not update the pointer masking configuration bits (see <a href="#isa-extensions">[isa-extensions]</a> for details). The same is the case on RV64 or larger systems when UXL/SXL/MXL is set to 1 for the corresponding privilege mode. Note that in RV32, the CSR bits introduced by pointer masking are still present, for compatibility between RV32 and larger systems with UXL/SXL/MXL set to 1. Setting UXL/SXL/MXL to 1 will clear the corresponding pointer masking configuration bits.</p>
+<p>Pointer masking only applies to RV64. In RV32, trying to enable pointer masking will result in an illegal WARL write and not update the pointer masking configuration bits (see <a href="#isa-extensions"><em>17.3. ISA Extensions</em></a> for details). The same is the case on RV64 or larger systems when UXL/SXL/MXL is set to 1 for the corresponding privilege mode. Note that in RV32, the CSR bits introduced by pointer masking are still present, for compatibility between RV32 and larger systems with UXL/SXL/MXL set to 1. Setting UXL/SXL/MXL to 1 will clear the corresponding pointer masking configuration bits.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -914,7 +914,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 </div>
 </div>
 <div class="sect1">
-<h2 id="17-3-isa-extensions"><a class="anchor" href="#17-3-isa-extensions"></a>17.3. ISA Extensions</h2>
+<h2 id="isa-extensions"><a class="anchor" href="#isa-extensions"></a>17.3. ISA Extensions</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>This section describes the pointer masking extensions <code>Smmpm</code>, <code>Smnpm</code> and <code>Ssnpm</code>. All of these extensions are privileged ISA extensions and do not add any new CSRs. For the definitions of <code>Sspm</code> and <code>Supm</code>, see <a href="#pointer-masking-extensions">[pointer-masking-extensions]</a>.</p>
@@ -971,7 +971,7 @@ NVBITS[1111111]  VBITS[11111111111111111111111110001&#8230;&#8203;000]</p></td>
 <p>All of these fields are read-only 0 on RV32 systems.</p>
 </div>
 <div class="sect2">
-<h3 id="17-3-1-ssnpm"><a class="anchor" href="#17-3-1-ssnpm"></a>17.3.1. Ssnpm</h3>
+<h3 id="ssnpm"><a class="anchor" href="#ssnpm"></a>17.3.1. Ssnpm</h3>
 <div class="paragraph">
 <p><code>Ssnpm</code> adds a new 2-bit WARL field (<code>PMM</code>) to bits 33:32 of <code>senvcfg</code>. Setting <code>PMM</code> enables or disables pointer masking for the next lower privilege mode (U/VU mode), according to the values in Table 2.</p>
 </div>
