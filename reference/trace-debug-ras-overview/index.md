@@ -2,15 +2,15 @@
 
 ##### Efficient Trace for RISC-V
 
-**Version:** v2.0
+**Version:** v2.1
 
-June 2025
+October 2026
 
-Trace architecture for efficient execution visibility.
+RISC-V Efficient Trace (E-Trace) specification for instruction and data trace encoding.
 
 [HTML](../e-trace/index.html)[PDF](../e-trace/%5Fattachments/riscv-trace-spec.pdf)
 
-[More](https://riscv.atlassian.net/wiki/external/NjI1Y2M5ODdiYmUxNGE5MzkzYzdkNzNjNGE3NWFjNDA)
+[More](https://riscv.atlassian.net/browse/RVS-2862)
 
 ##### QoS Register Interface
 
