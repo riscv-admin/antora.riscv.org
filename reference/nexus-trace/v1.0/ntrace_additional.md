@@ -4,7 +4,7 @@
 
 **Trace Bandwidth Considerations**
 
-SRC field (if enabled) may change the otherwise optimal layout of [Fields in Messages](#Fields in Messages).
+SRC field (if enabled) may change the otherwise optimal layout of [Fields in Messages](ntrace%5Fmessages%5Foverview.html#sec%5FFields%5Fin%5FMessages).
 
 **Validation Considerations**
 

@@ -12,33 +12,33 @@ This chapter explicitly addresses 16-bit and 32-bit instructions as defined in t
 
 **Detailed Rules**
 
-1. If tracing is started (or restarted after it was disabled), a [ProgTraceSync](#msg%5FProgTraceSync) message is generated.  
-   * This message specifies the reason for the start in the [SYNC](#field%5FSYNC) field and includes full address in the [F-ADDR](#field%5FF-ADDR) field.
-2. A retired 16-bit instruction increments the [I-CNT](#field%5FI-CNT) counter by 1, while a retired 32-bit instruction increments it by 2.
+1. If tracing is started (or restarted after it was disabled), a [ProgTraceSync](ntrace%5Fmessages%5Foverview.html#msg%5FProgTraceSync) message is generated.  
+   * This message specifies the reason for the start in the [SYNC](ntrace%5Fmessages%5Foverview.html#field%5FSYNC) field and includes full address in the [F-ADDR](ntrace%5Fmessages%5Foverview.html#field%5FF-ADDR) field.
+2. A retired 16-bit instruction increments the [I-CNT](ntrace%5Fmessages%5Foverview.html#field%5FI-CNT) counter by 1, while a retired 32-bit instruction increments it by 2.
 3. The following types of instructions allow trace decoders to determine the next PC and encoder should not generate any trace for them.  
    * Instruction which is not control transfer instructions should advance PC to the next instruction (increment by 2 or 4).  
    * Direct (inferable) unconditional jump should set next PC to jump destination (PC plus an offset obtained from opcode).  
    * Not-taken direct conditional branch (in BTM mode) should advance PC to the next instruction (increment by 2 or 4).
 4. Indirect, unconditional jump instruction is handled as:  
-   * In BTM mode, an [IndirectBranch](#msg2%5FIndirectBranch) message is generated.  
-   * In HTM mode, an [IndirectBranchHist](#msg2%5FIndirectBranchHist) message is generated. Should the [HIST](#field%5FHIST) field be empty, an [IndirectBranch](#msg2%5FIndirectBranch) message may optionally be generated instead.
+   * In BTM mode, an [IndirectBranch](ntrace%5Fmessages%5Fdetails.html#msg2%5FIndirectBranch) message is generated.  
+   * In HTM mode, an [IndirectBranchHist](ntrace%5Fmessages%5Fdetails.html#msg2%5FIndirectBranchHist) message is generated. Should the [HIST](ntrace%5Fmessages%5Foverview.html#field%5FHIST) field be empty, an [IndirectBranch](ntrace%5Fmessages%5Fdetails.html#msg2%5FIndirectBranch) message may optionally be generated instead.
 5. Direct, conditional branch instruction is handled as:  
-   * In BTM mode, a [DirectBranch](#msg%5FDirectBranch) message is generated, but only if the branch is taken.  
-   * In HTM mode, the outcome of the branch (1 for taken or 0 for not taken) is appended as a single bit into the branch history buffer ([HIST](#field%5FHIST) register).
-6. When tracing is stopped or disabled, a [ProgTraceCorrelation](#msg%5FProgTraceCorrelation) message is generated.  
-   * This message included a reason for stopping or disabling (specified in the [EVCODE](#field%5FEVCODE) field), the [I-CNT](#field%5FI-CNT) and an optional [HIST](#field%5FHIST) field. These details allow for the calculation of the last PC.
-7. When a generated message includes [I-CNT](#field%5FI-CNT) counter value or [HIST](#field%5FHIST) register value, the corresponding counter and/or register are reset.  
-   * If the I-CNT counter is full, a [ResourceFull](#msg%5FResourceFull) message, indicating that I-CNT counter is full, is generated. Subsequently, the I-CNT is reset.  
-   * Similarily, if the HIST register reaches it capacity, a [ResourceFull](#msg%5FResourceFull) message, specifying that the HIST register is full, is generated. The HIST register is then reset.
+   * In BTM mode, a [DirectBranch](ntrace%5Fmessages%5Foverview.html#msg%5FDirectBranch) message is generated, but only if the branch is taken.  
+   * In HTM mode, the outcome of the branch (1 for taken or 0 for not taken) is appended as a single bit into the branch history buffer ([HIST](ntrace%5Fmessages%5Foverview.html#field%5FHIST) register).
+6. When tracing is stopped or disabled, a [ProgTraceCorrelation](ntrace%5Fmessages%5Foverview.html#msg%5FProgTraceCorrelation) message is generated.  
+   * This message included a reason for stopping or disabling (specified in the [EVCODE](ntrace%5Fmessages%5Fdetails.html#field%5FEVCODE) field), the [I-CNT](ntrace%5Fmessages%5Foverview.html#field%5FI-CNT) and an optional [HIST](ntrace%5Fmessages%5Foverview.html#field%5FHIST) field. These details allow for the calculation of the last PC.
+7. When a generated message includes [I-CNT](ntrace%5Fmessages%5Foverview.html#field%5FI-CNT) counter value or [HIST](ntrace%5Fmessages%5Foverview.html#field%5FHIST) register value, the corresponding counter and/or register are reset.  
+   * If the I-CNT counter is full, a [ResourceFull](ntrace%5Fmessages%5Foverview.html#msg%5FResourceFull) message, indicating that I-CNT counter is full, is generated. Subsequently, the I-CNT is reset.  
+   * Similarily, if the HIST register reaches it capacity, a [ResourceFull](ntrace%5Fmessages%5Foverview.html#msg%5FResourceFull) message, specifying that the HIST register is full, is generated. The HIST register is then reset.
 
 **Extended Rules**
 
 These rules are augmenting the above rules if the corresponding configuration setting is set.
 
-1. Call and return instructions may optionally be handled as described in the [Implicit Return Optimization](#Implicit Return Optimization) chapter and may generate no trace.
+1. Call and return instructions may optionally be handled as described in the [Implicit Return Optimization](ntrace%5Foptimizations.html#sec%5FImplicit%5FReturn%5FOptimization) chapter and may generate no trace.
 2. By default, the target of an indirect unconditional jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant then it can be considered inferable under some circumstances.  
    * Such instruction sequences may be detected and in such a case no trace is generated.  
-   * This optional feature is described in detail in the [Sequential Jump Optimization](#Sequential Jump Optimization) chapter.
+   * This optional feature is described in detail in the [Sequential Jump Optimization](ntrace%5Foptimizations.html#sec%5FSequential%5FJump%5FOptimization) chapter.
 
 ### [](#9-1-1-custom-instructions)9.1.1\. Custom Instructions
 

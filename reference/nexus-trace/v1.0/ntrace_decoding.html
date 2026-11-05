@@ -727,7 +727,7 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>Decoding must start from a <a href="#Synchronizing Messages">synchronizing message</a>. The synchronizing message provides the complete PC in the <a href="#field_F-ADDR">F-ADDR</a> field. Transfers relative to this PC may then be inferred using subsequent messages till a new PC is transmitted in a subsequent synchronizing message.</p>
+<p>Decoding must start from a <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">synchronizing message</a>. The synchronizing message provides the complete PC in the <a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a> field. Transfers relative to this PC may then be inferred using subsequent messages till a new PC is transmitted in a subsequent synchronizing message.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -736,7 +736,7 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">F-ADDR</a> are transmitted periodically. Periodic <a href="#field_F-ADDR">F-ADDR</a> transmission is also needed to decode trace from small, circular buffers.
+To provide partial decoding of big trace, messages with <a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a> are transmitted periodically. Periodic <a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a> transmission is also needed to decode trace from small, circular buffers.
 </td>
 </tr>
 </table>
@@ -752,7 +752,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 <p>Copy <strong>HIST</strong> and <strong>I-CNT</strong> fields (if available) to corresponding registers.</p>
 </li>
 <li>
-<p>Handle <a href="#field_HIST">HIST</a> register (while not empty):</p>
+<p>Handle <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> register (while not empty):</p>
 <div class="ulist">
 <ul>
 <li>
@@ -768,7 +768,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 </div>
 </li>
 <li>
-<p>Handle <a href="#field_I-CNT">I-CNT</a> register (while greater than 0x0):</p>
+<p>Handle <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> register (while greater than 0x0):</p>
 <div class="ulist">
 <ul>
 <li>
@@ -791,7 +791,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 </div>
 </li>
 <li>
-<p>At the last step the <a href="#field_F-ADDR">F-ADDR</a> or <a href="#field_U-ADDR">U-ADDR</a> field (if available) should be applied.</p>
+<p>At the last step the <a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a> or <a href="ntrace_messages_overview.html#field_U-ADDR" class="xref page">U-ADDR</a> field (if available) should be applied.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -804,7 +804,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 </div>
 </li>
 <li>
-<p>Handle the <a href="#field_B-CNT">B-CNT</a> or <a href="#field_RCODE">RCODE</a> fields by repeating processing of the fields from previous trace message.</p>
+<p>Handle the <a href="ntrace_messages_details.html#field_B-CNT" class="xref page">B-CNT</a> or <a href="ntrace_messages_details.html#field_RCODE" class="xref page">RCODE</a> fields by repeating processing of the fields from previous trace message.</p>
 </li>
 </ul>
 </div>
@@ -821,7 +821,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 <p>Phrase <strong>inferable unconditional jumps (all types)</strong> include indirect unconditional jumps, which may be inferable.</p>
 </li>
 <li>
-<p>Extra fields like <a href="#field_SYNC">SYNC</a>/<a href="#field_B-TYPE">B-TYPE</a> only provide extra details, but are NOT essential for a decoder to reconstruct the PC flow.</p>
+<p>Extra fields like <a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a>/<a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a> only provide extra details, but are NOT essential for a decoder to reconstruct the PC flow.</p>
 </li>
 <li>
 <p>See <a href="https://github.com/riscv-non-isa/tg-nexus-trace/tree/main/refcode/c">N-Trace Reference Code</a> for simple but fully functional implementation.</p>
@@ -836,7 +836,7 @@ To provide partial decoding of big trace, messages with <a href="#field_F-ADDR">
 <div class="sect2">
 <h3 id="10-1-2-decoding-trace-from-multiple-harts"><a class="anchor" href="#10-1-2-decoding-trace-from-multiple-harts"></a>10.1.2. Decoding trace from multiple harts</h3>
 <div class="paragraph">
-<p>Decoder assigned to a specific hart should process only those messages tagged with a <a href="#field_SRC">SRC</a> value corresponding to that hart. To facilitate this,
+<p>Decoder assigned to a specific hart should process only those messages tagged with a <a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a> value corresponding to that hart. To facilitate this,
 all encoders operating within the same trace stream must configure the <code>trTeSrcBits</code> field identically to ensure a consistent source identifier bit width,
 and must each be assigned a unique <code>trTeSrcID</code> field value. This arrangement ensures that messages can be accurately attributed to their originating hart,
 allowing for precise and isolated trace analysis per hart.</p>
@@ -845,7 +845,7 @@ allowing for precise and isolated trace analysis per hart.</p>
 <div class="sect2">
 <h3 id="10-1-3-decoding-trace-of-operating-systems"><a class="anchor" href="#10-1-3-decoding-trace-of-operating-systems"></a>10.1.3. Decoding trace of operating systems</h3>
 <div class="paragraph">
-<p>In case of complex operating systems (Linux etc.), where code consists of several independently built programs and libraries, decoders must be aware of different program images (e.g., ELF files) at different locations. <a href="#msg_Ownership">Ownership</a> messages should provide enough context. Decoders must be also aware of assignment of <strong>scontext/hcontext</strong> values for programs and processes being traced.</p>
+<p>In case of complex operating systems (Linux etc.), where code consists of several independently built programs and libraries, decoders must be aware of different program images (e.g., ELF files) at different locations. <a href="ntrace_messages_overview.html#msg_Ownership" class="xref page">Ownership</a> messages should provide enough context. Decoders must be also aware of assignment of <strong>scontext/hcontext</strong> values for programs and processes being traced.</p>
 </div>
 <div class="paragraph">
 <p>Operating systems may decide to migrate single process to different cores/harts. It may also be the case, when different threads from the same process (sharing code &#8230;&#8203;) will run in the same time on more than one core/hart.</p>

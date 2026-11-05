@@ -14,4 +14,4 @@ This specification together with details provided in any of above documents shou
 
 Trace is controlled by set of 32-bit memory-mapped registers.
 
-Not all trace protocols and components must support all registers, bits, fields and options. This document includes a chapter [Minimal Implementation](#Minimal Implementation) which describes the smallest possible set of registers and fields, but each message protocol supported by this standard must clarify the exact meaning of supported registers/fields and bits as some of them define.
+Not all trace protocols and components must support all registers, bits, fields and options. This document includes a chapter [Minimal Implementation](tci%5Fadditional.html#sec%5FMinimal%5FImplementation) which describes the smallest possible set of registers and fields, but each message protocol supported by this standard must clarify the exact meaning of supported registers/fields and bits as some of them define.

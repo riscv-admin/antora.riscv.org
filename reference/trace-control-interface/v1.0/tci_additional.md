@@ -2,7 +2,7 @@
 
 ## [](#additional-material)Additional Material
 
-### [](#minimal-implementation)Minimal Implementation
+### [](#sec%5FMinimal%5FImplementation)Minimal Implementation
 
 This (non-normative) chapter gives an of what needs to be done to put together complete RISC-V trace implementation without getting familiar with every detail of every register.
 
@@ -67,7 +67,7 @@ It is hard to define required mode as it depends on SoC bandwidth requirements a
 
 * Field `trAtbBridgeID` must be settable by trace tool (hard coded ID may not be handled by all trace tools).
 
-### [](#reset-and-discovery)Reset and Discovery
+### [](#sec%5FReset%5Fand%5FDiscovery)Reset and Discovery
 
 This chapter describes what trace tools should do to reset and discover trace features.
 
@@ -89,10 +89,10 @@ When component is held in reset (`tr??Active` is 0), then `tr??Enable` bit must 
 
 Releasing components from reset (by setting `tr??Active` to 1) may take time - debug tools should monitor (with reasonable timeout) if the appropriate bit changed from 0 to 1.
 
-As not all fields/registers are affected by reset (defined as [Undef](#Undef)), the trace tools must initialize (usually, a write of a value 0) several registers to assure that trace component is in a predictable state.
+As not all fields/registers are affected by reset (defined as [Undef](tci%5Fintroduction.html#Undef)), the trace tools must initialize (usually, a write of a value 0) several registers to assure that trace component is in a predictable state.
 
-| |  Some of the reset values are defined as [SD](#SD) (system dependent) and these values should reset as well and each time to the same value as would be after power-up. Most of fields/registers have [Undef](#Undef) specified in reset behavior of the field. It should not prevent some implementations from resetting these. |
-| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| |  Some of the reset values are defined as [SD](tci%5Fintroduction.html#SD) (system dependent) and these values should reset as well and each time to the same value as would be after power-up. Most of fields/registers have [Undef](tci%5Fintroduction.html#Undef) specified in reset behavior of the field. It should not prevent some implementations from resetting these. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
 Reset and Discovery should be performed as follows:
 
@@ -139,7 +139,7 @@ In general, it is safer to power-up and enable components starting from sinks/br
 | |  Pre-release version of this specification specified that most of fields and registers were reset. It was suggested (by Architecture Review Committee) that reset logic is made minimal to follow RISC-V ISA style. Older implementations (which reset more bits) are still compatible with a ratified version. These implementations do not have to change as it is perfectly OK to reset more fields and registers. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#enabling-and-disabling)Enabling and Disabling
+### [](#sec%5FEnabling%5Fand%5FDisabling)Enabling and Disabling
 
 Enabling should work as follows:
 

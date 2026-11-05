@@ -736,14 +736,14 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeActive</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Primary activate/reset bit for the TE. When 0, the TE may have clocks gated off or be powered
-down, and other register locations may be inaccessible. Hardware may take an arbitrarily long time to process power-up and power-down and will indicate completion when the read value of this bit matches what was written. See <a href="#Reset and Discovery">Reset and Discovery</a> chapter for more details.</p></td>
+down, and other register locations may be inaccessible. Hardware may take an arbitrarily long time to process power-up and power-down and will indicate completion when the read value of this bit matches what was written. See <a href="tci_additional.html#sec_Reset_and_Discovery" class="xref page">Reset and Discovery</a> chapter for more details.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeEnable</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Trace Encoder is enabled. Allows <code>trTeInstTracing</code> and <code>trTeDataTracing</code> to turn tracing on and off. Setting <code>trTeEnable</code> to 0 flushes any queued trace data to the sink or funnel attached to this encoder. This bit can be set to 1 only by direct writing to it. This write of 1 should be done after all other settings are done. See <a href="#Enabling and Disabling">Enabling and Disabling</a> chapter for more details.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Trace Encoder is enabled. Allows <code>trTeInstTracing</code> and <code>trTeDataTracing</code> to turn tracing on and off. Setting <code>trTeEnable</code> to 0 flushes any queued trace data to the sink or funnel attached to this encoder. This bit can be set to 1 only by direct writing to it. This write of 1 should be done after all other settings are done. See <a href="tci_additional.html#sec_Enabling_and_Disabling" class="xref page">Enabling and Disabling</a> chapter for more details.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 </tr>
@@ -752,7 +752,7 @@ down, and other register locations may be inaccessible. Hardware may take an arb
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstTracing</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Instruction trace is being generated. Written from a trace tool (after a write to <code>trTeEnable</code>) or controlled by triggers. When <code>trTeInstTracing=1</code>, instruction trace data may be subject to additional filtering in some implementations (additional <code>trTeInstMode</code> settings).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
@@ -767,13 +767,13 @@ down, and other register locations may be inaccessible. Hardware may take an arb
 <td class="tableblock halign-left valign-top"><p class="tableblock">Instruction trace generation mode<br>
 <strong>0:</strong> Full Instruction trace is disabled, but other trace (data trace) may be emitted.<br>
 <strong>1-2:</strong> Protocol defined trace mode.<br>
-<strong>3:</strong> Baseline instruction trace (for example <a href="#Branch Trace Messaging">Branch Trace</a>).<br>
+<strong>3:</strong> Baseline instruction trace (for example <a href="tci_system_overview.html#sec_Branch_Trace_Messaging" class="xref page">Branch Trace</a>).<br>
 <strong>4-5:</strong> Protocol defined trace mode.<br>
-<strong>6:</strong> Optimized instruction trace (for example <a href="#Branch History Messaging">Branch History Trace</a>).<br>
+<strong>6:</strong> Optimized instruction trace (for example <a href="tci_system_overview.html#sec_Branch_History_Messaging" class="xref page">Branch History Trace</a>).<br>
 <strong>7:</strong> Reserved for vendor-defined instruction trace mode.<br>
 NOTE: When non-supported mode (different than 0) is set, it cannot revert to 0 but MUST revert to supported non-0 mode.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8:7</p></td>
@@ -787,7 +787,7 @@ NOTE: When non-supported mode (different than 0) is set, it cannot revert to 0 b
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeContext</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable sending trace messages/fields with scontext/mcontext values and/or privilege levels.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
@@ -802,14 +802,14 @@ NOTE: When non-supported mode (different than 0) is set, it cannot revert to 0 b
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Allows <code>trTeInstTracing</code> to be set or cleared by Trace-on
 and Trace-off signals generated by the corresponding trigger module.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstStallOrOverflow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Set to 1 by hardware when trace buffer overflow (also known as trace lost) occurs, or when the TE requests a hart stall. Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
@@ -817,7 +817,7 @@ and Trace-off signals generated by the corresponding trigger module.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>0:</strong> If TE cannot send a message, the message is dropped. The protocol dependent overflow instruction trace synchronization message/packet is generated when the trace is restarted, so the decoder will know that trace is lost and must reset any internal decoder state.<br>
 <strong>1:</strong> If TE cannot send a message, the hart is stalled until it can. With this option execution of instructions by the hart may be intrusively affected, but in many cases it is acceptable.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
@@ -833,7 +833,7 @@ and Trace-off signals generated by the corresponding trigger module.</p></td>
  source width held in <code>trTeSrcBits</code> is not 0.<br>
 <strong>1:</strong> Disable inclusion of source field in trace messages/packets.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">17:16</p></td>
@@ -845,7 +845,7 @@ and Trace-off signals generated by the corresponding trigger module.</p></td>
 <strong>3:</strong> Count instruction 16-bit half-words<br>
 Once the max value of periodic counter is reached, an instruction trace synchronization message/packet should be generated.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">19:18</p></td>
@@ -859,7 +859,7 @@ Once the max value of periodic counter is reached, an instruction trace synchron
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstSyncMax</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The maximum interval (in units determined by <code>trTeInstSyncMode</code>) between instruction trace synchronization messages/packets. Generate synchronization when count reaches 2^(<code>trTeInstSyncMax</code>+4). If an instruction trace synchronization message/packet is generated for another reason, the internal counter should be reset.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">26:24</p></td>
@@ -870,7 +870,7 @@ Once the max value of periodic counter is reached, an instruction trace synchron
 <strong>2-6:</strong> Reserved for future formats<br>
 <strong>7:</strong> Vendor-specific format</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:27</p></td>
@@ -945,21 +945,21 @@ Writing to this register while trace is enabled may unintentionally change a val
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeProtocolMajor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Trace Protocol Major Version. As specified by specification governing <code>trTeFormat</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#SD" class="xref page">SD</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23:20</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeProtocolMinor</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Trace Protocol Minor Version. As specified by specification governing <code>trTeFormat</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#SD" class="xref page">SD</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:24</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Reserved for vendor specific implementation details</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">&#8201;&#8212;&#8201;</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#SD" class="xref page">SD</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -999,42 +999,42 @@ Writing to this register while trace is enabled may unintentionally change a val
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstNoAddrDiff</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, trace messages/packets always carry a full address.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstNoTrapAddr</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, do not include trap handler address in trap messages/packets.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnSequentialJump</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, treat sequentially inferrable jumps as inferable PC discontinuities.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnImplicitReturn</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, treat returns as inferable PC discontinuities when returning from a recent call on a stack. Field <code>trTeInstImplicitReturnMode</code> below provides more details.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnBranchPrediction</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, Branch Predictor based compression is enabled.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnJumpTargetCache</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, Jump Target Cache based compression is enabled.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7:6</p></td>
@@ -1045,28 +1045,28 @@ Writing to this register while trace is enabled may unintentionally change a val
 <strong>2:</strong> Partial (LSB portion of return address) compare (smaller logic cost than 3 below, but in most cases adequate as chances to have an incorrect return address with same LSB bits is very slim).<br>
 <strong>3:</strong> Full address comparing (always assures skipped return addresses are the same as addresses deducted from call instruction). Implementation may take advantage of RAS (Return Address Stack) if implemented by the hart.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnRepeatedHistory</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable repeated branch history/map detection when set.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstEnAllJumps</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable emitting of trace message or add history/map bit for direct unconditional/inferable control flow changes (jumps or calls). Normally these instructions do not generate any trace as the decoder can determine the next instruction. Trace will not compress well but timestamp accuracy will be better - may be used when profiling loops.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstExtendAddrMSB</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, allow extended handing of MSB address bits. Encoding details are trace protocol dependent.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15:11</p></td>
@@ -1080,14 +1080,14 @@ Writing to this register while trace is enabled may unintentionally change a val
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeSrcID</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Trace source ID assigned to this trace encoder. If <code>trTeSrcBits</code> is not 0 and trace source is not disabled by <code>trTeInhibitSrc</code>, then trace messages from this TE will all include a trace source field of <code>trTeSrcBits</code> bits and all messages from this TE will use this value as trace source field.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:28</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeSrcBits</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The number of bits in the trace source field (0..12), unless disabled by <code>trTeInhibitSrc</code>. Some trace protocols may require that this field is identical for all enabled trace encoders within the same trace stream.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1125,9 +1125,9 @@ Applicability of different <code>trTeInst??</code> fields for each trace encodin
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15:0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeInstFilters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#trace-encoder-filter-registers">Trace Encoder Filter Registers</a> chapter qualify an instruction trace. If bit <strong><em>n</em></strong> is a 1 then instructions will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all instructions are traced.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#sec_Trace_Encoder_Filter_Registers">Trace Encoder Filter Registers</a> chapter qualify an instruction trace. If bit <strong><em>n</em></strong> is a 1 then instructions will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all instructions are traced.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
@@ -1163,28 +1163,28 @@ Applicability of different <code>trTeInst??</code> fields for each trace encodin
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataImplemented</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Read as 1 if data trace is implemented.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#SD" class="xref page">SD</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataTracing</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Data trace is being generated. Written from a trace tool or controlled by triggers. When <code>trTeDataTracing</code>=1, data trace  may be subject to additional filtering in some implementations.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataTrigEnable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Global enable/disable for data trace triggers</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataStallOrOverflow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Set to 1 by hardware when data trace causes trace buffer overflow, or when the TE requests a hart stall due to data trace. Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
@@ -1192,21 +1192,21 @@ Applicability of different <code>trTeInst??</code> fields for each trace encodin
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>0:</strong> If TE cannot send data trace messages, an overflow message is generated when the trace is restarted.<br>
 <strong>1:</strong> If TE cannot send data trace messages, the hart is stalled until it can.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataDrop</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Written to 1 by hardware when the data trace packet was dropped (if enabled). Clears to 0 at TE reset or when the trace is enabled (<code>trTeEnable</code> set to 1). Write 1 to clear.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RW1C</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataDropEna</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>1:</strong> Allow temporary suppression of data trace (at some watermark level) to prevent trace overflow or stall. This way instruction trace will have higher priority.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15:7</p></td>
@@ -1220,14 +1220,14 @@ Applicability of different <code>trTeInst??</code> fields for each trace encodin
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataNoValue</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, omit data values from data trace packets.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">17</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataNoAddr</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, omit data address from data trace packets.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">19:18</p></td>
@@ -1238,7 +1238,7 @@ Applicability of different <code>trTeInst??</code> fields for each trace encodin
 <strong>2:</strong> Use differential compression<br>
 <strong>3:</strong> Protocol defined address compression</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:20</p></td>
@@ -1295,9 +1295,9 @@ Applicability of different <code>trTeData??</code> fields for each trace encodin
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15:0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeDataFilters</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#trace-encoder-filter-registers">Trace Encoder Filter Registers</a> chapter qualify data trace. If bit <strong><em>n</em></strong> is a 1 then data accessed will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all data accesses are traced.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Determine which filters defined in <a href="#sec_Trace_Encoder_Filter_Registers">Trace Encoder Filter Registers</a> chapter qualify data trace. If bit <strong><em>n</em></strong> is a 1 then data accessed will be traced when filter <strong><em>n</em></strong> matches. If all bits are 0, all data accesses are traced.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
@@ -1369,7 +1369,7 @@ Applicability of different <code>trTeData??</code> fields for each trace encodin
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTsActive</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Primary activate/reset bit for timestamp unit.
 This must either be RW or, if separated reset for timestamp component is not implemented, a read-only copy of the corresponding <code>trTeActive</code> or <code>trFunnelActive</code> bit.
-See <a href="#Reset and Discovery">Reset and Discovery</a> chapter for more details.</p></td>
+See <a href="tci_additional.html#sec_Reset_and_Discovery" class="xref page">Reset and Discovery</a> chapter for more details.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SD</p></td>
 </tr>
@@ -1380,7 +1380,7 @@ See <a href="#Reset and Discovery">Reset and Discovery</a> chapter for more deta
 <strong>1:</strong> counter runs,<br>
 <strong>0:</strong> counter stopped.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
@@ -1397,7 +1397,7 @@ Write 1 to reset the timestamp counter.</p></td>
 <strong>1:</strong> counter runs when hart is halted (in debug mode),<br>
 <strong>0:</strong> stopped</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6:4</p></td>
@@ -1412,7 +1412,7 @@ Write 1 to reset the timestamp counter.</p></td>
 <strong>5-7:</strong> Vendor-specific mode</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
@@ -1427,7 +1427,7 @@ Write 1 to reset the timestamp counter.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Internal System or Core</strong> timestamp only.<br>
 Prescale timestamp input clock by 2^(2*trTsPrescale). It will be divided by 1, 4, 16, 64 respectively.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14:10</p></td>
@@ -1441,21 +1441,21 @@ Prescale timestamp input clock by 2^(2*trTsPrescale). It will be divided by 1, 4
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTsEnable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Enable for timestamp field in trace messages/packets (for Trace Encoder only).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23:16</p></td>
 <td class="tableblock halign-left valign-top"></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Vendor-specific bits to control what message/packet types include timestamp fields.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">29:24</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTsWidth</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Width of timestamp in bits (0..63)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RO</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#SD">SD</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#SD" class="xref page">SD</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:30</p></td>
@@ -1602,7 +1602,7 @@ If tracing is active (<code>trTeInstTracing</code> = 1), then the encoder genera
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigDbgControl</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Vendor-specific trigger setup</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1653,14 +1653,14 @@ If tracing is active (<code>trTeInstTracing</code> = 1), then the encoder genera
 <strong>5-15:</strong> Reserved<br></p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtInAction<strong>N</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Select actions (as defined for bits 3-0) for external trigger input #<strong>N</strong> (1..7). If an external trigger input does not exist, then its action is fixed at 0.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1696,14 +1696,14 @@ Stop trace transition (<code>trTeInstTracing</code> 1 &#8594; 0) will fire the t
 Vendor-specific event (optional)</p>
 </div></div></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeTrigExtOutEvent<strong>N</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Select events for external trigger output #<strong>N</strong> (1..7). If an external trigger output does not exist, then its event bits are fixed at 0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -1717,7 +1717,7 @@ Vendor-specific event (optional)</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="trace-encoder-filter-registers"><a class="anchor" href="#trace-encoder-filter-registers"></a>Trace Encoder Filter Registers</h3>
+<h3 id="sec_Trace_Encoder_Filter_Registers"><a class="anchor" href="#sec_Trace_Encoder_Filter_Registers"></a>Trace Encoder Filter Registers</h3>
 <div class="paragraph">
 <p>All registers with offsets 0x400 .. 0x7FC are designated for additional trace encoder filter options (context, addresses, modes, etc.).</p>
 </div>
@@ -1899,14 +1899,14 @@ Filter and comparator registers refer to values of some signals (as <strong>priv
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterEnable</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Overall filter enable for filter #<em>i</em></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchPrivilege</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, match privilege levels specified by <code>trTeFilterMatchChoicePrivilege</code> field for filter #<em>i</em>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
@@ -1914,7 +1914,7 @@ Filter and comparator registers refer to values of some signals (as <strong>priv
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, start matching from exception cause codes specified by <code>trTeFilterMatchChoiceEcause</code> field for filter #<em>i</em>, and
 stop matching upon return from the 1st matching exception.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
@@ -1922,49 +1922,49 @@ stop matching upon return from the 1st matching exception.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, start matching from either an interrupt or exception as specified by
 <code>trTeFilterMatchValueInterrupt</code> field for filter #<em>i</em>, and stop matching upon return from the 1st matching trap.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp1</code> must be true for the filter to match.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7:5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 1st comparison.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp2</code> must be true for the filter to match.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11:9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 2nd comparison.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchComp3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, the output of the comparator selected by <code>trTeFilterComp3</code> must be true for the filter to match.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15:13</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterComp3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Specifies the comparator unit to use for the 3rd comparison.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
@@ -1972,7 +1972,7 @@ stop matching upon return from the 1st matching exception.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>impdef</strong> values as specified by <code>trTeFilterMatchValueImpdef</code> and
 <code>trTeFilterMatchMaskImpdef</code> fields for filter #<em>i</em>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23:17</p></td>
@@ -1986,14 +1986,14 @@ stop matching upon return from the 1st matching exception.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchDtype</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>dtype</strong> values as specified by <code>trTeFilterMatchChoiceDtype</code> field for filter #<em>i</em>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchDsize</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When set, match <strong>dsize</strong> values as specified by <code>trTeFilterMatchChoiceDsize</code> field for filter #<em>i</em>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:26</p></td>
@@ -2041,7 +2041,7 @@ Handling of <code>trTeFilterMatchEcause</code> and <code>trTeFilterMatchInterrup
 <td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchPrivilege</code> field for filter #<em>i</em> is set, match all privilege
 levels for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>priv</strong> value at ingress port is N. Setting several bits allow matching several privileges.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
@@ -2049,7 +2049,7 @@ levels for which the corresponding bit is set. For example, if bit N is 1, then 
 <td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchInterrupt</code> field for filter #<em>i</em> is set, match <strong>itype</strong> of 2 or 1 depending on whether this bit is 1 or 0
 respectively.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:9</p></td>
@@ -2085,7 +2085,7 @@ respectively.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceEcauseLow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchEcause</code> field for filter #<em>i</em> is set, match all excepion causes for which the corresponding bit is set. If bit N is 1, then match if the <strong>ecause</strong> is N.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2113,7 +2113,7 @@ respectively.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeFilterMatchChoiceEcauseHigh</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Stores bits 63:32 to allow matching of higher <strong>ecause</strong> codes. If bit N is 1, then match if the <strong>ecause</strong> is N+32.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2143,7 +2143,7 @@ respectively.</p></td>
 (<strong>impdef</strong> &amp; <code>trTeFilterMatchMaskImpdef</code>) ==
 (<code>trTeFilterMatchValueImpdef</code> &amp; <code>trTeFilterMatchMaskImpdef</code>).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2173,7 +2173,7 @@ respectively.</p></td>
 (<strong>impdef</strong> &amp; <code>trTeFilterMatchMaskImpdef</code>) ==
 (<code>trTeFilterMatchValueImpdef</code> &amp; <code>trTeFilterMatchMaskImpdef</code>).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2202,7 +2202,7 @@ respectively.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchDtype</code> field for filter #<em>i</em> is set, match all data access types
 for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>dtype</strong> value is N.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">23:16</p></td>
@@ -2210,7 +2210,7 @@ for which the corresponding bit is set. For example, if bit N is 1, then match i
 <td class="tableblock halign-left valign-top"><p class="tableblock">When <code>trTeFilterMatchDsize</code> field for filter #<em>i</em> is set, match all data access sizes
 for which the corresponding bit is set. For example, if bit N is 1, then match if the <strong>dsize</strong> value is N.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:24</p></td>
@@ -2250,14 +2250,14 @@ for which the corresponding bit is set. For example, if bit N is 1, then match i
 <strong>2:</strong> <strong>tval</strong><br>
 <strong>3:</strong> <strong>daddr</strong></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3:2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSInput</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Determines which input to compare against the secondary comparator.  Same encoding as <code>trTeCompPInput</code>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6:4</p></td>
@@ -2272,7 +2272,7 @@ for which the corresponding bit is set. For example, if bit N is 1, then match i
 <strong>6:</strong> Result always false (input ignored).  Prime latch to 1 if <code>trTeCompMatchMode</code> is 3<br>
 <strong>7:</strong> Result always true (input ignored)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
@@ -2294,7 +2294,7 @@ for which the corresponding bit is set. For example, if bit N is 1, then match i
 <strong>6:</strong> Result always true (input ignored).  Use <code>trTeCompSMatch</code> as a mask for <code>trTeCompPMatch</code><br>
 <strong>7:</strong> Result always true (input ignored)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
@@ -2312,7 +2312,7 @@ for which the corresponding bit is set. For example, if bit N is 1, then match i
 <strong>2:</strong> Either primary or secondary result does not match: !(P &amp;&amp; S)<br>
 <strong>3:</strong> Set when primary result is true and continue to assert until instruction after secondary result is true</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
@@ -2322,7 +2322,7 @@ of the final instruction in a block that causes a
 primary match. This is also known as a watchpoint.
 Requires <code>trTeCompPInput</code> to be 0, and has no effect otherwise.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
@@ -2332,7 +2332,7 @@ of the final instruction in a block that causes a
 secondary match. This is also known as a watchpoint.
 Requires <code>trTeCompSInput</code> to be 0, and has no effect otherwise.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">31:16</p></td>
@@ -2380,7 +2380,7 @@ Comparisions are performed as unsigned numbers. Only bits from an input signal (
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPMatchLow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the primary comparator (bits 31:0).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2408,7 +2408,7 @@ Comparisions are performed as unsigned numbers. Only bits from an input signal (
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompPMatchHigh</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the primary comparator (bits 63:32).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2436,7 +2436,7 @@ Comparisions are performed as unsigned numbers. Only bits from an input signal (
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSMatchLow</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the secondary comparator (bits 31:0).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>
@@ -2464,7 +2464,7 @@ Comparisions are performed as unsigned numbers. Only bits from an input signal (
 <td class="tableblock halign-left valign-top"><p class="tableblock">trTeCompSMatchHigh</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">The match value for the secondary comparator (bits 63:32).</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">WARL</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#Undef">Undef</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="tci_introduction.html#Undef" class="xref page">Undef</a></p></td>
 </tr>
 </tbody>
 </table>

@@ -1,6 +1,6 @@
 # 2.1. N-Trace Transmission Protocol
 
-## [](#2-1-n-trace-transmission-protocol)2.1\. N-Trace Transmission Protocol
+## [](#sec%5FN-Trace%5FTransmission%5FProtocol)2.1\. N-Trace Transmission Protocol
 
 The IEEE-5001 Nexus Standard defines a trace messaging protocol using several **MDO** (Message Data Out) signals and one or two flag signals known as **MSEO** (Message Start/End Out). A Nexus message is sent or stored in a record composed of **MDO** and **MSEO**.
 
@@ -21,7 +21,7 @@ __Table 1\. N-Trace subset__
 | Max field size                | Not specified  | 64 bits (some 32 bits or less)                                      |
 | Max standard message size     | Not specified  | 38 bytes (maximum sum of all fields)                                |
 
-The maximum standard message size of 38 bytes in this version of the specification is to transmit [IndirectBranchHistSync](#msg%5FIndirectBranchHistSync) message which includes TCODE/ SRC/ SYNC/ B-TYPE(5 bytes total), I-CNT(30 bits, 5 bytes), F-ADDR(63 bits, 11 bytes), HIST(32 bits, 6 bytes) TSTAMP(64 bits, 11 bytes).
+The maximum standard message size of 38 bytes in this version of the specification is to transmit [IndirectBranchHistSync](ntrace%5Fmessages%5Foverview.html#msg%5FIndirectBranchHistSync) message which includes TCODE/ SRC/ SYNC/ B-TYPE(5 bytes total), I-CNT(30 bits, 5 bytes), F-ADDR(63 bits, 11 bytes), HIST(32 bits, 6 bytes) TSTAMP(64 bits, 11 bytes).
 
 While implementations may have a shorter maximum message size (e.g. due to I-CNT being smaller), they must assure that the internal FIFOs are designed to hold at least two maximum sized messages that the implementation can produce.
 
@@ -84,9 +84,9 @@ Order of bits and bytes:
 | |  Above rules allow receiving trace probes to skip idle messages. |
 | ------------------------------------------------------------------ |
 
-### [](#2-1-4-pib-idle-cycles-explained)2.1.4\. PIB Idle Cycles Explained
+### [](#sec%5FPIB%5FIdle%5FCycles%5FExplained)2.1.4\. PIB Idle Cycles Explained
 
-This chapter describes N-Trace specific details about the transmission via a Pin Interface Block (PIB), as it is described in the [RISC-V Trace Control Interface](#RISC-V%5FTrace%5FControl%5FInterface) Specification.
+This chapter describes N-Trace specific details about the transmission via a Pin Interface Block (PIB), as it is described in the [RISC-V Trace Control Interface](ntrace%5Fintroduction.html#RISC-V%5FTrace%5FControl%5FInterface) Specification.
 
 Trace messages may start on any (positive or negative) edge of trace clock.
 

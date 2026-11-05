@@ -711,10 +711,10 @@
 <h2 id="6-1-n-trace-messages-details"><a class="anchor" href="#6-1-n-trace-messages-details"></a>6.1. N-Trace Messages (Details)</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This chapter provides a detailed description of all N-Trace messages. Overview of all fields in all messages is provided in the <a href="#Fields in Messages">Fields in Messages</a> table.</p>
+<p>This chapter provides a detailed description of all N-Trace messages. Overview of all fields in all messages is provided in the <a href="ntrace_messages_overview.html#sec_Fields_in_Messages" class="xref page">Fields in Messages</a> table.</p>
 </div>
 <div class="paragraph">
-<p>Common fields are described in the <a href="#Common Fields">Common Fields</a> chapter, but fields specific to message <strong>TCODE</strong> values are explained here.</p>
+<p>Common fields are described in the <a href="ntrace_messages_overview.html#sec_Common_Fields" class="xref page">Common Fields</a> chapter, but fields specific to message <strong>TCODE</strong> values are explained here.</p>
 </div>
 <div class="paragraph">
 <p>Size of field in <strong>Bits</strong> column may be one or more of the following values:</p>
@@ -742,7 +742,7 @@
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-The IEEE-5001 Nexus Standard presents tables with <strong>TCODE</strong> (which is sent first) in the last row. In contrast, this specification shows <a href="#Fields in Messages">Fields in Messages</a> in the order they are sent (the first field sent is described first), aligning with the order of storage, processing, and text dumps.
+The IEEE-5001 Nexus Standard presents tables with <strong>TCODE</strong> (which is sent first) in the last row. In contrast, this specification shows <a href="ntrace_messages_overview.html#sec_Fields_in_Messages" class="xref page">Fields in Messages</a> in the order they are sent (the first field sent is described first), aligning with the order of storage, processing, and text dumps.
 </td>
 </tr>
 </table>
@@ -751,7 +751,7 @@ The IEEE-5001 Nexus Standard presents tables with <strong>TCODE</strong> (which 
 <h3 id="msg2_Ownership"><a class="anchor" href="#msg2_Ownership"></a>6.1.1. Ownership Message</h3>
 <div class="paragraph">
 <p>This message furnishes the requisite context (privileged mode and Context ID, as assigned by the operating system or hypervisor), enabling the decoder to correlate program flow with distinct code
-segments associated with various programs. Activation of this feature requires explicit enabling of the <a href="#trTeContext">trTeContext</a> control bit.</p>
+segments associated with various programs. Activation of this feature requires explicit enabling of the <a href="ntrace_controls.html#trTeContext" class="xref page">trTeContext</a> control bit.</p>
 </div>
 <div class="paragraph">
 <p>Reporting of this information occurs under one of the following three conditions:</p>
@@ -765,7 +765,7 @@ segments associated with various programs. Activation of this feature requires e
 <p>In the event of a trap or trap return that results in a change in privilege mode (including <strong>ECALL</strong> and <strong>EBREAK</strong> instructions).</p>
 </li>
 <li>
-<p>Following any trace <a href="#Synchronizing Messages">synchronizing message</a>.</p>
+<p>Following any trace <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">synchronizing message</a>.</p>
 </li>
 </ul>
 </div>
@@ -812,12 +812,12 @@ If tracing multiple OS-es, main decoder may route messages to an OS-specific dec
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=2(0x2). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=2(0x2). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.
 <a id="field_PROCESS"></a></p></td>
 </tr>
 <tr>
@@ -828,7 +828,7 @@ If tracing multiple OS-es, main decoder may route messages to an OS-specific dec
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -921,7 +921,7 @@ PROCESS=0xC           0b0_11_00   =&gt; V=0,PRV[1:0]=11                (M-mode)<
 <div class="sect2">
 <h3 id="msg2_DirectBranch"><a class="anchor" href="#msg2_DirectBranch"></a>6.1.2. DirectBranch Message</h3>
 <div class="paragraph">
-<p>It is applicable to <a href="#mode_BTM">BTM</a> mode only.</p>
+<p>It is applicable to <a href="ntrace_modes.html#mode_BTM" class="xref page">BTM</a> mode only.</p>
 </div>
 <div class="paragraph">
 <p>This message is generated when the taken direct conditional branch has retired.</p>
@@ -944,22 +944,22 @@ PROCESS=0xC           0b0_11_00   =&gt; V=0,PRV[1:0]=11                (M-mode)<
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=3(0x3). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=3(0x3). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -988,7 +988,7 @@ Direct unconditional jumps change the PC to the destination address of such a ju
 <div class="sect2">
 <h3 id="msg2_IndirectBranch"><a class="anchor" href="#msg2_IndirectBranch"></a>6.1.3. IndirectBranch Message</h3>
 <div class="paragraph">
-<p>It is applicable to <a href="#mode_BTM">BTM</a> mode only.</p>
+<p>It is applicable to <a href="ntrace_modes.html#mode_BTM" class="xref page">BTM</a> mode only.</p>
 </div>
 <div class="paragraph">
 <p>This message is generated under two conditions:</p>
@@ -1021,32 +1021,32 @@ Direct unconditional jumps change the PC to the destination address of such a ju
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=4(0x4). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=4(0x4). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">U-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="#field_U-ADDR">U-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="ntrace_messages_overview.html#field_U-ADDR" class="xref page">U-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1056,7 +1056,7 @@ Direct unconditional jumps change the PC to the destination address of such a ju
 <div class="paragraph">
 <p>The last instruction within the code block(s), as specified by the I-CNT field, either represents an indirect unconditional control flow
 change (i.e., jump, call, or return) or this packet is generated in response to an exception or interrupt reported on the ingress port.
-The next PC is determined by applying the <a href="#Address Compression">Address Compression</a> rules to the U-ADDR field present in this message.</p>
+The next PC is determined by applying the <a href="ntrace_field_encoding.html#sec_Address_Compression" class="xref page">Address Compression</a> rules to the U-ADDR field present in this message.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1097,12 +1097,12 @@ Consequently, the PC of the last instruction in a code block(s) can be determine
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=8(0x8). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=8(0x8). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.
 <a id="field_ETYPE"></a></p></td>
 </tr>
 <tr>
@@ -1132,7 +1132,7 @@ Consequently, the PC of the last instruction in a code block(s) can be determine
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1140,7 +1140,7 @@ Consequently, the PC of the last instruction in a code block(s) can be determine
 <p><strong>Explanations and Notes</strong></p>
 </div>
 <div class="paragraph">
-<p>Error Message must be sent immediately prior to a <a href="#Synchronizing Messages">synchronizing message</a> as soon as space is available in the Trace Encoder output queue. It is recommended that the timestamp reported in the message corresponds to the moment when the first trace message was dropped; however, this is not a requirement.</p>
+<p>Error Message must be sent immediately prior to a <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">synchronizing message</a> as soon as space is available in the Trace Encoder output queue. It is recommended that the timestamp reported in the message corresponds to the moment when the first trace message was dropped; however, this is not a requirement.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1204,32 +1204,32 @@ Consequently, the PC of the last instruction in a code block(s) can be determine
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=9(0x9). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=9(0x9). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1243,7 +1243,7 @@ Instead, it serves to pinpoint the precise Program Counter (PC) location at whic
 Additionally, the F-ADDR field provides the complete PC address at the moment the trigger was activated.</p>
 </div>
 <div class="paragraph">
-<p>This message may be also generated on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+<p>This message may be also generated on linear code for certain synchronization events as described in <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">Synchronizing Message</a> chapter.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1267,32 +1267,32 @@ Additionally, the F-ADDR field provides the complete PC address at the moment th
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=11(0xB). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=11(0xB). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1304,7 +1304,7 @@ Additionally, the F-ADDR field provides the complete PC address at the moment th
 However, it further includes details on the reason for synchronization via the SYNC field, as well as the full Program Counter (PC) address through the F-ADDR field.</p>
 </div>
 <div class="paragraph">
-<p>This message may be also generated on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+<p>This message may be also generated on linear code for certain synchronization events as described in <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">Synchronizing Message</a> chapter.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1328,37 +1328,37 @@ However, it further includes details on the reason for synchronization via the S
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=12(0xC). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=12(0xC). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1369,7 +1369,7 @@ However, it further includes details on the reason for synchronization via the S
 <p>This message is generated in the same conditions as <a href="#msg2_IndirectBranch">IndirectBranch</a> message, but additionally provides a reason for synchronization (SYNC field) and full PC (F-ADDR field).</p>
 </div>
 <div class="paragraph">
-<p>This message may be also generated (with <a href="#field_B-TYPE">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+<p>This message may be also generated (with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">Synchronizing Message</a> chapter.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1397,21 +1397,21 @@ This mechanism ensures that no information is lost, as it enables the decoder to
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=27(0x1B). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=27(0x1B). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.
 <a id="field_RCODE"></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">RCODE</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Standard Resource Code field (defines a meaning of RDATA fields).<br>
-<strong>0:</strong> I-CNT counter has reached max value and is reported in the RDATA[0] field. See <a href="#I-CNT Details">I-CNT Details</a> chapter.<br>
-<strong>1:</strong> HIST field is full and is reported in the RDATA[0] field.  See <a href="#HIST Field Full">HIST Field Full</a> chapter for more details.<br>
-<strong>2</strong>: <strong>Extension:</strong> HIST field is full and is repeated. RDATA[0] field holds HIST value and RDATA[1] field holds HREPEAT (History Repeat) value. This optional extension can be enabled via the <a href="#trTeInstEnRepeatedHistory">trTeInstEnRepeatedHistory</a> control bit.<br>
+<strong>0:</strong> I-CNT counter has reached max value and is reported in the RDATA[0] field. See <a href="ntrace_field_encoding.html#sec_I-CNT_Details" class="xref page">I-CNT Details</a> chapter.<br>
+<strong>1:</strong> HIST field is full and is reported in the RDATA[0] field.  See <a href="ntrace_field_encoding.html#sec_HIST_Field_Full" class="xref page">HIST Field Full</a> chapter for more details.<br>
+<strong>2</strong>: <strong>Extension:</strong> HIST field is full and is repeated. RDATA[0] field holds HIST value and RDATA[1] field holds HREPEAT (History Repeat) value. This optional extension can be enabled via the <a href="ntrace_controls.html#trTeInstEnRepeatedHistory" class="xref page">trTeInstEnRepeatedHistory</a> control bit.<br>
 <strong>3..7:</strong> Reserved for future encodings.<br>
 <strong>8..15:</strong> Designated for vendor specific encodings.
 <a id="field_RDATA"></a></p></td>
@@ -1430,7 +1430,7 @@ This mechanism ensures that no information is lost, as it enables the decoder to
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1443,7 +1443,7 @@ the maximum number of history bits implemented within the HIST register.</p>
 </div>
 <div class="paragraph">
 <p>Nonetheless, implementations may opt to include any quantity of history bits in
-this field, with the range extending from a minimum of 2 bits up to the maximum defined by <a href="#NTRACE_MAX_HIST">NTRACE_MAX_HIST</a> bits.</p>
+this field, with the range extending from a minimum of 2 bits up to the maximum defined by <a href="ntrace_messages_overview.html#NTRACE_MAX_HIST" class="xref page">NTRACE_MAX_HIST</a> bits.</p>
 </div>
 <div class="paragraph">
 <p>Should the I-CNT counter and the HIST register simultaneously reach their respective capacity limits, it is mandatory to emit two successive ResourceFull
@@ -1471,37 +1471,37 @@ messages.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=28(0x1C). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=28(0x1C). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">U-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="#field_U-ADDR">U-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Unique Address (<a href="ntrace_messages_overview.html#field_U-ADDR" class="xref page">U-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1509,10 +1509,10 @@ messages.</p>
 <p><strong>Explanations and Notes</strong></p>
 </div>
 <div class="paragraph">
-<p>Last instruction in the code block (or blocks) (described by HIST and I-CNT fields) is indirect unconditional control flow change (jump, call, return) instruction or this message is generated when exception or interrupt is reported in the ingress port. See <a href="#HIST Field Generation">HIST Field Generation</a> and <a href="#I-CNT Details">I-CNT Details</a> chapters for clarifications.</p>
+<p>Last instruction in the code block (or blocks) (described by HIST and I-CNT fields) is indirect unconditional control flow change (jump, call, return) instruction or this message is generated when exception or interrupt is reported in the ingress port. See <a href="ntrace_field_encoding.html#sec_HIST_Field_Generation" class="xref page">HIST Field Generation</a> and <a href="ntrace_field_encoding.html#sec_I-CNT_Details" class="xref page">I-CNT Details</a> chapters for clarifications.</p>
 </div>
 <div class="paragraph">
-<p>Next PC is determined by applying the <a href="#Address Compression">Address Compression</a> rules using the U-ADDR field in this message.</p>
+<p>Next PC is determined by applying the <a href="ntrace_field_encoding.html#sec_Address_Compression" class="xref page">Address Compression</a> rules using the U-ADDR field in this message.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1536,42 +1536,42 @@ messages.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=29(0x1D). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=29(0x1D). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SYNC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="#field_SYNC">SYNC</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Synchronization Reason (<a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B-TYPE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="#field_B-TYPE">B-TYPE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Type (<a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">F-ADDR</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="#field_F-ADDR">F-ADDR</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Full Address (<a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1583,7 +1583,7 @@ messages.</p>
 However, it further includes details on the reason for synchronization via the SYNC field, as well as the full Program Counter (PC) address through the F-ADDR field.</p>
 </div>
 <div class="paragraph">
-<p>This message may be also generated (with <a href="#field_B-TYPE">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="#Synchronizing Messages">Synchronizing Message</a> chapter.</p>
+<p>This message may be also generated (with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0 field) on linear code for certain synchronization events as described in <a href="ntrace_field_encoding.html#sec_Synchronizing_Messages" class="xref page">Synchronizing Message</a> chapter.</p>
 </div>
 <div style="page-break-after: always;"></div>
 </div>
@@ -1607,24 +1607,24 @@ However, it further includes details on the reason for synchronization via the S
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=30(0x1E). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=30(0x1E). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.
 <a id="field_B-CNT"></a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">B-CNT</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch Count field.
-Number of times the previous branch message (without a <a href="#field_SYNC">SYNC</a> field) is repeated. Generated if I-CNT, HIST and target address is the same as in the previous branch message.</p></td>
+Number of times the previous branch message (without a <a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a> field) is repeated. Generated if I-CNT, HIST and target address is the same as in the previous branch message.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1659,12 +1659,12 @@ Number of times the previous branch message (without a <a href="#field_SYNC">SYN
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TCODE</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Value=33(0x21). Standard Transfer Code (<a href="#field_TCODE">TCODE</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Value=33(0x21). Standard Transfer Code (<a href="ntrace_messages_overview.html#field_TCODE" class="xref page">TCODE</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">SRC</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="#field_SRC">SRC</a>) field.
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Message Source (<a href="ntrace_messages_overview.html#field_SRC" class="xref page">SRC</a>) field.
 <a id="field_EVCODE"></a></p></td>
 </tr>
 <tr>
@@ -1691,17 +1691,17 @@ In BTM trace mode CDF must be 0. In HTM trace mode CDF must be 1 (even if HIST f
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">I-CNT</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="#field_I-CNT">I-CNT</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Instruction Count (<a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a>) field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">HIST</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="#field_HIST">HIST</a>) field. <strong>This field must be present in HTM mode</strong>, so decoder does not need to read CDF to determine its existence.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Branch History (<a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a>) field. <strong>This field must be present in HTM mode</strong>, so decoder does not need to read CDF to determine its existence.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Var,Cfg</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">TSTAMP</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="#field_TSTAMP">TSTAMP</a>) field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Standard Timestamp (<a href="ntrace_messages_overview.html#field_TSTAMP" class="xref page">TSTAMP</a>) field.</p></td>
 </tr>
 </tbody>
 </table>

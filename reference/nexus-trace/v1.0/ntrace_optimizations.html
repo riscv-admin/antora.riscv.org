@@ -711,12 +711,12 @@
 <h2 id="8-1-optimization-extensions"><a class="anchor" href="#8-1-optimization-extensions"></a>8.1. Optimization Extensions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table <a href="#Details_Control_Parameters">Details_Control_Parameters</a> describes all control bits to enable these optimizations.</p>
+<p>N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table <a href="ntrace_controls.html#Details_Control_Parameters" class="xref page">Details_Control_Parameters</a> describes all control bits to enable these optimizations.</p>
 </div>
 <div class="sect2">
-<h3 id="8-1-1-sequential-jump-optimization"><a class="anchor" href="#8-1-1-sequential-jump-optimization"></a>8.1.1. Sequential Jump Optimization</h3>
+<h3 id="sec_Sequential_Jump_Optimization"><a class="anchor" href="#sec_Sequential_Jump_Optimization"></a>8.1.1. Sequential Jump Optimization</h3>
 <div class="paragraph">
-<p>This optimization must be enabled by <a href="#trTeInstEnSequentialJump">trTeInstEnSequentialJump</a> control bit.</p>
+<p>This optimization must be enabled by <a href="ntrace_controls.html#trTeInstEnSequentialJump" class="xref page">trTeInstEnSequentialJump</a> control bit.</p>
 </div>
 <div class="paragraph">
 <p>By default, the target of an indirect unconditional jump is always considered an uninferable PC discontinuity.
@@ -761,9 +761,9 @@ efficiency as it is anticipated that consecutive execution will be the norm.
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="8-1-2-implicit-return-optimization"><a class="anchor" href="#8-1-2-implicit-return-optimization"></a>8.1.2. Implicit Return Optimization</h3>
+<h3 id="sec_Implicit_Return_Optimization"><a class="anchor" href="#sec_Implicit_Return_Optimization"></a>8.1.2. Implicit Return Optimization</h3>
 <div class="paragraph">
-<p>This optimization must be enabled by the <a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a> control field different than 0.</p>
+<p>This optimization must be enabled by the <a href="ntrace_controls.html#trTeInstImplicitReturnMode" class="xref page">trTeInstImplicitReturnMode</a> control field different than 0.</p>
 </div>
 <div class="paragraph">
 <p>Although a function return is usually an indirect unconditional jump, most programs return to the
@@ -777,10 +777,10 @@ improvements in trace encoder efficiency.</p>
 message. The encoder must ensure that this is the case.</p>
 </div>
 <div class="paragraph">
-<p>There are 3 possible ways of handling return address stack (values of <a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a> control field):</p>
+<p>There are 3 possible ways of handling return address stack (values of <a href="ntrace_controls.html#trTeInstImplicitReturnMode" class="xref page">trTeInstImplicitReturnMode</a> control field):</p>
 </div>
 <div class="paragraph">
-<p><strong>Simple counting (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=1)</strong></p>
+<p><strong>Simple counting (<a href="ntrace_controls.html#trTeInstImplicitReturnMode" class="xref page">trTeInstImplicitReturnMode</a>=1)</strong></p>
 </div>
 <div class="paragraph">
 <p>This can be accomplished by utilizing a
@@ -790,7 +790,7 @@ treated as inferable and will not generate a trace message if the count is non-z
 call was already reported in an earlier message). Such a scheme is low cost, and will work as long as programs are "well behaved". The encoder will not be able to check that the return address is that of the instruction following the associated call. As such, any program that modifies return addresses cannot be traced using this mode with this minimal implementation. Due to these limitations <strong>this is NOT recommended implementation</strong>.</p>
 </div>
 <div class="paragraph">
-<p><strong>Stack with Full Addresses (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=3)</strong></p>
+<p><strong>Stack with Full Addresses (<a href="ntrace_controls.html#trTeInstImplicitReturnMode" class="xref page">trTeInstImplicitReturnMode</a>=3)</strong></p>
 </div>
 <div class="paragraph">
 <p>The encoder maintains a stack of expected return addresses (created when call is encountered), and only treat a
@@ -799,7 +799,7 @@ programs but is more expensive to implement. In this case, if a return address d
 prediction, it must be reported explicitly via a message. This ensures that the decoder can determine which return is being reported. This method may use shadow stack if implemented by the core.</p>
 </div>
 <div class="paragraph">
-<p><strong>Stack with Partial Addresses (<a href="#trTeInstImplicitReturnMode">trTeInstImplicitReturnMode</a>=2)</strong></p>
+<p><strong>Stack with Partial Addresses (<a href="ntrace_controls.html#trTeInstImplicitReturnMode" class="xref page">trTeInstImplicitReturnMode</a>=2)</strong></p>
 </div>
 <div class="paragraph">
 <p>Call stack maintained by encoder may not include all addresses, but only keep some least significant part of it and use them to compare if return is matching the call or not. Changes that program making incorrect return will return to address with the same least significant portion are very slim.</p>
@@ -819,9 +819,9 @@ Decoder does not need to know what actual depth of the call stack is implemented
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="8-1-3-repeated-history-optimization"><a class="anchor" href="#8-1-3-repeated-history-optimization"></a>8.1.3. Repeated History Optimization</h3>
+<h3 id="sec_Repeated_History_Optimization"><a class="anchor" href="#sec_Repeated_History_Optimization"></a>8.1.3. Repeated History Optimization</h3>
 <div class="paragraph">
-<p>This optimization must be enabled by the <a href="#trTeInstEnRepeatedHistory">trTeInstEnRepeatedHistory</a> control bit.</p>
+<p>This optimization must be enabled by the <a href="ntrace_controls.html#trTeInstEnRepeatedHistory" class="xref page">trTeInstEnRepeatedHistory</a> control bit.</p>
 </div>
 <div class="paragraph">
 <p>A typical loop either has a direct conditional branch at the start of a loop (which must be typically 'taken' to terminate the loop) or has a direct conditional branch at the end of the loop (which must be typically taken to repeat the loop).
@@ -831,10 +831,10 @@ In the first case, the direct conditional branch is not taken most of the time a
 <p>Loops with many iterations such as those in functions like memcpy/strcpy have identical flow in each iteraction. Instead of sending the same history bits many times, repeated patterns can be detected and counted. This is a big saving! As an example, a memcpy of 4MB buffer using 32-bit transfers will execute at least 1M of direct conditional branches and 1M of history bits must be included in trace (it is a lot of trace).</p>
 </div>
 <div class="paragraph">
-<p>The IEEE-5001 Nexus Standard defines a <a href="#msg_RepeatBranch">Repeat Branch</a> message. This message will provide a single <a href="#field_B-CNT">B-CNT</a> (Branch Count) field instead of generating many identical <a href="#msg_DirectBranch">Direct Branch</a> messages. But this message cannot be used in <a href="#mode_HTM">HTM</a> mode as repeated messages (Direct Branch) do not include the HIST field.</p>
+<p>The IEEE-5001 Nexus Standard defines a <a href="ntrace_messages_overview.html#msg_RepeatBranch" class="xref page">Repeat Branch</a> message. This message will provide a single <a href="ntrace_messages_details.html#field_B-CNT" class="xref page">B-CNT</a> (Branch Count) field instead of generating many identical <a href="ntrace_messages_overview.html#msg_DirectBranch" class="xref page">Direct Branch</a> messages. But this message cannot be used in <a href="ntrace_modes.html#mode_HTM" class="xref page">HTM</a> mode as repeated messages (Direct Branch) do not include the HIST field.</p>
 </div>
 <div class="paragraph">
-<p>To allow generation of repeated history of direct conditional branches in HTM mode an extra encoding for <a href="#field_RCODE">RCODE</a>=2 in <a href="#msg_ResourceFull">Resource Full</a> message is added.</p>
+<p>To allow generation of repeated history of direct conditional branches in HTM mode an extra encoding for <a href="ntrace_messages_details.html#field_RCODE" class="xref page">RCODE</a>=2 in <a href="ntrace_messages_overview.html#msg_ResourceFull" class="xref page">Resource Full</a> message is added.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -843,13 +843,13 @@ In the first case, the direct conditional branch is not taken most of the time a
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-It is allowed to generate any sequence of <a href="#msg_ResourceFull">Resource Full</a> messages as long as the logically concatenated sequence of (repeated or not &#8230;&#8203;) HIST bits (excluding most significant stop-bit[s]) is the same.
+It is allowed to generate any sequence of <a href="ntrace_messages_overview.html#msg_ResourceFull" class="xref page">Resource Full</a> messages as long as the logically concatenated sequence of (repeated or not &#8230;&#8203;) HIST bits (excluding most significant stop-bit[s]) is the same.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>Tracing of such simple, long loops would benefit from generating special messages/fields which provide counters of taken/not-taken direct conditional branches (in a way like <a href="#msg_RepeatBranch">Repeat Branch</a> message).</p>
+<p>Tracing of such simple, long loops would benefit from generating special messages/fields which provide counters of taken/not-taken direct conditional branches (in a way like <a href="ntrace_messages_overview.html#msg_RepeatBranch" class="xref page">Repeat Branch</a> message).</p>
 </div>
 <div class="paragraph">
 <p>But this approach will not work with more complex code with a conditional statement (or several of them) inside of a loop.</p>
@@ -858,7 +858,7 @@ It is allowed to generate any sequence of <a href="#msg_ResourceFull">Resource F
 <p>In such a case, it is desired to detect repeated sequences of taken/not-taken direct conditional branches and instead generate many messages with HIST fields, generate a message consisting of a HIST pattern and repeat count.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s assume that we have a loop, which generates a long sequence of repeated taken/not-taken direct conditional branches. Trace may generate <a href="#msg_ResourceFull">Resource Full</a> messages with the following HIST records:</p>
+<p>Let&#8217;s assume that we have a loop, which generates a long sequence of repeated taken/not-taken direct conditional branches. Trace may generate <a href="ntrace_messages_overview.html#msg_ResourceFull" class="xref page">Resource Full</a> messages with the following HIST records:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -946,9 +946,9 @@ HREPEAT counter should not have too many bits as it is not desired to not genera
 <div style="page-break-after: always;"></div>
 </div>
 <div class="sect2">
-<h3 id="8-1-4-virtual-addresses-optimization"><a class="anchor" href="#8-1-4-virtual-addresses-optimization"></a>8.1.4. Virtual Addresses Optimization</h3>
+<h3 id="sec_Virtual_Addresses_Optimization"><a class="anchor" href="#sec_Virtual_Addresses_Optimization"></a>8.1.4. Virtual Addresses Optimization</h3>
 <div class="paragraph">
-<p>This optimization must be enabled by <a href="#trTeInstExtendAddrMSB">trTeInstExtendAddrMSB</a> control bit.</p>
+<p>This optimization must be enabled by <a href="ntrace_controls.html#trTeInstExtendAddrMSB" class="xref page">trTeInstExtendAddrMSB</a> control bit.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -969,7 +969,7 @@ have 6 MDO bits in each byte).
 </table>
 </div>
 <div class="paragraph">
-<p>The following additional rules are used when <a href="#trTeInstExtendAddrMSB">trTeInstExtendAddrMSB</a> control bit is implemented and set:</p>
+<p>The following additional rules are used when <a href="ntrace_controls.html#trTeInstExtendAddrMSB" class="xref page">trTeInstExtendAddrMSB</a> control bit is implemented and set:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -1004,7 +1004,7 @@ have 6 MDO bits in each byte).
 </ul>
 </div>
 <div class="paragraph">
-<p>Trace encoder must implement a most significant bit detection (skipping identical 1-s or 0-s in addition to skipping identical 0-s as for any other variable size field) while sending F-ADDR/U-ADDR field. Trace decoders must do it in reverse order, which means that a sign extension (if needed) must be done after collecting the last MDO bit in an F-ADDR/U-ADDR field. Calculation of full address (as defined in <a href="#Address Compression">Address Compression</a> chapter above) must be done after sign extension of U-ADDR field.</p>
+<p>Trace encoder must implement a most significant bit detection (skipping identical 1-s or 0-s in addition to skipping identical 0-s as for any other variable size field) while sending F-ADDR/U-ADDR field. Trace decoders must do it in reverse order, which means that a sign extension (if needed) must be done after collecting the last MDO bit in an F-ADDR/U-ADDR field. Calculation of full address (as defined in <a href="ntrace_field_encoding.html#sec_Address_Compression" class="xref page">Address Compression</a> chapter above) must be done after sign extension of U-ADDR field.</p>
 </div>
 <div class="paragraph">
 <p><strong>Example Encodings</strong></p>

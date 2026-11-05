@@ -741,17 +741,17 @@ instructions, thereby requiring their occurrences to be traced.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>If tracing is started (or restarted after it was disabled), a <a href="#msg_ProgTraceSync">ProgTraceSync</a> message is generated.</p>
+<p>If tracing is started (or restarted after it was disabled), a <a href="ntrace_messages_overview.html#msg_ProgTraceSync" class="xref page">ProgTraceSync</a> message is generated.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>This message specifies the reason for the start in the <a href="#field_SYNC">SYNC</a> field and includes full address in the <a href="#field_F-ADDR">F-ADDR</a> field.</p>
+<p>This message specifies the reason for the start in the <a href="ntrace_messages_overview.html#field_SYNC" class="xref page">SYNC</a> field and includes full address in the <a href="ntrace_messages_overview.html#field_F-ADDR" class="xref page">F-ADDR</a> field.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>A retired 16-bit instruction increments the <a href="#field_I-CNT">I-CNT</a> counter by 1, while a retired 32-bit instruction increments it by 2.</p>
+<p>A retired 16-bit instruction increments the <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> counter by 1, while a retired 32-bit instruction increments it by 2.</p>
 </li>
 <li>
 <p>The following types of instructions allow trace decoders to determine the next PC and encoder should not generate any trace for them.</p>
@@ -774,10 +774,10 @@ instructions, thereby requiring their occurrences to be traced.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>In BTM mode, an <a href="#msg2_IndirectBranch">IndirectBranch</a> message is generated.</p>
+<p>In BTM mode, an <a href="ntrace_messages_details.html#msg2_IndirectBranch" class="xref page">IndirectBranch</a> message is generated.</p>
 </li>
 <li>
-<p>In HTM mode, an <a href="#msg2_IndirectBranchHist">IndirectBranchHist</a> message is generated. Should the <a href="#field_HIST">HIST</a> field be empty, an <a href="#msg2_IndirectBranch">IndirectBranch</a> message may optionally be generated instead.</p>
+<p>In HTM mode, an <a href="ntrace_messages_details.html#msg2_IndirectBranchHist" class="xref page">IndirectBranchHist</a> message is generated. Should the <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> field be empty, an <a href="ntrace_messages_details.html#msg2_IndirectBranch" class="xref page">IndirectBranch</a> message may optionally be generated instead.</p>
 </li>
 </ul>
 </div>
@@ -787,33 +787,33 @@ instructions, thereby requiring their occurrences to be traced.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>In BTM mode, a <a href="#msg_DirectBranch">DirectBranch</a> message is generated, but only if the branch is taken.</p>
+<p>In BTM mode, a <a href="ntrace_messages_overview.html#msg_DirectBranch" class="xref page">DirectBranch</a> message is generated, but only if the branch is taken.</p>
 </li>
 <li>
-<p>In HTM mode, the outcome of the branch (1 for taken or 0 for not taken) is appended as a single bit into the branch history buffer (<a href="#field_HIST">HIST</a> register).</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p>When tracing is stopped or disabled, a <a href="#msg_ProgTraceCorrelation">ProgTraceCorrelation</a> message is generated.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>This message included a reason for stopping or disabling (specified in the <a href="#field_EVCODE">EVCODE</a> field), the <a href="#field_I-CNT">I-CNT</a> and an optional <a href="#field_HIST">HIST</a> field. These details allow for the calculation of the last PC.</p>
+<p>In HTM mode, the outcome of the branch (1 for taken or 0 for not taken) is appended as a single bit into the branch history buffer (<a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> register).</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>When a generated message includes <a href="#field_I-CNT">I-CNT</a> counter value or <a href="#field_HIST">HIST</a> register value, the corresponding counter and/or register are reset.</p>
+<p>When tracing is stopped or disabled, a <a href="ntrace_messages_overview.html#msg_ProgTraceCorrelation" class="xref page">ProgTraceCorrelation</a> message is generated.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>If the I-CNT counter is full, a <a href="#msg_ResourceFull">ResourceFull</a> message, indicating that I-CNT counter is full, is generated. Subsequently, the I-CNT is reset.</p>
+<p>This message included a reason for stopping or disabling (specified in the <a href="ntrace_messages_details.html#field_EVCODE" class="xref page">EVCODE</a> field), the <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> and an optional <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> field. These details allow for the calculation of the last PC.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Similarily, if the HIST register reaches it capacity, a <a href="#msg_ResourceFull">ResourceFull</a> message, specifying that the HIST register is full, is generated. The HIST register is then reset.</p>
+<p>When a generated message includes <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> counter value or <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> register value, the corresponding counter and/or register are reset.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>If the I-CNT counter is full, a <a href="ntrace_messages_overview.html#msg_ResourceFull" class="xref page">ResourceFull</a> message, indicating that I-CNT counter is full, is generated. Subsequently, the I-CNT is reset.</p>
+</li>
+<li>
+<p>Similarily, if the HIST register reaches it capacity, a <a href="ntrace_messages_overview.html#msg_ResourceFull" class="xref page">ResourceFull</a> message, specifying that the HIST register is full, is generated. The HIST register is then reset.</p>
 </li>
 </ul>
 </div>
@@ -829,7 +829,7 @@ instructions, thereby requiring their occurrences to be traced.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Call and return instructions may optionally be handled as described in the <a href="#Implicit Return Optimization">Implicit Return Optimization</a> chapter and may generate no trace.</p>
+<p>Call and return instructions may optionally be handled as described in the <a href="ntrace_optimizations.html#sec_Implicit_Return_Optimization" class="xref page">Implicit Return Optimization</a> chapter and may generate no trace.</p>
 </li>
 <li>
 <p>By default, the target of an indirect unconditional jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant
@@ -840,7 +840,7 @@ then it can be considered inferable under some circumstances.</p>
 <p>Such instruction sequences may be detected and in such a case no trace is generated.</p>
 </li>
 <li>
-<p>This optional feature is described in detail in the <a href="#Sequential Jump Optimization">Sequential Jump Optimization</a> chapter.</p>
+<p>This optional feature is described in detail in the <a href="ntrace_optimizations.html#sec_Sequential_Jump_Optimization" class="xref page">Sequential Jump Optimization</a> chapter.</p>
 </li>
 </ul>
 </div>

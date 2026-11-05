@@ -711,7 +711,7 @@
 <h2 id="1-1-trace-ingress-port"><a class="anchor" href="#1-1-trace-ingress-port"></a>1.1. Trace Ingress Port</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>N-Trace uses the same ingress port as specified in <a href="#E-Trace_Specification">E-Trace Specification</a> (chapter <strong>4 Instruction Trace Interface</strong>).</p>
+<p>N-Trace uses the same ingress port as specified in <a href="ntrace_introduction.html#E-Trace_Specification" class="xref page">E-Trace Specification</a> (chapter <strong>4 Instruction Trace Interface</strong>).</p>
 </div>
 <div class="ulist">
 <ul>
@@ -784,7 +784,7 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">0 = No special type</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong>Values of itype (<a href="#itype_3_4">3-bit</a>) (without <a href="#Implicit Return Optimization">Implicit Return Optimization</a></strong>)</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong>Values of itype (<a href="#itype_3_4">3-bit</a>) (without <a href="ntrace_optimizations.html#sec_Implicit_Return_Optimization" class="xref page">Implicit Return Optimization</a></strong>)</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JAL rd</p></td>
@@ -817,7 +817,7 @@
 <td class="tableblock halign-left valign-top"><p class="tableblock">6 = Indirect jump (with or without linkage)</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong>Values of itype (<a href="#itype_3_4">4-bit</a>) (needed for <a href="#Implicit Return Optimization">Implicit Return Optimization</a></strong>). <a href="#link">link</a> means <strong>x1</strong> or <strong>x5</strong>.</p></td>
+<td class="tableblock halign-left valign-top" colspan="3"><p class="tableblock"><strong>Values of itype (<a href="#itype_3_4">4-bit</a>) (needed for <a href="ntrace_optimizations.html#sec_Implicit_Return_Optimization" class="xref page">Implicit Return Optimization</a></strong>). <a href="#link">link</a> means <strong>x1</strong> or <strong>x5</strong>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">JAL rd</p></td>
@@ -930,7 +930,7 @@ Branches (<strong>itype</strong>=4, 5) are always conditional, direct branches. 
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Extended 4-bit <strong>itype</strong> (codes 8..15) are only necessary when <a href="#Implicit Return Optimization">Implicit Return Optimization</a> is implemented.
+Extended 4-bit <strong>itype</strong> (codes 8..15) are only necessary when <a href="ntrace_optimizations.html#sec_Implicit_Return_Optimization" class="xref page">Implicit Return Optimization</a> is implemented.
 </td>
 </tr>
 </table>
@@ -980,53 +980,53 @@ Jump instructions (CM.JT and CM.JALT) defined by ratified <strong>Zcmt</strong> 
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No special type</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="#field_I-CNT">I-CNT</a> field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Exception</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=2 or 1.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=2 or 1.<br>
 <strong>IMPORTANT:</strong> An address emitted is known at the next valid ingress port cycle.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Interrupt</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=3 or 1.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=3 or 1.<br>
 <strong>IMPORTANT:</strong> An address emitted is known at the next valid ingress port cycle.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Trap return</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.<br>
 <strong>IMPORTANT:</strong> An address emitted is known at the next valid ingress port cycle.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Not-taken branch</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>For <a href="#mode_BTM">BTM</a> mode:</strong><br>
-  Only update <a href="#field_I-CNT">I-CNT</a> field.</p>
-<p class="tableblock"><strong>For <a href="#mode_HTM">HTM</a> mode:</strong><br>
-  Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-  Add 0 as least significant bit to <a href="#field_HIST">HIST</a> field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>For <a href="ntrace_modes.html#mode_BTM" class="xref page">BTM</a> mode:</strong><br>
+  Only update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.</p>
+<p class="tableblock"><strong>For <a href="ntrace_modes.html#mode_HTM" class="xref page">HTM</a> mode:</strong><br>
+  Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+  Add 0 as least significant bit to <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Taken branch</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>For <a href="#mode_BTM">BTM</a> mode:</strong><br>
-  Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-  Generate <a href="#msg_DirectBranch">DirectBranch</a> message.</p>
-<p class="tableblock"><strong>For <a href="#mode_HTM">HTM</a> mode:</strong><br>
-Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Add 1 as least significant bit to <a href="#field_HIST">HIST</a> field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>For <a href="ntrace_modes.html#mode_BTM" class="xref page">BTM</a> mode:</strong><br>
+  Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+  Generate <a href="ntrace_messages_overview.html#msg_DirectBranch" class="xref page">DirectBranch</a> message.</p>
+<p class="tableblock"><strong>For <a href="ntrace_modes.html#mode_HTM" class="xref page">HTM</a> mode:</strong><br>
+Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Add 1 as least significant bit to <a href="ntrace_messages_overview.html#field_HIST" class="xref page">HIST</a> field.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Indirect jump (with or without linkage)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.<br>
 <strong>IMPORTANT:</strong> An address emitted is known at the next valid ingress port cycle.</p></td>
 </tr>
 <tr>
@@ -1037,7 +1037,7 @@ Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
 </tbody>
 </table>
 <div class="paragraph">
-<p>When the <strong>itype</strong> input of ingress port is 4-bit wide, the Indirect jump (with or without linkage) <strong>itype=6</strong> should not be generated and one of the following values should be generated instead. Encoder must handle call stack action as described in the <a href="#Implicit Return Optimization">Implicit Return Optimization</a> chapter (if enabled).</p>
+<p>When the <strong>itype</strong> input of ingress port is 4-bit wide, the Indirect jump (with or without linkage) <strong>itype=6</strong> should not be generated and one of the following values should be generated instead. Encoder must handle call stack action as described in the <a href="ntrace_optimizations.html#sec_Implicit_Return_Optimization" class="xref page">Implicit Return Optimization</a> chapter (if enabled).</p>
 </div>
 <table id="Handling_of_4-bit_itype_values" class="tableblock frame-all grid-all stretch">
 <caption class="title">Table 3. Handling of 4-bit itype values</caption>
@@ -1059,56 +1059,56 @@ Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Indirect call</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field. Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field. Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Push</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Direct call</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="#field_I-CNT">I-CNT</a> field.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Push</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Indirect jump (without linkage)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.<br>
 <a href="#same_handling">Same handing</a> as <strong>itype=14</strong>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Direct jump (without linkage)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="#field_I-CNT">I-CNT</a> field.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
 <a href="#same_handling">Same handing</a> as <strong>itype=15</strong>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Co-routine swap</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-If Pop does not returns the same address as PC at next valid ingress port cycle, emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+If Pop does not returns the same address as PC at next valid ingress port cycle, emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Pop,Push</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Return</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-If Pop does not returns the same address as PC at next valid ingress port cycle, emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+If Pop does not returns the same address as PC at next valid ingress port cycle, emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Pop</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Other indirect jump (with linkage)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="#field_I-CNT">I-CNT</a> field.<br>
-Emit Indirect Branch message with <a href="#field_B-TYPE">B-TYPE</a>=0.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
+Emit Indirect Branch message with <a href="ntrace_messages_overview.html#field_B-TYPE" class="xref page">B-TYPE</a>=0.<br>
 <a href="#same_handling">Same handing</a> as <strong>itype=10</strong>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Other direct jump (with linkage)</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="#field_I-CNT">I-CNT</a> field.<br>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Only update <a href="ntrace_messages_overview.html#field_I-CNT" class="xref page">I-CNT</a> field.<br>
 <a href="#same_handling">Same handing</a> as <strong>itype=11</strong>.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
 </tr>
@@ -1127,7 +1127,7 @@ N-Trace messages do not differentiate instructions classified as <strong>&#8230;
 </table>
 </div>
 <div class="paragraph">
-<p>If optional <a href="#trTeInstEnAllJumps">trTeInstEnAllJumps</a> bit is set, trace ingress port is required to report <strong>itype</strong>=5 (Taken branch) for all direct unconditional jumps, which are normally reported as <strong>itype</strong> = 0 or 15.</p>
+<p>If optional <a href="ntrace_controls.html#trTeInstEnAllJumps" class="xref page">trTeInstEnAllJumps</a> bit is set, trace ingress port is required to report <strong>itype</strong>=5 (Taken branch) for all direct unconditional jumps, which are normally reported as <strong>itype</strong> = 0 or 15.</p>
 </div>
 <div class="admonitionblock important">
 <table>
@@ -1152,7 +1152,7 @@ provides the address of the exception or interrupt handler.
 </td>
 <td class="content">
 Since almost every ingress port cycle updates I-CNT, there is a possibility
-of overflow. For more information, see <a href="#I-CNT Details">I-CNT Details</a> chapter regarding
+of overflow. For more information, see <a href="ntrace_field_encoding.html#sec_I-CNT_Details" class="xref page"> I-CNT Details</a> chapter regarding
 I-CNT management and overflow handling.
 </td>
 </tr>

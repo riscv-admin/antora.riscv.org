@@ -2,11 +2,11 @@
 
 ## [](#8-1-optimization-extensions)8.1\. Optimization Extensions
 
-N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table [Details\_Control\_Parameters](#Details%5FControl%5FParameters) describes all control bits to enable these optimizations.
+N-Trace messages are defined as a strict subset of IEEE-5001 Nexus Standard messages. However, to provide better compression some optional extensions are defined. Each of them should be by default disabled and specifically enabled to allow simpler decoder to decode non fully optimized trace. Table [Details\_Control\_Parameters](ntrace%5Fcontrols.html#Details%5FControl%5FParameters) describes all control bits to enable these optimizations.
 
-### [](#8-1-1-sequential-jump-optimization)8.1.1\. Sequential Jump Optimization
+### [](#sec%5FSequential%5FJump%5FOptimization)8.1.1\. Sequential Jump Optimization
 
-This optimization must be enabled by [trTeInstEnSequentialJump](#trTeInstEnSequentialJump) control bit.
+This optimization must be enabled by [trTeInstEnSequentialJump](ntrace%5Fcontrols.html#trTeInstEnSequentialJump) control bit.
 
 By default, the target of an indirect unconditional jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant then it can be considered inferable under some circumstances. The hart must identify indirect unconditional jumps with sequentially inferable targets and provide this information separately to the encoder. The final decision as to whether to treat the indirect unconditional jump as inferable or not must be made by the encoder. Both the constant load and the indirect unconditional jump must be traced as consecutive instructions in the same message for the decoder to be able to infer the indirect unconditional jump target.
 
@@ -20,53 +20,53 @@ Such indirect unconditional jump targets are classified as sequentially inferabl
 | |  The restriction that the instructions must be retired consecutively is necessary to minimize the additional signals needed between the hart and the encoder, and should have a minimal impact on trace efficiency as it is anticipated that consecutive execution will be the norm. |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#8-1-2-implicit-return-optimization)8.1.2\. Implicit Return Optimization
+### [](#sec%5FImplicit%5FReturn%5FOptimization)8.1.2\. Implicit Return Optimization
 
-This optimization must be enabled by the [trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode) control field different than 0.
+This optimization must be enabled by the [trTeInstImplicitReturnMode](ntrace%5Fcontrols.html#trTeInstImplicitReturnMode) control field different than 0.
 
 Although a function return is usually an indirect unconditional jump, most programs return to the point in the program from which the function was called using a standard calling convention. For those programs, it is possible to determine the execution path without being explicitly notified of the destination addresses of the returns. The implicit return mode can result in very significant improvements in trace encoder efficiency.
 
 Returns can only be treated as inferable if the associated call has already been reported in an earlier message. The encoder must ensure that this is the case.
 
-There are 3 possible ways of handling return address stack (values of [trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode) control field):
+There are 3 possible ways of handling return address stack (values of [trTeInstImplicitReturnMode](ntrace%5Fcontrols.html#trTeInstImplicitReturnMode) control field):
 
-**Simple counting ([trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode)\=1)**
+**Simple counting ([trTeInstImplicitReturnMode](ntrace%5Fcontrols.html#trTeInstImplicitReturnMode)\=1)**
 
 This can be accomplished by utilizing a counter to keep track of the number of nested calls being traced. The counter increments on calls and decrements on returns. The counter will not over or underflow, and is reset to 0 whenever a synchronizing message is sent. Returns will be treated as inferable and will not generate a trace message if the count is non-zero (i.e. the associated call was already reported in an earlier message). Such a scheme is low cost, and will work as long as programs are "well behaved". The encoder will not be able to check that the return address is that of the instruction following the associated call. As such, any program that modifies return addresses cannot be traced using this mode with this minimal implementation. Due to these limitations **this is NOT recommended implementation**.
 
-**Stack with Full Addresses ([trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode)\=3)**
+**Stack with Full Addresses ([trTeInstImplicitReturnMode](ntrace%5Fcontrols.html#trTeInstImplicitReturnMode)\=3)**
 
 The encoder maintains a stack of expected return addresses (created when call is encountered), and only treat a return as inferable if the actual return address matches the value on the stack. This is fully robust for all programs but is more expensive to implement. In this case, if a return address does not match the prediction, it must be reported explicitly via a message. This ensures that the decoder can determine which return is being reported. This method may use shadow stack if implemented by the core.
 
-**Stack with Partial Addresses ([trTeInstImplicitReturnMode](#trTeInstImplicitReturnMode)\=2)**
+**Stack with Partial Addresses ([trTeInstImplicitReturnMode](ntrace%5Fcontrols.html#trTeInstImplicitReturnMode)\=2)**
 
 Call stack maintained by encoder may not include all addresses, but only keep some least significant part of it and use them to compare if return is matching the call or not. Changes that program making incorrect return will return to address with the same least significant portion are very slim.
 
 | |  Decoder does not need to know what actual depth of the call stack is implemented by encoder but for efficiency reasons it should assume max depth. N-Trace implementation should never implement call stack deeper than 32 levels. Such deep calls will be most likely interrupted by other events/messages (like periodic SYNC). |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 
-### [](#8-1-3-repeated-history-optimization)8.1.3\. Repeated History Optimization
+### [](#sec%5FRepeated%5FHistory%5FOptimization)8.1.3\. Repeated History Optimization
 
-This optimization must be enabled by the [trTeInstEnRepeatedHistory](#trTeInstEnRepeatedHistory) control bit.
+This optimization must be enabled by the [trTeInstEnRepeatedHistory](ntrace%5Fcontrols.html#trTeInstEnRepeatedHistory) control bit.
 
 A typical loop either has a direct conditional branch at the start of a loop (which must be typically 'taken' to terminate the loop) or has a direct conditional branch at the end of the loop (which must be typically taken to repeat the loop). In the first case, the direct conditional branch is not taken most of the time and taken once at the end. In the second case, the direct conditional branch is taken most of the time, but not taken at the end of the loop.
 
 Loops with many iterations such as those in functions like memcpy/strcpy have identical flow in each iteraction. Instead of sending the same history bits many times, repeated patterns can be detected and counted. This is a big saving! As an example, a memcpy of 4MB buffer using 32-bit transfers will execute at least 1M of direct conditional branches and 1M of history bits must be included in trace (it is a lot of trace).
 
-The IEEE-5001 Nexus Standard defines a [Repeat Branch](#msg%5FRepeatBranch) message. This message will provide a single [B-CNT](#field%5FB-CNT) (Branch Count) field instead of generating many identical [Direct Branch](#msg%5FDirectBranch) messages. But this message cannot be used in [HTM](#mode%5FHTM) mode as repeated messages (Direct Branch) do not include the HIST field.
+The IEEE-5001 Nexus Standard defines a [Repeat Branch](ntrace%5Fmessages%5Foverview.html#msg%5FRepeatBranch) message. This message will provide a single [B-CNT](ntrace%5Fmessages%5Fdetails.html#field%5FB-CNT) (Branch Count) field instead of generating many identical [Direct Branch](ntrace%5Fmessages%5Foverview.html#msg%5FDirectBranch) messages. But this message cannot be used in [HTM](ntrace%5Fmodes.html#mode%5FHTM) mode as repeated messages (Direct Branch) do not include the HIST field.
 
-To allow generation of repeated history of direct conditional branches in HTM mode an extra encoding for [RCODE](#field%5FRCODE)\=2 in [Resource Full](#msg%5FResourceFull) message is added.
+To allow generation of repeated history of direct conditional branches in HTM mode an extra encoding for [RCODE](ntrace%5Fmessages%5Fdetails.html#field%5FRCODE)\=2 in [Resource Full](ntrace%5Fmessages%5Foverview.html#msg%5FResourceFull) message is added.
 
-| |  It is allowed to generate any sequence of [Resource Full](#msg%5FResourceFull) messages as long as the logically concatenated sequence of (repeated or not …​) HIST bits (excluding most significant stop-bit\[s\]) is the same. |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| |  It is allowed to generate any sequence of [Resource Full](ntrace%5Fmessages%5Foverview.html#msg%5FResourceFull) messages as long as the logically concatenated sequence of (repeated or not …​) HIST bits (excluding most significant stop-bit\[s\]) is the same. |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-Tracing of such simple, long loops would benefit from generating special messages/fields which provide counters of taken/not-taken direct conditional branches (in a way like [Repeat Branch](#msg%5FRepeatBranch) message).
+Tracing of such simple, long loops would benefit from generating special messages/fields which provide counters of taken/not-taken direct conditional branches (in a way like [Repeat Branch](ntrace%5Fmessages%5Foverview.html#msg%5FRepeatBranch) message).
 
 But this approach will not work with more complex code with a conditional statement (or several of them) inside of a loop.
 
 In such a case, it is desired to detect repeated sequences of taken/not-taken direct conditional branches and instead generate many messages with HIST fields, generate a message consisting of a HIST pattern and repeat count.
 
-Let’s assume that we have a loop, which generates a long sequence of repeated taken/not-taken direct conditional branches. Trace may generate [Resource Full](#msg%5FResourceFull) messages with the following HIST records:
+Let’s assume that we have a loop, which generates a long sequence of repeated taken/not-taken direct conditional branches. Trace may generate [Resource Full](ntrace%5Fmessages%5Foverview.html#msg%5FResourceFull) messages with the following HIST records:
 
 Msg#1:
     TCODE=27 (ResourceFull)
@@ -113,14 +113,14 @@ Msg#1:
 | |  HREPEAT counter should not have too many bits as it is not desired to not generate any trace messages for longer periods of time. Bigger HREPEAT will not make compression better but will produce timestamp rarely. |
 | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-### [](#8-1-4-virtual-addresses-optimization)8.1.4\. Virtual Addresses Optimization
+### [](#sec%5FVirtual%5FAddresses%5FOptimization)8.1.4\. Virtual Addresses Optimization
 
-This optimization must be enabled by [trTeInstExtendAddrMSB](#trTeInstExtendAddrMSB) control bit.
+This optimization must be enabled by [trTeInstExtendAddrMSB](ntrace%5Fcontrols.html#trTeInstExtendAddrMSB) control bit.
 
 | |  Normally (without the above bit enabled or implemented), addresses with many most significant bits set to 1 will be sent as long messages (as variable size fields skip only the most significant 0-s). An address,**0xFFFF\_FFFF\_8000\_31F4**, a real address from the Linux kernel, will be encoded as F-ADDR = **0x7FFF\_FFFF\_C000\_18FA** (with the least significant 0-bit skipped). Such a 63-bit variable field value will require 11 bytes to be sent (as we have 6 MDO bits in each byte). |
 | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 
-The following additional rules are used when [trTeInstExtendAddrMSB](#trTeInstExtendAddrMSB) control bit is implemented and set:
+The following additional rules are used when [trTeInstExtendAddrMSB](ntrace%5Fcontrols.html#trTeInstExtendAddrMSB) control bit is implemented and set:
 
 * The encoder may skip any number of most significant identical bits in the U-ADDR/F-ADDR fields. However, it must ensure that if any bits are skipped, then the number of transmitted bits is a multiple of the MDO size. Additionally, the most significant transmitted bit must have the same value as the skipped bits.
 * If F-ADDR/U-ADDR field is received by decoder, then the last (most significant) bit of the very last MDO record must be extended up to bit#63 or bit#31 (depending on XLEN of the core). It is like sign-extension, but it is NOT a sign bit.
@@ -133,7 +133,7 @@ This way of encoding allows an encoder to efficiently send:
 * Any virtual address (in any mode).
 * Any illegal address.
 
-Trace encoder must implement a most significant bit detection (skipping identical 1-s or 0-s in addition to skipping identical 0-s as for any other variable size field) while sending F-ADDR/U-ADDR field. Trace decoders must do it in reverse order, which means that a sign extension (if needed) must be done after collecting the last MDO bit in an F-ADDR/U-ADDR field. Calculation of full address (as defined in [Address Compression](#Address Compression) chapter above) must be done after sign extension of U-ADDR field.
+Trace encoder must implement a most significant bit detection (skipping identical 1-s or 0-s in addition to skipping identical 0-s as for any other variable size field) while sending F-ADDR/U-ADDR field. Trace decoders must do it in reverse order, which means that a sign extension (if needed) must be done after collecting the last MDO bit in an F-ADDR/U-ADDR field. Calculation of full address (as defined in [Address Compression](ntrace%5Ffield%5Fencoding.html#sec%5FAddress%5FCompression) chapter above) must be done after sign extension of U-ADDR field.
 
 **Example Encodings**
 
