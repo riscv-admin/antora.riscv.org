@@ -577,7 +577,7 @@ encodings 64 to 127 are designated for custom use.</p>
 <div class="paragraph">
 <p>The commands are interpreted as two 64-bit doublewords. The byte order of each
 of the doublewords in memory, little-endian or big-endian, is the endianness as
-determined by <code>fctl.BE</code> (<a href="#FCTRL">[FCTRL]</a>).</p>
+determined by <code>fctl.BE</code> (<a href="iommu_registers.html#FCTRL" class="xref page">Features-control register (<code>fctl</code>)</a>).</p>
 </div>
 <div class="paragraph">
 <p>The following command opcodes are defined:</p>
@@ -898,7 +898,7 @@ commands fetched from the CQ have been completed and committed.</p>
 </div>
 <div class="paragraph">
 <p>If the <code>IOFENCE.C</code> times out waiting on completion of previous commands that are
-specified to have a timeout, then the <code>cmd_to</code> bit in <code>cqcsr</code> <a href="#CSR">[CSR]</a> is set to
+specified to have a timeout, then the <code>cmd_to</code> bit in <code>cqcsr</code> <a href="iommu_registers.html#CSR" class="xref page">Command-queue CSR (<code>cqcsr</code>)</a> is set to
 signal this condition. The <code>cqh</code> holds the index of the <code>IOFENCE.C</code> that timed
 out and all previous commands that are not specified to have a timeout have been
 completed and committed.</p>
@@ -937,7 +937,7 @@ observed by all RISC-V harts and IOMMUs in the system.</p>
 </div>
 <div class="paragraph">
 <p>The wire-signaled-interrupts (<code>WSI</code>) bit when set to 1 causes a wired-interrupt
-from the command queue to be generated (by setting <code>cqcsr.fence_w_ip</code> - <a href="#CSR">[CSR]</a>)
+from the command queue to be generated (by setting <code>cqcsr.fence_w_ip</code> - <a href="iommu_registers.html#CSR" class="xref page">Command-queue CSR (<code>cqcsr</code>)</a>)
 on completion of <code>IOFENCE.C</code>. This bit is reserved if the IOMMU does not support
 wired-interrupts or wired-interrupts have not been enabled
 (i.e., <code>fctl.WSI == 0</code>).</p>
@@ -1052,7 +1052,7 @@ operand and all associated PDT entries. The <code>PID</code> operand is reserved
 the PDT are observed before all subsequent implicit reads from IOMMU to PDT.
 The command invalidates cached leaf PDT entry for the specified <code>PID</code> and <code>DID</code>.
 The <code>PID</code> operand of <code>IODIR.INVAL_PDT</code> must not be wider than the width
-supported by the IOMMU (see <a href="#CAP">[CAP]</a>).</p>
+supported by the IOMMU (see <a href="iommu_registers.html#CAP" class="xref page">IOMMU capabilities (<code>capabilities</code>)</a>).</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1210,7 +1210,7 @@ number of fault records processed. If <code>fqh</code> == <code>fqt</code>, the 
 <div class="paragraph">
 <p>The fault records are interpreted as four 64-bit doublewords. The byte order of
 each of the doublewords in memory, little-endian or big-endian, is the endianness
-as determined by <code>fctl.BE</code> (<a href="#FCTRL">[FCTRL]</a>).</p>
+as determined by <code>fctl.BE</code> (<a href="iommu_registers.html#FCTRL" class="xref page">Features-control register (<code>fctl</code>)</a>).</p>
 </div>
 <div class="imageblock kroki">
 <div class="content">
@@ -1590,7 +1590,7 @@ do not require a response, i.e. those with the "Last Request in PRG" field is 0,
 are silently discarded. "Page request" messages that require a response, i.e.
 those with "Last Request in PRG" field set to 1 and are not "Stop Marker"
 messages, may be auto-completed by an IOMMU generated “Page Request Group
-Response” message as specified in <a href="#ATS_PRI">[ATS_PRI]</a>.</p>
+Response” message as specified in <a href="iommu_data_structures.html#ATS_PRI" class="xref page">PCIe ATS Page Request handling</a>.</p>
 </div>
 <div class="paragraph">
 <p>When an error bit in <code>pqcsr</code> is 1 or when a new message is produced in the
@@ -1616,7 +1616,7 @@ of the message) is held in the <code>PAYLOAD</code> field. If <code>R</code> and
 <div class="paragraph">
 <p>The page-request-queue records are interpreted as two 64-bit doublewords. The byte
 order of each of the doublewords in memory, little-endian or big-endian, is the
-endianness as determined by <code>fctl.BE</code> (<a href="#FCTRL">[FCTRL]</a>).</p>
+endianness as determined by <code>fctl.BE</code> (<a href="iommu_registers.html#FCTRL" class="xref page">Features-control register (<code>fctl</code>)</a>).</p>
 </div>
 <div class="paragraph">
 <p>The <code>PAYLOAD</code> holds the message body and its fields are as specified by the PCIe

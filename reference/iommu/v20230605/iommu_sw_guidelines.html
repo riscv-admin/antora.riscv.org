@@ -941,13 +941,13 @@ process-directory-table (when <code>DC.tc.PDTV=1</code>).</p>
 <p>When a change is made to a first-stage page table, and the second-stage is
 Bare, then software must perform invalidations using <code>IOTINVAL.VMA</code> with
 <code>GV=0</code> and <code>AV</code> and <code>PSCV</code> operands appropriate for the modification as
-specified in <a href="#IVMA">[IVMA]</a>.</p>
+specified in <a href="iommu_in_memory_queues.html#IVMA" class="xref page"><code>IOTINVAL.VMA</code> operands and operations</a>.</p>
 </div>
 <div class="paragraph">
 <p>When a change is made to a first-stage page table, and the second-stage is
 not Bare, then software must perform invalidations using <code>IOTINVAL.VMA</code> with
 <code>GV=1</code>, <code>GSCID=DC.iohgatp.GSCID</code> and <code>AV</code> and <code>PSCV</code> operands appropriate for
-the modification as specified in <a href="#IVMA">[IVMA]</a>.</p>
+the modification as specified in <a href="iommu_in_memory_queues.html#IVMA" class="xref page"><code>IOTINVAL.VMA</code> operands and operations</a>.</p>
 </div>
 <div class="paragraph">
 <p>Between a change to the first-stage PTE and when an invalidation command to
@@ -1183,7 +1183,7 @@ from the <code>PQ</code> by advancing the <code>pqh</code> by the number of reco
 <li>
 <p>When a <code>PQ</code> overflow condition occurs, software may observe incomplete
 page-request groups due to the "Page Request" messages being dropped. The
-IOMMU might have automatically responded (see <a href="#ATS_PRI">[ATS_PRI]</a>) to a dropped
+IOMMU might have automatically responded (see <a href="iommu_data_structures.html#ATS_PRI" class="xref page">PCIe ATS Page Request handling</a>) to a dropped
 "Page Request" in such groups if the "Last Request in PRG" flag was set to 1
 in the message. Software should ignore and not service the such incomplete
 groups.</p>

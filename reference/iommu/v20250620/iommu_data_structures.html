@@ -705,7 +705,7 @@ next device-directory-table.</p>
 <p>The <code>DC</code> is interpreted as four 64-bit doublewords in base-format and as eight
 64-bit doublewords in extended-format.  The byte order of each of the
 doublewords in memory, little-endian or big-endian, is the endianness as
-determined by <code>fctl.BE</code> (<a href="#FCTRL">[FCTRL]</a>). The IOMMU may read the <code>DC</code> fields in any
+determined by <code>fctl.BE</code> (<a href="iommu_registers.html#FCTRL" class="xref page">Features-control register (<code>fctl</code>)</a>). The IOMMU may read the <code>DC</code> fields in any
 order.</p>
 </div>
 </div>
@@ -851,7 +851,7 @@ faults encountered in the address translation process. Setting <code>DTF</code> 
 not disable error responses from being generated to the device in response to
 faulting transactions. Setting <code>DTF</code> to 1 does not disable reporting of faults
 from the IOMMU that are not related to the address translation process. The
-faults that are not reported when <code>DTF</code> is 1 are listed in <a href="#FAULT_CAUSE">[FAULT_CAUSE]</a>.</p>
+faults that are not reported when <code>DTF</code> is 1 are listed in <a href="iommu_in_memory_queues.html#FAULT_CAUSE" class="xref page">Fault record <code>CAUSE</code> field encodings</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -2011,8 +2011,8 @@ and VS-stage page tables, remains a reserved encoding for IO transactions.</p>
 <p>When the translation process reports a fault, and the request is an Untranslated
 request or a Translated request, the IOMMU requests the IO bridge to abort the
 transaction. Guidelines for handling faulting transactions in the IO bridge are
-provided in <a href="#IOBR_FAULT_RESP">[IOBR_FAULT_RESP]</a>. The fault may be reported using the fault/event
-reporting mechanism and fault record formats specified in <a href="#FAULT_QUEUE">[FAULT_QUEUE]</a>.</p>
+provided in <a href="iommu_hw_guidelines.html#IOBR_FAULT_RESP" class="xref page">Aborting transactions</a>. The fault may be reported using the fault/event
+reporting mechanism and fault record formats specified in <a href="iommu_in_memory_queues.html#FAULT_QUEUE" class="xref page">Fault/Event-Queue (<code>FQ</code>)</a>.</p>
 </div>
 <div class="paragraph">
 <p>If the fault was detected by a PCIe ATS Translation Request then the IOMMU may
@@ -2170,7 +2170,7 @@ recognized as an MSI to a virtual hart if the write is to a page occupied by
 an interrupt file of a virtual IMSIC within the VM.</p>
 </div>
 <div class="paragraph">
-<p>When MSI address translation is supported (<code>capabilities.MSI_FLAT</code>, <a href="#CAP">[CAP]</a>),
+<p>When MSI address translation is supported (<code>capabilities.MSI_FLAT</code>, <a href="iommu_registers.html#CAP" class="xref page">IOMMU capabilities (<code>capabilities</code>)</a>),
 the process to identify an incoming <code>IOVA</code> as the address of a virtual interrupt
 file and translating the address using the MSI page table is as follows:</p>
 </div>
@@ -2622,7 +2622,7 @@ not be invoked for translating addresses in CXL.cache transactions.</p>
 the device-context to determine if ATS and PRI are enabled for the requester.
 If ATS and PRI are enabled, i.e. <code>EN_ATS</code> and <code>EN_PRI</code> are both set to 1, the
  IOMMU queues the message into an in-memory queue called the
-page-request-queue (<code>PQ</code>) (See <a href="#PRQ">[PRQ]</a>). Following suitable processing of the
+page-request-queue (<code>PQ</code>) (See <a href="iommu_in_memory_queues.html#PRQ" class="xref page">Page-Request-Queue (<code>PQ</code>)</a>). Following suitable processing of the
 "Page Request", a software handler may generate a "Page Request Group Response"
 message to the device.</p>
 </div>
@@ -2631,7 +2631,7 @@ message to the device.</p>
 "Page Request" or "Stop Marker" messages through the <code>PQ</code> due to error
 conditions such as the queue being disabled, queue being full, or the IOMMU
 encountering access faults when attempting to access queue memory. These error
-conditions are specified in <a href="#PRQ">[PRQ]</a>.</p>
+conditions are specified in <a href="iommu_in_memory_queues.html#PRQ" class="xref page">Page-Request-Queue (<code>PQ</code>)</a>.</p>
 </div>
 <div class="paragraph">
 <p>If the <code>ddtp.iommu_mode</code> is <code>Bare</code> or is <code>Off</code>, then the IOMMU cannot locate a
@@ -2815,36 +2815,36 @@ group of entries.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Device Directory Table</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>device_id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IDDT">IODIR.INVAL_DDT</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IDDT" class="xref page">IODIR.INVAL_DDT</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Process Directory Table</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>device_id</code>, <code>process_id</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IPDT">IODIR.INVAL_PDT</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IPDT" class="xref page">IODIR.INVAL_PDT</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">First-stage page table
  (when second-stage is
   not Bare)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>GSCID</code>, <code>PSCID</code>, and IOVA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IVMA">IOTINVAL.VMA</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IVMA" class="xref page">IOTINVAL.VMA</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">First-stage page table
  (when second-stage is
   Bare)</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>PSCID</code>, and IOVA</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IVMA">IOTINVAL.VMA</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IVMA" class="xref page">IOTINVAL.VMA</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Second-stage page table</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>GSCID</code>, <code>GPA</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IGVMA">IOTINVAL.GVMA</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IGVMA" class="xref page">IOTINVAL.GVMA</a></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock">MSI page table</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>GSCID</code>, <code>GPA</code></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="#IGVMA">IOTINVAL.GVMA</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="iommu_in_memory_queues.html#IGVMA" class="xref page">IOTINVAL.GVMA</a></p></td>
 </tr>
 </tbody>
 </table>

@@ -831,7 +831,7 @@ the register returns 0 and writes to that offset are ignored.</p>
 <p>Reset value for <code>ddtp.iommu_mode</code> field must be either <code>Off</code> or <code>Bare</code>.</p>
 </div>
 <div class="paragraph">
-<p>After a reset the caches (<a href="#CACHING">[CACHING]</a>) must have no valid entries.</p>
+<p>After a reset the caches (<a href="iommu_data_structures.html#CACHING" class="xref page">Caching in-memory data structures</a>) must have no valid entries.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1249,7 +1249,7 @@ are enabled (i.e. <code>cqcsr.cqon/cqen == 1</code>, <code>fqcsr.fqon/cqen == 1<
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>BE</code></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock">WARL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">When 0, IOMMU accesses to memory resident data
-                                structures, as specified in <a href="#ENDIAN_CONFIG">[ENDIAN_CONFIG]</a>,
+                                structures, as specified in <a href="iommu_data_structures.html#ENDIAN_CONFIG" class="xref page">Endianness of memory access to data structures</a>,
                                 and accesses to in-memory queues are performed
                                 as little-endian accesses and when 1 as
                                 big-endian accesses.</p></td>
@@ -1268,7 +1268,7 @@ are enabled (i.e. <code>cqcsr.cqon/cqen == 1</code>, <code>fqcsr.fqon/cqen == 1<
 <td class="tableblock halign-center valign-top"><p class="tableblock">WARL</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Controls the address-translation schemes that
                                 may be used for guest physical addresses as
-                                defined in <a href="#IOHGATP_MODE_ENC">[IOHGATP_MODE_ENC]</a>.</p></td>
+                                defined in <a href="iommu_data_structures.html#IOHGATP_MODE_ENC" class="xref page">Encodings of <code>iohgatp.MODE</code> field</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">15:3</p></td>
@@ -1440,7 +1440,7 @@ of the modes must be supported.</p>
 in-flight transactions, observed at the time of the write to this field, from devices
 connected to the IOMMU will either be processed with the configurations
 applicable to the old value of the <code>iommu_mode</code> field or be aborted
-(<a href="#IOBR_FAULT_RESP">[IOBR_FAULT_RESP]</a>). It also ensures that all transactions and previous
+(<a href="iommu_hw_guidelines.html#IOBR_FAULT_RESP" class="xref page">Aborting transactions</a>). It also ensures that all transactions and previous
 requests from devices that have already been processed by the IOMMU are committed
 to a global ordering point such that they can be observed by all RISC-V harts,
 devices, and IOMMUs in the platform. Software must not change the <code>PPN</code> field
@@ -2396,7 +2396,7 @@ status of the page-request-queue.</p>
                               The IOMMU may respond to “Page Request” messages
                               received when page-request-queue is off or in
                               the process of being turned off, as specified in
-                              <a href="#ATS_PRI">[ATS_PRI]</a>.</p></td>
+                              <a href="iommu_data_structures.html#ATS_PRI" class="xref page">PCIe ATS Page Request handling</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">1</p></td>
@@ -2429,7 +2429,7 @@ status of the page-request-queue.</p>
                               that caused the <code>pqof</code> or <code>pqmf</code> bit to be set
                               and all subsequent “Page Request” messages
                               received while these bits are 1 as specified in
-                              <a href="#ATS_PRI">[ATS_PRI]</a>.</p></td>
+                              <a href="iommu_data_structures.html#ATS_PRI" class="xref page">PCIe ATS Page Request handling</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">9</p></td>
@@ -2450,7 +2450,7 @@ status of the page-request-queue.</p>
                               that caused the <code>pqof</code> or <code>pqmf</code> bit to be set
                               and all subsequent “Page Request” messages
                               received while these bits are 1 as specified in
-                              <a href="#ATS_PRI">[ATS_PRI]</a>.</p></td>
+                              <a href="iommu_data_structures.html#ATS_PRI" class="xref page">PCIe ATS Page Request handling</a>.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">15:10</p></td>
