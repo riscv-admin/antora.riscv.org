@@ -740,7 +740,7 @@
 </tbody>
 </table>
 <div class="paragraph">
-<p>Attempts to access <code>sctrdepth</code> from VS-mode or VU-mode raise a virtual-instruction exception, unless CTR state enable access restrictions apply.  See <a href="#stable-enable-access-control">State Enable Access Control</a>.</p>
+<p>Attempts to access <code>sctrdepth</code> from VS-mode or VU-mode raise a virtual-instruction exception, unless CTR state enable access restrictions apply.  See <a href="#state-enable-access-control">State Enable Access Control</a>.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -876,7 +876,7 @@ and software should ignore but preserve any fields that it does not recognize.  
 <p>When <code>vsiselect</code> holds a value in 0x200..0x2FF, the <code>vsireg*</code> registers provide access to the same CTR entry register state as the analogous <code>sireg*</code> registers.  There is not a separate set of entry registers for V=1.</p>
 </div>
 <div class="paragraph">
-<p>See <a href="#stable-enable-access-control">State Enable Access Control</a> for cases where CTR accesses from S-mode and VS-mode may be restricted.</p>
+<p>See <a href="#state-enable-access-control">State Enable Access Control</a> for cases where CTR accesses from S-mode and VS-mode may be restricted.</p>
 </div>
 <div class="sect2">
 <h3 id="10-2-1-control-transfer-record-source-register-ctrsource"><a class="anchor" href="#10-2-1-control-transfer-record-source-register-ctrsource"></a>10.2.1. Control Transfer Record Source Register (<code>ctrsource</code>)</h3>
@@ -1022,13 +1022,13 @@ CC[15:12]) and Cycle Count Mantissa (CCM, in CC[11:0]). See
 <p>Any read of <code>ctrsource</code>, <code>ctrtarget</code>, or <code>ctrdata</code> that follows SCTRCLR, such that it precedes the next qualified control transfer, will return the value 0.  Further, the first recorded transfer following SCTRCLR will have <code>ctrdata</code>.CCV=0.</p>
 </div>
 <div class="paragraph">
-<p>SCTRCLR raises an illegal-instruction exception in U-mode, and a virtual-instruction exception in VU-mode, unless CTR state enable access restrictions apply.  See <a href="#stable-enable-access-control">State Enable Access Control</a>.</p>
+<p>SCTRCLR raises an illegal-instruction exception in U-mode, and a virtual-instruction exception in VU-mode, unless CTR state enable access restrictions apply.  See <a href="#state-enable-access-control">State Enable Access Control</a>.</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="state-enabl-access-control"><a class="anchor" href="#state-enabl-access-control"></a>10.4. State Enable Access Control</h2>
+<h2 id="state-enable-access-control"><a class="anchor" href="#state-enable-access-control"></a>10.4. State Enable Access Control</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>When Smstateen is implemented, the <code>mstateen0</code>.CTR bit controls access to CTR register state from privilege modes less privileged than M-mode.  When <code>mstateen0</code>.CTR=1, accesses to CTR register state behave as described in <a href="#CSRs">CSRs</a> and <a href="#entry-registers">Entry Registers</a> above, while SCTRCLR behaves as described in <a href="#supervisor-ctr-clear-instruction">Supervisor CTR Clear Instruction</a>.  When <code>mstateen0</code>.CTR=0 and the privilege mode is less privileged than M-mode, the following operations raise an illegal-instruction exception:</p>

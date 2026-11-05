@@ -128,7 +128,7 @@ Like `siselect` and `sireg*`, the widths of `vsiselect` and `vsireg*` are always
 
 ### [](#4-1-5-access-control-by-the-state-enable-csrs)4.1.5\. Access control by the state-enable CSRs
 
-If extension Smstateen is implemented together with Smcsrind, bit 60 of state-enable register `mstateen0` controls access to `siselect`, `sireg*`,`vsiselect`, and `vsireg*`. When `mstateen0`\[60\]=0, an attempt to access one of these CSRs from a privilege mode less privileged than M-mode results in an illegal-instruction exception. As always, the state-enable CSRs do not affect the accessibility of any state when in M-mode, only in less privileged modes. For more explanation, see the documentation for extension [Smstateen](smstateen.html#]).
+If extension Smstateen is implemented together with Smcsrind, bit 60 of state-enable register `mstateen0` controls access to `siselect`, `sireg*`,`vsiselect`, and `vsireg*`. When `mstateen0`\[60\]=0, an attempt to access one of these CSRs from a privilege mode less privileged than M-mode results in an illegal-instruction exception. As always, the state-enable CSRs do not affect the accessibility of any state when in M-mode, only in less privileged modes. For more explanation, see the documentation for extension [Smstateen](smstateen.html).
 
 Other extensions may specify that certain mstateen bits control access to registers accessed indirectly through `siselect` \+ `sireg*`, and/or`vsiselect` \+ `vsireg*`. However, regardless of any other mstateen bits, if`mstateen0`\[60\] = 1, a virtual-instruction exception is raised as described in the previous section for all attempts from VS-mode or VU-mode to directly access `vsiselect` or `vsireg*`, and for all attempts from VU-mode to access `siselect` or `sireg*`.
 

@@ -176,7 +176,7 @@ __Table 5\. Control Transfer Record Metadata Register Field Definitions__
 | CCV         | Cycle Count Valid. See [Cycle Counting](#cycle-counting).                                                                                                                                           | WARL   |
 | CC\[15:0\]  | Cycle Count, composed of the Cycle Count Exponent (CCE, in CC\[15:12\]) and Cycle Count Mantissa (CCM, in CC\[11:0\]). See[Cycle Counting](#cycle-counting).                                        | WARL   |
 
-Undefined bits in `ctrdata` are WPRI. Undefined bits must be implemented as read-only 0, unless a [Custom extension](#custom-extension) is implemented and enabled.
+Undefined bits in `ctrdata` are WPRI. Undefined bits must be implemented as read-only 0, unless a [Custom extension](#custom-extensions) is implemented and enabled.
 
 | |  _Like the [Transfer Type Filter](#transfer-type-filtering) bits in mctrctl, the ctrdata.TYPE bits leverage the E-trace itype encodings._ |
 | ------------------------------------------------------------------------------------------------------------------------------------------- |
