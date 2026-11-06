@@ -38,7 +38,7 @@ Interrupts are a different type of delta that generally occur asynchronously to 
 
 The decoder generally does not know where an interrupt occurred in the instruction sequence, so the trace must report the address where normal program flow ceased, as well as give an indication of the asynchronous destination which may be as simple as reporting the exception type. When an interrupt or exception occurs, the final instruction retired beforehand must be traced. Following this the next valid instruction address (the first of the trap handler) must be traced.
 
-Note: not all exceptions and interrupts cause traps (see[\[sec:terminology\]](#sec:terminology) for definitions). Most notably, floating point exceptions and disabled interrupts do not trap. If an exception or interrupt doesn’t trap, the program counter does not change. So, there is no need to trace all exceptions/interrupts, just traps. In this document, interrupts and exceptions are only traced when they cause traps to be taken.
+Note: not all exceptions and interrupts cause traps (see[Terminology](introduction.html#sec:terminology) for definitions). Most notably, floating point exceptions and disabled interrupts do not trap. If an exception or interrupt doesn’t trap, the program counter does not change. So, there is no need to trace all exceptions/interrupts, just traps. In this document, interrupts and exceptions are only traced when they cause traps to be taken.
 
 #### [](#sec:synchronization)2.1.1.5\. Synchronization
 
@@ -60,7 +60,7 @@ Some examples of why tracing may stop are:
 
 * The hart may be halted (entered debug mode);
 * The hart may be reset;
-* Encoding may be stopped (for example via a _Trace-off_ trigger - see[\[sec:trigger\]](#sec:trigger));
+* Encoding may be stopped (for example via a _Trace-off_ trigger - see[Using trigger outputs from the Debug Module](ingressPort.html#sec:trigger));
 * The matching criteria for any filtering capabilities implemented by the encoder may no longer be met;
 * The encoder may be disabled.
 
@@ -78,7 +78,7 @@ Here are common examples of such modes:
 * branch prediction mode: branches that are predicted correctly by an encoder branch predictor (and an identical copy in the decoder) are not encoded as taken/non-taken, but as a more efficient branch count number.
 * Jump target cache mode: Rather than reporting the address of an uninferable jump target, efficiency can be improved by caching recent jump targets, and reporting the cache entry index instead.
 
-Modes may have associated parameters; see [\[tab:iparameters\]](#tab:iparameters) for further details.
+Modes may have associated parameters; see [Parameters to the encoder - instruction trace](discovery.html#tab:iparameters) for further details.
 
 All modes are optional apart from delta address mode, which must be supported.
 
@@ -110,7 +110,7 @@ This mode can only be used if the decoder can infer the address of the trap hand
 
 Related parameters: _sijump\_p_.
 
-By default, the target of an indirect jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant then it can be considered inferable under some circumstances. The hart must identify jumps with sequentially inferable targets and provide this information separately to the encoder. The final decision as to whether to treat the jump as inferable or not must be made by the encoder. Both the constant load and the jump must be traced in order for the decoder to be able to infer the jump target. See [\[JumpClasses\]](#JumpClasses) for details of what constitutes a sequentially inferable jump.
+By default, the target of an indirect jump is always considered an uninferable PC discontinuity. However, if the register that specifies the jump target was loaded with a constant then it can be considered inferable under some circumstances. The hart must identify jumps with sequentially inferable targets and provide this information separately to the encoder. The final decision as to whether to treat the jump as inferable or not must be made by the encoder. Both the constant load and the jump must be traced in order for the decoder to be able to infer the jump target. See [Jump classification and target inference](ingressPort.html#JumpClasses) for details of what constitutes a sequentially inferable jump.
 
 #### [](#sec:implicit-return)2.1.2.5\. Implicit return mode
 
@@ -118,7 +118,7 @@ Related parameters: _call\_counter\_size\_p_, _return\_stack\_size\_p_,_itype\_w
 
 Although a function return is usually an indirect jump, well behaved programs return to the point in the program from which the function was called using a standard calling convention. For those programs, it is possible to determine the execution path without being explicitly notified of the destination address of the return. The implicit return mode can result in very significant improvements in trace encoder efficiency.
 
-Returns can only be treated as inferable if the associated call has already been reported in an earlier packet. The encoder must ensure that this is the case. This can be accomplished by utilizing a counter to keep track of the number of nested calls being traced. The counter increments on calls (but not tail calls), and decrements on returns (see[\[JumpClasses\]](#JumpClasses) for definitions). The counter will not over or underflow, and is reset to 0 whenever a synchronization packet is sent. Returns will be treated as inferable and will not generate a trace packet if the count is non-zero (i.e. the associated call was already reported in an earlier packet).
+Returns can only be treated as inferable if the associated call has already been reported in an earlier packet. The encoder must ensure that this is the case. This can be accomplished by utilizing a counter to keep track of the number of nested calls being traced. The counter increments on calls (but not tail calls), and decrements on returns (see[Jump classification and target inference](ingressPort.html#JumpClasses) for definitions). The counter will not over or underflow, and is reset to 0 whenever a synchronization packet is sent. Returns will be treated as inferable and will not generate a trace packet if the count is non-zero (i.e. the associated call was already reported in an earlier packet).
 
 Such a scheme is low cost, and will work as long as programs are "well behaved". The encoder does not check that the return address is actually that of the instruction following the associated call. As such, any program that modifies return addresses cannot be traced using this mode with this minimal implementation.
 

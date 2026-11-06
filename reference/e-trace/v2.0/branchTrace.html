@@ -838,7 +838,7 @@ address (the first of the trap handler) must be traced.</p>
 </div>
 <div class="paragraph">
 <p>Note: not all exceptions and interrupts cause traps (see
-<a href="#sec:terminology">[sec:terminology]</a> for definitions). Most
+<a href="introduction.html#sec:terminology" class="xref page">Terminology</a> for definitions). Most
 notably, floating point exceptions and disabled interrupts do not trap.
 If an exception or interrupt doesn&#8217;t trap, the program counter does not
 change. So, there is no need to trace all exceptions/interrupts, just
@@ -900,7 +900,7 @@ instruction must be output.</p>
 </li>
 <li>
 <p>Encoding may be stopped (for example via a <em>Trace-off</em> trigger - see
-<a href="#sec:trigger">[sec:trigger]</a>);</p>
+<a href="ingressPort.html#sec:trigger" class="xref page">Using trigger outputs from the Debug Module</a>);</p>
 </li>
 <li>
 <p>The matching criteria for any filtering capabilities implemented by
@@ -961,7 +961,7 @@ jump targets, and reporting the cache entry index instead.</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Modes may have associated parameters; see <a href="#tab:iparameters">[tab:iparameters]</a> for further details.</p>
+<p>Modes may have associated parameters; see <a href="discovery.html#tab:iparameters" class="xref page">Parameters to the encoder - instruction trace</a> for further details.</p>
 </div>
 <div class="paragraph">
 <p>All modes are optional apart from delta address mode, which must be
@@ -1030,7 +1030,7 @@ sequentially inferable targets and provide this information separately
 to the encoder. The final decision as to whether to treat the jump as
 inferable or not must be made by the encoder. Both the constant load and
 the jump must be traced in order for the decoder to be able to infer the
-jump target. See <a href="#JumpClasses">[JumpClasses]</a> for details
+jump target. See <a href="ingressPort.html#JumpClasses" class="xref page">Jump classification and target inference</a> for details
 of what constitutes a sequentially inferable jump.</p>
 </div>
 </div>
@@ -1055,7 +1055,7 @@ already been reported in an earlier packet. The encoder must ensure that
 this is the case. This can be accomplished by utilizing a counter to
 keep track of the number of nested calls being traced. The counter
 increments on calls (but not tail calls), and decrements on returns (see
-<a href="#JumpClasses">[JumpClasses]</a> for definitions). The counter
+<a href="ingressPort.html#JumpClasses" class="xref page">Jump classification and target inference</a> for definitions). The counter
 will not over or underflow, and is reset to 0 whenever a synchronization
 packet is sent. Returns will be treated as inferable and will not
 generate a trace packet if the count is non-zero (i.e. the associated

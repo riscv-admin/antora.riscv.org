@@ -742,7 +742,7 @@
 <ul>
 <li>
 <p><em>te_inst.</em> The name of the packet type emitted by the encoder (see
-<a href="#packets">[packets]</a>);</p>
+<a href="payload.html#packets" class="xref page">Instruction Trace Encoder Output Packets</a>);</p>
 </li>
 <li>
 <p><em>inst.</em> Abbreviation for 'instruction';</p>
@@ -771,17 +771,17 @@ not;</p>
 <li>
 <p><em>ppccd.</em> Privilege has changed, or context has changed and needs to be
 reported precisely or treated as an uninferable PC discontinuity (see
-<a href="#tab:context-type">[tab:context-type]</a>);</p>
+<a href="ingressPort.html#tab:context-type" class="xref page">Context type ctype values and corresponding actions</a>);</p>
 </li>
 <li>
 <p><em>ppccd_br.</em> As above, but branch map not empty;</p>
 </li>
 <li>
-<p><em>ntf.</em> Trace notify trigger (see <a href="#tab:debugModuleTriggerSupport">[tab:debugModuleTriggerSupport]</a>);</p>
+<p><em>ntf.</em> Trace notify trigger (see <a href="ingressPort.html#tab:debugModuleTriggerSupport" class="xref page">Debug Module trigger support (mcontrol action)</a>);</p>
 </li>
 <li>
 <p><em>cci.</em> context change that can be reported imprecisely (see
-<a href="#tab:context-type">[tab:context-type]</a>);</p>
+<a href="ingressPort.html#tab:context-type" class="xref page">Context type ctype values and corresponding actions</a>);</p>
 </li>
 <li>
 <p><em>rpt_br.</em> Report branches due to full branch map or misprediction;</p>
@@ -831,7 +831,7 @@ instruction.</p>
 <div class="paragraph">
 <p>Additionally, the encoder can generate one further packet type, not
 shown on the diagram for clarity. The <em>support</em> packet (format 3,
-subformat 3 - see <a href="#sec:format33">[sec:format33]</a>) is sent when:</p>
+subformat 3 - see <a href="payload.html#sec:format33" class="xref page">Format 3 subformat 3 - Support</a>) is sent when:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -854,7 +854,7 @@ packet.</p>
 </div>
 <div class="paragraph">
 <p>Note: if the <strong>halted</strong> or <strong>reset</strong> sideband signals are asserted (see
-<a href="#tab:ingress-side-band">[tab:ingress-side-band]</a>) the encoder will behave as if it has received an unqualified instruction (output <em>te_inst</em> reporting the address of the previous instruction, followed by
+<a href="ingressPort.html#tab:ingress-side-band" class="xref page">Optional sideband encoder input signals</a>) the encoder will behave as if it has received an unqualified instruction (output <em>te_inst</em> reporting the address of the previous instruction, followed by
 <em>te_support</em>);</p>
 </div>
 <div id="fig:algo" class="imageblock text-center">
@@ -880,7 +880,7 @@ predicted correctly, nothing is output at this time, and the encoder
 continues to count correctly predicted branch outcomes. As soon as one
 of the branch outcomes is not correctly predicted, the encoder will
 output a format 0, subformat 0 packet. See also
-<a href="#sec:format0">[sec:format0]</a>.</p>
+<a href="payload.html#sec:format0" class="xref page">Format 0 packets</a>.</p>
 </div>
 <div class="paragraph">
 <p>The choice between formats for the "format 0/1/2" case in the middle of
@@ -900,7 +900,7 @@ address. This will include branch information if there are any branches
 to report. However, the encoder may chose to output the equivalent
 format 1 or 2 packet (containing the differential address, with or
 without branch information) if that will result in a shorter packet (see
-<a href="#sec:format0">[sec:format0]</a>);</p>
+<a href="payload.html#sec:format0" class="xref page">Format 0 packets</a>);</p>
 </li>
 <li>
 <p>Else, if there are branches to report, format 1 is used, otherwise
@@ -912,13 +912,13 @@ format 2.</p>
 <p>Packet formats 0, 1 and 2 are organized so that the address is usually
 the final field. Minimizing the number of bits required to represent the
 address reduces the total packet size and significantly improves
-efficiency. See <a href="#packets">[packets]</a>.</p>
+efficiency. See <a href="payload.html#packets" class="xref page">Instruction Trace Encoder Output Packets</a>.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="sec:resync"><a class="anchor" href="#sec:resync"></a>8.1.2. Resynchronisation</h3>
 <div class="paragraph">
-<p>Per <a href="#sec:synchronization">[sec:synchronization]</a>, a format 3
+<p>Per <a href="branchTrace.html#sec:synchronization" class="xref page">Synchronization</a>, a format 3
 synchronisation packet must be output after "a prolonged period of
 time". The exact mechanism for determining this is not specified, but
 options might be to count the number of <em>te_inst</em> packets emitted, or

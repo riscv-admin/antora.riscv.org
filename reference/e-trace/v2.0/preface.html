@@ -740,37 +740,37 @@
 <div class="ulist">
 <ul>
 <li>
-<p>Updated <a href="#packets">[packets]</a> and <a href="#fragments">[fragments]</a> to reference the <a href="https://github.com/riscv-non-isa/e-trace-encap/releases/latest/">Unformatted Trace &amp; Diagnostic Data Packet Encapsulation for RISC-V Specification</a>;</p>
+<p>Updated <a href="payload.html#packets" class="xref page">Instruction Trace Encoder Output Packets</a> and <a href="fragmentCodeAndTransport.html#fragments" class="xref page">Code fragment and transport</a> to reference the <a href="https://github.com/riscv-non-isa/e-trace-encap/releases/latest/">Unformatted Trace &amp; Diagnostic Data Packet Encapsulation for RISC-V Specification</a>;</p>
 </li>
 <li>
 <p>Removed ambiguity between 'last' and 'final'.  Last was previously used to mean both the instruction before the current one, and the final instruction traced;</p>
 </li>
 <li>
-<p>Clarified behaviour when trace-on and trace-off triggers occur both occur in the same cycle (see <a href="#sec:trigger">[sec:trigger]</a>);</p>
+<p>Clarified behaviour when trace-on and trace-off triggers occur both occur in the same cycle (see <a href="ingressPort.html#sec:trigger" class="xref page">Using trigger outputs from the Debug Module</a>);</p>
 </li>
 <li>
-<p>Clarified that full synchronization also takes place on a privilege change (see <a href="#sec:synchronization">[sec:synchronization]</a> and <a href="#sec:thaddr">[sec:thaddr]</a>);</p>
+<p>Clarified that full synchronization also takes place on a privilege change (see <a href="branchTrace.html#sec:synchronization" class="xref page">Synchronization</a> and <a href="payload.html#sec:thaddr" class="xref page">Format 3 thaddr, address and privilege fields</a>);</p>
 </li>
 <li>
-<p>Reworded jump classifications in jump classifications in <a href="#sec:InstructionInterfaceRequirements">[sec:InstructionInterfaceRequirements]</a> to align with terminology used in other specifications;</p>
+<p>Reworded jump classifications in jump classifications in <a href="ingressPort.html#sec:InstructionInterfaceRequirements" class="xref page">Instruction Trace Interface requirements</a> to align with terminology used in other specifications;</p>
 </li>
 <li>
-<p>Clarified when to issue sync-support packet when trace is enabled (see <a href="#sec:format33">[sec:format33]</a>);</p>
+<p>Clarified when to issue sync-support packet when trace is enabled (see <a href="payload.html#sec:format33" class="xref page">Format 3 subformat 3 - Support</a>);</p>
 </li>
 <li>
-<p>Clarified that branch_map can be set to 31 any time an address needs to be reported and the branch map is full (see <a href="#sec:format1">[sec:format1]</a>);</p>
+<p>Clarified that branch_map can be set to 31 any time an address needs to be reported and the branch map is full (see <a href="payload.html#sec:format1" class="xref page">Format 1 packets</a>);</p>
 </li>
 <li>
-<p>Updated reference encoding algorithm to generalize resync behaviour and add missing trap conditions (see <a href="#Algorithm">[Algorithm]</a>);</p>
+<p>Updated reference encoding algorithm to generalize resync behaviour and add missing trap conditions (see <a href="exampleAlgorithm.html#Algorithm" class="xref page">Reference Compressed Branch Trace Algorithm</a>);</p>
 </li>
 <li>
-<p>Clarified that implicit returns are not stored in the jump target cache (see <a href="#sec:jump-cache">[sec:jump-cache]</a>);</p>
+<p>Clarified that implicit returns are not stored in the jump target cache (see <a href="branchTrace.html#sec:jump-cache" class="xref page">Jump target cache mode</a>);</p>
 </li>
 <li>
-<p>Updated decoder to remove ECALL, EBREAK and C.EBREAK from is_uninferrable_jump function.  Including them is harmless but unnecessary, as these instrucitons don&#8217;t retire (see <a href="#Decoder">[Decoder]</a>);</p>
+<p>Updated decoder to remove ECALL, EBREAK and C.EBREAK from is_uninferrable_jump function.  Including them is harmless but unnecessary, as these instrucitons don&#8217;t retire (see <a href="decoder.html#Decoder" class="xref page">Decoder</a>);</p>
 </li>
 <li>
-<p>Corrected description of why the EPC is not always reported (see <a href="#sec:thaddr">[sec:thaddr]</a>).</p>
+<p>Corrected description of why the EPC is not always reported (see <a href="payload.html#sec:thaddr" class="xref page">Format 3 thaddr, address and privilege fields</a>).</p>
 </li>
 <li>
 <p>Minor clarifications, formatting and typo fixes.</p>
@@ -801,16 +801,16 @@
 <p>Control field definitions removed from section 2, which now references the <a href="#https://github.com/riscv-non-isa/e-trace-encap/releases/latest/">RISC-V Trace Control Interface Specification</a></p>
 </li>
 <li>
-<p>Added detail on handling of multi-load/store instructions for data trace to <a href="#sec:DataInterfaceRequirements">[sec:DataInterfaceRequirements]</a>.</p>
+<p>Added detail on handling of multi-load/store instructions for data trace to <a href="ingressPort.html#sec:DataInterfaceRequirements" class="xref page">Data Trace Interface requirements</a>.</p>
 </li>
 <li>
-<p>Removed references to tail-calls in jump classifications in <a href="#sec:InstructionInterfaceRequirements">[sec:InstructionInterfaceRequirements]</a>.</p>
+<p>Removed references to tail-calls in jump classifications in <a href="ingressPort.html#sec:InstructionInterfaceRequirements" class="xref page">Instruction Trace Interface requirements</a>.</p>
 </li>
 <li>
-<p>Corrected typos where <code>lrid</code> was inadvertently refered to by an earlier name (<code>index</code>) in <a href="#sec:data-loadstore">[sec:data-loadstore]</a>.</p>
+<p>Corrected typos where <code>lrid</code> was inadvertently refered to by an earlier name (<code>index</code>) in <a href="dataTracePayload.html#sec:data-loadstore" class="xref page">Load and Store</a>.</p>
 </li>
 <li>
-<p>Corrected reference decoder in <a href="#Decoder">[Decoder]</a> to cover a corner-case related to trap returns.</p>
+<p>Corrected reference decoder in <a href="decoder.html#Decoder" class="xref page">Decoder</a> to cover a corner-case related to trap returns.</p>
 </li>
 </ul>
 </div>

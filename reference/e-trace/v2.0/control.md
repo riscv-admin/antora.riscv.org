@@ -50,7 +50,7 @@ __Table 1\. Basic Control__
 
 ### [](#sec:ctl-modes)1.1.2\. Optional Modes
 
-See [\[optional\]](#optional) for details of the modes covered in this section.
+See [Optional and run-time configurable modes](branchTrace.html#optional) for details of the modes covered in this section.
 
 __Table 2\. Optional and run-time configurable modes.__
 | **Field**                      | **Applicability** | **E-Trace Specific Details** |
@@ -73,7 +73,7 @@ __Table 2\. Optional and run-time configurable modes.__
 
 ### [](#sec:ctl-filter)1.1.3\. Filtering
 
-See [\[ch:filtering\]](#ch:filtering) for details of the filtering capabilities covered in this section.
+See [Filtering](filtering.html#ch:filtering) for details of the filtering capabilities covered in this section.
 
 __Table 3\. Trace filtering selection__
 | **Field**           | **Applicability** | **E-Trace Specific Details** |

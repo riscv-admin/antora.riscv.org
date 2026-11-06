@@ -6,17 +6,17 @@ The contents of this chapter are informative only.
 
 A reference algorithm for compressed branch trace is given in[Figure 1](#fig:algo). In the diagram, the following terms are used:
 
-* _te\_inst._ The name of the packet type emitted by the encoder (see[\[packets\]](#packets));
+* _te\_inst._ The name of the packet type emitted by the encoder (see[Instruction Trace Encoder Output Packets](payload.html#packets));
 * _inst._ Abbreviation for 'instruction';
 * _trap. Exception or interrupt signalled;_
 * _updiscon._ Uninferable PC discontinuity. This identifies an instruction that causes the program counter to be changed by an amount that cannot be predicted from the source code alone (**itype** values 8, 10, 12 or 14);
 * _Qualified?_ An instruction that meets the filtering criteria is qualified, and will be traced;
 * _Branch?_ Is the instruction a branch or not (**itype** values 4 or 5);
 * _branch map._ A vector where each bit represents the outcome of a branch. A 0 indicates the branch was taken, a 1 indicates that it was not;
-* _ppccd._ Privilege has changed, or context has changed and needs to be reported precisely or treated as an uninferable PC discontinuity (see[\[tab:context-type\]](#tab:context-type));
+* _ppccd._ Privilege has changed, or context has changed and needs to be reported precisely or treated as an uninferable PC discontinuity (see[Context type ctype values and corresponding actions](ingressPort.html#tab:context-type));
 * _ppccd\_br._ As above, but branch map not empty;
-* _ntf._ Trace notify trigger (see [\[tab:debugModuleTriggerSupport\]](#tab:debugModuleTriggerSupport));
-* _cci._ context change that can be reported imprecisely (see[\[tab:context-type\]](#tab:context-type));
+* _ntf._ Trace notify trigger (see [Debug Module trigger support (mcontrol action)](ingressPort.html#tab:debugModuleTriggerSupport));
+* _cci._ context change that can be reported imprecisely (see[Context type ctype values and corresponding actions](ingressPort.html#tab:context-type));
 * _rpt\_br._ Report branches due to full branch map or misprediction;
 * _branches._ The number of branches encountered but not yet reported to the decoder;
 * _pbc._ Correctly predicted branches count (always zero if branch predictor disabled or not present);
@@ -29,13 +29,13 @@ A reference algorithm for compressed branch trace is given in[Figure 1](#fig:alg
 
 A 3-stage pipeline within the encoder is assumed, such that the encoder has visibility of the current, previous and next instructions. All packets are generated using information relating to the current instruction. The orange diamonds indicate decisions based on the previous instruction, the green diamond indicates a decision based on the next instruction, and all other diamonds are based on the current instruction.
 
-Additionally, the encoder can generate one further packet type, not shown on the diagram for clarity. The _support_ packet (format 3, subformat 3 - see [\[sec:format33\]](#sec:format33)) is sent when:
+Additionally, the encoder can generate one further packet type, not shown on the diagram for clarity. The _support_ packet (format 3, subformat 3 - see [Format 3 subformat 3 - Support](payload.html#sec:format33)) is sent when:
 
 * The encoder is enabled or disabled, or its configuration is changed, to inform the decoder of the operating mode of the encoder;
 * After the final qualified instruction has been traced, to inform the decoder that tracing has stopped;
 * If trace packets are lost (for example if the buffer into which packets are being written fills up), in this situation, the 1st packet loaded into the buffer when space next becomes available must be a_support_ packet. Following this, tracing will resume with a sync packet.
 
-Note: if the **halted** or **reset** sideband signals are asserted (see[\[tab:ingress-side-band\]](#tab:ingress-side-band)) the encoder will behave as if it has received an unqualified instruction (output _te\_inst_ reporting the address of the previous instruction, followed by_te\_support_);
+Note: if the **halted** or **reset** sideband signals are asserted (see[Optional sideband encoder input signals](ingressPort.html#tab:ingress-side-band)) the encoder will behave as if it has received an unqualified instruction (output _te\_inst_ reporting the address of the previous instruction, followed by_te\_support_);
 
 ![algo](_images/algo.png) 
 
@@ -45,19 +45,19 @@ Figure 1\. Instruction delta trace algorithm
 
 In all cases but two, the packet format is determined only by a 'yes' outcome from the associated decision.
 
-When reporting branch information on its own (without an address), the choice between format 1 and format 0, subformat 0 depends on the number of correctly predicted branches (this will be 0 if the predictor is not supported, or is disabled). No packets are generated until there are at least 31 branches to report. Format 1 is used if the outcome of at least one of those 31 branches was not predicted correctly. If all were predicted correctly, nothing is output at this time, and the encoder continues to count correctly predicted branch outcomes. As soon as one of the branch outcomes is not correctly predicted, the encoder will output a format 0, subformat 0 packet. See also[\[sec:format0\]](#sec:format0).
+When reporting branch information on its own (without an address), the choice between format 1 and format 0, subformat 0 depends on the number of correctly predicted branches (this will be 0 if the predictor is not supported, or is disabled). No packets are generated until there are at least 31 branches to report. Format 1 is used if the outcome of at least one of those 31 branches was not predicted correctly. If all were predicted correctly, nothing is output at this time, and the encoder continues to count correctly predicted branch outcomes. As soon as one of the branch outcomes is not correctly predicted, the encoder will output a format 0, subformat 0 packet. See also[Format 0 packets](payload.html#sec:format0).
 
 The choice between formats for the "format 0/1/2" case in the middle of the diagram also needs further explanation.
 
 * If the number of correctly predicted branches is 31 or more, then format 0, subformat 0 is always used;
-* Else, if the jump target cache is supported and enabled, and the address being reported is in the cache, then normally format 0, subformat 1 will be used, reporting the cache index associated with the address. This will include branch information if there are any branches to report. However, the encoder may chose to output the equivalent format 1 or 2 packet (containing the differential address, with or without branch information) if that will result in a shorter packet (see[\[sec:format0\]](#sec:format0));
+* Else, if the jump target cache is supported and enabled, and the address being reported is in the cache, then normally format 0, subformat 1 will be used, reporting the cache index associated with the address. This will include branch information if there are any branches to report. However, the encoder may chose to output the equivalent format 1 or 2 packet (containing the differential address, with or without branch information) if that will result in a shorter packet (see[Format 0 packets](payload.html#sec:format0));
 * Else, if there are branches to report, format 1 is used, otherwise format 2.
 
-Packet formats 0, 1 and 2 are organized so that the address is usually the final field. Minimizing the number of bits required to represent the address reduces the total packet size and significantly improves efficiency. See [\[packets\]](#packets).
+Packet formats 0, 1 and 2 are organized so that the address is usually the final field. Minimizing the number of bits required to represent the address reduces the total packet size and significantly improves efficiency. See [Instruction Trace Encoder Output Packets](payload.html#packets).
 
 ### [](#sec:resync)8.1.2\. Resynchronisation
 
-Per [\[sec:synchronization\]](#sec:synchronization), a format 3 synchronisation packet must be output after "a prolonged period of time". The exact mechanism for determining this is not specified, but options might be to count the number of _te\_inst_ packets emitted, or the number of clock cycles elapsed, since the previous synchronization message was sent.
+Per [Synchronization](branchTrace.html#sec:synchronization), a format 3 synchronisation packet must be output after "a prolonged period of time". The exact mechanism for determining this is not specified, but options might be to count the number of _te\_inst_ packets emitted, or the number of clock cycles elapsed, since the previous synchronization message was sent.
 
 When the resync is required, the primary objective is to output a format 3 packet, so that the decoder can start tracing from that point without needing any of the history. However, if the decoder is already synced, then it is also required that it can continue to follow the execution path up to and through the format 3 packet seamlessly. As such, before outputting a format 3 packet, it is necessary to output a format 0/1 packet for the preceding instruction if there are any unreported branches (because format 3 does not contain a branch map). There are several supported options for incrementing the resync timer (packets, cycle or instruction half-words), and as such updates to the timer do not necessarily coincide with instruction retirements. A small, independent FSM can be used to ensure the required packets are output in the required order, as follows:
 

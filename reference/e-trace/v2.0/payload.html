@@ -915,7 +915,7 @@ adds significant additional complexity to the encoder;</p>
 </li>
 <li>
 <p>It would complicate the algorithm shown in
-<a href="#fig:algo">[fig:algo]</a>.</p>
+<a href="exampleAlgorithm.html#fig:algo" class="xref page">Instruction delta trace algorithm</a>.</p>
 </li>
 </ul>
 </div>
@@ -931,7 +931,7 @@ address of the trap handler, or of the exception itself - <a href="#sec:thaddr">
 </div>
 <div class="paragraph">
 <p>If the implicit exception mode is enabled (see
-<a href="#sec:implicit-exception">[sec:implicit-exception]</a>), the trap
+<a href="branchTrace.html#sec:implicit-exception" class="xref page">Implicit exception mode</a>), the trap
 handler address is omitted if <strong>thaddr</strong> is 1.</p>
 </div>
 <table class="tableblock frame-all grid-all fit-content center">
@@ -1057,7 +1057,7 @@ nature of the exception. It is omitted from the packet for interrupts.</p>
 <div class="paragraph">
 <p>This packet contains only the context and/or the timestamp, and is
 output when the context value changes and can be reported imprecisely
-(see <a href="#tab:context-type">[tab:context-type]</a>).</p>
+(see <a href="ingressPort.html#tab:context-type" class="xref page">Context type ctype values and corresponding actions</a>).</p>
 </div>
 <table class="tableblock frame-all grid-all fit-content center">
 <caption class="title">Table 3. Packet format 3, subformat 2</caption>
@@ -1267,7 +1267,7 @@ indicated using <strong>ended_rep</strong>.</p>
 <p>This packet contains only an instruction address, and is used when the
 address of an instruction must be reported, and there is no unreported
 branch information. The address is in differential format unless full
-address mode is enabled (see <a href="#sec:full-address">[sec:full-address]</a>).</p>
+address mode is enabled (see <a href="branchTrace.html#sec:full-address" class="xref page">Full address mode</a>).</p>
 </div>
 <table class="tableblock frame-all grid-all fit-content center">
 <caption class="title">Table 5. Packet format 2</caption>
@@ -1302,7 +1302,7 @@ instruction address.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If the value of this bit is different from the MSB of
 <strong>address</strong>, it indicates that this packet is reporting an instruction
 that is not the target of an uninferable discontinuity because a
-notification was requested via <strong>trigger[2]</strong> (see <a href="#sec:trigger">[sec:trigger]</a>).</p></td>
+notification was requested via <strong>trigger[2]</strong> (see <a href="ingressPort.html#sec:trigger" class="xref page">Using trigger outputs from the Debug Module</a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>updiscon</strong></p></td>
@@ -1553,7 +1553,7 @@ branch information must be reported (for example because the branch map
 is full), or when the address of an instruction must be reported, and
 there has been at least one branch since the previous packet. If
 included, the address is in differential format unless full address mode
-is enabled (see <a href="#sec:full-address">[sec:full-address]</a>).</p>
+is enabled (see <a href="branchTrace.html#sec:full-address" class="xref page">Full address mode</a>).</p>
 </div>
 <table class="tableblock frame-all grid-all stretch center">
 <caption class="title">Table 6. Packet format 1 - address, branch map</caption>
@@ -1612,7 +1612,7 @@ instruction address.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">If the value of this bit is different from the MSB of
 <strong>address</strong>, it indicates that this packet is reporting an instruction
 that is not the target of an uninferable discontinuity because a
-notification was requested via <strong>trigger[2]</strong> (see <a href="#sec:trigger">[sec:trigger]</a>).</p></td>
+notification was requested via <strong>trigger[2]</strong> (see <a href="ingressPort.html#sec:trigger" class="xref page">Using trigger outputs from the Debug Module</a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>updiscon</strong></p></td>
@@ -1859,7 +1859,7 @@ instruction address.</p></td>
 <strong>address</strong>, it indicates that this packet is reporting an instruction
 that is not the target of an uninferable discontinuity because a
 notification was requested via <strong>trigger[2]</strong> (see
-<a href="#sec:trigger">[sec:trigger]</a>).</p></td>
+<a href="ingressPort.html#sec:trigger" class="xref page">Using trigger outputs from the Debug Module</a>).</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><strong>updiscon</strong></p></td>
@@ -2041,7 +2041,7 @@ or nested call count. If <strong>irreport</strong> is the same value as
 <p>The width of this field depends on the number of optional formats
 supported. Currently, two optional formats are defined (correctly
 predicted branches and jump target cache). The width is specified by the
-<em>f0s_width</em> discovery field (see <a href="#sec:disco">[sec:disco]</a>). If
+<em>f0s_width</em> discovery field (see <a href="discovery.html#sec:disco" class="xref page">Discovery of encoder parameters</a>). If
 multiple optional formats are supported, the field width must be
 non-zero. However, if only one optional format is supported, the field
 can be omitted, and the value of the field inferred from the <strong>options</strong>
