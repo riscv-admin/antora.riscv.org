@@ -2,7 +2,7 @@
 
 ## [](#1-1-transport)1.1\. Transport
 
-An RPMI transport is an abstraction over a physical medium used to send and receive messages between the application processors (APs) and the platform microcontroller (PuC). It provides bi-directional communication between a RISC-V privilege-level of application processors and a platform microcontroller. The application processors can have multiple RPMI transport instances with a platform microcontroller. Also, a platform can also have multiple microcontrollers each with its own RPMI transport instance as shown in the [\[fig\_intro\_trans\_topology\]](#fig%5Fintro%5Ftrans%5Ftopology)below.
+An RPMI transport is an abstraction over a physical medium used to send and receive messages between the application processors (APs) and the platform microcontroller (PuC). It provides bi-directional communication between a RISC-V privilege-level of application processors and a platform microcontroller. The application processors can have multiple RPMI transport instances with a platform microcontroller. Also, a platform can also have multiple microcontrollers each with its own RPMI transport instance as shown in the [Transport for M-Mode and S-Mode](intro.html#fig%5Fintro%5Ftrans%5Ftopology)below.
 
 An RPMI transport instance consists of two logical bi-directional channels for message delivery as shown in the [Figure 1](#transport%5Fbidir%5Fcomm) below. Each channel is capable of transferring messages in request-response pairs. A channel which transfers a request message from the application processors (APs) to the platform microcontroller (PuC) and response/acknowledgement back in opposite direction is called an A2P channel. Similarly, the channel for request messages from the platform microcontroller (PuC) to the application processors (APs) is called a P2A channel. The P2A channel also transfers notification messages to the application processors.
 
@@ -139,9 +139,9 @@ If the P2A doorbell is a MSI then the application processors must configure the 
 
 #### [](#1-1-1-6-integration-with-rpmi-message-protocol)1.1.1.6\. Integration with RPMI Message Protocol
 
-If the doorbell interrupts are supported and enabled, the shared memory transport uses `FLAGS[3]` bit in the [message header](#table%5Fmessage%5Fheader) of[RPMI normal request](#messaging%5Fmessage%5Ftypes%5Ftable) as a **doorbell interrupt request** flag. This flag represents if the doorbell interrupt is requested to notify about the response of a request message.
+If the doorbell interrupts are supported and enabled, the shared memory transport uses `FLAGS[3]` bit in the [message header](message-protocol.html#table%5Fmessage%5Fheader) of[RPMI normal request](message-protocol.html#messaging%5Fmessage%5Ftypes%5Ftable) as a **doorbell interrupt request** flag. This flag represents if the doorbell interrupt is requested to notify about the response of a request message.
 
-The sender of the [RPMI normal request](#messaging%5Fmessage%5Ftypes%5Ftable) type message can set the `FLAGS[3]` bit to `1` to inform the service provider to ring the doorbell after sending the response message back. If the `FLAGS[3]` bit is `0`, it means that the sender is going to poll for the response message in the queue and the service provider does not need to ring the doorbell.
+The sender of the [RPMI normal request](message-protocol.html#messaging%5Fmessage%5Ftypes%5Ftable) type message can set the `FLAGS[3]` bit to `1` to inform the service provider to ring the doorbell after sending the response message back. If the `FLAGS[3]` bit is `0`, it means that the sender is going to poll for the response message in the queue and the service provider does not need to ring the doorbell.
 
 If the sender of an RPMI normal request message sets the `FLAGS[3]` bit to `1`without supporting or enabling the doorbell interrupt, the behavior is undefined.
 

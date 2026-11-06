@@ -68,13 +68,13 @@ The message data carries different information based on the RPMI message type:
 * An RPMI acknowledgement message carries the status and optional response data.
 * An RPMI notification message carries an array of RPMI events.
 
-The message data format for RPMI request message and RPMI acknowledgement message is defined separately for each RPMI service. The message data format for RPMI notification message is defined in the [\[Notifications\]](#Notifications).
+The message data format for RPMI request message and RPMI acknowledgement message is defined separately for each RPMI service. The message data format for RPMI notification message is defined in the [Notifications](#sec%5Fnotifications).
 
-An RPMI acknowledgement message must have a signed `STATUS` field as the first 4-byte word of the message data containing an error code defined in the [\[Possible Error Codes\]](#Possible Error Codes). An RPMI service where the response data exceeds the maximum message data size can use multipart RPMI acknowledgement messages.
+An RPMI acknowledgement message must have a signed `STATUS` field as the first 4-byte word of the message data containing an error code defined in the [Possible Error Codes](#sec%5Fpossible%5Ferror%5Fcodes). An RPMI service where the response data exceeds the maximum message data size can use multipart RPMI acknowledgement messages.
 
 If a physical address is passed in the message data of any message type, then it refers to the physical address space of the application processor.
 
-### [](#2-1-3-notifications)2.1.3\. Notifications
+### [](#sec%5Fnotifications)2.1.3\. Notifications
 
 The platform microcontroller can use RPMI notification message to notify application processors about system events which are also referred to as**RPMI events**. An RPMI notification message has no associated response or acknowledgement from application processors. Multiple RPMI events can be packed into a single RPMI notification message depending on the space available in the message data. Each RPMI event may have additional data associated with it based on the type of RPMI event. Any action required for handling an RPMI event depends on the application processors. The format of an RPMI notification message in shown in the [Figure 2](#messaging%5Fnotif%5Fformat)below.
 
@@ -104,7 +104,7 @@ __Table 4\. Event Format__
 
 Figure 3\. Event Header
 
-### [](#2-1-4-possible-error-codes)2.1.4\. Possible Error Codes
+### [](#sec%5Fpossible%5Ferror%5Fcodes)2.1.4\. Possible Error Codes
 
 The [Table 5](#table%5Ferror%5Fcodes) below lists the error codes which can be returned by an RPMI service in the `STATUS` field of the RPMI acknowledgement message.
 

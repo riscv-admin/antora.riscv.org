@@ -10,7 +10,7 @@ Figure 1\. RPMI and SBI MPXY Integration
 
 The RPMI communication via the SBI MPXY extension must satisfy the following requirements:
 
-1. The SBI MPXY channel must correspond to a single RPMI service group which is allowed in S-mode except BASE and CPPC service groups. The [\[table\_service\_groups\]](#table%5Fservice%5Fgroups)list the RPMI service groups allowed in S-mode.
+1. The SBI MPXY channel must correspond to a single RPMI service group which is allowed in S-mode except BASE and CPPC service groups. The [RPMI Service Groups](service-groups.html#table%5Fservice%5Fgroups)list the RPMI service groups allowed in S-mode.
 2. The SBI MPXY channel corresponding to the RPMI SYSTEM\_MSI service group must not support the P2A doorbell system MSI.
 3. The `message_id` parameter passed to the `sbi_mpxy_send_message_with_response()`and `sbi_mpxy_send_message_without_response()` must represent the `SERVICE_ID` of an RPMI service belonging to the RPMI service group bound to the SBI MPXY channel.
 4. The format of the message data passed via the SBI MPXY shared memory to the`sbi_mpxy_send_message_with_response()` and `sbi_mpxy_send_message_without_response()`must match the request data format of the RPMI service represented by the`message_id` parameter.

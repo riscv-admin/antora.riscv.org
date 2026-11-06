@@ -90,10 +90,10 @@ __Table 5\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 6\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-base%5Fget%5Fimplementation%5Fversion-service%5Fid-0x02)Service: BASE\_GET\_IMPLEMENTATION\_VERSION (SERVICE\_ID: 0x02)
 
@@ -104,10 +104,10 @@ __Table 7\. Request Data__
 | -- |
 
 __Table 8\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                                                |
-| ---- | ------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI implementation version returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | IMPL\_VERSION | uint32 | Implementation version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                                                    |
+| Word | Name          | Type   | Description                                                                                                                                                                              |
+| ---- | ------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI implementation version returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | IMPL\_VERSION | uint32 | Implementation version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                                                                  |
 
 #### [](#service-base%5Fget%5Fimplementation%5Fid-service%5Fid-0x03)Service: BASE\_GET\_IMPLEMENTATION\_ID (SERVICE\_ID: 0x03)
 
@@ -118,10 +118,10 @@ __Table 9\. Request Data__
 | -- |
 
 __Table 10\. Response Data__
-| Word | Name     | Type   | Description                                                                                                                                                           |
-| ---- | -------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS   | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI implementation ID returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | IMPL\_ID | uint32 | Implementation ID.                                                                                                                                                    |
+| Word | Name     | Type   | Description                                                                                                                                                                         |
+| ---- | -------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS   | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI implementation ID returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | IMPL\_ID | uint32 | Implementation ID.                                                                                                                                                                  |
 
 #### [](#service-base%5Fget%5Fspec%5Fversion-service%5Fid-0x04)Service: BASE\_GET\_SPEC\_VERSION (SERVICE\_ID: 0x04)
 
@@ -132,10 +132,10 @@ __Table 11\. Request Data__
 | -- |
 
 __Table 12\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                                              |
-| ---- | ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI specification version returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes) |
-| 1    | SPEC\_VERSION | uint32 | RPMI specification version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                                              |
+| Word | Name          | Type   | Description                                                                                                                                                                            |
+| ---- | ------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS RPMI specification version returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes) |
+| 1    | SPEC\_VERSION | uint32 | RPMI specification version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                                                            |
 
 #### [](#service-base%5Fget%5Fplatform%5Finfo-service%5Fid-0x05)Service: BASE\_GET\_PLATFORM\_INFO (SERVICE\_ID: 0x05)
 
@@ -148,7 +148,7 @@ __Table 13\. Request Data__
 __Table 14\. Response Data__
 | Word | Name              | Type                       | Description                                                                                                                                                                                                                                                                                  |
 | ---- | ----------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS            | int32                      | Return error code. Error Code Description RPMI\_SUCCESS Platform information returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                                                                                                          |
+| 0    | STATUS            | int32                      | Return error code. Error Code Description RPMI\_SUCCESS Platform information returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                                                                                                            |
 | 1    | PLATFORM\_ID\_LEN | uint32                     | Platform Identifier field length in bytes.                                                                                                                                                                                                                                                   |
 | 2    | PLATFORM\_ID      | uint8\[PLATFORM\_ID\_LEN\] | Platform Identifier.Up to PLATFORM\_ID\_LEN bytes NULL terminated ASCII string. The use and interpretation of this field is implementation-defined. It can be used to convey details such as the vendor ID, vendor name, specific product model, revision, or configuration of the hardware. |
 
@@ -164,10 +164,10 @@ __Table 15\. Request Data__
 | 0    | SERVICEGROUP\_ID | uint32 | Service group ID. |
 
 __Table 16\. Response Data__
-| Word | Name                    | Type   | Description                                                                                                                                         |
-| ---- | ----------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                  | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service probed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes) |
-| 1    | SERVICE\_GROUP\_VERSION | uint32 | Service group version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                              |
+| Word | Name                    | Type   | Description                                                                                                                                                       |
+| ---- | ----------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                  | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service probed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes) |
+| 1    | SERVICE\_GROUP\_VERSION | uint32 | Service group version. Bits Description \[31:16\] MAJOR number. \[15:0\] MINOR number.                                                                            |
 
 #### [](#service-base%5Fget%5Fattributes-service%5Fid-0x07)Service: BASE\_GET\_ATTRIBUTES (SERVICE\_ID: 0x07)
 
@@ -180,7 +180,7 @@ __Table 17\. Request Data__
 __Table 18\. Response Data__
 | Word | Name   | Type   | Description                                                                                                                                                                                         |
 | ---- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                           |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                             |
 | 1    | FLAGS0 | uint32 | Bits Description \[31:2\] _Reserved_ and must be 0. \[1\] RPMI context privilege level. 0b1: M-mode. 0b0: S-mode. \[0\] Event notification support in platform. 0b1: Supported. 0b0: Not supported. |
 | 2    | FLAGS1 | uint32 | _Reserved_ and must be 0.                                                                                                                                                                           |
 | 3    | FLAGS2 | uint32 | _Reserved_ and must be 0.                                                                                                                                                                           |
@@ -239,10 +239,10 @@ __Table 21\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 22\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-sysmsi%5Fget%5Fattributes-service%5Fid-0x02)Service: SYSMSI\_GET\_ATTRIBUTES (SERVICE\_ID: 0x02)
 
@@ -253,12 +253,12 @@ __Table 23\. Request Data__
 | -- |
 
 __Table 24\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                             |
-| ---- | ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | SYS\_NUM\_MSI | uint32 | Number of system MSIs.                                                                                                                                  |
-| 2    | FLAGS0        | uint32 | _Reserved_ and must be 0.                                                                                                                               |
-| 3    | FLAGS1        | uint32 | _Reserved_ and must be 0.                                                                                                                               |
+| Word | Name          | Type   | Description                                                                                                                                                           |
+| ---- | ------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | SYS\_NUM\_MSI | uint32 | Number of system MSIs.                                                                                                                                                |
+| 2    | FLAGS0        | uint32 | _Reserved_ and must be 0.                                                                                                                                             |
+| 3    | FLAGS1        | uint32 | _Reserved_ and must be 0.                                                                                                                                             |
 
 #### [](#service-sysmsi%5Fget%5Fmsi%5Fattributes-service%5Fid-0x03)Service: SYSMSI\_GET\_MSI\_ATTRIBUTES (SERVICE\_ID: 0x03)
 
@@ -270,12 +270,12 @@ __Table 25\. Request Data__
 | 0    | SYS\_MSI\_INDEX | uint32 | Index of the system MSI. |
 
 __Table 26\. Response Data__
-| Word | Name           | Type        | Description                                                                                                                                                                                                                            |
-| ---- | -------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS0         | uint32      | Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Preferred privilege level for MSI handling. 0b1: M-mode. 0b0: M-mode or S-mode.                                                                                              |
-| 2    | FLAGS1         | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                              |
-| 3:6  | SYS\_MSI\_NAME | uint8\[16\] | System MSI name, a NULL-terminated ASCII string up to 16-bytes.                                                                                                                                                                        |
+| Word | Name           | Type        | Description                                                                                                                                                                                                                                          |
+| ---- | -------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS0         | uint32      | Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Preferred privilege level for MSI handling. 0b1: M-mode. 0b0: M-mode or S-mode.                                                                                                            |
+| 2    | FLAGS1         | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                                            |
+| 3:6  | SYS\_MSI\_NAME | uint8\[16\] | System MSI name, a NULL-terminated ASCII string up to 16-bytes.                                                                                                                                                                                      |
 
 #### [](#srvgrp%5Fsysmsi%5Fset%5Fmsi%5Fstate)Service: SYSMSI\_SET\_MSI\_STATE (SERVICE\_ID: 0x04)
 
@@ -288,9 +288,9 @@ __Table 27\. Request Data__
 | 1    | SYS\_MSI\_STATE | uint32 | System MSI state as defined in [Table 19](#table%5Fsysmsi%5Fstate). |
 
 __Table 28\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                    |
-| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS MSI is enabled or disabled successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI orSYS\_MSI\_STATE value is reserved or invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                  |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS MSI is enabled or disabled successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI orSYS\_MSI\_STATE value is reserved or invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#srvgrp%5Fsysmsi%5Fget%5Fmsi%5Fstate)Service: SYSMSI\_GET\_MSI\_STATE (SERVICE\_ID: 0x05)
 
@@ -302,10 +302,10 @@ __Table 29\. Request Data__
 | 0    | SYS\_MSI\_INDEX | uint32 | Index of the system MSI. |
 
 __Table 30\. Response Data__
-| Word | Name            | Type   | Description                                                                                                                                                                                                                                |
-| ---- | --------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS          | int32  | Return error code. Error Code Description RPMI\_SUCCESS MSI state is returned successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | SYS\_MSI\_STATE | uint32 | System MSI state as defined in [Table 19](#table%5Fsysmsi%5Fstate).                                                                                                                                                                        |
+| Word | Name            | Type   | Description                                                                                                                                                                                                                                              |
+| ---- | --------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS          | int32  | Return error code. Error Code Description RPMI\_SUCCESS MSI state is returned successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | SYS\_MSI\_STATE | uint32 | System MSI state as defined in [Table 19](#table%5Fsysmsi%5Fstate).                                                                                                                                                                                      |
 
 #### [](#srvgrp%5Fsysmsi%5Fset%5Fmsi%5Ftarget)Service: SYSMSI\_SET\_MSI\_TARGET (SERVICE\_ID: 0x06)
 
@@ -320,9 +320,9 @@ __Table 31\. Request Data__
 | 3    | SYS\_MSI\_DATA          | uint32 | 32-bit MSI data.                 |
 
 __Table 32\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                  |
-| ---- | ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS MSI address and data are configured successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. RPMI\_ERR\_INVALID\_ADDR MSI target address is invalid or it is not 4-byte aligned. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                |
+| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS MSI address and data are configured successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. RPMI\_ERR\_INVALID\_ADDR MSI target address is invalid or it is not 4-byte aligned. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#srvgrp%5Fsysmsi%5Fget%5Fmsi%5Ftarget)Service: SYSMSI\_GET\_MSI\_TARGET (SERVICE\_ID: 0x07)
 
@@ -334,12 +334,12 @@ __Table 33\. Request Data__
 | 0    | SYS\_MSI\_INDEX | uint32 | Index of the system MSI. |
 
 __Table 34\. Response Data__
-| Word | Name                    | Type   | Description                                                                                                                                                                                                                                      |
-| ---- | ----------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS                  | int32  | Return error code. Error Code Description RPMI\_SUCCESS MSI target details returned successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | SYS\_MSI\_ADDRESS\_LOW  | uint32 | Lower 32-bit of the MSI address.                                                                                                                                                                                                                 |
-| 2    | SYS\_MSI\_ADDRESS\_HIGH | uint32 | Upper 32-bit of the MSI address.                                                                                                                                                                                                                 |
-| 3    | SYS\_MSI\_DATA          | uint32 | 32-bit MSI data.                                                                                                                                                                                                                                 |
+| Word | Name                    | Type   | Description                                                                                                                                                                                                                                                    |
+| ---- | ----------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                  | int32  | Return error code. Error Code Description RPMI\_SUCCESS MSI target details returned successfully. RPMI\_ERR\_INVALID\_PARAM SYS\_MSI\_INDEX value is greater than SYS\_NUM\_MSI. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | SYS\_MSI\_ADDRESS\_LOW  | uint32 | Lower 32-bit of the MSI address.                                                                                                                                                                                                                               |
+| 2    | SYS\_MSI\_ADDRESS\_HIGH | uint32 | Upper 32-bit of the MSI address.                                                                                                                                                                                                                               |
+| 3    | SYS\_MSI\_DATA          | uint32 | 32-bit MSI data.                                                                                                                                                                                                                                               |
 
 ### [](#service-group-system%5Freset-servicegroup%5Fid-0x0003)Service Group - SYSTEM\_RESET (SERVICEGROUP\_ID: 0x0003)
 
@@ -379,10 +379,10 @@ __Table 36\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 37\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-sysrst%5Fget%5Fattributes-service%5Fid-0x02)Service: SYSRST\_GET\_ATTRIBUTES (SERVICE\_ID: 0x02)
 
@@ -394,10 +394,10 @@ __Table 38\. Request Data__
 | 0    | RESET\_TYPE | uint32 | Reset type.Refer [Reset Types](#section-reset-types) for more details. |
 
 __Table 39\. Response Data__
-| Word | Name   | Type   | Description                                                                                                                                               |
-| ---- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS  | uint32 | Reset type attributes. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Reset type support. 0b1: Supported. 0b0: Not supported.                  |
+| Word | Name   | Type   | Description                                                                                                                                                             |
+| ---- | ------ | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS  | uint32 | Reset type attributes. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Reset type support. 0b1: Supported. 0b0: Not supported.                                |
 
 #### [](#service-sysrst%5Freset-service%5Fid-0x03)Service: SYSRST\_RESET (SERVICE\_ID: 0x03)
 
@@ -444,10 +444,10 @@ __Table 43\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 44\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-syssusp%5Fget%5Fattributes-service%5Fid-0x02)Service: SYSSUSP\_GET\_ATTRIBUTES (SERVICE\_ID: 0x02)
 
@@ -461,7 +461,7 @@ __Table 45\. Request Data__
 __Table 46\. Response Data__
 | Word | Name   | Type   | Description                                                                                                                                                                                                                                                                                                                           |
 | ---- | ------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                                                                                                                                                             |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Attributes returned successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                                                                                                                                                               |
 | 1    | FLAGS  | uint32 | Suspend type attributes. Bits Description \[31:2\] _Reserved_ and must be 0. \[1\] Resume Address Support.If a SUSPEND\_TYPE supports custom resume address which platform must configure for the resuming application processor. 0b1: Supported. 0b0: Not supported. \[0\] Suspend type Support. 0b1: Supported. 0b0: Not supported. |
 
 #### [](#service-syssusp%5Fsuspend-service%5Fid-0x03)Service: SYSSUSP\_SUSPEND (SERVICE\_ID: 0x03)
@@ -481,9 +481,9 @@ __Table 47\. Request Data__
 | 3    | RESUME\_ADDR\_HIGH | uint32 | Upper 32-bit address.                                                        |
 
 __Table 48\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                    |
-| ---- | ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Suspend request has been accepted. RPMI\_ERR\_INVALID\_PARAM HART\_ID or SUSPEND\_TYPE is invalid. RPMI\_ERR\_INVALID\_ADDR Resume address is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                  |
+| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Suspend request has been accepted. RPMI\_ERR\_INVALID\_PARAM HART\_ID or SUSPEND\_TYPE is invalid. RPMI\_ERR\_INVALID\_ADDR Resume address is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 ### [](#service-group-hart%5Fstate%5Fmanagement-servicegroup%5Fid-0x0005)Service Group - HART\_STATE\_MANAGEMENT (SERVICEGROUP\_ID: 0x0005)
 
@@ -530,10 +530,10 @@ __Table 50\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 51\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-hsm%5Fget%5Fhart%5Fstatus-service%5Fid-0x02)Service: HSM\_GET\_HART\_STATUS (SERVICE\_ID: 0x02)
 
@@ -545,10 +545,10 @@ __Table 52\. Request Data__
 | 0    | HART\_ID | uint32 | Hart ID.    |
 
 __Table 53\. Response Data__
-| Word | Name        | Type   | Description                                                                                                                                                                                                                                                |
-| ---- | ----------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID is invalid. RPMI\_ERR\_INVALID\_STATE Hart is in invalid state. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | HART\_STATE | uint32 | Hart state.Refer [Hart States](#section-hart-states) for more details.                                                                                                                                                                                     |
+| Word | Name        | Type   | Description                                                                                                                                                                                                                                                              |
+| ---- | ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID is invalid. RPMI\_ERR\_INVALID\_STATE Hart is in invalid state. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | HART\_STATE | uint32 | Hart state.Refer [Hart States](#section-hart-states) for more details.                                                                                                                                                                                                   |
 
 #### [](#service-hsm%5Fget%5Fhart%5Flist-service%5Fid-0x03)Service: HSM\_GET\_HART\_LIST (SERVICE\_ID: 0x03)
 
@@ -562,12 +562,12 @@ __Table 54\. Request Data__
 | 0    | START\_INDEX | uint32 | Start index of the Hart ID. |
 
 __Table 55\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                                                                                |
-| ---- | ------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | REMAINING     | uint32 | Remaining number of Hart IDs to be returned.                                                                                                                                                               |
-| 2    | RETURNED      | uint32 | Number of Hart IDs returned in this request.                                                                                                                                                               |
-| 3    | HART\_ID\[N\] | uint32 | Hart IDs list.                                                                                                                                                                                             |
+| Word | Name          | Type   | Description                                                                                                                                                                                                              |
+| ---- | ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | REMAINING     | uint32 | Remaining number of Hart IDs to be returned.                                                                                                                                                                             |
+| 2    | RETURNED      | uint32 | Number of Hart IDs returned in this request.                                                                                                                                                                             |
+| 3    | HART\_ID\[N\] | uint32 | Hart IDs list.                                                                                                                                                                                                           |
 
 #### [](#service-hsm%5Fget%5Fsuspend%5Ftypes-service%5Fid-0x04)Service: HSM\_GET\_SUSPEND\_TYPES (SERVICE\_ID: 0x04)
 
@@ -583,12 +583,12 @@ __Table 56\. Request Data__
 | 0    | START\_INDEX | uint32 | Start index of the Hart ID. 0 for the first call, subsequent calls will use the next index of the remaining items. |
 
 __Table 57\. Response Data__
-| Word | Name               | Type   | Description                                                                                                                                                                                                |
-| ---- | ------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS             | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | REMAINING          | uint32 | Remaining number of suspend types to be returned.                                                                                                                                                          |
-| 2    | RETURNED           | uint32 | Number of suspend types returned in this request.                                                                                                                                                          |
-| 3    | SUSPEND\_TYPE\[N\] | uint32 | Suspend types.Refer [Hart Suspend Types](#section-hart-suspend-types) for more details.                                                                                                                    |
+| Word | Name               | Type   | Description                                                                                                                                                                                                              |
+| ---- | ------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS             | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | REMAINING          | uint32 | Remaining number of suspend types to be returned.                                                                                                                                                                        |
+| 2    | RETURNED           | uint32 | Number of suspend types returned in this request.                                                                                                                                                                        |
+| 3    | SUSPEND\_TYPE\[N\] | uint32 | Suspend types.Refer [Hart Suspend Types](#section-hart-suspend-types) for more details.                                                                                                                                  |
 
 #### [](#service-hsm%5Fget%5Fsuspend%5Finfo-service%5Fid-0x05)Service: HSM\_GET\_SUSPEND\_INFO (SERVICE\_ID: 0x05)
 
@@ -610,14 +610,14 @@ __Table 58\. Request Data__
 | 0    | SUSPEND\_TYPE | uint32 | Suspend type.Refer [Hart Suspend Types](#section-hart-suspend-types) for more details. |
 
 __Table 59\. Response Data__
-| Word | Name            | Type   | Description                                                                                                                                                                                                 |
-| ---- | --------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS          | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM SUSPEND\_TYPE is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS           | uint32 | Bits Description \[31: 1\] _Reserved_ and must be 0. \[0\] Local timer running status. 0b1: Local timer stops when the hart is suspended. 0b0: Local timer does not stop when hart is suspended.            |
-| 2    | ENTRY\_LATENCY  | uint32 | Entry latency in microseconds.                                                                                                                                                                              |
-| 3    | EXIT\_LATENCY   | uint32 | Exit latency in microseconds.                                                                                                                                                                               |
-| 4    | WAKEUP\_LATENCY | uint32 | Wakeup latency in microseconds.                                                                                                                                                                             |
-| 5    | MIN\_RESIDENCY  | uint32 | Minimum residency time in microseconds.                                                                                                                                                                     |
+| Word | Name            | Type   | Description                                                                                                                                                                                                               |
+| ---- | --------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS          | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM SUSPEND\_TYPE is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS           | uint32 | Bits Description \[31: 1\] _Reserved_ and must be 0. \[0\] Local timer running status. 0b1: Local timer stops when the hart is suspended. 0b0: Local timer does not stop when hart is suspended.                          |
+| 2    | ENTRY\_LATENCY  | uint32 | Entry latency in microseconds.                                                                                                                                                                                            |
+| 3    | EXIT\_LATENCY   | uint32 | Exit latency in microseconds.                                                                                                                                                                                             |
+| 4    | WAKEUP\_LATENCY | uint32 | Wakeup latency in microseconds.                                                                                                                                                                                           |
+| 5    | MIN\_RESIDENCY  | uint32 | Minimum residency time in microseconds.                                                                                                                                                                                   |
 
 #### [](#service-hsm%5Fhart%5Fstart-service%5Fid-0x06)Service: HSM\_HART\_START (SERVICE\_ID: 0x06)
 
@@ -631,9 +631,9 @@ __Table 60\. Request Data__
 | 2    | START\_ADDR\_HIGH | uint32 | Upper 32-bit of the start address.        |
 
 __Table 61\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ---- | ------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and hart has started. RPMI\_ERR\_INVALID\_PARAM HART\_ID or start address is invalid. RPMI\_ERR\_ALREADY Hart is already in transition to start state or has already started. RPMI\_ERR\_DENIED Hart is not in stopped state. RPMI\_ERR\_HW\_FAULT Failed due to hardware fault. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and hart has started. RPMI\_ERR\_INVALID\_PARAM HART\_ID or start address is invalid. RPMI\_ERR\_ALREADY Hart is already in transition to start state or has already started. RPMI\_ERR\_DENIED Hart is not in stopped state. RPMI\_ERR\_HW\_FAULT Failed due to hardware fault. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-hsm%5Fhart%5Fstop-service%5Fid-0x07)Service: HSM\_HART\_STOP (SERVICE\_ID: 0x07)
 
@@ -649,9 +649,9 @@ __Table 62\. Request Data__
 | 0    | HART\_ID | uint32 | Hart ID of the calling hart. |
 
 __Table 63\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                           |
-| ---- | ------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and hart is stopped. RPMI\_ERR\_ALREADY Hart is already in transition to stop state or has already stopped. RPMI\_ERR\_DENIED Hart is not in start state. RPMI\_ERR\_HW\_FAULT Failed due to hardware failure. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                                         |
+| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and hart is stopped. RPMI\_ERR\_ALREADY Hart is already in transition to stop state or has already stopped. RPMI\_ERR\_DENIED Hart is not in start state. RPMI\_ERR\_HW\_FAULT Failed due to hardware failure. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-hsm%5Fhart%5Fsuspend-service%5Fid-0x08)Service: HSM\_HART\_SUSPEND (SERVICE\_ID: 0x08)
 
@@ -670,9 +670,9 @@ __Table 64\. Request Data__
 | 3    | RESUME\_ADDR\_HIGH | uint32 | Upper 32-bit of the resume address.Only used for non-retentive suspend types.          |
 
 __Table 65\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                             |
-| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or SUSPEND\_TYPE is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                           |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or SUSPEND\_TYPE is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 ### [](#service-group-cppc-servicegroup%5Fid-0x0006)Service Group - CPPC (SERVICEGROUP\_ID: 0x0006)
 
@@ -765,10 +765,10 @@ __Table 69\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 70\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-cppc%5Fprobe%5Freg-service%5Fid-0x02)Service: CPPC\_PROBE\_REG (SERVICE\_ID: 0x02)
 
@@ -781,10 +781,10 @@ __Table 71\. Request Data__
 | 1    | HART\_ID | uint32 | Hart ID.          |
 
 __Table 72\. Response Data__
-| Word | Name        | Type   | Description                                                                                                                                                                                                                                                              |
-| ---- | ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS CPPC register probed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | REG\_LENGTH | uint32 | Register length (bits).                                                                                                                                                                                                                                                  |
+| Word | Name        | Type   | Description                                                                                                                                                                                                                                                                            |
+| ---- | ----------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS CPPC register probed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | REG\_LENGTH | uint32 | Register length (bits).                                                                                                                                                                                                                                                                |
 
 #### [](#service-cppc%5Fread%5Freg-service%5Fid-0x03)Service: CPPC\_READ\_REG (SERVICE\_ID: 0x03)
 
@@ -797,11 +797,11 @@ __Table 73\. Request Data__
 | 1    | HART\_ID | uint32 | Hart ID.          |
 
 __Table 74\. Response Data__
-| Word | Name       | Type   | Description                                                                                                                                                                                                                                                           |
-| ---- | ---------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS     | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | DATA\_LOW  | uint32 | Lower 32-bit of the data.                                                                                                                                                                                                                                             |
-| 2    | DATA\_HIGH | uint32 | Upper 32-bit of data. This will be 0 if the register is of 32-bit length.                                                                                                                                                                                             |
+| Word | Name       | Type   | Description                                                                                                                                                                                                                                                                         |
+| ---- | ---------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS     | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | DATA\_LOW  | uint32 | Lower 32-bit of the data.                                                                                                                                                                                                                                                           |
+| 2    | DATA\_HIGH | uint32 | Upper 32-bit of data. This will be 0 if the register is of 32-bit length.                                                                                                                                                                                                           |
 
 #### [](#service-cppc%5Fwrite%5Freg-service%5Fid-0x04)Service: CPPC\_WRITE\_REG (SERVICE\_ID: 0x04)
 
@@ -818,9 +818,9 @@ __Table 75\. Request Data__
 | 3    | DATA\_HIGH | uint32 | Upper 32-bit of data. This is ignored if the register is of 32-bit length. |
 
 __Table 76\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                   |
-| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. RPMI\_ERR\_DENIED REG\_ID is read only. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                 |
+| ---- | ------ | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID or REG\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED REG\_ID is not supported. RPMI\_ERR\_DENIED REG\_ID is read only. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-cppc%5Fget%5Ffast%5Fchannel%5Fregion-service%5Fid-0x05)Service: CPPC\_GET\_FAST\_CHANNEL\_REGION (SERVICE\_ID: 0x05)
 
@@ -835,7 +835,7 @@ __Table 77\. Request Data__
 __Table 78\. Response Data__
 | Word | Name               | Type   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | ---- | ------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS             | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NOT\_SUPPORTED Fast-channels not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                                                                                                                                                                                                                                                                    |
+| 0    | STATUS             | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NOT\_SUPPORTED Fast-channels not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                                                                                                                                                                                                                                                                      |
 | 1    | FLAGS              | uint32 | Bits Description \[31:5\] _Reserved_ and must be 0. \[4:3\] CPPC mode. 0b00: Normal mode. Desired performance level for performance change. 0b01: Autonomous mode. Performance limit change. Platform can choose the level in the requested limit. 0b10 - 0b11: Reserved. \[2:1\] Performance Request fast-channel doorbell register width. 0b00: 8-bit. 0b01: 16-bit. 0b10: 32-bit. 0b11: Reserved. \[0\] Performance Request fast-channel doorbell support. 0b1: Supported. 0b0: Not supported. |
 | 2    | REGION\_ADDR\_LOW  | uint32 | Lower 32-bit of the fast-channels shared memory region physical address.                                                                                                                                                                                                                                                                                                                                                                                                                          |
 | 3    | REGION\_ADDR\_HIGH | uint32 | Upper 32-bit of the fast-channels shared memory region physical address.                                                                                                                                                                                                                                                                                                                                                                                                                          |
@@ -855,13 +855,13 @@ __Table 79\. Request Data__
 | 0    | HART\_ID | uint32 | Hart ID.    |
 
 __Table 80\. Response Data__
-| Word | Name                         | Type   | Description                                                                                                                                                                                                                                                   |
-| ---- | ---------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED Fast-channels not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | PERF\_REQUEST\_OFFSET\_LOW   | uint32 | Lower 32-bit of a Performance Request fast-channel offset.                                                                                                                                                                                                    |
-| 2    | PERF\_REQUEST\_OFFSET\_HIGH  | uint32 | Upper 32-bit of a Performance Request fast-channel offset.                                                                                                                                                                                                    |
-| 3    | PERF\_FEEDBACK\_OFFSET\_LOW  | uint32 | Lower 32-bit of a Performance Feedback fast-channel offset.                                                                                                                                                                                                   |
-| 4    | PERF\_FEEDBACK\_OFFSET\_HIGH | uint32 | Upper 32-bit of a Performance Feedback fast-channel offset.                                                                                                                                                                                                   |
+| Word | Name                         | Type   | Description                                                                                                                                                                                                                                                                 |
+| ---- | ---------------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM HART\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED Fast-channels not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | PERF\_REQUEST\_OFFSET\_LOW   | uint32 | Lower 32-bit of a Performance Request fast-channel offset.                                                                                                                                                                                                                  |
+| 2    | PERF\_REQUEST\_OFFSET\_HIGH  | uint32 | Upper 32-bit of a Performance Request fast-channel offset.                                                                                                                                                                                                                  |
+| 3    | PERF\_FEEDBACK\_OFFSET\_LOW  | uint32 | Lower 32-bit of a Performance Feedback fast-channel offset.                                                                                                                                                                                                                 |
+| 4    | PERF\_FEEDBACK\_OFFSET\_HIGH | uint32 | Upper 32-bit of a Performance Feedback fast-channel offset.                                                                                                                                                                                                                 |
 
 #### [](#service-cppc%5Fget%5Fhart%5Flist-service%5Fid-0x07)Service: CPPC\_GET\_HART\_LIST (SERVICE\_ID: 0x07)
 
@@ -875,12 +875,12 @@ __Table 81\. Request Data__
 | 0    | START\_INDEX | uint32 | Starting index of Hart ID. |
 
 __Table 82\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                                                                                |
-| ---- | ------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | REMAINING     | uint32 | Remaining number of Hart IDs to be returned.                                                                                                                                                               |
-| 2    | RETURNED      | uint32 | Number of Hart IDs returned in this request.                                                                                                                                                               |
-| 3    | HART\_ID\[N\] | uint32 | Hart IDs.                                                                                                                                                                                                  |
+| Word | Name          | Type   | Description                                                                                                                                                                                                              |
+| ---- | ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | REMAINING     | uint32 | Remaining number of Hart IDs to be returned.                                                                                                                                                                             |
+| 2    | RETURNED      | uint32 | Number of Hart IDs returned in this request.                                                                                                                                                                             |
+| 3    | HART\_ID\[N\] | uint32 | Hart IDs.                                                                                                                                                                                                                |
 
 ### [](#service-group-voltage-servicegroup%5Fid-0x0007)Service Group - VOLTAGE (SERVICEGROUP\_ID: 0x0007)
 
@@ -961,10 +961,10 @@ __Table 84\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 85\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-volt%5Fget%5Fnum%5Fdomains-service%5Fid-0x02)Service: VOLT\_GET\_NUM\_DOMAINS (SERVICE\_ID: 0x02)
 
@@ -975,10 +975,10 @@ __Table 86\. Request Data__
 | -- |
 
 __Table 87\. Response Data__
-| Word | Name         | Type   | Description                                                                                                                                             |
-| ---- | ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_DOMAINS | uint32 | Number of voltage domains.                                                                                                                              |
+| Word | Name         | Type   | Description                                                                                                                                                           |
+| ---- | ------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_DOMAINS | uint32 | Number of voltage domains.                                                                                                                                            |
 
 #### [](#service-volt%5Fget%5Fattributes-service%5Fid-0x03)Service: VOLT\_GET\_ATTRIBUTES (SERVICE\_ID: 0x03)
 
@@ -992,7 +992,7 @@ __Table 88\. Request Data__
 __Table 89\. Response Data__
 | Word | Name           | Type        | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
 | ---- | -------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                                                                                                                                                                                                   |
+| 0    | STATUS         | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                                                                                                                                                                                                     |
 | 1    | FLAGS          | uint32      | Bits Description \[31:4\] _Reserved_ and must be 0. \[3:1\] Voltage format.Refer to [Voltage Level Format](#voltage-level-format-section) for more details. 0b000: Discrete format. 0b001: Linear range format. 0b010 - 0b111: Reserved. \[0\] Voltage domain control support. 0b0: Voltage domain can be enabled/disabled. 0b1: Voltage domain is always-on, voltage value can be changed in the supported voltage range. |
 | 2    | NUM\_LEVELS    | uint32      | The number of voltage levels (number of arrays) supported by the domain. If the voltage level format is a linear range, then each linear range is considered a single voltage level.                                                                                                                                                                                                                                       |
 | 3    | TRANS\_LATENCY | uint32      | Transition latency, in microsecond (us).                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -1011,13 +1011,13 @@ __Table 90\. Request Data__
 | 1    | VOLTAGE\_LEVEL\_INDEX | uint32 | The index of discrete voltage if the format is discrete, or index of linear range tuple if the format is linear range. |
 
 __Table 91\. Response Data__
-| Word | Name               | Type       | Description                                                                                                                                                                                                                                                                                              |
-| ---- | ------------------ | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS             | int32      | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and voltage levels returned. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID is invalid. RPMI\_ERR\_INVALID\_PARAM VOLTAGE\_LEVEL\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS              | uint32     | _Reserved_ and must be 0.                                                                                                                                                                                                                                                                                |
-| 2    | REMAINING          | uint32     | The remaining number of discrete voltage if the format is discrete type, or number of linear range tuple if the format is linear range.                                                                                                                                                                  |
-| 3    | RETURNED           | uint32     | The number of discrete voltage levels returned if the format is discrete type, or the number of linear range tuple if the format is linear range.                                                                                                                                                        |
-| 4    | VOLTAGE\_LEVEL\[\] | uint32\[\] | Voltage levels.The voltage format data structure and its packing is according to the supported format. Refer to [Voltage Level Format](#voltage-level-format-section) for more details.                                                                                                                  |
+| Word | Name               | Type       | Description                                                                                                                                                                                                                                                                                                            |
+| ---- | ------------------ | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS             | int32      | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and voltage levels returned. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID is invalid. RPMI\_ERR\_INVALID\_PARAM VOLTAGE\_LEVEL\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS              | uint32     | _Reserved_ and must be 0.                                                                                                                                                                                                                                                                                              |
+| 2    | REMAINING          | uint32     | The remaining number of discrete voltage if the format is discrete type, or number of linear range tuple if the format is linear range.                                                                                                                                                                                |
+| 3    | RETURNED           | uint32     | The number of discrete voltage levels returned if the format is discrete type, or the number of linear range tuple if the format is linear range.                                                                                                                                                                      |
+| 4    | VOLTAGE\_LEVEL\[\] | uint32\[\] | Voltage levels.The voltage format data structure and its packing is according to the supported format. Refer to [Voltage Level Format](#voltage-level-format-section) for more details.                                                                                                                                |
 
 #### [](#service-volt%5Fset%5Fconfig-service%5Fid-0x05)Service: VOLT\_SET\_CONFIG (SERVICE\_ID: 0x05)
 
@@ -1030,9 +1030,9 @@ __Table 92\. Request Data__
 | 1    | CONFIG     | uint32 | Voltage domain config. Bits **Description** \[31:1\] _Reserved_ and must be 0. \[0\] Voltage supply control. 0b1: Enable voltage supply. 0b0: Disable voltage supply. |
 
 __Table 93\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                |
-| ---- | ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID or CONFIG is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                              |
+| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID or CONFIG is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-volt%5Fget%5Fconfig-service%5Fid-0x06)Service: VOLT\_GET\_CONFIG (SERVICE\_ID: 0x06)
 
@@ -1044,10 +1044,10 @@ __Table 94\. Request Data__
 | 0    | DOMAIN\_ID | uint32 | Voltage domain ID. |
 
 __Table 95\. Response Data__
-| Word | Name   | Type   | Description                                                                                                                                                                                                     |
-| ---- | ------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID not found. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CONFIG | uint32 | Voltage domain config. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Voltage supply state. 0b1: Voltage supply is enabled. 0b0: Voltage supply is disabled.                                         |
+| Word | Name   | Type   | Description                                                                                                                                                                                                                   |
+| ---- | ------ | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID not found. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CONFIG | uint32 | Voltage domain config. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Voltage supply state. 0b1: Voltage supply is enabled. 0b0: Voltage supply is disabled.                                                       |
 
 #### [](#service-volt%5Fset%5Flevel-service%5Fid-0x07)Service: VOLT\_SET\_LEVEL (SERVICE\_ID: 0x07)
 
@@ -1060,9 +1060,9 @@ __Table 96\. Request Data__
 | 1    | VOLTAGE\_LEVEL | int32  | Voltage level, in microvolts. |
 
 __Table 97\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                        |
-| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID or VOLTAGE\_LEVEL is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                      |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID or VOLTAGE\_LEVEL is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-volt%5Fget%5Flevel-service%5Fid-0x08)Service: VOLT\_GET\_LEVEL (SERVICE\_ID: 0x08)
 
@@ -1074,10 +1074,10 @@ __Table 98\. Request Data__
 | 0    | DOMAIN\_ID | uint32 | Voltage domain ID. |
 
 __Table 99\. Response Data__
-| Word | Name           | Type  | Description                                                                                                                                                                                                     |
-| ---- | -------------- | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID not found. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | VOLTAGE\_LEVEL | int32 | Voltage level, in microvolts.                                                                                                                                                                                   |
+| Word | Name           | Type  | Description                                                                                                                                                                                                                   |
+| ---- | -------------- | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM Voltage DOMAIN\_ID not found. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | VOLTAGE\_LEVEL | int32 | Voltage level, in microvolts.                                                                                                                                                                                                 |
 
 ### [](#service-group-clock-servicegroup%5Fid-0x0008)Service Group - CLOCK (SERVICEGROUP\_ID: 0x0008)
 
@@ -1168,10 +1168,10 @@ __Table 103\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 104\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                       |
-| ---- | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes) |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                     |
+| ---- | -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes) |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                              |
 
 #### [](#service-clk%5Fget%5Fnum%5Fclocks-service%5Fid-0x02)Service: CLK\_GET\_NUM\_CLOCKS (SERVICE\_ID: 0x02)
 
@@ -1182,10 +1182,10 @@ __Table 105\. Request Data__
 | -- |
 
 __Table 106\. Response Data__
-| Word | Name        | Type   | Description                                                                                                                                             |
-| ---- | ----------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_CLOCKS | uint32 | Number of clocks.                                                                                                                                       |
+| Word | Name        | Type   | Description                                                                                                                                                           |
+| ---- | ----------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS      | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_CLOCKS | uint32 | Number of clocks.                                                                                                                                                     |
 
 #### [](#service-clk%5Fget%5Fattributes-service%5Fid-0x03)Service: CLK\_GET\_ATTRIBUTES (SERVICE\_ID: 0x03)
 
@@ -1199,7 +1199,7 @@ __Table 107\. Request Data__
 __Table 108\. Response Data__
 | Word | Name                | Type        | Description                                                                                                                                                                                                                   |
 | ---- | ------------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                       |
+| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).         |
 | 1    | FLAGS               | uint32      | Bits Description \[31:2\] _Reserved_ and must be 0. \[1:0\] Clock format. Refer to [Clock Rate Format](#clock-rate-format-section) for more details. 0b00: Discrete format. 0b01: Linear range format. 0b10 - 0b11: Reserved. |
 | 2    | NUM\_RATES          | uint32      | The number of discrete clock rates if the format is of discrete type, or the number of linear ranges if the format is linear range.                                                                                           |
 | 3    | TRANSITION\_LATENCY | uint32      | Transition latency, in microseconds (us).                                                                                                                                                                                     |
@@ -1224,13 +1224,13 @@ __Table 109\. Request Data__
 | 1    | CLOCK\_RATE\_INDEX | uint32 | Clock rate index. |
 
 __Table 110\. Response Data__
-| Word | Name             | Type        | Description                                                                                                                                                                                                                   |
-| ---- | ---------------- | ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS           | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or CLOCK\_RATE\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS            | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                     |
-| 2    | REMAINING        | uint32      | The remaining number of discrete clock rates if the format is discrete type, or the remaining number of linear ranges if the format is linear range.                                                                          |
-| 3    | RETURNED         | uint32      | The number of discrete clock rates returned if the format is discrete type, or the number of linear ranges returned if the format is linear range.                                                                            |
-| 4    | CLOCK\_RATE\[ \] | uint32\[2\] | Clock rates.The clock rate data structure and its packing is according to the supported format. Refer to [Clock Rate Format](#clock-rate-format-section) for more details.                                                    |
+| Word | Name             | Type        | Description                                                                                                                                                                                                                                 |
+| ---- | ---------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS           | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or CLOCK\_RATE\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS            | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                                   |
+| 2    | REMAINING        | uint32      | The remaining number of discrete clock rates if the format is discrete type, or the remaining number of linear ranges if the format is linear range.                                                                                        |
+| 3    | RETURNED         | uint32      | The number of discrete clock rates returned if the format is discrete type, or the number of linear ranges returned if the format is linear range.                                                                                          |
+| 4    | CLOCK\_RATE\[ \] | uint32\[2\] | Clock rates.The clock rate data structure and its packing is according to the supported format. Refer to [Clock Rate Format](#clock-rate-format-section) for more details.                                                                  |
 
 #### [](#service-clk%5Fset%5Fconfig-service%5Fid-0x05)Service: CLK\_SET\_CONFIG (SERVICE\_ID: 0x05)
 
@@ -1243,9 +1243,9 @@ __Table 111\. Request Data__
 | 1    | CONFIG    | uint32 | Clock config. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Clock control. 0b0: Disable clock. 0b1: Enable clock. |
 
 __Table 112\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                       |
-| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or CONFIG is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                     |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or CONFIG is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-clk%5Fget%5Fconfig-service%5Fid-0x06)Service: CLK\_GET\_CONFIG (SERVICE\_ID: 0x06)
 
@@ -1257,10 +1257,10 @@ __Table 113\. Request Data__
 | 0    | CLOCK\_ID | uint32 | Clock ID.   |
 
 __Table 114\. Response Data__
-| Word | Name   | Type   | Description                                                                                                                                                                                            |
-| ---- | ------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes) |
-| 1    | CONFIG | uint32 | Clock config. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Clock state. 0b0: Clock is disabled. 0b1: Clock is enabled.                                                                    |
+| Word | Name   | Type   | Description                                                                                                                                                                                                          |
+| ---- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes) |
+| 1    | CONFIG | uint32 | Clock config. Bits Description \[31:1\] _Reserved_ and must be 0. \[0\] Clock state. 0b0: Clock is disabled. 0b1: Clock is enabled.                                                                                  |
 
 #### [](#service-clk%5Fset%5Frate-service%5Fid-0x07)Service: CLK\_SET\_RATE (SERVICE\_ID: 0x07)
 
@@ -1275,9 +1275,9 @@ __Table 115\. Request Data__
 | 3    | CLOCK\_RATE\_HIGH | uint32 | Upper 32-bit of the clock rate in Hertz.                                                                                                                                                                                                               |
 
 __Table 116\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                       |
-| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or clock rate is invalid or the flags passed are invalid or reserved. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                     |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID or clock rate is invalid or the flags passed are invalid or reserved. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-clk%5Fget%5Frate-service%5Fid-0x08)Service: CLK\_GET\_RATE (SERVICE\_ID: 0x08)
 
@@ -1289,11 +1289,11 @@ __Table 117\. Request Data__
 | 0    | CLOCK\_ID | uint32 | Clock ID.   |
 
 __Table 118\. Request Data__
-| Word | Name              | Type   | Description                                                                                                                                                                                             |
-| ---- | ----------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS            | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CLOCK\_RATE\_LOW  | uint32 | Lower 32-bit of the clock rate in Hertz.                                                                                                                                                                |
-| 2    | CLOCK\_RATE\_HIGH | uint32 | Upper 32-bit of the clock rate in Hertz.                                                                                                                                                                |
+| Word | Name              | Type   | Description                                                                                                                                                                                                           |
+| ---- | ----------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS            | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM CLOCK\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CLOCK\_RATE\_LOW  | uint32 | Lower 32-bit of the clock rate in Hertz.                                                                                                                                                                              |
+| 2    | CLOCK\_RATE\_HIGH | uint32 | Upper 32-bit of the clock rate in Hertz.                                                                                                                                                                              |
 
 ### [](#service-group-device%5Fpower-servicegroup%5Fid-0x0009)Service Group - DEVICE\_POWER (SERVICEGROUP\_ID: 0x0009)
 
@@ -1342,10 +1342,10 @@ __Table 121\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 122\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-dpwr%5Fget%5Fnum%5Fdomains-service%5Fid-0x02)Service: DPWR\_GET\_NUM\_DOMAINS (SERVICE\_ID: 0x02)
 
@@ -1356,10 +1356,10 @@ __Table 123\. Request Data__
 | -- |
 
 __Table 124\. Response Data__
-| Word | Name         | Type   | Description                                                                                                                                             |
-| ---- | ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_DOMAINS | uint32 | Number of device power domains.                                                                                                                         |
+| Word | Name         | Type   | Description                                                                                                                                                           |
+| ---- | ------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_DOMAINS | uint32 | Number of device power domains.                                                                                                                                       |
 
 #### [](#service-dpwr%5Fget%5Fattributes-service%5Fid-0x03)Service: DPWR\_GET\_ATTRIBUTES (SERVICE\_ID: 0x03)
 
@@ -1371,12 +1371,12 @@ __Table 125\. Request Data__
 | 0    | DOMAIN\_ID | uint32 | Device power domain ID. |
 
 __Table 126\. Response Data__
-| Word | Name                | Type        | Description                                                                                                                                                                                              |
-| ---- | ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS               | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                |
-| 2    | TRANSITION\_LATENCY | uint32      | Worst case transition latency of domain from one power state to another, in microseconds (us).                                                                                                           |
-| 3:6  | DOMAIN\_NAME        | uint8\[16\] | Device power domain name, a NULL-terminated ASCII string up to 16-bytes.                                                                                                                                 |
+| Word | Name                | Type        | Description                                                                                                                                                                                                            |
+| ---- | ------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS               | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                              |
+| 2    | TRANSITION\_LATENCY | uint32      | Worst case transition latency of domain from one power state to another, in microseconds (us).                                                                                                                         |
+| 3:6  | DOMAIN\_NAME        | uint8\[16\] | Device power domain name, a NULL-terminated ASCII string up to 16-bytes.                                                                                                                                               |
 
 #### [](#service-dpwr%5Fset%5Fstate-service%5Fid-0x04)Service: DPWR\_SET\_STATE (SERVICE\_ID: 0x04)
 
@@ -1389,9 +1389,9 @@ __Table 127\. Request Data__
 | 1    | POWER\_STATE | uint32 | This field indicates the power state to which the power domain should transition. The specific power states and their meanings may vary depending on the implementation, but generally, they include values such as "ON", "OFF" and vendor specific power state. Refer [Power State Format](#section-power-state)for more details. |
 
 __Table 128\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                |
-| ---- | ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or POWER\_STATE is invalid. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Failed due to hardware error. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                              |
+| ---- | ------ | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or POWER\_STATE is invalid. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Failed due to hardware error. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-dpwr%5Fget%5Fstate-service%5Fid-0x05)Service: DPWR\_GET\_STATE (SERVICE\_ID: 0x05)
 
@@ -1405,7 +1405,7 @@ __Table 129\. Request Data__
 __Table 130\. Response Data__
 | Word | Name         | Type   | Description                                                                                                                                                                                                                                          |
 | ---- | ------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                             |
+| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                               |
 | 1    | POWER\_STATE | uint32 | This field indicates the current power state of the specified domain. The power state can be one of several predefined values, such as ON, OFF, or vendor specific implementation. Refer [Power State Format](#section-power-state)for more details. |
 
 ### [](#service-group-performance-servicegroup%5Fid-0x000a)Service Group - PERFORMANCE (SERVICEGROUP\_ID: 0x000A)
@@ -1510,10 +1510,10 @@ __Table 134\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 135\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-perf%5Fget%5Fnum%5Fdomains-service%5Fid-0x02)Service: PERF\_GET\_NUM\_DOMAINS (SERVICE\_ID: 0x02)
 
@@ -1524,10 +1524,10 @@ __Table 136\. Request Data__
 | -- |
 
 __Table 137\. Response Data__
-| Word | Name         | Type   | Description                                                                                                                                             |
-| ---- | ------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_DOMAINS | uint32 | Number of performance domains.                                                                                                                          |
+| Word | Name         | Type   | Description                                                                                                                                                           |
+| ---- | ------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_DOMAINS | uint32 | Number of performance domains.                                                                                                                                        |
 
 #### [](#service-perf%5Fget%5Fattributes-service%5Fid-0x03)Service: PERF\_GET\_ATTRIBUTES (SERVICE\_ID: 0x03)
 
@@ -1541,7 +1541,7 @@ __Table 138\. Request Data__
 __Table 139\. Response Data__
 | Word | Name                | Type        | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | ---- | ------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| 0    | STATUS              | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 | 1    | FLAGS               | uint32      | Bits Description \[31:3\] _Reserved_ and must be 0. \[2\] Performance limit change support. This attribute indicates whether the platform allows software to set the performance limit for a specific performance domain. 0b0: Performance limit change is not allowed. 0b1: Performance limit change is allowed. \[1\] Performance level change support. This attribute indicates whether the platform allows software to set the performance level for a specific performance domain. 0b0: Performance level change is not allowed. 0b1: Performance level change is allowed. \[0\] Fast-channel support. This attribute indicates whether the platform supports fast-channel for a specific performance domain. 0b0: Fast-channel is not supported. 0b1: Fast-channel is supported. |
 | 2    | NUM\_LEVELS         | uint32      | The total number of supported performance levels.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | 3    | TRANSITION\_LATENCY | uint32      | Minimum amount of time that needs to pass between two consecutive requests, in microseconds (us).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
@@ -1588,13 +1588,13 @@ __Table 140\. Request Data__
 | 1    | PERF\_LEVEL\_INDEX | uint32 | Index of performance data array. The first index starts at zero. |
 
 __Table 141\. Response Data__
-| Word | Name      | Type        | Description                                                                                                                                                                                                                    |
-| ---- | --------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS    | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or PERF\_LEVEL\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS     | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                      |
-| 2    | REMAINING | uint32      | Remaining number of levels (number of arrays).                                                                                                                                                                                 |
-| 3    | RETURNED  | uint32      | Number of levels returned (number of arrays).                                                                                                                                                                                  |
-| 4    | LEVEL\[\] | uint32\[4\] | List of performance levels attributes.Refer to [\[section-perf-attribute\]](#section-perf-attribute) for the complete structure of performance level attributes.                                                               |
+| Word | Name      | Type        | Description                                                                                                                                                                                                                                  |
+| ---- | --------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS    | int32       | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or PERF\_LEVEL\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS     | uint32      | _Reserved_ and must be 0.                                                                                                                                                                                                                    |
+| 2    | REMAINING | uint32      | Remaining number of levels (number of arrays).                                                                                                                                                                                               |
+| 3    | RETURNED  | uint32      | Number of levels returned (number of arrays).                                                                                                                                                                                                |
+| 4    | LEVEL\[\] | uint32\[4\] | List of performance levels attributes.Refer to [Performance Level Attribute](#section-perf-level-attribute) for the complete structure of performance level attributes.                                                                      |
 
 #### [](#service-perf%5Fget%5Flevel-service%5Fid-0x05)Service: PERF\_GET\_LEVEL (SERVICE\_ID: 0x05)
 
@@ -1606,10 +1606,10 @@ __Table 142\. Request Data__
 | 0    | DOMAIN\_ID | uint32 | Performance domain ID. |
 
 __Table 143\. Response Data__
-| Word | Name   | Type   | Description                                                                                                                                                                                              |
-| ---- | ------ | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | LEVEL  | uint32 | Current performance level index of the domain.                                                                                                                                                           |
+| Word | Name   | Type   | Description                                                                                                                                                                                                            |
+| ---- | ------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | LEVEL  | uint32 | Current performance level index of the domain.                                                                                                                                                                         |
 
 #### [](#service-perf%5Fset%5Flevel-service%5Fid-0x06)Service: PERF\_SET\_LEVEL (SERVICE\_ID: 0x06)
 
@@ -1622,9 +1622,9 @@ __Table 144\. Request Data__
 | 1    | LEVEL      | uint32 | Performance level index. |
 
 __Table 145\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                   |
-| ---- | ------ | ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or LEVEL is invalid. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Operation failed due to hardware error. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                 |
+| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or LEVEL is invalid. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Operation failed due to hardware error. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-perf%5Fget%5Flimit-service%5Fid-0x07)Service: PERF\_GET\_LIMIT (SERVICE\_ID: 0x07)
 
@@ -1636,11 +1636,11 @@ __Table 146\. Request Data__
 | 0    | DOMAIN\_ID | uint32 | Performance domain ID. |
 
 __Table 147\. Response Data__
-| Word | Name             | Type   | Description                                                                                                                                                                                              |
-| ---- | ---------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS           | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | MAX\_PERF\_LEVEL | uint32 | Maximum allowed performance level index.                                                                                                                                                                 |
-| 2    | MIN\_PERF\_LEVEL | uint32 | Minimum allowed performance level index.                                                                                                                                                                 |
+| Word | Name             | Type   | Description                                                                                                                                                                                                            |
+| ---- | ---------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS           | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | MAX\_PERF\_LEVEL | uint32 | Maximum allowed performance level index.                                                                                                                                                                               |
+| 2    | MIN\_PERF\_LEVEL | uint32 | Minimum allowed performance level index.                                                                                                                                                                               |
 
 #### [](#service-perf%5Fset%5Flimit-service%5Fid-0x08)Service: PERF\_SET\_LIMIT (SERVICE\_ID: 0x08)
 
@@ -1661,9 +1661,9 @@ __Table 148\. Request Data__
 | 2    | MIN\_PERF\_LEVEL | uint32 | Minimum allowed performance level index. |
 
 __Table 149\. Response Data__
-| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---- | ------ | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or performance level is invalid. RPMI\_ERR\_NOT\_SUPPORTED Performance limit change is not allowed. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Operation failed due to hardware error. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
+| Word | Name   | Type  | Description                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ---- | ------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS | int32 | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID or performance level is invalid. RPMI\_ERR\_NOT\_SUPPORTED Performance limit change is not allowed. RPMI\_ERR\_DENIED Denied due to no permission. RPMI\_ERR\_HW\_FAULT Operation failed due to hardware error. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
 
 #### [](#service-perf%5Fget%5Ffast%5Fchannel%5Fregion-service%5Fid-0x09)Service: PERF\_GET\_FAST\_CHANNEL\_REGION (SERVICE\_ID: 0x09)
 
@@ -1674,13 +1674,13 @@ __Table 150\. Request Data__
 | -- |
 
 __Table 151\. Response Data__
-| Word | Name                     | Type   | Description                                                                                                                                                                                                      |
-| ---- | ------------------------ | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                   | int32  | Return error code Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NOT\_SUPPORTED Fast-channel is not implemented. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes) |
-| 1    | REGION\_PHYS\_ADDR\_LOW  | uint32 | Lower 32-bit of the fast-channels shared memory region physical address.                                                                                                                                         |
-| 2    | REGION\_PHYS\_ADDR\_HIGH | uint32 | Upper 32-bit of the fast-channels shared memory region physical address.                                                                                                                                         |
-| 3    | REGION\_SIZE\_LOW        | uint32 | Lower 32-bit of the fast-channels shared memory region size.                                                                                                                                                     |
-| 4    | REGION\_SIZE\_HIGH       | uint32 | Upper 32-bit of the fast-channels shared memory region size.                                                                                                                                                     |
+| Word | Name                     | Type   | Description                                                                                                                                                                                                                    |
+| ---- | ------------------------ | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 0    | STATUS                   | int32  | Return error code Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NOT\_SUPPORTED Fast-channel is not implemented. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes) |
+| 1    | REGION\_PHYS\_ADDR\_LOW  | uint32 | Lower 32-bit of the fast-channels shared memory region physical address.                                                                                                                                                       |
+| 2    | REGION\_PHYS\_ADDR\_HIGH | uint32 | Upper 32-bit of the fast-channels shared memory region physical address.                                                                                                                                                       |
+| 3    | REGION\_SIZE\_LOW        | uint32 | Lower 32-bit of the fast-channels shared memory region size.                                                                                                                                                                   |
+| 4    | REGION\_SIZE\_HIGH       | uint32 | Upper 32-bit of the fast-channels shared memory region size.                                                                                                                                                                   |
 
 #### [](#service-perf%5Fget%5Ffast%5Fchannel%5Fattributes-service%5Fid-0x0a)Service: PERF\_GET\_FAST\_CHANNEL\_ATTRIBUTES (SERVICE\_ID: 0x0A)
 
@@ -1695,7 +1695,7 @@ __Table 152\. Request Data__
 __Table 153\. Response Data__
 | Word | Name                   | Type   | Description                                                                                                                                                                                                                                                                          |
 | ---- | ---------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS                 | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED Fast-channel is not implemented. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes).                  |
+| 0    | STATUS                 | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM DOMAIN\_ID is invalid. RPMI\_ERR\_NOT\_SUPPORTED Fast-channel is not implemented. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes).    |
 | 1    | FLAGS                  | uint32 | Bits Description \[31:3\] _Reserved_ and must be 0. \[2:1\] Doorbell register width. This field is unused if doorbell is not supported. 0b00: 8-bit. 0b01: 16-bit. 0b10: 32-bit. 0b11: Reserved. \[0\] Doorbell support. 0b0: Doorbell is not supported. 0b1: Doorbell is supported. |
 | 2    | FASTCHAN\_OFFSET\_LOW  | uint32 | Lower 32-bit offset of fast-channel physical address region.                                                                                                                                                                                                                         |
 | 3    | FASTCHAN\_OFFSET\_HIGH | uint32 | Upper 32-bit offset of fast-channel physical address region.                                                                                                                                                                                                                         |
@@ -1734,10 +1734,10 @@ __Table 155\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 156\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-mm%5Fget%5Fattributes-service%5Fid-0x02)Service: MM\_GET\_ATTRIBUTES (SERVICE\_ID: 0x02)
 
@@ -1748,13 +1748,13 @@ __Table 157\. Request Data__
 | -- |
 
 __Table 158\. Response Data__
-| Word | Name                  | Type   | Description                                                                                                                                             |
-| ---- | --------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | MM\_VERSION           | uint32 | Management Mode version. Bits Description \[31:16\] Major version. \[15:0\] Minor version.                                                              |
-| 2    | MM\_SHMEM\_ADDR\_LOW  | uint32 | Lower 32-bit of the MM shared memory physical address.                                                                                                  |
-| 3    | MM\_SHMEM\_ADDR\_HIGH | uint32 | Upper 32-bit of the MM shared memory physical address.                                                                                                  |
-| 4    | MM\_SHMEM\_SIZE       | uint32 | The size of MM shared memory in bytes.                                                                                                                  |
+| Word | Name                  | Type   | Description                                                                                                                                                           |
+| ---- | --------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | MM\_VERSION           | uint32 | Management Mode version. Bits Description \[31:16\] Major version. \[15:0\] Minor version.                                                                            |
+| 2    | MM\_SHMEM\_ADDR\_LOW  | uint32 | Lower 32-bit of the MM shared memory physical address.                                                                                                                |
+| 3    | MM\_SHMEM\_ADDR\_HIGH | uint32 | Upper 32-bit of the MM shared memory physical address.                                                                                                                |
+| 4    | MM\_SHMEM\_SIZE       | uint32 | The size of MM shared memory in bytes.                                                                                                                                |
 
 #### [](#service-mm%5Fcommunicate-service%5Fid-0x03)Service: MM\_COMMUNICATE (SERVICE\_ID: 0x03)
 
@@ -1769,10 +1769,10 @@ __Table 159\. Request Data__
 | 3    | MM\_COMM\_OUTPUT\_DATA\_SIZE   | uint32 | The maximum size of the output data which can be written by the MM service in the MM shared memory. |
 
 __Table 160\. Response Data__
-| Word | Name                         | Type   | Description                                                                                                                                                                                                                                                                                      |
-| ---- | ---------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| 0    | STATUS                       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_ADDR Input data end (or Output data end) is outside MM shared memory. RPMI\_ERR\_DENIED Denied due to no permission. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | MM\_COMM\_RETURN\_DATA\_SIZE | uint32 | Actual size of the output data written by the MM service in the MM shared memory.                                                                                                                                                                                                                |
+| Word | Name                         | Type   | Description                                                                                                                                                                                                                                                                                                    |
+| ---- | ---------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                       | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_ADDR Input data end (or Output data end) is outside MM shared memory. RPMI\_ERR\_DENIED Denied due to no permission. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | MM\_COMM\_RETURN\_DATA\_SIZE | uint32 | Actual size of the output data written by the MM service in the MM shared memory.                                                                                                                                                                                                                              |
 
 ### [](#service-group-ras%5Fagent-servicegroup%5Fid-0x000c)Service Group - RAS\_AGENT (SERVICEGROUP\_ID: 0x000C)
 
@@ -1820,10 +1820,10 @@ __Table 162\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 163\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-ras%5Fget%5Fnum%5Ferr%5Fsrcs-service%5Fid-0x02)Service: RAS\_GET\_NUM\_ERR\_SRCS (SERVICE\_ID: 0x02)
 
@@ -1834,10 +1834,10 @@ __Table 164\. Request Data__
 | -- |
 
 __Table 165\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                   |
-| ---- | -------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and number of error sources returned asNUM\_ERR\_SRCS. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_ERR\_SRCS | uint32 | Number of error sources.                                                                                                                                                                                      |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                 |
+| ---- | -------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and number of error sources returned asNUM\_ERR\_SRCS. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_ERR\_SRCS | uint32 | Number of error sources.                                                                                                                                                                                                    |
 
 #### [](#service-ras%5Fget%5Ferr%5Fsrcs%5Fid%5Flist-service%5Fid-0x03)Service: RAS\_GET\_ERR\_SRCS\_ID\_LIST (SERVICE\_ID: 0x03)
 
@@ -1849,13 +1849,13 @@ __Table 166\. Request Data__
 | 0    | START\_INDEX | uint32 | Starting index of RAS\_ERR\_SRC\_ID list. 0 for the first call, subsequent calls will use the next index of the remaining items. |
 
 __Table 167\. Response Data__
-| Word | Name                   | Type   | Description                                                                                                                                                                                                                                   |
-| ---- | ---------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                 | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and list of error sources returned. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS                  | uint32 | _Reserved_ and must be 0.                                                                                                                                                                                                                     |
-| 2    | REMAINING              | uint32 | Remaining number of error source IDs.                                                                                                                                                                                                         |
-| 3    | RETURNED               | uint32 | Number of error source IDs returned in this request.                                                                                                                                                                                          |
-| 4    | RAS\_ERR\_SRC\_ID\[N\] | uint32 | An array of error source IDs where each entry in the array is a unique error source ID. N is equal to RETURNED number of error source IDs in this request.                                                                                    |
+| Word | Name                   | Type   | Description                                                                                                                                                                                                                                                 |
+| ---- | ---------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                 | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and list of error sources returned. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS                  | uint32 | _Reserved_ and must be 0.                                                                                                                                                                                                                                   |
+| 2    | REMAINING              | uint32 | Remaining number of error source IDs.                                                                                                                                                                                                                       |
+| 3    | RETURNED               | uint32 | Number of error source IDs returned in this request.                                                                                                                                                                                                        |
+| 4    | RAS\_ERR\_SRC\_ID\[N\] | uint32 | An array of error source IDs where each entry in the array is a unique error source ID. N is equal to RETURNED number of error source IDs in this request.                                                                                                  |
 
 #### [](#service-ras%5Fget%5Ferr%5Fsrc%5Fdesc-service%5Fid-0x04)Service: RAS\_GET\_ERR\_SRC\_DESC (SERVICE\_ID: 0x04)
 
@@ -1867,13 +1867,13 @@ This service retrieves the error source descriptor of an error source specified 
 | 1    | BYTE\_OFFSET      | uint32 | Offset from which the descriptor is to be read. Offset 0 for the first call, subsequent byte offset of the remaining bytes. |
 
 __Table 168\. Response Data__
-| Word | Name                | Type   | Description                                                                                                                                                                                                                                                                           |
-| ---- | ------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS              | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and partial/complete error source descriptor returned. RPMI\_ERR\_INVALID\_PARAM RAS\_ERR\_SRC\_ID or BYTE\_OFFSET is invalid. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | FLAGS               | uint32 | Bits Description \[31:4\] _Reserved_ and must be 0. \[3:0\] Format of the error source descriptor. 0b0000: GHESv2 format. 0b0001 - 0b1110: Reserved. 0b1111: Implementation specific.                                                                                                 |
-| 2    | REMAINING           | uint32 | Remaining number of bytes to be read.                                                                                                                                                                                                                                                 |
-| 3    | RETURNED            | uint32 | Number of bytes read in this request.                                                                                                                                                                                                                                                 |
-| 4    | ERR\_SRC\_DESC\[N\] | uint8  | Full or partial descriptor N is equal to the RETURNED bytes in this request.                                                                                                                                                                                                          |
+| Word | Name                | Type   | Description                                                                                                                                                                                                                                                                                         |
+| ---- | ------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS              | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully and partial/complete error source descriptor returned. RPMI\_ERR\_INVALID\_PARAM RAS\_ERR\_SRC\_ID or BYTE\_OFFSET is invalid. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | FLAGS               | uint32 | Bits Description \[31:4\] _Reserved_ and must be 0. \[3:0\] Format of the error source descriptor. 0b0000: GHESv2 format. 0b0001 - 0b1110: Reserved. 0b1111: Implementation specific.                                                                                                               |
+| 2    | REMAINING           | uint32 | Remaining number of bytes to be read.                                                                                                                                                                                                                                                               |
+| 3    | RETURNED            | uint32 | Number of bytes read in this request.                                                                                                                                                                                                                                                               |
+| 4    | ERR\_SRC\_DESC\[N\] | uint8  | Full or partial descriptor N is equal to the RETURNED bytes in this request.                                                                                                                                                                                                                        |
 
 ### [](#service-group-request%5Fforward-servicegroup%5Fid-0x000d)Service Group - REQUEST\_FORWARD (SERVICEGROUP\_ID: 0x000D)
 
@@ -1895,9 +1895,9 @@ __Table 169\. Request Forward Services__
 The [Table 170](#table%5Freqfwd%5Fnotification%5Fevents) below lists the notification events defined by the REQUEST\_FORWARD service group.
 
 __Table 170\. Request Forward Notification Events__
-| Event ID | Name                 | Event Data                                                                                                                                                                                                                                                                              | Description                                                                                                                                                               |
-| -------- | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0x01     | REQFWD\_NEW\_MESSAGE | An array of N bytes representing the first N bytes of the current forwarded RPMI request message. The value N is specified by the EVENT\_DATALEN field of the RPMI notification event as shown in [\[table\_notification\_message\_format\]](#table%5Fnotification%5Fmessage%5Fformat). | This RPMI notification event represents the arrival of a new forwarded RPMI request message when there were no other pending forwarded RPMI request message in the queue. |
+| Event ID | Name                 | Event Data                                                                                                                                                                                                                                                                       | Description                                                                                                                                                               |
+| -------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0x01     | REQFWD\_NEW\_MESSAGE | An array of N bytes representing the first N bytes of the current forwarded RPMI request message. The value N is specified by the EVENT\_DATALEN field of the RPMI notification event as shown in [Event Format](message-protocol.html#table%5Fnotification%5Fmessage%5Fformat). | This RPMI notification event represents the arrival of a new forwarded RPMI request message when there were no other pending forwarded RPMI request message in the queue. |
 
 #### [](#service-reqfwd%5Fenable%5Fnotification-service%5Fid-0x01)Service: REQFWD\_ENABLE\_NOTIFICATION (SERVICE\_ID: 0x01)
 
@@ -1910,10 +1910,10 @@ __Table 171\. Request Data__
 | 1    | REQ\_STATE | uint32 | Requested event notification state.Change or query the current state of EVENT\_ID notification. 0: Disable. 1: Enable. 2: Return current state. Any other values of REQ\_STATE field other than the defined ones are reserved for future use. |
 
 __Table 172\. Response Data__
-| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                        |
-| ---- | -------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                 |
+| Word | Name           | Type   | Description                                                                                                                                                                                                                                                                                                      |
+| ---- | -------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS         | int32  | Return error code. Error Code Description RPMI\_SUCCESS Event is subscribed successfully. RPMI\_ERR\_INVALID\_PARAM EVENT\_ID or REQ\_STATE is invalid. RPMI\_ERR\_NOT\_SUPPORTED Notification for the EVENT\_ID is not supported. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | CURRENT\_STATE | uint32 | Current EVENT\_ID notification state. 0: Notification is disabled. 1: Notification is enabled. In case of REQ\_STATE = 0 or 1, the CURRENT\_STATE will return the requested state.In case of an error, the value of CURRENT\_STATE is unspecified.                                                               |
 
 #### [](#service-reqfwd%5Fretrieve%5Fcurrent%5Fmessage-service%5Fid-0x02)Service: REQFWD\_RETRIEVE\_CURRENT\_MESSAGE (SERVICE\_ID: 0x02)
 
@@ -1925,12 +1925,12 @@ __Table 173\. Request Data__
 | 0    | START\_INDEX | uint32 | Starting index of first byte of the current forwarded RPMI request message. Use0 for the first call, subsequent calls will use the next index of the remaining bytes. |
 
 __Table 174\. Response Data__
-| Word | Name                  | Type   | Description                                                                                                                                                                                                                                                                 |
-| ---- | --------------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS                | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. RPMI\_ERR\_NO\_DATA No forwarded RPMI request message available. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | REMAINING             | uint32 | Remaining number of bytes in the current forwarded RPMI request message.                                                                                                                                                                                                    |
-| 2    | RETURNED              | uint32 | Number of bytes N of the current forwarded RPMI request message returned in this request.                                                                                                                                                                                   |
-| 3    | REQUEST\_MESSAGE\[N\] | uint8  | An array of N bytes representing a part of the current forwarded RPMI request message at byte offset specified by START\_INDEX.                                                                                                                                             |
+| Word | Name                  | Type   | Description                                                                                                                                                                                                                                                                               |
+| ---- | --------------------- | ------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS                | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_INVALID\_PARAM START\_INDEX is invalid. RPMI\_ERR\_NO\_DATA No forwarded RPMI request message available. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | REMAINING             | uint32 | Remaining number of bytes in the current forwarded RPMI request message.                                                                                                                                                                                                                  |
+| 2    | RETURNED              | uint32 | Number of bytes N of the current forwarded RPMI request message returned in this request.                                                                                                                                                                                                 |
+| 3    | REQUEST\_MESSAGE\[N\] | uint8  | An array of N bytes representing a part of the current forwarded RPMI request message at byte offset specified by START\_INDEX.                                                                                                                                                           |
 
 #### [](#service-reqfwd%5Fcomplete%5Fcurrent%5Fmessage-service%5Fid-0x03)Service: REQFWD\_COMPLETE\_CURRENT\_MESSAGE (SERVICE\_ID: 0x03)
 
@@ -1947,7 +1947,7 @@ __Table 175\. Request Data__
 | 0    | RESPONSE\_DATA\[N\] | uint8 | An array of bytes representing the RPMI message data to be send as response data for the current forwarded RPMI request message. The Nrepresents the total number of bytes in the response data which can be inferred by the platform microcontroller (or SBI implementation) from the overall size of the REQFWD\_COMPLETE\_CURRENT\_MESSAGE service message. |
 
 __Table 176\. Response Data__
-| Word | Name          | Type   | Description                                                                                                                                                                                                         |
-| ---- | ------------- | ------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NO\_DATA No forwarded request message retrieved. Other errors [\[table\_error\_codes\]](#table%5Ferror%5Fcodes). |
-| 1    | NUM\_MESSAGES | uint32 | Number of forwarded messages available for retrieval, excluding the current forwarded message.                                                                                                                      |
+| Word | Name          | Type   | Description                                                                                                                                                                                                                       |
+| ---- | ------------- | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0    | STATUS        | int32  | Return error code. Error Code Description RPMI\_SUCCESS Service completed successfully. RPMI\_ERR\_NO\_DATA No forwarded request message retrieved. Other errors [RPMI Error Codes](message-protocol.html#table%5Ferror%5Fcodes). |
+| 1    | NUM\_MESSAGES | uint32 | Number of forwarded messages available for retrieval, excluding the current forwarded message.                                                                                                                                    |
